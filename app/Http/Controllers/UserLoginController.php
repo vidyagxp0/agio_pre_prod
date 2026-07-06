@@ -190,10 +190,21 @@ class UserLoginController extends Controller
         $user = User::where('emp_code', $request->emp_code)->first();
 
         // ❌ User not found
+        // if (!$user) {
+        //     toastr()->error('Email not registered.');
+        //     return redirect()->back();
+        // }
+
         if (!$user) {
-            toastr()->error('Email not registered.');
-            return redirect()->back();
-        }
+
+                toastr()->error('Employee Code is incorrect.');
+
+                return redirect()->back()
+                    ->withErrors([
+                        'emp_code' => 'Employee Code is incorrect.'
+                    ])
+                    ->withInput();
+            }
 
         // ❌ Check if user is locked/disabled
         if ($user->is_active == 0) {
@@ -206,7 +217,14 @@ class UserLoginController extends Controller
                 $user->save();
             } else {
                 toastr()->error('Your account is locked. Please try later or contact admin.');
-                return redirect()->back();
+                //return redirect()->back();
+
+                  return redirect()->back()
+                ->withErrors([
+                   'emp_code' => 'Your account has been locked. Please contact Admin.',
+                    'password' => 'Account locked after 3 failed attempts.'
+                ])
+                ->withInput();
             }
         }
 
@@ -252,23 +270,59 @@ class UserLoginController extends Controller
                 return redirect('rcms/qms-dashboard');
             }
 
-        } else {
-            // ❌ Failed login attempt
-            $user->failed_attempts += 1;
+        } 
+        // else {
+        //     // ❌ Failed login attempt
+        //     $user->failed_attempts += 1;
 
-            if ($user->failed_attempts >= 3) {
-                $user->is_active = 0;
-                $user->locked_at = now();
+        //     if ($user->failed_attempts >= 3) {
+        //         $user->is_active = 0;
+        //         $user->locked_at = now();
 
-                toastr()->error('Account locked after 3 failed attempts.');
-            } else {
-                toastr()->error('Login failed. Attempt '.$user->failed_attempts.' of 3.');
-            }
+        //         toastr()->error('Account locked after 3 failed attempts.');
+        //     } else {
+        //         toastr()->error('Login failed. Attempt '.$user->failed_attempts.' of 3.');
+        //     }
 
-            $user->save();
+        //     $user->save();
+            
 
-            return redirect()->back();
-        }
+        //     return redirect()->back();
+        // }
+else {
+
+    // Failed login attempt
+    $user->failed_attempts += 1;
+
+    if ($user->failed_attempts >= 3) {
+
+        $user->is_active = 0;
+        $user->locked_at = now();
+        $user->save();
+
+        toastr()->error('Account locked after 3 failed attempts.');
+
+         return redirect()->back()
+                ->withErrors([
+                    'emp_code' => 'Your account has been locked. Please contact Admin.',
+                    'password' => 'Account locked after 3 failed attempts.'
+                ])
+                ->withInput();
+    } 
+    
+    else {
+
+        $user->save();
+
+        toastr()->error('Wrong Password. Attempt '.$user->failed_attempts.' of 3.');
+
+        return redirect()->back()
+            ->withErrors([
+                'password' => 'Wrong Password.'
+            ])
+            ->withInput();
+    }
+}
     }
 
     public function changePassword()

@@ -612,11 +612,11 @@
                                 </script>
 
                                 <style>
-.readonly-select {
-    background: #f5f5f5;
-    pointer-events: none;
-}
-</style>
+                                .readonly-select {
+                                    background: #f5f5f5;
+                                    pointer-events: none;
+                                }
+                                </style>
 
                         <div class="sub-head">
                             Impact Assessment @if($data->stage ==1)
@@ -1691,7 +1691,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('more_info_stage', $data->id) }}" method="POST">
+                <form action="{{ route('more_info_stage', $data->id) }}" method="POST"  id="RejectModalFormData">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -1714,13 +1714,17 @@
                         </div>
                     </div>
 
-                    <!-- Modal footer -->
-                    <!-- <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button>Close</button>
-                            </div> -->
+                    
                     <div class="modal-footer">
-                        <button type="submit">
+                        <!-- <button type="submit">
+                            Submit
+                        </button> -->
+
+                         <button type="submit" class="RejectInitiatorModalButton">
+                            <div class="spinner-border spinner-border-sm RejectInitiatorModalSpinner"
+                                style="display: none" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
                             Submit
                         </button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1740,7 +1744,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('cpjreject', $data->id) }}" method="POST">
+                <form action="{{ route('cpjreject', $data->id) }}" method="POST" id="RejectDataModalFormData">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -1763,13 +1767,16 @@
                         </div>
                     </div>
 
-                    <!-- Modal footer -->
-                    <!-- <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button>Close</button>
-                            </div> -->
+                  
                     <div class="modal-footer">
-                        <button type="submit">
+                        <!-- <button type="submit">
+                            Submit
+                        </button> -->
+                         <button type="submit" class="RejectDataInitiatorModalButton">
+                            <div class="spinner-border spinner-border-sm RejectDataInitiatorModalSpinner"
+                                style="display: none" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
                             Submit
                         </button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1789,7 +1796,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('cpjCancle', $data->id) }}" method="POST">
+                <form action="{{ route('cpjCancle', $data->id) }}" method="POST" id="pendingInitiatorForm">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -1812,13 +1819,16 @@
                         </div>
                     </div>
 
-                    <!-- Modal footer -->
-                    <!-- <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button>Close</button>
-                            </div> -->
+                  
                     <div class="modal-footer">
-                        <button type="submit">
+                        <!-- <button type="submit">
+                            Submit
+                        </button> -->
+                         <button type="submit" class="pendingInitiatorModalButton">
+                            <div class="spinner-border spinner-border-sm pendingInitiatorModalSpinner"
+                                style="display: none" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
                             Submit
                         </button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1838,7 +1848,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('hodCancle', $data->id) }}" method="POST">
+                <form action="{{ route('hodCancle', $data->id) }}" method="POST" id="cencelInitiatorForm" >
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -1861,13 +1871,14 @@
                         </div>
                     </div>
 
-                    <!-- Modal footer -->
-                    <!-- <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button>Close</button>
-                            </div> -->
+                  
                     <div class="modal-footer">
-                        <button type="submit">
+                        
+                         <button type="submit" class="CancelInitiatorModalButton">
+                            <div class="spinner-border spinner-border-sm CancelInitiatorModalSpinner"
+                                style="display: none" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
                             Submit
                         </button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1932,6 +1943,51 @@
             });
         });
 
+
+         document.addEventListener('DOMContentLoaded', function() {
+            var signatureForm = document.getElementById('RejectModalFormData');
+
+            signatureForm.addEventListener('submit', function(e) {
+
+                var submitButton = signatureForm.querySelector('.RejectInitiatorModalButton');
+                var spinner = signatureForm.querySelector('.RejectInitiatorModalSpinner');
+
+                submitButton.disabled = true;
+
+                spinner.style.display = 'inline-block';
+            });
+        });
+
+         document.addEventListener('DOMContentLoaded', function() {
+            var signatureForm = document.getElementById('cencelInitiatorForm');
+
+            signatureForm.addEventListener('submit', function(e) {
+
+                var submitButton = signatureForm.querySelector('.CancelInitiatorModalButton');
+                var spinner = signatureForm.querySelector('.CancelInitiatorModalSpinner');
+
+                submitButton.disabled = true;
+
+                spinner.style.display = 'inline-block';
+            });
+        });
+
+         document.addEventListener('DOMContentLoaded', function() {
+            var signatureForm = document.getElementById('RejectDataModalFormData');
+
+            signatureForm.addEventListener('submit', function(e) {
+
+                var submitButton = signatureForm.querySelector('.RejectDataInitiatorModalButton');
+                var spinner = signatureForm.querySelector('.RejectDataInitiatorModalSpinner');
+
+                submitButton.disabled = true;
+
+                spinner.style.display = 'inline-block';
+            });
+        });
+
+
+        
 
         // =========================
         wow = new WOW({
