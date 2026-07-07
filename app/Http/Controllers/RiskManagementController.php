@@ -4321,25 +4321,30 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->Brief_description != $data->Brief_description) {
+        $oldBriefDescription = trim(strip_tags(html_entity_decode($lastDocument->Brief_description ?? '')));
+        $newBriefDescription = trim(strip_tags(html_entity_decode($data->Brief_description ?? '')));
+
+        if ($oldBriefDescription !== $newBriefDescription) {
+
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
             $history->activity_type = 'Brief Description/Procedure';
-            $history->previous = $lastDocument->Brief_description;
-            $history->current = $data->Brief_description;
-            $history->comment = $request->comment;
+            $history->previous = $oldBriefDescription;
+            $history->current = $newBriefDescription;
+            $history->comment = $request->comment ?? 'NA';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->Brief_description) || $lastDocument->Brief_description === '') {
+
+            if (empty($oldBriefDescription)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-            //  dd($history);
+
             $history->save();
         }
 
@@ -4432,28 +4437,36 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
+        $oldinvestigation_summary = trim(strip_tags(html_entity_decode($lastDocument->investigation_summary ?? '')));
+         $newinvestigation_summary = trim(strip_tags(html_entity_decode($data->investigation_summary ?? '')));
 
-        if ($lastDocument->investigation_summary != $data->investigation_summary) {
-            $history = new RiskAuditTrail();
-            $history->risk_id = $data->id;
-            $history->activity_type = 'Risk Assessment Summary';
-            $history->previous = $lastDocument->investigation_summary;
-            $history->current = $data->investigation_summary;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->investigation_summary) || $lastDocument->investigation_summary === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+            if ($oldinvestigation_summary !== $newinvestigation_summary) {
+
+                $history = new RiskAuditTrail();
+                $history->risk_id = $data->id;
+                $history->activity_type = 'Risk Assessment Summary';
+                $history->previous = $oldinvestigation_summary;
+                $history->current = $newinvestigation_summary;
+                $history->comment = $request->comment ?? 'NA';
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastDocument->status;
+
+                if (empty($oldinvestigation_summary)) {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+
+                $history->save();
             }
-            //  dd($history);
-            $history->save();
-        }
+
+            
+
+       
 
 
 
