@@ -1,10 +1,6 @@
 @extends('frontend.layout.main')
 @section('container')
 
-<link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
-        type='text/css' />
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
-    </script>
     <style>
         textarea.note-codable {
             display: none !important;
@@ -209,11 +205,6 @@
     </script>
 
     <style>
-        /* textarea.note-codable {
-            display: none !important;
-        } */
-
-       
 
         .sub-main-head {
             display: flex;
@@ -224,17 +215,7 @@
             margin-bottom: 7px;
         }
 
-        /* .sub-head {
-                    margin-left: 280px;
-                    margin-right: 280px;
-                    color: #4274da;
-                    border-bottom: 2px solid #4274da;
-                    padding-bottom: 5px;
-                    margin-bottom: 20px;
-                    font-weight: bold;
-                    font-size: 1.2rem;
 
-                } */
         .launch_extension {
             background: #4274da;
             color: white;
@@ -282,12 +263,6 @@
             padding: 4px;
             margin-bottom: 3px;
         }
-
-        /* .saveButton:disabled{
-                        background: black!important;
-                        border:  black!important;
-
-                    } */
 
         .main-danger-block {
             display: flex;
@@ -370,16 +345,7 @@
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         @endphp
-                        {{-- <button class="button_theme1" onclick="window.print();return false;"
-                            class="new-doc-btn">Print</button> --}}
-                        <button class="button_theme1"> <a class="text-white"
-                                href="{{ url('rootAuditTrial', $data->id) }}">
-                                Audit Trail </a> </button>
-                                {{-- @php
-
-dd($data->initiator_id , Auth::user()->id);
-
-@endphp --}}
+           
                         @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3) || Helpers::check_roles($data->division_id, 'root_cause_analysisView', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledge
@@ -733,8 +699,6 @@ dd($data->initiator_id , Auth::user()->id);
                                     </div>
 
 
-                                   
-
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group">Initiated Through <span class="text-danger">*</span></label>
@@ -769,28 +733,7 @@ dd($data->initiator_id , Auth::user()->id);
                                         </div>
                                     </div>
 
-                                    {{-- <script>
-                                        function toggleOtherField() {
-                                            const selectBox = document.getElementById("initiated_through");
-                                            const otherField = document.getElementById("initiated_through_req");
-
-                                            if (!selectBox || !otherField) return;
-
-                                            // Always read the value, even if the select is disabled
-                                            const selectedValue = selectBox.options[selectBox.selectedIndex].value;
-
-                                            if (selectedValue === "others") {
-                                                otherField.style.display = "block";
-                                            } else {
-                                                otherField.style.display = "none";
-                                            }
-                                        }
-
-                                        document.addEventListener("DOMContentLoaded", function () {
-                                            toggleOtherField();
-                                        });
-                                    </script> --}}
-
+                                    
                                     <script>
                                         function toggleOtherField() {
                                             const selectBox = document.getElementById("initiated_through");
@@ -814,7 +757,6 @@ dd($data->initiator_id , Auth::user()->id);
 
                                     </script>
 
-                                
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
@@ -1305,91 +1247,134 @@ dd($data->initiator_id , Auth::user()->id);
                                      $stagethirdrole =  (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3) ||  Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18))
                                     @endphp
                                 
-                                <div class="col-lg-12">
+                        
+                                    <div class="col-lg-12">
 
-                                        <div class="group-input">
-                                            <label for="objective" style="">Objective<span class="text-danger">*</span></label>
-                                            <textarea name="objective" id="summernote" class="summernote" {{$data->stage == 4 ? '' : 'readonly'}}>{{  strip_tags($data->objective) }}</textarea>
-                                        </div>
+                                        {!! quillEditor(
+                                            'objective',
+                                            strip_tags($data->objective),
+
+                                            '
+                                            <label for="objective">
+                                                Objective <span class="text-danger">*</span>
+                                            </label>
+                                            ',
+
+                                            $data->stage != 4
+                                        ) !!}
 
                                         @error('objective')
-                                    <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                            </div>
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="scope">Scope @if ($data->stage == 4)<span class="text-danger">*</span>@endif</label>
-                                        <textarea name="scope" id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->scope) }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="problem_statement">Problem Statement @if ($data->stage == 4) <span class="text-danger">*</span>@endif</label>
-                                        <textarea name="problem_statement_rca" id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->problem_statement_rca) }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="requirement">Background @if ($data->stage == 4) <span class="text-danger">*</span> @endif</label>
-                                        <textarea name="requirement" id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->requirement) }}</textarea>
-                                    </div>
-                                    @error('requirement')
-                                        <span>{{$message}} </span>
-                                    @enderror
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="immediate_action">Immediate Action @if ($data->stage == 4) <span class="text-danger">*</span> @endif</label>
-                                        <textarea name="immediate_action" id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->immediate_action) }}</textarea>
-                                    </div>
-                                </div>
+                                    <div class="col-lg-12">
 
-                                {{-- <div class="col-lg-12">
+                                        {!! quillEditor(
+                                            'scope',
+                                            strip_tags($data->scope),
+
+                                            '
+                                            <label for="scope">
+                                                Scope '.($data->stage == 4 ? '<span class="text-danger">*</span>' : '').'
+                                            </label>
+                                            ',
+
+                                            $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8
+                                        ) !!}
+
+                                        @error('scope')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-lg-12">
+
+                                        {!! quillEditor(
+                                            'problem_statement_rca',
+                                            strip_tags($data->problem_statement_rca),
+
+                                            '
+                                            <label for="problem_statement">
+                                                Problem Statement '.($data->stage == 4 ? '<span class="text-danger">*</span>' : '').'
+                                            </label>
+                                            ',
+
+                                            $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8
+                                        ) !!}
+
+                                        @error('problem_statement_rca')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-lg-12">
+
+                                        {!! quillEditor(
+                                            'requirement',
+                                            strip_tags($data->requirement),
+
+                                            '
+                                            <label for="requirement">
+                                                Background '.($data->stage == 4 ? '<span class="text-danger">*</span>' : '').'
+                                            </label>
+                                            ',
+
+                                            $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8
+                                        ) !!}
+
+                                        @error('requirement')
+                                            <span>{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-lg-12">
+
+                                        {!! quillEditor(
+                                            'immediate_action',
+                                            strip_tags($data->immediate_action),
+
+                                            '
+                                            <label for="immediate_action">
+                                                Immediate Action '.($data->stage == 4 ? '<span class="text-danger">*</span>' : '').'
+                                            </label>
+                                            ',
+
+                                            $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8
+                                        ) !!}
+
+                                        @error('immediate_action')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+
+                               
+                                @php
+                                    $selectedTeam = old('investigation_team', is_array($data->investigation_team) ? $data->investigation_team : explode(',', $data->investigation_team));
+                                @endphp
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="investigation_team">Investigation Team @if ($data->stage == 4) <span class="text-danger">*</span>@endif </label>
-                                        <select multiple id="investigation_team"placeholder="Select members of the Investigation Team" name="investigation_team[]"  {{ in_array($data->stage,[0,1,2,3,5,6,7,8]) ? "disabled" : "" }} {{$data->stage ==4 ? 'required' : ''}}>
-                                          
-                                        @foreach ($users as $key => $value)
-                                            <option value="{{ $value->id }}"
-                                                {{old('investigation_team', $data->investigation_team) == $value->id ? 'selected' : '' }}>
-                                                {{ $value->name }}
-                                            </option>
-                                        @endforeach
+                                        <select multiple id="investigation_team" name="investigation_team[]" 
+                                            {{ in_array($data->stage,[0,1,2,3,5,6,7,8]) ? "disabled" : "" }} 
+                                            {{ $data->stage == 4 ? 'required' : '' }}>
+                                            
+                                            @foreach ($users as $key => $value)
+                                                <option value="{{ $value->id }}"
+                                                    {{ in_array($value->id, $selectedTeam) ? 'selected' : '' }}>
+                                                    {{ $value->name }}
+                                                </option>
+                                            @endforeach
                                         </select>
-                                    
+
                                         @if(in_array($data->stage, [0,1,2,3,5,6,7,8]))
-                                            <input type="hidden" name="investigation_team" value="{{old('investigation_team', $data->investigation_team)}}">
-                                        @endif  
-
+                                            @foreach($selectedTeam as $id)
+                                                <input type="hidden" name="investigation_team[]" value="{{ $id }}">
+                                            @endforeach
+                                        @endif
                                     </div>
-                                </div> --}}
-
-                        @php
-                            $selectedTeam = old('investigation_team', is_array($data->investigation_team) ? $data->investigation_team : explode(',', $data->investigation_team));
-                        @endphp
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="investigation_team">Investigation Team @if ($data->stage == 4) <span class="text-danger">*</span>@endif </label>
-                                <select multiple id="investigation_team" name="investigation_team[]" 
-                                    {{ in_array($data->stage,[0,1,2,3,5,6,7,8]) ? "disabled" : "" }} 
-                                    {{ $data->stage == 4 ? 'required' : '' }}>
-                                    
-                                    @foreach ($users as $key => $value)
-                                        <option value="{{ $value->id }}"
-                                            {{ in_array($value->id, $selectedTeam) ? 'selected' : '' }}>
-                                            {{ $value->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-
-                                @if(in_array($data->stage, [0,1,2,3,5,6,7,8]))
-                                    @foreach($selectedTeam as $id)
-                                        <input type="hidden" name="investigation_team[]" value="{{ $id }}">
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
+                                </div>
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -1419,6 +1404,7 @@ dd($data->initiator_id , Auth::user()->id);
                                         @endif
                                     </div>
                                 </div>
+
                                 <div class="col-12 mb-4" id="fmea-section" style="display:none;">
                                     <div class="group-input">
                                         <label for="agenda">
@@ -2011,12 +1997,30 @@ dd($data->initiator_id , Auth::user()->id);
                                     </div>
                                 </div>
 
-                                <div class="col-md-12" id="root-cause-others"style="display:none;">
-                                    <div class="group-input">
-                                        <label for="root_cause_Others">Others @if ($data->stage == 4)@endif</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea class="summernote"  name="root_cause_Others" id="summernote" {{$data->stage == 4 ? 'required' : ''}}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ $data->root_cause_Others}} </textarea>
-                                    </div>
+                                <div class="col-md-12" id="root-cause-others" style="display:none;">
+
+                                    {!! quillEditor(
+                                        'root_cause_Others',
+                                        $data->root_cause_Others,
+
+                                        '
+                                        <label for="root_cause_Others">
+                                            Others '.($data->stage == 4 ? '<span class="text-danger">*</span>' : '').'
+                                        </label>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small>
+                                        </div>
+                                        ',
+
+                                        !($data->stage == 4 && $stagethirdrole)
+                                    ) !!}
+
+                                    @error('root_cause_Others')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+
                                 </div>
 
                                     <div class="col-12" id="otherAttachmentField" style="display: {{ $data->reason == 'others' ? 'block' : 'none' }};">                                   
@@ -2069,37 +2073,72 @@ dd($data->initiator_id , Auth::user()->id);
 
 
                                 <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="root_cause">Root Cause @if ($data->stage == 4) <span class="text-danger">*</span>@endif</label>
-                                        <textarea name="root_cause"  id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->root_cause) }}</textarea>
-                                    </div>
+                                    {!! quillEditor(
+                                        'root_cause',
+                                        strip_tags($data->root_cause),
+
+                                        '
+                                        <label for="root_cause">
+                                            Root Cause '.($data->stage == 4 ? '<span class="text-danger">*</span>' : '').'
+                                        </label>
+                                        ',
+
+                                        $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8
+                                    ) !!}
                                 </div>
+
                                 <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="impact_risk_assessment">Impact / Risk Assessment @if ($data->stage == 4) <span class="text-danger">*</span>@endif</label>
-                                        <textarea name="impact_risk_assessment" id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->impact_risk_assessment) }}</textarea>
-                                    </div>
+                                    {!! quillEditor(
+                                        'impact_risk_assessment',
+                                        strip_tags($data->impact_risk_assessment),
+
+                                        '
+                                        <label for="impact_risk_assessment">
+                                            Impact / Risk Assessment '.($data->stage == 4 ? '<span class="text-danger">*</span>' : '').'
+                                        </label>
+                                        ',
+
+                                        $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8
+                                    ) !!}
+
                                     @error('impact_risk_assessment')
-                                        <p class="text-danger">{{$message}}</p>
+                                        <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
+
                                 <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="capa">CAPA @if ($data->stage == 4) <span class="text-danger">*</span> @endif</label>
-                                        <textarea name="capa" id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->capa) }}</textarea>
-                                    </div>
+                                    {!! quillEditor(
+                                        'capa',
+                                        strip_tags($data->capa),
+
+                                        '
+                                        <label for="capa">
+                                            CAPA '.($data->stage == 4 ? '<span class="text-danger">*</span>' : '').'
+                                        </label>
+                                        ',
+
+                                        $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8
+                                    ) !!}
+
                                     @error('capa')
-                                    <p class="text-danger">{{$message}}</p>
+                                        <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
 
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="investigation_summary">Investigation Summary @if ($data->stage == 4 ? 'required' : '') <span class="text-danger">*</span> @endif</label>
-                                        <textarea name="investigation_summary_rca" id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->investigation_summary_rca) }}</textarea>
-                                    </div>
-                                </div>
+                                    {!! quillEditor(
+                                        'investigation_summary_rca',
+                                        strip_tags($data->investigation_summary_rca),
 
+                                        '
+                                        <label for="investigation_summary">
+                                            Investigation Summary '.($data->stage == 4 ? '<span class="text-danger">*</span>' : '').'
+                                        </label>
+                                        ',
+
+                                        $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8
+                                    ) !!}
+                                </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="comments">Investigation Attachment
@@ -2756,36 +2795,10 @@ dd($data->initiator_id , Auth::user()->id);
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-12">
-                                            <div class="sub-head">More Info Req</div>
-                                        </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_hfr_by">More Info Req.
-                                            By</label>
-                                        <div class="">@if ($data->More_Info_hrc_by ){{ $data->More_Info_hrc_by }}@else Not Applicable
-                                            @endif</div>
-                                    </div>
+                               
+                                <div class="col-12">
+                                    <div class="sub-head">QA/CQA Review</div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_hfr_on">More Info Req.
-                                            On</label>
-                                        <div class="">@if ($data->More_Info_hrc_on ){{ $data->More_Info_hrc_on }}@else Not Applicable
-                                            @endif</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_hfr_comment">Comments</label>
-                                        <div class="">@if ($data->More_Info_hrc_comment ){{ $data->More_Info_hrc_comment }}@else Not Applicable
-                                            @endif</div>
-                                    </div>
-                                </div> --}}
-
-                                        <div class="col-12">
-                                            <div class="sub-head">QA/CQA Review</div>
-                                        </div>
                                 <div class="col-lg-4">
                                     <div class="group-input" style="margin-bottom: 1rem">
                                         <label for="QQQA_Review_Complete_By">QA/CQA Review Complete By</label>
@@ -2816,35 +2829,10 @@ dd($data->initiator_id , Auth::user()->id);
                                             @endif</div>
                                     </div>
                                 </div>
-                                 {{-- <div class="col-12">
-                                            <div class="sub-head">More Info Req</div>
-                                        </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_hfr_by">More Info Req.
-                                            By</label>
-                                        <div class="">@if ($data->More_Info_qac_by ){{ $data->More_Info_qac_by }}@else Not Applicable
-                                            @endif</div>
-                                    </div>
+                                
+                                <div class="col-12">
+                                    <div class="sub-head">Submited</div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_hfr_on">More Info Req.
-                                            On</label>
-                                        <div class="">@if ($data->More_Info_qac_on ){{ $data->More_Info_qac_on }}@else Not Applicable
-                                            @endif</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_hfr_comment">Comments</label>
-                                        <div class="">@if ($data->More_Info_qac_comment ){{ $data->More_Info_qac_comment }}@else Not Applicable
-                                            @endif</div>
-                                    </div>
-                                </div> --}}
-                                        <div class="col-12">
-                                            <div class="sub-head">Submited</div>
-                                        </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input" style="margin-bottom: 1rem">
@@ -2874,32 +2862,7 @@ dd($data->initiator_id , Auth::user()->id);
                                             @endif</div>
                                     </div>
                                 </div>
-                                 {{-- <div class="col-12">
-                                            <div class="sub-head">More Info Req</div>
-                                        </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_hfr_by">More Info Req.
-                                            By</label>
-                                        <div class="">@if ($data->More_Info_sub_by ){{ $data->More_Info_sub_by }}@else Not Applicable
-                                            @endif</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_hfr_on">More Info Req.
-                                            On</label>
-                                        <div class="">@if ($data->More_Info_sub_on ){{ $data->More_Info_sub_on }}@else Not Applicable
-                                            @endif</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_hfr_comment">Comments</label>
-                                        <div class="">@if ($data->More_Info_sub_comment ){{ $data->More_Info_sub_comment }}@else Not Applicable
-                                            @endif</div>
-                                    </div>
-                                </div> --}}
+                                 
                                 <div class="col-12">
                                             <div class="sub-head">HOD Final Review</div>
                                         </div>
@@ -2930,35 +2893,10 @@ dd($data->initiator_id , Auth::user()->id);
                                             @endif</div>
                                     </div>
                                 </div>
-                                {{-- <div class="col-12">
-                                            <div class="sub-head">More Info Req</div>
-                                        </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_hfr_by">More Info Req.
-                                            By</label>
-                                        <div class="">@if ($data->More_Info_hfr_by ){{ $data->More_Info_hfr_by }}@else Not Applicable
-                                            @endif</div>
-                                    </div>
+                               
+                                <div class="col-12">
+                                    <div class="sub-head">Final QA/CQA Review</div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_hfr_on">More Info Req.
-                                            On</label>
-                                        <div class="">@if ($data->More_Info_hfr_on ){{ $data->More_Info_hfr_on }}@else Not Applicable
-                                            @endif</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_hfr_comment">Comments</label>
-                                        <div class="">@if ($data->More_Info_hfr_comment ){{ $data->More_Info_hfr_comment }}@else Not Applicable
-                                            @endif</div>
-                                    </div>
-                                </div> --}}
-                                        <div class="col-12">
-                                            <div class="sub-head">Final QA/CQA Review</div>
-                                        </div>
                                 <div class="col-lg-4" style="margin-bottom: 1rem">
                                     <div class="group-input">
                                         <label for="Final_QA_Review_Complete_By">Final QA/CQA Review Complete
@@ -2988,29 +2926,7 @@ dd($data->initiator_id , Auth::user()->id);
                                             @endif</div>
                                     </div>
                                 </div>
-                                 {{-- <div class="col-12">
-                                            <div class="sub-head">More Info Req. </div>
-                                        </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="qA_review_complete_by">More Info Req.
-                                            By</label>
-                                        <div class="">@if ($data->qA_review_complete_by ){{ $data->qA_review_complete_by }}@else Not Applicable @endif</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="qA_review_complete_on">More Info Req.
-                                            On</label>
-                                        <div class="">@if ($data->qA_review_complete_on ){{ $data->qA_review_complete_on }}@else Not Applicable @endif</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="qA_review_complete_comment">Comments</label>
-                                        <div class="">@if ($data->qA_review_complete_comment ){{ $data->qA_review_complete_comment }}@else Not Applicable @endif</div>
-                                    </div>
-                                </div> --}}
+                                
                                  <div class="col-12">
                                             <div class="sub-head">QAH/CQAH Closure. </div>
                                         </div>
@@ -3076,11 +2992,9 @@ dd($data->initiator_id , Auth::user()->id);
                                 </div>
                             </div>
                             <div class="button-block">
-                                {{-- <button type="submit" class="saveButton"
-                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button> --}}
+                                
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                {{-- <button type="submit"
-                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Submit</button> --}}
+                               
                                 <button type="button"> <a class="text-white"
                                         href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a> </button>
@@ -3125,10 +3039,7 @@ dd($data->initiator_id , Auth::user()->id);
                     </div>
 
                     <!-- Modal footer -->
-                    {{-- <div class="modal-footer">
-                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                            <button>Close</button>
-                        </div> --}}
+              
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3175,7 +3086,6 @@ dd($data->initiator_id , Auth::user()->id);
                     <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
-                        {{-- <button>Close</button> --}}
                     </div>
                 </form>
             </div>
@@ -3228,20 +3138,9 @@ dd($data->initiator_id , Auth::user()->id);
                         
                     @endif
                         
-                    
-                        {{-- <div class="group-input">
-                        <label for="root-item">
-                        <input type="radio" name="revision" id="root-item" value="effectiveness-check">
-                            Effectiveness check
-                        </label>
-                    </div> --}}
                     </div>
 
                     <!-- Modal footer -->
-                    <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                    <button type="button" data-bs-dismiss="modal">Close</button>
-                                                                                                                                                                                                                                                                                                                                    <button type="submit">Continue</button>
-                                                                                                                                                                                                                                                                                                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -3350,87 +3249,6 @@ dd($data->initiator_id , Auth::user()->id);
             }
         }
 
-        // function addRootCauseAnalysisRiskAssessment1(tableId) {
-        //     var table = document.getElementById(tableId);
-        //     var currentRowCount = table.rows.length;
-        //     var newRow = table.insertRow(currentRowCount);
-        //     newRow.setAttribute("id", "row" + currentRowCount);
-        //     var cell1 = newRow.insertCell(0);
-        //     cell1.innerHTML = currentRowCount;
-
-        //     var cell2 = newRow.insertCell(1);
-        //     cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
-
-        //     var cell3 = newRow.insertCell(2);
-        //     cell3.innerHTML = "<input name='risk_element[]' type='text'>";
-
-        //     var cell4 = newRow.insertCell(3);
-        //     cell4.innerHTML = "<input name='problem_cause[]' type='text'>";
-
-        //     // var cell5 = newRow.insertCell(4);
-        //     // cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
-
-        //     var cell5 = newRow.insertCell(4);
-        //     cell5.innerHTML =
-        //         "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
-        //         //  "<input name='initial_severity[]' type='text'>";
-
-        //     var cell6 = newRow.insertCell(5);
-        //     cell6.innerHTML =
-        //         "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
-
-        //     var cell7 = newRow.insertCell(6);
-        //     cell7.innerHTML =
-        //         "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
-
-        //     var cell8 = newRow.insertCell(7);
-        //     cell8.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' readonly>";
-
-        //     // var cell10 = newRow.insertCell(9);
-        //     // cell10.innerHTML =
-        //     //     "<select name='risk_acceptance[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
-
-        //     var cell9 = newRow.insertCell(8);
-        //     cell9.innerHTML = "<input name='risk_control_measure[]' type='text'>";
-
-        //     var cell10 = newRow.insertCell(9);
-        //     cell10.innerHTML =
-        //         "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
-
-        //     var cell11 = newRow.insertCell(10);
-        //     cell11.innerHTML =
-        //         "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
-
-        //     var cell12 = newRow.insertCell(11);
-        //     cell12.innerHTML =
-        //         "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
-
-        //     var cell13 = newRow.insertCell(12);
-        //     cell13.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' readonly>";
-        //     var cell14 = newRow.insertCell(13);
-        //     cell14.innerHTML =
-        //         "<select name='risk_acceptance[]' class='risk-acceptance' readonly>" +
-        //         "<option value=''>-- Select --</option>" +
-        //         "<option value='Low'>Low</option>" +
-        //         "<option value='Medium'>Medium</option>" +
-        //         "<option value='High'>High</option>" +
-        //         "</select>";
-
-        //         var cell15 = newRow.insertCell(14);
-        //         cell15.innerHTML =
-        //             "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
-
-        //         var cell16 = newRow.insertCell(15);
-        //         cell16.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
-
-        //         var cell17 = newRow.insertCell(16);
-        //         cell17.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
-
-        //     for (var i = 1; i < currentRowCount; i++) {
-        //         var row = table.rows[i];
-        //         row.cells[0].innerHTML = i;
-        //     }
-        // }
         function addRootCauseAnalysisRiskAssessment1(tableId) {
         var table = document.getElementById(tableId);
         var currentRowCount = table.children[1].rows.length;
@@ -3448,8 +3266,6 @@ dd($data->initiator_id , Auth::user()->id);
         var cell4 = newRow.insertCell(3);
         cell4.innerHTML = "<textarea name='problem_cause[]' type='text'>";
 
-        // var cell5 = newRow.insertCell(4);
-        // cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
 
         var cell5 = newRow.insertCell(4);
         cell5.innerHTML =
@@ -3861,111 +3677,5 @@ dd($data->initiator_id , Auth::user()->id);
         $('#root-cause-methodology').trigger('change');
     });
 </script>
-
-<script>
-   
-</script>
-
-<script>
-    $('#summernote').summernote({
-      toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'underline', 'clear', 'italic']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture', 'video']],
-          ['view', ['fullscreen', 'codeview', 'help']]
-      ]
-  });
-
-//   $('.summernote').summernote({
-//     toolbar: [
-//         ['style', ['style']],
-//         ['font', ['bold', 'underline', 'clear', 'italic']],
-//         ['color', ['color']],
-//         ['para', ['ul', 'ol', 'paragraph']],
-//         ['table', ['table']],
-//         ['insert', ['link', 'picture', 'video']],
-//         ['view', ['fullscreen', 'codeview', 'help']]
-//     ],
-//         callbacks: {
-//             onPaste: function (e) {
-//                 let bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('text/html');
-
-//                 bufferText = bufferText.replace(/<table/g, '<table border="1"');
-
-//                 setTimeout(function () {
-//                     $('.summernote').summernote('pasteHTML', bufferText);
-//                 }, 10);
-                
-//                 e.preventDefault();
-//             }
-//         }
-//     });
-     var stage = @json($data->stage); // PHP se JS me stage bhejna
-
-    if (stage != 4) {
-        $('.summernote').summernote('disable');  // non-editable
-    } else {
-        $('.summernote').summernote('enable');   // editable
-    }
-
-  </script>
-
-  {{-- by kp --}}
-  {{-- <script>
-$(document).ready(function () {
-    $('.summernote').summernote({
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'underline', 'clear', 'italic']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture', 'video']],
-            ['view', ['fullscreen', 'codeview', 'help']]
-        ],
-        callbacks: {
-            onPaste: function (e) {
-                let bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('text/html');
-                bufferText = bufferText.replace(/<table/g, '<table border="1"');
-                setTimeout(function () {
-                    $('.summernote').summernote('pasteHTML', bufferText);
-                }, 10);
-                e.preventDefault();
-            }
-        }
-    });
-
-    // Stage ke hisaab se editor disable/enable
-    var stage = @json($data->stage); // PHP se JS me stage bhejna
-
-    if (stage != 4) {
-        $('.summernote').summernote('disable');  // non-editable
-    } else {
-        $('.summernote').summernote('enable');   // editable
-    }
-});
-</script> --}}
-
-  
-  {{-- <script>
-         var editor = new FroalaEditor('.summernote', {
-            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
-            imageUploadParam: 'image_param',
-            imageUploadMethod: 'POST',
-            imageMaxSize: 20 * 1024 * 1024,
-            imageUploadURL: "{{ secure_url('api/upload-files') }}",
-            fileUploadParam: 'image_param',
-            fileUploadURL: "{{ secure_url('api/upload-files')}}",
-            videoUploadParam: 'image_param',
-            videoUploadURL: "{{ secure_url('api/upload-files') }}",
-            videoMaxSize: 500 * 1024 * 1024,
-         });
-         
-        $(".summernote-disabled").FroalaEditor("edit.off");
-    </script> --}}
-  
 @endsection
 

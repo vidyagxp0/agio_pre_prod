@@ -126,14 +126,6 @@
                                 </div>
 
 
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Department Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" readonly>
-                                    </div>
-                                </div> --}}
-
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b> Initiator Department</b></label>
