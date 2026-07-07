@@ -52,10 +52,7 @@ class RiskManagementController extends Controller
     public function risk()
     {
         $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
-       // $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        // $lastAi = RiskManagement::orderBy('record', 'desc')->first();
-        // $record_number = $lastAi ? $lastAi->record + 1 : 1;
-        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+      
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
@@ -67,8 +64,7 @@ class RiskManagementController extends Controller
 
     public function store(Request $request)
     {
-        // return dd($request);
-        // return $request;
+
         $form_progress = null;
 
         if (!$request->short_description) {
@@ -156,46 +152,6 @@ class RiskManagementController extends Controller
         $data->document_used_risk = $request->input('document_used_risk');
         $data->risk_level3 = $request->input('risk_level3');
 
-
-        // $data->risk_level = serialize($request->input('risk_level'));
-        // $data->risk_level_2 = serialize($request->input('risk_level_2'));
-        // $data->purpose = serialize($request->input('purpose'));
-        // $data->scope = serialize($request->input('scope'));
-        // $data->reason_for_revision = serialize($request->input('reason_for_revision'));
-        // $data->Brief_description = serialize($request->input('Brief_description'));
-        // $data->document_used_risk = serialize($request->input('document_used_risk'));
-        // $data->risk_level3 = serialize($request->input('risk_level3'));
-        // $data->root_cause_methodology = implode(',', $request->root_cause_methodology);
-        // $data->measurement = json_encode($request->measurement);
-        // $data->materials = json_encode($request->materials);
-        // $data->methods = json_encode($request->methods);
-        // $data->environment = json_encode($request->environment);
-        //$data->manpower = json_encode($request->manpower);
-        //$data->machine = json_encode($request->machine);
-        //$data->problem_statement1 = ($request->problem_statement1);
-        // $data->why_problem_statement = $request->why_problem_statement;
-        // $data->why_1 = json_encode($request->why_1);
-        // $data->why_2 = json_encode($request->why_2);
-        // $data->why_3 = json_encode($request->why_3);
-        // $data->why_4 = json_encode($request->why_4);
-        // $data->why_5 = json_encode($request->why_5);
-        // $data->root_cause = $request->root_cause;
-        // $data->what_will_be = $request->what_will_be;
-        // $data->what_will_not_be = $request->what_will_not_be;
-        // $data->what_rationable = $request->what_rationable;
-        // $data->where_will_be = $request->where_will_be;
-        // $data->where_will_not_be = $request->where_will_not_be;
-        // $data->where_rationable = $request->where_rationable;
-        // $data->when_will_be = $request->when_will_be;
-        // $data->when_will_not_be = $request->when_will_not_be;
-        // $data->when_rationable = $request->when_rationable;
-        // $data->coverage_will_be = $request->coverage_will_be;
-        // $data->coverage_will_not_be = $request->coverage_will_not_be;
-        // $data->coverage_rationable = $request->coverage_rationable;
-        // $data->who_will_be = $request->who_will_be;
-        // $data->who_will_not_be = $request->who_will_not_be;
-        // $data->who_rationable = $request->who_rationable;
-        // $data->training_require = $request->training_require;
         $data->justification = $request->justification;
         $data->cost_of_risk = $request->cost_of_risk;
         $data->environmental_impact = $request->environmental_impact;
@@ -243,7 +199,6 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('risk_attachment')) {
                 foreach ($request->file('risk_attachment') as $file) {
-                    //$name = $request->name . 'risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                      $name = $request->name . 'risk_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     
                     $file->move('upload/', $name);
@@ -258,7 +213,6 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('risk_ana_attach')) {
                 foreach ($request->file('risk_ana_attach') as $file) {
-                   // $name = $request->name . 'risk_ana_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                      $name = $request->name . 'risk_ana_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -267,23 +221,11 @@ class RiskManagementController extends Controller
             $data->risk_ana_attach = json_encode($files);
         }
 
-        // if (!empty($request->risk_ana_attach)) {
-        //     $files = [];
-        //     if ($request->hasfile('risk_ana_attach')) {
-        //         foreach ($request->file('risk_ana_attach') as $file) {
-        //             $name = $request->name . 'risk_ana_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $data->risk_ana_attach = json_encode($files);
-        // }
 
         if (!empty($request->hod_design_attach)) {
             $files = [];
             if ($request->hasfile('hod_design_attach')) {
                 foreach ($request->file('hod_design_attach') as $file) {
-                   // $name = $request->name . 'hod_design_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                      $name = $request->name . 'hod_design_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -292,13 +234,10 @@ class RiskManagementController extends Controller
             $data->hod_design_attach = json_encode($files);
         }
 
-        // dd($data->risk_attachment);
-
         if (!empty($request->reference)) {
             $files = [];
             if ($request->hasfile('reference')) {
                 foreach ($request->file('reference') as $file) {
-                   // $name = $request->name . 'reference' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                      $name = $request->name . 'reference' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -496,7 +435,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('production_attachment')) {
                 foreach ($request->file('production_attachment') as $file) {
-                    $name = $request->name . 'production_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'production_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -509,7 +448,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Warehouse_attachment')) {
                 foreach ($request->file('Warehouse_attachment') as $file) {
-                    $name = $request->name . 'Warehouse_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Warehouse_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -521,7 +460,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Quality_Control_attachment')) {
                 foreach ($request->file('Quality_Control_attachment') as $file) {
-                    $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Quality_Control_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -533,7 +472,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Quality_Assurance_attachment')) {
                 foreach ($request->file('Quality_Assurance_attachment') as $file) {
-                    $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Quality_Assurance_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -545,7 +484,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Engineering_attachment')) {
                 foreach ($request->file('Engineering_attachment') as $file) {
-                    $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Engineering_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -557,7 +496,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Analytical_Development_attachment')) {
                 foreach ($request->file('Analytical_Development_attachment') as $file) {
-                    $name = $request->name . 'Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Analytical_Development_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -569,7 +508,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Kilo_Lab_attachment')) {
                 foreach ($request->file('Kilo_Lab_attachment') as $file) {
-                    $name = $request->name . 'Kilo_Lab_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Kilo_Lab_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -581,7 +520,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Technology_transfer_attachment')) {
                 foreach ($request->file('Technology_transfer_attachment') as $file) {
-                    $name = $request->name . 'Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Technology_transfer_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -593,7 +532,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Environment_Health_Safety_attachment')) {
                 foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
-                    $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Environment_Health_Safety_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -605,7 +544,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Human_Resource_attachment')) {
                 foreach ($request->file('Human_Resource_attachment') as $file) {
-                    $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Human_Resource_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -617,7 +556,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Information_Technology_attachment')) {
                 foreach ($request->file('Information_Technology_attachment') as $file) {
-                    $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Information_Technology_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -629,7 +568,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Project_management_attachment')) {
                 foreach ($request->file('Project_management_attachment') as $file) {
-                    $name = $request->name . 'Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Project_management_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -642,7 +581,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('CorporateQualityAssurance_attachment')) {
                 foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
-                    $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'CorporateQualityAssurance_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -654,7 +593,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Other1_attachment')) {
                 foreach ($request->file('Other1_attachment') as $file) {
-                    $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Other1_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -666,7 +605,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Other2_attachment')) {
                 foreach ($request->file('Other2_attachment') as $file) {
-                    $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Other2_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -678,7 +617,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Other3_attachment')) {
                 foreach ($request->file('Other3_attachment') as $file) {
-                    $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Other3_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -691,7 +630,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Other4_attachment')) {
                 foreach ($request->file('Other4_attachment') as $file) {
-                    $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Other4_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -704,7 +643,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('Other5_attachment')) {
                 foreach ($request->file('Other5_attachment') as $file) {
-                    $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Other5_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -718,7 +657,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('qa_cqa_attachments')) {
                 foreach ($request->file('qa_cqa_attachments') as $file) {
-                    $name = $request->name . 'qa_cqa_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_cqa_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -730,7 +669,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('qa_cqa_head_attach')) {
                 foreach ($request->file('qa_cqa_head_attach') as $file) {
-                    $name = $request->name . 'qa_cqa_head_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_cqa_head_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -807,13 +746,10 @@ class RiskManagementController extends Controller
 
         $data1->save();
 
-//----------------------------------------------------------------------------------------------------
+      //----------------------------------------------------------------------------------------------------
 
 
-
-
-
-//---------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------
         // ---------------------------------------
         $data2 = new RiskAssesmentGrid();
         $data2->risk_id = $data->id;
@@ -980,106 +916,6 @@ class RiskManagementController extends Controller
         $data6->save();
         // ------------------------------------------------
 
-
-
-        // $lastDocument = RiskAuditTrail::where('risk_id', $data->id)->orderBy('created_at', 'desc')->first();
-
-
-        // $failure_mode_grid = [
-        //     'risk_factor' => 'Risk Factor',
-        //     'risk_element' => 'Risk element',
-        //     'problem_cause' => 'Probable cause of risk element',
-        //     'existing_risk_control' => 'Existing Risk Controls',
-        //     'initial_severity' => 'Initial Severity',
-        //     'initial_probability' => 'Initial Probability',
-        //     'initial_detectability' => 'Initial Detectability',
-        //     'initial_rpn' => 'Initial RPN',
-        //     'risk_acceptance' => 'Risk Acceptance',
-        //     'risk_control_measure' => 'Proposed Additional Risk control measure',
-        //     'residual_severity' => 'Residual Severity',
-        //     'residual_probability' => 'Residual Probability',
-        //     'residual_detectability' => 'Residual Detectability',
-        //     'residual_rpn' => 'Residual RPN',
-        //     'risk_acceptance2' => 'Risk Acceptance',
-        //     'mitigation_proposal' => 'Mitigation proposal',
-        // ];
-
-        // foreach ($failure_mode_grid as $key => $value) {
-        //     if (!empty($request->$key)) {
-        //         $currentValue = $request->$key;
-
-        //         // If the current value is an array, convert it to a comma-separated string
-        //         if (is_array($currentValue)) {
-        //             $currentValue = implode(', ', $currentValue);
-        //         }
-
-        //         // Get previous value from the last document
-        //         $previousValue = !empty($lastDocument->$key) ? $lastDocument->$key : '';
-
-        //         // Compare the values, if same and no comment, don't save
-        //         if ($previousValue != $currentValue || !empty($request->comment)) {
-        //             $history = new RiskAuditTrail();
-        //             $history->risk_id = $data->id;
-        //             $history->activity_type = $value;
-        //             $history->previous = $previousValue; // Store the previous value
-        //             $history->current = $currentValue;
-        //             $history->comment = "Not Applicable"; // Add comment if required
-        //             $history->user_id = Auth::user()->id;
-        //             $history->user_name = Auth::user()->name;
-        //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //             $history->origin_state = $data->status;
-        //             $history->change_to = "Opened";
-        //             $history->change_from = "Initiation";
-        //             $history->action_name = 'Create';
-
-        //             $history->save();
-        //         }
-        //     }
-        // }
-
-
-        // $Fishbone_or_ishikawa_diagram = [
-        //     'measurement' => 'Measurement',
-        //     'materials' => 'Materials ',
-        //     'methods' => 'Methods ',
-        //     'environment' => 'Environment ',
-        //     'manpower' => 'Manpower ',
-        //     'machine' => 'Machine ',
-        //     'problem_statement' => 'Problem Statement ',
-        // ];
-
-        // foreach ($Fishbone_or_ishikawa_diagram as $key => $value) {
-        //     if (!empty($request->$key)) {
-        //         $currentValue = $request->$key;
-
-        //         // If the current value is an array, convert it to a comma-separated string
-        //         if (is_array($currentValue)) {
-        //             $currentValue = implode(', ', $currentValue);
-        //         }
-
-        //         // Get previous value from the last document
-        //         $previousValue = !empty($lastDocument->$key) ? $lastDocument->$key : '';
-
-        //         // Compare the values, if same and no comment, don't save
-        //         if ($previousValue != $currentValue || !empty($request->comment)) {
-        //             $history = new RiskAuditTrail();
-        //             $history->risk_id = $data->id;
-        //             $history->activity_type = $value;
-        //             $history->previous = $previousValue; // Store the previous value
-        //             $history->current = $currentValue;
-        //             $history->comment = "Not Applicable"; // Add comment if required
-        //             $history->user_id = Auth::user()->id;
-        //             $history->user_name = Auth::user()->name;
-        //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //             $history->origin_state = $data->status;
-        //             $history->change_to = "Opened";
-        //      $history->change_from = "Initiation";
-        //             $history->action_name = 'Create';
-
-        //             $history->save();
-        //         }
-        //     }
-        // }
 
         if (!empty($data->record)) {
             $history = new RiskAuditTrail();
@@ -1289,23 +1125,6 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        // if (!empty($data->due_date)) {
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $data->id;
-        //     $history->activity_type = 'Due Date';
-        //     $history->previous = "Null";
-        //     $history->current = Helpers::getdateFormat($data->due_date);
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $data->status;
-        //     $history->change_to =   "Opened";
-        //     $history->change_from = "Initiation";
-        //     $history->action_name = 'Create';
-        //     $history->save();
-        // }
-
 
         if (!empty($data->purpose)) {
             $history = new RiskAuditTrail();
@@ -1476,81 +1295,6 @@ class RiskManagementController extends Controller
             }
 
 
-            // if (!empty($data->severity_rate)) {
-            //     $history = new RiskAuditTrail();
-            //     $history->risk_id = $data->id;
-            //     $history->activity_type = 'Severity Rate';
-            //     $history->previous = "Null";
-            //     $history->current = $data->severity_rate;
-            //     $history->comment = "Not Applicable";
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $data->status;
-            //     $history->change_to =   "Opened";
-            //     $history->change_from = "Initiation";
-            //     $history->action_name = 'Create';
-
-            //     $history->save();
-            // }
-
-
-            // if (!empty($data->occurrence)) {
-            //     $history = new RiskAuditTrail();
-            //     $history->risk_id = $data->id;
-            //     $history->activity_type = 'Occurrence';
-            //     $history->previous = "Null";
-            //     $history->current = $data->occurrence;
-            //     $history->comment = "Not Applicable";
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $data->status;
-            //     $history->change_to =   "Opened";
-            //     $history->change_from = "Initiation";
-            //     $history->action_name = 'Create';
-
-            //     $history->save();
-            // }
-
-
-            // if (!empty($data->detection)) {
-            //     $history = new RiskAuditTrail();
-            //     $history->risk_id = $data->id;
-            //     $history->activity_type = 'Detection';
-            //     $history->previous = "Null";
-            //     $history->current = $data->detection;
-            //     $history->comment = "Not Applicable";
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $data->status;
-            //     $history->change_to =   "Opened";
-            //     $history->change_from = "Initiation";
-            //     $history->action_name = 'Create';
-            //     $history->save();
-            // }
-
-
-            // if (!empty($data->rpn)) {
-            //     $history = new RiskAuditTrail();
-            //     $history->risk_id = $data->id;
-            //     $history->activity_type = 'Rpn';
-            //     $history->previous = "Null";
-            //     $history->current = $data->rpn;
-            //     $history->comment = "Not Applicable";
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $data->status;
-            //     $history->change_to =   "Opened";
-            //     $history->change_from = "Initiation";
-            //     $history->action_name = 'Create';
-
-            //     $history->save();
-            // }
-
-
             if (!empty($data->risk_ana_attach)) {
                 $history = new RiskAuditTrail();
                 $history->risk_id = $data->id;
@@ -1569,41 +1313,6 @@ class RiskManagementController extends Controller
                 $history->save();
             }
 
-            // if (!empty($data->reviewer_person_value)) {
-            //     $history = new RiskAuditTrail();
-            //     $history->risk_id = $data->id;
-            //     $history->activity_type = 'CFT Reviewer Selection';
-            //     $history->previous = "Null";
-            //     $history->current = $data->reviewer_person_value;
-            //     $history->comment = "Not Applicable";
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $data->status;
-            //     $history->change_to =   "Opened";
-            //     $history->change_from = "Initiation";
-            //     $history->action_name = 'Create';
-
-            //     $history->save();
-            // }
-
-            // if (!empty($data->hod_des_rev_comm)) {
-            //     $history = new RiskAuditTrail();
-            //     $history->risk_id = $data->id;
-            //     $history->activity_type = 'HOD/Designee Review Comment';
-            //     $history->previous = "Null";
-            //     $history->current = $data->hod_des_rev_comm;
-            //     $history->comment = "Not Applicable";
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $data->status;
-            //     $history->change_to =   "Opened";
-            //     $history->change_from = "Initiation";
-            //     $history->action_name = 'Create';
-
-            //     $history->save();
-            // }
 
             if (!empty($data->hod_des_rev_comm)) {
                 $history = new RiskAuditTrail();
@@ -1712,72 +1421,6 @@ class RiskManagementController extends Controller
                 $history->save();
             }
 
-        // if (!empty($data->open_date)) {
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $data->id;
-        //     $history->activity_type = 'Open Date';
-        //     $history->previous = "Null";
-        //     $history->current = $data->open_date;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $data->status;
-        //     $history->change_to =   "Opened";
-        //     $history->change_from = "Initiation";
-        //     $history->action_name = 'Create';
-        //     $history->save();
-        // }
-
-        // if (!empty($data->assign_to)) {
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $data->id;
-        //     $history->activity_type = 'Assign Id';
-        //     $history->previous = "Null";
-        //     $history->current = $data->assign_to;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $data->status;
-        //     $history->change_to =   "Opened";
-        //     $history->change_from = "Initiation";
-        //     $history->action_name = 'Create';
-        //     $history->save();
-        // }
-
-        // if (!empty($data->departments)) {
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $data->id;
-        //     $history->activity_type = 'Departments';
-        //     $history->previous = "Null";
-        //     $history->current = $data->departments;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $data->status;
-        //     $history->change_to =   "Opened";
-        //     $history->change_from = "Initiation";
-        //     $history->action_name = 'Create';
-
-        //     $history->save();
-        // }
-
-        // if (!empty($data->team_members)) {
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $data->id;
-        //     $history->activity_type = 'Team Members';
-        //     $history->previous = "Null";
-        //     $history->current = $data->team_members;
-        //     $history->comment = "NA";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $data->status;
-        //     $history->save();
-        // }
-
 
         if (!empty($data->zone)) {
             $history = new RiskAuditTrail();
@@ -1851,41 +1494,6 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        // if (!empty($data->description)) {
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $data->id;
-        //     $history->activity_type = 'Risk/Opportunity Description';
-        //     $history->previous = "Null";
-        //     $history->current = $data->description;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $data->status;
-        //     $history->change_to =   "Opened";
-        //     $history->change_from = "Initiation";
-        //     $history->action_name = 'Create';
-
-        //     $history->save();
-        // }
-
-        // if (!empty($data->comments)) {
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $data->id;
-        //     $history->activity_type = 'Risk/Opportunity Comments';
-        //     $history->previous = "Null";
-        //     $history->current = $data->comments;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $data->status;
-        //     $history->change_to =   "Opened";
-        //     $history->change_from = "Initiation";
-        //     $history->action_name = 'Create';
-
-        //     $history->save();
-        // }
 
         if (!empty($data->departments2)) {
             $history = new RiskAuditTrail();
@@ -2067,19 +1675,6 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        // if (!empty($internalAudit->refrence_record)) {
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $data->id;
-        //     $history->activity_type = 'Reference Recores';
-        //     $history->previous = "Null";
-        //     $history->current = $data->refrence_record;
-        //     $history->comment = "NA";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $data->status;
-        //     $history->save();
-        // }
 
         if (!empty($data->risk_management_strategy)) {
             $history = new RiskAuditTrail();
@@ -2652,106 +2247,6 @@ class RiskManagementController extends Controller
         }
 
 
-        // $why_why_chart  = [
-        //     'why_problem_statement' => 'Problem Statement',
-        //     'why_1' => ' Why 1',
-        //     'why_2' => '  Why 2',
-        //     'why_3' => '  Why 3',
-        //     'why_4' => '  Why 4',
-        //     'why_5' => '  Why 5',
-        //     'why_root_cause' => 'Root Cause',
-        // ];
-        // foreach ($why_why_chart as $key => $value) {
-        //     if (!empty($request->$key)) {
-        //         $currentValue = $request->$key;
-
-        //         // If the current value is an array, convert it to a comma-separated string
-        //         if (is_array($currentValue)) {
-        //             $currentValue = implode(', ', $currentValue);
-        //         }
-
-        //         // Get previous value from the last document
-        //         $previousValue = !empty($lastDocument->$key) ? $lastDocument->$key : '';
-
-        //         // Compare the values, if same and no comment, don't save
-        //         if ($previousValue != $currentValue || !empty($request->comment)) {
-        //             $history = new RiskAuditTrail();
-        //             $history->risk_id = $data->id;
-        //             $history->activity_type = $value;
-        //             $history->previous = $previousValue; // Store the previous value
-        //             $history->current = $currentValue;
-        //             $history->comment = "Not Applicable"; // Add comment if required
-        //             $history->user_id = Auth::user()->id;
-        //             $history->user_name = Auth::user()->name;
-        //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //             $history->origin_state = $data->status;
-        //             $history->change_to = "Opened";
-        //        $history->change_from = "Initiation";
-        //             $history->action_name = 'Create';
-
-        //             $history->save();
-        //         }
-        //     }
-        // }
-
-
-        // $is_is_not_analysis  = [
-        //     'what_will_be' => ' What / Will Be',
-        //     'what_will_not_be' => 'what / Will Not Be',
-        //     'what_rationable' => 'what / Rational',
-
-        //     'where_will_be' => ' Where / Will Be',
-        //     'where_will_not_be' => ' Where / Will Not Be',
-        //     'where_rationable' => ' Where / Rational',
-
-        //     'when_will_be' => ' When / Will Be',
-        //     'when_will_not_be' => 'When / Will Not Be ',
-        //     'when_rationable' => 'When / Retional ',
-
-        //     'coverage_will_be' => 'Coverage / Will Be',
-        //     'coverage_will_not_be' => 'Coverage / Will Not Be',
-        //     'coverage_rationable' => 'Coverage / Retional',
-
-        //     'who_will_be' => 'Who / will Be ',
-        //     'who_will_not_be' => 'Who / Will Not Be',
-        //     'who_rationable' => ' Who / Retional',
-        // ];
-
-        // foreach ($is_is_not_analysis as $key => $value) {
-        //     if (!empty($request->$key)) {
-        //         $currentValue = $request->$key;
-
-        //         // If the current value is an array, convert it to a comma-separated string
-        //         if (is_array($currentValue)) {
-        //             $currentValue = implode(', ', $currentValue);
-        //         }
-
-        //         // Get previous value from the last document
-        //         $previousValue = !empty($lastDocument->$key) ? $lastDocument->$key : '';
-
-        //         // Compare the values, if same and no comment, don't save
-        //         if ($previousValue != $currentValue || !empty($request->comment)) {
-        //             $history = new RiskAuditTrail();
-        //             $history->risk_id = $data->id;
-        //             $history->activity_type = $value;
-        //             $history->previous = $previousValue; // Store the previous value
-        //             $history->current = $currentValue;
-        //             $history->comment = "Not Applicable"; // Add comment if required
-        //             $history->user_id = Auth::user()->id;
-        //             $history->user_name = Auth::user()->name;
-        //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //             $history->origin_state = $data->status;
-        //             $history->change_to = "Opened";
-        //         $history->change_from = "Initiation";
-        //             $history->action_name = 'Create';
-
-        //             $history->save();
-        //         }
-
-        //     }
-        // }
-
-
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
@@ -2795,7 +2290,6 @@ class RiskManagementController extends Controller
         } else {
             $data->other_type = null;
         }
-
 
 
         $data->source_of_risk2 = $request->source_of_risk2;
@@ -2869,9 +2363,7 @@ class RiskManagementController extends Controller
         $data->impact_analysis = $request->impact_analysis;
         $data->risk_analysis = $request->risk_analysis;
         $data->due_date_extension = $request->due_date_extension;
-        //$data->severity = $request->severity;
-        //$data->occurance = $request->occurance;
-        //$data->refrence_record =  implode(',', $request->refrence_record);
+       
         $data->refrence_record = is_array($request->refrence_record) ? implode(',', $request->refrence_record) : '';
         $data->qa_cqa_comments = $request->qa_cqa_comments;
         $data->qa_cqa_head_comm= $request->qa_cqa_head_comm;
@@ -2890,7 +2382,7 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('reference')) {
                 foreach ($request->file('reference') as $file) {
-                    $name = $request->name . 'reference' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'reference' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2898,9 +2390,6 @@ class RiskManagementController extends Controller
 
             $data->reference = json_encode($files);
         }
-
-    
-
 
         
          if (!empty($request->risk_attachment) || !empty($request->deleted_risk_attachment))
@@ -2919,7 +2408,6 @@ class RiskManagementController extends Controller
                 $newFiles = [];
                 if ($request->hasFile('risk_attachment')) {
                     foreach ($request->file('risk_attachment') as $file) {
-                    // $name = $request->name . 'risk_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $name = $request->name . 'risk_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 
                         $file->move(public_path('upload/'), $name);
@@ -2931,13 +2419,6 @@ class RiskManagementController extends Controller
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $data->risk_attachment = json_encode($allFiles);
             }
-
-
-
-
-
-
-
 
 
              if (!empty($request->risk_ana_attach) || !empty($request->deleted_risk_ana_attach))
@@ -2956,7 +2437,6 @@ class RiskManagementController extends Controller
                 $newFiles = [];
                 if ($request->hasFile('risk_ana_attach')) {
                     foreach ($request->file('risk_ana_attach') as $file) {
-                    // $name = $request->name . 'risk_ana_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $name = $request->name . 'risk_ana_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 
                         $file->move(public_path('upload/'), $name);
@@ -2968,8 +2448,6 @@ class RiskManagementController extends Controller
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $data->risk_ana_attach = json_encode($allFiles);
             }
-
-
 
 
             if (!empty($request->hod_design_attach) || !empty($request->deleted_hod_design_attach))
@@ -2988,7 +2466,6 @@ class RiskManagementController extends Controller
                 $newFiles = [];
                 if ($request->hasFile('hod_design_attach')) {
                     foreach ($request->file('hod_design_attach') as $file) {
-                    // $name = $request->name . 'hod_design_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $name = $request->name . 'hod_design_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 
                         $file->move(public_path('upload/'), $name);
@@ -3018,7 +2495,6 @@ class RiskManagementController extends Controller
                 $newFiles = [];
                 if ($request->hasFile('qa_cqa_attachments')) {
                     foreach ($request->file('qa_cqa_attachments') as $file) {
-                    // $name = $request->name . 'qa_cqa_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $name = $request->name . 'qa_cqa_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 
                         $file->move(public_path('upload/'), $name);
@@ -3062,87 +2538,7 @@ class RiskManagementController extends Controller
             }
 
 
-
-        // if (!empty($request->risk_attachment)) {
-        //     $files = [];
-        //     if ($request->hasfile('risk_attachment')) {
-        //         foreach ($request->file('risk_attachment') as $file) {
-        //           //  $name = $request->name . 'risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //              $name = $request->name . 'risk_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-
-        //     $data->risk_attachment = json_encode($files);
-        // }
-
-
-        // if (!empty($request->risk_ana_attach)) {
-        //     $files = [];
-        //     if ($request->hasfile('risk_ana_attach')) {
-        //         foreach ($request->file('risk_ana_attach') as $file) {
-        //             // $name = $request->name . 'risk_ana_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //                $name = $request->name . 'risk_ana_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-
-        //     $data->risk_ana_attach = json_encode($files);
-        // }
-
-       
-
-        // if (!empty($request->hod_design_attach)) {
-        //     $files = [];
-        //     if ($request->hasfile('hod_design_attach')) {
-        //         foreach ($request->file('hod_design_attach') as $file) {
-        //             // $name = $request->name . 'hod_design_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //                $name = $request->name . 'hod_design_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-
-        //     $data->hod_design_attach = json_encode($files);
-        // }
-
-        // if ($request->hasFile('qa_cqa_attachments')) {
-        //     $files = [];
-        //     foreach ($request->file('qa_cqa_attachments') as $file) {
-        //         // $name = $request->name . '_qa_cqa_attachments_' . uniqid() . '.' . $file->getClientOriginalExtension();
-        //            $name = $request->name . 'qa_cqa_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-        //         $file->move(public_path('upload/'), $name);
-        //         $files[] = $name;
-        //     }
-        //     $data->qa_cqa_attachments = json_encode($files);
-        // }
-
-        // $data->fill($request->except('qa_cqa_head_attach'));if ($request->hasFile('qa_cqa_head_attach')) {
-        //     $files = [];
-        //     foreach ($request->file('qa_cqa_head_attach') as $file) {
-        //         //$name = $request->name . '_qa_cqa_head_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
-        //            $name = $request->name . 'qa_cqa_head_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-        //         $file->move(public_path('upload/'), $name);
-        //         $files[] = $name;
-        //     }
-        //     $data->qa_cqa_head_attach = json_encode($files);
-        // }
-        // $data->fill($request->except('qa_cqa_head_attach'));
-        //  return $data;
-
-        // -----------grid=------
-        //  $data1 = new RiskAssesmentGrid();
-        //  $data1->risk_id = $data->id;
-        //  $data1->type = "effect_analysis";
-
-
         if ($data->stage == 2 || $data->stage == 3) {
-
-            // if (!$form_progress) {
-            //     $form_progress = 'cft';
-            // }
 
 
             $Cft = RiskManagmentCft::withoutTrashed()->where('risk_id', $id)->first();
@@ -3339,7 +2735,7 @@ class RiskManagementController extends Controller
 
                 if ($request->hasfile('Production_Table_Attachment')) {
                     foreach ($request->file('Production_Table_Attachment') as $file) {
-                        // $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'Production_Table_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                            $name = $request->name . 'Production_Table_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3349,24 +2745,11 @@ class RiskManagementController extends Controller
                 $Cft->Production_Table_Attachment = json_encode($files);
             }
 
-            // if (!empty($request->Production_Table_Attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Production_Table_Attachment')) {
-            //         foreach ($request->file('Production_Table_Attachment') as $file) {
-            //             $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-            //     $Cft->Production_Table_Attachment = json_encode($files);
-            // }
 
             if (!empty($request->Production_Injection_Attachment)) {
                 $files = [];
                 if ($request->hasfile('Production_Injection_Attachment')) {
                     foreach ($request->file('Production_Injection_Attachment') as $file) {
-                      //  $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                          $name = $request->name . 'Production_Injection_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3379,7 +2762,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Quality_Control_attachment')) {
                     foreach ($request->file('Quality_Control_attachment') as $file) {
-                        //$name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                          $name = $request->name . 'Quality_Control_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3392,7 +2774,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Quality_Assurance_attachment')) {
                     foreach ($request->file('Quality_Assurance_attachment') as $file) {
-                        //$name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                          $name = $request->name . 'Quality_Assurance_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3404,7 +2785,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Engineering_attachment')) {
                     foreach ($request->file('Engineering_attachment') as $file) {
-                        //$name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                          $name = $request->name . 'Engineering_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3416,7 +2796,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Analytical_Development_attachment')) {
                     foreach ($request->file('Analytical_Development_attachment') as $file) {
-                        //$name = $request->name . 'Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                          $name = $request->name . 'Analytical_Development_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3429,7 +2808,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Kilo_Lab_attachment')) {
                     foreach ($request->file('Kilo_Lab_attachment') as $file) {
-                        // $name = $request->name . 'Kilo_Lab_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                          $name = $request->name . 'Kilo_Lab_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3442,7 +2820,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Technology_transfer_attachment')) {
                     foreach ($request->file('Technology_transfer_attachment') as $file) {
-                       // $name = $request->name . 'Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                          $name = $request->name . 'Technology_transfer_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3455,7 +2832,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Environment_Health_Safety_attachment')) {
                     foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
-                       // $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                          $name = $request->name . 'Environment_Health_Safety_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3468,7 +2844,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Human_Resource_attachment')) {
                     foreach ($request->file('Human_Resource_attachment') as $file) {
-                       // $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                          $name = $request->name . 'Human_Resource_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3481,7 +2856,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Information_Technology_attachment')) {
                     foreach ($request->file('Information_Technology_attachment') as $file) {
-                       // $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                         $name = $request->name . 'Information_Technology_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension(); 
                        $file->move('upload/', $name);
                         $files[] = $name;
@@ -3494,7 +2868,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Project_management_attachment')) {
                     foreach ($request->file('Project_management_attachment') as $file) {
-                       // $name = $request->name . 'Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                         $name = $request->name . 'Project_management_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3508,7 +2881,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('CorporateQualityAssurance_attachment')) {
                     foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
-                       // $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                         $name = $request->name . 'CorporateQualityAssurance_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3522,7 +2894,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('ProductionLiquid_attachment')) {
                     foreach ($request->file('ProductionLiquid_attachment') as $file) {
-                       // $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                          $name = $request->name . 'ProductionLiquid_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3536,7 +2907,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Microbiology_attachment')) {
                     foreach ($request->file('Microbiology_attachment') as $file) {
-                       // $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                          $name = $request->name . 'Microbiology_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3550,7 +2920,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('ContractGiver_attachment')) {
                     foreach ($request->file('ContractGiver_attachment') as $file) {
-                       // $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                         $name = $request->name . 'ContractGiver_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3564,7 +2933,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Store_attachment')) {
                     foreach ($request->file('Store_attachment') as $file) {
-                      //  $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                         $name = $request->name . 'Store_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3578,7 +2946,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('ResearchDevelopment_attachment')) {
                     foreach ($request->file('ResearchDevelopment_attachment') as $file) {
-                       // $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                          $name = $request->name . 'ResearchDevelopment_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3592,7 +2959,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('RegulatoryAffair_attachment')) {
                     foreach ($request->file('RegulatoryAffair_attachment') as $file) {
-                       // $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                         $name = $request->name . 'RegulatoryAffair_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3605,7 +2971,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Other1_attachment')) {
                     foreach ($request->file('Other1_attachment') as $file) {
-                      //  $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                          $name = $request->name . 'Other1_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3619,7 +2984,7 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Other2_attachment')) {
                     foreach ($request->file('Other2_attachment') as $file) {
-                        $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Other2_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3631,7 +2996,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Other3_attachment')) {
                     foreach ($request->file('Other3_attachment') as $file) {
-                     //   $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                       $name = $request->name . 'Other3_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();  
                      $file->move('upload/', $name);
                         $files[] = $name;
@@ -3643,7 +3007,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Other4_attachment')) {
                     foreach ($request->file('Other4_attachment') as $file) {
-                       // $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                         $name = $request->name . 'Other4_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3656,7 +3019,6 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Other5_attachment')) {
                     foreach ($request->file('Other5_attachment') as $file) {
-                       // $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                          $name = $request->name . 'Other5_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3673,8 +3035,6 @@ class RiskManagementController extends Controller
             $cftUsers = DB::table('risk_managment_cfts')->where(['risk_id' => $id])->first();
             // Define the column names
             $columns = ['Production_person', 'Production_Table_Person', 'Production_Injection_Person', 'ResearchDevelopment_person', 'Human_Resource_person', 'CorporateQualityAssurance_person', 'Store_person', 'Quality_Control_Person', 'QualityAssurance_person', 'RegulatoryAffair_person', 'ProductionLiquid_person', 'Microbiology_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Analytical_Development_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Information_Technology_person', 'Project_management_person'];
-
-            // $columns = ['Production_person', 'Production_Table_Person', 'Production_Injection_Person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person'];
 
             // Initialize an array to store the values
             $valuesArray = [];
@@ -3705,7 +3065,7 @@ class RiskManagementController extends Controller
                             }
                         );
                     } catch (\Exception $e) {
-                        //log error
+                        
                     }
                 }
             }
@@ -3718,7 +3078,7 @@ class RiskManagementController extends Controller
 
                 if ($request->hasfile('Initial_attachment')) {
                     foreach ($request->file('Initial_attachment') as $file) {
-                        //$name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        //$name = $request->name . 'Initial_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $name = $request->name . 'Initial_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
@@ -3729,11 +3089,6 @@ class RiskManagementController extends Controller
             }
         }
 
-
-
-
-        // $data->form_progress = isset($form_progress) ? $form_progress : null;
-        // dd($data->form_progress);
 
         $data->update();
 
@@ -3779,7 +3134,7 @@ class RiskManagementController extends Controller
         $data1->mitigation_proposal = serialize($request->mitigation_proposal ?? []);
 
         $data1->save();
-//----------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------------------
 
         // Define the mapping of database fields to the descriptive field names
         $fieldNames = [
@@ -3821,11 +3176,6 @@ class RiskManagementController extends Controller
                     'risk_acceptance2' => isset($previousDetails['risk_acceptance2'][$index]) ? $previousDetails['risk_acceptance2'][$index] : null,
                     'mitigation_proposal' => isset($previousDetails['mitigation_proposal'][$index]) ? $previousDetails['mitigation_proposal'][$index] : null,
 
-
-                    // 'action' => $previousDetails['action'][$index] ?? null,
-                    // 'responsible' => Helpers::getInitiatorName($previousDetails['responsible'][$index]) ?? null,
-                    // 'deadline' => Helpers::getdateFormat($previousDetails['deadline'][$index]) ?? null,
-                    // 'item_status' => $previousDetails['item_status'][$index] ?? null,
                 ];
 
 
@@ -3883,12 +3233,10 @@ class RiskManagementController extends Controller
             }
         }
 
-//--------------------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------------------
 
         // ---------------------------------------
-        //  $data2 = new RiskAssesmentGrid();
-        //  $data2->risk_id = $data->id;
-        //  $data2->type = "fishbone";
+
         $data2 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'fishbone')->first();
 
         if (!empty($request->measurement)) {
@@ -3916,9 +3264,6 @@ class RiskManagementController extends Controller
         // =-------------------------------
         $data3 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'why_chart')->first();
      
-        //  $data3 = new RiskAssesmentGrid();
-        //  $data3->risk_id = $data->id;
-        //  $data3->type = "why_chart";
         $whyData = [];
         if (!empty($request->why_questions) && !empty($request->why_answers)) {
             foreach ($request->why_questions as $index => $question) {
@@ -3952,13 +3297,11 @@ class RiskManagementController extends Controller
         if (!empty($request->why_root_cause)) {
             $data3->why_root_cause = $request->why_root_cause;
         }
-       // dd($data3);
+       
         $data3->save();
 
         // --------------------------------------------
-        //  $data4 = new RiskAssesmentGrid();
-        //  $data4->risk_id = $data->id;
-        //  $data4->type = "what_who_where";
+
         $data4 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'what_who_where')->first();
 
         if (!empty($request->what_will_be)) {
@@ -4009,9 +3352,6 @@ class RiskManagementController extends Controller
         $data4->save();
 
         $data5 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'Action_Plan')->first();
-        //  $data5 = new RiskAssesmentGrid();
-        //  $data5->risk_id = $data->id;
-        //  $data5->type = "Action_Plan";
 
         if (!empty($request->action)) {
             $data5->action = serialize($request->action);
@@ -4028,9 +3368,7 @@ class RiskManagementController extends Controller
 
         $data5->save();
 
-        //  $data6 = new RiskAssesmentGrid();
-        //  $data6->risk_id = $data->id;
-        //  $data6->type = "Mitigation_Plan_Details";
+ 
         $data6 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'Mitigation_Plan_Details')->first();
         if (!empty($request->mitigation_steps)) {
             $data6->mitigation_steps = serialize($request->mitigation_steps);
@@ -4051,8 +3389,6 @@ class RiskManagementController extends Controller
         $data6->save();
 
 
-        //$lastDocumentdata =  RiskManagement::find($id);
-
 
         if ($lastDocument->Initiator_Group != $data->Initiator_Group) {
             $history = new RiskAuditTrail();
@@ -4072,7 +3408,7 @@ class RiskManagementController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-            //  dd($history);
+           
             $history->save();
         }
 
@@ -4095,7 +3431,7 @@ class RiskManagementController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-            //  dd($history);
+            
             $history->save();
         }
 
@@ -4118,7 +3454,7 @@ class RiskManagementController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-            //  dd($history);
+            
             $history->save();
         }
 
@@ -4167,28 +3503,6 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        // if ($lastDocument->other_source_of_risk != $data->other_source_of_risk) {
-
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $id;
-        //     $history->activity_type = 'Other(Source of Risk/Opportunity)';
-        //     $history->previous = $lastDocument->other_source_of_risk;
-        //     $history->current = $data->other_source_of_risk;
-        //     $history->comment = $request->other_source_of_risk_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     if (is_null($lastDocument->other_source_of_risk) || $lastDocument->other_source_of_risk === '') {
-        //         $history->action_name = "New";
-        //     } else {
-        //         $history->action_name = "Update";
-        //     }
-
-        //     $history->save();
-        // }
 
         if ($lastDocument->type != $data->type ) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
@@ -4271,7 +3585,7 @@ class RiskManagementController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-            //  dd($history);
+            
             $history->save();
         }
 
@@ -4294,7 +3608,7 @@ class RiskManagementController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-            //  dd($history);
+            
             $history->save();
         }
 
@@ -4317,7 +3631,7 @@ class RiskManagementController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-            //  dd($history);
+            
             $history->save();
         }
 
@@ -4339,7 +3653,7 @@ class RiskManagementController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-            //  dd($history);
+            
             $history->save();
         }
 
@@ -4362,7 +3676,7 @@ class RiskManagementController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-            //  dd($history);
+            
             $history->save();
         }
 
@@ -4384,7 +3698,6 @@ class RiskManagementController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-            //  dd($history);
             $history->save();
         }
 
@@ -4406,7 +3719,6 @@ class RiskManagementController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-            //  dd($history);
             $history->save();
         }
 
@@ -4479,99 +3791,6 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        // if ($lastDocument->severity_rate != $data->severity_rate || !empty($request->severity_rate_comment)) {
-
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $id;
-        //     $history->activity_type = 'Severity Rate';
-        //     $history->previous = $lastDocument->severity_rate;
-        //     $history->current = $data->severity_rate;
-        //     $history->comment = $request->severity_rate_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     if (is_null($lastDocument->severity_rate) || $lastDocument->severity_rate === '') {
-        //         $history->action_name = "New";
-        //     } else {
-        //         $history->action_name = "Update";
-        //     }
-
-        //     $history->save();
-        // }
-
-        // if ($lastDocument->occurrence != $data->occurrence || !empty($request->occurrence_comment)) {
-
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $id;
-        //     $history->activity_type = 'Occurrence';
-        //     $history->previous = $lastDocument->occurrence;
-        //     $history->current = $data->occurrence;
-        //     $history->comment = $request->occurrence_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     if (is_null($lastDocument->occurrence) || $lastDocument->occurrence === '') {
-        //         $history->action_name = "New";
-        //     } else {
-        //         $history->action_name = "Update";
-        //     }
-
-        //     $history->save();
-        // }
-
-
-        // if ($lastDocument->detection != $data->detection || !empty($request->detection_comment)) {
-
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $id;
-        //     $history->activity_type = 'Detection';
-        //     $history->previous = $lastDocument->detection;
-        //     $history->current = $data->detection;
-        //     $history->comment = $request->detection_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     if (is_null($lastDocument->detection) || $lastDocument->detection === '') {
-        //         $history->action_name = "New";
-        //     } else {
-        //         $history->action_name = "Update";
-        //     }
-
-        //     $history->save();
-        // }
-
-        // if ($lastDocument->rpn != $data->rpn || !empty($request->rpn_comment)) {
-
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $id;
-        //     $history->activity_type = 'Rpn';
-        //     $history->previous = $lastDocument->rpn;
-        //     $history->current = $data->rpn;
-        //     $history->comment = $request->rpn_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     if (is_null($lastDocument->rpn) || $lastDocument->rpn === '') {
-        //         $history->action_name = "New";
-        //     } else {
-        //         $history->action_name = "Update";
-        //     }
-
-        //     $history->save();
-        // }
-
 
         if ($lastDocument->risk_ana_attach != $data->risk_ana_attach) {
             $history = new RiskAuditTrail();
@@ -4597,79 +3816,6 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        // if ($lastDocument->risk_ana_attach != $data->risk_ana_attach || !empty($request->risk_ana_attach)) {
-
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $id;
-        //     $history->activity_type = 'Attachments';
-
-        //     // Convert arrays to JSON strings if necessary
-        //     $history->previous = is_array($lastDocument->risk_ana_attach) ? json_encode($lastDocument->risk_ana_attach) : $lastDocument->risk_ana_attach;
-        //     $history->current = is_array($data->risk_ana_attach) ? json_encode($data->risk_ana_attach) : $data->risk_ana_attach;
-        //     $history->comment = is_array($request->risk_ana_attach) ? json_encode($request->risk_ana_attach) : $request->risk_ana_attach;
-
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to = "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-
-        //     if (is_null($lastDocument->risk_ana_attach) || $lastDocument->risk_ana_attach === '') {
-        //         $history->action_name = "New";
-        //     } else {
-        //         $history->action_name = "Update";
-        //     }
-
-        //     $history->save();
-        // }
-
-
-        // if ($lastDocument->reviewer_person_value != $data->reviewer_person_value) {
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $data->id;
-        //     $history->activity_type = 'CFT Reviewer Selection';
-        //     $history->previous = Helpers::getInitiatorName($lastDocument->reviewer_person_value);
-        //     $history->current =  Helpers::getInitiatorName($data->reviewer_person_value);
-        //     $history->comment = $request->comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     if (is_null($lastDocument->reviewer_person_value) || $lastDocument->reviewer_person_value === '') {
-        //         $history->action_name = "New";
-        //     } else {
-        //         $history->action_name = "Update";
-        //     }
-        //     //  dd($history);
-        //     $history->save();
-        // }
-
-
-        // if ($lastDocument->hod_des_rev_comm != $data->hod_des_rev_comm || !empty($request->hod_des_rev_comm)) {
-
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $id;
-        //     $history->activity_type = 'HOD/Designee Review Comment';
-        //     $history->previous = $lastDocument->hod_des_rev_comm;
-        //     $history->current = $data->hod_des_rev_comm;
-        //     $history->comment = $request->hod_des_rev_comm;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     if (is_null($lastDocument->hod_des_rev_comm) || $lastDocument->hod_des_rev_comm === '') {
-        //         $history->action_name = "New";
-        //     } else {
-        //         $history->action_name = "Update";
-        //     }
-
-        //     $history->save();
-        // }
 
         if ($lastDocument->hod_des_rev_comm != $data->hod_des_rev_comm) {
             $history = new RiskAuditTrail();
@@ -4689,41 +3835,9 @@ class RiskManagementController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-            //  dd($history);
+           
             $history->save();
         }
-
-
-        // if ($lastDocument->hod_design_attach != $data->hod_design_attach || !empty($request->hod_design_attach)) {
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $id;
-        //     $history->activity_type = 'Hod/Designee Attachments';
-
-        //     // Convert arrays to strings if necessary
-        //     $previousAttachment = is_array($lastDocument->hod_design_attach) ? implode(', ', $lastDocument->hod_design_attach) : $lastDocument->hod_design_attach;
-        //     $currentAttachment = is_array($data->hod_design_attach) ? implode(', ', $data->hod_design_attach) : $data->hod_design_attach;
-        //     $commentAttachment = is_array($request->hod_design_attach) ? implode(', ', $request->hod_design_attach) : $request->hod_design_attach;
-
-        //     $history->previous =str_replace(',', ', ', $lastDocument->hod_design_attach);
-        //     $history->current = str_replace(',', ', ', $data->hod_design_attach);
-        //     $history->comment = $commentAttachment;
-
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to = "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-
-        //     if (is_null($lastDocument->hod_design_attach) || $lastDocument->hod_design_attach === '') {
-        //         $history->action_name = "New";
-        //     } else {
-        //         $history->action_name = "Update";
-        //     }
-
-        //     $history->save();
-        // }
-
         if ($lastDocument->hod_design_attach != $data->hod_design_attach) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
