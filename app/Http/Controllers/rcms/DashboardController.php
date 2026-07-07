@@ -47,6 +47,11 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
+        if ($request->has('ajax_load')) {
+            $html = view('frontend.rcms.dashboard')->render();
+            return response()->json(['html' => $html]);
+        }
+        return view('frontend.rcms.dashboard');
         $table = [];
         $limit = min(max((int) $request->get('limit', 500), 50), 2000);
 

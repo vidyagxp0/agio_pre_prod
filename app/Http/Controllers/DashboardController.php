@@ -76,11 +76,26 @@ class DashboardController extends Controller
         ];
 
         $processRecords = function ($model, $type, $titleFormat, $urlPath) use (&$due_dates, $today, $excludedStatus, $dueDateLimit) {
-            $records = $model::query()
-                ->whereNotNull('due_date')
-                ->orderByDesc('id')
-                ->limit($dueDateLimit)
-                ->get(['id', 'record', 'record_number', 'division_id', 'status', 'due_date']);
+            $records = [];
+            $dueDateCol = null;
+
+            foreach (['due_date', 'proposed_due_date', 'due_date_gi'] as $col) {
+                try {
+                    $records = $model::query()
+                        ->whereNotNull($col)
+                        ->orderByDesc('id')
+                        ->limit($dueDateLimit)
+                        ->get();
+                    $dueDateCol = $col;
+                    break;
+                } catch (\Illuminate\Database\QueryException $e) {
+                    continue;
+                }
+            }
+
+            if (!$dueDateCol || empty($records)) {
+                return;
+            }
 
             foreach ($records as $query) {
 
@@ -91,11 +106,16 @@ class DashboardController extends Controller
                     continue;
                 }
 
-                if (empty($query->due_date)) {
+                $val = $query->$dueDateCol;
+                if (empty($val) || strpos($val, 'NaN') !== false) {
                     continue;
                 }
 
-                $due_date = \Carbon\Carbon::parse($query->due_date);
+                try {
+                    $due_date = \Carbon\Carbon::parse($val);
+                } catch (\Exception $e) {
+                    continue;
+                }
                 $daysLeft = $today->diffInDays($due_date, false);
 
                 // ✅ Color logic
@@ -107,11 +127,12 @@ class DashboardController extends Controller
                     $backgroundColor = 'red';        // less than 7 days remaining / overdue
                 }
 
-                $recordNo = $query->record ?? $query->record_number ?? 0;
+                $recordNo = $query->record ?? ($query->record_number ?? ($query->record_no ?? 0));
+                $divId = $query->division_id ?? ($query->division_code ?? ($query->site_location_code ?? null));
 
                 $due_dates[] = [
                     'type' => $type,
-                    'title' => Helpers::getDivisionCode($query->division_id)
+                    'title' => Helpers::getDivisionCode($divId)
                         . '/' . $titleFormat . '/' . date('Y') . '/'
                         . str_pad($recordNo, 4, '0', STR_PAD_LEFT),
                     'start' => $due_date->toDateString(),
