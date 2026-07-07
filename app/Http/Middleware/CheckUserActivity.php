@@ -47,7 +47,7 @@ class CheckUserActivity
     {
         if (Auth::check()) {
 
-            $timeout = 60; // 2 minutes
+            $timeout = 5 * 60; // 5 minutes
 
             $lastActivity = session('last_activity');
 
