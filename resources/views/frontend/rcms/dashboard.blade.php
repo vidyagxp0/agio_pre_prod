@@ -1,5 +1,6 @@
-@extends('frontend.rcms.layout.main_rcms')
+@extends(request()->has('ajax_load') ? 'frontend.rcms.layout.empty' : 'frontend.rcms.layout.main_rcms')
 
+@if (!request()->has('ajax_load'))
 <script>
     // Function to update the options of the second dropdown based on the selection in the first dropdown
     function updateQueryOptions() {
@@ -160,8 +161,30 @@
         width: 100px !important;
     }
 
+    @keyframes shimmer {
+        0% {
+            background-position: -450px 0;
+        }
+        100% {
+            background-position: 450px 0;
+        }
+    }
+    .skeleton-row td {
+        padding: 15px 10px;
+        vertical-align: middle;
+        background: #fff !important;
+    }
+    .skeleton-bar {
+        height: 14px;
+        border-radius: 4px;
+        background: linear-gradient(to right, #f6f7f8 8%, #edeef1 18%, #f6f7f8 33%);
+        background-size: 800px 104px;
+        animation: shimmer 1.5s infinite linear;
+    }
 </style>
+@endif
 @section('rcms_container')
+    @if (!request()->has('ajax_load'))
     <div id="rcms-dashboard">
         <div class="container-fluid">
             <div class="dash-grid">
@@ -174,9 +197,14 @@
                                 <label for="scope">Process</label>
                                 <select id="scope" name="form">
                                     <option value="">All Records</option>
-                                    @foreach ($uniqueProcessNames as $ultraprocess)
-                                        <option value={{ $ultraprocess }}>{{ $ultraprocess }}</option>
-                                    @endforeach
+                                     @php
+                                         if (!isset($uniqueProcessNames)) {
+                                             $uniqueProcessNames = DB::table('q_m_s_processes')->select('process_name')->distinct()->pluck('process_name');
+                                         }
+                                     @endphp
+                                     @foreach ($uniqueProcessNames as $ultraprocess)
+                                         <option value={{ $ultraprocess }}>{{ $ultraprocess }}</option>
+                                     @endforeach
                                 </select>
                             </div>
                             <div class="group-input">
@@ -197,58 +225,193 @@
                             <div class="item-btn" onclick="window.print()">Print</div>
                         </div>
                         <div class="main-scope-table table-container">
-                            <div class="main-scope-table table-container">
-                                <table class="table table-bordered" id="auditTable">
-                                    <thead class="table-header11">
-                                        <tr>
-                                            <th style="width: 5%">ID</th>
-                                            <th style="width: 6%">Record No.</th>
-                                            <th style="width: 5%">Parent ID</th>
-                                            <th style="width: 5%">Division</th>
-                                            <th style="width: 8%">Process</th>
-                                            <th style="width: 45%">Short Description</th>
-                                            <th style="width: 6%">Date Opened</th>
-                                            <th style="width: 8%">Originator</th>
-                                            <th style="width: 6%"> Due Date</th>
-                                            <th style="width: 10%">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="searchTable">
-                                        @php
+                            <table class="table table-bordered" id="auditTable">
+                                <thead class="table-header11">
+                                    <tr>
+                                        <th style="width: 5%">ID</th>
+                                        <th style="width: 6%">Record No.</th>
+                                        <th style="width: 5%">Parent ID</th>
+                                        <th style="width: 5%">Division</th>
+                                        <th style="width: 8%">Process</th>
+                                        <th style="width: 45%">Short Description</th>
+                                        <th style="width: 6%">Date Opened</th>
+                                        <th style="width: 8%">Originator</th>
+                                        <th style="width: 6%"> Due Date</th>
+                                        <th style="width: 10%">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="searchTable">
+    @endif
+                                    @if (!request()->has('ajax_load'))
+                                        @for ($i = 0; $i < 6; $i++)
+                                            <tr class="skeleton-row">
+                                                <td><div class="skeleton-bar" style="width: 50px;"></div></td>
+                                                <td><div class="skeleton-bar" style="width: 150px;"></div></td>
+                                                <td><div class="skeleton-bar" style="width: 80px;"></div></td>
+                                                <td><div class="skeleton-bar" style="width: 100px;"></div></td>
+                                                <td><div class="skeleton-bar" style="width: 120px;"></div></td>
+                                                <td><div class="skeleton-bar" style="width: 320px;"></div></td>
+                                                <td><div class="skeleton-bar" style="width: 110px;"></div></td>
+                                                <td><div class="skeleton-bar" style="width: 120px;"></div></td>
+                                                <td><div class="skeleton-bar" style="width: 100px;"></div></td>
+                                                <td><div class="skeleton-bar" style="width: 80px;"></div></td>
+                                            </tr>
+                                        @endfor
+                                    @endif
+                                    @php
+                                        $modelsConfig = [
+                                            ['class' => \App\Models\CC::class, 'type' => 'Change-Control', 'prefix' => 'CC'],
+                                            ['class' => \App\Models\ActionItem::class, 'type' => 'Action-Item', 'prefix' => 'AI'],
+                                            ['class' => \App\Models\extension_new::class, 'type' => 'Extension', 'prefix' => 'Ext'],
+                                            ['class' => \App\Models\EffectivenessCheck::class, 'type' => 'Effectiveness-Check', 'prefix' => 'EC'],
+                                            ['class' => \App\Models\InternalAudit::class, 'type' => 'Internal-Audit', 'prefix' => 'IA'],
+                                            ['class' => \App\Models\Capa::class, 'type' => 'Capa', 'prefix' => 'CAPA'],
+                                            ['class' => \App\Models\RiskManagement::class, 'type' => 'risk-assesment', 'prefix' => 'RA'],
+                                            ['class' => \App\Models\ManagementReview::class, 'type' => 'Management-Review', 'prefix' => 'MR'],
+                                            ['class' => \App\Models\LabIncident::class, 'type' => 'Lab-Incident', 'prefix' => 'LI'],
+                                            ['class' => \App\Models\Auditee::class, 'type' => 'External-Audit', 'prefix' => 'EA'],
+                                            ['class' => \App\Models\AuditProgram::class, 'type' => 'Audit-Program', 'prefix' => 'AuditProgram'],
+                                            ['class' => \App\Models\RootCauseAnalysis::class, 'type' => 'Root-Cause-Analysis', 'prefix' => 'RCA'],
+                                            ['class' => \App\Models\Observation::class, 'type' => 'Observation', 'prefix' => 'OBS'],
+                                            ['class' => \App\Models\OOS::class, 'type' => 'OOS/OOT', 'prefix' => 'OOS'],
+                                            ['class' => \App\Models\MarketComplaint::class, 'type' => 'Market Complaint', 'prefix' => 'MC'],
+                                            ['class' => \App\Models\Ootc::class, 'type' => 'OOT', 'prefix' => 'OOT'],
+                                            ['class' => \App\Models\errata::class, 'type' => 'ERRATA', 'prefix' => 'ERRATA'],
+                                            ['class' => \App\Models\OOS_micro::class, 'type' => 'OOS Microbiology', 'prefix' => 'OOSMicro'],
+                                            ['class' => \App\Models\Deviation::class, 'type' => 'Deviation', 'prefix' => 'DEV'],
+                                            ['class' => \App\Models\OutOfCalibration::class, 'type' => 'Out Of Calibration', 'prefix' => 'OOC'],
+                                            ['class' => \App\Models\Incident::class, 'type' => 'Incident', 'prefix' => 'INC'],
+                                            ['class' => \App\Models\Resampling::class, 'type' => 'Resampling', 'prefix' => 'Resampling'],
+                                            ['class' => \App\Models\ChangeProposalJust::class, 'type' => 'Change Proposal And Justification', 'prefix' => 'CPJ'],
+                                            ['class' => \App\Models\FailureInvestigation::class, 'type' => 'Failure Investigation', 'prefix' => 'FI'],
+                                            ['class' => \App\Models\NonConformance::class, 'type' => 'Non Conformance', 'prefix' => 'NC'],
+                                        ];
+
+                                        if (request()->has('ajax_load')) {
+                                            $limit = 1000;
+
+                                            $allRawData = [];
+                                            $allDivisions = DB::table('q_m_s_divisions')->pluck('name', 'id')->toArray();
+
+                                            foreach ($modelsConfig as $cfg) {
+                                                $records = $cfg['class']::orderByDesc('id')->limit($limit)->get();
+                                                foreach ($records as $rec) {
+                                                    $divId = $rec->division_id ?? ($rec->division_code ?? ($rec->site_location_code ?? null));
+                                                    $divName = $allDivisions[$divId] ?? 'Plant';
+                                                    $year = $rec->created_at ? date('Y', strtotime($rec->created_at)) : date('Y');
+                                                    $recordNoStr = str_pad($rec->record ?? ($rec->record_number ?? 0), 4, '0', STR_PAD_LEFT);
+                                                    
+                                                    $finalPrefix = $cfg['prefix'];
+                                                    if ($cfg['type'] == 'OOS/OOT') {
+                                                        $finalPrefix = $rec->Form_type ?? 'OOS';
+                                                    }
+                                                    
+                                                    $recordNumber = $divName . '/' . $finalPrefix . '/' . $year . '/' . $recordNoStr;
+
+                                                    $allRawData[] = (object)[
+                                                        'id' => $rec->id,
+                                                        'parent_id' => $rec->parent_id ?? ($rec->parent_record ?? null),
+                                                        'parent_type' => $rec->parent_type ?? null,
+                                                        'record' => $rec->record ?? ($rec->record_number ?? null),
+                                                        'type' => $cfg['type'],
+                                                        'division_id' => $divId,
+                                                        'short_description' => $rec->short_description ?? ($rec->short_desc ?? ($rec->description_gi ?? ($rec->description_ooc ?? ($rec->cpdescription ?? '-')))),
+                                                        'initiator_id' => $rec->initiator_id ?? ($rec->initiator ?? null),
+                                                        'initiated_through' => $rec->initiated_through ?? ($rec->initiated_through_gi ?? ($rec->initiated_by ?? '-')),
+                                                        'intiation_date' => $rec->intiation_date ?? null,
+                                                        'stage' => $rec->status ?? null,
+                                                        'date_open' => $rec->created_at ? ($rec->created_at instanceof \Carbon\Carbon ? $rec->created_at->toDateTimeString() : \Carbon\Carbon::parse($rec->created_at)->toDateTimeString()) : \Carbon\Carbon::now()->toDateTimeString(),
+                                                        'date_close' => $rec->updated_at ? ($rec->updated_at instanceof \Carbon\Carbon ? $rec->updated_at->toDateTimeString() : \Carbon\Carbon::parse($rec->updated_at)->toDateTimeString()) : null,
+                                                        'due_date' => $rec->due_date ?? ($rec->due_date_gi ?? null),
+                                                        'dashboard_unique_id' => $rec->dashboard_unique_id ?? null,
+                                                        'record_number' => $recordNumber,
+                                                    ];
+                                                }
+                                            }
+
+                                            $sortedData = collect($allRawData)->sortByDesc('date_open')->values()->toArray();
+                                            $tablesData = $sortedData;
+                                            $total_count = count($sortedData);
+                                        } else {
+                                            $datag = isset($datag) ? $datag : collect([]);
                                             $table = json_encode($datag);
                                             $tables = json_decode($table);
-                                            $total_count = count($datag);
+                                            if (is_array($tables)) {
+                                                $tables = (object)['data' => $tables];
+                                            }
+                                            if (!isset($tables->data)) {
+                                                $tables = (object)['data' => []];
+                                            }
+                                            $tablesData = is_array($tables->data) ? $tables->data : (is_object($tables->data) ? (array)$tables->data : []);
+                                            $total_count = count($tablesData);
+                                        }
 
+                                        $allUserRoles = DB::table('user_roles')
+                                            ->where('user_id', Auth::user()->id)
+                                            ->get(['q_m_s_divisions_id', 'q_m_s_roles_id'])
+                                            ->groupBy('q_m_s_divisions_id')
+                                            ->map(function($items) {
+                                                return $items->pluck('q_m_s_roles_id')->toArray();
+                                            })
+                                            ->toArray();
+
+                                        $allUserNames = DB::table('users')->pluck('name', 'id')->toArray();
+
+                                        $parentIdsByType = collect($tablesData)->groupBy('parent_type')->map(function($items) {
+                                            return $items->pluck('parent_id')->filter()->unique()->toArray();
+                                        })->toArray();
+
+                                        $parentUniqueIds = [];
+                                        foreach ($parentIdsByType as $type => $ids) {
+                                            if (empty($ids)) continue;
+                                            switch ($type) {
+                                                case 'Incident':
+                                                    $parentUniqueIds['Incident'] = DB::table('incidents')->whereIn('id', $ids)->pluck('dashboard_unique_id', 'id')->toArray();
+                                                    break;
+                                                case 'Internal Audit':
+                                                    $parentUniqueIds['Internal Audit'] = DB::table('internal_audits')->whereIn('id', $ids)->pluck('dashboard_unique_id', 'id')->toArray();
+                                                    break;
+                                                case 'External Audit':
+                                                    $parentUniqueIds['External Audit'] = DB::table('auditees')->whereIn('id', $ids)->pluck('dashboard_unique_id', 'id')->toArray();
+                                                    break;
+                                                case 'Management Review':
+                                                    $parentUniqueIds['Management Review'] = DB::table('management_reviews')->whereIn('id', $ids)->pluck('dashboard_unique_id', 'id')->toArray();
+                                                    break;
+                                                case 'OOC':
+                                                    $parentUniqueIds['OOC'] = DB::table('out_of_calibrations')->whereIn('id', $ids)->pluck('dashboard_unique_id', 'id')->toArray();
+                                                    break;
+                                            }
+                                        }
+
+                                        $allDivisions = DB::table('q_m_s_divisions')->pluck('name', 'id')->toArray();
+                                    @endphp
+
+                                    @if (request()->has('ajax_load'))
+                                        @php
+                                            if (ob_get_length()) ob_clean();
                                         @endphp
-                                        @foreach (collect($tables->data)->sortByDesc('date_open') as $datas)
-                                            @php
-                                                $userRoles = DB::table('user_roles')
-                                                    ->where([
-                                                        'user_id' => Auth::user()->id,
-                                                        'q_m_s_divisions_id' => $datas->division_id,
-                                                    ])
-                                                    ->pluck('q_m_s_roles_id')
-                                                    ->toArray();
+                                    @endif
 
-                                                $stagesToHide = [
-                                                    'Closed-Cancelled',
-                                                    'Closed - Cancelled',
-                                                    'Closed - Done',
-                                                    'Closed Done',
-                                                    'Closed-Reject',
-                                                    'Closed - Rejected',
-                                                    'Closed – Effective',
-                                                    'Closed – Not Effective',
-                                                ];
+                                    @foreach (collect($tablesData)->sortByDesc('date_open') as $datas)
+                                        @php
+                                            $userRoles = $allUserRoles[$datas->division_id] ?? [];
 
-                                                // Check if the stage is in the stagesToHide array
-                                                $hideRecord = in_array($datas->stage, $stagesToHide);
+                                            $stagesToHide = [
+                                                'Closed-Cancelled',
+                                                'Closed - Cancelled',
+                                                'Closed - Done',
+                                                'Closed Done',
+                                                'Closed-Reject',
+                                                'Closed - Rejected',
+                                                'Closed – Effective',
+                                                'Closed – Not Effective',
+                                            ];
 
-                                                // Check if the user has one of the allowed roles
-                                                $userHasAllowedRole = in_array(1, $userRoles);
-                                            @endphp
+                                            $hideRecord = in_array($datas->stage, $stagesToHide);
+                                            $userHasAllowedRole = in_array(1, $userRoles);
+                                        @endphp
 
-                                                <tr>
+                                        <tr>
                                                     <td>
                                                         @if ($datas->type == 'Change-Control')
                                                          @php 
@@ -1047,110 +1210,29 @@
                                                         data-bs-target="#record-modal">
                                                             {{ $datas->record_number ?? '-' }}
                                                     </td>
-                                                          
-                                               @php
-                                                    $findRecord = null;
-                                                @endphp
-
-                                                @if ($datas->parent_type == 'Change Control')
-                                                    @php
-                                                        $findRecord = DB::table('c_c_s')->find($datas->parent_id);
-                                                    @endphp
-                                                @elseif ($datas->parent_type == 'CC')
-                                                    @php
-                                                        $findRecord = DB::table('c_c_s')->find($datas->parent_id);
-                                                    @endphp    
-                                                @elseif ($datas->parent_type == 'Lab Incident')
-                                                    @php
-                                                        $findRecord = DB::table('lab_incidents')->find($datas->parent_id);
-                                                    @endphp
-                                                @elseif (in_array($datas->parent_type, ['OOS Chemical', 'OOS Micro', 'OOT']))
-                                                    @php
-                                                        $findRecord = DB::table('o_o_s')->find($datas->parent_id);
-                                                    @endphp
-                                                @elseif ($datas->parent_type == 'CAPA')
-                                                    @php
-                                                        $findRecord = DB::table('capas')->find($datas->parent_id);
-                                                    @endphp
-                                                @elseif ($datas->parent_type == 'Capa')
-                                                    @php
-                                                        $findRecord = DB::table('capas')->find($datas->parent_id);
-                                                    @endphp
-                                                    @elseif ($datas->parent_type == 'RCA')
-                                                    @php
-                                                        $findRecord = DB::table('root_cause_analyses')->find($datas->parent_id);
-                                                    @endphp
-                                                    @elseif ($datas->parent_type == 'Deviation')
-                                                    @php
-                                                        $findRecord = DB::table('deviations')->find($datas->parent_id);
-                                                    @endphp
-                                                    @elseif ($datas->parent_type == 'EffectivenessCheck')
-                                                    @php
-                                                        $findRecord = DB::table('effectiveness_checks')->find($datas->parent_id);
-                                                    @endphp
-                                                    @elseif ($datas->parent_type == 'Observation')
-                                                    @php
-                                                        $findRecord = DB::table('observations')->find($datas->parent_id);
-                                                    @endphp
-                                                    @elseif ($datas->parent_type == 'Audit_Program')
-                                                    @php
-                                                        $findRecord = DB::table('audit_programs')->find($datas->parent_id);
-                                                    @endphp
-                                                    @elseif ($datas->parent_type == 'Market Complaint')
-                                                    @php
-                                                        $findRecord = DB::table('marketcompalints')->find($datas->parent_id);
-                                                    @endphp
-                                                    @elseif ($datas->parent_type == 'Risk Assessment')
-                                                    @php
-                                                        $findRecord = DB::table('risk_management')->find($datas->parent_id);
-                                                    @endphp
-                                                     @elseif ($datas->parent_type == 'risk-assesment')
-                                                    @php
-                                                        $findRecord = DB::table('risk_management')->find($datas->parent_id);
-                                                    @endphp
-                                                    @elseif ($datas->parent_type == 'Incident')
-                                                    @php
-                                                        $findRecord = DB::table('incidents')->find($datas->parent_id);
-                                                    @endphp
-
-                                                    @elseif ($datas->parent_type == 'Internal Audit')
-                                                    @php
-                                                        $findRecord = DB::table('internal_audits')->find($datas->parent_id);
-                                                    @endphp
-
-                                                     @elseif ($datas->parent_type == 'External Audit')
-                                                    @php
-                                                        $findRecord = DB::table('auditees')->find($datas->parent_id);
-                                                    @endphp
-
-                                                     @elseif ($datas->parent_type == 'Management Review')
-                                                    @php
-                                                        $findRecord = DB::table('management_reviews')->find($datas->parent_id);
-                                                    @endphp
-                                                                                                        
-                                                    @elseif ($datas->parent_type == 'OOC')
-                                                    @php
-                                                        $findRecord = DB::table('out_of_calibrations')->find($datas->parent_id);
-                                                    @endphp
-                                                    
-                                                @endif
-                                              
-                                                <td>
-                                                    @if ($findRecord) 
-                                                        {{ str_pad($findRecord->dashboard_unique_id, 4, '0', STR_PAD_LEFT) }}
-                                                    @else
-                                                        -
-                                                    @endif
-                                                </td>
+                                                                                                         <td>
+                                                     @if ($datas->parent_id && $datas->parent_type)
+                                                         @php
+                                                             $pUniqueId = $parentUniqueIds[$datas->parent_type][$datas->parent_id] ?? null;
+                                                         @endphp
+                                                         @if ($pUniqueId)
+                                                             {{ str_pad($pUniqueId, 4, '0', STR_PAD_LEFT) }}
+                                                         @else
+                                                             -
+                                                         @endif
+                                                     @else
+                                                         -
+                                                     @endif
+                                                 </td>
 
                                                     <td class="viewdetails" data-id="{{ $datas->id }}"
                                                         data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                         data-bs-target="#record-modal">
-                                                        @if ($datas->division_id)
-                                                            {{ Helpers::getDivisionName($datas->division_id) }}
-                                                        @else
-                                                            -
-                                                        @endif
+                                                         @if ($datas->division_id)
+                                                             {{ $allDivisions[$datas->division_id] ?? 'Plant' }}
+                                                         @else
+                                                             -
+                                                         @endif
                                                     </td>
                                                     <td class="viewdetails" data-id="{{ $datas->id }}"
                                                         data-type="{{ $datas->type }}" data-bs-toggle="modal"
@@ -1179,7 +1261,7 @@
                                                     <td class="viewdetails" data-id="{{ $datas->id }}"
                                                         data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                         data-bs-target="#record-modal">
-                                                        {{ Helpers::getInitiatorName($datas->initiator_id) }}
+                                                        {{ $allUserNames[$datas->initiator_id] ?? '-' }}
                                                     </td>
                                                     <td class="viewdetails" data-id="{{ $datas->id }}"
                                                         data-type="{{ $datas->type }}" data-bs-toggle="modal"
@@ -1196,6 +1278,7 @@
 
                                                 </tr>
                                         @endforeach
+                                    @if (!request()->has('ajax_load'))
                                     </tbody>
                                 </table>
                             </div>
@@ -1247,6 +1330,26 @@
         </script>
         <script type='text/javascript'>
             $(document).ready(function() {
+                // Dynamic lazy loader for loading remaining records
+                const urlParams = new URLSearchParams(window.location.search);
+                const limit = urlParams.get('limit');
+                if (!limit || limit == '1' || limit == '50') {
+                    // Load full 2000+ records asynchronously in background via AJAX bypassing controller slowness
+                    $.ajax({
+                        url: '/rcms/qms-dashboard?ajax_load=1&_t=' + new Date().getTime(),
+                        type: 'GET',
+                        success: function(response) {
+                            var htmlContent = (response && response.html) ? response.html : response;
+                            if (typeof htmlContent === 'string' && htmlContent.trim() !== '') {
+                                $('#searchTable').empty().html(htmlContent);
+                            }
+                        },
+                        error: function() {
+                            $('#searchTable').html('<tr><td colspan="10" style="text-align: center; color: red; font-weight: bold; padding: 15px;">Failed to load records. Please refresh.</td></tr>');
+                        }
+                    });
+                }
+
                 $('#auditTable').on('click', '.viewdetails', function() {
                     var auditid = $(this).attr('data-id');
                     var formType = $(this).attr('data-type') == "OOS/OOT" ? "OOS_OOT" : $(this).attr(
@@ -1276,4 +1379,5 @@
                 });
             });
         </script>
+    @endif
     @endsection

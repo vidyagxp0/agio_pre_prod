@@ -173,7 +173,7 @@
                     <div>
                         <a href="/TMS">TMS Dashboard</a>
                     </div>
-                    <div><a href="/rcms/qms-dashboard">QMS-Dashboard</a></div>
+                    <div><a href="/rcms/qms-dashboard?limit=1">QMS-Dashboard</a></div>
                     @if (Auth::user())
                         @if (Helpers::checkRoles(3) || Helpers::checkRoles(1) || Helpers::checkRoles(2))
                             <div>
