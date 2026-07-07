@@ -1247,11 +1247,8 @@
                                                         {{ $datas->short_description }}
                                                     </td>
                                                     @php
-                                                        // $date = new \DateTime($datas->date_open);
-                                                        $date = new \DateTime($datas->date_open, new \DateTimeZone('UTC'));
-                                                        $date->setTimezone(new \DateTimeZone('Asia/Kolkata'));
-                                                        $formattedDate = $date->format('d-M-Y H:i:s');
-                                                    @endphp
+                                                         $formattedDate = \Carbon\Carbon::parse($datas->date_open)->format('d-M-Y H:i:s');
+                                                     @endphp
 
                                                     <td class="viewdetails" data-id="{{ $datas->id }}"
                                                         data-type="{{ $datas->type }}" data-bs-toggle="modal"
