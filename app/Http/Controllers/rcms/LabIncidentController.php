@@ -1005,20 +1005,33 @@ class LabIncidentController extends Controller
             $history->origin_state = $data->status;
             $history->save();
         }
-        if (!empty($data->description_incidence_gi)) {
+       
+
+        if (!empty(trim(strip_tags($data->description_incidence_gi ?? '')))) {
+
+            $cleanDescription = trim(
+                strip_tags(
+                    html_entity_decode($data->description_incidence_gi)
+                )
+            );
+
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Description Of Incidence';
-            $history->previous = "Null";
-            $history->current = $data->description_incidence_gi;
+
+            $history->previous = null; // "Null" string mat save karo
+            $history->current = $cleanDescription;
+
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->origin_state = $data->status;
+
             $history->save();
         }
         if (!empty($data->analyst_sign_date_gi)) {
@@ -3412,53 +3425,35 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->save();
         }
 
-        if ($lastDocument->description_incidence_gi != $data->description_incidence_gi ) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Description Of Incidence';
-            $history->previous = $lastDocument->description_incidence_gi;
-            $history->current = $data->description_incidence_gi;
-            $history->comment = $request->description_incidence_gi_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastDocument->description_incidence_gi) || $lastDocument->description_incidence_gi === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
+       
 
-        }
+                $oldInvestigation = trim(strip_tags(html_entity_decode($lastDocument->description_incidence_gi ?? '')));
+                    $newInvestigation = trim(strip_tags(html_entity_decode($data->description_incidence_gi ?? '')));
 
+                    if ($oldInvestigation !== $newInvestigation || !empty($request->comment)) {
 
-        // $previousAnalystName = User::find($lastDocument->analyst_sign_date_gi);
-        // $currentAnalystName = User::find($data['analyst_sign_date_gi']);
+                        $lastDataAuditTrail = LabIncidentAuditTrial::where('LabIncident_id', $data->id)
+                            ->where('activity_type', 'Description Of Incidence')
+                            ->exists();
 
-        // if ($lastDocument->analyst_sign_date_gi != $data['analyst_sign_date_gi']||$lastDocument->analyst_sign_date_gi != $data['analyst_sign_date_gi']){
-        //     $history = new LabIncidentAuditTrial();
-        //     $history->LabIncident_id = $data['id'];
-        //     $history->activity_type = 'Reported By';
-        //     $history->previous = $previousAnalystName ? $previousAnalystName->name : 'Unknown';
-        //     $history->current = $currentAnalystName ? $currentAnalystName->name : 'Unknown';
-        //     $history->comment = $request->analyst_sign_date_gi_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to = "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //      if (is_null($lastDocument->analyst_sign_date_gi) || $lastDocument->analyst_sign_date_gi === '') {
-        //         $history->action_name = "New";
-        //     } else {
-        //         $history->action_name = "Update";
-        //     }
-        //     $history->save();
+                        $history = new LabIncidentAuditTrial();
+                        $history->LabIncident_id = $data->id;
+                        $history->activity_type = 'Description Of Incidence';
+                        $history->previous = $oldInvestigation;
+                        $history->current = $newInvestigation;
+                        $history->comment = $request->comment ?? 'NA';
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->action_name = $lastDataAuditTrail ? "Update" : "New";
 
-        // }
+                        $history->save();
+                    }
+
+        
 
         if ($lastDocument->analyst_sign_date_gi != $data->analyst_sign_date_gi ) {
             $history = new LabIncidentAuditTrial();

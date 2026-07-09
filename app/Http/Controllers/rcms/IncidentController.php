@@ -277,107 +277,20 @@ class IncidentController extends Controller
                                     }
                                 }
 
-                            //     if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical')
-                            //     {
-                            //            $list = Helpers::getHeadoperationsUserList();
-                            //                 foreach ($list as $u) {
-                            //                     if ($u->q_m_s_divisions_id == $incident->division_id) {
-                            //                         $email = Helpers::getInitiatorEmail($u->user_id);
-                            //                         if ($email !== null) {
-                            //                              // Add this if statement
-                            //                              try {
-                            //                                 Mail::send(
-                            //                                     'mail.Categorymail',
-                            //                                     ['data' => $incident],
-                            //                                     function ($message) use ($email) {
-                            //                                         $message->to($email)
-                            //                                             ->subject("Activity Performed By " . Auth::user()->name);
-                            //                                     }
-                            //                                 );
-                            //                             } catch (\Exception $e) {
-                            //                                 //log error
-                            //                             }
+                           
+                if (!empty ($request->Initial_attachment)) {
+                    $files = [];
+                    if ($request->hasfile('Initial_attachment')) {
+                        foreach ($request->file('Initial_attachment') as $file) {
+                            // $name = $request->name . 'QA_Initial_Review_Attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $name = $request->name . "QA_Initial_Review_Attachments" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            $file->move('upload/', $name);
+                            $files[] = $name;
+                        }
+                    }
 
-                            //                         }
-                            //                     }
-                            //                 }
-                            //    }
-                                    //     if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
-                                    //         $list = Helpers::getCEOUserList();
-                                    //                 foreach ($list as $u) {
-                                    //                     if ($u->q_m_s_divisions_id == $incident->division_id) {
-                                    //                         $email = Helpers::getInitiatorEmail($u->user_id);
-                                    //                         if ($email !== null) {
-                                    //                              // Add this if statement
-                                    //                              try {
-                                    //                                     Mail::send(
-                                    //                                         'mail.Categorymail',
-                                    //                                         ['data' => $incident],
-                                    //                                         function ($message) use ($email) {
-                                    //                                             $message->to($email)
-                                    //                                                 ->subject("Activity Performed By " . Auth::user()->name);
-                                    //                                         }
-                                    //                                     );
-                                    //                                 } catch (\Exception $e) {
-                                    //                                     //log error
-                                    //                                 }
-
-                                    //                         }
-                                    //                     }
-                                    //                 }
-                                    //             }
-                                    //             if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
-                                    //                 $list = Helpers::getCorporateEHSHeadUserList();
-                                    //                         foreach ($list as $u) {
-                                    //                             if ($u->q_m_s_divisions_id == $incident->division_id) {
-                                    //                                 $email = Helpers::getInitiatorEmail($u->user_id);
-                                    //                                 if ($email !== null) {
-                                    //                                      // Add this if statement
-                                    //                                      try {
-                                    //                                             Mail::send(
-                                    //                                                 'mail.Categorymail',
-                                    //                                                 ['data' => $incident],
-                                    //                                                 function ($message) use ($email) {
-                                    //                                                     $message->to($email)
-                                    //                                                         ->subject("Activity Performed By " . Auth::user()->name);
-                                    //                                                 }
-                                    //                                             );
-                                    //                                         } catch (\Exception $e) {
-                                    //                                             //log error
-                                    //                                         }
-
-                                    //                                 }
-                                    //                             }
-                                    //                         }
-                                    //    }
-
-        //      if (!empty ($request->Initial_attachment)) {
-
-        //                 $files = [];
-
-        //                 if ($incident->Initial_attachment) {
-        //                     $existingFiles = json_decode($incident->Initial_attachment, true); // Convert to associative array
-        //                     if (is_array($existingFiles)) {
-        //                         $files = $existingFiles;
-        //                     }
-        //                 }
-
-
-        //   }
-
-  if (!empty ($request->Initial_attachment)) {
-    $files = [];
-    if ($request->hasfile('Initial_attachment')) {
-        foreach ($request->file('Initial_attachment') as $file) {
-            // $name = $request->name . 'QA_Initial_Review_Attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            $name = $request->name . "QA_Initial_Review_Attachments" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move('upload/', $name);
-            $files[] = $name;
-        }
-    }
-
-    $incident->Initial_attachment = json_encode($files);
-}
+                    $incident->Initial_attachment = json_encode($files);
+                }
 
 
         if (!empty ($request->qa_head_deginee_attachments)) {
@@ -594,176 +507,7 @@ class IncidentController extends Controller
 
 
 
-            //// Define an associative array to map the field keys to display names
-            //$fieldNames = [
-            //    'facility_name' => 'Name',
-            //    'IDnumber' => 'ID Number',
-            //    'Remarks' => 'Remarks'
-            //];
-
-            //foreach ($request->facility_name as $index => $facility_name) {
-            //    // Since this is a new entry, there are no previous details
-            //    $previousDetails = [
-            //        'facility_name' => null,
-            //        'IDnumber' => null,
-            //        'Remarks' => null,
-            //    ];
-
-            //    // Current fields values from the request
-            //    $fields = [
-            //        'facility_name' => $facility_name,
-            //        'IDnumber' => $request->IDnumber[$index],
-            //        'Remarks' => $request->Remarks[$index],
-            //    ];
-
-            //    foreach ($fields as $key => $currentValue) {
-            //        // Log changes for new rows (no previous value to compare)
-            //        if (!empty($currentValue)) {
-            //            // Only create an audit trail entry for new values
-            //            $history = new IncidentAuditTrail();
-            //            $history->incident_id = $incident->id;
-
-            //            // Set activity type to include field name and row index using the fieldNames array
-            //            $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
-
-            //            // Since this is a new entry, 'Previous' value is null
-            //            $history->previous = 'null'; // Previous value or 'null'
-
-            //            // Assign 'Current' value, which is the new value
-            //            $history->current = $currentValue; // New value
-
-            //            // Comments and user details
-            //            $history->comment = $request->equipment_comments[$index] ?? '';
-            //            $history->user_id = Auth::user()->id;
-            //            $history->user_name = Auth::user()->name;
-            //            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //            $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
-            //            $history->change_to = "Opened";
-            //            $history->change_from = "Initiation";
-            //            $history->action_name = "Create";
-
-            //            // Save the history record
-            //            $history->save();
-            //        }
-            //    }
-            //}
-
-
-
-
-
-
-            //// Define an associative array to map the field keys to display names
-            //$fieldNames = [
-            //    'Number' => 'Document Number',
-            //    'ReferenceDocumentName' => 'Document Name',
-            //    'Document_Remarks' => 'Remarks'
-            //];
-
-            //foreach ($request->Number as $index => $Number) {
-            //    // Since this is a new entry, there are no previous details
-            //    $previousDetails = [
-            //        'Number' => null,
-            //        'ReferenceDocumentName' => null,
-            //        'Document_Remarks' => null,
-            //    ];
-
-            //    // Current fields values from the request
-            //    $fields = [
-            //        'Number' => $Number,
-            //        'ReferenceDocumentName' => $request->ReferenceDocumentName[$index],
-            //        'Document_Remarks' => $request->Document_Remarks[$index],
-            //    ];
-
-            //    foreach ($fields as $key => $currentValue) {
-            //        // Log changes for new rows (no previous value to compare)
-            //        if (!empty($currentValue)) {
-            //            // Only create an audit trail entry for new values
-            //            $history = new IncidentAuditTrail();
-            //            $history->incident_id = $incident->id;
-
-            //            // Set activity type to include field name and row index using the fieldNames array
-            //            $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
-
-            //            // Since this is a new entry, 'Previous' value is null
-            //            $history->previous = 'null'; // Previous value or 'null'
-
-            //            // Assign 'Current' value, which is the new value
-            //            $history->current = $currentValue; // New value
-
-            //            // Comments and user details
-            //            $history->comment = $request->equipment_comments[$index] ?? '';
-            //            $history->user_id = Auth::user()->id;
-            //            $history->user_name = Auth::user()->name;
-            //            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //            $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
-            //            $history->change_to = "Opened";
-            //            $history->change_from = "Initiation";
-            //            $history->action_name = "Create";
-
-            //            // Save the history record
-            //            $history->save();
-            //        }
-            //    }
-            //}
-
-
-
-
-
-            //// Define an associative array to map the field keys to display names
-            //$fieldNames = [
-            //    'product_name' => 'Product / Material',
-            //    'product_stage' => 'Stage',
-            //    'batch_no' => 'A.R.No. / Batch No'
-            //];
-
-            //foreach ($request->product_name as $index => $product_name) {
-            //    // Since this is a new entry, there are no previous details
-            //    $previousDetails = [
-            //        'product_name' => null,
-            //        'product_stage' => null,
-            //        'batch_no' => null,
-            //    ];
-
-            //    // Current fields values from the request
-            //    $fields = [
-            //        'product_name' => $product_name,
-            //        'product_stage' => $request->product_stage[$index],
-            //        'batch_no' => $request->batch_no[$index],
-            //    ];
-
-            //    foreach ($fields as $key => $currentValue) {
-            //        // Log changes for new rows (no previous value to compare)
-            //        if (!empty($currentValue)) {
-            //            // Only create an audit trail entry for new values
-            //            $history = new IncidentAuditTrail();
-            //            $history->incident_id = $incident->id;
-
-            //            // Set activity type to include field name and row index using the fieldNames array
-            //            $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
-
-            //            // Since this is a new entry, 'Previous' value is null
-            //            $history->previous = 'null'; // Previous value or 'null'
-
-            //            // Assign 'Current' value, which is the new value
-            //            $history->current = $currentValue; // New value
-
-            //            // Comments and user details
-            //            $history->comment = $request->equipment_comments[$index] ?? '';
-            //            $history->user_id = Auth::user()->id;
-            //            $history->user_name = Auth::user()->name;
-            //            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //            $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
-            //            $history->change_to = "Opened";
-            //            $history->change_from = "Initiation";
-            //            $history->action_name = "Create";
-
-            //            // Save the history record
-            //            $history->save();
-            //        }
-            //    }
-            //}
+        
 
             $Cft = new IncidentCft();
             $Cft->incident_id = $incident->id;
@@ -1193,24 +937,7 @@ class IncidentController extends Controller
 
 
 
-            // if (!empty($request->record)){
-            //     $history = new IncidentAuditTrail();
-            //     $history->incident_id = $incident->id;
-            //     $history->activity_type = 'Record Number';
-            //     $history->activity_type = 'Record ';
-            //     $history->previous = "Null";
-            //     $history->current = Helpers::getDivisionName(session()->get('division')) . "/INC/" . Helpers::year($incident->created_at) . "/" . str_pad($incident->record, 4, '0', STR_PAD_LEFT);
-            //     $history->comment = "Not Applicable";
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $incident->status;
-            //     $history->change_to = "Opened";
-            //     $history->change_from = "Initiator";
-            //     $history->action_name = 'Create';
-            //     $history->save();
-            // }
-
+          
         if (!empty ($request->Initiator_Group)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
@@ -1731,80 +1458,47 @@ class IncidentController extends Controller
                 }
             }
 
-        // if (!empty($request->Description_incident)){
-        //     $history = new IncidentAuditTrail();
-        //     $history->incident_id = $incident->id;
-        //     $history->activity_type = 'Description of Incident';
-        //     $history->previous = "Null";
-        //     $history->current = $incident->Description_incident;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->change_to =   "Opened";
-        //     $history->change_from = "Initiator";
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $incident->status;
-        //     $history->action_name = 'Create';
-        //     $history->save();
-        // }
+        
 
-        // if (!empty($request->investigation)){
-        //     $history = new IncidentAuditTrail();
-        //     $history->incident_id = $incident->id;
-        //     $history->activity_type = 'Investigation';
-        //     $history->previous = "Null";
-        //     $history->current = $incident->investigation;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->change_to =   "Opened";
-        //     $history->change_from = "Initiator";
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $incident->status;
-        //     $history->action_name = 'Create';
-        //     $history->save();
-        // }
+            if (!empty(trim(strip_tags($request->Description_incident)))) {
 
-        if (!empty($request->Description_incident)){
-            // HTML tags remove karein
-            $cleanDescription = strip_tags($request->Description_incident);
+            $cleanDescription = trim(strip_tags(html_entity_decode($request->Description_incident)));
 
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Description of Incident';
-            $history->previous = "Null";
+            $history->previous = '';
             $history->current = $cleanDescription;
-            $history->comment = "Not Applicable";
+            $history->comment = 'Not Applicable';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_to = 'Opened';
+            $history->change_from = 'Initiator';
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
         }
 
-        if (!empty($request->investigation)){
-            // HTML tags remove karein
-            $cleanInvestigation = strip_tags($request->investigation);
+        if (!empty(trim(strip_tags($request->investigation)))) {
+
+            $cleanInvestigation = trim(strip_tags(html_entity_decode($request->investigation)));
 
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Investigation';
-            $history->previous = "Null";
+            $history->previous = '';
             $history->current = $cleanInvestigation;
-            $history->comment = "Not Applicable";
+            $history->comment = 'Not Applicable';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
+            $history->change_to = 'Opened';
+            $history->change_from = 'Initiator';
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
         }
-
         if (!empty ($request->immediate_correction)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
@@ -1841,38 +1535,7 @@ class IncidentController extends Controller
 
 
 
-        // if (!empty ($request->incident_date)){
-        //     $history = new IncidentAuditTrail();
-        //     $history->incident_id = $incident->id;
-        //     $history->activity_type = 'Incident Observed';
-        //     $history->previous = "Null";
-        //     $history->current = $incident->incident_date;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $incident->status;
-        //     $history->change_to =   "Opened";
-        //     $history->change_from = "Initiator";
-        //     $history->action_name = 'Create';
-        //     $history->save();
-        // }
-        //if (is_array($request->Facility) && $request->Facility[0] !== null){
-        //    $history = new IncidentAuditTrail();
-        //    $history->incident_id = $incident->id;
-        //    $history->activity_type = 'Observed by';
-        //    $history->previous = "Null";
-        //    $history->current = $incident->Facility;
-        //    $history->comment = "Not Applicable";
-        //    $history->user_id = Auth::user()->id;
-        //    $history->user_name = Auth::user()->name;
-        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //    $history->origin_state = $incident->status;
-        //    $history->change_to =   "Opened";
-        //    $history->change_from = "Initiator";
-        //    $history->action_name = 'Create';
-        //    $history->save();
-        //}
+       
 
         if (!empty($request->review_of_verific)){
             $history = new IncidentAuditTrail();
@@ -2319,39 +1982,7 @@ class IncidentController extends Controller
             $history->save();
         }
 
-        // if ($request->Post_Categorization){
-        //     $history = new IncidentAuditTrail();
-        //     $history->incident_id = $incident->id;
-        //     $history->activity_type = 'Post Categorization Of Incident';
-        //     $history->previous = "Null";
-        //     $history->current = $incident->Post_Categorization;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->change_to =   "Opened";
-        //     $history->change_from = "Initiator";
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $incident->status;
-        //     $history->action_name = 'Create';
-        //     $history->save();
-        // }
-
-        // if ($request->Investigation_Of_Review){
-        //     $history = new IncidentAuditTrail();
-        //     $history->incident_id = $incident->id;
-        //     $history->activity_type = 'Justification for Revised Category';
-        //     $history->previous = "Null";
-        //     $history->current = $incident->Investigation_Of_Review;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->change_to =   "Opened";
-        //     $history->change_from = "Initiator";
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $incident->status;
-        //     $history->action_name = 'Create';
-        //     $history->save();
-        // }
+       
 
         if (!empty($request->Closure_Comments)){
             $history = new IncidentAuditTrail();
@@ -2498,19 +2129,7 @@ class IncidentController extends Controller
                 'incident_date' => 'required',
                 'incident_time' => 'required',
                 'incident_reported_date' => 'required',
-                //'Delay_Justification' => [
-                //    function ($attribute, $value, $fail) use ($request) {
-                //        $incident_date = Carbon::parse($request->incident_date);
-                //        $reported_date = Carbon::parse($request->incident_reported_date);
-                //        $diff_in_days = $reported_date->diffInDays($incident_date);
-
-                //        if ($diff_in_days !== 0) {
-                //            if(!$request->Delay_Justification){
-                //                $fail('The Delay Justification is required!');
-                //            }
-                //        }
-                //    },
-                //],
+               
                 'Delay_Justification' => [
                     function ($attribute, $value, $fail) use ($request) {
 
@@ -2577,40 +2196,7 @@ class IncidentController extends Controller
                         }
                     },
                 ],
-                // 'ReferenceDocumentName' => [
-                //     function ($attribute, $value, $fail) use ($request) {
-                //         if ($request->input('Document_Details_Required') === 'yes' && (count($value) === 1 && reset($value) === null)) {
-                //             $fail('The Referrence Document Number field is required when Document Details Required is yes.');
-                //         }
-                //     },
-                // ],
-                // 'Description_incident' => [
-                //     'required',
-                //     'array',
-                //     function($attribute, $value, $fail) {
-                //         if (count($value) === 1 && reset($value) === null) {
-                //             return $fail('Description of Incident must not be empty!.');
-                //         }
-                //     },
-                // ],
-                // 'Immediate_Action' => [
-                //     'required',
-                //     'array',
-                //     function($attribute, $value, $fail) {
-                //         if (count($value) === 1 && reset($value) === null) {
-                //             return $fail('Immediate Action field must not be empty!.');
-                //         }
-                //     },
-                // ],
-                // 'Preliminary_Impact' => [
-                //     'required',
-                //     'array',
-                //     function($attribute, $value, $fail) {
-                //         if (count($value) === 1 && reset($value) === null) {
-                //             return $fail('Preliminary Impact field must not be empty!.');
-                //         }
-                //     },
-                // ],
+               
             ], [
 
                 'audit_type' => 'Incident related to field required!'
@@ -2738,9 +2324,7 @@ class IncidentController extends Controller
 
         $incident->short_description = $request->short_description;
         $incident->initiator_group_code = $request->initiator_group_code;
-        // $incident->incident_reported_date = $request->incident_reported_date;
-        // $incident->incident_reported_date == now();
-
+       
         $incident->incident_date = $request->incident_date;
         $incident->incident_time = $request->incident_time;
         $incident->Delay_Justification = $request->Delay_Justification;
@@ -2814,19 +2398,7 @@ class IncidentController extends Controller
         $incident->detection = $request->detection ? $request->detection: $incident->detection;
 
 
-        // $incident->equipment_name = $request->equipment_name;
-        // $incident->instrument_name = $request->instrument_name;
-        // $incident->inc_facility_name = $request->inc_facility_name;
-        // $incident->product_quality_imapct = $request->product_quality_imapct;
-        // $incident->process_performance_impact = $request->process_performance_impact;
-        // $incident->yield_impact = $request->yield_impact;
-        // $incident->gmp_impact = $request->gmp_impact;
-        // $incident->additionl_testing_required = $request->additionl_testing_required;
-        // $incident->any_similar_incident_in_past = $request->any_similar_incident_in_past;
-        // $incident->classification_by_qa = $request->classification_by_qa;
-        // $incident->capa_require = $request->capa_require;
-        // $incident->deviation_required = $request->deviation_required;
-
+       
         $newDataGridqrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' =>
         'failure_mode_qrms'])->firstOrCreate();
         $newDataGridqrms->incident_id = $id;
@@ -2871,337 +2443,7 @@ class IncidentController extends Controller
             }
 
             $Cft = IncidentCft::withoutTrashed()->where('incident_id', $id)->first();
-            // if($Cft && $incident->stage == 4 ){
-            //     $Cft->Production_Review = $request->Production_Review == null ? $Cft->Production_Review : $request->Production_Review;
-            //     $Cft->Production_person = $request->Production_person == null ? $Cft->Production_person : $request->Production_Review;
-            //     $Cft->Warehouse_review = $request->Warehouse_review == null ? $Cft->Warehouse_review : $request->Warehouse_review;
-            //     $Cft->Warehouse_notification = $request->Warehouse_notification == null ? $Cft->Warehouse_notification : $request->Warehouse_notification;
-            //     $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
-            //     $Cft->Quality_Control_Person = $request->Quality_Control_Person == null ? $Cft->Quality_Control_Person : $request->Quality_Control_Person;
-            //     $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review == null ? $Cft->Quality_Assurance_Review : $request->Quality_Assurance_Review;
-            //     $Cft->QualityAssurance_person = $request->QualityAssurance_person == null ? $Cft->QualityAssurance_person : $request->QualityAssurance_person;
-
-            //     $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
-            //     $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-            //     $Cft->Analytical_Development_review = $request->Analytical_Development_review == null ? $Cft->Analytical_Development_review : $request->Analytical_Development_review;
-            //     $Cft->Analytical_Development_person = $request->Analytical_Development_person == null ? $Cft->Analytical_Development_person : $request->Analytical_Development_person;
-            //     $Cft->Kilo_Lab_review = $request->Kilo_Lab_review == null ? $Cft->Kilo_Lab_review : $request->Kilo_Lab_review;
-            //     $Cft->Kilo_Lab_person = $request->Kilo_Lab_person == null ? $Cft->Kilo_Lab_person : $request->Kilo_Lab_person;
-            //     $Cft->Technology_transfer_review = $request->Technology_transfer_review == null ? $Cft->Technology_transfer_review : $request->Technology_transfer_review;
-            //     $Cft->Technology_transfer_person = $request->Technology_transfer_person == null ? $Cft->Technology_transfer_person : $request->Technology_transfer_person;
-            //     $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
-            //     $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
-            //     $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
-            //     $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-            //     $Cft->Project_management_review = $request->Project_management_review == null ? $Cft->Project_management_review : $request->Project_management_review;
-            //     $Cft->Project_management_person = $request->Project_management_person == null ? $Cft->Project_management_person : $request->Project_management_person;
-            //     $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
-            //     $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
-            //     $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
-            //     $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
-            //     $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
-            //     $Cft->Other2_review = $request->Other2_review  == null ? $Cft->Other2_review : $request->Other2_review;
-            //     $Cft->Other2_person = $request->Other2_person  == null ? $Cft->Other2_person : $request->Other2_person;
-            //     $Cft->Other2_Department_person = $request->Other2_Department_person  == null ? $Cft->Other2_Department_person : $request->Other2_Department_person;
-            //     $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
-            //     $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
-            //     $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
-            //     $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
-            //     $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
-            //     $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
-            //     $Cft->Other5_review = $request->Other5_review  == null ? $Cft->Other5_review : $request->Other5_review;
-            //     $Cft->Other5_person = $request->Other5_person  == null ? $Cft->Other5_person : $request->Other5_person;
-            //     $Cft->Other5_Department_person = $request->Other5_Department_person  == null ? $Cft->Other5_Department_person : $request->Other5_Department_person;
-            // }
-            // else{
-            //     $Cft->Production_Review = $request->Production_Review;
-            //     $Cft->Production_person = $request->Production_person;
-            //     $Cft->Warehouse_review = $request->Warehouse_review;
-            //     $Cft->Warehouse_notification = $request->Warehouse_notification;
-            //     $Cft->Quality_review = $request->Quality_review;
-            //     $Cft->Quality_Control_Person = $request->Quality_Control_Person;
-            //     $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review;
-            //     $Cft->QualityAssurance_person = $request->QualityAssurance_person;
-            //     $Cft->Engineering_review = $request->Engineering_review;
-            //     $Cft->Engineering_person = $request->Engineering_person;
-            //     $Cft->Analytical_Development_review = $request->Analytical_Development_review;
-            //     $Cft->Analytical_Development_person = $request->Analytical_Development_person;
-            //     $Cft->Kilo_Lab_review = $request->Kilo_Lab_review;
-            //     $Cft->Kilo_Lab_person = $request->Kilo_Lab_person;
-            //     $Cft->Technology_transfer_review = $request->Technology_transfer_review;
-            //     $Cft->Technology_transfer_person = $request->Technology_transfer_person;
-            //     $Cft->Environment_Health_review = $request->Environment_Health_review;
-            //     $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
-            //     $Cft->Human_Resource_review = $request->Human_Resource_review;
-            //     $Cft->Human_Resource_person = $request->Human_Resource_person;
-            //     $Cft->Project_management_review = $request->Project_management_review;
-            //     $Cft->Project_management_person = $request->Project_management_person;
-            //     $Cft->Information_Technology_review = $request->Information_Technology_review;
-            //     $Cft->Information_Technology_person = $request->Information_Technology_person;
-            //     $Cft->Other1_review = $request->Other1_review;
-            //     $Cft->Other1_person = $request->Other1_person;
-            //     $Cft->Other1_Department_person = $request->Other1_Department_person;
-            //     $Cft->Other2_review = $request->Other2_review;
-            //     $Cft->Other2_person = $request->Other2_person;
-            //     $Cft->Other2_Department_person = $request->Other2_Department_person;
-            //     $Cft->Other3_review = $request->Other3_review;
-            //     $Cft->Other3_person = $request->Other3_person;
-            //     $Cft->Other3_Department_person = $request->Other3_Department_person;
-            //     $Cft->Other4_review = $request->Other4_review;
-            //     $Cft->Other4_person = $request->Other4_person;
-            //     $Cft->Other4_Department_person = $request->Other4_Department_person;
-            //     $Cft->Other5_review = $request->Other5_review;
-            //     $Cft->Other5_person = $request->Other5_person;
-            //     $Cft->Other5_Department_person = $request->Other5_Department_person;
-            // }
-            // $Cft->Production_assessment = $request->Production_assessment;
-            // $Cft->Production_feedback = $request->Production_feedback;
-            // $Cft->Warehouse_assessment = $request->Warehouse_assessment;
-            // $Cft->Warehouse_feedback = $request->Warehouse_feedback;
-            // $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
-            // $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
-            // $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
-            // $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
-            // $Cft->Engineering_assessment = $request->Engineering_assessment;
-            // $Cft->Engineering_feedback = $request->Engineering_feedback;
-            // $Cft->Analytical_Development_assessment = $request->Analytical_Development_assessment;
-            // $Cft->Analytical_Development_feedback = $request->Analytical_Development_feedback;
-            // $Cft->Kilo_Lab_assessment = $request->Kilo_Lab_assessment;
-            // $Cft->Kilo_Lab_feedback = $request->Kilo_Lab_feedback;
-            // $Cft->Technology_transfer_assessment = $request->Technology_transfer_assessment;
-            // $Cft->Technology_transfer_feedback = $request->Technology_transfer_feedback;
-            // $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
-            // $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
-            // $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
-            // $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
-            // $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
-            // $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-            // $Cft->Project_management_assessment = $request->Project_management_assessment;
-            // $Cft->Project_management_feedback = $request->Project_management_feedback;
-            // $Cft->Other1_assessment = $request->Other1_assessment;
-            // $Cft->Other1_feedback = $request->Other1_feedback;
-            // $Cft->Other2_Assessment = $request->Other2_Assessment;
-            // $Cft->Other2_feedback = $request->Other2_feedback;
-            // $Cft->Other3_Assessment = $request->Other3_Assessment;
-            // $Cft->Other3_feedback = $request->Other3_feedback;
-            // $Cft->Other4_Assessment = $request->Other4_Assessment;
-            // $Cft->Other4_feedback = $request->Other4_feedback;
-            // $Cft->Other5_Assessment = $request->Other5_Assessment;
-            // $Cft->Other5_feedback = $request->Other5_feedback;
-
-
-            // if (!empty ($request->production_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('production_attachment')) {
-            //         foreach ($request->file('production_attachment') as $file) {
-            //             $name = $request->name . 'production_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-            //     $Cft->production_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Warehouse_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Warehouse_attachment')) {
-            //         foreach ($request->file('Warehouse_attachment') as $file) {
-            //             $name = $request->name . 'Warehouse_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-            //     $Cft->Warehouse_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Quality_Control_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Quality_Control_attachment')) {
-            //         foreach ($request->file('Quality_Control_attachment') as $file) {
-            //             $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-            //     $Cft->Quality_Control_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Quality_Assurance_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Quality_Assurance_attachment')) {
-            //         foreach ($request->file('Quality_Assurance_attachment') as $file) {
-            //             $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-
-            //     $Cft->Quality_Assurance_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Engineering_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Engineering_attachment')) {
-            //         foreach ($request->file('Engineering_attachment') as $file) {
-            //             $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-
-            //     $Cft->Engineering_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Analytical_Development_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Analytical_Development_attachment')) {
-            //         foreach ($request->file('Analytical_Development_attachment') as $file) {
-            //             $name = $request->name . 'Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-
-            //     $Cft->Analytical_Development_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Kilo_Lab_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Kilo_Lab_attachment')) {
-            //         foreach ($request->file('Kilo_Lab_attachment') as $file) {
-            //             $name = $request->name . 'Kilo_Lab_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-            //     $Cft->Kilo_Lab_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Technology_transfer_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Technology_transfer_attachment')) {
-            //         foreach ($request->file('Technology_transfer_attachment') as $file) {
-            //             $name = $request->name . 'Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-            //     $Cft->Technology_transfer_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Environment_Health_Safety_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Environment_Health_Safety_attachment')) {
-            //         foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
-            //             $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-
-            //     $Cft->Environment_Health_Safety_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Human_Resource_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Human_Resource_attachment')) {
-            //         foreach ($request->file('Human_Resource_attachment') as $file) {
-            //             $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-            //     $Cft->Human_Resource_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Information_Technology_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Information_Technology_attachment')) {
-            //         foreach ($request->file('Information_Technology_attachment') as $file) {
-            //             $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-
-            //     $Cft->Information_Technology_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Project_management_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Project_management_attachment')) {
-            //         foreach ($request->file('Project_management_attachment') as $file) {
-            //             $name = $request->name . 'Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-            //     $Cft->Project_management_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Other1_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Other1_attachment')) {
-            //         foreach ($request->file('Other1_attachment') as $file) {
-            //             $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-
-            //     $Cft->Other1_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Other2_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Other2_attachment')) {
-            //         foreach ($request->file('Other2_attachment') as $file) {
-            //             $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-
-            //     $Cft->Other2_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Other3_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Other3_attachment')) {
-            //         foreach ($request->file('Other3_attachment') as $file) {
-            //             $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-            //     $Cft->Other3_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Other4_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Other4_attachment')) {
-            //         foreach ($request->file('Other4_attachment') as $file) {
-            //             $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-            //     $Cft->Other4_attachment = json_encode($files);
-            // }
-            // if (!empty ($request->Other5_attachment)) {
-            //     $files = [];
-            //     if ($request->hasfile('Other5_attachment')) {
-            //         foreach ($request->file('Other5_attachment') as $file) {
-            //             $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //             $file->move('upload/', $name);
-            //             $files[] = $name;
-            //         }
-            //     }
-
-
-            //     $Cft->Other5_attachment = json_encode($files);
-            // }
-
+           
 
                 $Cft->save();
 
@@ -3247,27 +2489,6 @@ class IncidentController extends Controller
 
         }
 
-        // if (!empty ($request->Initial_attachment)) {
-
-        //     $files = [];
-
-        //     if ($incident->Initial_attachment) {
-        //         $existingFiles = json_decode($incident->Initial_attachment, true); // Convert to associative array
-        //         if (is_array($existingFiles)) {
-        //             $files = $existingFiles;
-        //         }
-        //         // $files = is_array(json_decode($incident->Initial_attachment)) ? $incident->Initial_attachment : [];
-        //     }
-
-        //     if ($request->hasfile('Initial_attachment')) {
-        //         foreach ($request->file('Initial_attachment') as $file) {
-        //             $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $incident->Initial_attachment = json_encode($files);
-        // }
 
         // third attachment
         // Initial_attachment logic
@@ -3323,41 +2544,7 @@ class IncidentController extends Controller
         $incident->qa_head_deginee_attachments = json_encode($allFiles);
     }
 
-        //if (!empty ($request->qa_head_deginee_attachments)) {
-        //    $files = [];
-        //    if ($request->hasfile('qa_head_deginee_attachments')) {
-        //        foreach ($request->file('qa_head_deginee_attachments') as $file) {
-        //            $name = $request->name . 'qa_head_deginee_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //            $file->move('upload/', $name);
-        //            $files[] = $name;
-        //        }
-        //    }
-
-
-        //    $incident->qa_head_deginee_attachments = json_encode($files);
-        //}
-
-        // if (!empty ($request->Audit_file)) {
-
-        //     $files = [];
-
-        //     if ($incident->Audit_file) {
-        //         $existingFiles = json_decode($incident->Audit_file, true); // Convert to associative array
-        //         if (is_array($existingFiles)) {
-        //             $files = $existingFiles;
-        //         }
-        //         // $files = is_array(json_decode($incident->Audit_file)) ? $incident->Audit_file : [];
-        //     }
-
-        //     if ($request->hasfile('Audit_file')) {
-        //         foreach ($request->file('Audit_file') as $file) {
-        //             $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $incident->Audit_file = json_encode($files);
-        // }
+       
 // Audit_file attachment logic
 if (!empty($request->Audit_file) || !empty($request->deleted_Audit_file)) {
     $existingFiles = json_decode($incident->Audit_file, true) ?? [];
@@ -3385,27 +2572,7 @@ if (!empty($request->Audit_file) || !empty($request->deleted_Audit_file)) {
 }
 
 
-        // if (!empty ($request->hod_attachments)) {
-
-        //     $files = [];
-
-        //     if ($incident->hod_attachments) {
-        //         $existingFiles = json_decode($incident->hod_attachments, true); // Convert to associative array
-        //         if (is_array($existingFiles)) {
-        //             $files = $existingFiles;
-        //         }
-        //         // $files = is_array(json_decode($incident->Audit_file)) ? $incident->Audit_file : [];
-        //     }
-
-        //     if ($request->hasfile('hod_attachments')) {
-        //         foreach ($request->file('hod_attachments') as $file) {
-        //             $name = $request->name . 'hod_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $incident->hod_attachments = json_encode($files);
-        // }
+       
 
         // HOD_attachments logic
 if (!empty($request->hod_attachments) || !empty($request->deleted_hod_attachments)) {
@@ -3481,28 +2648,7 @@ if (!empty($request->hod_attachments) || !empty($request->deleted_hod_attachment
 
             $incident->QA_attachment = json_encode($files);
         }
-        // if (!empty ($request->qa_head_attachments)) {
-        //     $files = [];
-
-        //     if ($incident->qa_head_attachments) {
-        //         $existingFiles = json_decode($incident->qa_head_attachments, true); // Convert to associative array
-        //         if (is_array($existingFiles)) {
-        //             $files = $existingFiles;
-        //         }
-        //         // $files = is_array(json_decode($incident->qa_head_attachments)) ? $incident->qa_head_attachments : [];
-        //     }
-
-        //     if ($request->hasfile('qa_head_attachments')) {
-        //         foreach ($request->file('qa_head_attachments') as $file) {
-        //             $name = $request->name . 'qa_head_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-
-
-        //     $incident->qa_head_attachments = json_encode($files);
-        // }
+       
         // QA Head Attachments logic
 if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_attachments)) {
     $existingFiles = json_decode($incident->qa_head_attachments, true) ?? [];
@@ -3529,28 +2675,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
     $incident->qa_head_attachments = json_encode($allFiles);
 }
 
-        // if (!empty ($request->qa_final_ra_attachments)) {
-        //     $files = [];
-
-        //     if ($incident->qa_final_ra_attachments) {
-        //         $existingFiles = json_decode($incident->qa_final_ra_attachments, true); // Convert to associative array
-        //         if (is_array($existingFiles)) {
-        //             $files = $existingFiles;
-        //         }
-        //         // $files = is_array(json_decode($incident->qa_final_ra_attachments)) ? $incident->qa_final_ra_attachments : [];
-        //     }
-
-        //     if ($request->hasfile('qa_final_ra_attachments')) {
-        //         foreach ($request->file('qa_final_ra_attachments') as $file) {
-        //             $name = $request->name . 'qa_final_ra_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-
-
-        //     $incident->qa_final_ra_attachments = json_encode($files);
-        // }
+        
     // QA Final Review Attachments logic
     if (!empty($request->qa_final_ra_attachments) || !empty($request->deleted_qa_final_ra_attachments)) {
         $existingFiles = json_decode($incident->qa_final_ra_attachments, true) ?? [];
@@ -3655,30 +2780,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
            
        
-        // if (!empty ($request->closure_attachment)) {
-
-        //     $files = [];
-
-        //     if ($incident->closure_attachment) {
-        //         $existingFiles = json_decode($incident->closure_attachment, true); // Convert to associative array
-        //         if (is_array($existingFiles)) {
-        //             $files = $existingFiles;
-        //         }
-        //         // $files = is_array(json_decode($incident->closure_attachment)) ? $incident->closure_attachment : [];
-        //     }
-
-        //     if ($request->hasfile('closure_attachment')) {
-        //         foreach ($request->file('closure_attachment') as $file) {
-        //             $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-
-
-        //     $incident->closure_attachment = json_encode($files);
-        // }
-
+       
         // Closure Attachments logic
         if (!empty($request->closure_attachment) || !empty($request->deleted_closure_attachment)) {
             $existingFiles = json_decode($incident->closure_attachment, true) ?? [];
@@ -4398,45 +3500,59 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     }
                 }
 
-            if($lastIncident->Description_incident != $incident->Description_incident || !empty ($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Description of Incident')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Description of Incident';
-                $history->previous =  $lastIncident->Description_incident;
-                $history->current = $incident->Description_incident;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
+           
 
-            if($lastIncident->investigation != $incident->investigation || !empty($request->comment)) {
-                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                 ->where('activity_type', 'investigation')
-                                 ->exists();
-                 $history = new IncidentAuditTrail();
-                 $history->incident_id = $incident->id;
-                 $history->activity_type = 'Investigation';
-                 $history->previous =  $lastIncident->investigation;
-                 $history->current = $incident->investigation;
-                 $history->comment = $request->comment;
-                 $history->user_id = Auth::user()->id;
-                 $history->user_name = Auth::user()->name;
-                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                 $history->origin_state = $lastIncident->status;
-                 $history->change_to = "Not Applicable";
-                 $history->change_from = $lastIncident->status;
-                 $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                 $history->save();
-             }
+                    $oldDescription = trim(strip_tags(html_entity_decode($lastIncident->Description_incident ?? '')));
+                    $newDescription = trim(strip_tags(html_entity_decode($incident->Description_incident ?? '')));
+
+                    if ($oldDescription !== $newDescription || !empty($request->comment)) {
+
+                        $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                            ->where('activity_type', 'Description of Incident')
+                            ->exists();
+
+                        $history = new IncidentAuditTrail();
+                        $history->incident_id = $incident->id;
+                        $history->activity_type = 'Description of Incident';
+                        $history->previous = $oldDescription;
+                        $history->current = $newDescription;
+                        $history->comment = $request->comment ?? 'NA';
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastIncident->status;
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = $lastIncident->status;
+                        $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+
+                        $history->save();
+                    }
+
+                    $oldInvestigation = trim(strip_tags(html_entity_decode($lastIncident->investigation ?? '')));
+                    $newInvestigation = trim(strip_tags(html_entity_decode($incident->investigation ?? '')));
+
+                    if ($oldInvestigation !== $newInvestigation || !empty($request->comment)) {
+
+                        $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                            ->where('activity_type', 'Investigation')
+                            ->exists();
+
+                        $history = new IncidentAuditTrail();
+                        $history->incident_id = $incident->id;
+                        $history->activity_type = 'Investigation';
+                        $history->previous = $oldInvestigation;
+                        $history->current = $newInvestigation;
+                        $history->comment = $request->comment ?? 'NA';
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastIncident->status;
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = $lastIncident->status;
+                        $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+
+                        $history->save();
+                    }
 
             if($lastIncident->immediate_correction != $incident->immediate_correction || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
@@ -4682,45 +3798,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
 
 
-            // if($lastIncident->Initiator_Group !=$incident->Initiator_Group || !empty($request->Initiator_Group)) {
-            //     $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-            //                     ->where('activity_type', 'Initiator Group')
-            //                     ->exists();
-            //     $history = new IncidentAuditTrail();
-            //     $history->incident_id = $incident->id;
-            //     $history->activity_type = 'Initiator Group';
-            //     $history->previous =  $lastIncident->Initiator_Group;
-            //     $history->current = $incident->Initiator_Group;
-            //     $history->comment = $request->comment;
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state= $lastIncident->status;
-            //     $history->change_to= "Not Applicable";
-            //     $history->change_from= $lastIncident->status;
-            //     $history->action_name=$lastDataAuditTrail ? "Update" : "New";
-            //     $history->save();
-            // }
-
-            //if($lastIncident->Facility !=$incident->Facility || !empty($request->comment)) {
-            //    $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-            //                    ->where('activity_type', 'Initiator Group')
-            //                    ->exists();
-            //    $history = new IncidentAuditTrail();
-            //    $history->incident_id = $incident->id;
-            //    $history->activity_type = 'Facility';
-            //    $history->previous =  $lastIncident->Facility;
-            //    $history->current = $incident->Facility;
-            //    $history->comment = $request->comment;
-            //    $history->user_id = Auth::user()->id;
-            //    $history->user_name = Auth::user()->name;
-            //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //    $history->origin_state= $lastIncident->status;
-            //    $history->change_to= "Not Applicable";
-            //    $history->change_from= $lastIncident->status;
-            //    $history->action_name=$lastDataAuditTrail ? "Update" : "New";
-            //    $history->save();
-            //}
+          
 
 
             if($lastIncident->Delay_Justification != $incident->Delay_Justification || !empty($request->Delay_Justification_comment)) {
@@ -4758,25 +3836,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
 
 
-            // if($lastIncident->Preliminary_Impact !=$incident->Preliminary_Impact || !empty($request->comment)) {
-            //     $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-            //                     ->where('activity_type', 'Preliminary Impact')
-            //                     ->exists();
-            //     $history = new IncidentAuditTrail();
-            //     $history->incident_id = $incident->id;
-            //     $history->activity_type = 'Preliminary Impact';
-            //     $history->previous =  $lastIncident->Preliminary_Impact;
-            //     $history->current = $incident->Preliminary_Impact;
-            //     $history->comment = $request->comment;
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state= $lastIncident->status;
-            //     $history->change_to= "Not Applicable";
-            //     $history->change_from= $lastIncident->status;
-            //     $history->action_name=$lastDataAuditTrail ? "Update" : "New";
-            //     $history->save();
-            // }
+           
 
 
             if($lastIncident->HOD_Remarks != $incident->HOD_Remarks || !empty($request->comment)) {
@@ -5799,17 +4859,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->change_to =   "HOD Initial Review";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'More Info Required';
-                // if (is_null($lastDocument->Qa_more_info_req_by) || $lastDocument->Qa_more_info_req_by === '') {
-                //     $history->previous = "";
-                // } else {
-                //     $history->previous = $lastDocument->Qa_more_info_req_by . ' , ' . $lastDocument->Qa_more_info_req_on;
-                // }
-                // $history->current = $incident->Qa_more_info_req_by . ' , ' . $incident->Qa_more_info_req_on;
-                // if (is_null($lastDocument->Qa_more_info_req_by) || $lastDocument->Qa_more_info_req_by === '') {
-                //     $history->action_name = 'New';
-                // } else {
-                //     $history->action_name = 'Update';
-                // }
+                
                  $history->save();
                 $incident->update();
                 $history = new IncidentHistory();
@@ -6485,26 +5535,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
         $history->stage_id = $incident->stage;
         $history->status = "Send to Initiator";
         $history->save();
-        // foreach ($list as $u) {
-        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
-        //         $email = Helpers::getInitiatorEmail($u->user_id);
-        //         if ($email !== null) {
-
-        //             try {
-        //                 Mail::send(
-        //                     'mail.view-mail',
-        //                     ['data' => $incident],
-        //                     function ($message) use ($email) {
-        //                         $message->to($email)
-        //                             ->subject("Activity Performed By " . Auth::user()->name);
-        //                     }
-        //                 );
-        //             } catch (\Exception $e) {
-        //                 //log error
-        //             }
-        //         }
-        //     }
-        // }
+        
         $incident->update();
         toastr()->success('Document Sent');
         return back();
@@ -6552,26 +5583,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
         $history->stage_id = $incident->stage;
         $history->status = "Send to HOD Review";
         $history->save();
-        // foreach ($list as $u) {
-        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
-        //         $email = Helpers::getInitiatorEmail($u->user_id);
-        //         if ($email !== null) {
-
-        //             try {
-        //                 Mail::send(
-        //                     'mail.view-mail',
-        //                     ['data' => $incident],
-        //                     function ($message) use ($email) {
-        //                         $message->to($email)
-        //                             ->subject("Activity Performed By " . Auth::user()->name);
-        //                     }
-        //                 );
-        //             } catch (\Exception $e) {
-        //                 //log error
-        //             }
-        //         }
-        //     }
-        // }
+       
         $incident->update();
         toastr()->success('Document Sent');
         return back();
@@ -6619,26 +5631,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
         $history->stage_id = $incident->stage;
         $history->status = "Send to QA Initial Review";
         $history->save();
-        // foreach ($list as $u) {
-        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
-        //         $email = Helpers::getInitiatorEmail($u->user_id);
-        //         if ($email !== null) {
-
-        //             try {
-        //                 Mail::send(
-        //                     'mail.view-mail',
-        //                     ['data' => $incident],
-        //                     function ($message) use ($email) {
-        //                         $message->to($email)
-        //                             ->subject("Activity Performed By " . Auth::user()->name);
-        //                     }
-        //                 );
-        //             } catch (\Exception $e) {
-        //                 //log error
-        //             }
-        //         }
-        //     }
-        // }
+      
         $incident->update();
         toastr()->success('Document Sent');
         return back();
@@ -6689,26 +5682,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
         $history->stage_id = $incident->stage;
         $history->status = "Send to Pending Initiator Update";
         $history->save();
-        // foreach ($list as $u) {
-        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
-        //         $email = Helpers::getInitiatorEmail($u->user_id);
-        //         if ($email !== null) {
-
-        //             try {
-        //                 Mail::send(
-        //                     'mail.view-mail',
-        //                     ['data' => $incident],
-        //                     function ($message) use ($email) {
-        //                         $message->to($email)
-        //                             ->subject("Activity Performed By " . Auth::user()->name);
-        //                     }
-        //                 );
-        //             } catch (\Exception $e) {
-        //                 //log error
-        //             }
-        //         }
-        //     }
-        // }
+       
         $incident->update();
         toastr()->success('Document Sent');
         return back();
@@ -6877,104 +5851,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                         ]);
                     }
 
-                    //rca child validation
-                    // $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                    //     ->where('parent_type', 'Incident')
-                    //     ->get();
-                    //         $hasPendingRCA = false;
-                    //     foreach ($rcachilds as $ext) {
-                    //             $rcachildstatus = trim(strtolower($ext->status));
-                    //             if ($rcachildstatus !== 'closed - done' && $rcachildstatus !==
-                    //                 'closed-cancelled' ) {
-                    //                 $hasPendingRCA = true;
-                    //                 break;
-                    //             }
-                    //         }
-                    // if ($hasPendingRCA) {
-                    //     // $rcachildstatus = trim(strtolower($extensionchild->status));
-                    //     if ($hasPendingRCA) {
-                    //         Session::flash('swal', [
-                    //             'title' => 'RCA Child Pending!',
-                    //             'message' => 'You cannot proceed until RCA Child is Closed-Done.',
-                    //             'type' => 'warning',
-                    //         ]);
-
-                    //     return redirect()->back();
-                    //     }
-                    // } else {
-                    //     // Flash message for success (when the form is filled correctly)
-                    //     Session::flash('swal', [
-                    //         'title' => 'Success!',
-                    //         'message' => 'Document Sent',
-                    //         'type' => 'success',
-                    //     ]);
-                    // }
-
-                    // //action item child validation
-
-                    // $actionchilds = ActionItem::where('parent_id', $id)
-                    //     ->where('parent_type', 'Incident')
-                    //     ->get();
-                    //         $hasPendingaction = false;
-                    //     foreach ($actionchilds as $ext) {
-                    //             $actionchildstatus = trim(strtolower($ext->status));
-                    //             if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
-                    //                 $hasPendingaction = true;
-                    //                 break;
-                    //             }
-                    //         }
-                    // if ($hasPendingaction) {
-                    //     // $actionchildstatus = trim(strtolower($extensionchild->status));
-                    //     if ($hasPendingaction) {
-                    //         Session::flash('swal', [
-                    //             'title' => 'Action Item Child Pending!',
-                    //             'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                    //             'type' => 'warning',
-                    //         ]);
-
-                    //     return redirect()->back();
-                    //     }
-                    // } else {
-                    //     // Flash message for success (when the form is filled correctly)
-                    //     Session::flash('swal', [
-                    //         'title' => 'Success!',
-                    //         'message' => 'Document Sent',
-                    //         'type' => 'success',
-                    //     ]);
-                    // }
-
-                    // //CAPA child validations
-                    // $capachilds = Capa::where('parent_id', $id)
-                    //     ->where('parent_type', 'Incident')
-                    //     ->get();
-                    //     $hasPendingcapa = false;
-                    //     foreach($capachilds as $ext) {
-                    //             $capachildstatus = trim(strtolower($ext->status));
-                    //             if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed - cancelled') {
-                    //                 $hasPendingcapa = true;
-                    //                 break;
-                    //             }
-                    //         }
-                    // if ($hasPendingcapa) {
-                    //     // $capachildstatus = trim(strtolower($extensionchild->status));
-                    //     if ($hasPendingcapa) {
-                    //         Session::flash('swal', [
-                    //             'title' => 'CAPA Child Pending!',
-                    //             'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
-                    //             'type' => 'warning',
-                    //         ]);
-
-                    //     return redirect()->back();
-                    //     }
-                    // } else {
-                    //     // Flash message for success (when the form is filled correctly)
-                    //     Session::flash('swal', [
-                    //         'title' => 'Success!',
-                    //         'message' => 'Document Sent',
-                    //         'type' => 'success',
-                    //     ]);
-                    // }
-
+                   
 
 
                     $incident->stage = "3";
@@ -7521,37 +6398,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                         ]);
                     }
 
-                    // //CAPA child validations
-                    // $capachilds = Capa::where('parent_id', $id)
-                    //     ->where('parent_type', 'Incident')
-                    //     ->get();
-                    //     $hasPendingcapa = false;
-                    //     foreach($capachilds as $ext) {
-                    //             $capachildstatus = trim(strtolower($ext->status));
-                    //             if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed - cancelled') {
-                    //                 $hasPendingcapa = true;
-                    //                 break;
-                    //             }
-                    //         }
-                    // if ($hasPendingcapa) {
-                    //     // $capachildstatus = trim(strtolower($extensionchild->status));
-                    //     if ($hasPendingcapa) {
-                    //         Session::flash('swal', [
-                    //             'title' => 'CAPA Child Pending!',
-                    //             'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
-                    //             'type' => 'warning',
-                    //         ]);
-
-                    //     return redirect()->back();
-                    //     }
-                    // } else {
-                    //     // Flash message for success (when the form is filled correctly)
-                    //     Session::flash('swal', [
-                    //         'title' => 'Success!',
-                    //         'message' => 'Document Sent',
-                    //         'type' => 'success',
-                    //     ]);
-                    // }
+                   
 
 
                     if(empty($incident->capa_implementation) || empty($incident->check_points) || empty($incident->corrective_actions) || empty($incident->batch_release) || empty($incident->affected_documents) || empty($incident->QA_Feedbacks)) {

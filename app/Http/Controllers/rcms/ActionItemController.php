@@ -496,12 +496,12 @@ foreach ($pre as $processName => $modelClass) {
             $history->save();
             }
 
-            if (!empty($openState->description)) {
+            if (!empty(strip_tags($openState->description))) {
                 $history = new ActionItemHistory();
                 $history->cc_id =   $openState->id;
                 $history->activity_type = 'Description';
                 $history->previous = "Null";
-                $history->current =  $openState->description;
+                $history->current =  strip_tags($openState->description);
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1256,28 +1256,36 @@ foreach ($pre as $processName => $modelClass) {
 
             $history->save();
             }
-        if ($lastopenState->description != $openState->description || !empty($request->description_comment)) {
-            $history = new ActionItemHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Description';
-            $history->previous = $lastopenState->description;
-            $history->current = $openState->description;
-            $history->comment = $request->description_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastopenState->status;
-            $history->change_to = "Not Applicable";
-           $history->change_from = $lastopenState->status;
-             if (is_null($lastopenState->description)) {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+            $oldDescription = trim(strip_tags($lastopenState->description ?? ''));
+            $newDescription = trim(strip_tags($openState->description ?? ''));
+
+            if ($oldDescription !== $newDescription || !empty(trim($request->description_comment))) {
+
+                $history = new ActionItemHistory();
+                $history->cc_id = $id;
+                $history->activity_type = 'Description';
+
+                $history->previous = !empty($oldDescription) ? $oldDescription : 'NA';
+                $history->current = !empty($newDescription) ? $newDescription : 'NA';
+
+                $history->comment = $request->description_comment ?? 'NA';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                $history->origin_state = $lastopenState->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastopenState->status;
+
+                if (empty($oldDescription)) {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+
+                $history->save();
             }
-
-            $history->save();
-        }
-
 
         if($lastopenState->hod_preson != $openState->hod_preson || !empty($request->comment)) {
             $lastDataAuditTrail = ActionItemHistory::where('cc_id', $openState->id)
