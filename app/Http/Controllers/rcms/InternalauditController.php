@@ -371,7 +371,7 @@ class InternalauditController extends Controller
         //                    $auditTrail->comment = "";
         //                    $auditTrail->user_id = Auth::user()->id;
         //                    $auditTrail->user_name = Auth::user()->name;
-        //                    $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //                    $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
         //                    //$auditTrail->origin_state = $internalAudit->status;
         //                    $auditTrail->change_to = "Not Applicable";
         //                    $auditTrail->change_from = $internalAudit->status;
@@ -431,7 +431,7 @@ class InternalauditController extends Controller
             //                    $auditTrail->comment = "";
             //                    $auditTrail->user_id = Auth::user()->id;
             //                    $auditTrail->user_name = Auth::user()->name;
-            //                    $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //                    $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
             //                    $auditTrail->origin_state = $internalAudit->status;
             //                    $auditTrail->change_to = "Not Applicable";
             //                    $auditTrail->change_from = $internalAudit->status;
@@ -488,7 +488,7 @@ class InternalauditController extends Controller
             //                    $auditTrail->comment = "";
             //                    $auditTrail->user_id = Auth::user()->id;
             //                    $auditTrail->user_name = Auth::user()->name;
-            //                    $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //                    $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
             //                    //$auditTrail->origin_state = $internalAudit->status;
             //                    $auditTrail->change_to = "Not Applicable";
             //                    $auditTrail->change_from = $internalAudit->status;
@@ -768,7 +768,7 @@ class InternalauditController extends Controller
         //            $history->comment = 'NA';
         //            $history->user_id = Auth::user()->id;
         //            $history->user_name = Auth::user()->name;
-        //            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //            $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
         //            $history->change_to = "Opened";
         //            $history->change_from = "Initiation";
@@ -855,7 +855,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -872,7 +872,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -888,7 +888,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -905,7 +905,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -922,7 +922,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -939,7 +939,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -955,7 +955,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -971,7 +971,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -988,7 +988,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1005,7 +1005,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1022,7 +1022,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1040,7 +1040,7 @@ class InternalauditController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $internalAudit->status;
         //     $history->change_to =   "Opened";
         //     $history->change_from = "Initiation";
@@ -1057,7 +1057,7 @@ class InternalauditController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $internalAudit->status;
         //     $history->change_to =   "Opened";
         //     $history->change_from = "Initiation";
@@ -1073,7 +1073,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1090,7 +1090,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1107,7 +1107,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1124,7 +1124,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1141,7 +1141,7 @@ class InternalauditController extends Controller
             $history->comment = "Na";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1158,7 +1158,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1175,7 +1175,7 @@ class InternalauditController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $internalAudit->status;
         //     $history->change_to =   "Opened";
         //     $history->change_from = "Initiation";
@@ -1192,7 +1192,7 @@ class InternalauditController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $internalAudit->status;
         //     $history->save();
         // }
@@ -1206,7 +1206,7 @@ class InternalauditController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $internalAudit->status;
         //     $history->save();
         // }
@@ -1220,7 +1220,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1237,7 +1237,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1254,7 +1254,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1270,7 +1270,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1287,7 +1287,7 @@ class InternalauditController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $internalAudit->status;
         //     $history->change_to =   "Opened";
         //     $history->change_from = "Initiation";
@@ -1304,7 +1304,7 @@ class InternalauditController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $internalAudit->status;
         //     $history->change_to =   "Opened";
         //     $history->change_from = "Initiation";
@@ -1321,7 +1321,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1338,7 +1338,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1355,7 +1355,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1372,7 +1372,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1389,7 +1389,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1406,7 +1406,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1424,7 +1424,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1441,7 +1441,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1458,7 +1458,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1474,7 +1474,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1490,7 +1490,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1506,7 +1506,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1523,7 +1523,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1540,7 +1540,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1557,7 +1557,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1574,7 +1574,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1591,7 +1591,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1608,7 +1608,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1624,7 +1624,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1641,7 +1641,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1658,7 +1658,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1675,7 +1675,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1694,7 +1694,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1711,7 +1711,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1728,7 +1728,7 @@ class InternalauditController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $internalAudit->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -2758,7 +2758,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2783,7 +2783,7 @@ for ($i = 1; $i <= 2; $i++) {
         //     $history->comment = $request->date_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -2797,7 +2797,7 @@ for ($i = 1; $i <= 2; $i++) {
         //     $history->comment = $request->date_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -2818,7 +2818,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2836,7 +2836,7 @@ for ($i = 1; $i <= 2; $i++) {
         //     $history->comment = $request->date_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -2861,7 +2861,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2885,7 +2885,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2909,7 +2909,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2933,7 +2933,7 @@ for ($i = 1; $i <= 2; $i++) {
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
@@ -2956,7 +2956,7 @@ for ($i = 1; $i <= 2; $i++) {
                     $history->comment = "Not Applicable";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "Not Applicable";
                     $history->change_from = $lastDocument->status;
@@ -2978,7 +2978,7 @@ for ($i = 1; $i <= 2; $i++) {
         //     $history->comment = $request->date_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -3000,7 +3000,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3024,7 +3024,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3048,7 +3048,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3071,7 +3071,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3094,7 +3094,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3117,7 +3117,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3141,7 +3141,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3159,7 +3159,7 @@ for ($i = 1; $i <= 2; $i++) {
         //     $history->comment = $request->date_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -3180,7 +3180,7 @@ for ($i = 1; $i <= 2; $i++) {
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
@@ -3198,7 +3198,7 @@ for ($i = 1; $i <= 2; $i++) {
         //     $history->comment = $request->date_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -3219,7 +3219,7 @@ for ($i = 1; $i <= 2; $i++) {
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
@@ -3243,7 +3243,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3261,7 +3261,7 @@ for ($i = 1; $i <= 2; $i++) {
         //     $history->comment = $request->date_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -3283,7 +3283,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3307,7 +3307,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3332,7 +3332,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3356,7 +3356,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3380,7 +3380,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3404,7 +3404,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3429,7 +3429,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3453,7 +3453,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3477,7 +3477,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3501,7 +3501,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3525,7 +3525,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3548,7 +3548,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3571,7 +3571,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3594,7 +3594,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3617,7 +3617,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3640,7 +3640,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3663,7 +3663,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3686,7 +3686,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3709,7 +3709,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3732,7 +3732,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3755,7 +3755,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3778,7 +3778,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3795,7 +3795,7 @@ for ($i = 1; $i <= 2; $i++) {
         //     $history->comment = $request->date_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -3815,7 +3815,7 @@ for ($i = 1; $i <= 2; $i++) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3838,7 +3838,7 @@ if ($areIniAttachmentsSame != true) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3867,7 +3867,7 @@ if ($areIniAttachmentsSame1 != true) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3896,7 +3896,7 @@ if ($areIniAttachmentsSame2 != true) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3929,7 +3929,7 @@ if ($areIniAttachmentsSame2 != true) {
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3960,7 +3960,7 @@ if ($areIniAttachmentsSame2 != true) {
                             $history->comment = "Not Applicable";
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
@@ -3988,7 +3988,7 @@ if ($areIniAttachmentsSame2 != true) {
                             $history->comment = "Not Applicable";
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
@@ -4018,7 +4018,7 @@ if ($areIniAttachmentsSame2 != true) {
                                     $history->comment = "Not Applicable";
                                     $history->user_id = Auth::user()->id;
                                     $history->user_name = Auth::user()->name;
-                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                     $history->origin_state = $lastDocument->status;
                                     $history->change_to =   "Not Applicable";
                                     $history->change_from = $lastDocument->status;
@@ -4046,7 +4046,7 @@ if ($areIniAttachmentsSame2 != true) {
                                             $history->comment = "Not Applicable";
                                             $history->user_id = Auth::user()->id;
                                             $history->user_name = Auth::user()->name;
-                                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                             $history->origin_state = $lastDocument->status;
                                             $history->change_to =   "Not Applicable";
                                             $history->change_from = $lastDocument->status;
@@ -4073,7 +4073,7 @@ if ($areIniAttachmentsSame2 != true) {
                                 //             $history->comment = "Not Applicable";
                                 //             $history->user_id = Auth::user()->id;
                                 //             $history->user_name = Auth::user()->name;
-                                //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                //             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 //             $history->origin_state = $lastDocument->status;
                                 //             $history->change_to =   "Not Applicable";
                                 //             $history->change_from = $lastDocument->status;
@@ -4101,7 +4101,7 @@ if ($areIniAttachmentsSame2 != true) {
                                         //             $history->comment = "Not Applicable";
                                         //             $history->user_id = Auth::user()->id;
                                         //             $history->user_name = Auth::user()->name;
-                                        //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                        //             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                         //             $history->origin_state = $lastDocument->status;
                                         //             $history->change_to =   "Not Applicable";
                                         //             $history->change_from = $lastDocument->status;
@@ -4125,7 +4125,7 @@ if ($areIniAttachmentsSame2 != true) {
         //     $history->comment = $request->date_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -4139,7 +4139,7 @@ if ($areIniAttachmentsSame2 != true) {
         //     $history->comment = $request->date_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -4153,7 +4153,7 @@ if ($areIniAttachmentsSame2 != true) {
         //     $history->comment = $request->date_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -4168,7 +4168,7 @@ if ($areIniAttachmentsSame2 != true) {
         //     $history->comment = $request->date_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -4182,7 +4182,7 @@ if ($areIniAttachmentsSame2 != true) {
         //     $history->comment = $request->date_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -4196,7 +4196,7 @@ if ($areIniAttachmentsSame2 != true) {
         //     $history->comment = $request->date_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
@@ -4269,7 +4269,7 @@ if ($areIniAttachmentsSame2 != true) {
         //                        $auditTrail->comment = "";
         //                        $auditTrail->user_id = Auth::user()->id;
         //                        $auditTrail->user_name = Auth::user()->name;
-        //                        $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //                        $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
         //                        $auditTrail->origin_state = $internalAudit->status;
         //                        $auditTrail->change_to = "Not Applicable";
         //                        $auditTrail->change_from = $internalAudit->status;
@@ -4347,7 +4347,7 @@ if ($areIniAttachmentsSame2 != true) {
         //                        $auditTrail->comment = "";
         //                        $auditTrail->user_id = Auth::user()->id;
         //                        $auditTrail->user_name = Auth::user()->name;
-        //                        $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //                        $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
         //                        $auditTrail->origin_state = $internalAudit->status;
         //                        $auditTrail->change_to = "Not Applicable";
         //                        $auditTrail->change_from = $internalAudit->status;
@@ -4434,7 +4434,7 @@ if ($areIniAttachmentsSame2 != true) {
         //                        $auditTrail->comment = "";
         //                        $auditTrail->user_id = Auth::user()->id;
         //                        $auditTrail->user_name = Auth::user()->name;
-        //                        $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //                        $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
         //                        $auditTrail->origin_state = $internalAudit->status;
         //                        $auditTrail->change_to = "Not Applicable";
         //                        $auditTrail->change_from = $internalAudit->status;
@@ -4738,7 +4738,7 @@ if ($areIniAttachmentsSame2 != true) {
             //                    $history->comment = $request->equipment_comments[$index] ?? '';
             //                    $history->user_id = Auth::user()->id;
             //                    $history->user_name = Auth::user()->name;
-            //                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //                    $history->origin_state = $internalAudit->status;
             //                    $history->change_to = "Not Applicable";
             //                    $history->change_from = $internalAudit->status;
@@ -4937,7 +4937,7 @@ if ($areIniAttachmentsSame2 != true) {
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->change_to = "Acknowledgement ";
                             $history->change_from = $lastDocument->status;
@@ -5250,7 +5250,7 @@ if ($changeControl->stage == 2) {
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->change_to = " Response";
                             $history->change_from = $lastDocument->status;
@@ -5468,7 +5468,7 @@ if ($changeControl->stage == 2) {
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->change_to = "Response Verification";
                             $history->change_from = $lastDocument->status;
@@ -5735,7 +5735,7 @@ if ($changeControl->stage == 2) {
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->change_to = "Closed - Done";
                             $history->change_from = $lastDocument->status;
@@ -5819,7 +5819,7 @@ if ($changeControl->stage == 2) {
         $history->comment = $comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $lastDocument->status;
         $history->change_to = "Audit";
         $history->change_from = $lastDocument->status;
@@ -5900,7 +5900,7 @@ if ($changeControl->stage == 2) {
                                             $history->comment = $request->comment;
                                             $history->user_id = Auth::user()->id;
                                             $history->user_name = Auth::user()->name;
-                                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                             $history->origin_state = $lastDocument->status;
                                             $history->change_to = " Audit";
                                             $history->change_from = $lastDocument->status;
@@ -5952,7 +5952,7 @@ if ($changeControl->stage == 2) {
                                     $history->comment = $request->comment;
                                     $history->user_id = Auth::user()->id;
                                     $history->user_name = Auth::user()->name;
-                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                     $history->origin_state = $lastDocument->status;
                                     $history->change_to = " Audit";
                                     $history->change_from = $lastDocument->status;
@@ -6152,7 +6152,7 @@ if ($changeControl->stage == 2) {
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_to = "Response Verification";
                         $history->change_from = $lastDocument->status;
@@ -6262,7 +6262,7 @@ if ($changeControl->stage == 2) {
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->change_to = "Opened";
                             $history->change_from = $lastDocument->status;
@@ -6364,7 +6364,7 @@ if ($changeControl->stage == 2) {
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->change_to = "Opened";
                             $history->change_from = $lastDocument->status;
@@ -6521,7 +6521,7 @@ if ($changeControl->stage == 2) {
                                 $history->comment = $request->comment;
                                 $history->user_id = Auth::user()->id;
                                 $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->change_to = "Closed-Cancelled";
                                 $history->change_from = $lastDocument->status;
@@ -6611,7 +6611,7 @@ if ($changeControl->stage == 2) {
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->change_to = "Closed-Cancelled";
                             $history->change_from = $lastDocument->status;
@@ -6700,7 +6700,7 @@ if ($changeControl->stage == 2) {
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->origin_state = $lastDocument->status;
                             $history->change_to = "Closed-Cancelled";

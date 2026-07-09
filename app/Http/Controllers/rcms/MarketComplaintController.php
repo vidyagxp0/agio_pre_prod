@@ -775,7 +775,7 @@ class MarketComplaintController extends Controller
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $marketComplaint->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiator";
@@ -792,7 +792,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
@@ -808,7 +808,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
@@ -825,7 +825,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
@@ -843,7 +843,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
@@ -860,7 +860,7 @@ class MarketComplaintController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $marketComplaint->status;
         //     $history->change_to =   "Opened";
         //     $history->change_from = "Initiator";
@@ -877,7 +877,7 @@ class MarketComplaintController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $marketComplaint->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -894,7 +894,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -910,7 +910,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -926,7 +926,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -942,7 +942,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -958,7 +958,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -974,7 +974,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -992,7 +992,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1009,7 +1009,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1027,7 +1027,7 @@ class MarketComplaintController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $marketComplaint->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -1044,7 +1044,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1061,7 +1061,7 @@ class MarketComplaintController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $marketComplaint->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -1078,7 +1078,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1097,7 +1097,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1113,7 +1113,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1130,7 +1130,7 @@ class MarketComplaintController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $marketComplaint->status;
         //      $history->change_to = "Opened";
         //         $history->change_from = "Initiation";
@@ -1147,7 +1147,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1164,7 +1164,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1181,7 +1181,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1198,7 +1198,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1215,7 +1215,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1233,7 +1233,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1250,7 +1250,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1267,7 +1267,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1284,7 +1284,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1301,7 +1301,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1318,7 +1318,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1334,7 +1334,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1350,7 +1350,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1367,7 +1367,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1383,7 +1383,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1399,7 +1399,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1415,7 +1415,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1432,7 +1432,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1448,7 +1448,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1464,7 +1464,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1482,7 +1482,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1499,7 +1499,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1515,7 +1515,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1532,7 +1532,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1549,7 +1549,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1566,7 +1566,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1583,7 +1583,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1600,7 +1600,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1617,7 +1617,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1634,7 +1634,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1651,7 +1651,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1669,7 +1669,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1685,7 +1685,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1701,7 +1701,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1717,7 +1717,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1733,7 +1733,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1750,7 +1750,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1766,7 +1766,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1782,7 +1782,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1798,7 +1798,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1814,7 +1814,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1830,7 +1830,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1846,7 +1846,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1862,7 +1862,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1878,7 +1878,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1894,7 +1894,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1910,7 +1910,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $marketComplaint->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1973,7 +1973,7 @@ class MarketComplaintController extends Controller
                         $auditTrail->comment = "";
                         $auditTrail->user_id = Auth::user()->id;
                         $auditTrail->user_name = Auth::user()->name;
-                        $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $auditTrail->origin_state = $marketComplaint->status;
                         $auditTrail->change_to = "Not Applicable";
                         $auditTrail->change_from = $marketComplaint->status;
@@ -2037,7 +2037,7 @@ class MarketComplaintController extends Controller
                                 $auditTrail->comment = "";
                                 $auditTrail->user_id = Auth::user()->id;
                                 $auditTrail->user_name = Auth::user()->name;
-                                $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $auditTrail->origin_state = $marketComplaint->status;
                                 $auditTrail->change_to = "Not Applicable";
                                 $auditTrail->change_from = $marketComplaint->status;
@@ -2094,7 +2094,7 @@ class MarketComplaintController extends Controller
                             $auditTrail->comment = "";
                             $auditTrail->user_id = Auth::user()->id;
                             $auditTrail->user_name = Auth::user()->name;
-                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $auditTrail->origin_state = $marketComplaint->status;
                             $auditTrail->change_to = "Not Applicable";
                             $auditTrail->change_from = $marketComplaint->status;
@@ -2148,7 +2148,7 @@ class MarketComplaintController extends Controller
                             $auditTrail->comment = "";
                             $auditTrail->user_id = Auth::user()->id;
                             $auditTrail->user_name = Auth::user()->name;
-                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $auditTrail->origin_state = $marketComplaint->status;
                             $auditTrail->change_to = "Not Applicable";
                             $auditTrail->change_from = $marketComplaint->status;
@@ -2203,7 +2203,7 @@ class MarketComplaintController extends Controller
                             $auditTrail->comment = "";
                             $auditTrail->user_id = Auth::user()->id;
                             $auditTrail->user_name = Auth::user()->name;
-                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $auditTrail->origin_state = $marketComplaint->status;
                             $auditTrail->change_to = "Not Applicable";
                             $auditTrail->change_from = $marketComplaint->status;
@@ -2256,7 +2256,7 @@ class MarketComplaintController extends Controller
                             $auditTrail->comment = "";
                             $auditTrail->user_id = Auth::user()->id;
                             $auditTrail->user_name = Auth::user()->name;
-                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $auditTrail->origin_state = $marketComplaint->status;
                             $auditTrail->change_to = "Not Applicable";
                             $auditTrail->change_from = $marketComplaint->status;
@@ -2310,7 +2310,7 @@ class MarketComplaintController extends Controller
                             $auditTrail->comment = "";
                             $auditTrail->user_id = Auth::user()->id;
                             $auditTrail->user_name = Auth::user()->name;
-                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $auditTrail->origin_state = $marketComplaint->status;
                             $auditTrail->change_to = "Not Applicable";
                             $auditTrail->change_from = $marketComplaint->status;
@@ -2367,7 +2367,7 @@ class MarketComplaintController extends Controller
                             $auditTrail->comment = "";
                             $auditTrail->user_id = Auth::user()->id;
                             $auditTrail->user_name = Auth::user()->name;
-                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $auditTrail->origin_state = $marketComplaint->status;
                             $auditTrail->change_to = "Not Applicable";
                             $auditTrail->change_from = $marketComplaint->status;
@@ -3420,7 +3420,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->review_of_stability_study_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3443,7 +3443,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->review_of_product_manu_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3466,7 +3466,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->additional_inform_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3490,7 +3490,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->in_case_Invalide_com_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3513,7 +3513,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->conclusion_pi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3536,7 +3536,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->the_probable_root_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3559,7 +3559,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->initiator_group_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3583,7 +3583,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->initiator_group_code_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3607,7 +3607,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->review_of_past_history_of_product_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3631,7 +3631,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->review_of_equipment_break_down_and_maintainance_record_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3651,7 +3651,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->rev_eq_inst_qual_calib_record_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3672,7 +3672,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->review_of_training_record_of_concern_persons_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3692,7 +3692,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->review_of_analytical_data_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3712,7 +3712,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->Expecteddate_of_investigation_completion_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3732,7 +3732,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->review_of_complaint_sample_if_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3752,7 +3752,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->review_of_Batch_Packing_record_bpr_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3773,7 +3773,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->review_of_packing_materials_used_in_batch_packing_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3793,7 +3793,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->review_of_raw_materials_used_in_batch_manufacturing_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3813,7 +3813,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->review_of_control_sample_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3835,7 +3835,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->review_of_batch_manufacturing_record_BMR_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3856,7 +3856,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->review_of_complaint_sample_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3878,7 +3878,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->due_date_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3899,7 +3899,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->description_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3922,7 +3922,7 @@ class MarketComplaintController extends Controller
         //     $history->comment = $request->initiator_group_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastmarketComplaint->status;
         //     $history->change_to = "Not Applicable";
         //     $history->change_from = $lastmarketComplaint->status;
@@ -3946,7 +3946,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->initiated_through_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3970,7 +3970,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->if_other_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -3994,7 +3994,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->is_repeat_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4019,7 +4019,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->repeat_nature_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4043,7 +4043,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->initial_attachment_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4067,7 +4067,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->complainant_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4091,7 +4091,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->complaint_reported_on_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4115,7 +4115,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->details_of_nature_market_complaint_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4140,7 +4140,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->stability_study_data_review_ca_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4165,7 +4165,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->categorization_of_complaint_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4190,7 +4190,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->qa_head_comment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4214,7 +4214,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->qa_cqa_he_attach_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4239,7 +4239,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->qa_cqa_comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4264,7 +4264,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->qa_cqa_attachments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4289,7 +4289,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->qa_cqa_head_comm_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4314,7 +4314,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->qa_cqa_head_attach_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4340,7 +4340,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->conclusion_hodsr_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4360,7 +4360,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->root_cause_analysis_hodsr_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4380,7 +4380,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->probable_root_causes_complaint_hodsr_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4400,7 +4400,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->impact_assessment_hodsr_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4420,7 +4420,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->corrective_action_hodsr_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4441,7 +4441,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->preventive_action_hodsr_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4461,7 +4461,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->summary_and_conclusion_hodsr_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4481,7 +4481,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->investigation_attach_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4502,7 +4502,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->comments_if_any_hodsr_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4524,7 +4524,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->manufacturer_name_address_ca_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4546,7 +4546,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->complaint_sample_required_ca_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4568,7 +4568,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->complaint_sample_status_ca_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4590,7 +4590,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->brief_description_of_complaint_ca_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4611,7 +4611,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->batch_record_review_observation_ca_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4631,7 +4631,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->analytical_data_review_observation_ca_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4651,7 +4651,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->retention_sample_review_observation_ca_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4672,7 +4672,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->qms_events_ifany_review_observation_ca_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4692,7 +4692,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->repeated_complaints_queries_for_product_ca_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4713,7 +4713,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->interpretation_on_complaint_sample_ifrecieved_ca_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4733,7 +4733,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->comments_ifany_ca_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4754,7 +4754,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->initial_attachment_ca_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4776,7 +4776,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->closure_comment_c_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4796,7 +4796,7 @@ class MarketComplaintController extends Controller
             $history->comment = $request->initial_attachment_c_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4821,7 +4821,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4841,7 +4841,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4861,7 +4861,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4881,7 +4881,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4901,7 +4901,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4921,7 +4921,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4941,7 +4941,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4964,7 +4964,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -4984,7 +4984,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5004,7 +5004,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5024,7 +5024,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5044,7 +5044,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5064,7 +5064,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5084,7 +5084,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5106,7 +5106,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5126,7 +5126,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5146,7 +5146,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5166,7 +5166,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5186,7 +5186,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5206,7 +5206,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5226,7 +5226,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5248,7 +5248,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5268,7 +5268,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5288,7 +5288,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5308,7 +5308,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5328,7 +5328,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5348,7 +5348,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5368,7 +5368,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5390,7 +5390,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5410,7 +5410,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5430,7 +5430,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5450,7 +5450,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5470,7 +5470,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5490,7 +5490,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5510,7 +5510,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5532,7 +5532,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5552,7 +5552,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5572,7 +5572,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5592,7 +5592,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5612,7 +5612,7 @@ class MarketComplaintController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastmarketComplaint->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastmarketComplaint->status;
@@ -5632,7 +5632,7 @@ class MarketComplaintController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastmarketComplaint->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastmarketComplaint->status;
@@ -5652,7 +5652,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5674,7 +5674,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5694,7 +5694,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5714,7 +5714,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5734,7 +5734,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5754,7 +5754,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5774,7 +5774,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5794,7 +5794,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5816,7 +5816,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5836,7 +5836,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5856,7 +5856,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5876,7 +5876,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5896,7 +5896,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5916,7 +5916,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5936,7 +5936,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5958,7 +5958,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5978,7 +5978,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -5998,7 +5998,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6018,7 +6018,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6038,7 +6038,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6058,7 +6058,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6078,7 +6078,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6100,7 +6100,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6120,7 +6120,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6140,7 +6140,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6160,7 +6160,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6180,7 +6180,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6200,7 +6200,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6220,7 +6220,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6242,7 +6242,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6262,7 +6262,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6282,7 +6282,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6302,7 +6302,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6322,7 +6322,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6342,7 +6342,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6362,7 +6362,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6384,7 +6384,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6404,7 +6404,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6424,7 +6424,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6444,7 +6444,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6464,7 +6464,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6484,7 +6484,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6504,7 +6504,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6526,7 +6526,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6546,7 +6546,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6566,7 +6566,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6586,7 +6586,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6606,7 +6606,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6626,7 +6626,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6646,7 +6646,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6668,7 +6668,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6688,7 +6688,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6708,7 +6708,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6728,7 +6728,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6748,7 +6748,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6768,7 +6768,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6789,7 +6789,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6810,7 +6810,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6830,7 +6830,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6850,7 +6850,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6870,7 +6870,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6890,7 +6890,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6910,7 +6910,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6930,7 +6930,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6950,7 +6950,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6973,7 +6973,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -6993,7 +6993,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7013,7 +7013,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7033,7 +7033,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7053,7 +7053,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7073,7 +7073,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7093,7 +7093,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7113,7 +7113,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7135,7 +7135,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7155,7 +7155,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7175,7 +7175,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7195,7 +7195,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7215,7 +7215,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7235,7 +7235,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7255,7 +7255,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7275,7 +7275,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7297,7 +7297,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7317,7 +7317,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7337,7 +7337,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7357,7 +7357,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7377,7 +7377,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7397,7 +7397,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7417,7 +7417,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7437,7 +7437,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7460,7 +7460,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7480,7 +7480,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7500,7 +7500,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7520,7 +7520,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7540,7 +7540,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7560,7 +7560,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7580,7 +7580,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7600,7 +7600,7 @@ class MarketComplaintController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
@@ -7682,7 +7682,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                     $history->comment = $request->material_comment[$index] ?? '';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $data1->status;
                     $history->change_to = "Not Applicable";
                     $history->change_from = $data1->status;
@@ -7780,7 +7780,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $auditTrail->comment = "";
                                 $auditTrail->user_id = Auth::user()->id;
                                 $auditTrail->user_name = Auth::user()->name;
-                                $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $auditTrail->origin_state = $marketComplaint->status;
                                 $auditTrail->change_to = "Not Applicable";
                                 $auditTrail->change_from = $marketComplaint->status;
@@ -7859,7 +7859,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $auditTrail->comment = "";
                                 $auditTrail->user_id = Auth::user()->id;
                                 $auditTrail->user_name = Auth::user()->name;
-                                $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $auditTrail->origin_state = $marketComplaint->status;
                                 $auditTrail->change_to = "Not Applicable";
                                 $auditTrail->change_from = $marketComplaint->status;
@@ -7937,7 +7937,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $auditTrail->comment = "";
                                 $auditTrail->user_id = Auth::user()->id;
                                 $auditTrail->user_name = Auth::user()->name;
-                                $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $auditTrail->origin_state = $marketComplaint->status;
                                 $auditTrail->change_to = "Not Applicable";
                                 $auditTrail->change_from = $marketComplaint->status;
@@ -8016,7 +8016,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $auditTrail->comment = "";
                                 $auditTrail->user_id = Auth::user()->id;
                                 $auditTrail->user_name = Auth::user()->name;
-                                $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $auditTrail->origin_state = $marketComplaint->status;
                                 $auditTrail->change_to = "Not Applicable";
                                 $auditTrail->change_from = $marketComplaint->status;
@@ -8090,7 +8090,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $auditTrail->comment = "";
                                 $auditTrail->user_id = Auth::user()->id;
                                 $auditTrail->user_name = Auth::user()->name;
-                                $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $auditTrail->origin_state = $marketComplaint->status;
                                 $auditTrail->change_to = "Not Applicable";
                                 $auditTrail->change_from = $marketComplaint->status;
@@ -8169,7 +8169,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $auditTrail->comment = "";
                                 $auditTrail->user_id = Auth::user()->id;
                                 $auditTrail->user_name = Auth::user()->name;
-                                $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $auditTrail->origin_state = $marketComplaint->status;
                                 $auditTrail->change_to = "Not Applicable";
                                 $auditTrail->change_from = $marketComplaint->status;
@@ -8252,7 +8252,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $auditTrail->comment = "";
                                 $auditTrail->user_id = Auth::user()->id;
                                 $auditTrail->user_name = Auth::user()->name;
-                                $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $auditTrail->origin_state = $marketComplaint->status;
                                 $auditTrail->change_to = "Not Applicable";
                                 $auditTrail->change_from = $marketComplaint->status;
@@ -8343,7 +8343,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_to =   "QA/CQA Head Review";
                         $history->change_from = $lastDocument->status;
@@ -8572,7 +8572,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         $history->user_name = Auth::user()->name;
                         $history->change_to =   "Investigation CAPA And Root Cause Analysis";
                         $history->change_from = $lastDocument->status;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->stage = 'Completed';
                         if (is_null($lastDocument->complete_review_by) || $lastDocument->complete_review_on == '') {
@@ -8747,7 +8747,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         $history->user_name = Auth::user()->name;
                         $history->change_to =   "CFT Review";
                         $history->change_from = $lastDocument->status;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->stage = 'Completed';
                         if (is_null($lastDocument->send_cft_by) || $lastDocument->send_cft_on == '') {
@@ -8837,7 +8837,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to = "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
 
@@ -8868,7 +8868,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
@@ -8896,7 +8896,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->Engineering_by) || $lastDocument->Engineering_on == '') {
@@ -8924,7 +8924,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->Environment_Health_Safety_by) || $lastDocument->Environment_Health_Safety_on == '') {
@@ -8952,7 +8952,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->Human_Resource_by) || $lastDocument->Human_Resource_on == '') {
@@ -8979,7 +8979,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == '') {
@@ -9007,7 +9007,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->Other1_by) || $lastDocument->Other1_on == '') {
@@ -9036,7 +9036,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->Other2_by) || $lastDocument->Other2_on == '') {
@@ -9064,7 +9064,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->Other3_by) || $lastDocument->Other3_on == '') {
@@ -9091,7 +9091,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->Other4_by) || $lastDocument->Other4_on == '') {
@@ -9118,7 +9118,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->Other5_by) || $lastDocument->Other5_on == '') {
@@ -9142,7 +9142,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 $history->action_name = "Update";
@@ -9165,7 +9165,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->Production_Table_By) || $lastDocument->Production_Table_On == '') {
@@ -9193,7 +9193,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->ProductionLiquid_by) || $lastDocument->ProductionLiquid_on == '') {
@@ -9221,7 +9221,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->Production_Injection_By) || $lastDocument->Production_Injection_On == '') {
@@ -9249,7 +9249,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->Store_by) || $lastDocument->Store_on == '') {
@@ -9277,7 +9277,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->ResearchDevelopment_by) || $lastDocument->ResearchDevelopment_on == '') {
@@ -9305,7 +9305,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->Microbiology_by) || $lastDocument->Microbiology_on == '') {
@@ -9333,7 +9333,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->RegulatoryAffair_by) || $lastDocument->RegulatoryAffair_on == '') {
@@ -9362,7 +9362,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->CorporateQualityAssurance_by) || $lastDocument->CorporateQualityAssurance_on == '') {
@@ -9390,7 +9390,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 $history->user_name = Auth::user()->name;
                                 $history->change_to =   "Not Applicable";
                                 $history->change_from = $lastDocument->status;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'CFT Review';
                                 if (is_null($lastDocument->ContractGiver_by) || $lastDocument->ContractGiver_on == '') {
@@ -9453,7 +9453,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->change_to =   "All Action Completion Verification by QA/CQA";
                             $history->change_from = $lastDocument->status;
@@ -9555,7 +9555,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         $history->action = 'QA/CQA Verification Complete';
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_to =   "QA/CQA Head Approval ";
                         $history->change_from = $lastDocument->status;
@@ -9660,7 +9660,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         $history->action = 'Approval Complete';
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_to =   "Pending Response Letter";
                         $history->change_from = $lastDocument->status;
@@ -9889,7 +9889,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_to =   "Closed-Done";
                         $history->change_from = $lastDocument->status;
@@ -9985,7 +9985,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Pending Response Letter";
                 $history->change_from = $lastDocument->status;
@@ -10021,7 +10021,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Pending Response Letter";
                 $history->change_from = $lastDocument->status;;
@@ -10086,7 +10086,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "All Action Completion Verification by QA/CQA";
                 $history->change_from = $lastDocument->status;
@@ -10151,7 +10151,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             //     $history->comment = $request->comment;
             //     $history->user_id = Auth::user()->id;
             //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //     $history->origin_state = $lastDocument->status;
             //     $history->change_to = "Investigation, CAPA and Root Cause Analysis";
             //     $history->change_from = $lastDocument->status;
@@ -10241,7 +10241,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Investigation, CAPA and Root Cause Analysis";
                 $history->change_from = $lastDocument->status;
@@ -10369,7 +10369,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Investigation CAPA And Root Cause Analysis";
                 $history->change_from = $lastDocument->status;;
@@ -10485,7 +10485,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "QA/CQA Head Review";
                 $history->change_from = $lastDocument->status;
@@ -10552,7 +10552,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to = "Open";
                     $history->change_from = $lastDocument->status;
@@ -10633,7 +10633,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Closed - Cancelled";
             $history->change_from = "Supervisor Review";
@@ -11680,7 +11680,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->stage = 'Send to QA/CQA';
 
@@ -11744,7 +11744,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $history->comment = 'Reopened Market Complaint';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $oldMarketComplain->status;
             $history->change_from = $oldMarketComplain->status;
             $history->change_to = "Reopened";

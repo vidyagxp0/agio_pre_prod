@@ -288,10 +288,12 @@
                                         ];
 
                                         if (request()->has('ajax_load')) {
-                                            $limit = 1000;
+                                            $limit = 50; // optimized: initial ajax load limit
 
                                             $allRawData = [];
-                                            $allDivisions = DB::table('q_m_s_divisions')->pluck('name', 'id')->toArray();
+                                            $allDivisions = \Illuminate\Support\Facades\Cache::remember('qms_dashboard_divisions', 3600, function () {
+                                                return DB::table('q_m_s_divisions')->pluck('name', 'id')->toArray();
+                                            });
 
                                             foreach ($modelsConfig as $cfg) {
                                                 $records = $cfg['class']::orderByDesc('id')->limit($limit)->get();
@@ -355,7 +357,9 @@
                                             })
                                             ->toArray();
 
-                                        $allUserNames = DB::table('users')->pluck('name', 'id')->toArray();
+                                        $allUserNames = \Illuminate\Support\Facades\Cache::remember('qms_dashboard_user_names', 3600, function () {
+                                            return DB::table('users')->pluck('name', 'id')->toArray();
+                                        });
 
                                         $parentIdsByType = collect($tablesData)->groupBy('parent_type')->map(function($items) {
                                             return $items->pluck('parent_id')->filter()->unique()->toArray();
@@ -383,7 +387,9 @@
                                             }
                                         }
 
-                                        $allDivisions = DB::table('q_m_s_divisions')->pluck('name', 'id')->toArray();
+                                        $allDivisions = \Illuminate\Support\Facades\Cache::remember('qms_dashboard_divisions', 3600, function () {
+                                            return DB::table('q_m_s_divisions')->pluck('name', 'id')->toArray();
+                                        });
                                     @endphp
 
                                     @if (request()->has('ajax_load'))
@@ -414,11 +420,6 @@
                                         <tr>
                                                     <td>
                                                         @if ($datas->type == 'Change-Control')
-                                                         @php 
-                                                            DB::table('c_c_s')
-                                                            ->where('id', $datas->id)
-                                                            ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                        @endphp
                                                             <a href="{{ route('CC.show', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -440,11 +441,6 @@
                                                             </a>
                                                             {{-- -----------------------by pankaj-------------------- --}}
                                                         @elseif ($datas->type == 'Internal-Audit')
-                                                         @php 
-                                                            DB::table('internal_audits')
-                                                            ->where('id', $datas->id)
-                                                            ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                        @endphp
                                                             <a href="{{ route('showInternalAudit', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -469,11 +465,6 @@
                                                             @endif
                                                             {{-- market complaint --}}
                                                         @elseif ($datas->type == 'Market Complaint')
-                                                        @php 
-                                                            DB::table('marketcompalints')
-                                                            ->where('id', $datas->id)
-                                                            ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                        @endphp
                                                             <a href="{{ route('marketcomplaint.marketcomplaint_view', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -497,11 +488,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif ($datas->type == 'Risk-Assesment')
-                                                        @php 
-                                                            DB::table('risk_management')
-                                                            ->where('id', $datas->id)
-                                                            ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                        @endphp
                                                             <a href="{{ route('showRiskManagement', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -525,11 +511,6 @@
                                                                 </a>
                                                             @endif
                                                     @elseif ($datas->type == 'risk-assesment')
-                                                        @php 
-                                                            DB::table('risk_management')
-                                                            ->where('id', $datas->id)
-                                                            ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                        @endphp
                                                             <a href="{{ route('showRiskManagement', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -553,11 +534,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif ($datas->type == 'Lab-Incident')
-                                                            @php 
-                                                                DB::table('lab_incidents')
-                                                                ->where('id', $datas->id)
-                                                                ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                            @endphp
                                                             <a href="{{ route('ShowLabIncident', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -581,11 +557,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif ($datas->type == 'Incident')
-                                                                @php 
-                                                                DB::table('incidents')
-                                                                ->where('id', $datas->id)
-                                                                ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
 
                                                             <a href="{{ route('incident-show', $datas->id) }}"
                                                               style="display: inline-block; 
@@ -612,11 +583,6 @@
 
                                                             {{-- Change proposal just --}}
                                                         @elseif ($datas->type == 'Change Proposal And Justification')
-                                                                @php 
-                                                                DB::table('change_proposal_justs')
-                                                                ->where('id', $datas->id)
-                                                                ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
 
                                                             <a href="{{ route('cpshow', $datas->id) }}"
                                                               style="display: inline-block; 
@@ -641,11 +607,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif ($datas->type == 'Out Of Calibration')
-                                                            @php 
-                                                                DB::table('out_of_calibrations')
-                                                                ->where('id', $datas->id)
-                                                                ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ route('ShowOutofCalibration', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -669,11 +630,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif ($datas->type == 'External-Audit')
-                                                                @php 
-                                                                    DB::table('auditees')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ route('showExternalAudit', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -696,12 +652,7 @@
                                                                     </div>
                                                                 </a>
                                                             @endif
-                                                        @elseif ($datas->type == 'Audit-Program')
-                                                                @php 
-                                                                    DB::table('audit_programs')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp 
+                                                        @elseif ($datas->type == 'Audit-Program') 
                                                             <a href="{{ route('ShowAuditProgram', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -724,12 +675,7 @@
                                                                     </div>
                                                                 </a>
                                                             @endif
-                                                        @elseif ($datas->type == 'Observation')
-                                                                @php 
-                                                                    DB::table('observations')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp 
+                                                        @elseif ($datas->type == 'Observation') 
                                                             <a href="{{ route('showobservation', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -753,11 +699,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Action-Item')
-                                                                @php 
-                                                                    DB::table('action_items')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ route('actionItem.show', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -781,11 +722,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Extension')
-                                                                @php 
-                                                                    DB::table('extension_news')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ url('extension_newshow', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -807,11 +743,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Effectiveness-Check')
-                                                                @php 
-                                                                    DB::table('effectiveness_checks')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ route('effectiveness.show', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -835,11 +766,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Capa')
-                                                                @php 
-                                                                    DB::table('capas')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ route('capashow', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -863,11 +789,6 @@
                                                                 </a>
                                                             @endif
                                                          @elseif($datas->type == 'CAPA')
-                                                                @php 
-                                                                    DB::table('capas')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ route('capashow', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -891,11 +812,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'OOS/OOT')
-                                                                @php 
-                                                                    DB::table('o_o_s')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ route('oos.oos_view', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -929,11 +845,6 @@
                                                         </a>
                                                     @endif --}}
                                                         @elseif($datas->type == 'ERRATA')
-                                                             @php 
-                                                                    DB::table('erratas')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ route('errata.show', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -968,11 +879,6 @@
                                                         </a>
                                                     @endif --}}
                                                         @elseif($datas->type == 'ERRATA')
-                                                                @php 
-                                                                    DB::table('erratas')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ route('errata.show', $datas->id) }}">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}{{ $datas->id }}
                                                             </a>
@@ -987,11 +893,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Management-Review')
-                                                                @php 
-                                                                    DB::table('management_reviews')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ route('manageshow', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -1015,11 +916,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Deviation')
-                                                                @php 
-                                                                    DB::table('deviations')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ route('devshow', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -1043,11 +939,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Deviation')
-                                                                @php 
-                                                                    DB::table('deviations')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ route('devshow', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -1071,11 +962,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Failure Investigation')
-                                                                @php 
-                                                                    DB::table('failure_investigations')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ route('failure-investigation-show', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -1099,11 +985,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Non Conformance')
-                                                                @php 
-                                                                    DB::table('non_conformances')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ route('non-conformance-show', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -1127,11 +1008,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Root-Cause-Analysis')
-                                                                @php 
-                                                                    DB::table('root_cause_analyses')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ route('root_show', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
@@ -1178,11 +1054,6 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Resampling')
-                                                               @php 
-                                                                    DB::table('resamplings')
-                                                                    ->where('id', $datas->id)
-                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
-                                                                @endphp
                                                             <a href="{{ url('resampling_view', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 

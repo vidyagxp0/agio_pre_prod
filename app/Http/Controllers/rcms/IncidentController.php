@@ -636,7 +636,7 @@ class IncidentController extends Controller
             //            $history->comment = $request->equipment_comments[$index] ?? '';
             //            $history->user_id = Auth::user()->id;
             //            $history->user_name = Auth::user()->name;
-            //            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //            $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
             //            $history->change_to = "Opened";
             //            $history->change_from = "Initiation";
@@ -695,7 +695,7 @@ class IncidentController extends Controller
             //            $history->comment = $request->equipment_comments[$index] ?? '';
             //            $history->user_id = Auth::user()->id;
             //            $history->user_name = Auth::user()->name;
-            //            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //            $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
             //            $history->change_to = "Opened";
             //            $history->change_from = "Initiation";
@@ -753,7 +753,7 @@ class IncidentController extends Controller
             //            $history->comment = $request->equipment_comments[$index] ?? '';
             //            $history->user_id = Auth::user()->id;
             //            $history->user_name = Auth::user()->name;
-            //            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //            $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
             //            $history->change_to = "Opened";
             //            $history->change_from = "Initiation";
@@ -1120,7 +1120,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiator";
@@ -1136,7 +1136,7 @@ class IncidentController extends Controller
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $incident->status;
                 $history->change_to = "Opened";
                 $history->change_from = "Initiator";
@@ -1152,7 +1152,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiator";
@@ -1167,7 +1167,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiator";
@@ -1183,7 +1183,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiator";
@@ -1203,7 +1203,7 @@ class IncidentController extends Controller
             //     $history->comment = "Not Applicable";
             //     $history->user_id = Auth::user()->id;
             //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //     $history->origin_state = $incident->status;
             //     $history->change_to = "Opened";
             //     $history->change_from = "Initiator";
@@ -1221,7 +1221,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
@@ -1238,7 +1238,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
@@ -1255,7 +1255,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiator";
@@ -1273,7 +1273,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiator";
@@ -1289,7 +1289,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiator";
@@ -1307,7 +1307,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiator";
@@ -1324,7 +1324,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
@@ -1340,7 +1340,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
@@ -1357,7 +1357,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
@@ -1374,7 +1374,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
@@ -1391,7 +1391,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
@@ -1408,7 +1408,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->change_to =   "Opened";
@@ -1425,7 +1425,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
@@ -1442,7 +1442,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
@@ -1459,7 +1459,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
@@ -1530,7 +1530,7 @@ class IncidentController extends Controller
                                 $history->comment = $request->equipment_comments[$index] ?? '';
                                 $history->user_id = Auth::user()->id;
                                 $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
                                 $history->change_to = "Opened";
                                 $history->change_from = "Initiation";
@@ -1554,7 +1554,7 @@ class IncidentController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1624,7 +1624,7 @@ class IncidentController extends Controller
                             $history->comment = $request->equipment_comments[$index] ?? '';
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
                             $history->change_to = "Opened";
                             $history->change_from = "Initiation";
@@ -1648,7 +1648,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1718,7 +1718,7 @@ class IncidentController extends Controller
                             $history->comment = $request->equipment_comments[$index] ?? '';
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
                             $history->change_to = "Opened";
                             $history->change_from = "Initiation";
@@ -1742,7 +1742,7 @@ class IncidentController extends Controller
         //     $history->user_name = Auth::user()->name;
         //     $history->change_to =   "Opened";
         //     $history->change_from = "Initiator";
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $incident->status;
         //     $history->action_name = 'Create';
         //     $history->save();
@@ -1759,7 +1759,7 @@ class IncidentController extends Controller
         //     $history->user_name = Auth::user()->name;
         //     $history->change_to =   "Opened";
         //     $history->change_from = "Initiator";
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $incident->status;
         //     $history->action_name = 'Create';
         //     $history->save();
@@ -1779,7 +1779,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to = "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1799,7 +1799,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to = "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1814,7 +1814,7 @@ class IncidentController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
@@ -1833,7 +1833,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1850,7 +1850,7 @@ class IncidentController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $incident->status;
         //     $history->change_to =   "Opened";
         //     $history->change_from = "Initiator";
@@ -1866,7 +1866,7 @@ class IncidentController extends Controller
         //    $history->comment = "Not Applicable";
         //    $history->user_id = Auth::user()->id;
         //    $history->user_name = Auth::user()->name;
-        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //    $history->origin_state = $incident->status;
         //    $history->change_to =   "Opened";
         //    $history->change_from = "Initiator";
@@ -1885,7 +1885,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1901,7 +1901,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1918,7 +1918,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1934,7 +1934,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1950,7 +1950,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1966,7 +1966,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1983,7 +1983,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1999,7 +1999,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2015,7 +2015,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2031,7 +2031,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2047,7 +2047,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2065,7 +2065,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2082,7 +2082,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2098,7 +2098,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2115,7 +2115,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2132,7 +2132,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2149,7 +2149,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2166,7 +2166,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2182,7 +2182,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2198,7 +2198,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2215,7 +2215,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2231,7 +2231,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2247,7 +2247,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2263,7 +2263,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2279,7 +2279,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2296,7 +2296,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2313,7 +2313,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2330,7 +2330,7 @@ class IncidentController extends Controller
         //     $history->user_name = Auth::user()->name;
         //     $history->change_to =   "Opened";
         //     $history->change_from = "Initiator";
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $incident->status;
         //     $history->action_name = 'Create';
         //     $history->save();
@@ -2347,7 +2347,7 @@ class IncidentController extends Controller
         //     $history->user_name = Auth::user()->name;
         //     $history->change_to =   "Opened";
         //     $history->change_from = "Initiator";
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $incident->status;
         //     $history->action_name = 'Create';
         //     $history->save();
@@ -2364,7 +2364,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2381,7 +2381,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2397,7 +2397,7 @@ class IncidentController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
@@ -3794,7 +3794,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -3814,7 +3814,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -3834,7 +3834,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -3854,7 +3854,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -3874,7 +3874,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -3894,7 +3894,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -3914,7 +3914,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -3934,7 +3934,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -3954,7 +3954,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->Delay_Justification_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -3976,7 +3976,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->audit_type_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -3996,7 +3996,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4016,7 +4016,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4036,7 +4036,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4056,7 +4056,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4145,7 +4145,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 $history->comment = $request->equipment_comments[$index] ?? '';
                                 $history->user_id = Auth::user()->id;
                                 $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $data3->status;
                                 $history->change_to = "Not Applicable";
                                 $history->change_from = $lastIncident->status;
@@ -4176,7 +4176,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4262,7 +4262,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 $history->comment = $request->equipment_comments[$index] ?? '';
                                 $history->user_id = Auth::user()->id;
                                 $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $data4->status;
                                 $history->change_to = "Not Applicable";
                                 $history->change_from = $lastIncident->status;
@@ -4293,7 +4293,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4379,7 +4379,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                     $history->comment = $request->equipment_comments[$index] ?? '';
                                     $history->user_id = Auth::user()->id;
                                     $history->user_name = Auth::user()->name;
-                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                     $history->origin_state = $data5->status;
                                     $history->change_to = "Not Applicable";
                                     $history->change_from = $lastIncident->status;
@@ -4410,7 +4410,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4430,7 +4430,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                  $history->comment = $request->comment;
                  $history->user_id = Auth::user()->id;
                  $history->user_name = Auth::user()->name;
-                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                 $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                  $history->origin_state = $lastIncident->status;
                  $history->change_to = "Not Applicable";
                  $history->change_from = $lastIncident->status;
@@ -4450,7 +4450,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4470,7 +4470,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4490,7 +4490,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4510,7 +4510,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4530,7 +4530,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4550,7 +4550,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4570,7 +4570,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4590,7 +4590,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4610,7 +4610,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4630,7 +4630,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4650,7 +4650,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4669,7 +4669,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4694,7 +4694,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
             //     $history->comment = $request->comment;
             //     $history->user_id = Auth::user()->id;
             //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //     $history->origin_state= $lastIncident->status;
             //     $history->change_to= "Not Applicable";
             //     $history->change_from= $lastIncident->status;
@@ -4714,7 +4714,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
             //    $history->comment = $request->comment;
             //    $history->user_id = Auth::user()->id;
             //    $history->user_name = Auth::user()->name;
-            //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //    $history->origin_state= $lastIncident->status;
             //    $history->change_to= "Not Applicable";
             //    $history->change_from= $lastIncident->status;
@@ -4735,7 +4735,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->Delay_Justification_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4770,7 +4770,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
             //     $history->comment = $request->comment;
             //     $history->user_id = Auth::user()->id;
             //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //     $history->origin_state= $lastIncident->status;
             //     $history->change_to= "Not Applicable";
             //     $history->change_from= $lastIncident->status;
@@ -4791,7 +4791,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4811,7 +4811,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4831,7 +4831,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4851,7 +4851,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4871,7 +4871,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4891,7 +4891,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4911,7 +4911,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4931,7 +4931,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4951,7 +4951,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4972,7 +4972,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -4992,7 +4992,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5012,7 +5012,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5032,7 +5032,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to= "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5053,7 +5053,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5073,7 +5073,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5093,7 +5093,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5113,7 +5113,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5134,7 +5134,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5154,7 +5154,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5175,7 +5175,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5195,7 +5195,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5215,7 +5215,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5235,7 +5235,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to= "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5255,7 +5255,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5275,7 +5275,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
             //     $history->comment = $request->comment;
             //     $history->user_id = Auth::user()->id;
             //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //     $history->origin_state= $lastIncident->status;
             //     $history->change_to= "Not Applicable";
             //     $history->change_from= $lastIncident->status;
@@ -5295,7 +5295,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
             //     $history->comment = $request->comment;
             //     $history->user_id = Auth::user()->id;
             //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //     $history->origin_state= $lastIncident->status;
             //     $history->change_to= "Not Applicable";
             //     $history->change_from= $lastIncident->status;
@@ -5315,7 +5315,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5335,7 +5335,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5355,7 +5355,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5375,7 +5375,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5397,7 +5397,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5416,7 +5416,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5435,7 +5435,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5455,7 +5455,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5476,7 +5476,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5497,7 +5497,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5517,7 +5517,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5537,7 +5537,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to = "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5559,7 +5559,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastIncident->status;
                 $history->change_to= "Not Applicable";
                 $history->change_from = $lastIncident->status;
@@ -5719,7 +5719,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "Opened";
                     $history->change_from = $lastDocument->status;
@@ -5794,7 +5794,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "HOD Initial Review";
                 $history->change_from = $lastDocument->status;
@@ -5901,7 +5901,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->change_to = "QA Initial Review";
@@ -5973,7 +5973,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->action_name ="Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->change_to =   "QAH/Designee Approval";
@@ -6047,7 +6047,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->change_to =   "Pending Initiator Update";
@@ -6121,7 +6121,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->change_to =   "HOD Final Review";
@@ -6198,7 +6198,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->change_to =   "QA Final Review";
@@ -6287,7 +6287,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $incident->status;
             $history->change_to =   "Closed-Cancel";
             $history->change_from = $lastDocument->status;
@@ -6405,7 +6405,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->stage = 'Send to HOD';
             // foreach ($list as $u) {
@@ -6472,7 +6472,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to Initiator';
         $history->save();
@@ -6539,7 +6539,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to HOD';
         $history->save();
@@ -6606,7 +6606,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to HOD';
         $history->save();
@@ -6676,7 +6676,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to Pending Initiator Update';
         $history->save();
@@ -6766,7 +6766,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "HOD Initial Review";
                     $history->change_from = $lastDocument->status;
@@ -6991,7 +6991,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     $history->action= 'HOD Review Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "QA Initial Review";
                     $history->change_from = $lastDocument->status;
@@ -7222,7 +7222,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     $history->user_name = Auth::user()->name;
                     $history->change_to =   "QAH/Designee Approval";
                     $history->change_from = $lastDocument->status;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->stage = 'QAH/Designee Approval';
                     if (is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_By === '') {
@@ -7357,7 +7357,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     $history->action= 'QAH/Designee Approval Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "Pending Initiator Update";
                     $history->change_from = $lastDocument->status;
@@ -7767,7 +7767,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_to =   "HOD Final Review";
                         $history->change_from = $lastDocument->status;
@@ -7894,7 +7894,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     $history->action ='HOD Final Review Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "QA Final Review";
                     $history->change_from = $lastDocument->status;
@@ -8051,7 +8051,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "QAH Closure Approval";
                     $history->change_from = $lastDocument->status;
@@ -8282,7 +8282,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "Closed-Done";
                     $history->change_from = $lastDocument->status;
@@ -8384,7 +8384,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Approved';
                 $history->save();
@@ -8434,7 +8434,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'HOD Review';
                 $history->save();
@@ -8504,7 +8504,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->change_to =   "HOD Initial Review";
@@ -8581,7 +8581,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
@@ -8654,7 +8654,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Information Required';
                 $history->save();
@@ -8725,7 +8725,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
@@ -8795,7 +8795,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
@@ -8865,7 +8865,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                $history->comment = $request->comment;
                $history->user_id = Auth::user()->id;
                $history->user_name = Auth::user()->name;
-               $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+               $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                $history->origin_state = $lastDocument->status;
                $history->stage = 'More Info Required';
                $history->save();

@@ -884,7 +884,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -899,7 +899,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -914,7 +914,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -930,7 +930,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -947,7 +947,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -963,7 +963,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -979,7 +979,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -995,7 +995,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1011,7 +1011,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1027,7 +1027,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->action_name = 'Create';
             $history->change_to =   "Opened";
@@ -1043,7 +1043,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -1061,7 +1061,7 @@ class FailureInvestigationController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1077,7 +1077,7 @@ class FailureInvestigationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1093,7 +1093,7 @@ class FailureInvestigationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1109,7 +1109,7 @@ class FailureInvestigationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->action_name = 'Create';
             $history->save();
@@ -1125,7 +1125,7 @@ class FailureInvestigationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->action_name = 'Create';
             $history->save();
@@ -2303,7 +2303,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $failureInvestigation->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2323,7 +2323,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2344,7 +2344,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2365,7 +2365,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2386,7 +2386,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2407,7 +2407,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2428,7 +2428,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2449,7 +2449,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2470,7 +2470,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2491,7 +2491,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2512,7 +2512,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2533,7 +2533,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2554,7 +2554,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2575,7 +2575,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2596,7 +2596,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2617,7 +2617,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2638,7 +2638,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2659,7 +2659,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2680,7 +2680,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2701,7 +2701,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2722,7 +2722,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2743,7 +2743,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2764,7 +2764,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2785,7 +2785,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2806,7 +2806,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2827,7 +2827,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2848,7 +2848,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2869,7 +2869,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2890,7 +2890,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2911,7 +2911,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2932,7 +2932,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2953,7 +2953,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastFailureInvestigation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastFailureInvestigation->status;
@@ -2978,7 +2978,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -2998,7 +2998,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3018,7 +3018,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3038,7 +3038,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3058,7 +3058,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3078,7 +3078,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3103,7 +3103,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3127,7 +3127,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3147,7 +3147,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3167,7 +3167,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3187,7 +3187,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3207,7 +3207,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3227,7 +3227,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3252,7 +3252,7 @@ class FailureInvestigationController extends Controller
            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3274,7 +3274,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3294,7 +3294,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3314,7 +3314,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3334,7 +3334,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3354,7 +3354,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3374,7 +3374,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3399,7 +3399,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3421,7 +3421,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3441,7 +3441,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3461,7 +3461,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3481,7 +3481,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3501,7 +3501,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3521,7 +3521,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3547,7 +3547,7 @@ class FailureInvestigationController extends Controller
            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3568,7 +3568,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3588,7 +3588,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3608,7 +3608,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3628,7 +3628,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3648,7 +3648,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3668,7 +3668,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3695,7 +3695,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3717,7 +3717,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3737,7 +3737,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3757,7 +3757,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3777,7 +3777,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3797,7 +3797,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3817,7 +3817,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3842,7 +3842,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3864,7 +3864,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3884,7 +3884,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3904,7 +3904,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3924,7 +3924,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3944,7 +3944,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3964,7 +3964,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -3991,7 +3991,7 @@ class FailureInvestigationController extends Controller
                 $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4013,7 +4013,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4033,7 +4033,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4053,7 +4053,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4073,7 +4073,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4093,7 +4093,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4113,7 +4113,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4138,7 +4138,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4160,7 +4160,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4180,7 +4180,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4200,7 +4200,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4220,7 +4220,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4240,7 +4240,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4260,7 +4260,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4285,7 +4285,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4307,7 +4307,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4327,7 +4327,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4347,7 +4347,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4367,7 +4367,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4387,7 +4387,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4407,7 +4407,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4432,7 +4432,7 @@ class FailureInvestigationController extends Controller
              $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4454,7 +4454,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4474,7 +4474,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4494,7 +4494,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4514,7 +4514,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4534,7 +4534,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4554,7 +4554,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4578,7 +4578,7 @@ class FailureInvestigationController extends Controller
            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4600,7 +4600,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4620,7 +4620,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4640,7 +4640,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4660,7 +4660,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4680,7 +4680,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4700,7 +4700,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4724,7 +4724,7 @@ class FailureInvestigationController extends Controller
                $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4746,7 +4746,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4766,7 +4766,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4786,7 +4786,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4806,7 +4806,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4826,7 +4826,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4846,7 +4846,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4870,7 +4870,7 @@ class FailureInvestigationController extends Controller
              $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4892,7 +4892,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4912,7 +4912,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4932,7 +4932,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4952,7 +4952,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4972,7 +4972,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -4992,7 +4992,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5016,7 +5016,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5038,7 +5038,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5058,7 +5058,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5078,7 +5078,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5098,7 +5098,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5118,7 +5118,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5138,7 +5138,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5162,7 +5162,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5183,7 +5183,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5203,7 +5203,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5223,7 +5223,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5243,7 +5243,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5263,7 +5263,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5283,7 +5283,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5307,7 +5307,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5329,7 +5329,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5349,7 +5349,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5369,7 +5369,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5389,7 +5389,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5409,7 +5409,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5429,7 +5429,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5449,7 +5449,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5472,7 +5472,7 @@ class FailureInvestigationController extends Controller
              $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5494,7 +5494,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5514,7 +5514,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5534,7 +5534,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5554,7 +5554,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5574,7 +5574,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5594,7 +5594,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5614,7 +5614,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5638,7 +5638,7 @@ class FailureInvestigationController extends Controller
               $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5660,7 +5660,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5680,7 +5680,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5700,7 +5700,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5720,7 +5720,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5740,7 +5740,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5760,7 +5760,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5780,7 +5780,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5804,7 +5804,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5825,7 +5825,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5845,7 +5845,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5865,7 +5865,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5885,7 +5885,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5905,7 +5905,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5925,7 +5925,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5945,7 +5945,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5969,7 +5969,7 @@ class FailureInvestigationController extends Controller
               $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -5991,7 +5991,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -6011,7 +6011,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -6031,7 +6031,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -6051,7 +6051,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -6071,7 +6071,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -6091,7 +6091,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -6111,7 +6111,7 @@ class FailureInvestigationController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -6135,7 +6135,7 @@ class FailureInvestigationController extends Controller
              $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastCft->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastCft->status;
@@ -6261,7 +6261,7 @@ class FailureInvestigationController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
@@ -6333,7 +6333,7 @@ class FailureInvestigationController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
@@ -6386,7 +6386,7 @@ class FailureInvestigationController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 // dd();
@@ -6449,7 +6449,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $failureInvestigation->status;
             $history->stage = 'Cancelled';
             $history->save();
@@ -6511,7 +6511,7 @@ class FailureInvestigationController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->stage = 'Send to HOD';
             // foreach ($list as $u) {
@@ -6578,7 +6578,7 @@ class FailureInvestigationController extends Controller
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to Initiator';
         $history->save();
@@ -6645,7 +6645,7 @@ class FailureInvestigationController extends Controller
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to HOD';
         $history->save();
@@ -6712,7 +6712,7 @@ class FailureInvestigationController extends Controller
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to HOD';
         $history->save();
@@ -6780,7 +6780,7 @@ class FailureInvestigationController extends Controller
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to Pending Initiator Update';
         $history->save();
@@ -6867,7 +6867,7 @@ class FailureInvestigationController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "HOD Review";
                     $history->change_from = $lastDocument->status;
@@ -6953,7 +6953,7 @@ class FailureInvestigationController extends Controller
                     $history->action= 'HOD Review Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "QA Initial Review";
                     $history->change_from = $lastDocument->status;
@@ -7032,7 +7032,7 @@ class FailureInvestigationController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->change_to =   "CFT Review";
                     $history->change_from = $lastDocument->status;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->stage = 'Completed';
                     $history->action_name = "Update";
@@ -7184,7 +7184,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7218,7 +7218,7 @@ class FailureInvestigationController extends Controller
                            // $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7239,7 +7239,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7261,7 +7261,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7282,7 +7282,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7302,7 +7302,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7322,7 +7322,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7343,7 +7343,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7364,7 +7364,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7385,7 +7385,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7405,7 +7405,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7425,7 +7425,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7445,7 +7445,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7465,7 +7465,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7485,7 +7485,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7505,7 +7505,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7525,7 +7525,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7545,7 +7545,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7565,7 +7565,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7585,7 +7585,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7605,7 +7605,7 @@ class FailureInvestigationController extends Controller
                             $history->user_name = Auth::user()->name;
                            $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -7665,7 +7665,7 @@ class FailureInvestigationController extends Controller
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_to =   "QA Final Review";
                         $history->change_from = $lastDocument->status;
@@ -7735,7 +7735,7 @@ class FailureInvestigationController extends Controller
                     $history->action ='QA Final Review Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "QA Head/Manager Designee Approval";
                     $history->change_from = $lastDocument->status;
@@ -7826,7 +7826,7 @@ class FailureInvestigationController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "Pending Initiator Update";
                     $history->change_from = $lastDocument->status;
@@ -7917,7 +7917,7 @@ class FailureInvestigationController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "QA Final Approval";
                     $history->change_from = $lastDocument->status;
@@ -8010,7 +8010,7 @@ class FailureInvestigationController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "Closed-Done";
                     $history->change_from = $lastDocument->status;
@@ -8078,7 +8078,7 @@ class FailureInvestigationController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Approved';
                 $history->save();
@@ -8130,7 +8130,7 @@ class FailureInvestigationController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'HOD Review';
                 $history->save();
@@ -8180,7 +8180,7 @@ class FailureInvestigationController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
@@ -8231,7 +8231,7 @@ class FailureInvestigationController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();

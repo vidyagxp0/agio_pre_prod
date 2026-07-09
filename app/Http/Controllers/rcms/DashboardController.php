@@ -34,6 +34,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use App\Models\OOS;
 use App\Models\errata;
 use App\Models\MarketComplaint;
@@ -47,13 +48,19 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
+        $uniqueProcessNames = Cache::remember('qms_dashboard_process_names', 3600, function () {
+            return QMSProcess::select('process_name')->distinct()->pluck('process_name');
+        });
+
         if ($request->has('ajax_load')) {
-            $html = view('frontend.rcms.dashboard')->render();
+            $html = view('frontend.rcms.dashboard', compact('uniqueProcessNames'))->render();
             return response()->json(['html' => $html]);
         }
-        return view('frontend.rcms.dashboard');
+
+        return view('frontend.rcms.dashboard', compact('uniqueProcessNames'));
+
         $table = [];
-        $limit = min(max((int) $request->get('limit', 500), 50), 2000);
+        $limit = min(max((int) $request->get('limit', 50), 50), 2000);
 
         $datas = CC::orderByDesc('id')->limit($limit)->get();
         $datas1 = ActionItem::orderByDesc('id')->limit($limit)->get();
@@ -1040,240 +1047,214 @@ class DashboardController extends Controller
 
     public function ccView($id, $type)
     {
+        /**
+         * PHASE-1 PERFORMANCE OPTIMIZATION
+         * --------------------------------
+         * Same route/function/output, but reduced repeated if/elseif + repeated
+         * division queries. Modal click now performs one record query + one cached
+         * division-name lookup instead of record query + QMSDivision::find() for
+         * every branch. No data update/delete is performed here.
+         */
 
+        $typeKey = $type == 'OOS_OOT' ? 'OOS_OOT' : $type;
 
+        $config = [
+            'OOT' => [
+                'model' => Ootc::class,
+                'single' => fn ($id) => "ootcSingleReport/{$id}",
+                'audit' => fn ($id) => "audit_pdf/{$id}",
+                'family' => fn ($id) => '#',
+            ],
+            'Failure Investigation' => [
+                'model' => FailureInvestigation::class,
+                'single' => fn ($id) => "failure-investigation-single-report/{$id}",
+                'audit' => fn ($id) => "failure-investigation-audit-pdf/{$id}",
+                'family' => fn ($id) => '#',
+            ],
+            'ERRATA' => [
+                'model' => errata::class,
+                'single' => fn ($id) => "errata_single_pdf/{$id}",
+                'audit' => fn ($id) => "errata_audit/{$id}",
+                'family' => fn ($id) => '#',
+            ],
+            'Capa' => [
+                'model' => Capa::class,
+                'display_type' => 'CAPA',
+                'single' => fn ($id) => "capaSingleReport/{$id}",
+                'audit' => fn ($id) => "capaAuditReport/{$id}",
+                'family' => fn ($id) => "capaFamilyReport/{$id}",
+            ],
+            'Lab-Incident' => [
+                'model' => LabIncident::class,
+                'single' => fn ($id) => "LabIncidentSingleReport/{$id}",
+                'audit' => fn ($id) => "LabIncidentAuditReport/{$id}",
+                'family' => fn ($id) => "labfamilyreport/{$id}",
+            ],
+            'Deviation' => [
+                'model' => Deviation::class,
+                'single' => fn ($id) => "deviationSingleReport/{$id}",
+                'audit' => fn ($id) => "DeviationAuditTrialPdf/{$id}",
+                'family' => fn ($id) => "deviationfamilyReport/{$id}",
+            ],
+            'Internal-Audit' => [
+                'model' => InternalAudit::class,
+                'single' => fn ($id) => "internalSingleReport/{$id}",
+                'audit' => fn ($id) => "internalauditReport/{$id}",
+                'family' => fn ($id) => "internalFamilyReport/{$id}",
+            ],
+            'risk-assesment' => [
+                'model' => RiskManagement::class,
+                'single' => fn ($id) => "riskSingleReport/{$id}",
+                'audit' => fn ($id) => "riskAuditReport/{$id}",
+                'family' => fn ($id) => "riskManagementfamily/{$id}",
+            ],
+            'Out Of Calibration' => [
+                'model' => OutOfCalibration::class,
+                'single' => fn ($id) => "OOCSingleReport/{$id}",
+                'audit' => fn ($id) => "ooc_Audit_Report/{$id}",
+                'family' => fn ($id) => "ooc_family_Report/{$id}",
+            ],
+            'External-Audit' => [
+                'model' => Auditee::class,
+                'single' => fn ($id) => "ExternalAuditSingleReport/{$id}",
+                'audit' => fn ($id) => "ExternalAuditTrialReport/{$id}",
+                'family' => fn ($id) => "external_family_report/{$id}",
+                'summary' => fn ($id) => "SummaryResponseReport/{$id}",
+            ],
+            'Audit-Program' => [
+                'model' => AuditProgram::class,
+                'single' => fn ($id) => "auditProgramSingleReport/{$id}",
+                'audit' => fn ($id) => "auditProgramAuditReport/{$id}",
+                'family' => fn ($id) => "auditProgramFamilyReport/{$id}",
+            ],
+            'Action-Item' => [
+                'model' => ActionItem::class,
+                'single' => fn ($id) => "actionitemSingleReport/{$id}",
+                'audit' => fn ($id) => "actionitemauditTrailPdf/{$id}",
+                'family' => fn ($id) => '#',
+            ],
+            'Extension' => [
+                'model' => extension_new::class,
+                'division_field' => 'site_location_code',
+                'record_field' => 'record_number',
+                'single' => fn ($id) => "singleReportNew/{$id}",
+                'audit' => fn ($id) => "extensionAuditReport/{$id}",
+                'family' => fn ($id) => '#',
+            ],
+            'Observation' => [
+                'model' => Observation::class,
+                'single' => fn ($id) => "ObservationSingleReport/{$id}",
+                'audit' => fn ($id) => "ObservationAuditTrialShow/{$id}",
+                'family' => fn ($id) => "ObservationfamilyReport/{$id}",
+            ],
+            'Effectiveness-Check' => [
+                'model' => EffectivenessCheck::class,
+                'single' => fn ($id) => "effectiveSingleReport/{$id}",
+                'audit' => fn ($id) => "effectiveAuditReport/{$id}",
+                'family' => fn ($id) => "effectiveFamilyReport/{$id}",
+            ],
+            'Management-Review' => [
+                'model' => ManagementReview::class,
+                'single' => fn ($id) => "managementReview/{$id}",
+                'audit' => fn ($id) => "managementReviewReport/{$id}",
+                'family' => fn ($id) => "managementReFamily_report/{$id}",
+            ],
+            'OOS_OOT' => [
+                'model' => OOS::class,
+                'display_type' => 'OOS/OOT',
+                'single' => fn ($id) => "oos/single_report/{$id}",
+                'audit' => fn ($id) => "oos/audit_report/{$id}",
+                'family' => fn ($id) => "oos/family_report/{$id}",
+            ],
+            'OOS Microbiology' => [
+                'model' => OOS_micro::class,
+                'single' => fn ($id) => "oos_micro/single_report/{$id}",
+                'audit' => fn ($id) => "oos_micro/audit_report/{$id}",
+                'family' => fn ($id) => '#',
+            ],
+            'Root-Cause-Analysis' => [
+                'model' => RootCauseAnalysis::class,
+                'single' => fn ($id) => "rootSingleReport/{$id}",
+                'audit' => fn ($id) => "rootAuditReport/{$id}",
+                'family' => fn ($id) => "rootFamilyReport/{$id}",
+            ],
+            'Market demo' => [
+                'model' => MarketComplaint::class,
+                'single' => fn ($id) => "marketComplaintSingleReport/{$id}",
+                'audit' => fn ($id) => "MarketComplaintAuditReport/{$id}",
+                'family' => fn ($id) => '#',
+            ],
+            'Market Complaint' => [
+                'model' => MarketComplaint::class,
+                'single' => fn ($id) => "pdf-report/{$id}",
+                'audit' => fn ($id) => "marketcomplaint/marketauditTrailPdf/{$id}",
+                'family' => fn ($id) => "pdf-family-report/{$id}",
+            ],
+            'Change-Control' => [
+                'model' => CC::class,
+                'single' => fn ($id) => "change_control_single_pdf/{$id}",
+                'audit' => fn ($id) => "audit/{$id}",
+                'family' => fn ($id) => "cc_family_report/{$id}",
+            ],
+            'Incident' => [
+                'model' => Incident::class,
+                'single' => fn ($id) => "incident-single-report/{$id}",
+                'audit' => fn ($id) => "incident-audit-pdf/{$id}",
+                'family' => fn ($id) => "incident-family-report/{$id}",
+            ],
+            'Non Conformance' => [
+                'model' => NonConformance::class,
+                'single' => fn ($id) => "non-conformance-single-report/{$id}",
+                'audit' => fn ($id) => "non-conformance-audit-pdf/{$id}",
+                'family' => fn ($id) => '#',
+            ],
+            'Resampling' => [
+                'model' => Resampling::class,
+                'single' => fn ($id) => "resamplingSingleReport/{$id}",
+                'audit' => fn ($id) => "resamplingAuditReport/{$id}",
+                'family' => fn ($id) => '#',
+            ],
+            'Change Proposal And Justification' => [
+                'model' => ChangeProposalJust::class,
+                'single' => fn ($id) => "cpjsingleReport/{$id}",
+                'audit' => fn ($id) => "cpjauditReport/{$id}",
+                'family' => fn ($id) => '#',
+            ],
+        ];
 
-        $division_name = "NA";
-
-        $summaryResponse = '';
-
-        if ($type == "OOT") {
-            $data = Ootc::find($id);
-            $single = "ootcSingleReport/" . $data->id;
-            $audit = "audit_pdf/".$data->id;
-            $family="#";
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        } elseif ($type == "Failure Investigation") {
-            $data = FailureInvestigation::find($id);
-            $single = "failure-investigation-single-report/" . $data->id;
-            $audit = "failure-investigation-audit-pdf/".$data->id;
-            $family="#";
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        } elseif ($type == "ERRATA") {
-            $data = errata::find($id);
-            $single = "errata_single_pdf/" . $data->id;
-            $audit = "errata_audit/" . $data->id;
-            $family="#";
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        } elseif ($type == "Capa") {
-            $data = Capa::find($id);
-            $single = "capaSingleReport/" . $data->id;
-            $audit = "capaAuditReport/" . $data->id;
-            $family = "capaFamilyReport/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        } elseif ($type == "Lab-Incident") {
-            $data = LabIncident::find($id);
-            $single = "LabIncidentSingleReport/" . $data->id;
-            $family = "labfamilyreport/" . $data->id;
-            $audit = "LabIncidentAuditReport/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        } elseif ($type == "Deviation") {
-            $data = Deviation::find($id);
-            $single = "deviationSingleReport/" . $data->id;
-            $audit = "DeviationAuditTrialPdf/" . $data->id;
-            $family = "deviationfamilyReport/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        } elseif ($type == "Internal-Audit") {
-            $data = InternalAudit::find($id);
-            $single = "internalSingleReport/" . $data->id;
-            $audit = "internalauditReport/" . $data->id;
-            $family = "internalFamilyReport/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        } elseif ($type == "risk-assesment") {
-            $data = RiskManagement::find($id);
-            $single = "riskSingleReport/" . $data->id;
-            $family = "riskManagementfamily/" .$data->id;
-            $audit = "riskAuditReport/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        } elseif ($type == "Out Of Calibration") {
-            $data = OutOfCalibration::find($id);
-            $recordno = ((RecordNumber::first()->value('counter')) + 1);
-            $single = "OOCSingleReport/" . $data->id;
-            $audit = "ooc_Audit_Report/" . $data->id;
-            $family = "ooc_family_Report/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        }elseif ($type == "Lab-Incident") {
-            $data = LabIncident::find($id);
-            $single = "LabIncidentSingleReport/" . $data->id;
-            $family="#";
-            $audit = "LabIncidentAuditReport/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        } elseif ($type == "External-Audit") {
-            $data = Auditee::find($id);
-            $single = "ExternalAuditSingleReport/" . $data->id;
-            $audit = "ExternalAuditTrialReport/" . $data->id;
-            $family = "external_family_report/" . $data->id;
-            $summaryResponse = "SummaryResponseReport/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        } elseif ($type == "Audit-Program") {
-            $data = AuditProgram::find($id);
-            $single = "auditProgramSingleReport/" . $data->id;
-            $family = "auditProgramFamilyReport/" . $data->id;
-            $audit = "auditProgramAuditReport/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        } elseif ($type == "Action-Item") {
-            $data = ActionItem::find($id);
-            $single = "actionitemSingleReport/"  . $data->id;
-            $family="#";
-            $audit = "actionitemauditTrailPdf/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-
-
-
+        if (!isset($config[$typeKey])) {
+            return response()->json(['html' => '<div class="block"><div class="status">Record type not found.</div></div>'], 404);
         }
-        elseif ($type == "Extension") {
-            $data = extension_new::find($id);
+
+        $cfg = $config[$typeKey];
+        $data = $cfg['model']::find($id);
+
+        if (!$data) {
+            return response()->json(['html' => '<div class="block"><div class="status">Record not found.</div></div>'], 404);
+        }
+
+        // Preserve old Extension behavior where record_number was assigned to record.
+        if (($cfg['record_field'] ?? null) === 'record_number') {
             $data->record = $data->record_number;
-            $single = "singleReportNew/" .$data->id;
-            $family="#";
-            $audit = "extensionAuditReport/" .$data->id;
-            $division = QMSDivision::find($data->site_location_code);
-            $division_name = $division->name;
         }
 
+        $displayType = $cfg['display_type'] ?? $type;
+        $recordValue = $data->record ?? ($data->record_number ?? 0);
+        $divisionField = $cfg['division_field'] ?? 'division_id';
+        $divisionId = $data->{$divisionField} ?? ($data->division_id ?? null);
+        $divisionName = Helpers::getDivisionName($divisionId);
 
-        elseif ($type == "Observation") {
-            $data = Observation::find($id);
-            $single = "ObservationSingleReport/" .$data->id;
-            $family = "ObservationfamilyReport/" .$data->id;
-            $audit = "ObservationAuditTrialShow/" .$data->id;
+        $single = $cfg['single']($data->id);
+        $audit = $cfg['audit']($data->id);
+        $family = $cfg['family']($data->id);
+        $summaryResponse = isset($cfg['summary']) ? $cfg['summary']($data->id) : '';
 
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division ? $division->name : '';
-        } elseif ($type == "Effectiveness-Check") {
-            $data = EffectivenessCheck::find($id);
-            $single = "effectiveSingleReport/" .$data->id;
-            $family = "effectiveFamilyReport/" .$data->id;
-            $audit = "effectiveAuditReport/" .$data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        } elseif ($type == "Management-Review") {
-            $data = ManagementReview::find($id);
-            $single = "managementReview/" . $data->id;
-            $audit = "managementReviewReport/" . $data->id;
-            $family = "managementReFamily_report/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        }elseif ($type == "OOS_OOT") {
-            $data = OOS::find($id);
-            $single = "oos/single_report/" . $data->id;
-            $audit = "oos/audit_report/" . $data->id;
-            $family = "oos/family_report/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        }elseif ($type == "OOS Microbiology") {
-            $data = OOS_micro::find($id);
-            $single = "oos_micro/single_report/" . $data->id;
-            $audit = "oos_micro/audit_report/" . $data->id;
-            $family="#";
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        }
-        elseif ($type == "Root-Cause-Analysis") {
-            $data = RootCauseAnalysis::find($id);
-            $single = "rootSingleReport/" . $data->id;
-            $audit = "rootAuditReport/" . $data->id;
-            $family = "rootFamilyReport/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        }
-        elseif ($type == "Market demo") {
-            $data = MarketComplaint::find($id);
-            $single = "marketComplaintSingleReport/" . $data->id;
-            $family="#";
-            $audit = "MarketComplaintAuditReport/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-
-        }
-
-        elseif ($type == "Market Complaint") {
-            $data = MarketComplaint::find($id);
-            $audit = "marketcomplaint/marketauditTrailPdf/" . $data->id;
-            $single = "pdf-report/" . $data->id;
-            $family="pdf-family-report/" .$data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-
-        }
-
-        elseif ($type == "Change-Control") {
-            $data = CC::find($id);
-            $audit = "audit/" . $data->id;
-            $single = "change_control_single_pdf/" . $data->id;
-            $family = "cc_family_report/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        }
-
-        elseif ($type == "Incident") {
-            $data = Incident::find($id);
-            $single = "incident-single-report/" . $data->id;
-            $family = "incident-family-report/" . $data->id;
-            $audit = "incident-audit-pdf/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        }
-        elseif ($type == "Non Conformance") {
-            $data = NonConformance::find($id);
-            $single = "non-conformance-single-report/" . $data->id;
-            $audit = "non-conformance-audit-pdf/" . $data->id;
-            $family="#";
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        }
-        elseif ($type == "Resampling") {
-            $data = Resampling::find($id);
-            $single = "resamplingSingleReport/" . $data->id;
-            $audit = "resamplingAuditReport/" . $data->id;
-            // $parent = "#";
-            $family="#";
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        }
-         elseif ($type == "Change Proposal And Justification") {
-            $data = ChangeProposalJust::find($id);
-            $single = "cpjsingleReport/" . $data->id;
-            $audit = "cpjauditReport/" . $data->id;
-            // $parent = "#";
-            $family="#";
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        }
-
-
-        $type = $type == 'Capa' ? 'CAPA' : $type;
-
-        $html = '';
         $html = '<div class="block">
         <div class="record">
-            Record No. ' . str_pad($data->record, 4, '0', STR_PAD_LEFT) .
+            Record No. ' . str_pad($recordValue, 4, '0', STR_PAD_LEFT) .
             '</div>
         <div class="division">
-        ' . Helpers::getDivisionName($data->division_id) . '/ ' . $type . '
+        ' . $divisionName . '/ ' . $displayType . '
 
         </div>
         <div class="status">' .
@@ -1293,19 +1274,18 @@ class DashboardController extends Controller
                         </div>
                         <div class="drop-list">
                             <a target="__blank" href="' . $audit . '" class="inner-item">Audit Trail</a>
-                            <a target="__blank" href="' . $single . '" class="inner-item">' . $type . ' Single Report</a>
-                            <a target="__blank" href="' . $family . '" class="inner-item">' . $type . ' Family Report</a>
+                            <a target="__blank" href="' . $single . '" class="inner-item">' . $displayType . ' Single Report</a>
+                            <a target="__blank" href="' . $family . '" class="inner-item">' . $displayType . ' Family Report</a>
 
 
-                            ' . ($type == 'External-Audit' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $type . ' Audit Response Report</a>' : '') . '
+                            ' . ($displayType == 'External-Audit' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Audit Response Report</a>' : '') . '
 
                         </div>
                     </div>
                 </div>
             </div>';
-        $response['html'] = $html;
 
-        return response()->json($response);
+        return response()->json(['html' => $html]);
     }
 
     //----------PAginator

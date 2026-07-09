@@ -338,7 +338,7 @@ if(!empty($request->attach_files2)){
                     $history->comment = 'NA';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
@@ -395,7 +395,7 @@ if(!empty($request->attach_files2)){
                     $history->comment = $request->action_taken_comment ?? ''; // Add a comment if provided
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = 'New'; // Assuming a new entry starts in 'New' state
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
@@ -449,7 +449,7 @@ if(!empty($request->attach_files2)){
                     $history->comment = $request->action_taken_comment ?? ''; // Add a comment if provided
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = 'New'; // Assuming a new entry starts in 'New' state
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
@@ -504,7 +504,7 @@ if(!empty($request->attach_files2)){
                     $history->comment = $request->action_taken_comment ?? ''; // Add a comment if provided
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = 'New'; // Assuming a new entry starts in 'New' state
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
@@ -558,7 +558,7 @@ if(!empty($request->attach_files2)){
                     $history->comment = $request->action_taken_comment ?? ''; // Add a comment if provided
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = 'New'; // Assuming a new entry starts in 'New' state
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
@@ -584,7 +584,7 @@ if(!empty($request->attach_files2)){
         // $history->comment = "NA";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
-        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         // $history->origin_state = $data->status;
         // $history->change_to =   "Opened";
         // $history->change_from = "Initiator";
@@ -600,7 +600,7 @@ if(!empty($request->attach_files2)){
     //     $history->comment = "NA";
     //     $history->user_id = Auth::user()->id;
     //     $history->user_name = Auth::user()->name;
-    //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
     //     $history->origin_state = $data->status;
     //     $history->change_to =   "Opened";
     //     $history->change_from = "Initiator";
@@ -616,7 +616,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -634,7 +634,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -651,7 +651,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -667,7 +667,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -683,7 +683,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -699,7 +699,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -716,7 +716,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -732,7 +732,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -750,7 +750,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -767,7 +767,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -784,7 +784,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -801,7 +801,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -818,7 +818,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -835,7 +835,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -852,7 +852,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -870,7 +870,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -887,7 +887,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -904,7 +904,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -921,7 +921,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -938,7 +938,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -955,7 +955,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -972,7 +972,7 @@ if(!empty($request->attach_files2)){
     //     $history->comment = "NA";
     //     $history->user_id = Auth::user()->id;
     //     $history->user_name = Auth::user()->name;
-    //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
     //     $history->origin_state = $data->status;
     //     $history->change_to =   "Opened";
     //     $history->change_from = "Initiation";
@@ -989,7 +989,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -1006,7 +1006,7 @@ if(!empty($request->attach_files2)){
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $data->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -1462,7 +1462,7 @@ if (is_array($request->action) && !empty($request->action)) {
                     $history->comment = 'NA'; // Use comments if available
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to = "Not Applicable"; // Adjust if needed
                     $history->change_from = $lastDocument->status; // Adjust if needed
@@ -1524,7 +1524,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         $history->comment = $request->action_taken_comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_to = "Not Applicable";
                         $history->change_from = $lastDocument->status;
@@ -1595,7 +1595,7 @@ if (is_array($request->action) && !empty($request->action)) {
         //                         $auditTrail->comment = "";
         //                         $auditTrail->user_id = Auth::user()->id;
         //                         $auditTrail->user_name = Auth::user()->name;
-        //                         $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //                         $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
         //                         $auditTrail->origin_state = $data->status;
         //                         $auditTrail->change_to = "Not Applicable";
         //                         $auditTrail->change_from = $data->status;
@@ -1662,7 +1662,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         $history->comment = $request->action_taken_comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_to = "Not Applicable";
                         $history->change_from = $lastDocument->status;
@@ -1729,7 +1729,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         $history->comment = $request->action_taken_comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_to = "Not Applicable";
                         $history->change_from = $lastDocument->status;
@@ -1794,7 +1794,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         $history->comment = $request->action_taken_comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_to = "Not Applicable";
                         $history->change_from = $lastDocument->status;
@@ -1823,7 +1823,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1845,7 +1845,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->auditee_department_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1867,7 +1867,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->auditee_department_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1889,7 +1889,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->short_description_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1911,7 +1911,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->attach_files_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1933,7 +1933,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->actual_start_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1957,7 +1957,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->actual_start_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1979,7 +1979,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->actual_start_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2000,7 +2000,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->actual_start_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2022,7 +2022,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->actual_start_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2043,7 +2043,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->actual_start_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2065,7 +2065,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->actual_start_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2089,7 +2089,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->actual_start_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2110,7 +2110,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->actual_end_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2131,7 +2131,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->action_taken_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2153,7 +2153,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->action_taken_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2175,7 +2175,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->action_taken_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2197,7 +2197,7 @@ if (is_array($request->action) && !empty($request->action)) {
         //     $history->comment = $request->action_taken_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
@@ -2219,7 +2219,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->action_taken_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2242,7 +2242,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->comment = $request->action_taken_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2328,7 +2328,7 @@ if (is_array($request->action) && !empty($request->action)) {
                 $history->action = 'Report Issued';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "Pending Response";
                 $history->change_from = $lastDocument->status;
@@ -2519,7 +2519,7 @@ if (is_array($request->action) && !empty($request->action)) {
                     $history->action = 'CAPA Plan Proposed';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "Response Verification";
                     $history->change_from = $lastDocument->status;
@@ -2719,7 +2719,7 @@ if (is_array($request->action) && !empty($request->action)) {
                     $history->action = 'No CAPAs Required';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "Response Verification";
                     $history->change_from = $lastDocument->status;
@@ -3028,7 +3028,7 @@ if (is_array($request->action) && !empty($request->action)) {
                 $history->action = 'Response Reviewed';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "Closed - Done";
                 $history->change_from = $lastDocument->status;
@@ -3130,7 +3130,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_from = $lastDocument->status;
                         $history->change_to = "Closed-Cancelled";
@@ -3172,7 +3172,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastopenState->status;
                         $history->change_from = $lastopenState->status;
                         $history->change_to = "Closed-Cancelled";
@@ -3215,7 +3215,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         $history->user_id = Auth::user()->id;
                         $history->action = "Cancel";
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_to =   "Closed-Cancelled";
                         $history->change_from = $lastDocument->status;
@@ -3296,7 +3296,7 @@ if (is_array($request->action) && !empty($request->action)) {
                 $history->action = 'More Info Required';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $changeControl->status;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastDocument->status;
@@ -3422,7 +3422,7 @@ if (is_array($request->action) && !empty($request->action)) {
                 $history->action = 'More Info Required';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $changeControl->status;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastDocument->status;
@@ -3558,7 +3558,7 @@ if (is_array($request->action) && !empty($request->action)) {
                 $history->action = 'No CAPAs Required';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "Closed - Done";
                 $history->change_from = $lastDocument->status;

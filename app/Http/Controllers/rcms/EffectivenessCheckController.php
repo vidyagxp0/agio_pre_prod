@@ -231,7 +231,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -247,7 +247,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -263,7 +263,7 @@ class EffectivenessCheckController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $openState->status;
         //     $history->change_to =   "Opened";
         //     $history->change_from = "Initiation";
@@ -280,7 +280,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -297,7 +297,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -315,7 +315,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -331,7 +331,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -347,7 +347,7 @@ class EffectivenessCheckController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $openState->status;
         //     $history->change_to =   "Opened";
         //     $history->change_from = "Initiation";
@@ -368,7 +368,7 @@ class EffectivenessCheckController extends Controller
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $openState->status;
         $history->change_to =   "Opened";
         $history->change_from = "Initiation";
@@ -384,7 +384,7 @@ class EffectivenessCheckController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $openState->status;
         //     $history->change_to =   "Opened";
         //     $history->change_from = "Initiation";
@@ -401,7 +401,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -418,7 +418,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -435,7 +435,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -452,7 +452,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -469,7 +469,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -486,7 +486,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -502,7 +502,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -518,7 +518,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -534,7 +534,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -550,7 +550,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -567,7 +567,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -584,7 +584,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -600,7 +600,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -617,7 +617,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -633,7 +633,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -649,7 +649,7 @@ class EffectivenessCheckController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $openState->status;
         //     $history->change_to =   "Opened";
         //     $history->change_from = "Initiation";
@@ -666,7 +666,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -682,7 +682,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -698,7 +698,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $openState->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
@@ -939,7 +939,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -962,7 +962,7 @@ class EffectivenessCheckController extends Controller
         //     $history->comment = $openState->comment_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastopenState->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastopenState->status;
@@ -985,7 +985,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->short_disp_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1008,7 +1008,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->short_disp_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1031,7 +1031,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->qa_cqa_approval_Attachment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1053,7 +1053,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->short_disp_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1074,7 +1074,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->qa_cqa_review_comment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1095,7 +1095,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->qa_cqa_review_comment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1117,7 +1117,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->effective_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1139,7 +1139,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->eff_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1161,7 +1161,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->sumry_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1183,7 +1183,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->quality_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1205,7 +1205,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->result_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1227,7 +1227,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->addenam_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1249,7 +1249,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->check_attach_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1272,7 +1272,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->check_attach_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1294,7 +1294,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->sub_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1316,7 +1316,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->att_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1339,7 +1339,7 @@ class EffectivenessCheckController extends Controller
         //     $history->comment = $openState->att_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastopenState->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastopenState->status;
@@ -1362,7 +1362,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->test_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1385,7 +1385,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->test_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1407,7 +1407,7 @@ class EffectivenessCheckController extends Controller
             $history->comment = $openState->refer_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
@@ -1467,7 +1467,7 @@ class EffectivenessCheckController extends Controller
                     $history->action = 'Submit'; // Corrected typo
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastopenState->status; // Corrected variable name here
                     $history->change_to = "Acknowledge";
                     $history->change_from = $lastopenState->status; // Corrected variable name here
@@ -1506,7 +1506,7 @@ class EffectivenessCheckController extends Controller
                             $history->comment = "";
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = "Not Applicable";
                             $history->change_to = "Not Applicable";
                             $history->change_from = "Acknowledge";
@@ -1641,7 +1641,7 @@ class EffectivenessCheckController extends Controller
                     $history->action = 'Acknowledge Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastopenState->status;
                     $history->change_to =   "Work Completion";
                     $history->change_from = $lastopenState->status;
@@ -1824,7 +1824,7 @@ class EffectivenessCheckController extends Controller
                             $history->action = 'Complete';
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastopenState->status;
                             $history->change_to =   "HOD Review";
                             $history->change_from = $lastopenState->status;
@@ -1860,7 +1860,7 @@ class EffectivenessCheckController extends Controller
                                     $history->comment = "";
                                     $history->user_id = Auth::user()->id;
                                     $history->user_name = Auth::user()->name;
-                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                     $history->origin_state = "Not Applicable";
                                     $history->change_to = "Not Applicable";
                                     $history->change_from ="HOD Review";
@@ -2005,7 +2005,7 @@ class EffectivenessCheckController extends Controller
                             $history->action = 'HOD Review Complete';
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastopenState->status;
                             $history->change_to =   "QA/CQA Review";
                             $history->change_from = $lastopenState->status;
@@ -2043,7 +2043,7 @@ class EffectivenessCheckController extends Controller
                             //         $history->comment = "";
                             //         $history->user_id = Auth::user()->id;
                             //         $history->user_name = Auth::user()->name;
-                            //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            //         $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             //         $history->origin_state = "Not Applicable";
                             //         $history->change_to = "Not Applicable";
                             //         $history->change_from = "QA/CQA Review";
@@ -2110,7 +2110,7 @@ class EffectivenessCheckController extends Controller
                             $history->comment = "";
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = "Not Applicable";
                             $history->change_to = "Not Applicable";
                             $history->change_from = "QA/CQA Review";
@@ -2252,7 +2252,7 @@ class EffectivenessCheckController extends Controller
                 $history->action = 'Effective'; // Corrected typo
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
                 $history->change_to = "QA/CQA Approval - Effective";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
@@ -2287,7 +2287,7 @@ class EffectivenessCheckController extends Controller
                         $history->comment = "";
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = "Not Applicable";
                         $history->change_to = "Not Applicable";
                         $history->change_from =  "QA/CQA Approval - Effective";
@@ -2415,7 +2415,7 @@ class EffectivenessCheckController extends Controller
                 $history->action = 'Effective Approval Completed'; // Corrected typo
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
                 $history->change_to = "Closed - Effective";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
@@ -2452,7 +2452,7 @@ class EffectivenessCheckController extends Controller
                 //         $history->comment = "";
                 //         $history->user_id = Auth::user()->id;
                 //         $history->user_name = Auth::user()->name;
-                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //         $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 //         $history->origin_state = "Not Applicable";
                 //         $history->change_to = "Not Applicable";
                 //         $history->change_from = "Closed - Effective";
@@ -2523,7 +2523,7 @@ class EffectivenessCheckController extends Controller
                         $history->comment = "";
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = "Not Applicable";
                         $history->change_to = "Not Applicable";
                         $history->change_from = "Closed - Effective";
@@ -2610,7 +2610,7 @@ class EffectivenessCheckController extends Controller
                     $history->action = 'Cancel'; // Corrected typo
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status; // Corrected variable name here
                     $history->change_to = "Closed Cancelled";
                     $history->change_from = $lastDocument->status; // Corrected variable name here
@@ -2647,7 +2647,7 @@ class EffectivenessCheckController extends Controller
                         $history->comment = "";
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = "Not Applicable";
                         $history->change_to = "Not Applicable";
                         $history->change_from = "Closed Cancelled";
@@ -2713,7 +2713,7 @@ class EffectivenessCheckController extends Controller
                 //         $history->comment = "";
                 //         $history->user_id = Auth::user()->id;
                 //         $history->user_name = Auth::user()->name;
-                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //         $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 //         $history->origin_state = "Not Applicable";
                 //         $history->change_to = "Not Applicable";
                 //         $history->change_from = "Closed Cancelled";
@@ -2800,7 +2800,7 @@ class EffectivenessCheckController extends Controller
                 $history->action = 'Not Effective'; // Corrected typo
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
                 $history->change_to = "QA/CQA Approval Not-Effective";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
@@ -2836,7 +2836,7 @@ class EffectivenessCheckController extends Controller
                         $history->comment = "";
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = "Not Applicable";
                         $history->change_to = "Not Applicable";
                         $history->change_from = "QA/CQA Approval Not-Effective";
@@ -2930,7 +2930,7 @@ class EffectivenessCheckController extends Controller
                 $history->action = 'Not Effective Approval Completed'; // Corrected typo
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
                 $history->change_to = "Closed - Not Effective";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
@@ -2966,7 +2966,7 @@ class EffectivenessCheckController extends Controller
                         $history->comment = "";
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = "Not Applicable";
                         $history->change_to = "Not Applicable";
                         $history->change_from = "Closed - Not Effective";
@@ -3029,7 +3029,7 @@ class EffectivenessCheckController extends Controller
                             // $history->comment = $request->comment;
                             // $history->user_id = Auth::user()->id;
                             // $history->user_name = Auth::user()->name;
-                            // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            // $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             // $history->origin_state = $lastopenState->status;
                             // $history->step = 'Not Effective';
                             // $history->save();
@@ -3043,7 +3043,7 @@ class EffectivenessCheckController extends Controller
                             $history->action = 'Not Effective'; // Corrected typo
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastopenState->status; // Corrected variable name here
                             $history->change_to = "QA/CQA Approval-Not Effective";
                             $history->change_from = $lastopenState->status; // Corrected variable name here
@@ -3081,7 +3081,7 @@ class EffectivenessCheckController extends Controller
                         // $history->comment = $request->comment;
                         // $history->user_id = Auth::user()->id;
                         // $history->user_name = Auth::user()->name;
-                        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        // $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         // $history->origin_state = $lastopenState->status;
                         // $history->step = 'Not Effective Approval Complete';
                         // $history->save();
@@ -3095,7 +3095,7 @@ class EffectivenessCheckController extends Controller
                         $history->action = 'Not Effective Approval Completed'; // Corrected typo
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastopenState->status; // Corrected variable name here
                         $history->change_to = "Closed Not Effective";
                         $history->change_from = $lastopenState->status; // Corrected variable name here
@@ -3146,7 +3146,7 @@ class EffectivenessCheckController extends Controller
                 $history->action = 'More Information Required'; // Corrected typo
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
                 $history->change_to = "Opened";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
@@ -3217,7 +3217,7 @@ class EffectivenessCheckController extends Controller
                 $history->action = 'More Information Required'; // Corrected typo
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
                 $history->change_to = "Acknowledge";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
@@ -3239,7 +3239,7 @@ class EffectivenessCheckController extends Controller
                         $history->comment = "";
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = "Not Applicable";
                         $history->change_to = "Not Applicable";
                         $history->change_from = "Work Completion";
@@ -3320,7 +3320,7 @@ class EffectivenessCheckController extends Controller
                 $history->action = 'More Information Required'; // Corrected typo
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
                 $history->change_to = "QA/CQA Review";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
@@ -3343,7 +3343,7 @@ class EffectivenessCheckController extends Controller
                         $history->comment = "";
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = "Not Applicable";
                         $history->change_to = "Not Applicable";
                         $history->change_from = "QA/CQA Review";
@@ -3406,7 +3406,7 @@ class EffectivenessCheckController extends Controller
                 $history->action = 'More Information Required'; // Corrected typo
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
                 $history->change_to = "QA/CQA Review";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
@@ -3429,7 +3429,7 @@ class EffectivenessCheckController extends Controller
                         $history->comment = "";
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = "Not Applicable";
                         $history->change_to = "Not Applicable";
                         $history->change_from = "QA/CQA Review";
@@ -3510,7 +3510,7 @@ class EffectivenessCheckController extends Controller
                 $history->action = 'More Information Required'; // Corrected typo
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
                 $history->change_to = "Work Completion";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
@@ -3534,7 +3534,7 @@ class EffectivenessCheckController extends Controller
                         $history->comment = "";
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = "Not Applicable";
                         $history->change_to = "Not Applicable";
                         $history->change_from = "QA/CQA Review";
