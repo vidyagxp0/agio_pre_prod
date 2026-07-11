@@ -65,22 +65,5 @@ class SendMail implements ShouldQueue
             throw $e;
         }
     }
-    // public function handle()
-    // {
-    //     $process_name = $this->process_name;
-    //     $process = $this->process;
-    //     $email = $this->email;
-    //     try {
-    //         Mail::send(
-    //             'mail.view-mail',
-    //             $this->data,
-    //             function ($message) use ($email, $process, $process_name) {
-    //                 $message->to($email)
-    //                 ->subject("Agio Notification: $process_name, Record #" . str_pad($process->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
-    //             }
-    //         );
-    //     } catch(\Exception $e) {
-    //         info('Error Sending Mail', [$e]);
-    //     }
-    // }
+ 
 }

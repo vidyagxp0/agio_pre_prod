@@ -288,7 +288,7 @@
                                         ];
 
                                         if (request()->has('ajax_load')) {
-                                            $limit = 50; // optimized: initial ajax load limit
+                                            $limit = 10000; // optimized: initial ajax load limit
 
                                             $allRawData = [];
                                             $allDivisions = \Illuminate\Support\Facades\Cache::remember('qms_dashboard_divisions', 3600, function () {
@@ -348,6 +348,76 @@
                                             $total_count = count($tablesData);
                                         }
 
+                                        /*
+                                        |--------------------------------------------------------------------------
+                                        | Store dashboard unique ID in the respective process table
+                                        |--------------------------------------------------------------------------
+                                        | This keeps the new optimized dashboard behaviour same as the old Blade.
+                                        | Example: Change Control table ID 96 can store dashboard_unique_id 175,
+                                        | so its child record displays Parent ID 0175.
+                                        */
+                                        $dashboardTableMap = [
+                                            'Change-Control' => 'c_c_s',
+                                            'Internal-Audit' => 'internal_audits',
+                                            'Market Complaint' => 'marketcompalints',
+                                            'Risk-Assesment' => 'risk_management',
+                                            'risk-assesment' => 'risk_management',
+                                            'Lab-Incident' => 'lab_incidents',
+                                            'Incident' => 'incidents',
+                                            'Change Proposal And Justification' => 'change_proposal_justs',
+                                            'Out Of Calibration' => 'out_of_calibrations',
+                                            'External-Audit' => 'auditees',
+                                            'Audit-Program' => 'audit_programs',
+                                            'Observation' => 'observations',
+                                            'Action-Item' => 'action_items',
+                                            'Extension' => 'extension_news',
+                                            'Effectiveness-Check' => 'effectiveness_checks',
+                                            'Capa' => 'capas',
+                                            'CAPA' => 'capas',
+                                            'OOS/OOT' => 'o_o_s',
+                                            'OOT' => 'ootcs',
+                                            'ERRATA' => 'errata',
+                                            'Management-Review' => 'management_reviews',
+                                            'Deviation' => 'deviations',
+                                            'Failure Investigation' => 'failure_investigations',
+                                            'Root-Cause-Analysis' => 'root_cause_analyses',
+                                            'Resampling' => 'resamplings',
+                                            'Non Conformance' => 'non_conformances',
+                                            'OOS Microbiology' => 'oos_micros',
+                                        ];
+
+                                        $sortedDashboardData = collect($tablesData)
+                                            ->sortByDesc('date_open')
+                                            ->values();
+
+                                        $total_count = $sortedDashboardData->count();
+
+                                        foreach ($sortedDashboardData as $dashboardIndex => $dashboardRecord) {
+                                            $dashboardUniqueId = $total_count - $dashboardIndex;
+                                            $dashboardTable = $dashboardTableMap[$dashboardRecord->type] ?? null;
+
+                                            if (
+                                                $dashboardTable &&
+                                                \Illuminate\Support\Facades\Schema::hasTable($dashboardTable) &&
+                                                \Illuminate\Support\Facades\Schema::hasColumn($dashboardTable, 'dashboard_unique_id')
+                                            ) {
+                                                DB::table($dashboardTable)
+                                                    ->where('id', $dashboardRecord->id)
+                                                    ->where(function ($query) use ($dashboardUniqueId) {
+                                                        $query->whereNull('dashboard_unique_id')
+                                                            ->orWhere('dashboard_unique_id', '!=', $dashboardUniqueId);
+                                                    })
+                                                    ->update([
+                                                        'dashboard_unique_id' => $dashboardUniqueId,
+                                                    ]);
+                                            }
+
+                                            // Keep the same value available in the current request as well.
+                                            $dashboardRecord->dashboard_unique_id = $dashboardUniqueId;
+                                        }
+
+                                        $tablesData = $sortedDashboardData->all();
+
                                         $allUserRoles = DB::table('user_roles')
                                             ->where('user_id', Auth::user()->id)
                                             ->get(['q_m_s_divisions_id', 'q_m_s_roles_id'])
@@ -361,32 +431,222 @@
                                             return DB::table('users')->pluck('name', 'id')->toArray();
                                         });
 
-                                        $parentIdsByType = collect($tablesData)->groupBy('parent_type')->map(function($items) {
-                                            return $items->pluck('parent_id')->filter()->unique()->toArray();
-                                        })->toArray();
+                                        $parentTableMap = [
+                                            // Change Control
+                                            'Change Control'      => 'c_c_s',
+                                            'Change-Control'      => 'c_c_s',
+                                            'Change_control'      => 'c_c_s',
+                                            'CC'                  => 'c_c_s',
 
-                                        $parentUniqueIds = [];
-                                        foreach ($parentIdsByType as $type => $ids) {
-                                            if (empty($ids)) continue;
-                                            switch ($type) {
-                                                case 'Incident':
-                                                    $parentUniqueIds['Incident'] = DB::table('incidents')->whereIn('id', $ids)->pluck('dashboard_unique_id', 'id')->toArray();
-                                                    break;
-                                                case 'Internal Audit':
-                                                    $parentUniqueIds['Internal Audit'] = DB::table('internal_audits')->whereIn('id', $ids)->pluck('dashboard_unique_id', 'id')->toArray();
-                                                    break;
-                                                case 'External Audit':
-                                                    $parentUniqueIds['External Audit'] = DB::table('auditees')->whereIn('id', $ids)->pluck('dashboard_unique_id', 'id')->toArray();
-                                                    break;
-                                                case 'Management Review':
-                                                    $parentUniqueIds['Management Review'] = DB::table('management_reviews')->whereIn('id', $ids)->pluck('dashboard_unique_id', 'id')->toArray();
-                                                    break;
-                                                case 'OOC':
-                                                    $parentUniqueIds['OOC'] = DB::table('out_of_calibrations')->whereIn('id', $ids)->pluck('dashboard_unique_id', 'id')->toArray();
-                                                    break;
+                                            // CAPA
+                                            'CAPA'                => 'capas',
+                                            'Capa'                => 'capas',
+                                            'capa'                => 'capas',
+
+                                            // Deviation
+                                            'Deviation'           => 'deviations',
+                                            'deviation'           => 'deviations',
+
+                                            // Root Cause Analysis
+                                            'RCA'                 => 'root_cause_analyses',
+                                            'Root Cause Analysis' => 'root_cause_analyses',
+                                            'Root-Cause-Analysis' => 'root_cause_analyses',
+
+                                            // Lab Incident
+                                            'Lab Incident'        => 'lab_incidents',
+                                            'Lab-Incident'        => 'lab_incidents',
+
+                                            // OOS / OOT
+                                            'OOS Chemical'        => 'o_o_s',
+                                            'OOS Micro'           => 'o_o_s',
+                                            'OOT'                 => 'o_o_s',
+                                            'OOS/OOT'             => 'o_o_s',
+
+                                            // Effectiveness Check
+                                            'EffectivenessCheck'  => 'effectiveness_checks',
+                                            'Effectiveness Check' => 'effectiveness_checks',
+                                            'Effectiveness-Check' => 'effectiveness_checks',
+
+                                            // Observation
+                                            'Observation'         => 'observations',
+
+                                            // Audit Program
+                                            'Audit_Program'       => 'audit_programs',
+                                            'Audit Program'       => 'audit_programs',
+                                            'Audit-Program'       => 'audit_programs',
+
+                                            // Market Complaint
+                                            'Market Complaint'    => 'marketcompalints',
+
+                                            // Risk Assessment
+                                            'Risk Assessment'     => 'risk_management',
+                                            'Risk-Assesment'      => 'risk_management',
+                                            'risk-assesment'      => 'risk_management',
+
+                                            // Incident
+                                            'Incident'            => 'incidents',
+
+                                            // Internal Audit
+                                            'Internal Audit'      => 'internal_audits',
+                                            'Internal-Audit'      => 'internal_audits',
+                                            'Internal_audit'      => 'internal_audits',
+
+                                            // External Audit
+                                            'External Audit'      => 'auditees',
+                                            'External-Audit'      => 'auditees',
+                                            'External_audit'      => 'auditees',
+
+                                            // Management Review
+                                            'Management Review'   => 'management_reviews',
+                                            'Management-Review'   => 'management_reviews',
+
+                                            // Out Of Calibration
+                                            'OOC'                 => 'out_of_calibrations',
+                                            'Out Of Calibration'  => 'out_of_calibrations',
+
+                                            // Action Item
+                                            'Action Item'         => 'action_items',
+                                            'Action_item'         => 'action_items',
+                                            'Action-Item'         => 'action_items',
+
+                                            // Extension
+                                            'Extension'           => 'extension_news',
+                                            'extension'           => 'extension_news',
+
+                                            // Errata
+                                            'ERRATA'              => 'errata',
+
+                                            // Resampling
+                                            'Resampling'          => 'resamplings',
+
+                                            // Non Conformance
+                                            'Non Conformance'     => 'non_conformances',
+
+                                            // Failure Investigation
+                                            'Failure Investigation' => 'failure_investigations',
+
+                                            // Change Proposal And Justification
+                                            'Change Proposal And Justification' => 'change_proposal_justs',
+                                            'Change Proposal & Justification'   => 'change_proposal_justs',
+                                            'CPJ'                               => 'change_proposal_justs',
+                                        ];
+
+                                        /*
+                                        |--------------------------------------------------------------------------
+                                        | Collect parent IDs table-wise
+                                        |--------------------------------------------------------------------------
+                                        | Same result as old Blade, but without one query per dashboard row.
+                                        */
+                                        $parentIdsByTable = [];
+
+                                        foreach ($tablesData as $dashboardRecord) {
+                                            $parentId = $dashboardRecord->parent_id ?? null;
+                                            $parentType = trim((string) ($dashboardRecord->parent_type ?? ''));
+
+                                            if (empty($parentId) || empty($parentType)) {
+                                                continue;
                                             }
+
+                                            $parentTable = $parentTableMap[$parentType] ?? null;
+
+                                            if (!$parentTable) {
+                                                continue;
+                                            }
+
+                                            $parentIdsByTable[$parentTable][] = $parentId;
                                         }
 
+                                        /*
+                                        |--------------------------------------------------------------------------
+                                        | Fetch dashboard unique IDs in batches
+                                        |--------------------------------------------------------------------------
+                                        */
+                                       $parentUniqueIdsByTable = [];
+
+foreach ($parentIdsByTable as $parentTable => $parentIds) {
+
+    $parentIds = array_values(
+        array_unique(
+            array_filter($parentIds, function ($value) {
+                return $value !== null && $value !== '';
+            })
+        )
+    );
+
+    if (
+        empty($parentIds) ||
+        !\Illuminate\Support\Facades\Schema::hasTable($parentTable) ||
+        !\Illuminate\Support\Facades\Schema::hasColumn($parentTable, 'dashboard_unique_id')
+    ) {
+        continue;
+    }
+
+    $query = DB::table($parentTable)
+        ->select('id', 'dashboard_unique_id');
+
+    /*
+    |--------------------------------------------------------------------------
+    | parent_id may contain actual table ID or process record number
+    |--------------------------------------------------------------------------
+    */
+    if (\Illuminate\Support\Facades\Schema::hasColumn($parentTable, 'record')) {
+
+        $query->addSelect('record');
+
+        $query->where(function ($q) use ($parentIds) {
+            $q->whereIn('id', $parentIds)
+              ->orWhereIn('record', $parentIds);
+        });
+
+    } elseif (\Illuminate\Support\Facades\Schema::hasColumn($parentTable, 'record_number')) {
+
+        $query->addSelect('record_number');
+
+        $query->where(function ($q) use ($parentIds) {
+            $q->whereIn('id', $parentIds)
+              ->orWhereIn('record_number', $parentIds);
+        });
+
+    } else {
+
+        $query->whereIn('id', $parentIds);
+    }
+
+    $parentRecords = $query->get();
+
+    $parentUniqueIdsByTable[$parentTable] = [];
+
+    foreach ($parentRecords as $parentRecord) {
+
+        if (empty($parentRecord->dashboard_unique_id)) {
+            continue;
+        }
+
+        // Mapping when parent_id stores database ID.
+        $parentUniqueIdsByTable[$parentTable][(string) $parentRecord->id]
+            = $parentRecord->dashboard_unique_id;
+
+        // Mapping when parent_id stores record number.
+        if (
+            isset($parentRecord->record) &&
+            $parentRecord->record !== null &&
+            $parentRecord->record !== ''
+        ) {
+            $parentUniqueIdsByTable[$parentTable][(string) $parentRecord->record]
+                = $parentRecord->dashboard_unique_id;
+        }
+
+        // Some tables use record_number instead of record.
+        if (
+            isset($parentRecord->record_number) &&
+            $parentRecord->record_number !== null &&
+            $parentRecord->record_number !== ''
+        ) {
+            $parentUniqueIdsByTable[$parentTable][(string) $parentRecord->record_number]
+                = $parentRecord->dashboard_unique_id;
+        }
+    }
+}
                                         $allDivisions = \Illuminate\Support\Facades\Cache::remember('qms_dashboard_divisions', 3600, function () {
                                             return DB::table('q_m_s_divisions')->pluck('name', 'id')->toArray();
                                         });
@@ -1081,20 +1341,28 @@
                                                         data-bs-target="#record-modal">
                                                             {{ $datas->record_number ?? '-' }}
                                                     </td>
-                                                                                                         <td>
-                                                     @if ($datas->parent_id && $datas->parent_type)
-                                                         @php
-                                                             $pUniqueId = $parentUniqueIds[$datas->parent_type][$datas->parent_id] ?? null;
-                                                         @endphp
-                                                         @if ($pUniqueId)
-                                                             {{ str_pad($pUniqueId, 4, '0', STR_PAD_LEFT) }}
-                                                         @else
-                                                             -
-                                                         @endif
-                                                     @else
-                                                         -
-                                                     @endif
-                                                 </td>
+                                                    <td>
+                                                        @php
+                                                            $parentId = $datas->parent_id ?? null;
+                                                            $parentType = trim((string) ($datas->parent_type ?? ''));
+
+                                                            $parentTable = $parentTableMap[$parentType] ?? null;
+
+                                                            $parentDashboardId = null;
+
+                                                            if ($parentId && $parentTable) {
+                                                                $parentDashboardId =
+                                                                    $parentUniqueIdsByTable[$parentTable][(string) $parentId] ?? null;
+                                                            }
+                                                        @endphp
+
+                                                        @if (!empty($parentDashboardId))
+                                                            {{ str_pad($parentDashboardId, 4, '0', STR_PAD_LEFT) }}
+                                                     
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
 
                                                     <td class="viewdetails" data-id="{{ $datas->id }}"
                                                         data-type="{{ $datas->type }}" data-bs-toggle="modal"

@@ -4076,7 +4076,7 @@ class CCController extends Controller
 
         if ($lastDocument->refence_change != $request->refence_change) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'HOD Person')
+            ->where('activity_type', 'Reference Change Proposal and Justification')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
@@ -9016,39 +9016,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 }
 
 
-                    //Action Item
-
-                    // $actionchilds = ActionItem::where('parent_id', $id)
-                    //     ->where('parent_type', 'CC')
-                    //     ->get();
-                    //         $hasPendingaction = false;
-                    //     foreach ($actionchilds as $ext) {
-                    //             $actionchildstatus = trim(strtolower($ext->status));
-                    //             if ($actionchildstatus !== 'closed - done') {
-                    //                 $hasPendingaction = true;
-                    //                 break;
-                    //             }
-                    //         }
-                    // if ($hasPendingaction) {
-                    //     // $actionchildstatus = trim(strtolower($extensionchild->status));
-                    //     if ($hasPendingaction) {
-                    //         Session::flash('swal', [
-                    //             'title' => 'Action Item Child Pending!',
-                    //             'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                    //             'type' => 'warning',
-                    //         ]);
-
-                    //     return redirect()->back();
-                    //     }
-                    // } else {
-                    //     // Flash message for success (when the form is filled correctly)
-                    //     Session::flash('swal', [
-                    //         'title' => 'Success!',
-                    //         'message' => 'Document Sent',
-                    //         'type' => 'success',
-                    //     ]);
-                    // }
-
                      // exetnsion child validation
                         $extensionchild = extension_new::where('parent_id', $id)
                         ->where('parent_type', 'CC')
@@ -9219,25 +9186,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             }
            if ($changeControl->stage == 4) {
 
-                    // CFT review state update form_progress
-                    // if ($changeControl->form_progress !== 'cft')
-                    // {
-                    //     Session::flash('swal', [
-                    //         'type' => 'warning',
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'CFT Tab is yet to be filled'
-                    //     ]);
-
-                    //     return redirect()->back();
-                    // }
-                    //  else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Sent for Investigation and CAPA review state'
-                    //     ]);
-                    // }
-
+                 
                      // exetnsion child validation
                         $extensionchild = extension_new::where('parent_id', $id)
                         ->where('parent_type', 'CC')
@@ -9360,75 +9309,75 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     foreach ($columns as $index => $column) {
                         $value = $cftUsers->$column;
                        if ($index == 0 && $cftUsers->$column == Auth::user()->name) {
-    $updateCFT->Quality_Control_by = Auth::user()->name;
-    $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
+                        $updateCFT->Quality_Control_by = Auth::user()->name;
+                        $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
 
-    $history = new RcmDocHistory();
-    $history->cc_id = $id;
-    $history->activity_type = 'Quality Control Review Completed By, Quality Control Review Completed On';
+                        $history = new RcmDocHistory();
+                        $history->cc_id = $id;
+                        $history->activity_type = 'Quality Control Review Completed By, Quality Control Review Completed On';
 
-    if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
-        $history->previous = "";
-    } else {
-        $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
-    }
+                        if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
+                        }
 
-    $history->action = 'CFT Review Complete';
+                        $history->action = 'CFT Review Complete';
 
-    // Make sure you're using the updated $updateCFT object here
-    $history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
+                        // Make sure you're using the updated $updateCFT object here
+                        $history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
 
-    $history->comment = $request->comment;
-    $history->user_id = Auth::user()->name;
-    $history->user_name = Auth::user()->name;
-    $history->change_to = "Not Applicable";
-    $history->change_from = $lastDocument->status;
-    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-    $history->origin_state = $lastDocument->status;
-    $history->stage = 'CFT Review';
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
 
-    if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
-        $history->action_name = 'New';
-    } else {
-        $history->action_name = 'Update';
-    }
+                        if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
 
-    $history->save();
-}
+                        $history->save();
+                    }
 
                      if ($index == 1 && $cftUsers->$column == Auth::user()->name) {
-    $updateCFT->QualityAssurance_by = Auth::user()->name;
-    $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
+                            $updateCFT->QualityAssurance_by = Auth::user()->name;
+                            $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
 
-    $history = new RcmDocHistory();
-    $history->cc_id = $id;
-    $history->activity_type = 'Quality Assurance Review Completed By, Quality Assurance Review Completed On';
+                            $history = new RcmDocHistory();
+                            $history->cc_id = $id;
+                            $history->activity_type = 'Quality Assurance Review Completed By, Quality Assurance Review Completed On';
 
-    if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
-        $history->previous = "";
-    } else {
-        $history->previous = $lastDocument->QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->QualityAssurance_on);
-    }
+                            if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
+                                $history->previous = "";
+                            } else {
+                                $history->previous = $lastDocument->QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->QualityAssurance_on);
+                            }
 
-    $history->action = 'CFT Review Complete';
-    $history->current = $updateCFT->QualityAssurance_by . ',' .Helpers::getdateFormat ($updateCFT->QualityAssurance_on);
-    $history->comment = $request->comment;
-    $history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
-    $history->user_name = Auth::user()->name;
-    $history->change_to = "Not Applicable";
-    $history->change_from = $lastDocument->status;
-    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-    $history->origin_state = $lastDocument->status;
-    $history->stage = 'CFT Review';
+                            $history->action = 'CFT Review Complete';
+                            $history->current = $updateCFT->QualityAssurance_by . ',' .Helpers::getdateFormat ($updateCFT->QualityAssurance_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'CFT Review';
 
-    if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
-        $history->action_name = 'New';
-    } else {
-        $history->action_name = 'Update';
-    }
+                            if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
+                                $history->action_name = 'New';
+                            } else {
+                                $history->action_name = 'Update';
+                            }
 
-    $history->save();
-}
+                            $history->save();
+                        }
 
                         if($index == 2 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Engineering_by = Auth::user()->name;
@@ -11703,7 +11652,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     toastr()->success('Sent to Pending Initiator Update');
                     return back();
 
-            }
+                }
 
 
 
@@ -12354,31 +12303,31 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             // Helpers::hodMail($changeControl);
             toastr()->success('Sent to Closed Done');
             return back();
-    }
+            }
 
 
 
 
 
-    if ($changeControl->stage == 12) {
-        if (is_null($changeControl->qa_closure_comments))
-        {
-            Session::flash('swal', [
-                'type' => 'warning',
-                'title' => 'Mandatory Fields!',
-                'message' => 'Change Closure Tab is yet to be filled'
-            ]);
+            if ($changeControl->stage == 12) {
+                if (is_null($changeControl->qa_closure_comments))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Change Closure Tab is yet to be filled'
+                    ]);
 
-            return redirect()->back();
-        }
-         else {
-            // dd($updateCFT->intial_update_comments);
-            Session::flash('swal', [
-                'type' => 'success',
-                'title' => 'Success',
-                'message' => 'Document Sent'
-            ]);
-        }
+                    return redirect()->back();
+                }
+                else {
+                    // dd($updateCFT->intial_update_comments);
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Document Sent'
+                    ]);
+                }
 
 
                      // CAPA Child

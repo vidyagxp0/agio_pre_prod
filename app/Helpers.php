@@ -1804,8 +1804,21 @@ class Helpers
 
     public static function getChangeProposalJustificationRecordNumber($id)
     {
+        if (!$id) {
+            return '';
+        }
+
         $data = ChangeProposalJust::find($id);
-        return Helpers::getDivisionName($data->division_id) . '/CPJ/' . Helpers::year($data->created_at) . '/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+
+        if (!$data) {
+            return '';
+        }
+
+        return Helpers::getDivisionName($data->division_id)
+            . '/CPJ/'
+            . Helpers::year($data->created_at)
+            . '/'
+            . str_pad($data->record, 4, '0', STR_PAD_LEFT);
     }
 
     public static function getUserDepartmentFromDB($id)
