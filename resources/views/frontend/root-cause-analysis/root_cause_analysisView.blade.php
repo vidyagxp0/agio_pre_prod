@@ -2005,7 +2005,7 @@
 
                                         '
                                         <label for="root_cause_Others">
-                                            Others '.($data->stage == 4 ? '<span class="text-danger">*</span>' : '').'
+                                            Others 
                                         </label>
                                         <div>
                                             <small class="text-primary">

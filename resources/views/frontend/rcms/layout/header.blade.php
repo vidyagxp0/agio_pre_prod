@@ -379,8 +379,11 @@
                 </div>
 
                 <div class="modal-body">
-                    <div class="logo">
-                        <img src="	https://agio_pre_prod.test/user/images/agio.jpg" alt="..." class="w-50 h-50">
+                    <div class="logo text-center">
+                        <img src="{{ asset('user/images/agio.jpg') }}"
+                            alt="Agio Logo"
+                            class="img-fluid"
+                            style="max-width:120px;">
                     </div>
                     <div class="bar">
                         <strong>Version : </strong> 10.0.0

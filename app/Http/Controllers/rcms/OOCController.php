@@ -632,12 +632,19 @@ class OOCController extends Controller
 
 
 
-        if(!empty($data->details_of_ooc)) {
+         if (!empty(trim(strip_tags($data->details_of_ooc ?? '')))) {
+
+            $details_of_oocData = trim(
+                strip_tags(
+                    html_entity_decode($data->details_of_ooc)
+                )
+            );
+      
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
             $history->activity_type = 'Details of OOC';
             $history->previous = "Null";
-            $history->current = $data->details_of_ooc;
+            $history->current = $details_of_oocData;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -734,12 +741,19 @@ class OOCController extends Controller
             $history->save();
         }
 
-         if(!empty($data->Delay_Justification_for_Reporting)) {
+        if (!empty(trim(strip_tags($data->Delay_Justification_for_Reporting ?? '')))) {
+
+            $Delay_Justification_for_ReportingData = trim(
+                strip_tags(
+                    html_entity_decode($data->Delay_Justification_for_Reporting)
+                )
+            );
+         
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
             $history->activity_type = 'Delay Justification for Reporting';
             $history->previous = "Null";
-            $history->current = $data->Delay_Justification_for_Reporting;
+            $history->current = $Delay_Justification_for_ReportingData;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -752,12 +766,19 @@ class OOCController extends Controller
         }
 
         // Immediate Action
-        if(!empty($data->Immediate_Action_ooc)) {
+         if (!empty(trim(strip_tags($data->Immediate_Action_ooc ?? '')))) {
+
+            $Immediate_Action_oocData = trim(
+                strip_tags(
+                    html_entity_decode($data->Immediate_Action_ooc)
+                )
+            );
+      
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
             $history->activity_type = 'Immediate Action';
             $history->previous = "Null";
-            $history->current = $data->Immediate_Action_ooc;
+            $history->current = $Immediate_Action_oocData;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3074,26 +3095,52 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
         }
 
 
-        if ($lastDocumentOoc->details_of_ooc != $ooc->details_of_ooc) {
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Details of OOC';
-            $history->previous = $lastDocumentOoc->details_of_ooc;
-            $history->current = $ooc->details_of_ooc;
-            $history->comment = $request->details_of_ooc_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOoc->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocumentOoc->status;
-            if (is_null($lastDocumentOoc->details_of_ooc) || $lastDocumentOoc->details_of_ooc === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+      
+
+                $oldDetailsOfOoc = trim(
+                    strip_tags(
+                        html_entity_decode($lastDocumentOoc->details_of_ooc ?? '')
+                    )
+                );
+
+                $newDetailsOfOoc = trim(
+                    strip_tags(
+                        html_entity_decode($ooc->details_of_ooc ?? '')
+                    )
+                );
+
+                if ($oldDetailsOfOoc !== $newDetailsOfOoc) {
+
+                    $history = new OOCAuditTrail();
+                    $history->ooc_id = $id;
+                    $history->activity_type = 'Details of OOC';
+
+                    $history->previous = !empty($oldDetailsOfOoc)
+                        ? $oldDetailsOfOoc
+                        : null;
+
+                    $history->current = !empty($newDetailsOfOoc)
+                        ? $newDetailsOfOoc
+                        : null;
+
+                    $history->comment = $request->details_of_ooc_comment ?? 'Not Applicable';
+
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                    $history->origin_state = $lastDocumentOoc->status;
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = $lastDocumentOoc->status;
+
+                    if (empty($oldDetailsOfOoc)) {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
+
+                    $history->save();
+                }
 
 
         if ($lastDocumentOoc->initial_attachment_ooc != $ooc->initial_attachment_ooc ) {
@@ -3206,49 +3253,111 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
 
         }
 
-        if ($lastDocumentOoc->Delay_Justification_for_Reporting != $ooc->Delay_Justification_for_Reporting ) {
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Delay Justification for Reporting';
-            $history->previous = $lastDocumentOoc->Delay_Justification_for_Reporting;
-            $history->current = $ooc->Delay_Justification_for_Reporting;
-            $history->comment = $request->Delay_Justification_for_Reporting_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOoc->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocumentOoc->status;
-            if (is_null($lastDocumentOoc->Delay_Justification_for_Reporting) || $lastDocumentOoc->Delay_Justification_for_Reporting === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+     
+
+          $oldDelayJustification = trim(
+                strip_tags(
+                    html_entity_decode($lastDocumentOoc->Delay_Justification_for_Reporting ?? '')
+                )
+            );
+
+            $newDelayJustification = trim(
+                strip_tags(
+                    html_entity_decode($ooc->Delay_Justification_for_Reporting ?? '')
+                )
+            );
+
+            if ($oldDelayJustification !== $newDelayJustification) {
+
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                $history->activity_type = 'Delay Justification for Reporting';
+
+                $history->previous = !empty($oldDelayJustification)
+                    ? $oldDelayJustification
+                    : null;
+
+                $history->current = !empty($newDelayJustification)
+                    ? $newDelayJustification
+                    : null;
+
+                $history->comment = $request->Delay_Justification_for_Reporting_comment ?? 'Not Applicable';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                $history->origin_state = $lastDocumentOoc->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastDocumentOoc->status;
+
+                $history->action_name = empty($oldDelayJustification) ? "New" : "Update";
+
+                $history->save();
             }
-            $history->save();
-        }
 
         // Check and log changes for Immediate Action
-        if ($lastDocumentOoc->Immediate_Action_ooc != $ooc->Immediate_Action_ooc) {
-            $history = new OOCAuditTrail();
-            $history->ooc_id = $id;
-            $history->activity_type = 'Immediate Action';
-            $history->previous = $lastDocumentOoc->Immediate_Action_ooc;
-            $history->current = $ooc->Immediate_Action_ooc;
-            $history->comment = 'Updated Immediate Action';
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocumentOoc->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocumentOoc->status;
-            if (is_null($lastDocumentOoc->Immediate_Action_ooc) || $lastDocumentOoc->Immediate_Action_ooc === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        // if ($lastDocumentOoc->Immediate_Action_ooc != $ooc->Immediate_Action_ooc) {
+        //     $history = new OOCAuditTrail();
+        //     $history->ooc_id = $id;
+        //     $history->activity_type = 'Immediate Action';
+        //     $history->previous = $lastDocumentOoc->Immediate_Action_ooc;
+        //     $history->current = $ooc->Immediate_Action_ooc;
+        //     $history->comment = 'Updated Immediate Action';
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocumentOoc->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocumentOoc->status;
+        //     if (is_null($lastDocumentOoc->Immediate_Action_ooc) || $lastDocumentOoc->Immediate_Action_ooc === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
 
+        $oldImmediateAction = trim(
+                strip_tags(
+                    html_entity_decode($lastDocumentOoc->Immediate_Action_ooc ?? '')
+                )
+            );
+
+            $newImmediateAction = trim(
+                strip_tags(
+                    html_entity_decode($ooc->Immediate_Action_ooc ?? '')
+                )
+            );
+
+            if ($oldImmediateAction !== $newImmediateAction) {
+
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                $history->activity_type = 'Immediate Action';
+
+                $history->previous = !empty($oldImmediateAction)
+                    ? $oldImmediateAction
+                    : null;
+
+                $history->current = !empty($newImmediateAction)
+                    ? $newImmediateAction
+                    : null;
+
+                $history->comment = $request->Immediate_Action_ooc_comment ?? 'Updated Immediate Action';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                $history->origin_state = $lastDocumentOoc->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastDocumentOoc->status;
+
+                $history->action_name = empty($oldImmediateAction) ? "New" : "Update";
+
+                $history->save();
+            }
 
         // Check and log changes for HOD Remarks
         if ($lastDocumentOoc->HOD_Remarks != $ooc->HOD_Remarks) {

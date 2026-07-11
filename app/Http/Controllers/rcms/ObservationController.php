@@ -2121,49 +2121,121 @@ if (is_array($request->action) && !empty($request->action)) {
             }
             $history->save();
         }
-        if ($lastDocument->action_taken != $data->action_taken || !empty($request->action_taken_comment)) {
+        // if ($lastDocument->action_taken != $data->action_taken || !empty($request->action_taken_comment)) {
 
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Action Taken ';
-            $history->previous = $lastDocument->action_taken;
-            $history->current = $data->action_taken;
-            $history->comment = $request->action_taken_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->action_taken) || $lastDocument->action_taken === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+        //     $history = new AuditTrialObservation();
+        //     $history->Observation_id = $id;
+        //     $history->activity_type = 'Action Taken ';
+        //     $history->previous = $lastDocument->action_taken;
+        //     $history->current = $data->action_taken;
+        //     $history->comment = $request->action_taken_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     if (is_null($lastDocument->action_taken) || $lastDocument->action_taken === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+
+
+        $oldActionTaken = trim(
+                strip_tags(
+                    html_entity_decode($lastDocument->action_taken ?? '')
+                )
+            );
+
+            $newActionTaken = trim(
+                strip_tags(
+                    html_entity_decode($data->action_taken ?? '')
+                )
+            );
+
+            if ($oldActionTaken !== $newActionTaken || !empty($request->action_taken_comment)) {
+
+                $history = new AuditTrialObservation();
+                $history->Observation_id = $id;
+                $history->activity_type = 'Action Taken';
+
+                $history->previous = !empty($oldActionTaken) ? $oldActionTaken : null;
+                $history->current = !empty($newActionTaken) ? $newActionTaken : null;
+
+                $history->comment = $request->action_taken_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastDocument->status;
+
+                $history->action_name = empty($oldActionTaken) ? "New" : "Update";
+
+                $history->save();
             }
-            $history->save();
-        }
 
-        if ($lastDocument->response_summary != $data->response_summary || !empty($request->action_taken_comment)) {
+        // if ($lastDocument->response_summary != $data->response_summary || !empty($request->action_taken_comment)) {
 
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Response Summary ';
-            $history->previous = $lastDocument->response_summary;
-            $history->current = $data->response_summary;
-            $history->comment = $request->action_taken_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->response_summary) || $lastDocument->response_summary === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+        //     $history = new AuditTrialObservation();
+        //     $history->Observation_id = $id;
+        //     $history->activity_type = 'Response Summary ';
+        //     $history->previous = $lastDocument->response_summary;
+        //     $history->current = $data->response_summary;
+        //     $history->comment = $request->action_taken_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     if (is_null($lastDocument->response_summary) || $lastDocument->response_summary === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
+
+
+        $oldResponseSummary = trim(
+                strip_tags(
+                    html_entity_decode($lastDocument->response_summary ?? '')
+                )
+            );
+
+            $newResponseSummary = trim(
+                strip_tags(
+                    html_entity_decode($data->response_summary ?? '')
+                )
+            );
+
+            if ($oldResponseSummary !== $newResponseSummary || !empty($request->action_taken_comment)) {
+
+                $history = new AuditTrialObservation();
+                $history->Observation_id = $id;
+                $history->activity_type = 'Response Summary';
+
+                $history->previous = !empty($oldResponseSummary) ? $oldResponseSummary : null;
+                $history->current = !empty($newResponseSummary) ? $newResponseSummary : null;
+
+                $history->comment = $request->action_taken_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastDocument->status;
+
+                $history->action_name = empty($oldResponseSummary) ? "New" : "Update";
+
+                $history->save();
             }
-            $history->save();
-        }
 
         if ($lastDocument->attach_files2 != $data->attach_files2 || !empty($request->action_taken_comment)) {
 
@@ -2384,6 +2456,11 @@ if (is_array($request->action) && !empty($request->action)) {
 
             if($capaRequired == "Yes"){
                 if ($changestage->stage == 2) {
+
+             
+
+                 $actionTaken = trim(strip_tags($changestage->action_taken));
+                  $responseSummary = trim(strip_tags($changestage->response_summary));
                     
                     if (
                         empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']) ||
@@ -2392,8 +2469,8 @@ if (is_array($request->action) && !empty($request->action)) {
                         empty($changestage->comments) ||
                         empty($changestage->actual_start_date) ||
                         empty($changestage->actual_end_date) ||
-                        empty($changestage->action_taken) ||
-                        empty($changestage->response_summary) ||
+                        empty($actionTaken) ||
+                        empty($responseSummary) ||
                          empty($changestage->impact_analysis) ||
                          is_null($changestage->impact_analysis)
                     ) {
@@ -2585,16 +2662,18 @@ if (is_array($request->action) && !empty($request->action)) {
                 
                 if ($changestage->stage == 2) {
 
-                
+               $actionTaken = trim(strip_tags($changestage->action_taken));
+               $responseSummary = trim(strip_tags($changestage->response_summary));
                     if (
+                    
                         empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']) ||
                         empty($grid_Data3->data) || !is_array($grid_Data3->data) || empty($grid_Data3->data[0]['corrective_action']) ||
                         empty($grid_Data4->data) || !is_array($grid_Data4->data) || empty($grid_Data4->data[0]['preventive_action']) ||
                         empty($changestage->comments) ||
                         empty($changestage->actual_start_date) ||
                         empty($changestage->actual_end_date) ||
-                        empty($changestage->action_taken) ||
-                        empty($changestage->response_summary) || 
+                        empty($actionTaken) ||
+                        empty($responseSummary) || 
                             empty($changestage->impact_analysis) ||
                          is_null($changestage->impact_analysis)
                     )

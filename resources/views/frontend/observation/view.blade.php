@@ -1703,7 +1703,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="action_taken">Action Taken @if ($data->stage == 2)
                                                     <span class="text-danger">*</span>
@@ -1727,7 +1727,55 @@
                                                 </label>
                                                 <textarea name="response_summary" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }} class="summernote" id="summernote">{{ $data->response_summary }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> -->
+
+
+                                    <div class="col-12">
+                                        {!! quillEditor(
+                                            'action_taken',
+                                            $data->action_taken ?? '',
+                                            '
+                                            <label for="action_taken">
+                                                Action Taken
+                                                '.($data->stage == 2 ? '<span class="text-danger">*</span>' : '').'
+                                            </label>
+                                            ',
+
+                                             $data->stage == 2 && $stagesecondRole ? '' : 'readonly' 
+                                            
+                                        ) !!}
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="sub-head">Response Summary</div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        {!! quillEditor(
+                                            'response_summary',
+                                            $data->response_summary ?? '',
+                                            '
+                                            <label for="response_summary">
+                                                Response Summary
+                                                '.($data->stage == 2 ? '<span class="text-danger">*</span>' : '').'
+                                            </label>
+                                            ',
+
+                                             $data->stage == 2 && $stagesecondRole ? '' : 'readonly'
+                                            
+                                        ) !!}
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+
                                         {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="date_response_due1">Date Response Due</label>

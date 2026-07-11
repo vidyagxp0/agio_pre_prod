@@ -4254,6 +4254,52 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                     ]);
                 }
            
+
+
+               $objective = trim(strip_tags($root->objective ?? ''));
+                $scope = trim(strip_tags($root->scope ?? ''));
+                $problem_statement_rca = trim(strip_tags($root->problem_statement_rca ?? ''));
+                $requirement = trim(strip_tags($root->requirement ?? ''));
+                $immediate_action = trim(strip_tags($root->immediate_action ?? ''));
+                $root_cause = trim(strip_tags($root->root_cause ?? ''));
+                $impact_risk_assessment = trim(strip_tags($root->impact_risk_assessment ?? ''));
+                $capa = trim(strip_tags($root->capa ?? ''));
+                $investigation_summary_rca = trim(strip_tags($root->investigation_summary_rca ?? ''));
+                $investigation_team = trim(strip_tags($root->investigation_team ?? ''));
+                $root_cause_methodology = trim(strip_tags($root->root_cause_methodology ?? ''));
+                $investigation_attachment = trim(strip_tags($root->investigation_attachment ?? ''));
+
+
+                if (
+                    empty($objective) ||
+                    empty($scope) ||
+                    empty($problem_statement_rca) ||
+                    empty($requirement) ||
+                    empty($immediate_action) ||
+                    empty($root_cause) ||
+                    empty($impact_risk_assessment) ||
+                    empty($capa) ||
+                    empty($investigation_team) ||
+                    empty($root_cause_methodology) ||
+                    empty($investigation_summary_rca) || empty($investigation_attachment)
+                ) {
+
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Investigation and Root Cause tab is yet to be filled.'
+                    ]);
+
+                    return redirect()->back();
+
+                } else {
+
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Next Stage'
+                    ]);
+                }
                 
                 $root->stage = "5";
                 $root->status = 'HOD Final Review';
