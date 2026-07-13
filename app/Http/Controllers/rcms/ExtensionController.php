@@ -150,7 +150,7 @@ class ExtensionController extends Controller
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $openState->status;
         $history->save();
 
@@ -162,7 +162,7 @@ class ExtensionController extends Controller
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $openState->status;
         $history->save();
 
@@ -174,7 +174,7 @@ class ExtensionController extends Controller
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $openState->status;
         $history->save();
 
@@ -186,7 +186,7 @@ class ExtensionController extends Controller
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $openState->status;
         $history->save();
 
@@ -198,7 +198,7 @@ class ExtensionController extends Controller
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $openState->status;
         $history->save();
 
@@ -210,7 +210,7 @@ class ExtensionController extends Controller
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $openState->status;
         $history->save();
 
@@ -222,7 +222,7 @@ class ExtensionController extends Controller
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $openState->status;
         $history->save();
         
@@ -234,7 +234,7 @@ class ExtensionController extends Controller
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->origin_state = $openState->status;
         $history->save();
 
@@ -316,7 +316,7 @@ class ExtensionController extends Controller
             $history->comment = $request->approver1_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -330,7 +330,7 @@ class ExtensionController extends Controller
             $history->comment = $request->approver_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -344,7 +344,7 @@ class ExtensionController extends Controller
             $history->comment = $request->short_description_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -358,7 +358,7 @@ class ExtensionController extends Controller
             $history->comment = $request->justification_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -373,7 +373,7 @@ class ExtensionController extends Controller
             $history->comment = $request->initiated_through_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -388,7 +388,7 @@ class ExtensionController extends Controller
             $history->comment = $request->initiated_if_other_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -403,7 +403,7 @@ class ExtensionController extends Controller
             $history->comment = $request->extention_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -418,7 +418,7 @@ class ExtensionController extends Controller
             $history->comment = $request->closure_attachments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -491,7 +491,7 @@ class ExtensionController extends Controller
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Submitted";
                             $history->save();
@@ -548,7 +548,7 @@ class ExtensionController extends Controller
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->stage = "Ext Approved";
                         $history->save();
@@ -631,7 +631,7 @@ class ExtensionController extends Controller
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'Cancelled';
                             $history->save();
@@ -682,7 +682,7 @@ class ExtensionController extends Controller
                                 $history->comment = $request->comment;
                                 $history->user_id = Auth::user()->id;
                                 $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'More Info Required';
                                 $history->save();
@@ -763,7 +763,7 @@ class ExtensionController extends Controller
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->stage = 'Rejected';
                         $history->save();

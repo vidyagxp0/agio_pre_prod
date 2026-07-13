@@ -197,7 +197,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -214,7 +214,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -231,7 +231,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -248,7 +248,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -266,7 +266,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -281,7 +281,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -296,7 +296,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -311,7 +311,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -329,7 +329,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -345,7 +345,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -361,7 +361,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -377,7 +377,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -393,7 +393,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -409,7 +409,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -425,7 +425,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -441,7 +441,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -456,7 +456,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -472,7 +472,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -487,7 +487,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -502,7 +502,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -518,7 +518,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -534,7 +534,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -550,7 +550,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -566,7 +566,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -582,7 +582,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -598,7 +598,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -614,7 +614,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -630,7 +630,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -646,7 +646,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -661,7 +661,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -677,7 +677,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -693,7 +693,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -709,7 +709,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -725,7 +725,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -741,7 +741,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -756,7 +756,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -771,7 +771,7 @@ class AuditProgramController extends Controller
             $history->comment ="Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -786,7 +786,7 @@ class AuditProgramController extends Controller
             $history->current = $data->Months;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -801,7 +801,7 @@ class AuditProgramController extends Controller
             $history->current = $data->through_req;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
              $history->change_to= "Opened";
             $history->change_from= "Initiation";
             $history->action_name="Create";
@@ -858,7 +858,7 @@ class AuditProgramController extends Controller
                             $auditTrail->comment = "";
                             $auditTrail->user_id = Auth::user()->id;
                             $auditTrail->user_name = Auth::user()->name;
-                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $auditTrail->origin_state = $data->status;
                             $auditTrail->change_to = "Not Applicable";
                             $auditTrail->change_from = $data->status;
@@ -925,7 +925,7 @@ class AuditProgramController extends Controller
         //                     $auditTrail->comment = "";
         //                     $auditTrail->user_id = Auth::user()->id;
         //                     $auditTrail->user_name = Auth::user()->name;
-        //                     $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //                     $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
         //                     $auditTrail->origin_state = $data->status;
         //                     $auditTrail->change_to = "Not Applicable";
         //                     $auditTrail->change_from = $data->status;
@@ -982,7 +982,7 @@ class AuditProgramController extends Controller
         //                     $auditTrail->comment = "";
         //                     $auditTrail->user_id = Auth::user()->id;
         //                     $auditTrail->user_name = Auth::user()->name;
-        //                     $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //                     $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
         //                     $auditTrail->origin_state = $data->status;
         //                     $auditTrail->change_to = "Not Applicable";
         //                     $auditTrail->change_from = $data->status;
@@ -1233,7 +1233,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->short_description_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1252,7 +1252,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->severity1_level_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1271,7 +1271,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->initiated_through_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1290,7 +1290,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->initiated_through_req_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1309,7 +1309,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1328,7 +1328,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->due_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1347,7 +1347,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->type_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1366,7 +1366,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->year_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1385,7 +1385,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->Quarter_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1404,7 +1404,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->description_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1423,7 +1423,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1442,7 +1442,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1461,7 +1461,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1480,7 +1480,7 @@ class AuditProgramController extends Controller
         //     $history->comment = $request->comments_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state= $lastDocument->status;
         //     $history->change_to= "Not Applicable";
         //     $history->change_from= $lastDocument->status;
@@ -1500,7 +1500,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1520,7 +1520,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1540,7 +1540,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1559,7 +1559,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1579,7 +1579,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1599,7 +1599,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1619,7 +1619,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1640,7 +1640,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1659,7 +1659,7 @@ class AuditProgramController extends Controller
         //     $history->comment = $request->comments_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state= $lastDocument->status;
         //     $history->change_to= "Not Applicable";
         //     $history->change_from= $lastDocument->status;
@@ -1678,7 +1678,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->related_url_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1698,7 +1698,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->url_description_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1717,7 +1717,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->Initiator_Group_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1736,7 +1736,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->initiator_group_code_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1755,7 +1755,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->zone_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1774,7 +1774,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->country_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1793,7 +1793,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->City_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1812,7 +1812,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->state_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1831,7 +1831,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->attachments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1850,7 +1850,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->due_date_extension_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1869,7 +1869,7 @@ class AuditProgramController extends Controller
         //     $history->comment = $request->Attached_File_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state= $lastDocument->status;
         //     $history->change_to= "Not Applicable";
         //     $history->change_from= $lastDocument->status;
@@ -1888,7 +1888,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->comment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1907,7 +1907,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->Months_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -1926,7 +1926,7 @@ class AuditProgramController extends Controller
             $history->comment = $request->through_req_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
@@ -2006,7 +2006,7 @@ class AuditProgramController extends Controller
 //                         $auditTrail->comment = "";
 //                         $auditTrail->user_id = Auth::user()->id;
 //                         $auditTrail->user_name = Auth::user()->name;
-//                         $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+//                         $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
 //                         $auditTrail->origin_state = $data->status;
 //                         $auditTrail->change_to = "Not Applicable";
 //                         $auditTrail->change_from = $data->status;
@@ -2092,7 +2092,7 @@ class AuditProgramController extends Controller
         //                         $auditTrail->comment = "";
         //                         $auditTrail->user_id = Auth::user()->id;
         //                         $auditTrail->user_name = Auth::user()->name;
-        //                         $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //                         $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
         //                         $auditTrail->origin_state = $data->status;
         //                         $auditTrail->change_to = "Not Applicable";
         //                         $auditTrail->change_from = $data->status;
@@ -2187,7 +2187,7 @@ class AuditProgramController extends Controller
         //                         $auditTrail->comment = "";
         //                         $auditTrail->user_id = Auth::user()->id;
         //                         $auditTrail->user_name = Auth::user()->name;
-        //                         $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //                         $auditTrail->user_role = \Helpers::getRoleName(Auth::user()->role);
         //                         $auditTrail->origin_state = $data->status;
         //                         $auditTrail->change_to = "Not Applicable";
         //                         $auditTrail->change_from = $data->status;
@@ -2294,7 +2294,7 @@ class AuditProgramController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Submit';
                 $history->change_to= "Pending Approval";
@@ -2396,7 +2396,7 @@ class AuditProgramController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->stage='Approve';
                     $history->change_to= "Pending Audit";
@@ -2517,7 +2517,7 @@ class AuditProgramController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Audit Completed';
                 $history->change_to = "Closed - Done";
@@ -2607,7 +2607,7 @@ class AuditProgramController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Rejected';
                 $history->change_to= "Opened";
@@ -2697,7 +2697,7 @@ class AuditProgramController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Cancel';
                 $history->change_to= "Closed-Cancel ";
@@ -2768,7 +2768,7 @@ class AuditProgramController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Cancel';
                 $history->change_to= "Closed-Cancel ";
@@ -2853,7 +2853,7 @@ class AuditProgramController extends Controller
     $history->comment = $request->comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
     $history->origin_state = $lastDocument->status;
     $history->stage = 'Cancel';
     $history->change_to = "Closed-Cancel ";

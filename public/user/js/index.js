@@ -1,8 +1,15 @@
 // ============================== MULTI SELESTOR
+var data = window.data || undefined;
+var data2 = window.data2 || undefined;
+var data3 = window.data3 || undefined;
+var data4 = window.data4 || undefined;
+
 $(document).ready(function () {
-    let multipleCancelButton = new Choices("#choices-multiple-remove-button", {
-        removeItemButton: true,
-    });
+    if (document.getElementById("choices-multiple-remove-button")) {
+        let multipleCancelButton = new Choices("#choices-multiple-remove-button", {
+            removeItemButton: true,
+        });
+    }
 });
 
 function addMultipleFiles(input, block_id) {
@@ -44,7 +51,10 @@ function googleTranslateElementInit() {
 }
 
 window.onload = function () {
-    document.querySelector("#preloader").style.display = "none";
+    var preloader = document.querySelector("#preloader");
+    if (preloader) {
+        preloader.style.display = "none";
+    }
 };
 
 // ========================= DASHBOARD CHART 1
@@ -66,11 +76,13 @@ var options = {
         },
     },
 };
-new Chart("chart", {
-    type: "bar",
-    options: options,
-    data: data,
-});
+if (document.getElementById("chart") && typeof data !== 'undefined') {
+    new Chart("chart", {
+        type: "bar",
+        options: options,
+        data: data,
+    });
+}
 
 var options2 = {
     maintainAspectRatio: false,
@@ -89,11 +101,13 @@ var options2 = {
         },
     },
 };
-new Chart("chart2", {
-    type: "doughnut",
-    options: options2,
-    data: data2,
-});
+if (document.getElementById("chart2") && typeof data2 !== 'undefined') {
+    new Chart("chart2", {
+        type: "doughnut",
+        options: options2,
+        data: data2,
+    });
+}
 
 var options3 = {
     maintainAspectRatio: false,
@@ -112,11 +126,13 @@ var options3 = {
         },
     },
 };
-new Chart("chart3", {
-    type: "polarArea",
-    options: options3,
-    data: data3,
-});
+if (document.getElementById("chart3") && typeof data3 !== 'undefined') {
+    new Chart("chart3", {
+        type: "polarArea",
+        options: options3,
+        data: data3,
+    });
+}
 
 var options4 = {
     maintainAspectRatio: false,
@@ -135,11 +151,13 @@ var options4 = {
         },
     },
 };
-new Chart("chart4", {
-    type: "line",
-    options: options4,
-    data: data4,
-});
+if (document.getElementById("chart4") && typeof data4 !== 'undefined') {
+    new Chart("chart4", {
+        type: "line",
+        options: options4,
+        data: data4,
+    });
+}
 
 function addRevRow(tableID) {
     var table = document.getElementById(tableID);

@@ -277,7 +277,7 @@ class OOSController extends Controller
                                 $history->comment = $request->comment;
                                 $history->user_id = Auth::user()->id;
                                 $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                                 $history->origin_state = $lastDocument->status;
                                 //$history->action = 'Submit';
                                 $history->change_from = $lastDocument->status;
@@ -394,7 +394,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'HOD Primary Review Complete';
                     $history->change_from = $lastDocument->status;
@@ -543,7 +543,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Phase IA HOD Review Complete';
                     $history->change_from = $lastDocument->status;
@@ -697,7 +697,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Phase IA QA/CQA Review Complete';
                     $history->change_from = $lastDocument->status;
@@ -948,7 +948,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Phase IB Investigation';
                     $history->change_from = $lastDocument->status;
@@ -1092,7 +1092,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Phase IB HOD Review Complete';
                     $history->change_from = $lastDocument->status;
@@ -1246,7 +1246,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Phase IB QA Review Complete';
                     $history->change_from = $lastDocument->status;
@@ -1313,7 +1313,7 @@ class OOSController extends Controller
             //         $history->comment = $request->comment;
             //         $history->user_id = Auth::user()->id;
             //         $history->user_name = Auth::user()->name;
-            //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //         $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //         $history->origin_state = $lastDocument->status;
             //         $history->action = 'Phase II A Correction Inconclusive';
             //         $history->change_from = $lastDocument->status;
@@ -1428,7 +1428,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'P I B Assignable Cause Not Found';
                     $history->change_from = $lastDocument->status;
@@ -1573,7 +1573,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Phase II A HOD Review Complete';
                     $history->change_from = $lastDocument->status;
@@ -1727,7 +1727,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Phase II A CQA/QA Review Complete';
                     $history->change_from = $lastDocument->status;
@@ -1880,7 +1880,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'P II A Assignable Cause Not Found';
                     $history->change_from = $lastDocument->status;
@@ -2108,7 +2108,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                      $history->action = 'Phase II B Investigation';
                     $history->change_from = $lastDocument->status;
@@ -2257,7 +2257,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Phase II B HOD Review Complete';
                     $history->change_from = $lastDocument->status;
@@ -2428,7 +2428,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Phase II B QA Review Complete';
                     $history->change_from = $lastDocument->status;
@@ -2753,7 +2753,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = $historyAction;
                     $history->change_from = $lastDocument->status;
@@ -2828,7 +2828,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'P III Investigation Applicable';
                     $history->change_from = $lastDocument->status;
@@ -2870,7 +2870,7 @@ class OOSController extends Controller
             //         $history->comment = $request->comment;
             //         $history->user_id = Auth::user()->id;
             //         $history->user_name = Auth::user()->name;
-            //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //         $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //         $history->origin_state = $lastDocument->status;
             //         $history->action = 'Request More Info';
             //         $history->change_from = $lastDocument->status;
@@ -2902,7 +2902,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
@@ -2982,7 +2982,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
@@ -3063,7 +3063,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Request More Info';
                     $history->change_from = $lastDocument->status;
@@ -3128,7 +3128,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
@@ -3196,7 +3196,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
@@ -3263,7 +3263,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Request More Info';
                     $history->change_from = $lastDocument->status;
@@ -3360,7 +3360,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
@@ -3454,7 +3454,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
@@ -3521,7 +3521,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
@@ -3587,7 +3587,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Request More Info';
                     $history->change_from = $lastDocument->status;
@@ -3652,7 +3652,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
@@ -3720,7 +3720,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
@@ -3787,7 +3787,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
@@ -3853,7 +3853,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Request More Info';
                     $history->change_from = $lastDocument->status;
@@ -3918,7 +3918,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
@@ -3985,7 +3985,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
@@ -4050,7 +4050,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
@@ -4118,7 +4118,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
@@ -4184,7 +4184,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Request More Info';
                     $history->change_from = $lastDocument->status;
@@ -4256,7 +4256,7 @@ class OOSController extends Controller
             //                 $history->comment = $request->comment;
             //                 $history->user_id = Auth::user()->id;
             //                 $history->user_name = Auth::user()->name;
-            //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //                 $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //                 $history->origin_state = $lastDocument->status;
             //                 $history->action = 'Assignable Cause Found';
             //                 $history->change_from = $lastDocument->status;
@@ -4302,7 +4302,7 @@ class OOSController extends Controller
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->action = 'QA Head Approval';
                             $history->change_from = $lastDocument->status;
@@ -4411,7 +4411,7 @@ class OOSController extends Controller
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->action = 'Request For Cancellation';
                             $history->change_from = $lastDocument->status;
@@ -4574,7 +4574,7 @@ class OOSController extends Controller
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->action = 'CQA/QA Head Primary Review Complete';
                             $history->change_from = $lastDocument->status;
@@ -4821,7 +4821,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Phase IA Investigation';
                     $history->change_from = $lastDocument->status;
@@ -4972,7 +4972,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Assignable Cause Not Found';
                     $history->change_from = $lastDocument->status;
@@ -5206,7 +5206,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocument->status;
                     $history->action = 'Phase II A Investigation';
                     $history->change_from = $lastDocument->status;
@@ -5345,7 +5345,7 @@ class OOSController extends Controller
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state =  $data->status;
                     $history->action = 'Cancel';
                     $history->change_from = $lastDocument->status;
@@ -5498,7 +5498,7 @@ class OOSController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->action = 'Assignable Cause Found';
             $history->change_from = $lastDocument->status;
@@ -5615,7 +5615,7 @@ class OOSController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->action = 'P-IB Assignable Cause Found';
             $history->change_from = $lastDocument->status;
@@ -5724,7 +5724,7 @@ class OOSController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->action = 'P-II A Assignable Cause Found';
             $history->change_from = $lastDocument->status;

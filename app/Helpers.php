@@ -437,6 +437,22 @@ class Helpers
     return $divisions[$id] ?? '';
 }
 
+
+    /**
+     * Performance helper: cache role name lookup used heavily in workflow/audit-trail controllers.
+     * Safe for production: read-only query, no data update/delete, short 5-minute TTL.
+     */
+    public static function getRoleName($id)
+    {
+        if (!$id) {
+            return '';
+        }
+
+        return self::rememberShared("role_name:{$id}", 300, function () use ($id) {
+            return DB::table('q_m_s_roles')->where('id', $id)->value('name') ?? '';
+        });
+    }
+
     public static function recordFormat($number)
     {
         return str_pad($number, 4, '0', STR_PAD_LEFT);
@@ -1788,8 +1804,21 @@ class Helpers
 
     public static function getChangeProposalJustificationRecordNumber($id)
     {
+        if (!$id) {
+            return '';
+        }
+
         $data = ChangeProposalJust::find($id);
-        return Helpers::getDivisionName($data->division_id) . '/CPJ/' . Helpers::year($data->created_at) . '/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+
+        if (!$data) {
+            return '';
+        }
+
+        return Helpers::getDivisionName($data->division_id)
+            . '/CPJ/'
+            . Helpers::year($data->created_at)
+            . '/'
+            . str_pad($data->record, 4, '0', STR_PAD_LEFT);
     }
 
     public static function getUserDepartmentFromDB($id)

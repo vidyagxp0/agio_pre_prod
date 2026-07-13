@@ -7360,23 +7360,27 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
 
     // Function to count characters in the textarea
     function countCharacters() {
-      var text = textArea.value;
-      // Display the character count
-      charCountDisplay.textContent = 'Character count: ' + text.length;
+      if (textArea && charCountDisplay) {
+        var text = textArea.value;
+        // Display the character count
+        charCountDisplay.textContent = 'Character count: ' + text.length;
+      }
     }
 
-    // Add an event listener to the textarea to trigger character count on input
-    textArea.addEventListener('input', function() {
-      countCharacters();
-      // Limit the text to 2500 characters
-      if (textArea.value.length > 2500) {
-        textArea.value = textArea.value.slice(0, 2500);
-        countCharacters(); // Update character count after truncation
-      }
-    });
+    if (textArea) {
+        // Add an event listener to the textarea to trigger character count on input
+        textArea.addEventListener('input', function() {
+          countCharacters();
+          // Limit the text to 2500 characters
+          if (textArea.value.length > 2500) {
+            textArea.value = textArea.value.slice(0, 2500);
+            countCharacters(); // Update character count after truncation
+          }
+        });
 
-    // Call the countCharacters function initially to display character count for any existing text
-    countCharacters();
+        // Call the countCharacters function initially to display character count for any existing text
+        countCharacters();
+    }
   </script>
 
 

@@ -156,7 +156,7 @@
                 <div class="bottom-head">
                     <div class="left-block">
                         <div class="link-block">
-                            <a href="{{ url('rcms/qms-dashboard') }}" data-bs-toggle="tooltip" title="Dekstop">
+                            <a href="{{ url('rcms/qms-dashboard') }}?limit=1" data-bs-toggle="tooltip" title="Dekstop">
                                 <i class="fa-solid fa-house-user"></i>
                             </a>
                             <button class="btn-transparent bg-transparent text-black" data-bs-toggle="modal" data-bs-target="#log-list-modal" title="Logs">
@@ -233,7 +233,7 @@
                             <a href="/TMS">TMS Dashboard</a>
                         </div>
                         <div>
-                            <a href="/rcms/qms-dashboard">QMS-Dashboard</a>
+                            <a href="/rcms/qms-dashboard?limit=1">QMS-Dashboard</a>
                         </div>
                         {{-- <div>
                                     <a href="/analytics">Analytics</a>

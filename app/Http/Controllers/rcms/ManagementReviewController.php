@@ -1192,7 +1192,7 @@ class ManagementReviewController extends Controller
                     $history->comment = $request->equipment_comments[$index] ?? '';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
@@ -1267,7 +1267,7 @@ class ManagementReviewController extends Controller
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         $history->change_to = "Opened";
         $history->change_from = "Initiation";
         $history->action_name = "Create";
@@ -1283,7 +1283,7 @@ class ManagementReviewController extends Controller
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1299,7 +1299,7 @@ class ManagementReviewController extends Controller
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1315,7 +1315,7 @@ class ManagementReviewController extends Controller
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1331,7 +1331,7 @@ class ManagementReviewController extends Controller
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1347,7 +1347,7 @@ class ManagementReviewController extends Controller
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1364,7 +1364,7 @@ class ManagementReviewController extends Controller
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1379,7 +1379,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1394,7 +1394,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1410,7 +1410,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1425,7 +1425,7 @@ class ManagementReviewController extends Controller
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1441,7 +1441,7 @@ class ManagementReviewController extends Controller
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1457,7 +1457,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1473,7 +1473,7 @@ class ManagementReviewController extends Controller
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1491,7 +1491,7 @@ class ManagementReviewController extends Controller
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1506,7 +1506,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1521,7 +1521,7 @@ class ManagementReviewController extends Controller
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1536,7 +1536,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1552,7 +1552,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1568,7 +1568,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1584,7 +1584,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1599,7 +1599,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1614,7 +1614,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1629,7 +1629,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1644,7 +1644,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -1659,7 +1659,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
@@ -3109,7 +3109,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->short_desc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3128,7 +3128,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->initiator_Group_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3147,7 +3147,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->initiator_group_code_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3166,7 +3166,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->summary_recommendation_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3185,7 +3185,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->review_period_monthly_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3204,7 +3204,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->review_period_six_monthly_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3224,7 +3224,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->start_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3244,7 +3244,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3264,7 +3264,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->description_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3284,7 +3284,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->inv_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3303,7 +3303,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->Operations_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3323,7 +3323,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->file_attchment_if_any_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3342,7 +3342,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->external_supplier_performance_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3361,7 +3361,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->customer_satisfaction_level_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3380,7 +3380,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->budget_estimates_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3399,7 +3399,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->completion_of_previous_tasks_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3416,7 +3416,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3440,7 +3440,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3460,7 +3460,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3480,7 +3480,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3500,7 +3500,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3520,7 +3520,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3540,7 +3540,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3560,7 +3560,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3583,7 +3583,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3603,7 +3603,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3623,7 +3623,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3643,7 +3643,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3663,7 +3663,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3683,7 +3683,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3704,7 +3704,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3725,7 +3725,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3747,7 +3747,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3767,7 +3767,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3787,7 +3787,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3807,7 +3807,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3827,7 +3827,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3847,7 +3847,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3867,7 +3867,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3887,7 +3887,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3909,7 +3909,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3929,7 +3929,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3949,7 +3949,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3970,7 +3970,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -3990,7 +3990,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4010,7 +4010,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4030,7 +4030,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4050,7 +4050,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4072,7 +4072,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4092,7 +4092,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4112,7 +4112,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4132,7 +4132,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4152,7 +4152,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4172,7 +4172,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4192,7 +4192,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4212,7 +4212,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4234,7 +4234,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4254,7 +4254,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4274,7 +4274,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4294,7 +4294,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4314,7 +4314,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4334,7 +4334,7 @@ class ManagementReviewController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
@@ -4354,7 +4354,7 @@ class ManagementReviewController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
@@ -4374,7 +4374,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4396,7 +4396,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4416,7 +4416,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4436,7 +4436,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4456,7 +4456,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4476,7 +4476,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4496,7 +4496,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4516,7 +4516,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4536,7 +4536,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4558,7 +4558,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4578,7 +4578,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4598,7 +4598,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4618,7 +4618,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4638,7 +4638,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4658,7 +4658,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4678,7 +4678,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4698,7 +4698,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4720,7 +4720,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4740,7 +4740,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4760,7 +4760,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4780,7 +4780,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4800,7 +4800,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4820,7 +4820,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4840,7 +4840,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4860,7 +4860,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4882,7 +4882,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4902,7 +4902,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4922,7 +4922,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4942,7 +4942,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4962,7 +4962,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -4982,7 +4982,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5002,7 +5002,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5022,7 +5022,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5044,7 +5044,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5064,7 +5064,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5084,7 +5084,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5104,7 +5104,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5124,7 +5124,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5144,7 +5144,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5164,7 +5164,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5184,7 +5184,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5206,7 +5206,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5226,7 +5226,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5246,7 +5246,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5266,7 +5266,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5286,7 +5286,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5306,7 +5306,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5326,7 +5326,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5346,7 +5346,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5368,7 +5368,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5388,7 +5388,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5408,7 +5408,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5428,7 +5428,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5448,7 +5448,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5468,7 +5468,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5488,7 +5488,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5508,7 +5508,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5530,7 +5530,7 @@ class ManagementReviewController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
@@ -5550,7 +5550,7 @@ class ManagementReviewController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
@@ -5570,7 +5570,7 @@ class ManagementReviewController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
@@ -5590,7 +5590,7 @@ class ManagementReviewController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
@@ -5610,7 +5610,7 @@ class ManagementReviewController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
@@ -5630,7 +5630,7 @@ class ManagementReviewController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
@@ -5650,7 +5650,7 @@ class ManagementReviewController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
@@ -5671,7 +5671,7 @@ class ManagementReviewController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocument->status;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
@@ -5692,7 +5692,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5712,7 +5712,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5732,7 +5732,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5762,7 +5762,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5782,7 +5782,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5802,7 +5802,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5822,7 +5822,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5842,7 +5842,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5862,7 +5862,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5885,7 +5885,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5906,7 +5906,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5926,7 +5926,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5947,7 +5947,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5967,7 +5967,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -5987,7 +5987,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6007,7 +6007,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6027,7 +6027,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6047,7 +6047,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6069,7 +6069,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6092,7 +6092,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6112,7 +6112,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6132,7 +6132,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6152,7 +6152,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6172,7 +6172,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6192,7 +6192,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6212,7 +6212,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6232,7 +6232,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6254,7 +6254,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6275,7 +6275,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6295,7 +6295,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6315,7 +6315,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6335,7 +6335,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6355,7 +6355,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6375,7 +6375,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6395,7 +6395,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6415,7 +6415,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6438,7 +6438,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6459,7 +6459,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6479,7 +6479,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6500,7 +6500,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6520,7 +6520,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6540,7 +6540,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6560,7 +6560,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6580,7 +6580,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6600,7 +6600,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6627,7 +6627,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6647,7 +6647,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6667,7 +6667,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6687,7 +6687,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6711,7 +6711,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6731,7 +6731,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6752,7 +6752,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6775,7 +6775,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6795,7 +6795,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6815,7 +6815,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6835,7 +6835,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6858,7 +6858,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6878,7 +6878,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6898,7 +6898,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6918,7 +6918,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6941,7 +6941,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6961,7 +6961,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -6981,7 +6981,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7001,7 +7001,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7024,7 +7024,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7045,7 +7045,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7068,7 +7068,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7088,7 +7088,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7108,7 +7108,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7128,7 +7128,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7151,7 +7151,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7171,7 +7171,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7191,7 +7191,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7211,7 +7211,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7234,7 +7234,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7254,7 +7254,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7274,7 +7274,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7294,7 +7294,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7317,7 +7317,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7337,7 +7337,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7357,7 +7357,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7377,7 +7377,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7400,7 +7400,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7420,7 +7420,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7440,7 +7440,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7460,7 +7460,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7483,7 +7483,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7503,7 +7503,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7523,7 +7523,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7543,7 +7543,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7566,7 +7566,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7586,7 +7586,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7606,7 +7606,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7626,7 +7626,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7649,7 +7649,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7669,7 +7669,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7689,7 +7689,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7710,7 +7710,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7732,7 +7732,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7752,7 +7752,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7772,7 +7772,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7792,7 +7792,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7816,7 +7816,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7836,7 +7836,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7856,7 +7856,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7876,7 +7876,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7899,7 +7899,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7919,7 +7919,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7939,7 +7939,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7959,7 +7959,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -7982,7 +7982,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -8002,7 +8002,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -8022,7 +8022,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -8042,7 +8042,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -8066,7 +8066,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -8086,7 +8086,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -8106,7 +8106,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -8126,7 +8126,7 @@ class ManagementReviewController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -8150,7 +8150,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->attendees_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -8169,7 +8169,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->qa_verification_file_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -8188,7 +8188,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->next_managment_review_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -8207,7 +8207,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->conclusion_new_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -8228,7 +8228,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->closure_attachments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -8249,7 +8249,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->meeting_and_summary_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -8384,7 +8384,7 @@ class ManagementReviewController extends Controller
                             $history->comment = $request->equipment_comments[$index] ?? '';
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $data3->status;
                             $history->change_to = "Not Applicable";
                             $history->change_from = $data3->status;
@@ -8562,7 +8562,7 @@ class ManagementReviewController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Submit';
                 $history->change_to = "QA Head Review";
@@ -8659,7 +8659,7 @@ class ManagementReviewController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'QA Head Review Complete';
                 $history->change_to = "Meeting And Summary";
@@ -8900,7 +8900,7 @@ class ManagementReviewController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Meeting and Summary Complete';
                 $history->change_to = "CFT actions";
@@ -9086,7 +9086,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to = "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
 
@@ -9120,7 +9120,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to = "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
 
@@ -9151,7 +9151,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->Engineering_by) || $lastDocument->Engineering_on == '') {
@@ -9179,7 +9179,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->Environment_Health_Safety_by) || $lastDocument->Environment_Health_Safety_on == '') {
@@ -9207,7 +9207,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->Human_Resource_by) || $lastDocument->Human_Resource_on == '') {
@@ -9234,7 +9234,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == '') {
@@ -9262,7 +9262,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->Other1_by) || $lastDocument->Other1_on == '') {
@@ -9291,7 +9291,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->Other2_by) || $lastDocument->Other2_on == '') {
@@ -9319,7 +9319,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->Other3_by) || $lastDocument->Other3_on == '') {
@@ -9346,7 +9346,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->Other4_by) || $lastDocument->Other4_on == '') {
@@ -9373,7 +9373,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->Other5_by) || $lastDocument->Other5_on == '') {
@@ -9397,7 +9397,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             $history->action_name = "Update";
@@ -9420,7 +9420,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->Production_Table_By) || $lastDocument->Production_Table_On == '') {
@@ -9448,7 +9448,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->ProductionLiquid_by) || $lastDocument->ProductionLiquid_on == '') {
@@ -9476,7 +9476,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->Production_Injection_By) || $lastDocument->Production_Injection_On == '') {
@@ -9504,7 +9504,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->Store_by) || $lastDocument->Store_on == '') {
@@ -9532,7 +9532,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->ResearchDevelopment_by) || $lastDocument->ResearchDevelopment_on == '') {
@@ -9560,7 +9560,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->Microbiology_by) || $lastDocument->Microbiology_on == '') {
@@ -9588,7 +9588,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->RegulatoryAffair_by) || $lastDocument->RegulatoryAffair_on == '') {
@@ -9617,7 +9617,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->CorporateQualityAssurance_by) || $lastDocument->CorporateQualityAssurance_on == '') {
@@ -9645,7 +9645,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'CFT Review';
                             if (is_null($lastDocument->ContractGiver_by) || $lastDocument->ContractGiver_on == '') {
@@ -9718,7 +9718,7 @@ class ManagementReviewController extends Controller
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_to =   "CFT HOD Review";
                         $history->change_from = $lastDocument->status;
@@ -9843,7 +9843,7 @@ class ManagementReviewController extends Controller
             //     $history->comment = $request->comment;
             //     $history->user_id = Auth::user()->id;
             //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //     $history->origin_state = $lastDocument->status;
             //     $history->stage='CFT Action Complete';
             //     $history->change_to= "HOD Final Review";
@@ -10005,7 +10005,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to = "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
 
@@ -10039,7 +10039,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to = "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
 
@@ -10070,7 +10070,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_Engineering_by) || $lastDocument->hod_Engineering_on == '') {
@@ -10098,7 +10098,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_Environment_Health_Safety_by) || $lastDocument->hod_Environment_Health_Safety_on == '') {
@@ -10126,7 +10126,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_Human_Resource_by) || $lastDocument->hod_Human_Resource_on == '') {
@@ -10153,7 +10153,7 @@ class ManagementReviewController extends Controller
                         //         $history->user_name = Auth::user()->name;
                         //         $history->change_to =   "Not Applicable";
                         //         $history->change_from = $lastDocument->status;
-                        //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        //         $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         //         $history->origin_state = $lastDocument->status;
                         //         $history->stage = 'CFT Review';
                         //         if(is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == '')
@@ -10182,7 +10182,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_Other1_by) || $lastDocument->hod_Other1_on == '') {
@@ -10211,7 +10211,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_Other2_by) || $lastDocument->hod_Other2_on == '') {
@@ -10239,7 +10239,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_Other3_by) || $lastDocument->hod_Other3_on == '') {
@@ -10266,7 +10266,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_Other4_by) || $lastDocument->hod_Other4_on == '') {
@@ -10293,7 +10293,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_Other5_by) || $lastDocument->hod_Other5_on == '') {
@@ -10317,7 +10317,7 @@ class ManagementReviewController extends Controller
                         //     $history->user_name = Auth::user()->name;
                         //     $history->change_to =   "Not Applicable";
                         //     $history->change_from = $lastDocument->status;
-                        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         //     $history->origin_state = $lastDocument->status;
                         //     $history->stage = 'CFT Review';
                         //     $history->action_name = "Update";
@@ -10341,7 +10341,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_Production_Table_By) || $lastDocument->hod_Production_Table_On == '') {
@@ -10369,7 +10369,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_ProductionLiquid_by) || $lastDocument->hod_ProductionLiquid_on == '') {
@@ -10397,7 +10397,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_Production_Injection_By) || $lastDocument->hod_Production_Injection_On == '') {
@@ -10425,7 +10425,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_Store_by) || $lastDocument->hod_Store_on == '') {
@@ -10453,7 +10453,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_ResearchDevelopment_by) || $lastDocument->hod_ResearchDevelopment_on == '') {
@@ -10482,7 +10482,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_Microbiology_by) || $lastDocument->hod_Microbiology_on == '') {
@@ -10511,7 +10511,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_RegulatoryAffair_by) || $lastDocument->hod_RegulatoryAffair_on == '') {
@@ -10542,7 +10542,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_CorporateQualityAssurance_by) || $lastDocument->hod_CorporateQualityAssurance_on == '') {
@@ -10570,7 +10570,7 @@ class ManagementReviewController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->change_to =   "Not Applicable";
                             $history->change_from = $lastDocument->status;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'HOD Final Review';
                             if (is_null($lastDocument->hod_ContractGiver_by) || $lastDocument->hod_ContractGiver_on == '') {
@@ -10635,7 +10635,7 @@ class ManagementReviewController extends Controller
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_to =   "HOD Final Review";
                         $history->change_from = $lastDocument->status;
@@ -10725,7 +10725,7 @@ class ManagementReviewController extends Controller
             //     $history->comment = $request->comment;
             //     $history->user_id = Auth::user()->id;
             //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             //     $history->origin_state = $lastDocument->status;
             //     $history->stage = 'HOD Final Review Complete';
             //     $history->change_to = "QA Verification";
@@ -10784,7 +10784,7 @@ class ManagementReviewController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'QA Verification Complete';
                 $history->change_to = "QA Head Closure Approval";
@@ -10914,7 +10914,7 @@ class ManagementReviewController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Approved';
                 $history->change_to = "Closed-Done";
@@ -11097,7 +11097,7 @@ class ManagementReviewController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Information Required By';
                 $history->change_to = "Opened";
@@ -11185,7 +11185,7 @@ class ManagementReviewController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Information Required';
                 $history->change_to = "Meeting and Summary";
@@ -11339,7 +11339,7 @@ class ManagementReviewController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Information Required';
                 $history->change_to = "CFT HOD Review";
@@ -11570,7 +11570,7 @@ class ManagementReviewController extends Controller
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Information Required';
                 $history->change_to = "QA Verification";
@@ -11652,7 +11652,7 @@ class ManagementReviewController extends Controller
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->stage = 'Send to HOD';
             $history->save();

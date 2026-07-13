@@ -445,7 +445,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -462,7 +462,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -478,7 +478,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -496,7 +496,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -513,7 +513,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -531,7 +531,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -549,7 +549,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -565,7 +565,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -582,7 +582,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -599,7 +599,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -615,7 +615,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -632,7 +632,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -649,7 +649,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -667,7 +667,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -685,7 +685,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -703,7 +703,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -720,7 +720,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -738,7 +738,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -755,7 +755,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -772,7 +772,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -789,7 +789,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -807,7 +807,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -825,7 +825,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -843,7 +843,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -860,7 +860,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -877,7 +877,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -893,7 +893,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -911,7 +911,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -929,7 +929,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -948,7 +948,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -965,7 +965,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -982,7 +982,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -999,7 +999,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->save();
         }
@@ -1013,7 +1013,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1030,7 +1030,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1050,7 +1050,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1066,7 +1066,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1084,7 +1084,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1101,7 +1101,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1122,7 +1122,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1139,7 +1139,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1156,7 +1156,7 @@ class CapaController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $capa->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1225,7 +1225,7 @@ class CapaController extends Controller
                     $history->comment = 'NA';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
@@ -1284,7 +1284,7 @@ class CapaController extends Controller
                     $history->comment = $request->equipment_comments[$index] ?? '';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
@@ -1762,7 +1762,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->problem_description_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1787,7 +1787,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->due_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1811,7 +1811,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->initiator_Group_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1835,7 +1835,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->initiator_group_code_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1860,7 +1860,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->initiated_through_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1884,7 +1884,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->initiated_through_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1908,7 +1908,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->initiated_through_req_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1930,7 +1930,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->repeat_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1952,7 +1952,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->repeat_nature_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1973,7 +1973,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->problem_description_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -1997,7 +1997,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->capa_team_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2021,7 +2021,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->initial_observation_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2044,7 +2044,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->initial_observation_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2067,7 +2067,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->interim_containnment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2090,7 +2090,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->interim_containnment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2104,28 +2104,39 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->save();
         }
 
-        if ($lastDocument->capa_attachment != $capa->capa_attachment || !empty($request->capa_attachment_comment)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $id;
-            $history->activity_type = 'CAPA Attachments';
-            $history->previous = $lastDocument->capa_attachment;
-            $history->current = $capa->capa_attachment;
-            $history->comment = $request->capa_attachment_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
+            $oldFiles = !empty($lastDocument->capa_attachment)
+                ? implode(', ', json_decode($lastDocument->capa_attachment, true) ?? [])
+                : '';
 
-            if (is_null($lastDocument->capa_attachment) || $lastDocument->capa_attachment === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+            $newFiles = !empty($capa->capa_attachment)
+                ? implode(', ', json_decode($capa->capa_attachment, true) ?? [])
+                : '';
+
+            if (
+                ($oldFiles !== $newFiles) &&
+                (!empty($oldFiles) || !empty($newFiles))
+            ) {
+
+                $history = new CapaAuditTrial();
+                $history->capa_id = $id;
+                $history->activity_type = 'CAPA Attachments';
+
+                $history->previous = $oldFiles ?: null;
+                $history->current = $newFiles ?: null;
+
+                $history->comment = $request->capa_attachment_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastDocument->status;
+
+                $history->action_name = empty($oldFiles) ? "New" : "Update";
+
+                $history->save();
             }
-
-            $history->save();
-        }
 
         if ($lastDocument->investigation != $capa->investigation) {
             $history = new CapaAuditTrial();
@@ -2136,7 +2147,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->investigation_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2160,7 +2171,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->rcadetails_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2184,7 +2195,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->details_new_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2207,7 +2218,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->capa_type_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2231,7 +2242,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->corrective_action_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2256,7 +2267,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->preventive_action_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2268,27 +2279,40 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->save();
         }
 
-        if ($lastDocument->capafileattachement != $capa->capafileattachement) {
+        $oldFiles = !empty($lastDocument->capafileattachement)
+            ? implode(', ', json_decode($lastDocument->capafileattachement, true) ?? [])
+            : '';
+
+        $newFiles = !empty($capa->capafileattachement)
+            ? implode(', ', json_decode($capa->capafileattachement, true) ?? [])
+            : '';
+
+        if (
+            ($oldFiles !== $newFiles) &&
+            (!empty($oldFiles) || !empty($newFiles))
+        ) {
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'File Attachment';
-            $history->previous = $lastDocument->capafileattachement;
-            $history->current = $capa->capafileattachement;
+
+            $history->previous = $oldFiles ?: null;
+            $history->current = $newFiles ?: null;
+
             $history->comment = $request->capafileattachement_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->capafileattachement) || $lastDocument->capafileattachement === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+
+            $history->action_name = empty($oldFiles) ? "New" : "Update";
+
             $history->save();
         }
+
 
         if ($lastDocument->hod_remarks != $capa->hod_remarks) {
             $history = new CapaAuditTrial();
@@ -2299,7 +2323,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->hod_remarks_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2314,27 +2338,40 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->save();
         }
 
-        if ($lastDocument->hod_attachment != $capa->hod_attachment) {
+        $oldFiles = !empty($lastDocument->hod_attachment)
+            ? implode(', ', json_decode($lastDocument->hod_attachment, true) ?? [])
+            : '';
+
+        $newFiles = !empty($capa->hod_attachment)
+            ? implode(', ', json_decode($capa->hod_attachment, true) ?? [])
+            : '';
+
+        if (
+            ($oldFiles !== $newFiles) &&
+            (!empty($oldFiles) || !empty($newFiles))
+        ) {
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'HOD Attachment';
-            $history->previous = $lastDocument->hod_attachment;
-            $history->current = $capa->hod_attachment;
+
+            $history->previous = $oldFiles ?: null;
+            $history->current = $newFiles ?: null;
+
             $history->comment = $request->hod_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->hod_attachment) || $lastDocument->hod_attachment === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+
+            $history->action_name = empty($oldFiles) ? "New" : "Update";
+
             $history->save();
         }
+
 
         if ($lastDocument->capa_qa_comments != $capa->capa_qa_comments || !empty($request->capa_qa_comments_comment)) {
             $history = new CapaAuditTrial();
@@ -2345,7 +2382,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->capa_qa_comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2359,25 +2396,37 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->save();
         }
 
-        if ($lastDocument->qa_attachment != $capa->qa_attachment) {
+        $oldFiles = !empty($lastDocument->qa_attachment)
+            ? implode(', ', json_decode($lastDocument->qa_attachment, true) ?? [])
+            : '';
+
+        $newFiles = !empty($capa->qa_attachment)
+            ? implode(', ', json_decode($capa->qa_attachment, true) ?? [])
+            : '';
+
+        if (
+            ($oldFiles !== $newFiles) &&
+            (!empty($oldFiles) || !empty($newFiles))
+        ) {
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'QA/CQA Attachment';
-            $history->previous = $lastDocument->qa_attachment;
-            $history->current = $capa->qa_attachment;
+
+            $history->previous = $oldFiles ?: null;
+            $history->current = $newFiles ?: null;
+
             $history->comment = $request->qa_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->qa_attachment) || $lastDocument->qa_attachment === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+
+            $history->action_name = empty($oldFiles) ? "New" : "Update";
+
             $history->save();
         }
 
@@ -2393,7 +2442,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->type_chnage_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2410,7 +2459,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->qah_cq_comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2424,25 +2473,36 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->save();
         }
 
-        if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($request->qah_cq_attachment_comment)) {
+        $oldFiles = !empty($lastDocument->qah_cq_attachment)
+            ? implode(', ', json_decode($lastDocument->qah_cq_attachment, true) ?? [])
+            : '';
+
+        $newFiles = !empty($capa->qah_cq_attachment)
+            ? implode(', ', json_decode($capa->qah_cq_attachment, true) ?? [])
+            : '';
+
+        if (
+            ($oldFiles !== $newFiles) &&
+            (!empty($oldFiles) || !empty($newFiles))
+        ) {
+
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = 'QA/CQA Approval Attachment ';
-            $history->previous = $lastDocument->qah_cq_attachment;
-            $history->current = $capa->qah_cq_attachment;
+            $history->activity_type = 'QA/CQA Approval Attachment';
+
+            $history->previous = $oldFiles ?: null;
+            $history->current = $newFiles ?: null;
+
             $history->comment = $request->qah_cq_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
 
-            if (is_null($lastDocument->qah_cq_attachment) || $lastDocument->qah_cq_attachment === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+            $history->action_name = empty($oldFiles) ? "New" : "Update";
 
             $history->save();
         }
@@ -2455,7 +2515,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->initiator_comment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2468,28 +2528,40 @@ $capa->closure_attachment = json_encode(array_values($files));
 
             $history->save();
         }
-        if ($lastDocument->initiator_capa_attachment != $capa->initiator_capa_attachment || !empty($request->initiator_capa_attachment_comment)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $id;
-            $history->activity_type = 'Initiator CAPA Update Attachment ';
-            $history->previous = $lastDocument->initiator_capa_attachment;
-            $history->current = $capa->initiator_capa_attachment;
-            $history->comment = $request->initiator_capa_attachment_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
+            $oldFiles = !empty($lastDocument->initiator_capa_attachment)
+                ? implode(', ', json_decode($lastDocument->initiator_capa_attachment, true) ?? [])
+                : '';
 
-            if (is_null($lastDocument->initiator_capa_attachment) || $lastDocument->initiator_capa_attachment === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+            $newFiles = !empty($capa->initiator_capa_attachment)
+                ? implode(', ', json_decode($capa->initiator_capa_attachment, true) ?? [])
+                : '';
+
+            if (
+                ($oldFiles !== $newFiles) &&
+                (!empty($oldFiles) || !empty($newFiles))
+            ) {
+
+                $history = new CapaAuditTrial();
+                $history->capa_id = $id;
+                $history->activity_type = 'Initiator CAPA Update Attachment';
+
+                $history->previous = $oldFiles ?: null;
+                $history->current = $newFiles ?: null;
+
+                $history->comment = $request->initiator_capa_attachment_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastDocument->status;
+
+                $history->action_name = empty($oldFiles) ? "New" : "Update";
+
+                $history->save();
             }
 
-            $history->save();
-        }
 
         if ($lastDocument->hod_final_review != $capa->hod_final_review || !empty($request->hod_final_review_comment)) {
             $history = new CapaAuditTrial();
@@ -2500,7 +2572,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->hod_final_review_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2514,25 +2586,36 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->save();
         }
 
-        if ($lastDocument->hod_final_attachment != $capa->hod_final_attachment || !empty($request->hod_final_attachment_comment)) {
+        $oldFiles = !empty($lastDocument->hod_final_attachment)
+            ? implode(', ', json_decode($lastDocument->hod_final_attachment, true) ?? [])
+            : '';
+
+        $newFiles = !empty($capa->hod_final_attachment)
+            ? implode(', ', json_decode($capa->hod_final_attachment, true) ?? [])
+            : '';
+
+        if (
+            ($oldFiles !== $newFiles) &&
+            (!empty($oldFiles) || !empty($newFiles))
+        ) {
+
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = 'HOD Final Attachment ';
-            $history->previous = $lastDocument->hod_final_attachment;
-            $history->current = $capa->hod_final_attachment;
+            $history->activity_type = 'HOD Final Attachment';
+
+            $history->previous = $oldFiles ?: null;
+            $history->current = $newFiles ?: null;
+
             $history->comment = $request->hod_final_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
 
-            if (is_null($lastDocument->hod_final_attachment) || $lastDocument->hod_final_attachment === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+            $history->action_name = empty($oldFiles) ? "New" : "Update";
 
             $history->save();
         }
@@ -2546,7 +2629,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->qa_cqa_qa_comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2560,25 +2643,36 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->save();
         }
 
-        if ($lastDocument->qa_closure_attachment != $capa->qa_closure_attachment || !empty($request->qa_closure_attachment_comment)) {
+        $oldFiles = !empty($lastDocument->qa_closure_attachment)
+            ? implode(', ', json_decode($lastDocument->qa_closure_attachment, true) ?? [])
+            : '';
+
+        $newFiles = !empty($capa->qa_closure_attachment)
+            ? implode(', ', json_decode($capa->qa_closure_attachment, true) ?? [])
+            : '';
+
+        if (
+            ($oldFiles !== $newFiles) &&
+            (!empty($oldFiles) || !empty($newFiles))
+        ) {
+
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'QA/CQA Closure Review Attachment ';
-            $history->previous = $lastDocument->qa_closure_attachment;
-            $history->current = $capa->qa_closure_attachment;
+
+            $history->previous = $oldFiles ?: null;
+            $history->current = $newFiles ?: null;
+
             $history->comment = $request->qa_closure_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
 
-            if (is_null($lastDocument->qa_closure_attachment) || $lastDocument->qa_closure_attachment === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+            $history->action_name = empty($oldFiles) ? "New" : "Update";
 
             $history->save();
         }
@@ -2592,7 +2686,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->effectivness_check_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2617,7 +2711,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->qa_review_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
@@ -2629,25 +2723,37 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->save();
         }
 
-        if ($lastDocument->closure_attachment != $capa->closure_attachment || !empty($request->closure_attachment_comment)) {
+        $oldFiles = !empty($lastDocument->closure_attachment)
+            ? implode(', ', json_decode($lastDocument->closure_attachment, true) ?? [])
+            : '';
+
+        $newFiles = !empty($capa->closure_attachment)
+            ? implode(', ', json_decode($capa->closure_attachment, true) ?? [])
+            : '';
+
+        if (
+            ($oldFiles !== $newFiles) &&
+            (!empty($oldFiles) || !empty($newFiles))
+        ) {
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'QA/CQA Head Closure Review Attachment';
-            $history->previous = $lastDocument->closure_attachment;
-            $history->current = $capa->closure_attachment;
+
+            $history->previous = $oldFiles ?: null;
+            $history->current = $newFiles ?: null;
+
             $history->comment = $request->closure_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->closure_attachment) || $lastDocument->closure_attachment === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+
+            $history->action_name = empty($oldFiles) ? "New" : "Update";
+
             $history->save();
         }
 
@@ -2767,7 +2873,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                             $history->comment = $request->material_comment[$index] ?? 'NA';
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocument->status;
                             $history->change_to = "Not Applicable";
                             $history->change_from = $lastDocument->status;
@@ -2780,7 +2886,7 @@ $capa->closure_attachment = json_encode(array_values($files));
         }
 
         
-//---------------------------------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------------------------------
 
     $data3 = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
 
@@ -2850,7 +2956,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                         $history->comment = 'NA'; // Use comments if available
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_to = "Not Applicable"; // Adjust if needed
                         $history->change_from = $lastDocument->status; // Adjust if needed
@@ -2972,7 +3078,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
 
                 $history->change_to = "HOD Review";
@@ -3095,7 +3201,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "QA/CQA Review";
                 $history->change_from = $lastDocument->status;
@@ -3221,7 +3327,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "QA/CQA Approval";
                 $history->change_from = $lastDocument->status;
@@ -3346,7 +3452,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "CAPA In progress";
                 $history->change_from = $lastDocument->status;
@@ -3468,7 +3574,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "HOD Final Review";
                 $history->change_from = $lastDocument->status;
@@ -3588,7 +3694,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "QA/CQA Closure Review";
                 $history->change_from = $lastDocument->status;
@@ -3711,7 +3817,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "QA/CQA Approval ";
                 $history->change_from = $lastDocument->status;
@@ -3867,7 +3973,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Closed - Done";
                 $history->change_from = $lastDocument->status;
@@ -3976,7 +4082,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastopenState->status;
                         $history->change_from = $lastopenState->status;
                         $history->change_to = "Closed-Cancelled";
@@ -4017,7 +4123,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                         $history->origin_state = $lastDocument->status;
                         $history->change_from = $lastDocument->status;
                         $history->change_to = "Closed - Cancelled";
@@ -4043,7 +4149,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state =  $capa->status;
                 $history->change_to = "Closed-Cancelled";
                 $history->change_from = $lastDocument->status;
@@ -4137,7 +4243,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Opened";
                 $history->change_from = $lastDocument->status;
@@ -4208,7 +4314,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "HOD Review";
                 $history->change_from = $lastDocument->status;
@@ -4277,7 +4383,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "QA/CQA Review";
                 $history->change_from = $lastDocument->status;
@@ -4348,7 +4454,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "QA/CQA Approval";
                 $history->change_from = $lastDocument->status;
@@ -4423,7 +4529,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "CAPA In progress";
             $history->change_from = $lastDocument->status;
@@ -4491,7 +4597,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "HOD Final Review";
             $history->change_from = $lastDocument->status;
@@ -4559,7 +4665,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocument->status;
             $history->change_to = "QA/CQA Closure Review";
             $history->change_from = $lastDocument->status;
@@ -4641,7 +4747,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Opened";
                 $history->change_from = "Pending CAPA Plan";
@@ -4701,7 +4807,7 @@ $capa->closure_attachment = json_encode(array_values($files));
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Pending CAPA Plan";
                 $history->change_from = "CAPA In Progress";

@@ -390,7 +390,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -407,7 +407,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -424,7 +424,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -441,7 +441,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -458,7 +458,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -501,7 +501,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -518,7 +518,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -536,7 +536,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -553,7 +553,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -570,7 +570,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -588,7 +588,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -605,7 +605,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -622,7 +622,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -648,7 +648,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -665,7 +665,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -682,7 +682,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -699,7 +699,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -716,7 +716,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -733,7 +733,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -757,7 +757,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -782,7 +782,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -800,7 +800,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -820,7 +820,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -837,7 +837,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -855,7 +855,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -872,7 +872,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -889,7 +889,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -906,7 +906,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -924,7 +924,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -941,7 +941,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -958,7 +958,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -975,7 +975,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -993,7 +993,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1011,7 +1011,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1028,7 +1028,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1045,7 +1045,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1062,7 +1062,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1080,7 +1080,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1097,7 +1097,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1113,7 +1113,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1130,7 +1130,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1146,7 +1146,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1163,7 +1163,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1180,7 +1180,7 @@ class OOCController extends Controller
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $data->status;
                 $history->change_to = "Opened";
                 $history->change_from = "Initiation";
@@ -1197,7 +1197,7 @@ class OOCController extends Controller
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $data->status;
                 $history->change_to = "Opened";
                 $history->change_from = "Initiation";
@@ -1214,7 +1214,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1232,7 +1232,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1249,7 +1249,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1267,7 +1267,7 @@ class OOCController extends Controller
                 $history->comment = "Null";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $data->status;
                 $history->change_to = "Opened";
                 $history->change_from = "Initiation";
@@ -1284,7 +1284,7 @@ class OOCController extends Controller
                 $history->comment = "Null";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $data->status;
                 $history->change_to = "Opened";
                 $history->change_from = "Initiation";
@@ -1301,7 +1301,7 @@ class OOCController extends Controller
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $data->status;
                 $history->change_to = "Opened";
                 $history->change_from = "Initiation";
@@ -1319,7 +1319,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1336,7 +1336,7 @@ class OOCController extends Controller
                 $history->comment = "Null";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $data->status;
                 $history->change_to = "Opened";
                 $history->change_from = "Initiation";
@@ -1353,7 +1353,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1370,7 +1370,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1387,7 +1387,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1405,7 +1405,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1422,7 +1422,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1440,7 +1440,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1457,7 +1457,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1474,7 +1474,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1491,7 +1491,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1508,7 +1508,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1525,7 +1525,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1542,7 +1542,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1559,7 +1559,7 @@ class OOCController extends Controller
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1575,7 +1575,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1593,7 +1593,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1610,7 +1610,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1628,7 +1628,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1645,7 +1645,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1663,7 +1663,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1681,7 +1681,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1698,7 +1698,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1716,7 +1716,7 @@ class OOCController extends Controller
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $data->status;
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
@@ -1765,7 +1765,7 @@ class OOCController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -1804,7 +1804,7 @@ class OOCController extends Controller
         //     $history->comment = "Null";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -1844,7 +1844,7 @@ class OOCController extends Controller
         //     $history->comment = "Null";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -1873,7 +1873,7 @@ class OOCController extends Controller
         //     $history->comment = "Null";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -1889,7 +1889,7 @@ class OOCController extends Controller
         //     $history->comment = "Null";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -1906,7 +1906,7 @@ class OOCController extends Controller
         //     $history->comment = "Null";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -1928,7 +1928,7 @@ class OOCController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -1945,7 +1945,7 @@ class OOCController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -1962,7 +1962,7 @@ class OOCController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -1979,7 +1979,7 @@ class OOCController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -1996,7 +1996,7 @@ class OOCController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -2013,7 +2013,7 @@ class OOCController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -2030,7 +2030,7 @@ class OOCController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -2048,7 +2048,7 @@ class OOCController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -2066,7 +2066,7 @@ class OOCController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -2084,7 +2084,7 @@ class OOCController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -2101,7 +2101,7 @@ class OOCController extends Controller
         //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $data->status;
         //     $history->change_to = "Opened";
         //     $history->change_from = "Initiation";
@@ -2836,7 +2836,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->due_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -2905,7 +2905,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->Initiator_Group_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -2927,7 +2927,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initiator_group_code_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -2949,7 +2949,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->last_calibration_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -2972,7 +2972,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->description_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -2994,7 +2994,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initiated_through_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3016,7 +3016,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initiated_if_other_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3038,7 +3038,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
         //     $history->comment = $request->is_repeat_capas_ooc_comment;
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
         //     $history->origin_state = $lastDocumentOoc->status;
         //     $history->change_to = "Not Applicable";
         //     $history->change_from = $lastDocumentOoc->status;
@@ -3060,7 +3060,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->is_repeat_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3082,7 +3082,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->Repeat_Nature_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3127,7 +3127,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
 
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
 
                     $history->origin_state = $lastDocumentOoc->status;
                     $history->change_to = "Not Applicable";
@@ -3152,7 +3152,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initial_attachment_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3174,7 +3174,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->qa_assign_person_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3196,7 +3196,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->qa_assign_person_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3218,7 +3218,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->ooc_logged_by_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3240,7 +3240,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->ooc_due_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3285,7 +3285,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
 
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
 
                 $history->origin_state = $lastDocumentOoc->status;
                 $history->change_to = "Not Applicable";
@@ -3296,27 +3296,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->save();
             }
 
-        // Check and log changes for Immediate Action
-        // if ($lastDocumentOoc->Immediate_Action_ooc != $ooc->Immediate_Action_ooc) {
-        //     $history = new OOCAuditTrail();
-        //     $history->ooc_id = $id;
-        //     $history->activity_type = 'Immediate Action';
-        //     $history->previous = $lastDocumentOoc->Immediate_Action_ooc;
-        //     $history->current = $ooc->Immediate_Action_ooc;
-        //     $history->comment = 'Updated Immediate Action';
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocumentOoc->status;
-        //     $history->change_to = "Not Applicable";
-        //     $history->change_from = $lastDocumentOoc->status;
-        //     if (is_null($lastDocumentOoc->Immediate_Action_ooc) || $lastDocumentOoc->Immediate_Action_ooc === '') {
-        //         $history->action_name = "New";
-        //     } else {
-        //         $history->action_name = "Update";
-        //     }
-        //     $history->save();
-        // }
+       
 
         $oldImmediateAction = trim(
                 strip_tags(
@@ -3348,7 +3328,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
 
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role =\Helpers::getRoleName(Auth::user()->role);
 
                 $history->origin_state = $lastDocumentOoc->status;
                 $history->change_to = "Not Applicable";
@@ -3369,7 +3349,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = 'Updated HOD Remarks';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3393,7 +3373,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = 'Updated HOD Attachment';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3414,7 +3394,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->qaheadremarks_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3433,7 +3413,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initial_attachment_capa_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3455,7 +3435,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->analysis_remarks_stage_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3477,7 +3457,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = 'Updated Evaluation Remarks';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3498,7 +3478,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = 'Updated Description of Cause for OOC Results';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3520,7 +3500,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->is_repeat_assingable_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3541,7 +3521,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->rootcausenewfield_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3562,7 +3542,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->protocol_based_study_hypthesis_study_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3585,7 +3565,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->justification_for_protocol_study_hypothesis_study_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3607,7 +3587,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->plan_of_protocol_study_hypothesis_study_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3630,7 +3610,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->attachments_hypothesis_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3653,7 +3633,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->conclusion_of_protocol_based_study_hypothesis_study_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3675,7 +3655,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->calibration_results_stage_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3696,7 +3676,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->review_of_calibration_results_of_analyst_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3720,7 +3700,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = 'Updated Phase IA Attachment';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3741,7 +3721,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = 'Updated Result Criteria';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3762,7 +3742,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->is_repeat_stae_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3783,7 +3763,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = 'Updated Additional Remarks';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3804,7 +3784,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initiated_through_capas_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3830,7 +3810,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initiated_through_capa_prevent_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3852,7 +3832,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initiated_through_capa_corrective_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3874,7 +3854,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->phase_ia_investigation_summary_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3900,7 +3880,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->phase_IA_HODREMARKS_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3919,7 +3899,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->attachments_hodIAHODPRIMARYREVIEW_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3936,7 +3916,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->qaremarksnewfield_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3955,7 +3935,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initial_attachment_capa_post_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3976,7 +3956,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->assignable_cause_identified ?? null;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -3993,7 +3973,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->qaHremarksnewfield_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4012,7 +3992,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initial_attachment_qah_post_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4029,7 +4009,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->is_repeat_stageii_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4050,7 +4030,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->is_repeat_stage_instrument_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4071,7 +4051,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->details_of_instrument_out_of_order_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4092,7 +4072,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->is_repeat_compiled_stageii_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4115,7 +4095,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initial_attachment_stageii_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4136,7 +4116,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->compiled_by_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4157,7 +4137,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initiated_throug_stageii_ooc;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4178,7 +4158,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initiated_through_stageii_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4200,7 +4180,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->justification_for_recalibration_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4221,7 +4201,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->is_repeat_reanalysis_stageii_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4243,7 +4223,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initiated_through_stageii_cause_failure_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4264,7 +4244,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initiated_through_capas_ooc_IB_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4290,7 +4270,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initiated_through_capa_prevent_ooc_IB_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4317,7 +4297,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initiated_through_capa_corrective_ooc_IB_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4343,7 +4323,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->phase_ib_investigation_summary_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4367,7 +4347,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->initial_attachment_reanalysisi_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4389,7 +4369,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->phase_IB_HODREMARKS_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4408,7 +4388,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->attachments_hodIBBBHODPRIMARYREVIEW_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4425,7 +4405,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->phase_IB_qareviewREMARKS_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4444,7 +4424,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->attachments_QAIBBBREVIEW_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4465,7 +4445,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->is_repeat_realease_stageii_ooc_comment ?? null;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4485,7 +4465,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->qPIBaHremarksnewfield_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4504,7 +4484,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->Pib_attachements_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
@@ -4576,7 +4556,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                             $history->comment = "";
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                             $history->origin_state = $lastDocumentOoc->status;
                             $history->change_to = $lastDocumentOoc->status;
                             $history->change_from = $lastDocumentOoc->status;
@@ -4720,7 +4700,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                     $history->origin_state = $lastDocumentOOC->status;
                     $history->change_to = "HOD Primary Review";
                     $history->change_from = $lastDocumentOOC->status;
@@ -4850,7 +4830,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "QA Head Primary Review";
                 $history->change_from = $lastDocumentOOC->status;
@@ -4976,7 +4956,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "Under Phase-IA Investigation";
                 $history->change_from = $lastDocumentOOC->status;
@@ -5180,7 +5160,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "Phase IA HOD Primary Review";
                 $history->change_from = $lastDocumentOOC->status;
@@ -5308,7 +5288,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "Phase IA QA Review";
                 $history->change_from = $lastDocumentOOC->status;
@@ -5430,7 +5410,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "P-IA QAH Review";
                 $history->change_from = $lastDocumentOOC->status;
@@ -5551,7 +5531,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "Closed-Done";
                 $history->change_from = $lastDocumentOOC->status;
@@ -5817,7 +5797,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "Phase IB HOD Primary Review";
                 $history->change_from = $lastDocumentOOC->status;
@@ -5955,7 +5935,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "Phase IB QA Review";
                 $history->change_from = $lastDocumentOOC->status;
@@ -6096,7 +6076,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "P-IB QAH Review";
                 $history->change_from = $lastDocumentOOC->status;
@@ -6215,7 +6195,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "Closed Done";
                 $history->change_from = $lastDocumentOOC->status;
@@ -6452,7 +6432,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "Under Phase-IB Investigation";
                 $history->change_from = $lastDocumentOOC->status;
@@ -6537,7 +6517,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "Under Phase-II B Investigation";
                 $history->change_from = $lastDocumentOOC->status;
@@ -6656,7 +6636,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Opened";
                 $history->change_from = $lastDocument->status;
@@ -6721,7 +6701,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "HOD Primary Review";
                 $history->change_from = $lastDocument->status;
@@ -6783,7 +6763,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "QA Head Primary Review";
                 $history->change_from = $lastDocument->status;
@@ -6848,7 +6828,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Under Phase-IA Investigation";
                 $history->change_from = $lastDocument->status;
@@ -6909,7 +6889,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Phase IA HOD Primary Review";
                 $history->change_from = $lastDocument->status;
@@ -6970,7 +6950,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Phase IA QA Review";
                 $history->change_from = $lastDocument->status;
@@ -7033,7 +7013,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "P-IA QAH Review";
                 $history->change_from = $lastDocument->status;
@@ -7095,7 +7075,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Under Phase-IB Investigation";
                 $history->change_from = $lastDocument->status;
@@ -7159,7 +7139,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Phase IB HOD Primary Review";
                 $history->change_from = $lastDocument->status;
@@ -7223,7 +7203,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Phase IB QA Review";
                 $history->change_from = $lastDocument->status;
@@ -7287,7 +7267,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "P-IB QAH Review";
                 $history->change_from = $lastDocument->status;
@@ -7580,7 +7560,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOOC->status;
             $history->change_to = "Closed - Cancelled";
             $history->change_from = $lastDocumentOOC->status;
@@ -7650,7 +7630,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastDocumentOOC->status;
             $history->change_to = "Closed-Done";
             $history->change_from = $lastDocumentOOC->status;
