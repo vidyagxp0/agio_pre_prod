@@ -885,12 +885,20 @@ class MarketComplaintController extends Controller
         //     $history->save();
         // }
 
-        if (!empty($marketComplaint->review_of_stability_study_gi)) {
+         if (!empty(trim(strip_tags($marketComplaint->review_of_stability_study_gi ?? '')))) {
+
+            $review_of_stability_study_giData = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->review_of_stability_study_gi)
+                )
+            );
+
+       
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Review of stability study program and samples ';
             $history->previous = "Null";
-            $history->current = $marketComplaint->review_of_stability_study_gi;
+            $history->current = $review_of_stability_study_giData;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -901,12 +909,19 @@ class MarketComplaintController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        if (!empty($marketComplaint->review_of_product_manu_gi)) {
+       if (!empty(trim(strip_tags($marketComplaint->review_of_product_manu_gi ?? '')))) {
+
+            $review_of_product_manu_giData = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->review_of_product_manu_gi)
+                )
+            );
+    
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Review of product manufacturing and analytical process';
             $history->previous = "Null";
-            $history->current = $marketComplaint->review_of_product_manu_gi;
+            $history->current = $review_of_product_manu_giData;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -917,12 +932,20 @@ class MarketComplaintController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        if (!empty($marketComplaint->additional_inform)) {
+
+         if (!empty(trim(strip_tags($marketComplaint->additional_inform ?? '')))) {
+
+            $additional_informData = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->additional_inform)
+                )
+            );
+      
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Additional information if require';
             $history->previous = "Null";
-            $history->current = $marketComplaint->additional_inform;
+            $history->current = $additional_informData;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -933,12 +956,20 @@ class MarketComplaintController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        if (!empty($marketComplaint->in_case_Invalide_com)) {
+
+         if (!empty(trim(strip_tags($marketComplaint->in_case_Invalide_com ?? '')))) {
+
+            $in_case_Invalide_comData = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->in_case_Invalide_com)
+                )
+            );
+     
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Comments';
             $history->previous = "Null";
-            $history->current = $marketComplaint->in_case_Invalide_com;
+            $history->current = $in_case_Invalide_comData;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1258,12 +1289,19 @@ class MarketComplaintController extends Controller
             $history->save();
         }
 
-        if (!empty($marketComplaint->details_of_nature_market_complaint_gi)) {
+         if (!empty(trim(strip_tags($marketComplaint->details_of_nature_market_complaint_gi ?? '')))) {
+
+            $details_of_nature_market_complaint_giData = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->details_of_nature_market_complaint_gi)
+                )
+            );
+        
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Details Of Nature Market Complaint';
             $history->previous = "Null";
-            $history->current = $marketComplaint->details_of_nature_market_complaint_gi;
+            $history->current = $details_of_nature_market_complaint_giData;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1292,12 +1330,21 @@ class MarketComplaintController extends Controller
             $history->save();
         }
 
-        if (!empty($marketComplaint->review_of_complaint_sample_gi)) {
+
+         if (!empty(trim(strip_tags($marketComplaint->review_of_complaint_sample_gi ?? '')))) {
+
+            $cleanDescription = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->review_of_complaint_sample_gi)
+                )
+            );
+    
+      
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Review of Complaint Sample';
             $history->previous = "Null";
-            $history->current = $marketComplaint->review_of_complaint_sample_gi;
+            $history->current = $cleanDescription;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1406,12 +1453,20 @@ class MarketComplaintController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        if (!empty($marketComplaint->review_of_complaint_sample_if)) {
+
+          if (!empty(trim(strip_tags($marketComplaint->review_of_complaint_sample_if ?? '')))) {
+
+            $review_of_complaint_sample_if = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->review_of_complaint_sample_if)
+                )
+            );
+       
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Review of Complaint Sample (if applicable)';
             $history->previous = "Null";
-            $history->current = $marketComplaint->review_of_complaint_sample_if;
+            $history->current = $review_of_complaint_sample_if;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1472,13 +1527,19 @@ class MarketComplaintController extends Controller
             $history->save();
         }
 
+        if (!empty(trim(strip_tags($marketComplaint->review_of_control_sample_gi ?? '')))) {
 
-        if (!empty($marketComplaint->review_of_control_sample_gi)) {
+            $review_of_control = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->review_of_control_sample_gi)
+                )
+            );
+       
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Review of Control Sample';
             $history->previous = "Null";
-            $history->current = $marketComplaint->review_of_control_sample_gi;
+            $history->current = $review_of_control;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1509,7 +1570,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->conclusion_hodsr)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of Complaint Samplet';
+            $history->activity_type = 'Review of Complaint Sample';
             $history->previous = "Null";
             $history->current = $marketComplaint->conclusion_hodsr;
             $history->comment = "Not Applicable";
@@ -3411,106 +3472,188 @@ class MarketComplaintController extends Controller
 
 
         // -------------------------audit show conditon--codestart----------------------------------
-        if ($lastmarketComplaint->review_of_stability_study_gi != $marketComplaint->review_of_stability_study_gi) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of stability study program and samples';
-            $history->previous = $lastmarketComplaint->review_of_stability_study_gi;
-            $history->current = $marketComplaint->review_of_stability_study_gi;
-            $history->comment = $request->review_of_stability_study_gi_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
+    
+         $oldControlSampleReviewstability = trim(
+                    strip_tags(
+                        html_entity_decode($lastmarketComplaint->review_of_stability_study_gi ?? '')
+                    )
+                );
 
-            // New condition added here
-            if (is_null($lastmarketComplaint->review_of_stability_study_gi) || $lastmarketComplaint->review_of_stability_study_gi === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+            $newControlSampleReviewstability = trim(
+                    strip_tags(
+                        html_entity_decode($marketComplaint->review_of_stability_study_gi ?? '')
+                    )
+                );
 
-            $history->save();
-        }
-        if ($lastmarketComplaint->review_of_product_manu_gi != $marketComplaint->review_of_product_manu_gi) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of product manufacturing and analytical process';
-            $history->previous = $lastmarketComplaint->review_of_product_manu_gi;
-            $history->current = $marketComplaint->review_of_product_manu_gi;
-            $history->comment = $request->review_of_product_manu_gi_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
+                if ($oldControlSampleReviewstability !== $newControlSampleReviewstability) {
 
-            // New condition added here
-            if (is_null($lastmarketComplaint->review_of_product_manu_gi) || $lastmarketComplaint->review_of_product_manu_gi === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+                    $history = new MarketComplaintAuditTrial();
+                    $history->market_id = $marketComplaint->id;
+                    $history->activity_type = 'Review of stability study program and samples';
 
-            $history->save();
-        }
-        if ($lastmarketComplaint->additional_inform != $marketComplaint->additional_inform) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Additional information if require ';
-            $history->previous = $lastmarketComplaint->additional_inform;
-            $history->current = $marketComplaint->additional_inform;
-            $history->comment = $request->additional_inform_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
+                    $history->previous = !empty($oldControlSampleReviewstability) ? $oldControlSampleReviewstability : null;
+                    $history->current = !empty($newControlSampleReviewstability) ? $newControlSampleReviewstability : null;
 
-            // New condition added here
-            if (is_null($lastmarketComplaint->additional_inform) || $lastmarketComplaint->additional_inform === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+                    $history->comment = $request->review_of_stability_study_gi_comment ?? 'Not Applicable';
 
-            $history->save();
-        }
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 
-        if ($lastmarketComplaint->in_case_Invalide_com != $marketComplaint->in_case_Invalide_com) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Comments';
-            $history->previous = $lastmarketComplaint->in_case_Invalide_com;
-            $history->current = $marketComplaint->in_case_Invalide_com;
-            $history->comment = $request->in_case_Invalide_com_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
+                    $history->origin_state = $lastmarketComplaint->status;
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = $lastmarketComplaint->status;
 
-            // New condition added here
-            if (is_null($lastmarketComplaint->in_case_Invalide_com) || $lastmarketComplaint->in_case_Invalide_com === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+                    if (empty($oldControlSampleReviewstability)) {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
 
-            $history->save();
-        }
-        if ($lastmarketComplaint->conclusion_pi != $marketComplaint->conclusion_pi) {
+                    $history->save();
+                }
+     
+
+        
+          $oldControlSampleReviewmanufacturing = trim(
+                    strip_tags(
+                        html_entity_decode($lastmarketComplaint->review_of_product_manu_gi ?? '')
+                    )
+                );
+
+            $newControlSampleReviewmanufacturing = trim(
+                    strip_tags(
+                        html_entity_decode($marketComplaint->review_of_product_manu_gi ?? '')
+                    )
+                );
+
+                if ($oldControlSampleReviewmanufacturing !== $newControlSampleReviewmanufacturing) {
+
+                    $history = new MarketComplaintAuditTrial();
+                    $history->market_id = $marketComplaint->id;
+                    $history->activity_type = 'Review of product manufacturing and analytical process';
+
+                    $history->previous = !empty($oldControlSampleReviewmanufacturing) ? $oldControlSampleReviewmanufacturing : null;
+                    $history->current = !empty($newControlSampleReviewmanufacturing) ? $newControlSampleReviewmanufacturing : null;
+
+                    $history->comment = $request->review_of_product_manu_gi_comment ?? 'Not Applicable';
+
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                    $history->origin_state = $lastmarketComplaint->status;
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = $lastmarketComplaint->status;
+
+                    if (empty($oldControlSampleReviewmanufacturing)) {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
+
+                    $history->save();
+                }
+     
+
+        
+          $oldControlSampleAdditionaldata = trim(
+                    strip_tags(
+                        html_entity_decode($lastmarketComplaint->additional_inform ?? '')
+                    )
+                );
+
+            $newControlSampleAdditionalData = trim(
+                    strip_tags(
+                        html_entity_decode($marketComplaint->additional_inform ?? '')
+                    )
+                );
+
+                if ($oldControlSampleAdditionaldata !== $newControlSampleAdditionalData) {
+
+                    $history = new MarketComplaintAuditTrial();
+                    $history->market_id = $marketComplaint->id;
+                    $history->activity_type = 'Additional information if require ';
+
+                    $history->previous = !empty($oldControlSampleAdditionaldata) ? $oldControlSampleAdditionaldata : null;
+                    $history->current = !empty($newControlSampleAdditionalData) ? $newControlSampleAdditionalData : null;
+
+                    $history->comment = $request->additional_inform_comment ?? 'Not Applicable';
+
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                    $history->origin_state = $lastmarketComplaint->status;
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = $lastmarketComplaint->status;
+
+                    if (empty($oldControlSampleAdditionaldata)) {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
+
+                    $history->save();
+                }
+       
+
+         $oldControlSampleReviewstabilityData = trim(
+                    strip_tags(
+                        html_entity_decode($lastmarketComplaint->in_case_Invalide_com ?? '')
+                    )
+                );
+
+            $newControlSampleReviewstabilityData = trim(
+                    strip_tags(
+                        html_entity_decode($marketComplaint->in_case_Invalide_com ?? '')
+                    )
+                );
+
+                if ($oldControlSampleReviewstabilityData !== $newControlSampleReviewstabilityData) {
+
+                    $history = new MarketComplaintAuditTrial();
+                    $history->market_id = $marketComplaint->id;
+                    $history->activity_type = 'Comments';
+
+                    $history->previous = !empty($oldControlSampleReviewstabilityData) ? $oldControlSampleReviewstabilityData : null;
+                    $history->current = !empty($newControlSampleReviewstabilityData) ? $newControlSampleReviewstabilityData : null;
+
+                    $history->comment = $request->Comments ?? 'Not Applicable';
+
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                    $history->origin_state = $lastmarketComplaint->status;
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = $lastmarketComplaint->status;
+
+                    if (empty($oldControlSampleReviewstabilityData)) {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
+
+                    $history->save();
+                }
+      
+         $oldconclusion_pi = trim(strip_tags(html_entity_decode($lastmarketComplaint->conclusion_pi ?? '')));
+
+        $newconclusion_pi = trim(strip_tags(html_entity_decode($marketComplaint->conclusion_pi ?? '')));
+               
+
+        if ($oldconclusion_pi !== $newconclusion_pi) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Conclusion';
-            $history->previous = $lastmarketComplaint->conclusion_pi;
-            $history->current = $marketComplaint->conclusion_pi;
-            $history->comment = $request->conclusion_pi_comment;
+
+            $history->previous = !empty($oldconclusion_pi) ? $oldconclusion_pi : null;
+            $history->current = !empty($newconclusion_pi) ? $newconclusion_pi : null;
+
+            $history->comment = $request->conclusion_pi_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
@@ -3518,8 +3661,7 @@ class MarketComplaintController extends Controller
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
 
-            // New condition added here
-            if (is_null($lastmarketComplaint->conclusion_pi) || $lastmarketComplaint->conclusion_pi === '') {
+            if (empty($oldconclusion_pi)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -3527,13 +3669,23 @@ class MarketComplaintController extends Controller
 
             $history->save();
         }
-        if ($lastmarketComplaint->the_probable_root != $marketComplaint->the_probable_root) {
+       
+        $oldthe_probable_root = trim(strip_tags(html_entity_decode($lastmarketComplaint->the_probable_root ?? '')));
+
+        $newthe_probable_root = trim(strip_tags(html_entity_decode($marketComplaint->the_probable_root ?? '')));
+               
+
+        if ($oldthe_probable_root !== $newthe_probable_root) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'The probable root causes or Root Cause';
-            $history->previous = $lastmarketComplaint->the_probable_root;
-            $history->current = $marketComplaint->the_probable_root;
-            $history->comment = $request->the_probable_root_comment;
+
+            $history->previous = !empty($oldthe_probable_root) ? $oldthe_probable_root : null;
+            $history->current = !empty($newthe_probable_root) ? $newthe_probable_root : null;
+
+            $history->comment = $request->the_probable_root_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
@@ -3541,8 +3693,7 @@ class MarketComplaintController extends Controller
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
 
-            // New condition added here
-            if (is_null($lastmarketComplaint->the_probable_root) || $lastmarketComplaint->the_probable_root === '') {
+            if (empty($oldthe_probable_root)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -3598,13 +3749,24 @@ class MarketComplaintController extends Controller
             $history->save();
         }
 
-        if ($lastmarketComplaint->review_of_past_history_of_product_gi != $marketComplaint->review_of_past_history_of_product_gi) {
+       
+
+         $oldreview_of_past_history_of_product_gi = trim(strip_tags(html_entity_decode($lastmarketComplaint->review_of_past_history_of_product_gi ?? '')));
+
+        $newreview_of_past_history_of_product_gi = trim(strip_tags(html_entity_decode($marketComplaint->review_of_past_history_of_product_gi ?? '')));
+               
+
+        if ($oldreview_of_past_history_of_product_gi !== $newreview_of_past_history_of_product_gi) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Review of Past history of product';
-            $history->previous = $lastmarketComplaint->review_of_past_history_of_product_gi;
-            $history->current = $marketComplaint->review_of_past_history_of_product_gi;
-            $history->comment = $request->review_of_past_history_of_product_gi_comment;
+
+            $history->previous = !empty($oldreview_of_past_history_of_product_gi) ? $oldreview_of_past_history_of_product_gi : null;
+            $history->current = !empty($newreview_of_past_history_of_product_gi) ? $newreview_of_past_history_of_product_gi : null;
+
+            $history->comment = $request->review_of_past_history_of_product_gi_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
@@ -3612,8 +3774,7 @@ class MarketComplaintController extends Controller
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
 
-            // New condition added here
-            if (is_null($lastmarketComplaint->review_of_past_history_of_product_gi) || $lastmarketComplaint->review_of_past_history_of_product_gi === '') {
+            if (empty($oldreview_of_past_history_of_product_gi)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -3622,85 +3783,134 @@ class MarketComplaintController extends Controller
             $history->save();
         }
 
-        if ($lastmarketComplaint->review_of_equipment_break_down_and_maintainance_record_gi != $marketComplaint->review_of_equipment_break_down_and_maintainance_record_gi) {
+       
+      
+        $oldreview_of_equipment_break_down_and_maintainance_record_gi = trim(strip_tags(html_entity_decode($lastmarketComplaint->review_of_equipment_break_down_and_maintainance_record_gi ?? '')));
+
+        $newreview_of_equipment_break_down_and_maintainance_record_gi = trim(strip_tags(html_entity_decode($marketComplaint->review_of_equipment_break_down_and_maintainance_record_gi ?? '')));
+               
+
+        if ($oldreview_of_equipment_break_down_and_maintainance_record_gi !== $newreview_of_equipment_break_down_and_maintainance_record_gi) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Review of Equipment Break-down and Maintainance Record';
-            $history->previous = $lastmarketComplaint->review_of_equipment_break_down_and_maintainance_record_gi;
-            $history->current = $marketComplaint->review_of_equipment_break_down_and_maintainance_record_gi;
-            $history->comment = $request->review_of_equipment_break_down_and_maintainance_record_gi_comment;
+
+            $history->previous = !empty($oldreview_of_equipment_break_down_and_maintainance_record_gi) ? $oldreview_of_equipment_break_down_and_maintainance_record_gi : null;
+            $history->current = !empty($newreview_of_equipment_break_down_and_maintainance_record_gi) ? $newreview_of_equipment_break_down_and_maintainance_record_gi : null;
+
+            $history->comment = $request->review_of_equipment_break_down_and_maintainance_record_gi_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->review_of_equipment_break_down_and_maintainance_record_gi)) {
+
+            if (empty($oldreview_of_equipment_break_down_and_maintainance_record_gi)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-            $history->save();
-        }
-        if ($lastmarketComplaint->rev_eq_inst_qual_calib_record_gi != $marketComplaint->rev_eq_inst_qual_calib_record_gi) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of Equipment/Instrument qualification/Calibration record';
-            $history->previous = $lastmarketComplaint->rev_eq_inst_qual_calib_record_gi;
-            $history->current = $marketComplaint->rev_eq_inst_qual_calib_record_gi;
-            $history->comment = $request->rev_eq_inst_qual_calib_record_gi_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->rev_eq_inst_qual_calib_record_gi)) {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+
             $history->save();
         }
 
-        if ($lastmarketComplaint->review_of_training_record_of_concern_persons_gi != $marketComplaint->review_of_training_record_of_concern_persons_gi) {
+        $oldrev_eq_inst_qual_calib_record_gi = trim(strip_tags(html_entity_decode($lastmarketComplaint->rev_eq_inst_qual_calib_record_gi ?? '')));
+
+        $newrev_eq_inst_qual_calib_record_gi = trim(strip_tags(html_entity_decode($marketComplaint->rev_eq_inst_qual_calib_record_gi ?? '')));
+               
+
+        if ($oldrev_eq_inst_qual_calib_record_gi !== $newrev_eq_inst_qual_calib_record_gi) {
+
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Review of Equipment/Instrument qualification/Calibration record';
+
+            $history->previous = !empty($oldrev_eq_inst_qual_calib_record_gi) ? $oldrev_eq_inst_qual_calib_record_gi : null;
+            $history->current = !empty($newrev_eq_inst_qual_calib_record_gi) ? $newrev_eq_inst_qual_calib_record_gi : null;
+
+            $history->comment = $request->rev_eq_inst_qual_calib_record_gi_comment ?? 'Not Applicable';
+
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+
+            if (empty($oldrev_eq_inst_qual_calib_record_gi)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            $history->save();
+        }
+       
+      
+        $oldreview_of_training_record_of_concern_persons_gi = trim(strip_tags(html_entity_decode($lastmarketComplaint->review_of_training_record_of_concern_persons_gi ?? '')));
+
+        $newreview_of_training_record_of_concern_persons_gi = trim(strip_tags(html_entity_decode($marketComplaint->review_of_training_record_of_concern_persons_gi ?? '')));
+               
+
+        if ($oldreview_of_training_record_of_concern_persons_gi !== $newreview_of_training_record_of_concern_persons_gi) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Review of training record of Concern Persons';
-            $history->previous = $lastmarketComplaint->review_of_training_record_of_concern_persons_gi;
-            $history->current = $marketComplaint->review_of_training_record_of_concern_persons_gi;
-            $history->comment = $request->review_of_training_record_of_concern_persons_gi_comment;
+
+            $history->previous = !empty($oldreview_of_training_record_of_concern_persons_gi) ? $oldreview_of_training_record_of_concern_persons_gi : null;
+            $history->current = !empty($newreview_of_training_record_of_concern_persons_gi) ? $newreview_of_training_record_of_concern_persons_gi : null;
+
+            $history->comment = $request->review_of_training_record_of_concern_persons_gi_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->review_of_training_record_of_concern_persons_gi)) {
+
+            if (empty($oldreview_of_training_record_of_concern_persons_gi)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
-        if ($lastmarketComplaint->review_of_analytical_data_gi != $marketComplaint->review_of_analytical_data_gi) {
+
+         $oldreview_of_analytical_data_gi = trim(strip_tags(html_entity_decode($lastmarketComplaint->review_of_analytical_data_gi ?? '')));
+
+        $newreview_of_analytical_data_gi = trim(strip_tags(html_entity_decode($marketComplaint->review_of_analytical_data_gi ?? '')));
+               
+
+        if ($oldreview_of_analytical_data_gi !== $newreview_of_analytical_data_gi) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Review of Analytical Data';
-            $history->previous = $lastmarketComplaint->review_of_analytical_data_gi;
-            $history->current = $marketComplaint->review_of_analytical_data_gi;
-            $history->comment = $request->review_of_analytical_data_gi_comment;
+
+            $history->previous = !empty($oldreview_of_analytical_data_gi) ? $oldreview_of_analytical_data_gi : null;
+            $history->current = !empty($newreview_of_analytical_data_gi) ? $newreview_of_analytical_data_gi : null;
+
+            $history->comment = $request->review_of_analytical_data_gi_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->review_of_analytical_data_gi)) {
+
+            if (empty($oldreview_of_analytical_data_gi)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
         if ($lastmarketComplaint->Expecteddate_of_investigation_completion != $marketComplaint->Expecteddate_of_investigation_completion) {
@@ -3723,150 +3933,256 @@ class MarketComplaintController extends Controller
             }
             $history->save();
         }
-        if ($lastmarketComplaint->review_of_complaint_sample_if != $marketComplaint->review_of_complaint_sample_if) {
+       
+        $oldReviewSample = trim(strip_tags(html_entity_decode($lastmarketComplaint->review_of_complaint_sample_if ?? '')));
+
+        $newReviewSample = trim(strip_tags(html_entity_decode($marketComplaint->review_of_complaint_sample_if ?? '')));
+               
+
+        if ($oldReviewSample !== $newReviewSample) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Review of Complaint Sample (if applicable)';
-            $history->previous = $lastmarketComplaint->review_of_complaint_sample_if;
-            $history->current = $marketComplaint->review_of_complaint_sample_if;
-            $history->comment = $request->review_of_complaint_sample_if_comment;
+
+            $history->previous = !empty($oldReviewSample) ? $oldReviewSample : null;
+            $history->current = !empty($newReviewSample) ? $newReviewSample : null;
+
+            $history->comment = $request->review_of_complaint_sample_if_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->review_of_complaint_sample_if)) {
+
+            if (empty($oldReviewSample)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-            $history->save();
-        }
-        if ($lastmarketComplaint->review_of_Batch_Packing_record_bpr_gi != $marketComplaint->review_of_Batch_Packing_record_bpr_gi) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of Batch Packing record BPR';
-            $history->previous = $lastmarketComplaint->review_of_Batch_Packing_record_bpr_gi;
-            $history->current = $marketComplaint->review_of_Batch_Packing_record_bpr_gi;
-            $history->comment = $request->review_of_Batch_Packing_record_bpr_gi_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->review_of_Batch_Packing_record_bpr_gi)) {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+
             $history->save();
         }
 
-        if ($lastmarketComplaint->review_of_packing_materials_used_in_batch_packing_gi != $marketComplaint->review_of_packing_materials_used_in_batch_packing_gi) {
+         $oldreview_of_Batch_Packing_record_bpr_gi = trim(strip_tags(html_entity_decode($lastmarketComplaint->review_of_Batch_Packing_record_bpr_gi ?? '')));
+
+        $newreview_of_Batch_Packing_record_bpr_gi = trim(strip_tags(html_entity_decode($marketComplaint->review_of_Batch_Packing_record_bpr_gi ?? '')));
+               
+
+        if ($oldreview_of_Batch_Packing_record_bpr_gi !== $newreview_of_Batch_Packing_record_bpr_gi) {
+
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Review of Batch Packing Record (BPR)';
+
+            $history->previous = !empty($oldreview_of_Batch_Packing_record_bpr_gi) ? $oldreview_of_Batch_Packing_record_bpr_gi : null;
+            $history->current = !empty($newreview_of_Batch_Packing_record_bpr_gi) ? $newreview_of_Batch_Packing_record_bpr_gi : null;
+
+            $history->comment = $request->review_of_Batch_Packing_record_bpr_gi_comment ?? 'Not Applicable';
+
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+
+            if (empty($oldreview_of_Batch_Packing_record_bpr_gi)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            $history->save();
+        }
+       
+
+
+         $oldreview_of_packing_materials_used_in_batch_packing_gi = trim(strip_tags(html_entity_decode($lastmarketComplaint->review_of_packing_materials_used_in_batch_packing_gi ?? '')));
+
+        $newreview_of_packing_materials_used_in_batch_packing_gi = trim(strip_tags(html_entity_decode($marketComplaint->review_of_packing_materials_used_in_batch_packing_gi ?? '')));
+               
+
+        if ($oldreview_of_packing_materials_used_in_batch_packing_gi !== $newreview_of_packing_materials_used_in_batch_packing_gi) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Review of packing materials used in batch packing';
-            $history->previous = $lastmarketComplaint->review_of_packing_materials_used_in_batch_packing_gi;
-            $history->current = $marketComplaint->review_of_packing_materials_used_in_batch_packing_gi;
-            $history->comment = $request->review_of_packing_materials_used_in_batch_packing_gi_comment;
+
+            $history->previous = !empty($oldreview_of_packing_materials_used_in_batch_packing_gi) ? $oldreview_of_packing_materials_used_in_batch_packing_gi : null;
+            $history->current = !empty($newreview_of_packing_materials_used_in_batch_packing_gi) ? $newreview_of_packing_materials_used_in_batch_packing_gi : null;
+
+            $history->comment = $request->review_of_complaint_sample_if_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->review_of_packing_materials_used_in_batch_packing_gi)) {
+
+            if (empty($oldreview_of_packing_materials_used_in_batch_packing_gi)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
-        if ($lastmarketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi != $marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi) {
+      
+
+
+        $oldreview_of_raw_materials_used_in_batch_manufacturing_gi = trim(strip_tags(html_entity_decode($lastmarketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi ?? '')));
+
+        $newreview_of_raw_materials_used_in_batch_manufacturing_gi = trim(strip_tags(html_entity_decode($marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi ?? '')));
+               
+
+        if ($oldreview_of_raw_materials_used_in_batch_manufacturing_gi !== $newreview_of_raw_materials_used_in_batch_manufacturing_gi) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Review of Raw materials used in batch manufacturing';
-            $history->previous = $lastmarketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi;
-            $history->current = $marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi;
-            $history->comment = $request->review_of_raw_materials_used_in_batch_manufacturing_gi_comment;
+
+            $history->previous = !empty($oldreview_of_raw_materials_used_in_batch_manufacturing_gi) ? $oldreview_of_raw_materials_used_in_batch_manufacturing_gi : null;
+            $history->current = !empty($newreview_of_raw_materials_used_in_batch_manufacturing_gi) ? $newreview_of_raw_materials_used_in_batch_manufacturing_gi : null;
+
+            $history->comment = $request->review_of_raw_materials_used_in_batch_manufacturing_gi_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi)) {
+
+            if (empty($oldreview_of_raw_materials_used_in_batch_manufacturing_gi)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
-        if ($lastmarketComplaint->review_of_control_sample_gi != $marketComplaint->review_of_control_sample_gi) {
+
+         $oldreview_of_control_sample_gi = trim(strip_tags(html_entity_decode($lastmarketComplaint->review_of_control_sample_gi ?? '')));
+
+        $newreview_of_control_sample_gi = trim(strip_tags(html_entity_decode($marketComplaint->review_of_control_sample_gi ?? '')));
+               
+
+        if ($oldreview_of_control_sample_gi !== $newreview_of_control_sample_gi) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Review of Control Sample';
-            $history->previous = $lastmarketComplaint->review_of_control_sample_gi;
-            $history->current = $marketComplaint->review_of_control_sample_gi;
-            $history->comment = $request->review_of_control_sample_gi_comment;
+
+            $history->previous = !empty($oldreview_of_control_sample_gi) ? $oldreview_of_control_sample_gi : null;
+            $history->current = !empty($newreview_of_control_sample_gi) ? $newreview_of_control_sample_gi : null;
+
+            $history->comment = $request->review_of_control_sample_gi_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->review_of_control_sample_gi)) {
+
+            if (empty($oldreview_of_control_sample_gi)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
 
+      
 
-        if ($lastmarketComplaint->review_of_batch_manufacturing_record_BMR_gi != $marketComplaint->review_of_batch_manufacturing_record_BMR_gi) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of Batch Manufacturing Record (BMR)';
-            $history->previous = $lastmarketComplaint->review_of_batch_manufacturing_record_BMR_gi;
-            $history->current = $marketComplaint->review_of_batch_manufacturing_record_BMR_gi;
-            $history->comment = $request->review_of_batch_manufacturing_record_BMR_gi_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->review_of_batch_manufacturing_record_BMR_gi)) {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+
+         $oldreview_of_batch_manufacturing_record_BMR_gi = trim(
+                strip_tags(
+                    html_entity_decode($lastmarketComplaint->review_of_batch_manufacturing_record_BMR_gi ?? '')
+                )
+            );
+
+            $newreview_of_batch_manufacturing_record_BMR_gi = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->review_of_batch_manufacturing_record_BMR_gi ?? '')
+                )
+            );
+
+            if ($oldreview_of_batch_manufacturing_record_BMR_gi !== $newreview_of_batch_manufacturing_record_BMR_gi) {
+
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Review of Batch Manufacturing Record (BMR)';
+
+                $history->previous = !empty($oldreview_of_batch_manufacturing_record_BMR_gi) ? $oldreview_of_batch_manufacturing_record_BMR_gi : null;
+                $history->current = !empty($newreview_of_batch_manufacturing_record_BMR_gi) ? $newreview_of_batch_manufacturing_record_BMR_gi : null;
+
+                $history->comment = $request->review_of_batch_manufacturing_record_BMR_gi_comment ?? 'Not Applicable';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
+
+                $history->origin_state = $lastmarketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastmarketComplaint->status;
+
+                if (empty($oldreview_of_batch_manufacturing_record_BMR_gi)) {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+
+                $history->save();
             }
-            $history->save();
-        }
 
-        if ($lastmarketComplaint->review_of_complaint_sample_gi != $marketComplaint->review_of_complaint_sample_gi) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of Complaint Sample';
-            $history->previous = $lastmarketComplaint->review_of_complaint_sample_gi;
-            $history->current = $marketComplaint->review_of_complaint_sample_gi;
-            $history->comment = $request->review_of_complaint_sample_gi_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->review_of_complaint_sample_gi)) {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+
+       
+        
+         $oldreview_of_complaint_sample_gi = trim(
+                strip_tags(
+                    html_entity_decode($lastmarketComplaint->review_of_complaint_sample_gi ?? '')
+                )
+            );
+
+            $newreview_of_complaint_sample_gi = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->review_of_complaint_sample_gi ?? '')
+                )
+            );
+
+            if ($oldreview_of_complaint_sample_gi !== $newreview_of_complaint_sample_gi) {
+
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Review of Complaint Sample';
+
+                $history->previous = !empty($oldreview_of_complaint_sample_gi) ? $oldreview_of_complaint_sample_gi : null;
+                $history->current = !empty($newreview_of_complaint_sample_gi) ? $newreview_of_complaint_sample_gi : null;
+
+                $history->comment = $request->review_of_complaint_sample_gi_comment ?? 'Not Applicable';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
+
+                $history->origin_state = $lastmarketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastmarketComplaint->status;
+
+                if (empty($oldreview_of_complaint_sample_gi)) {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+
+                $history->save();
             }
-            $history->save();
-        }
 
 
         if ($lastmarketComplaint->due_date_gi != $marketComplaint->due_date_gi) {
@@ -4106,54 +4422,92 @@ class MarketComplaintController extends Controller
             $history->save();
         }
 
-        if ($lastmarketComplaint->details_of_nature_market_complaint_gi != $marketComplaint->details_of_nature_market_complaint_gi) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Details Of Nature Market Complaint';
-            $history->previous = $lastmarketComplaint->details_of_nature_market_complaint_gi;
-            $history->current = $marketComplaint->details_of_nature_market_complaint_gi;
-            $history->comment = $request->details_of_nature_market_complaint_gi_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
+       
 
-            // New condition added here
-            if (is_null($lastmarketComplaint->details_of_nature_market_complaint_gi) || $lastmarketComplaint->details_of_nature_market_complaint_gi === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+
+          $olddetails_of_nature_market_complaint_gi = trim(
+                strip_tags(
+                    html_entity_decode($lastmarketComplaint->details_of_nature_market_complaint_gi ?? '')
+                )
+            );
+
+            $newdetails_of_nature_market_complaint_gi = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->details_of_nature_market_complaint_gi ?? '')
+                )
+            );
+
+            if ($olddetails_of_nature_market_complaint_gi !== $newdetails_of_nature_market_complaint_gi) {
+
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Details Of Nature Market Complaint';
+
+                $history->previous = !empty($olddetails_of_nature_market_complaint_gi) ? $olddetails_of_nature_market_complaint_gi : null;
+                $history->current = !empty($newdetails_of_nature_market_complaint_gi) ? $newdetails_of_nature_market_complaint_gi : null;
+
+                $history->comment = $request->details_of_nature_market_complaint_gi_comment ?? 'Not Applicable';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
+
+                $history->origin_state = $lastmarketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastmarketComplaint->status;
+
+                if (empty($olddetails_of_nature_market_complaint_gi)) {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+
+                $history->save();
             }
 
-            $history->save();
-        }
+
+      
 
 
-        if ($lastmarketComplaint->stability_study_data_review_ca != $marketComplaint->stability_study_data_review_ca) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Stablity Study Data Review';
-            $history->previous = $lastmarketComplaint->stability_study_data_review_ca;
-            $history->current = $marketComplaint->stability_study_data_review_ca;
-            $history->comment = $request->stability_study_data_review_ca_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
+        $oldstability_study_data_review_ca = trim(
+                strip_tags(
+                    html_entity_decode($lastmarketComplaint->stability_study_data_review_ca ?? '')
+                )
+            );
 
-            // New condition added here
-            if (is_null($lastmarketComplaint->stability_study_data_review_ca) || $lastmarketComplaint->stability_study_data_review_ca === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+            $newstability_study_data_review_ca = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->stability_study_data_review_ca ?? '')
+                )
+            );
+
+            if ($oldstability_study_data_review_ca !== $newstability_study_data_review_ca) {
+
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Stablity Study Data Review';
+
+                $history->previous = !empty($oldstability_study_data_review_ca) ? $oldstability_study_data_review_ca : null;
+                $history->current = !empty($newstability_study_data_review_ca) ? $newstability_study_data_review_ca : null;
+
+                $history->comment = $request->stability_study_data_review_ca_comment ?? 'Not Applicable';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
+
+                $history->origin_state = $lastmarketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastmarketComplaint->status;
+
+                if (empty($oldstability_study_data_review_ca)) {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+
+                $history->save();
             }
-
-            $history->save();
-        }
 
 
         if ($lastmarketComplaint->categorization_of_complaint_gi != $marketComplaint->categorization_of_complaint_gi) {
@@ -4331,44 +4685,70 @@ class MarketComplaintController extends Controller
 
         // -------------------------------------------------------hod audit show filds ----------------------------------------------
 
-        if ($lastmarketComplaint->conclusion_hodsr != $marketComplaint->conclusion_hodsr) {
+      
+
+        $oldconclusion_hodsr = trim(strip_tags(html_entity_decode($lastmarketComplaint->conclusion_hodsr ?? '')));
+
+        $newconclusion_hodsr = trim(strip_tags(html_entity_decode($marketComplaint->conclusion_hodsr ?? '')));
+               
+
+        if ($oldconclusion_hodsr !== $newconclusion_hodsr) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Root Cause Analysis';
-            $history->previous = $lastmarketComplaint->conclusion_hodsr;
-            $history->current = $marketComplaint->conclusion_hodsr;
-            $history->comment = $request->conclusion_hodsr_comment;
+
+            $history->previous = !empty($oldconclusion_hodsr) ? $oldconclusion_hodsr : null;
+            $history->current = !empty($newconclusion_hodsr) ? $newconclusion_hodsr : null;
+
+            $history->comment = $request->conclusion_hodsr_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->conclusion_hodsr) || $lastmarketComplaint->conclusion_hodsr === '') {
+
+            if (empty($oldconclusion_hodsr)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
-        if ($lastmarketComplaint->root_cause_analysis_hodsr != $marketComplaint->root_cause_analysis_hodsr) {
+
+
+        $oldroot_cause_analysis_hodsr = trim(strip_tags(html_entity_decode($lastmarketComplaint->root_cause_analysis_hodsr ?? '')));
+
+        $newroot_cause_analysis_hodsr = trim(strip_tags(html_entity_decode($marketComplaint->root_cause_analysis_hodsr ?? '')));
+               
+
+        if ($oldroot_cause_analysis_hodsr !== $newroot_cause_analysis_hodsr) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Other Methodology';
-            $history->previous = $lastmarketComplaint->root_cause_analysis_hodsr;
-            $history->current = $marketComplaint->root_cause_analysis_hodsr;
-            $history->comment = $request->root_cause_analysis_hodsr_comment;
+
+            $history->previous = !empty($oldroot_cause_analysis_hodsr) ? $oldroot_cause_analysis_hodsr : null;
+            $history->current = !empty($newroot_cause_analysis_hodsr) ? $newroot_cause_analysis_hodsr : null;
+
+            $history->comment = $request->root_cause_analysis_hodsr_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->root_cause_analysis_hodsr) || $lastmarketComplaint->root_cause_analysis_hodsr === '') {
+
+            if (empty($oldroot_cause_analysis_hodsr)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
         if ($lastmarketComplaint->probable_root_causes_complaint_hodsr != $marketComplaint->probable_root_causes_complaint_hodsr) {
@@ -4391,85 +4771,137 @@ class MarketComplaintController extends Controller
             }
             $history->save();
         }
-        if ($lastmarketComplaint->impact_assessment_hodsr != $marketComplaint->impact_assessment_hodsr) {
+       
+
+         $oldimpact_assessment_hodsr = trim(strip_tags(html_entity_decode($lastmarketComplaint->impact_assessment_hodsr ?? '')));
+
+        $newimpact_assessment_hodsr = trim(strip_tags(html_entity_decode($marketComplaint->impact_assessment_hodsr ?? '')));
+               
+
+        if ($oldimpact_assessment_hodsr !== $newimpact_assessment_hodsr) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Impact Assessment';
-            $history->previous = $lastmarketComplaint->impact_assessment_hodsr;
-            $history->current = $marketComplaint->impact_assessment_hodsr;
-            $history->comment = $request->impact_assessment_hodsr_comment;
+
+            $history->previous = !empty($oldimpact_assessment_hodsr) ? $oldimpact_assessment_hodsr : null;
+            $history->current = !empty($newimpact_assessment_hodsr) ? $newimpact_assessment_hodsr : null;
+
+            $history->comment = $request->impact_assessment_hodsr_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->impact_assessment_hodsr) || $lastmarketComplaint->impact_assessment_hodsr === '') {
+
+            if (empty($oldimpact_assessment_hodsr)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
-        if ($lastmarketComplaint->corrective_action_hodsr != $marketComplaint->corrective_action_hodsr) {
+       
+        
+
+        
+        $oldcorrective_action_hodsr = trim(strip_tags(html_entity_decode($lastmarketComplaint->corrective_action_hodsr ?? '')));
+
+        $newcorrective_action_hodsr = trim(strip_tags(html_entity_decode($marketComplaint->corrective_action_hodsr ?? '')));
+               
+
+        if ($oldcorrective_action_hodsr !== $newcorrective_action_hodsr) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Corrective Action';
-            $history->previous = $lastmarketComplaint->corrective_action_hodsr;
-            $history->current = $marketComplaint->corrective_action_hodsr;
-            $history->comment = $request->corrective_action_hodsr_comment;
+
+            $history->previous = !empty($oldcorrective_action_hodsr) ? $oldcorrective_action_hodsr : null;
+            $history->current = !empty($newcorrective_action_hodsr) ? $newcorrective_action_hodsr : null;
+
+            $history->comment = $request->corrective_action_hodsr_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->corrective_action_hodsr) || $lastmarketComplaint->corrective_action_hodsr === '') {
+
+            if (empty($oldcorrective_action_hodsr)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
 
-        if ($lastmarketComplaint->preventive_action_hodsr != $marketComplaint->preventive_action_hodsr) {
+        
+        $oldpreventive_action_hodsr = trim(strip_tags(html_entity_decode($lastmarketComplaint->preventive_action_hodsr ?? '')));
+
+        $newpreventive_action_hodsr = trim(strip_tags(html_entity_decode($marketComplaint->preventive_action_hodsr ?? '')));
+               
+
+        if ($oldpreventive_action_hodsr !== $newpreventive_action_hodsr) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Preventive Action';
-            $history->previous = $lastmarketComplaint->preventive_action_hodsr;
-            $history->current = $marketComplaint->preventive_action_hodsr;
-            $history->comment = $request->preventive_action_hodsr_comment;
+
+            $history->previous = !empty($oldpreventive_action_hodsr) ? $oldpreventive_action_hodsr : null;
+            $history->current = !empty($newpreventive_action_hodsr) ? $newpreventive_action_hodsr : null;
+
+            $history->comment = $request->preventive_action_hodsr_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->preventive_action_hodsr) || $lastmarketComplaint->preventive_action_hodsr === '') {
+
+            if (empty($oldpreventive_action_hodsr)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
-        if ($lastmarketComplaint->summary_and_conclusion_hodsr != $marketComplaint->summary_and_conclusion_hodsr) {
+       
+        $oldsummary_and_conclusion_hodsr = trim(strip_tags(html_entity_decode($lastmarketComplaint->summary_and_conclusion_hodsr ?? '')));
+
+        $newsummary_and_conclusion_hodsr = trim(strip_tags(html_entity_decode($marketComplaint->summary_and_conclusion_hodsr ?? '')));
+               
+
+        if ($oldsummary_and_conclusion_hodsr !== $newsummary_and_conclusion_hodsr) {
+
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Summary and Conclusion';
-            $history->previous = $lastmarketComplaint->summary_and_conclusion_hodsr;
-            $history->current = $marketComplaint->summary_and_conclusion_hodsr;
-            $history->comment = $request->summary_and_conclusion_hodsr_comment;
+
+            $history->previous = !empty($oldsummary_and_conclusion_hodsr) ? $oldsummary_and_conclusion_hodsr : null;
+            $history->current = !empty($newsummary_and_conclusion_hodsr) ? $newsummary_and_conclusion_hodsr : null;
+
+            $history->comment = $request->summary_and_conclusion_hodsr_comment ?? 'Not Applicable';
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->summary_and_conclusion_hodsr) || $lastmarketComplaint->summary_and_conclusion_hodsr === '') {
+
+            if (empty($oldsummary_and_conclusion_hodsr)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
+
             $history->save();
         }
         if ($lastmarketComplaint->investigation_attach != $marketComplaint->investigation_attach) {
@@ -4515,27 +4947,47 @@ class MarketComplaintController extends Controller
         }
         // ------------------------------------------------c a audit show data---------------------
 
-        if ($lastmarketComplaint->manufacturer_name_address_ca != $marketComplaint->manufacturer_name_address_ca) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Manufacturer name & Address';
-            $history->previous = $lastmarketComplaint->manufacturer_name_address_ca;
-            $history->current = $marketComplaint->manufacturer_name_address_ca;
-            $history->comment = $request->manufacturer_name_address_ca_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->manufacturer_name_address_ca) || $lastmarketComplaint->manufacturer_name_address_ca === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+        
 
-            $history->save();
-        }
+          $oldmanufacturer_name_address_ca = trim(
+                strip_tags(
+                    html_entity_decode($lastmarketComplaint->manufacturer_name_address_ca ?? '')
+                )
+            );
+
+            $newmanufacturer_name_address_ca = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->manufacturer_name_address_ca ?? '')
+                )
+            );
+
+            if ($oldmanufacturer_name_address_ca !== $newmanufacturer_name_address_ca) {
+
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Manufacturer name & Address';
+
+                $history->previous = !empty($oldmanufacturer_name_address_ca) ? $oldmanufacturer_name_address_ca : null;
+                $history->current = !empty($newmanufacturer_name_address_ca) ? $newmanufacturer_name_address_ca : null;
+
+                $history->comment = $request->manufacturer_name_address_ca_comment ?? 'Not Applicable';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
+
+                $history->origin_state = $lastmarketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastmarketComplaint->status;
+
+                if (empty($oldmanufacturer_name_address_ca)) {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+
+                $history->save();
+            }
 
         if ($lastmarketComplaint->complaint_sample_required_ca != $marketComplaint->complaint_sample_required_ca) {
             $history = new MarketComplaintAuditTrial();
@@ -4581,169 +5033,347 @@ class MarketComplaintController extends Controller
         }
 
 
-        if ($lastmarketComplaint->brief_description_of_complaint_ca != $marketComplaint->brief_description_of_complaint_ca) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Brief Description of complaint';
-            $history->previous = $lastmarketComplaint->brief_description_of_complaint_ca;
-            $history->current = $marketComplaint->brief_description_of_complaint_ca;
-            $history->comment = $request->brief_description_of_complaint_ca_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->brief_description_of_complaint_ca) || $lastmarketComplaint->brief_description_of_complaint_ca === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+     
 
-        if ($lastmarketComplaint->batch_record_review_observation_ca != $marketComplaint->batch_record_review_observation_ca) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Batch Record review observation';
-            $history->previous = $lastmarketComplaint->batch_record_review_observation_ca;
-            $history->current = $marketComplaint->batch_record_review_observation_ca;
-            $history->comment = $request->batch_record_review_observation_ca_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->batch_record_review_observation_ca) || $lastmarketComplaint->batch_record_review_observation_ca === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
-        if ($lastmarketComplaint->analytical_data_review_observation_ca != $marketComplaint->analytical_data_review_observation_ca) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Analytical Data review observation';
-            $history->previous = $lastmarketComplaint->analytical_data_review_observation_ca;
-            $history->current = $marketComplaint->analytical_data_review_observation_ca;
-            $history->comment = $request->analytical_data_review_observation_ca_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->analytical_data_review_observation_ca) || $lastmarketComplaint->analytical_data_review_observation_ca === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
-        if ($lastmarketComplaint->retention_sample_review_observation_ca != $marketComplaint->retention_sample_review_observation_ca) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Retention sample review observation';
-            $history->previous = $lastmarketComplaint->retention_sample_review_observation_ca;
-            $history->current = $marketComplaint->retention_sample_review_observation_ca;
-            $history->comment = $request->retention_sample_review_observation_ca_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->retention_sample_review_observation_ca) || $lastmarketComplaint->retention_sample_review_observation_ca === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+          $oldbrief_description_of_complaint_ca = trim(
+                strip_tags(
+                    html_entity_decode($lastmarketComplaint->brief_description_of_complaint_ca ?? '')
+                )
+            );
 
-        if ($lastmarketComplaint->qms_events_ifany_review_observation_ca != $marketComplaint->qms_events_ifany_review_observation_ca) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'QMS Events(if any) review Observation';
-            $history->previous = $lastmarketComplaint->qms_events_ifany_review_observation_ca;
-            $history->current = $marketComplaint->qms_events_ifany_review_observation_ca;
-            $history->comment = $request->qms_events_ifany_review_observation_ca_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->qms_events_ifany_review_observation_ca) || $lastmarketComplaint->qms_events_ifany_review_observation_ca === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
-        if ($lastmarketComplaint->repeated_complaints_queries_for_product_ca != $marketComplaint->repeated_complaints_queries_for_product_ca) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Repeated complaints/queries for product';
-            $history->previous = $lastmarketComplaint->repeated_complaints_queries_for_product_ca;
-            $history->current = $marketComplaint->repeated_complaints_queries_for_product_ca;
-            $history->comment = $request->repeated_complaints_queries_for_product_ca_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->repeated_complaints_queries_for_product_ca) || $lastmarketComplaint->repeated_complaints_queries_for_product_ca === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+            $newbrief_description_of_complaint_ca = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->brief_description_of_complaint_ca ?? '')
+                )
+            );
 
-        if ($lastmarketComplaint->interpretation_on_complaint_sample_ifrecieved_ca != $marketComplaint->interpretation_on_complaint_sample_ifrecieved_ca) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Interpretation on Complaint sample(if recieved)';
-            $history->previous = $lastmarketComplaint->interpretation_on_complaint_sample_ifrecieved_ca;
-            $history->current = $marketComplaint->interpretation_on_complaint_sample_ifrecieved_ca;
-            $history->comment = $request->interpretation_on_complaint_sample_ifrecieved_ca_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->interpretation_on_complaint_sample_ifrecieved_ca) || $lastmarketComplaint->interpretation_on_complaint_sample_ifrecieved_ca === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+            if ($oldbrief_description_of_complaint_ca !== $newbrief_description_of_complaint_ca) {
+
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Brief Description of complaint';
+
+                $history->previous = !empty($oldbrief_description_of_complaint_ca) ? $oldbrief_description_of_complaint_ca : null;
+                $history->current = !empty($newbrief_description_of_complaint_ca) ? $newbrief_description_of_complaint_ca : null;
+
+                $history->comment = $request->brief_description_of_complaint_ca_comment ?? 'Not Applicable';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
+
+                $history->origin_state = $lastmarketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastmarketComplaint->status;
+
+                if (empty($oldbrief_description_of_complaint_ca)) {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+
+                $history->save();
             }
-            $history->save();
-        }
-        if ($lastmarketComplaint->comments_ifany_ca != $marketComplaint->comments_ifany_ca) {
-            $history = new MarketComplaintAuditTrial();
-            $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Comments(if Any)';
-            $history->previous = $lastmarketComplaint->comments_ifany_ca;
-            $history->current = $marketComplaint->comments_ifany_ca;
-            $history->comment = $request->comments_ifany_ca_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastmarketComplaint->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->comments_ifany_ca) || $lastmarketComplaint->comments_ifany_ca === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+
+     
+
+          $oldbatch_record_review_observation_ca = trim(
+                strip_tags(
+                    html_entity_decode($lastmarketComplaint->batch_record_review_observation_ca ?? '')
+                )
+            );
+
+            $newbatch_record_review_observation_ca = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->batch_record_review_observation_ca ?? '')
+                )
+            );
+
+            if ($oldbatch_record_review_observation_ca !== $newbatch_record_review_observation_ca) {
+
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Batch Record Review Observation';
+
+                $history->previous = !empty($oldbatch_record_review_observation_ca) ? $oldbatch_record_review_observation_ca : null;
+                $history->current = !empty($newbatch_record_review_observation_ca) ? $newbatch_record_review_observation_ca : null;
+
+                $history->comment = $request->batch_record_review_observation_ca_comment ?? 'Not Applicable';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
+
+                $history->origin_state = $lastmarketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastmarketComplaint->status;
+
+                if (empty($oldbatch_record_review_observation_ca)) {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+
+                $history->save();
             }
-            $history->save();
-        }
+      
+
+
+          $oldanalytical_data_review_observation_ca = trim(
+                strip_tags(
+                    html_entity_decode($lastmarketComplaint->analytical_data_review_observation_ca ?? '')
+                )
+            );
+
+            $newanalytical_data_review_observation_ca = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->analytical_data_review_observation_ca ?? '')
+                )
+            );
+
+            if ($oldanalytical_data_review_observation_ca !== $newanalytical_data_review_observation_ca) {
+
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Analytical Data review observation';
+
+                $history->previous = !empty($oldanalytical_data_review_observation_ca) ? $oldanalytical_data_review_observation_ca : null;
+                $history->current = !empty($newanalytical_data_review_observation_ca) ? $newanalytical_data_review_observation_ca : null;
+
+                $history->comment = $request->analytical_data_review_observation_ca_comment ?? 'Not Applicable';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
+
+                $history->origin_state = $lastmarketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastmarketComplaint->status;
+
+                if (empty($oldanalytical_data_review_observation_ca)) {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+
+                $history->save();
+            }
+
+      
+
+            $oldretention_sample_review_observation_ca = trim(
+                strip_tags(
+                    html_entity_decode($lastmarketComplaint->retention_sample_review_observation_ca ?? '')
+                )
+            );
+
+            $newretention_sample_review_observation_ca = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->retention_sample_review_observation_ca ?? '')
+                )
+            );
+
+            if ($oldretention_sample_review_observation_ca !== $newretention_sample_review_observation_ca) {
+
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Retention sample review observation';
+
+                $history->previous = !empty($oldretention_sample_review_observation_ca) ? $oldretention_sample_review_observation_ca : null;
+                $history->current = !empty($newretention_sample_review_observation_ca) ? $newretention_sample_review_observation_ca : null;
+
+                $history->comment = $request->retention_sample_review_observation_ca_comment ?? 'Not Applicable';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = \Helpers::getRoleName(Auth::user()->role);
+
+                $history->origin_state = $lastmarketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastmarketComplaint->status;
+
+                if (empty($oldretention_sample_review_observation_ca)) {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+
+                $history->save();
+            }
+        
+
+      
+
+         $oldqms_events_ifany_review_observation_ca = trim(
+                strip_tags(
+                    html_entity_decode($lastmarketComplaint->qms_events_ifany_review_observation_ca ?? '')
+                )
+            );
+
+            $newqms_events_ifany_review_observation_ca = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->qms_events_ifany_review_observation_ca ?? '')
+                )
+            );
+
+            if ($oldqms_events_ifany_review_observation_ca !== $newqms_events_ifany_review_observation_ca) {
+
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'QMS Events(if any) review Observation';
+
+                $history->previous = !empty($oldqms_events_ifany_review_observation_ca) ? $oldqms_events_ifany_review_observation_ca : null;
+                $history->current = !empty($newqms_events_ifany_review_observation_ca) ? $newqms_events_ifany_review_observation_ca : null;
+
+                $history->comment = $request->qms_events_ifany_review_observation_ca_comment ?? 'Not Applicable';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                $history->origin_state = $lastmarketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastmarketComplaint->status;
+
+                if (empty($oldqms_events_ifany_review_observation_ca)) {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+
+                $history->save();
+            }
+      
+
+
+
+          $oldrepeated_complaints_queries_for_product_ca = trim(
+                strip_tags(
+                    html_entity_decode($lastmarketComplaint->repeated_complaints_queries_for_product_ca ?? '')
+                )
+            );
+
+            $newrepeated_complaints_queries_for_product_ca = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->repeated_complaints_queries_for_product_ca ?? '')
+                )
+            );
+
+            if ($oldrepeated_complaints_queries_for_product_ca !== $newrepeated_complaints_queries_for_product_ca) {
+
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Repeated complaints/queries for product';
+
+                $history->previous = !empty($oldrepeated_complaints_queries_for_product_ca) ? $oldrepeated_complaints_queries_for_product_ca : null;
+                $history->current = !empty($newrepeated_complaints_queries_for_product_ca) ? $newrepeated_complaints_queries_for_product_ca : null;
+
+                $history->comment = $request->repeated_complaints_queries_for_product_ca_comment ?? 'Not Applicable';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                $history->origin_state = $lastmarketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastmarketComplaint->status;
+
+                if (empty($oldrepeated_complaints_queries_for_product_ca)) {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+
+                $history->save();
+            }
+       
+
+
+
+            $oldinterpretation_on_complaint_sample_ifrecieved_ca = trim(
+                strip_tags(
+                    html_entity_decode($lastmarketComplaint->interpretation_on_complaint_sample_ifrecieved_ca ?? '')
+                )
+            );
+
+            $newinterpretation_on_complaint_sample_ifrecieved_ca = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->interpretation_on_complaint_sample_ifrecieved_ca ?? '')
+                )
+            );
+
+            if ($oldinterpretation_on_complaint_sample_ifrecieved_ca !== $newinterpretation_on_complaint_sample_ifrecieved_ca) {
+
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Interpretation on Complaint sample(if recieved)';
+
+                $history->previous = !empty($oldinterpretation_on_complaint_sample_ifrecieved_ca) ? $oldinterpretation_on_complaint_sample_ifrecieved_ca : null;
+                $history->current = !empty($newinterpretation_on_complaint_sample_ifrecieved_ca) ? $newinterpretation_on_complaint_sample_ifrecieved_ca : null;
+
+                $history->comment = $request->interpretation_on_complaint_sample_ifrecieved_ca_comment ?? 'Not Applicable';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                $history->origin_state = $lastmarketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastmarketComplaint->status;
+
+                if (empty($oldinterpretation_on_complaint_sample_ifrecieved_ca)) {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+
+                $history->save();
+            }
+
+        
+       
+
+        
+         $oldcomments_ifany_ca = trim(
+                strip_tags(
+                    html_entity_decode($lastmarketComplaint->comments_ifany_ca ?? '')
+                )
+            );
+
+            $newcomments_ifany_ca = trim(
+                strip_tags(
+                    html_entity_decode($marketComplaint->comments_ifany_ca ?? '')
+                )
+            );
+
+            if ($oldcomments_ifany_ca !== $newcomments_ifany_ca) {
+
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Comments(if Any)';
+
+                $history->previous = !empty($oldcomments_ifany_ca) ? $oldcomments_ifany_ca : null;
+                $history->current = !empty($newcomments_ifany_ca) ? $newcomments_ifany_ca : null;
+
+                $history->comment = $request->comments_ifany_ca_comment ?? 'Not Applicable';
+
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                $history->origin_state = $lastmarketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastmarketComplaint->status;
+
+                if (empty($oldcomments_ifany_ca)) {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+
+                $history->save();
+            }
+
 
         if ($lastmarketComplaint->initial_attachment_ca != $marketComplaint->initial_attachment_ca) {
             $history = new MarketComplaintAuditTrial();
