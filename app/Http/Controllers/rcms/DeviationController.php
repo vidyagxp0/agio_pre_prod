@@ -10414,7 +10414,12 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
          if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
+            // $list = Helpers::getInitiatorUserList();
+            $cftResponse = DeviationCftsResponse::withoutTrashed()->where(['deviation_id' => $id])->get();
             $list = Helpers::getInitiatorUserList();
+            $cftResponse->each(function ($response) {
+            $response->delete();
+            });
            if ($deviation->stage == 5) {
 
 
@@ -10472,7 +10477,63 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                         // }
                     }
                     $deviation->update();
-                    return back();
+
+                        $Cft = DeviationCft::where('deviation_id', $deviation->id)->first();
+                                if ($Cft) {
+                                    $Cft->QualityAssurance_by = null;
+                                    $Cft->QualityAssurance_on = null;
+                                    $Cft->Quality_Control_by = null;
+                                    $Cft->Quality_Control_on = null;
+                                    $Cft->Warehouse_by = null;
+                                    $Cft->Warehouse_on = null;
+                                    $Cft->Production_Injection_By = null;
+                                    $Cft->Production_Injection_On = null;
+                                    $Cft->Production_Table_By = null;
+                                    $Cft->Production_Table_On = null;
+                                    $Cft->RA_by = null;
+                                    $Cft->RA_on = null;
+                                    $Cft->production_by = null;
+                                    $Cft->production_on = null;
+                                    $Cft->ResearchDevelopment_by = null;
+                                    $Cft->ResearchDevelopment_on = null;
+                                    $Cft->Human_Resource_by = null;
+                                    $Cft->Human_Resource_on = null;
+                                    $Cft->CorporateQualityAssurance_by = null;
+                                    $Cft->CorporateQualityAssurance_on = null;
+                                    $Cft->Store_by = null;
+                                    $Cft->Store_on = null;
+                                    $Cft->Engineering_by = null;
+                                    $Cft->Engineering_on = null;
+                                    $Cft->RegulatoryAffair_by = null;
+                                    $Cft->RegulatoryAffair_on = null;
+                                    $Cft->QualityAssurance_by = null;
+                                    $Cft->QualityAssurance_on = null;
+                                    $Cft->ProductionLiquid_by = null;
+                                    $Cft->ProductionLiquid_on = null;
+                                    $Cft->Quality_Control_by = null;
+                                    $Cft->Quality_Control_on = null;
+                                    $Cft->Microbiology_by = null;
+                                    $Cft->Microbiology_on = null;
+                                    $Cft->Environment_Health_Safety_by = null;
+                                    $Cft->Environment_Health_Safety_on = null;
+                                    $Cft->ContractGiver_by = null;
+                                    $Cft->ContractGiver_on = null;
+                                    $Cft->Other1_by = null;
+                                    $Cft->Other1_on = null;
+                                    $Cft->Other2_by = null;
+                                    $Cft->Other2_on = null;
+                                    $Cft->Other3_by = null;
+                                    $Cft->Other3_on = null;
+                                    $Cft->Other4_by = null;
+                                    $Cft->Other4_on = null;
+                                    $Cft->Other5_by = null;
+                                    $Cft->Other5_on = null;
+
+                                    $Cft->save();
+
+                toastr()->success('Returned to Opened stage. CFT Review reopened.');
+                return back();
+                                }
                 }
              else {
             toastr()->error('E-signature Not match');
@@ -10485,7 +10546,12 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
          if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
+           // $list = Helpers::getInitiatorUserList();
+            $cftResponse = DeviationCftsResponse::withoutTrashed()->where(['deviation_id' => $id])->get();
             $list = Helpers::getInitiatorUserList();
+            $cftResponse->each(function ($response) {
+            $response->delete();
+            });
                  if ($deviation->stage == 5) {
 
 
@@ -10544,7 +10610,62 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                         // }
                     }
                     $deviation->update();
-                    return back();
+                                        $Cft = DeviationCft::where('deviation_id', $deviation->id)->first();
+                                if ($Cft) {
+                                    $Cft->QualityAssurance_by = null;
+                                    $Cft->QualityAssurance_on = null;
+                                    $Cft->Quality_Control_by = null;
+                                    $Cft->Quality_Control_on = null;
+                                    $Cft->Warehouse_by = null;
+                                    $Cft->Warehouse_on = null;
+                                    $Cft->Production_Injection_By = null;
+                                    $Cft->Production_Injection_On = null;
+                                    $Cft->Production_Table_By = null;
+                                    $Cft->Production_Table_On = null;
+                                    $Cft->RA_by = null;
+                                    $Cft->RA_on = null;
+                                    $Cft->production_by = null;
+                                    $Cft->production_on = null;
+                                    $Cft->ResearchDevelopment_by = null;
+                                    $Cft->ResearchDevelopment_on = null;
+                                    $Cft->Human_Resource_by = null;
+                                    $Cft->Human_Resource_on = null;
+                                    $Cft->CorporateQualityAssurance_by = null;
+                                    $Cft->CorporateQualityAssurance_on = null;
+                                    $Cft->Store_by = null;
+                                    $Cft->Store_on = null;
+                                    $Cft->Engineering_by = null;
+                                    $Cft->Engineering_on = null;
+                                    $Cft->RegulatoryAffair_by = null;
+                                    $Cft->RegulatoryAffair_on = null;
+                                    $Cft->QualityAssurance_by = null;
+                                    $Cft->QualityAssurance_on = null;
+                                    $Cft->ProductionLiquid_by = null;
+                                    $Cft->ProductionLiquid_on = null;
+                                    $Cft->Quality_Control_by = null;
+                                    $Cft->Quality_Control_on = null;
+                                    $Cft->Microbiology_by = null;
+                                    $Cft->Microbiology_on = null;
+                                    $Cft->Environment_Health_Safety_by = null;
+                                    $Cft->Environment_Health_Safety_on = null;
+                                    $Cft->ContractGiver_by = null;
+                                    $Cft->ContractGiver_on = null;
+                                    $Cft->Other1_by = null;
+                                    $Cft->Other1_on = null;
+                                    $Cft->Other2_by = null;
+                                    $Cft->Other2_on = null;
+                                    $Cft->Other3_by = null;
+                                    $Cft->Other3_on = null;
+                                    $Cft->Other4_by = null;
+                                    $Cft->Other4_on = null;
+                                    $Cft->Other5_by = null;
+                                    $Cft->Other5_on = null;
+
+                                    $Cft->save();
+
+                toastr()->success('Returned to QA/CQA Initial Assessment stage. CFT Review reopened.');
+                return back();
+                                }
                 }
              else {
             toastr()->error('E-signature Not match');
@@ -10557,11 +10678,15 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
          if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
+            $cftResponse = DeviationCftsResponse::withoutTrashed()->where(['deviation_id' => $id])->get();
             $list = Helpers::getInitiatorUserList();
+            $cftResponse->each(function ($response) {
+            $response->delete();
+            });
+                
            if ($deviation->stage == 5) {
 
-
-
+ 
 
                     $deviation->stage = "3";
                     $deviation->status = "QA/CQA Initial Assessment";
@@ -10649,7 +10774,64 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                         // }
                     }
                     $deviation->update();
-                    return back();
+
+                     $Cft = DeviationCft::where('deviation_id', $deviation->id)->first();
+                                if ($Cft) {
+                                    $Cft->QualityAssurance_by = null;
+                                    $Cft->QualityAssurance_on = null;
+                                    $Cft->Quality_Control_by = null;
+                                    $Cft->Quality_Control_on = null;
+                                    $Cft->Warehouse_by = null;
+                                    $Cft->Warehouse_on = null;
+                                    $Cft->Production_Injection_By = null;
+                                    $Cft->Production_Injection_On = null;
+                                    $Cft->Production_Table_By = null;
+                                    $Cft->Production_Table_On = null;
+                                    $Cft->RA_by = null;
+                                    $Cft->RA_on = null;
+                                    $Cft->production_by = null;
+                                    $Cft->production_on = null;
+                                    $Cft->ResearchDevelopment_by = null;
+                                    $Cft->ResearchDevelopment_on = null;
+                                    $Cft->Human_Resource_by = null;
+                                    $Cft->Human_Resource_on = null;
+                                    $Cft->CorporateQualityAssurance_by = null;
+                                    $Cft->CorporateQualityAssurance_on = null;
+                                    $Cft->Store_by = null;
+                                    $Cft->Store_on = null;
+                                    $Cft->Engineering_by = null;
+                                    $Cft->Engineering_on = null;
+                                    $Cft->RegulatoryAffair_by = null;
+                                    $Cft->RegulatoryAffair_on = null;
+                                    $Cft->QualityAssurance_by = null;
+                                    $Cft->QualityAssurance_on = null;
+                                    $Cft->ProductionLiquid_by = null;
+                                    $Cft->ProductionLiquid_on = null;
+                                    $Cft->Quality_Control_by = null;
+                                    $Cft->Quality_Control_on = null;
+                                    $Cft->Microbiology_by = null;
+                                    $Cft->Microbiology_on = null;
+                                    $Cft->Environment_Health_Safety_by = null;
+                                    $Cft->Environment_Health_Safety_on = null;
+                                    $Cft->ContractGiver_by = null;
+                                    $Cft->ContractGiver_on = null;
+                                    $Cft->Other1_by = null;
+                                    $Cft->Other1_on = null;
+                                    $Cft->Other2_by = null;
+                                    $Cft->Other2_on = null;
+                                    $Cft->Other3_by = null;
+                                    $Cft->Other3_on = null;
+                                    $Cft->Other4_by = null;
+                                    $Cft->Other4_on = null;
+                                    $Cft->Other5_by = null;
+                                    $Cft->Other5_on = null;
+
+                                    $Cft->save();
+
+                toastr()->success('Returned to QA/CQA Initial Assessment stage. CFT Review reopened.');
+                return back();
+                                }
+                  
                 }
              else {
             toastr()->error('E-signature Not match');
@@ -10800,6 +10982,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                 $deviation = Deviation::find($id);
                 $updateCFT = DeviationCft::where('deviation_id', $id)->latest()->first();
                 $lastDocument = Deviation::find($id);
+                 $Cft = DeviationCft::withoutTrashed()->where('deviation_id', $id)->first();
                 $cftDetails = DeviationCftsResponse::withoutTrashed()->where(['status' => 'In-progress', 'deviation_id' => $id])->distinct('cft_user_id')->count();
 
                 if ($deviation->stage == 1) {
@@ -11028,53 +11211,42 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     return back();
                 }
                 if ($deviation->stage == 3) {
-            //         if ($deviation->form_progress !== 'cft')
-            //         {
-            //             Session::flash('swal', [
-            //                 'type' => 'warning',
-            //                 'title' => 'Mandatory Fields!',
-            //                 'message' => 'QA/CQA initial review and CFT Mandatory Tab is yet to be filled!'
-            //             ]);
 
-            //             return redirect()->back();
-            //         } else {
-            //             Session::flash('swal', [
-            //                 'type' => 'success',
-            //                 'title' => 'Success',
-            //                 'message' => 'Sent for CFT review state'
-            //             ]);
-            //         }
-            //          $extensionchild = extension_new::where('parent_id', $id)
-            //     ->where('parent_type', 'Deviation')
-            //     ->get();
-            //         $hasPending2 = false;
-            //     foreach ($extensionchild as $ext) {
-            //             $extensionchildStatus = trim(strtolower($ext->status));
-            //             if ($extensionchildStatus !== 'closed - done') {
-            //                 $hasPending2 = true;
-            //                 break;
-            //             }
-            //         }
 
-            //    if ($hasPending2) {
-            //     // $extensionchildStatus = trim(strtolower($extensionchild->status));
-            //            Session::flash('swal', [
-            //                'title' => 'Extension Child Pending!',
-            //                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
-            //                'type' => 'warning',
-            //            ]);
+                 if ( $Cft->Production_Table_Review !== 'yes' &&
+                            $Cft->Production_Injection_Review !== 'yes' &&
+                            $Cft->ProductionLiquid_Review !== 'yes' &&
+                            $Cft->Store_Review !== 'yes' &&
+                            $Cft->ResearchDevelopment_Review !== 'yes' &&
+                            $Cft->Microbiology_Review !== 'yes' &&
+                            $Cft->RegulatoryAffair_Review !== 'yes' &&
+                            $Cft->CorporateQualityAssurance_Review !== 'yes' &&
+                            $Cft->ContractGiver_Review !== 'yes' &&
+                            $Cft->Quality_review !== 'yes' &&
+                            $Cft->Quality_Assurance_Review !== 'yes' &&
+                            $Cft->Engineering_review !== 'yes' &&
+                            $Cft->Environment_Health_review !== 'yes' &&
+                            $Cft->Human_Resource_review !== 'yes' &&
+                            $Cft->Other1_review !== 'yes' &&
+                            $Cft->Other2_review !== 'yes' &&
+                            $Cft->Other3_review !== 'yes' &&
+                            $Cft->Other4_review !== 'yes' &&
+                            $Cft->Other5_review !== 'yes' ) {
+                                                    Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'CFT Tab is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
 
-            //        return redirect()->back();
-
-            //    } else {
-            //        // Flash message for success (when the form is filled correctly)
-            //        Session::flash('swal', [
-            //            'title' => 'Success!',
-            //            'message' => 'Sent for Next Stage',
-            //            'type' => 'success',
-            //        ]);
-            //    }
-
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'CFT Reviews'
+                            ]);
+                        }
+          
 
                     $getCftData = DeviationCft::where('deviation_id', $id)->first();
 
