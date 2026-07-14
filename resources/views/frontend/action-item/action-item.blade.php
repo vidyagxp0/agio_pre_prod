@@ -31,7 +31,7 @@
         </div>
     </div>
     @php
-        $users = DB::table('users')->get();
+        $users = DB::table('users')->orderByRaw('LOWER(name) ASC')->get();
     @endphp
 
 
@@ -72,20 +72,10 @@
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                           <input type="hidden" name="record" id="record">
                                           <input disabled type="text" name="record" id="record" placeholder="Record Number">
-                                        {{-- <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName($parent_division_id) }}/AI/{{ date('Y') }}/{{ $record}}"> --}}
 
                                         </div>
                                 </div>
-                                <!-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Division Code"><b>Site/Location Code</b></label>
-                                        <input readonly type="text" name="division_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
-                                    </div>
-                                </div> -->
+      
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -105,10 +95,7 @@
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
                                     <input type="hidden" name="record" >
-                                            {{-- <input disabled type="text" name="record_number"
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ str_pad($record_number, 4, '0', STR_PAD_LEFT) }}">
-                                    <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
-                                        <input disabled type="text" name="record" id="record" placeholder="Record Number">
+                                    <input disabled type="text" name="record" id="record" placeholder="Record Number">
                                 </div>
                             </div>
                                 <div class="col-lg-6">
@@ -118,7 +105,6 @@
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id"
                                             value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
 
@@ -138,26 +124,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Opened">Date of Initiation</label>
-                                        {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                         <input disabled type="text"
                                             value="{{ date('d-M-Y') }}"
                                             name="intiation_date">
                                         <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="RLS Record Number"><b>Parent Record Number</b></label>
-                                        @if (!empty($record_number_full))
-                                        <input readonly type="text" name="parent_record_number"
-                                            value="{{ $record_number_full }}">
-                                        @else
-                                        <input readonly type="text" name="parent_record_number"
-                                        value="">
-                                        @endif
-                                    </div>
-                                </div> --}}
-
+                       
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -172,35 +145,7 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Due Date">Due Date</label>
-
-                                        @if (!empty($cc->due_date))
-                                        <div class="static">{{ $cc->due_date }}</div>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="search">
-                                            Assigned To <span
-                                                class="text-danger">*</span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to" required>
-                                            <option value="">Select a value</option>
-                                            @foreach ($users as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('assign_to')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                                --}}
-
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="assign_to1"> Assigned To<span

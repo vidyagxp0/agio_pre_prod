@@ -1195,6 +1195,7 @@ class DashboardController extends Controller
                 'single' => fn ($id) => "change_control_single_pdf/{$id}",
                 'audit' => fn ($id) => "audit/{$id}",
                 'family' => fn ($id) => "cc_family_report/{$id}",
+                'summary' => fn ($id) => "summary/{$id}",
             ],
             'Incident' => [
                 'model' => Incident::class,
@@ -1279,6 +1280,7 @@ class DashboardController extends Controller
 
 
                             ' . ($displayType == 'External-Audit' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Audit Response Report</a>' : '') . '
+                            ' . ($displayType == 'Change-Control' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
 
                         </div>
                     </div>

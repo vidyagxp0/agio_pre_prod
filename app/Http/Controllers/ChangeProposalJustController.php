@@ -73,7 +73,7 @@ class ChangeProposalJustController extends Controller
         $data->initiator_id = Auth::id();
         $data->record = $record;
         $data->division_code = $request->division_code;
-        $data->department =  $request->department;
+        $data->department = Helpers::getUserDepartmentFromDB(Auth::user()->departmentid);
         $data->division_id = $request->division_id;
         $data->intiation_date = $request->intiation_date;
         $data->cpdescription = $request->cpdescription;
@@ -215,15 +215,15 @@ class ChangeProposalJustController extends Controller
             $history = new ChangeProposalAuditTrial();
             $history->cpjg_id = $data->id;
             $history->activity_type = 'Initiation Department';
-            $history->previous = "Null";
-            $history->current =  Helpers::getUserDepartmentFromDB(Auth::user()->departmentid);
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
+            $history->previous = 'Null';
+            $history->current = $data->department;
+            $history->comment = 'Not Applicable';
+            $history->user_id = Auth::id();
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
+            $history->change_to = 'Opened';
+            $history->change_from = 'Initiation';
             $history->action_name = 'Create';
             $history->save();
 

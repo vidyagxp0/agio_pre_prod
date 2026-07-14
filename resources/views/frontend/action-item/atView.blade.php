@@ -58,7 +58,7 @@
         </script>
     @endif
     @php
-        $users = DB::table('users')->get();
+        $users = DB::table('users')->orderByRaw('LOWER(name) ASC')->get();
     @endphp
     {{-- ======================================
                 CHANGE CONTROL VIEW
@@ -315,13 +315,7 @@
                                 @if (!empty($cc->id))
                                     <input type="hidden" name="ccId" value="{{ $cc->id }}">
                                 @endif
-                                {{-- <div class="col-lg-6"> --}}
-
-                                {{-- <div class="group-input">
-                                            <label for="originator">Initiator</label>
-                                            <div class="static">Amit Guru</div>
-                                        </div> --}}
-                                {{-- </div> --}}
+                      
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
@@ -347,13 +341,7 @@
                                         {{-- <div class="static"> </div> --}}
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Date Due"><b>Date of Initiation</b></label>
-                                            <input disabled type="text" name="intiation_date"
-                                                value="{{ Helpers::getdateFormat($data->intiation_date) }}">
-                                        </div>
-                                    </div> --}}
+                             
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
@@ -374,9 +362,6 @@
 
                                             <input readonly type="text" name="parent_record_number"
                                                 value="{{ $data->parent_record_number }}">
-                                            {{-- @else
-                                            <input type="text" name="parent_record_number_edit"
-                                            value="{{ $data->parent_record_number_edit }}"> --}}
                                         </div>
                                     </div>
                                 @endif
@@ -384,7 +369,6 @@
 
                                 @php
                                     $isAssignto = (($data->initiator_id == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Action Item', 3) || Helpers::check_roles($data->division_id, 'Action Item', 18));
-                                   
                                 @endphp
 
                                 <div class="col-md-6">
