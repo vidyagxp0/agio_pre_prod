@@ -9,111 +9,346 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-<style>
+ <style>
+      
+
+    @page {
+         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+     }
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
         padding: 0;
-        min-width: 100vw;
-        min-height: 100vh;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+        margin-bottom: -60px; 
     }
 
-    .w-10 {
-        width: 10%;
+    header, footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
     }
 
-    .w-20 {
-        width: 20%;
+    header {
+        top: -140px;
+        border-bottom: none;
     }
 
-    .w-30 {
-        width: 30%;
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
     }
 
-    .w-40 {
-        width: 40%;
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
     }
 
-    .w-50 {
-        width: 50%;
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+    
+    .block {
+        margin-bottom: 25px;
     }
 
-    .w-60 {
-        width: 60%;
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
     }
 
-    .w-70 {
-        width: 70%;
-    }
-
-    .w-80 {
-        width: 80%;
-    }
-
-    .w-90 {
-        width: 90%;
-    }
-
-    .w-100 {
-        width: 100%;
-    }
-
-    .h-100 {
-        height: 100%;
-    }
-
-    header table,
-    header th,
-    header td,
-    footer table,
-    footer th,
-    footer td {
-        border: 1px solid black;
-        border-collapse: collapse;
+    .table_bg {
+        background-color: #387478;
+        color: #111;
     }
 
     table {
         width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
     }
 
-    th,
-    td {
-        padding: 10px;
+    th, td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
         text-align: left;
+        vertical-align: top;
     }
 
-    footer .head,
-    header .head {
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.2rem;
+    th {
+        background-color: #f2f2f2;
+        font-weight: 600;
     }
 
-    footer {
-        position: fixed;
-        display: block;
-        bottom: 0;
-        left: 0;
+    .section-gap {
+        margin-top: 20px;
+    }
+
+    .no-border th, .no-border td {
+        border: none !important;
+    }
+
+    /* .w-5 { width: 5%; } */
+    .w-5 { width: 6%; }
+    .w-8 { width: 8%; }
+    .w-10 { width: 10%; }
+    .w-20 { width: 20%; }
+    .w-30 { width: 30%; }
+    .w-50 { width: 50%; }
+    .w-70 { width: 70%; }
+    .w-80 { width: 80%; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .border-table {
+        overflow-x: auto;
+    }
+    table th, table td {
+        word-wrap: break-word;
+    }
+
+
+        .head-number {
+            font-weight: bold;
+            font-size: 13px;
+            padding-left: 10px;
+        }
+
+        .div-data {
+            font-size: 13px;
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
+
+
+
+                .why-why-chart-container {
+                width: 100%;
+                padding: 10px;
+                background: #fff;
+                border-radius: 5px;
+            }
+
+            .block-head {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .table th, .table td {
+                padding: 10px;
+                border: 1px solid #ddd;
+            }
+
+            .problem-statement th {
+                background: #f4bb22;
+                width: 150px;
+            }
+
+            .why-label {
+                color: #393cd4;
+                width: 150px;
+            }
+
+            .answer-label {
+                color: #393cd4;
+                width: 150px;
+            }
+
+            .root-cause th {
+                background: #0080006b;
+                width: 150px;
+            }
+
+            .text-muted {
+                color: gray;
+            }
+    </style>
+<style>
+    .change-grid {
         width: 100%;
-        font-size: 0.9rem;
+        border-collapse: collapse;
+        table-layout: fixed;
     }
 
-    footer td {
-        text-align: center;
+    .change-grid th,
+    .change-grid td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        font-size: 11px;
+        vertical-align: top;
+        text-align: left;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        line-height: 0.8;
     }
+
+    .change-grid th {
+        background: #f2f2f2;
+        font-weight: bold;
+    }
+
+    .change-grid .sr-no {
+        width: 8%;
+    }
+
+    .change-grid .text-col {
+        width: 30.66%;
+    }
+
+    .pdf-text {
+        white-space: pre-line;
+    }
+     .report-title {
+            margin-bottom: 15px;
+            padding: 8px;
+            border: 1px solid #000;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .record-table,
+        .action-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .record-table {
+            margin-bottom: 15px;
+        }
+
+        .record-table th,
+        .record-table td {
+            padding: 6px;
+            border: 1px solid #000;
+            vertical-align: top;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .record-table th {
+            width: 22%;
+            background: #f2f2f2;
+            text-align: left;
+        }
+
+        .section-heading {
+            padding: 7px 10px;
+            border: 1px solid #000;
+            border-bottom: none;
+            background: #eeeeee;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .action-table th,
+        .action-table td {
+            border: 1px solid #000;
+            padding: 7px 6px;
+            vertical-align: top;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+        }
+
+        .action-table thead {
+            display: table-header-group;
+        }
+
+        .action-table tr {
+            page-break-inside: avoid;
+        }
+
+        .action-table th {
+            height: 42px;
+            text-align: center;
+            vertical-align: middle;
+            background: #f7f7f7;
+            font-weight: bold;
+        }
+
+        .action-table td {
+            min-height: 55px;
+        }
+
+        .sr-column {
+            width: 8%;
+            text-align: center;
+        }
+
+        .task-column {
+            width: 43%;
+        }
+
+        .assigned-column {
+            width: 20%;
+            text-align: center;
+        }
+
+        .due-date-column {
+            width: 14%;
+            text-align: center;
+        }
+
+        .acknowledge-column {
+            width: 15%;
+            text-align: center;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .no-record {
+            height: 70px;
+            text-align: center;
+            vertical-align: middle !important;
+            font-weight: bold;
+        }
+
+        .generated-date {
+            margin-top: 10px;
+            text-align: right;
+            font-size: 9px;
+        }
 </style>
-
 <body>
 
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
-                    Change Control Summary
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
+                    Change Control Summary Report
+                    </div>
                 </td>
                 <td class="w-30">
-                    <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                    <div class="logo" style="text-align: center;">
+                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                        style="max-height: 55px; max-width: 40px;">
                     </div>
                 </td>
             </tr>
@@ -121,13 +356,13 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Change Control No.</strong>
+                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-40">
-                    CC/P1/QC01/2023/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Page No.</strong>
                 </td>
             </tr>
         </table>
@@ -135,30 +370,107 @@
 
     <div class="inner-block">
         <div class="content-table">
-            <table>
+        {{-- <table class="record-table">
+            <tr>
+                <th>Change Control No.</th>
+                <td>
+                    {{ $data->record_number
+                        ?? $data->record
+                        ?? $data->id }}
+                </td>
+
+                <th>Originator</th>
+                <td>
+                    {{ $data->originator ?? 'N/A' }}
+                </td>
+            </tr>
+
+            <tr>
+                <th>Short Description</th>
+                <td colspan="3">
+                    {!! $data->short_description
+                        ?? $data->description
+                        ?? 'N/A' !!}
+                </td>
+            </tr>
+
+            <tr>
+                <th>Status</th>
+                <td>
+                    {{ $data->status ?? 'N/A' }}
+                </td>
+
+                <th>Created Date</th>
+                <td>
+                    {{ !empty($data->created_at)
+                        ? \Carbon\Carbon::parse($data->created_at)->format('d-M-Y')
+                        : 'N/A' }}
+                </td>
+            </tr>
+        </table> --}}
+
+        <div class="section-heading">
+            Proposed Action Item
+        </div>
+
+        <table class="action-table">
+            <thead>
                 <tr>
-                    <th class="w-30">Initiator</th>
-                    <td class="w-70">{{ $data->originator }}</td>
+                    <th class="sr-column">
+                        Sr.<br>No.
+                    </th>
+
+                    <th class="task-column">
+                        Proposed Action / Task
+                    </th>
+
+                    <th class="assigned-column">
+                        Assigned To
+                    </th>
+
+                    <th class="due-date-column">
+                        Due Date
+                    </th>
+
+                    <th class="acknowledge-column">
+                        Acknowledge By
+                    </th>
                 </tr>
-                <tr>
-                    <th class="w-30">Date Initiation</th>
-                    <td class="w-70">{{$data->created_at}}</td>
-                </tr>
-                <tr>
-                    <th class="w-30">Short Description</th>
-                    <td class="w-70">
-                        {{ $data->short_description }}
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-30">Due Date</th>
-                    <td class="w-70">{{ $data->due_date }}</td>
-                </tr>
-                <tr>
-                    <th class="w-30">Division Code</th>
-                    <td class="w-70">{{ $data->Division_Code }}</td>
-                </tr>
-            </table>
+            </thead>
+
+            <tbody>
+                @forelse ($actionItems as $key => $actionItem)
+                    <tr>
+                        <td class="sr-column center">
+                            {{ $key + 1 }}
+                        </td>
+
+                        <td class="task-column">
+                            {!! $actionItem->task_description ?? 'N/A' !!}
+                        </td>
+
+                        <td class="assigned-column">
+                            {{ $actionItem->assigned_to_name ?? 'N/A' }}
+                        </td>
+
+                        <td class="due-date-column center">
+                            {{ $actionItem->formatted_due_date ?? 'N/A' }}
+                        </td>
+
+                        <td class="acknowledge-column">
+                            {{ $actionItem->acknowledgement_by ?? 'N/A' }}
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="no-record">
+                            No Action Item has been created from this Change Control.
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+
         </div>
     </div>
 

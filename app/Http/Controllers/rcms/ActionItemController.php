@@ -50,56 +50,52 @@ class ActionItemController extends Controller
         $record_number = $lastAi ? $lastAi->record + 1 : 1;
         $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         
-        // $old_record = ActionItem::select('id', 'division_id', 'record')->get();
-        // $record = ((RecordNumber::first()->value('counter')) + 1);
-        // $record_number = $record;
-        // $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
 
         $pre = [
-    'DEV' => \App\Models\Deviation::class,
-   'AP' => \App\Models\AuditProgram::class,
-   'AI' => \App\Models\ActionItem::class,
-   'Exte' => \App\Models\extension_new::class,
-   'Resam' => \App\Models\Resampling::class,
-   'Obse' => \App\Models\Observation::class,
-   'RCA' => \App\Models\RootCauseAnalysis::class,
-   'RA' => \App\Models\RiskAssessment::class,
-   'MR' => \App\Models\ManagementReview::class,
-   'EA' => \App\Models\Auditee::class,
-   'IA' => \App\Models\InternalAudit::class,
-   'CAPA' => \App\Models\Capa::class,
-   'CC' => \App\Models\CC::class,
-   'ND' => \App\Models\Document::class,
-   'Lab' => \App\Models\LabIncident::class,
-   'EC' => \App\Models\EffectivenessCheck::class,
-   'OOSChe' => \App\Models\OOS::class,
-   'OOT' => \App\Models\OOT::class,
-   'OOC' => \App\Models\OutOfCalibration::class,
-   'MC' => \App\Models\MarketComplaint::class,
-   'NC' => \App\Models\NonConformance::class,
-   'Incident' => \App\Models\Incident::class,
-   'FI' => \App\Models\FailureInvestigation::class,
-   'ERRATA' => \App\Models\errata::class,
-   'OOSMicr' => \App\Models\OOS_micro::class,
-   // Add other models as necessary...
-];
+            'DEV' => \App\Models\Deviation::class,
+        'AP' => \App\Models\AuditProgram::class,
+        'AI' => \App\Models\ActionItem::class,
+        'Exte' => \App\Models\extension_new::class,
+        'Resam' => \App\Models\Resampling::class,
+        'Obse' => \App\Models\Observation::class,
+        'RCA' => \App\Models\RootCauseAnalysis::class,
+        'RA' => \App\Models\RiskAssessment::class,
+        'MR' => \App\Models\ManagementReview::class,
+        'EA' => \App\Models\Auditee::class,
+        'IA' => \App\Models\InternalAudit::class,
+        'CAPA' => \App\Models\Capa::class,
+        'CC' => \App\Models\CC::class,
+        'ND' => \App\Models\Document::class,
+        'Lab' => \App\Models\LabIncident::class,
+        'EC' => \App\Models\EffectivenessCheck::class,
+        'OOSChe' => \App\Models\OOS::class,
+        'OOT' => \App\Models\OOT::class,
+        'OOC' => \App\Models\OutOfCalibration::class,
+        'MC' => \App\Models\MarketComplaint::class,
+        'NC' => \App\Models\NonConformance::class,
+        'Incident' => \App\Models\Incident::class,
+        'FI' => \App\Models\FailureInvestigation::class,
+        'ERRATA' => \App\Models\errata::class,
+        'OOSMicr' => \App\Models\OOS_micro::class,
+        // Add other models as necessary...
+        ];
 
-// Create an empty collection to store the related records
-$relatedRecords = collect();
+        // Create an empty collection to store the related records
+        $relatedRecords = collect();
 
-// Loop through each model and get the records, adding the process name to each record
-foreach ($pre as $processName => $modelClass) {
-   $records = $modelClass::all()->map(function ($record) use ($processName) {
-       $record->process_name = $processName; // Attach the process name to each record
-       return $record;
-   });
+        // Loop through each model and get the records, adding the process name to each record
+        foreach ($pre as $processName => $modelClass) {
+        $records = $modelClass::all()->map(function ($record) use ($processName) {
+            $record->process_name = $processName; // Attach the process name to each record
+            return $record;
+        });
 
-   // Merge the records into the collection
-   $relatedRecords = $relatedRecords->merge($records);
-}
+        // Merge the records into the collection
+        $relatedRecords = $relatedRecords->merge($records);
+        }
         return view('frontend.action-item.action-item', compact('due_date', 'record','old_record','record_number','relatedRecords'));
     }
     public function index()

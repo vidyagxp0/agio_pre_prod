@@ -134,7 +134,7 @@
         </div>
     </div>
     @php
-        $users = DB::table('users')->get();
+        $users = DB::table('users')->orderByRaw('LOWER(name) ASC')->get();
     @endphp
     <div id="change-control-fields">
         <div class="container-fluid">
@@ -358,10 +358,6 @@
                                     });
                                 </script>
 
-
-
-
-
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Risk Assessment Required">Risk Assessment Required? </label>
@@ -375,15 +371,10 @@
                                         </div>
 
 
-
-
                                         <div class="col-lg-6" id="justification_div" style="display:none;">
                                             <div class="group-input">
                                                 <label for="Justification">Justification</label>
                                                 <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required."></textarea>
-                                                <!-- @error('justification')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror -->
                                             </div>
                                         </div>
 
@@ -398,7 +389,7 @@
                                                     ])
                                                     ->get();
                                                 $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                                $hodRoles = DB::table('users')->whereIn('id', $userRoleIds)->get();
+                                                $hodRoles = DB::table('users')->whereIn('id', $userRoleIds)->orderByRaw('LOWER(name) ASC')->get();
                                             @endphp
 
                                             <div class="col-lg-6">
@@ -463,15 +454,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Textbox for 'Other' option -->
-                                <!-- <div class="col-lg-6" id="other_specify_div" style="display:none;">
-                                    <div class="group-input">
-                                        <label for="other_specify">Please specify</label>
-                                        <input type="text" name="Occurance" id="other_specify" value="Occurance" placeholder="Specify if Other is selected">
-
-                                    </div>
-                                </div> -->
-
 
                                 <div class="col-lg-6" id="other_specify_div" style="display:none;">
                                     <div class="group-input">
@@ -501,22 +483,6 @@
                                     });
                                 </script>
 
-
-                                <!-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="severity-level">Severity Level</label>
-                                        <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
-                                            guiding priority for corrective actions. Ranging from low to high, they ensure
-                                            quality standards and mitigate critical risks.</span>
-                                        <select name="severity_level1">
-                                            <option value="">-- Select --</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="major">Major</option>
-                                            <option value="critical">Critical</option>
-                                        </select>
-                                    </div>
-                                </div> -->
-
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -543,41 +509,7 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="repeat">Repeat</label>
-                                        <div><small class="text-primary">Please select yes if it is has recurred in past
-                                                six months</small></div>
-                                        <select name="repeat"
-                                            onchange="otherController(this.value, 'yes', 'repeat_nature')">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input" id="repeat_nature">
-                                        <label for="repeat_nature">Repeat Nature<span
-                                                class="text-danger d-none">*</span></label>
-                                        <textarea name="repeat_nature"></textarea>
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="risk_level">Risk Level</label>
-                                        <select name="risk_level" id="risk_level" class="mb-0">
-                                            <option value="">-- Select --</option>
-                                            <option value="critical">Critical</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="major">Major</option>
-                                        </select>
-                                        <div class="ai_text">AI Suggested option</div>
-                                    </div>
-                                </div> --}}
-
+                                
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="nature-change">Nature Of Change<span class="text-danger">*</span>

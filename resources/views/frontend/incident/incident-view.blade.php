@@ -2834,7 +2834,7 @@
                                     </div>
                                 </div>
 
-                                            @if ($data->stage == 3)
+                                            {{-- @if ($data->stage == 3)
                                                 <div class="col-md-12">
                                                     <div class="group-input">
                                                         <label for="Justification for  categorization">Justification for
@@ -2861,7 +2861,7 @@
                                             @endif
                                             @error('Justification_for_categorization')
                                                 <div class="text-danger">{{ $message }}</div>
-                                            @enderror
+                                            @enderror --}}
 
                                             <div class="col-md-12">
                                                 <div class="group-input" id="investigation_details_block" style="display: none">
