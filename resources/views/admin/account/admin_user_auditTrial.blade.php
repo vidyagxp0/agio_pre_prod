@@ -267,7 +267,7 @@
                     </td> -->
                     <td>
                         <div><strong> Peformed By
-                                :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
+                                :</strong>{{ 'superadmin' ? 'superadmin' : 'Not Applicable' }}
                         </div>
                         <div style="margin-top: 5px;"> <strong>Performed On
                                 :</strong>{{ \Carbon\Carbon::parse($dataDemo->created_at )->format('d-M-Y h:i A') }}
