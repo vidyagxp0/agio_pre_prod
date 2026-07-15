@@ -1095,6 +1095,7 @@ class DashboardController extends Controller
                 'single' => fn ($id) => "deviationSingleReport/{$id}",
                 'audit' => fn ($id) => "DeviationAuditTrialPdf/{$id}",
                 'family' => fn ($id) => "deviationfamilyReport/{$id}",
+                'summary' => fn ($id) => "deviation_summary/{$id}",
             ],
             'Internal-Audit' => [
                 'model' => InternalAudit::class,
@@ -1281,6 +1282,7 @@ class DashboardController extends Controller
 
                             ' . ($displayType == 'External-Audit' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Audit Response Report</a>' : '') . '
                             ' . ($displayType == 'Change-Control' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
+                            ' . ($displayType == 'Deviation' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
 
                         </div>
                     </div>

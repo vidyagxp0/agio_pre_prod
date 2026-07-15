@@ -289,6 +289,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('deviationSingleReport/{id}', [DeviationController::class, 'singleReport'])->name('deviationSingleReport');
             Route::get('deviation/reopen/store/{id}',    [DeviationController::class, 'reopenStore'])->name('deviation.reopen.store');
             Route::get('deviationfamilyReport/{id}', [DeviationController::class, 'familyReport'])->name('deviationfamilyReport');
+            Route::get('deviation_summary/{id}', [DeviationController::class, 'dev_summery_pdf'])->name('deviation.summary');
 
             Route::post('dev-launch-extension-deviation/{id}', [DeviationController::class, 'launchExtensionDeviation'])->name('dev-launch-extension-deviation');
             Route::post('dev-launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('dev-launch-extension-capa');
