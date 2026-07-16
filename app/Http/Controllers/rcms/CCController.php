@@ -14840,7 +14840,7 @@ class CCController extends Controller
         $actionItems->transform(function ($actionItem) {
 
             $actionItem->task_description =
-                $actionItem->short_description
+                $actionItem->description
                 ?? $actionItem->action_item
                 ?? $actionItem->proposed_action
                 ?? $actionItem->description

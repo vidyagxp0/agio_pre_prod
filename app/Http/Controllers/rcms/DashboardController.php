@@ -1097,6 +1097,7 @@ class DashboardController extends Controller
                 'single' => fn ($id) => "deviationSingleReport/{$id}",
                 'audit' => fn ($id) => "DeviationAuditTrialPdf/{$id}",
                 'family' => fn ($id) => "deviationfamilyReport/{$id}",
+                'summary' => fn ($id) => "deviation_summary/{$id}",
             ],
             'Internal-Audit' => [
                 'model' => InternalAudit::class,
@@ -1207,7 +1208,7 @@ class DashboardController extends Controller
                 'single' => fn ($id) => "incident-single-report/{$id}",
                 'audit' => fn ($id) => "incident-audit-pdf/{$id}",
                 'family' => fn ($id) => "incident-family-report/{$id}",
-                
+                "summary" => fn ($id) => "incident_summary/{$id}"
             ],
             'Non Conformance' => [
                 'model' => NonConformance::class,
@@ -1291,6 +1292,9 @@ class DashboardController extends Controller
                             ' . ($displayType == 'risk-assesment' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
                             ' . ($displayType == 'Lab-Incident' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
                              ' . ($displayType == 'Root-Cause-Analysis' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
+                            ' . ($displayType == 'Deviation' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
+                            ' . ($displayType == 'Incident' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
+
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 @extends('frontend.layout.main')
 @section('container')
     @php
-        $users = DB::table('users')->select('id', 'name')->get();
+        $users = DB::table('users')->select('id', 'name')->orderByRaw('LOWER(name) ASC')->get();
 
     @endphp
 
@@ -26,17 +26,6 @@
             margin-bottom: 7px;
         }
 
-        /* .sub-head {
-                                                                                                margin-left: 280px;
-                                                                                                margin-right: 280px;
-                                                                                                color: #4274da;
-                                                                                                border-bottom: 2px solid #4274da;
-                                                                                                padding-bottom: 5px;
-                                                                                                margin-bottom: 20px;
-                                                                                                font-weight: bold;
-                                                                                                font-size: 1.2rem;
-
-                                                                                            } */
 
         .create-entity {
             background: #323c50;
@@ -69,9 +58,6 @@
             gap: 20px;
         }
 
-        /* .modal-header{
-                                                                                                background: gainsboro !important;
-                                                                                            } */
         .main_head_modal li {
             margin-bottom: 10px;
         }
@@ -114,11 +100,6 @@
             margin-bottom: 3px;
         }
 
-        /* .saveButton:disabled{
-                                                                                                    background: black!important;
-                                                                                                    border:  black!important;
-
-                                                                                                } */
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -202,15 +183,6 @@
             }
         }
     </script>
-    <!-- <script>
-        function addWhyField(con_class, name) {
-            let mainBlock = document.querySelector('.why-why-chart')
-            let container = mainBlock.querySelector(`.${con_class}`)
-            let textarea = document.createElement('textarea')
-            textarea.setAttribute('name', name);
-            container.append(textarea)
-        }
-    </script> -->
 
     <script>
         console.log('Script working')
@@ -401,9 +373,6 @@
                         '<td><input type="text" name="batch_no[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
                         // '<td> <input type="text" name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="">1 <option value="">2</option> <option value="">3</option><option value="">4</option> <option value="">5</option><option value="">6</option> <option value="">7</option> <option value="">8</option><option value="">9</option><option value="">Final</option> </select></td>' +
-
-
-
 
                         '</tr>';
 
@@ -685,14 +654,6 @@
                                     $initiationDate = date('Y-m-d'); // Current date as initiation date
                                     $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
                                 @endphp
-
-                                <!-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                        <input type="date" id="intiation_date" name="intiation_date" required />
-                                            <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
-                                    </div>
-                                </div> -->
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
