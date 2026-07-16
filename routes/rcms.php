@@ -504,7 +504,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('incident-audit-pdf/{id}', [IncidentController::class, 'incidentAuditTrailPdf'])->name('incident-audit-pdf');
             Route::get('incident-single-report/{id}', [IncidentController::class, 'singleReport'])->name('incident-single-report');
             Route::get('incident-family-report/{id}', [IncidentController::class, 'incidentFamilyReport'])->name('incident-family-report');
-
+            Route::get('incident_summary/{id}', [IncidentController::class, 'incident_summery_pdf'])->name('incident.summary');
 
             Route::post('launch-extension-incident/{id}', [IncidentController::class, 'launchExtensionIncident'])->name('launch-extension-incident');
             Route::post('launch-extension-capa/{id}', [IncidentController::class, 'launchExtensionCapa'])->name('launch-extension-capa');

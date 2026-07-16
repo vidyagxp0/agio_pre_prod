@@ -536,22 +536,6 @@
                                     </div>
                                 </div>
 
-                                <!-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="div_code">Division Code</label>
-                                        <select name="div_code">
-                                            <option value="">-- Select --</option>
-                                            <option value="Instrumental Lab">Instrumental Lab</option>
-                                            <option value="Microbiology Lab">Microbiology Lab</option>
-                                            <option value="Molecular lab">Molecular lab</option>
-                                            <option value="Physical Lab">Physical Lab</option>
-                                            <option value="Stability Lab">Stability Lab</option>
-                                            <option value="Wet Chemistry">Wet Chemistry</option>
-                                            <option value="Quality Department">Quality Department</option>
-                                            <option value="Administration Department">Administration Department</option>
-                                        </select>
-                                    </div>
-                                </div> -->
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="others">Initial Attachment</label>
@@ -624,7 +608,7 @@
 
                                         </div>
                                     </div>
-                            <!-- </div> -->
+                           
                             <div class="button-block">
                                 <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -660,22 +644,7 @@
                                     </div>
                                 </div>
                             </div>
-                        <!-- </div> -->
-                        <!-- <div class="sub-head">
-                            Training Information
-                        </div>
-                        <div class="group-input">
-                            <label for="nature-change">Training Required</label>
-                            <select name="training_required">
-                                <option value="">-- Select --</option>
-                                <option value="no">No</option>
-                                <option value="yes">Yes</option>
-                            </select>
-                        </div>
-                        <div class="group-input">
-                            <label for="train-comments">Training Comments</label>
-                            <textarea name="train_comments"></textarea>
-                        </div> -->
+                       
                         <div class="button-block">
                             <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -698,35 +667,7 @@
                             </div>
                             <div class="row">
 
-                                <!-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="doc-detail">
-                                            Document Details<button type="button" name="ann"
-                                                id="documentAdd">+</button>
-                                        </label>
-                                        <table class="table-bordered table" id="documentTableDetails">
-                                            <thead>
-                                                <tr>
-                                                    <th>Sr. No.</th>
-                                                    <th>Current Document No.</th>
-                                                    <th>Current Version No.</th>
-                                                    <th>New Document No.</th>
-                                                    <th>New Version No.</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><input type="text" value="1" name="documentDetails[]" readonly></td>
-                                                    <td><input type="text" name="documentDetails[0][currentDocNumber]"></td>
-                                                    <td><input type="text" name="documentDetails[0][currentVersionNumber]"></td>
-                                                    <td><input type="text" name="documentDetails[0][newDocNumber]"></td>
-                                                    <td><input type="text" name="documentDetails[0][newVersionNumber]"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div> -->
-
+                               
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="current-practice">
