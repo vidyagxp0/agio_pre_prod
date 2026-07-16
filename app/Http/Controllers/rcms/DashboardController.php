@@ -1083,12 +1083,14 @@ class DashboardController extends Controller
                 'single' => fn ($id) => "capaSingleReport/{$id}",
                 'audit' => fn ($id) => "capaAuditReport/{$id}",
                 'family' => fn ($id) => "capaFamilyReport/{$id}",
+                'summary' => fn ($id) => "Capasummary/{$id}", 
             ],
             'Lab-Incident' => [
                 'model' => LabIncident::class,
                 'single' => fn ($id) => "LabIncidentSingleReport/{$id}",
                 'audit' => fn ($id) => "LabIncidentAuditReport/{$id}",
                 'family' => fn ($id) => "labfamilyreport/{$id}",
+                'summary' => fn ($id) => "Labsummary/{$id}",
             ],
             'Deviation' => [
                 'model' => Deviation::class,
@@ -1107,6 +1109,7 @@ class DashboardController extends Controller
                 'single' => fn ($id) => "riskSingleReport/{$id}",
                 'audit' => fn ($id) => "riskAuditReport/{$id}",
                 'family' => fn ($id) => "riskManagementfamily/{$id}",
+                'summary' => fn ($id) => "Risksummary/{$id}", 
             ],
             'Out Of Calibration' => [
                 'model' => OutOfCalibration::class,
@@ -1171,12 +1174,14 @@ class DashboardController extends Controller
                 'single' => fn ($id) => "oos_micro/single_report/{$id}",
                 'audit' => fn ($id) => "oos_micro/audit_report/{$id}",
                 'family' => fn ($id) => '#',
+               
             ],
             'Root-Cause-Analysis' => [
                 'model' => RootCauseAnalysis::class,
                 'single' => fn ($id) => "rootSingleReport/{$id}",
                 'audit' => fn ($id) => "rootAuditReport/{$id}",
                 'family' => fn ($id) => "rootFamilyReport/{$id}",
+                 'summary' => fn ($id) => "RCASummary/{$id}",
             ],
             'Market demo' => [
                 'model' => MarketComplaint::class,
@@ -1202,6 +1207,7 @@ class DashboardController extends Controller
                 'single' => fn ($id) => "incident-single-report/{$id}",
                 'audit' => fn ($id) => "incident-audit-pdf/{$id}",
                 'family' => fn ($id) => "incident-family-report/{$id}",
+                
             ],
             'Non Conformance' => [
                 'model' => NonConformance::class,
@@ -1281,7 +1287,10 @@ class DashboardController extends Controller
 
                             ' . ($displayType == 'External-Audit' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Audit Response Report</a>' : '') . '
                             ' . ($displayType == 'Change-Control' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
-
+                            ' . ($displayType == 'CAPA' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
+                            ' . ($displayType == 'risk-assesment' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
+                            ' . ($displayType == 'Lab-Incident' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
+                             ' . ($displayType == 'Root-Cause-Analysis' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
                         </div>
                     </div>
                 </div>

@@ -266,10 +266,11 @@
     </style>
 
 
-    @php
-        $users = DB::table('users')->get();
-    @endphp
+   
 
+     @php
+        $users = DB::table('users')->select('id', 'name')->orderByRaw('LOWER(name) ASC')->get();
+    @endphp
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -598,6 +599,7 @@
                                                     value=" {{ Helpers::getDivisionName($data->division_id) }}/RA/{{ date('Y') }}/{{ $data->record }}">
                                             </div>
                                         </div>
+                                        
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Division Code"><b>Site/Location Code</b></label>

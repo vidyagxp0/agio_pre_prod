@@ -30,7 +30,7 @@
     </div>
 
     @php
-        $users = DB::table('users')->get();
+        $users = DB::table('users')->select('id', 'name')->orderByRaw('LOWER(name) ASC')->get();
     @endphp
 
     {{-- ======================================

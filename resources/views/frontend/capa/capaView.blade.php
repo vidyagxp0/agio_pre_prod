@@ -1,9 +1,11 @@
 @extends('frontend.layout.main')
 @section('container')
-    @php
-        $users = DB::table('users')->select('id', 'name')->get();
+   
 
+    @php
+        $users = DB::table('users')->select('id', 'name')->orderByRaw('LOWER(name) ASC')->get();
     @endphp
+    
     <style>
           
         #step-form>div {

@@ -31,6 +31,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\OpenStage;
 use App\Models\QMSDivision;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 // use App\Services\DocumentService;
 
 class CapaController extends Controller
@@ -5173,6 +5175,187 @@ $capa->closure_attachment = json_encode(array_values($files));
             return $pdf->stream('CAPA' . $id . '.pdf');
         }
     }
+
+
+
+
+     public function summery_pdf($id)
+    {
+
+        $data = Capa::find($id);
+
+        if (!$data) {
+            abort(404, 'CAPA record not found.');
+        }
+
+        $data->originator = User::where('id', $data->initiator_id)
+            ->value('name') ?? 'N/A';
+
+        $actionItems = ActionItem::where('parent_id', $data->id)
+            ->where('parent_type', 'CAPA')
+            ->orderBy('id', 'asc')
+            ->get();
+
+
+        $actionItems->transform(function ($actionItem) {
+
+            $actionItem->task_description =
+                $actionItem->short_description
+                ?? $actionItem->action_item
+                ?? $actionItem->proposed_action
+                ?? $actionItem->description
+                ?? $actionItem->task
+                ?? 'N/A';
+
+            $assignedUserId =
+                $actionItem->assign_to
+                ?? $actionItem->assigned_to
+                ?? $actionItem->assignee_id
+                ?? $actionItem->responsible_person
+                ?? null;
+
+            if ($assignedUserId) {
+                $assignedUserIds = is_array($assignedUserId)
+                    ? $assignedUserId
+                    : array_filter(explode(',', $assignedUserId));
+
+                $actionItem->assigned_to_name = User::whereIn('id', $assignedUserIds)
+                    ->pluck('name')
+                    ->implode(', ');
+            } else {
+                $actionItem->assigned_to_name = 'N/A';
+            }
+
+            $dueDate =
+                $actionItem->due_date
+                ?? $actionItem->target_completion_date
+                ?? $actionItem->completion_date
+                ?? $actionItem->target_date
+                ?? null;
+
+            $actionItem->formatted_due_date = $dueDate
+                ? Carbon::parse($dueDate)->format('d-M-Y')
+                : 'N/A';
+
+
+            $acknowledgeUserId =
+                $actionItem->acknowledge_by
+                ?? $actionItem->acknowledged_by
+                ?? $actionItem->ack_by
+                ?? null;
+
+            if (!$acknowledgeUserId && Schema::hasTable('stage_manages')) {
+
+                $query = DB::table('stage_manages');
+
+                if (Schema::hasColumn('stage_manages', 'record_id')) {
+                    $query->where('record_id', $actionItem->id);
+                } elseif (Schema::hasColumn('stage_manages', 'action_item_id')) {
+                    $query->where('action_item_id', $actionItem->id);
+                }
+
+                if (Schema::hasColumn('stage_manages', 'record_type')) {
+                    $query->whereIn('record_type', [
+                        'Action Item',
+                        'ActionItem',
+                        'Action_Item',
+                        'AI'
+                    ]);
+                }
+
+                if (Schema::hasColumn('stage_manages', 'activity_type')) {
+                    $query->where('activity_type', 'like', '%Acknowledg%');
+                } elseif (Schema::hasColumn('stage_manages', 'action')) {
+                    $query->where('action', 'like', '%Acknowledg%');
+                } elseif (Schema::hasColumn('stage_manages', 'activity')) {
+                    $query->where('activity', 'like', '%Acknowledg%');
+                }
+
+                if (Schema::hasColumn('stage_manages', 'created_at')) {
+                    $query->orderByDesc('created_at');
+                } else {
+                    $query->orderByDesc('id');
+                }
+
+                $acknowledgeActivity = $query->first();
+
+                if ($acknowledgeActivity) {
+                    $acknowledgeUserId =
+                        $acknowledgeActivity->user_id
+                        ?? $acknowledgeActivity->created_by
+                        ?? $acknowledgeActivity->updated_by
+                        ?? null;
+                }
+            }
+
+            $actionItem->acknowledge_by_name = $acknowledgeUserId
+                ? User::where('id', $acknowledgeUserId)->value('name')
+                : 'N/A';
+
+            return $actionItem;
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | PDF Generate
+        |--------------------------------------------------------------------------
+        */
+        $time = Carbon::now();
+
+        $pdf = PDF::loadView(
+            'frontend.capa.summary_pdf',
+            compact(
+                'data',
+                'actionItems',
+                'time'
+            )
+        )->setOptions([
+            'defaultFont' => 'sans-serif',
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true,
+            'isPhpEnabled' => true,
+        ]);
+
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->render();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Page Number
+        |--------------------------------------------------------------------------
+        */
+        $canvas = $pdf->getDomPDF()->getCanvas();
+
+        $canvas->page_script(function (
+            $pageNumber,
+            $pageCount,
+            $canvas,
+            $fontMetrics
+        ) {
+            $text = $pageNumber . ' of ' . $pageCount;
+            $font = $fontMetrics->getFont('sans-serif');
+            $size = 9;
+
+            $textWidth = $fontMetrics->getTextWidth(
+                $text,
+                $font,
+                $size
+            );
+
+            $canvas->text(
+                $canvas->get_width() - $textWidth - 35,
+                $canvas->get_height() - 25,
+                $text,
+                $font,
+                $size
+            );
+        });
+
+        return $pdf->stream(
+            'Capa_Action_Item_Summary_' . $data->id . '.pdf'
+        );
+    }
+
 
     public static function auditReport($id)
     {

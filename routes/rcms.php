@@ -245,9 +245,13 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('capaSingleReport/{id}', [CapaController::class, 'singleReport'])->name('capaSingleReport');
             Route::get('capaFamilyReport/{id}', [CapaController::class, 'familyReport'])->name('capaFamilyReport');
             Route::get('capaAuditReport/{id}', [CapaController::class, 'auditReport'])->name('capaAuditReport');
+            Route::get('Capasummary/{id}', [CapaController::class, 'summery_pdf']);
             Route::get('riskSingleReport/{id}', [RiskManagementController::class, 'singleReport'])->name('riskSingleReport');
             Route::get('riskAuditReport/{id}', [RiskManagementController::class, 'auditReport'])->name('riskAuditReport');
+              Route::get('Risksummary/{id}', [RiskManagementController::class, 'summery_pdf']);
+          
             Route::get('rootSingleReport/{id}', [RootCauseController::class, 'singleReport'])->name('rootSingleReport');
+                Route::get('RCASummary/{id}', [RootCauseController::class, 'summery_pdf']);
             Route::get('riskManagementfamily/{id}', [RiskManagementController::class, 'effectiveFamilyReport'])->name('riskManagementfamily');
             Route::get('rootFamilyReport/{id}', [RootCauseController::class, 'familyReport'])->name('rootFamilyReport');
             Route::get('rootAuditReport/{id}', [RootCauseController::class, 'auditReport'])->name('rootAuditReport');
@@ -516,6 +520,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('send-post-implementation/{id}', [CCController::class, 'sentoPostImplementation'])->name('send-post-implementation');
             Route::post('moreinfoState_actionitem/{id}', [ActionItemController::class, 'actionmoreinfo']);
             Route::post('StageChangeLabIncidentchange/{id}', [LabIncidentController::class, 'StageChangeLabIncidentchange'])->name('StageChangeLabIncidentchange');
+             Route::get('Labsummary/{id}', [LabIncidentController::class, 'summery_pdf']);
             Route::post('traning_required/{id}', [CCController::class, 'TrainingRequired'])->name('traning_required');
             Route::get('/get-training-details/{id}', [CCController::class, 'DocumentsDetails']);
 
