@@ -40,6 +40,7 @@ class PrintControlController extends Controller
      */
     public function store(Request $request)
     {
+        
         $printcontrol = new PrintControl();
         $printcontrol->role_id = $request->role_id;
         $printcontrol->daily = $request->daily;

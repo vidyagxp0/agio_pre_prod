@@ -133,14 +133,6 @@
 
                             @endif
 
-                            <!--<form-->
-                            <!--    action="{{ route('documents.destroy', $doc->id) }}"-->
-                            <!--    method="post">-->
-                            <!--    @csrf-->
-                            <!--    @method('DELETE')-->
-                            <!--    <button type="submit">Delete</button>-->
-                            <!--</form>-->
-
                         </div>
                     </div>
                 </td>

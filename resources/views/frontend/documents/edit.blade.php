@@ -3632,7 +3632,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -4703,7 +4703,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -5541,7 +5541,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -6351,7 +6351,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -7173,7 +7173,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -7278,7 +7278,7 @@
                                                 <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                     </a>
                                                     <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                         <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -7387,7 +7387,7 @@
                                             <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                 <b>{{ $file }}</b>
                                                 <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                 </a>
                                                 <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                     <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -7497,7 +7497,7 @@
                                                 <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                     </a>
                                                     <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                         <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -7603,7 +7603,7 @@
                                                             <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                                 <b>{{ $file }}</b>
                                                                 <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                                 </a>
                                                                 <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                                     <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -7714,7 +7714,7 @@
                                                             <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                                 <b>{{ $file }}</b>
                                                                 <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                                 </a>
                                                                 <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                                     <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -7824,7 +7824,7 @@
                                                             <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                                 <b>{{ $file }}</b>
                                                                 <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                                 </a>
                                                                 <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                                     <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -7930,7 +7930,7 @@
                                                             <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                                 <b>{{ $file }}</b>
                                                                 <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                                 </a>
                                                                 <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                                     <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -8036,7 +8036,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -8141,7 +8141,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -8243,7 +8243,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -8349,7 +8349,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -8459,7 +8459,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -8569,7 +8569,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -8679,7 +8679,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -8789,7 +8789,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -8900,7 +8900,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -9010,7 +9010,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -9119,7 +9119,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -9229,7 +9229,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -9341,7 +9341,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -9452,7 +9452,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -9562,7 +9562,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -9674,7 +9674,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -9784,7 +9784,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -9894,7 +9894,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -10836,7 +10836,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -10935,7 +10935,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -11041,7 +11041,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -11148,7 +11148,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -11254,7 +11254,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -11368,7 +11368,7 @@
                                                         <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                                 <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -11474,7 +11474,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -11578,7 +11578,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -11686,7 +11686,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -12029,7 +12029,7 @@
                                                         <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                                 <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -12139,7 +12139,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -12249,7 +12249,7 @@
                                                 <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                     </a>
                                                     <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                         <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -12357,7 +12357,7 @@
                                                 <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                     </a>
                                                     <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                         <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -12466,7 +12466,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                             <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -12574,7 +12574,7 @@
                                                 <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                     </a>
                                                     <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                         <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -12682,7 +12682,7 @@
                                                 <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                     </a>
                                                     <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                         <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -12789,7 +12789,7 @@
                                                 <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                     </a>
                                                     <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                         <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -12897,7 +12897,7 @@
                                                 <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                     </a>
                                                     <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                         <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -13005,7 +13005,7 @@
                                                 <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                     </a>
                                                     <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                         <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -13113,7 +13113,7 @@
                                                 <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                     </a>
                                                     <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                         <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -13221,7 +13221,7 @@
                                                 <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                     </a>
                                                     <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                         <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -13324,7 +13324,7 @@
                                                         <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                                 <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -13430,7 +13430,7 @@
                                                         <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                                 <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -13532,7 +13532,7 @@
                                                         <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                                 <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -13634,7 +13634,7 @@
                                                         <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                                 <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -14560,184 +14560,572 @@
 
                 <div id="distribution-retrieval" class="tabcontent">
                     <div class="orig-head">
-                        Distribution & Retrieval
+                        Distribution, Retrieval & Destruction
                     </div>
 
                     <div class="input-fields">
                         <div class="group-input">
-                            <label for="distriution_retrieval">
-                                Distribution & Retrieval
-                                <button type="button" name="agenda"
-                                    onclick="addDistributionRetrieval1('distribution-retrieval-grid')">+</button>
-                            </label>
-                            <div class="table-responsive retrieve-table">
-                                <table class="table table-bordered" id="distribution-retrieval-grid">
+
+                            {{-- Validation / service error --}}
+                            @if ($errors->has('distribution'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('distribution') }}
+                                </div>
+                            @endif
+
+                            <div class="table-responsive">
+                                <table
+                                    class="table table-bordered"
+                                    id="distribution-retrieval-grid">
                                     <thead>
                                         <tr>
-                                            <th>Row </th>
-                                            <th class="copy-name">Document Title</th>
-                                            <th class="copy-name">Document Number</th>
-                                            <th class="copy-name">Document Printed By</th>
-                                            <th class="copy-name">Document Printed on</th>
-                                            <th class="copy-num">Number of Print Copies</th>
-                                            <th class="copy-name">Issuance Date</th>
-                                            <th class="copy-name">Issued To </th>
-                                            <th class="copy-long">Department/Location</th>
-                                            <th class="copy-num">Number of Issued Copies</th>
-                                            <th class="copy-long">Reason for Issuance</th>
-                                            <th class="copy-name">Retrieval Date</th>
-                                            <th class="copy-name">Retrieved By</th>
-                                            <th class="copy-name">Retrieved Person Department</th>
-                                            <th class="copy-num">Number of Retrieved Copies</th>
-                                            <th class="copy-long">Reason for Retrieval</th>
-                                            <th class="copy-long">Remarks</th>
-                                            <th class="copy-name">Document Distributed By</th>
-                                            <th class="copy-name">Document Distributed On</th>
-                                            <th class="copy-long">Action</th>
+                                            <th rowspan="2">Sr. No.</th>
 
+                                            <th colspan="7">
+                                                Distribution
+                                            </th>
+
+                                            <th colspan="4">
+                                                Retrieval
+                                            </th>
+
+                                            <th colspan="4">
+                                                Destruction
+                                            </th>
                                         </tr>
-                                    </thead>
-                           
-
-                                    <tbody>
-                                        @php
-                                        $doc_number = '';
-                                        $doc_number = Helpers::getDivisionName($document->division_id)
-                                        . '/' . ($document->document_type_name ? $temp . ' /' : '')
-                                        . $document->created_at->format('Y')
-                                        . '/000' . $document->id . 'R1.0';
-                                        @endphp
-
-                                        @foreach ($PH as $grid)
-
 
                                         <tr>
-                                            <td>
-                                                {{ $loop->index + 1 }}
-                                            </td>
-                                            <td><input type="text" value="{{ $document->document_name }}" name="document_name"></td>
-
-                                            <td><input type="text" name="document_number" value="{{ $doc_number }}">
-                                            </td>
-                                            <!-- <td><input type="text" value="{{ $grid->user_id }}" name="user_id">
-                                        </td> -->
-                                            <td><input type="text" value="{{ Helpers::getInitiatorName($grid->user_id) }}" name="user_id">
-                                            </td>
-
-                                            <!-- <td><input type="text" value="{{ Helpers::getdateFormat($grid->created_at) }}" name="distribution[{{ $loop->index }}][Helpers::getdateFormat($grid->created_at)]">
-                                        </td> -->
-                                            <td><input type="text" value="{{ Helpers::getdateFormat($grid->created_at) }}" name="created_at"></td>
-
-                                            <td><input type="text" value="{{ $grid->issue_copies }}" name="issue_copies">
-                                            </td>
-                                            <td>
-                                                <div class="group-input new-date-document_distribution_grid-field mb-0">
-                                                    <div class="input-date">
-                                                        <div class="calenderauditee">
-                                                            <input type="text" id="date' + serialNumber + '" readonly placeholder="DD-MM-YYYY" />
-                                                            <input type="date" name="date" class="hide-input" style="position: absolute; top: 0; left: 0; opacity: 0;" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" oninput="handleDateInput(this, 'date' + serialNumber + ')" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            {{-- Distribution --}}
+                                            <th>Doc. Title</th>
+                                            <th>Doc. No.</th>
+                                            <th>Issued By</th>
+                                            <th>Issued Date</th>
+                                            <th>No. of Copies Issued</th>
+                                            <th>Issued To</th>
+                                            <th>Issued Reason</th>
 
 
-                                            <td>
-                                                <select id="select-state" placeholder="Select..." name="issuance_to">
-                                                    <option value='0' {{ $grid->issuance_to == '0' ? 'selected' : '' }}>-- Select --</option>
-                                                    @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}" {{ $grid->issuance_to == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select id="select-state" placeholder="Select..." name="department" class="form-control" style="width: 95%; position: relative; left: 13px;">
-                                                    <option value='0' {{ $grid->department == '0' ? 'selected' : '' }}>-- Select --</option>
-                                                    @php
-                                                    $staticDepartments = [
-                                                    1 => 'Calibration Lab',
-                                                    2 => 'Engineering',
-                                                    3 => 'Facilities',
-                                                    4 => 'LAB',
-                                                    5 => 'Labeling',
-                                                    6 => 'Manufacturing',
-                                                    7 => 'Quality Assurance',
-                                                    8 => 'Quality Control',
-                                                    9 => 'Regulatory Affairs',
-                                                    10 => 'Security',
-                                                    11 => 'Training',
-                                                    12 => 'IT',
-                                                    13 => 'Application Engineering',
-                                                    14 => 'Trading',
-                                                    15 => 'Research',
-                                                    16 => 'Sales',
-                                                    17 => 'Finance',
-                                                    18 => 'System',
-                                                    19 => 'Administrative',
-                                                    20 => 'M&A',
-                                                    21 => 'R&D',
-                                                    22 => 'Human Resources',
-                                                    23 => 'Banking',
-                                                    24 => 'Marketing'
-                                                    ];
-                                                    @endphp
-                                                    @foreach ($staticDepartments as $key => $value)
-                                                    <option value='{{ $key }}' {{ $grid->department == $key ? 'selected' : '' }}>
-                                                        {{ $value }}
-                                                    </option>
-                                                    @endforeach
-                                                </select>
+                                            {{-- Retrieval --}}
+                                            <th>No. of Copies Retrieved</th>
+                                            <th>Retrieved By</th>
+                                            <th>Retrieve Date</th>
+                                            <th>Retrieve Reason</th>
 
-                                            </td>
-                                            <td><input type="text" name="issued_copies" value="{{ $grid->issued_copies }}">
-                                            </td>
-                                            <td><input type="text" name="print_reason" value="{{ $grid->print_reason }}">
-                                            </td>
-                                            <td>
-                                                <div class="group-input new-date-data-field mb-0">
-                                                    <div class="input-date ">
-                                                        <div class="calenderauditee">
-                                                            <input type="text" id="retrieval_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ $grid->retrieval_date }}" />
-                                                            <input type="date" name="distribution[{{ $loop->index }}][retrieval_date]" class="hide-input" oninput="handleDateInput(this, `retrieval_date' + serialNumber +'`)" value="{{ $grid->retrieval_date }}" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <select id="select-state" placeholder="Select..." name="distribution[{{ $loop->index }}][retrieval_by]">
-                                                    <option value="" {{ $grid->retrieval_by == '' ? 'selected' : '' }}>Select a value</option>
-                                                    @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}" {{ $grid->retrieval_by == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select id="select-state" placeholder="Select..." name="department" class="form-control" style="width: 95%; position: relative; left: 13px;">
-                                                    <option value='0'>-- Select --</option>
-                                                    @foreach($departments as $department)
-                                                    <option value="{{ $department->id }}">{{ $department->full_name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                            <td><input type="number" name="distribution[{{ $loop->index }}][retrieved_copies]" value="{{ $grid->retrieved_copies }}">
-                                            </td>
-                                            <td><input type="text" name="distribution[{{ $loop->index }}][retrieved_reason]" value="{{ $grid->retrieved_reason }}">
-                                            </td>
-                                            <td><input type="text" name="distribution[{{ $loop->index }}][remark]" value="{{ $grid->remark }}">
-                                            </td>
-                                            <td>
-                                                <input type="text" value="{{ Helpers::getInitiatorName($grid->user_id) }}" name="user_id">
-                                                {{-- <input type="text" name="distribution[{{ $loop->index }}][document_distributed_by]" value="{{ $grid->document_distributed_by }}"> --}}
-                                            </td>
-                                            <td>
-                                                <input type="text" value="{{ Helpers::getdateFormat($grid->created_at) }}" name="created_at">
-                                                {{-- <input type="text" name="distribution[{{ $loop->index }}][document_distributed_on]" value="{{ $grid->document_distributed_on }}"> --}}
-                                            </td>
-                                            <td>
-                                                <button type="button" onclick="removeRow(this)">Remove</button>
-                                            </td>
+                                            {{-- Destruction --}}
+                                            <th>Destructed By</th>
+                                            <th>Destruction Date</th>
+                                            <th>No. of Copies Destructed</th>
+                                            <th>Reason</th>
                                         </tr>
-                                        @endforeach
+                                    </thead>
+
+                                    <tbody>
+
+                                        @forelse ($PH as $index => $grid)
+
+                                            @php
+                                                /*
+                                                |--------------------------------------------------------------------------
+                                                | Document number
+                                                |--------------------------------------------------------------------------
+                                                */
+
+                                                $documentNumber =
+                                                    $grid->document_number
+                                                    ?? (
+                                                        Helpers::getDivisionName(
+                                                            $document->division_id
+                                                        )
+                                                        . '/' .
+                                                        (
+                                                            $document->document_type_name
+                                                            ?? $document->sop_type_short
+                                                            ?? 'DOC'
+                                                        )
+                                                        . '/' .
+                                                        optional(
+                                                            $document->created_at
+                                                        )->format('Y')
+                                                        . '/' .
+                                                        str_pad(
+                                                            $document->id,
+                                                            4,
+                                                            '0',
+                                                            STR_PAD_LEFT
+                                                        )
+                                                        . 'R' .
+                                                        (
+                                                            $document->major
+                                                            ?? '1.0'
+                                                        )
+                                                    );
+
+                                                /*
+                                                |--------------------------------------------------------------------------
+                                                | Issued date
+                                                |--------------------------------------------------------------------------
+                                                */
+
+                                                $issuedDate = null;
+
+                                                $storedIssuedDate =
+                                                    $grid->issuance_date
+                                                    ?? $grid->document_printed_on
+                                                    ?? $grid->issued_date
+                                                    ?? $grid->date
+                                                    ?? null;
+
+                                                if (!empty($storedIssuedDate)) {
+                                                    try {
+                                                        $issuedDate =
+                                                            \Carbon\Carbon::parse(
+                                                                $storedIssuedDate
+                                                            );
+                                                    } catch (\Throwable $e) {
+                                                        $issuedDate = null;
+                                                    }
+                                                }
+
+                                                /*
+                                                |--------------------------------------------------------------------------
+                                                | Retrieval date
+                                                |--------------------------------------------------------------------------
+                                                */
+
+                                                $retrievalDate = null;
+
+                                                if (!empty($grid->retrieval_date)) {
+                                                    try {
+                                                        $retrievalDate =
+                                                            \Carbon\Carbon::parse(
+                                                                $grid->retrieval_date
+                                                            );
+                                                    } catch (\Throwable $e) {
+                                                        $retrievalDate = null;
+                                                    }
+                                                }
+
+                                                /*
+                                                |--------------------------------------------------------------------------
+                                                | Destruction date
+                                                |--------------------------------------------------------------------------
+                                                */
+
+                                                $destructionDate = null;
+
+                                                if (!empty($grid->destruction_date)) {
+                                                    try {
+                                                        $destructionDate =
+                                                            \Carbon\Carbon::parse(
+                                                                $grid->destruction_date
+                                                            );
+                                                    } catch (\Throwable $e) {
+                                                        $destructionDate = null;
+                                                    }
+                                                }
+
+                                                /*
+                                                |--------------------------------------------------------------------------
+                                                | Issued information
+                                                |--------------------------------------------------------------------------
+                                                */
+
+                                                $issuedById =
+                                                    $grid->document_printed_by
+                                                    ?? $grid->user_id
+                                                    ?? null;
+
+                                                $issuedToId =
+                                                    $grid->issuance_to
+                                                    ?? null;
+
+                                                $issuedCopies =
+                                                    $grid->issued_copies
+                                                    ?? $grid->document_printed_copies
+                                                    ?? $grid->issue_copies
+                                                    ?? 0;
+
+                                                $print_reason =
+                                                    $grid->print_reason
+                                                    ?? null;
+
+                                                $retrievedCopies =
+                                                    old(
+                                                        "distribution.$index.retrieved_copies",
+                                                        $grid->retrieved_copies ?? ''
+                                                    );
+
+                                                $destructedCopies =
+                                                    old(
+                                                        "distribution.$index.destructed_copies",
+                                                        $grid->destructed_copies ?? ''
+                                                    );
+                                            @endphp
+
+                                            <tr>
+
+                                                {{-- ================================================= --}}
+                                                {{-- Hidden IDs --}}
+                                                {{-- ================================================= --}}
+
+                                                <td class="text-center">
+
+                                                    {{ $index + 1 }}
+
+                                                    <input
+                                                        type="hidden"
+                                                        name="distribution[{{ $index }}][history_type]"
+                                                        value="{{ $grid->history_type }}"
+                                                    >
+
+                                                    <input
+                                                        type="hidden"
+                                                        name="distribution[{{ $index }}][history_id]"
+                                                        value="{{ $grid->history_id }}"
+                                                    >
+
+                                                    <input
+                                                        type="hidden"
+                                                        name="distribution[{{ $index }}][document_id]"
+                                                        value="{{ $document->id }}"
+                                                    >
+                                                    <input
+                                                        type="hidden"
+                                                        name="distribution[{{ $index }}][issued_reason]"
+                                                        value="{{ $grid->issued_reason ?? '' }}"
+                                                    >
+
+                                                    <input
+                                                        type="hidden"
+                                                        name="distribution[{{ $index }}][location]"
+                                                        value="{{ $grid->location ?? $grid->department ?? '' }}"
+                                                    >
+
+                                                </td>
+
+                                                {{-- ================================================= --}}
+                                                {{-- Distribution section --}}
+                                                {{-- ================================================= --}}
+
+                                                {{-- Document title --}}
+                                                <td>
+                                                    <textarea
+                                                        name="distribution[{{ $index }}][document_title]"
+                                                        class="grid-readonly-field"
+                                                        readonly>{{ $document->document_name }}</textarea>
+                                                </td>
+
+                                                {{-- Document number --}}
+                                                <td>
+                                                    <textarea
+                                                        name="distribution[{{ $index }}][document_number]"
+                                                        class="grid-readonly-field"
+                                                        readonly>{{ $documentNumber }}</textarea>
+                                                </td>
+
+                                                {{-- Issued by --}}
+                                                <td>
+
+                                                    <input
+                                                        type="text"
+                                                        value="{{ !empty($issuedById)
+                                                            ? Helpers::getInitiatorName($issuedById)
+                                                            : '' }}"
+                                                        class="grid-readonly-field"
+                                                        readonly>
+
+                                                    <input
+                                                        type="hidden"
+                                                        name="distribution[{{ $index }}][issued_by]"
+                                                        value="{{ $issuedById }}">
+
+                                                </td>
+
+                                                {{-- Issued date --}}
+                                                <td>
+
+                                                    <input
+                                                        type="text"
+                                                        value="{{ $issuedDate
+                                                            ? $issuedDate->format('d-M-Y')
+                                                            : '' }}"
+                                                        class="grid-readonly-field"
+                                                        readonly>
+                                                    <input
+                                                        type="hidden"
+                                                        name="distribution[{{ $index }}][issued_date]"
+                                                        value="{{ $issuedDate
+                                                            ? $issuedDate->format('Y-m-d')
+                                                            : '' }}">
+
+                                                </td>
+
+                                                {{-- Issued copies --}}
+                                                <td>
+
+                                                    <input
+                                                        type="number"
+                                                        name="distribution[{{ $index }}][issued_copies]"
+                                                        value="{{ $issuedCopies }}" class="grid-readonly-field text-center"  min="0" readonly>
+
+                                                </td>
+
+                                                {{-- Issued to --}}
+                                                <td>
+
+                                                    <input
+                                                        type="text"
+                                                        value="{{ !empty($issuedToId)
+                                                            ? Helpers::getInitiatorName($issuedToId)
+                                                            : '' }}"
+                                                        class="grid-readonly-field"
+                                                        readonly>
+
+                                                    <input
+                                                        type="hidden"
+                                                        name="distribution[{{ $index }}][issued_to]"
+                                                        value="{{ $issuedToId }}">
+
+                                                </td>
+                    
+
+                                                <td>
+                                                    <textarea
+                                                        name="distribution[{{ $index }}][print_reason]"
+                                                        class="grid-readonly-field"
+                                                        readonly>{{ $print_reason }}</textarea>
+                                                </td>
+
+                                    
+
+                                                {{-- ================================================= --}}
+                                                {{-- Retrieval section --}}
+                                                {{-- ================================================= --}}
+
+                                                {{-- Retrieved copies --}}
+                                                <td>
+
+                                                    <input
+                                                        type="number"
+                                                        id="retrieved_copies_{{ $index }}"
+                                                        name="distribution[{{ $index }}][retrieved_copies]"
+                                                        value="{{ $retrievedCopies }}" min="0" max="{{ $issuedCopies }}" class="form-control grid-editable-field" data-issued-copies="{{ $issuedCopies }}" oninput="validateGridCopies({{ $index }})">
+                                                    <small
+                                                        id="retrieved_error_{{ $index }}"
+                                                        class="grid-error-message"
+                                                    ></small>
+
+                                                </td>
+
+                                                {{-- Retrieved by --}}
+                                                <td>
+
+                                                    <select
+                                                        name="distribution[{{ $index }}][retrieval_by]"
+                                                        class="form-control grid-editable-field"
+                                                    >
+                                                        <option value="">
+                                                            -- Select --
+                                                        </option>
+
+                                                        @foreach ($users as $user)
+                                                            <option
+                                                                value="{{ $user->id }}"
+                                                                {{
+                                                                    old(
+                                                                        "distribution.$index.retrieval_by",
+                                                                        $grid->retrieval_by ?? ''
+                                                                    ) == $user->id
+                                                                        ? 'selected'
+                                                                        : ''
+                                                                }}
+                                                            >
+                                                                {{ $user->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+
+                                                </td>
+
+                                                {{-- Retrieval date --}}
+                                                <td>
+
+                                                    <div class="grid-date-wrapper">
+
+                                                        <input
+                                                            type="text"
+                                                            id="retrieval_date_display_{{ $index }}"
+                                                            class="form-control grid-editable-field"
+                                                            value="{{ $retrievalDate
+                                                                ? $retrievalDate->format('d-M-Y')
+                                                                : '' }}"
+                                                            placeholder="DD-MMM-YYYY"
+                                                            readonly
+                                                            onclick="openGridDatePicker(
+                                                                'retrieval_date_{{ $index }}'
+                                                            )"
+                                                        >
+
+                                                        <input
+                                                            type="date"
+                                                            id="retrieval_date_{{ $index }}"
+                                                            name="distribution[{{ $index }}][retrieval_date]"
+                                                            value="{{ old(
+                                                                "distribution.$index.retrieval_date",
+                                                                $retrievalDate
+                                                                    ? $retrievalDate->format('Y-m-d')
+                                                                    : '' ) }}"
+                                                            class="grid-hidden-date"
+                                                            onchange="handleGridDate(
+                                                                this,
+                                                                'retrieval_date_display_{{ $index }}'
+                                                            )"
+                                                        >
+
+                                                    </div>
+
+                                                </td>
+
+                                                {{-- Retrieval reason --}}
+                                                <td>
+
+                                                    <textarea
+                                                        name="distribution[{{ $index }}][retrieved_reason]"
+                                                        class="form-control grid-editable-textarea"
+                                                        placeholder="Enter retrieval reason"
+                                                    >{{ old(
+                                                        "distribution.$index.retrieved_reason",
+                                                        $grid->retrieved_reason ?? ''
+                                                    ) }}</textarea>
+
+                                                </td>
+
+                                                {{-- ================================================= --}}
+                                                {{-- Destruction section --}}
+                                                {{-- ================================================= --}}
+
+                                                {{-- Destructed by --}}
+                                                <td>
+
+                                                    <select
+                                                        name="distribution[{{ $index }}][destructed_by]"
+                                                        class="form-control grid-editable-field"
+                                                    >
+                                                        <option value="">
+                                                            -- Select --
+                                                        </option>
+
+                                                        @foreach ($users as $user)
+                                                            <option
+                                                                value="{{ $user->id }}"
+                                                                {{
+                                                                    old(
+                                                                        "distribution.$index.destructed_by",
+                                                                        $grid->destructed_by ?? ''
+                                                                    ) == $user->id
+                                                                        ? 'selected'
+                                                                        : ''
+                                                                }}
+                                                            >
+                                                                {{ $user->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+
+                                                </td>
+
+                                                {{-- Destruction date --}}
+                                                <td>
+
+                                                    <div class="grid-date-wrapper">
+
+                                                        <input
+                                                            type="text"
+                                                            id="destruction_date_display_{{ $index }}"
+                                                            class="form-control grid-editable-field"
+                                                            value="{{ $destructionDate
+                                                                ? $destructionDate->format('d-M-Y')
+                                                                : '' }}"
+                                                            placeholder="DD-MMM-YYYY"
+                                                            readonly
+                                                            onclick="openGridDatePicker(
+                                                                'destruction_date_{{ $index }}'
+                                                            )"
+                                                        >
+
+                                                        <input
+                                                            type="date"
+                                                            id="destruction_date_{{ $index }}"
+                                                            name="distribution[{{ $index }}][destruction_date]"
+                                                            value="{{ old(
+                                                                "distribution.$index.destruction_date",
+                                                                $destructionDate
+                                                                    ? $destructionDate->format('Y-m-d')
+                                                                    : ''
+                                                            ) }}"
+                                                            class="grid-hidden-date"
+                                                            onchange="handleGridDate(
+                                                                this,
+                                                                'destruction_date_display_{{ $index }}'
+                                                            )"
+                                                        >
+
+                                                    </div>
+
+                                                </td>
+
+                                                {{-- Destructed copies --}}
+                                                <td>
+
+                                                    <input
+                                                        type="number"
+                                                        id="destructed_copies_{{ $index }}"
+                                                        name="distribution[{{ $index }}][destructed_copies]"
+                                                        value="{{ $destructedCopies }}"
+                                                        min="0"
+                                                        max="{{ $retrievedCopies !== ''
+                                                            ? $retrievedCopies
+                                                            : $issuedCopies }}"
+                                                        class="form-control grid-editable-field"
+                                                        oninput="validateGridCopies({{ $index }})"
+                                                    >
+
+                                                    <small
+                                                        id="destructed_error_{{ $index }}"
+                                                        class="grid-error-message"
+                                                    ></small>
+
+                                                </td>
+
+                                                {{-- Destruction reason --}}
+                                                <td>
+
+                                                    <textarea
+                                                        name="distribution[{{ $index }}][destruction_reason]"
+                                                        class="form-control grid-editable-textarea"
+                                                        placeholder="Enter destruction reason"
+                                                    >{{ old(
+                                                        "distribution.$index.destruction_reason",
+                                                        $grid->destruction_reason ?? ''
+                                                    ) }}</textarea>
+
+                                                </td>
+
+                                            </tr>
+
+                                        @empty
+
+                                            <tr>
+                                                <td
+                                                    colspan="15"
+                                                    class="text-center"
+                                                >
+                                                    No distribution record found.
+                                                </td>
+                                            </tr>
+
+                                        @endforelse
+
                                     </tbody>
                                 </table>
                             </div>
@@ -14745,458 +15133,332 @@
                     </div>
 
 
-                    {{-- <script>
-                        function addDistributionRetrieval1(tableId) {
-                            let table = document.getElementById(tableId);
-                            let currentRowCount = table.rows.length; // Existing rows count including the header
-                            let newRow = table.insertRow(currentRowCount); // Insert new row at the end
-
-                            // Mock data for departments and users if not available
-                            let departmentsData = @json(Helpers::getDmsDepartments()); // Use PHP helper
-
-                            newRow.setAttribute("id", "row" + currentRowCount);
-
-                            // Document details
-                            let sopTypeShort = "{{ $document->sop_type_short }}";
-                            let departmentId = "{{ $document->department_id }}";
-                            let documentId = "{{ str_pad($document->id, 4, '0', STR_PAD_LEFT) }}";
-                            let major = "{{ $document->major }}";
-
-                            // Create cells for the new row
-                            let cell1 = newRow.insertCell(0);
-                            cell1.innerHTML = currentRowCount;
-
-                            let cell2 = newRow.insertCell(1);
-                            cell2.innerHTML = `<textarea style="overflow: hidden; border: none; width: 10rem;"
-                            name="distribution[${currentRowCount}][document_title]" readonly>{{ $document->document_name }}</textarea>`;
-
-                            let cell3 = newRow.insertCell(2);
-                            cell3.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;"
-                            name="distribution[${currentRowCount}][document_number]" readonly>
-                            ${sopTypeShort}/${departmentId}/${documentId}/R${major}</textarea>`;
-
-                            let cell4 = newRow.insertCell(3);
-                            cell4.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;"
-                            name="distribution[${currentRowCount}][document_printed_by]"></textarea>`;
-
-                            let cell5 = newRow.insertCell(4);
-                            cell5.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;"
-                            name="distribution[${currentRowCount}][document_printed_on]"></textarea>`;
-
-                            let cell6 = newRow.insertCell(5);
-                            cell6.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;"
-                            name="distribution[${currentRowCount}][document_printed_copies]"></textarea>`;
-
-                            let cell7 = newRow.insertCell(6);
-                            cell7.innerHTML = '<div class="group-input new-date-data-field mb-0"> <div class="input-date "><div class="calenderauditee"><input style="width: 6rem;" type="text" id="issuance_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input style="width:4rem" type="date" name="distribution['+ currentRowCount +'][issuance_date]" class="hide-input" oninput="handleDateInput(this, `issuance_date' + currentRowCount +'`)" /></div></div></div>';
-
-                            let cell8 = newRow.insertCell(7);
-                            cell8.innerHTML = `<select style="width: 6rem;" name="distribution[${currentRowCount}][issuance_to]">
-                            <option value='0'>-- Select --</option>
-                            ${users.map(user => `<option value="${user.id}">${user.name}</option>`).join('')}
-                            </select>`;
-
-                            let cell9 = newRow.insertCell(8);
-                            cell9.innerHTML = `<select style="width: 6rem;" name="distribution[${currentRowCount}][location]">
-                            <option value="0">-- Select --</option>
-                            ${Object.entries(departmentsData).map(([code, name]) =>
-                                `<option value="${code}">${name}</option>`).join('')}
-                            </select>`;
-
-                            let cell10 = newRow.insertCell(9);
-                            cell10.innerHTML = `<textarea style="overflow: hidden;
-                            border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][issued_copies]"></textarea>`;
-
-                            let cell11 = newRow.insertCell(10);
-                            cell11.innerHTML = `<textarea style="overflow: hidden;
-                            border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][issued_reason]"></textarea>`;
-
-                            let cell12 = newRow.insertCell(11);
-                            cell12.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input style=" width: 6rem;" type="text" id="retrieval_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input style=" width: 4rem;" type="date" name="distribution['+currentRowCount+'][retrieval_date]" class="hide-input" oninput="handleDateInput(this, `retrieval_date' + currentRowCount +'`)" /></div></div></div>';
-
-                            let cell13 = newRow.insertCell(12);
-                            cell13.innerHTML = `<select style="
-                            width: 6rem;" id="select-state" placeholder="Select..."
-                                name="distribution[${currentRowCount}][retrieval_by]">
-                                <option value='0'>-- Select --</option>
-                                ${users.map(user => `<option value="${user.id}">${user.name}</option>`).join('')}
-                            </select>`;
-
-                            let cell14 = newRow.insertCell(13);
-                            cell14.innerHTML = `
-                                <select style="width: 6rem;" id="select-state" placeholder="Select..."
-                                    name="distribution[${currentRowCount}][retrieved_department]">
-                                    <option value="0" ${savedRetrival === "0" ? "selected" : ""}>-- Select --</option>
-                                    ${Object.entries(departmentsData).map(([code, name]) =>
-                                        `<option value="${code}" ${savedRetrival === code ? "selected" : ""}>${name}</option>`
-                                    ).join('')}
-                                </select>
-                            `;
-
-                            let cell15 = newRow.insertCell(14);
-                            cell15.innerHTML = `<textarea style="overflow: hidden;
-                            border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][retrieved_copies]"></textarea>`;
-
-                            let cell16 = newRow.insertCell(15);
-                            cell16.innerHTML = `<textarea style="overflow: hidden;
-                            border: none; width: 6rem;" type="text" name="distribution[${currentRowCount}][retrieved_reason]"></textarea>`;
-
-                            let cell17 = newRow.insertCell(16);
-                            cell17.innerHTML = `<textarea style="overflow: hidden; border: none; width: 6rem;"
-                            name="distribution[${currentRowCount}][remark]"></textarea>`;
-
-                            let cell18 = newRow.insertCell(17);
-                            cell18.innerHTML = `<button class='removeTrainRow' onclick="removeRow(this)">Remove</button>`;
-                        }
-
-                        function removeRow(button) {
-                            let row = button.parentNode.parentNode;
-                            row.parentNode.removeChild(row);
-                        }
-                    </script> --}}
-
                     <script>
-                        function addDistributionRetrieval1(tableId) {
-                            let table = document.getElementById(tableId);
-                            let currentRowCount = table.rows.length; // Including the header
-                            let newRow = table.insertRow(currentRowCount); // Insert a new row
+                        /**
+                        * Hidden HTML date input open karega.
+                        */
+                        function openGridDatePicker(inputId) {
+                            const dateInput = document.getElementById(inputId);
 
-                            // Fetch PHP data and escape properly
-                            let departmentsData = @json(Helpers::getDmsDepartments());
-                            let users = @json($users); // Assuming you pass users as a variable
+                            if (!dateInput) {
+                                return;
+                            }
 
-                            // Document details
-                            let sopTypeShort = "{{ $document->sop_type_short }}";
-                            let departmentId = "{{ $document->department_id }}";
-                            let documentId = "{{ str_pad($document->id, 4, '0', STR_PAD_LEFT) }}";
-                            let major = "{{ $document->major }}";
-                            let documentName = "{{ $document->document_name }}";
+                            if (typeof dateInput.showPicker === 'function') {
+                                dateInput.showPicker();
+                                return;
+                            }
 
-                            newRow.setAttribute("id", "row" + currentRowCount);
-
-                            // Create and populate cells
-                            newRow.innerHTML = `
-                                <td>${currentRowCount}</td>
-                                <td><textarea style="overflow: hidden; border: none; width: 10rem;"
-                                    name="distribution[${currentRowCount}][document_title]" readonly>${documentName}</textarea></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
-                                    name="distribution[${currentRowCount}][document_number]" readonly>${sopTypeShort}/${departmentId}/${documentId}/R${major}</textarea></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
-                                    name="distribution[${currentRowCount}][document_printed_by]"></textarea></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
-                                    name="distribution[${currentRowCount}][document_printed_on]"></textarea></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
-                                    name="distribution[${currentRowCount}][document_printed_copies]"></textarea></td>
-                                <td>
-                                    <div class="group-input new-date-data-field mb-0">
-                                        <div class="input-date">
-                                            <div class="calenderauditee">
-                                                <input style="width: 6rem;" type="text" id="issuance_date${currentRowCount}" readonly placeholder="DD-MMM-YYYY" />
-                                                <input style="width:4rem" type="date" name="distribution[${currentRowCount}][issuance_date]"
-                                                    class="hide-input" oninput="handleDateInput(this, 'issuance_date${currentRowCount}')">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <select style="width: 6rem;" name="distribution[${currentRowCount}][issuance_to]">
-                                        <option value="0">-- Select --</option>
-                                        ${users.map(user => `<option value="${user.id}">${user.name}</option>`).join('')}
-                                    </select>
-                                </td>
-                                <td>
-                                    <select style="width: 6rem;" name="distribution[${currentRowCount}][location]">
-                                        <option value="0">-- Select --</option>
-                                        ${Object.entries(departmentsData).map(([code, name]) =>
-                                            `<option value="${code}">${name}</option>`).join('')}
-                                    </select>
-                                </td>
-                                <td><input type="number" style="overflow: hidden; border: none; width: 6rem;"
-                                    name="distribution[${currentRowCount}][issued_copies]"></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
-                                    name="distribution[${currentRowCount}][issued_reason]"></textarea></td>
-                                <td>
-                                    <div class="group-input new-date-data-field mb-0">
-                                        <div class="input-date">
-                                            <div class="calenderauditee">
-                                                <input style="width: 6rem;" type="text" id="retrieval_date${currentRowCount}" readonly placeholder="DD-MMM-YYYY" />
-                                                <input style="width: 4rem;" type="date" name="distribution[${currentRowCount}][retrieval_date]"
-                                                    class="hide-input" oninput="handleDateInput(this, 'retrieval_date${currentRowCount}')">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <select style="width: 6rem;" name="distribution[${currentRowCount}][retrieval_by]">
-                                        <option value="0">-- Select --</option>
-                                        ${users.map(user => `<option value="${user.id}">${user.name}</option>`).join('')}
-                                    </select>
-                                </td>
-                                <td>
-                                    <select style="width: 6rem;" name="distribution[${currentRowCount}][retrieved_department]">
-                                        <option value="0">-- Select --</option>
-                                        ${Object.entries(departmentsData).map(([code, name]) =>
-                                            `<option value="${code}">${name}</option>`).join('')}
-                                    </select>
-                                </td>
-                                <td><input type="number" style="overflow: hidden; border: none; width: 6rem;"
-                                    name="distribution[${currentRowCount}][retrieved_copies]"></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
-                                    name="distribution[${currentRowCount}][retrieved_reason]"></textarea></td>
-                                <td><textarea style="overflow: hidden; border: none; width: 6rem;"
-                                    name="distribution[${currentRowCount}][remark]"></textarea></td>
-                                <td><button class="removeTrainRow" onclick="removeRow(this)">Remove</button></td>
-                            `;
+                            dateInput.click();
                         }
 
-                        function removeRow(button) {
-                            let row = button.parentNode.parentNode;
-                            row.parentNode.removeChild(row);
+                        /**
+                        * YYYY-MM-DD ko DD-MMM-YYYY format me display karega.
+                        */
+                        function handleGridDate(dateInput, displayInputId) {
+                            const displayInput =
+                                document.getElementById(displayInputId);
+
+                            if (!displayInput) {
+                                return;
+                            }
+
+                            if (!dateInput.value) {
+                                displayInput.value = '';
+                                return;
+                            }
+
+                            const dateParts = dateInput.value.split('-');
+
+                            if (dateParts.length !== 3) {
+                                displayInput.value = '';
+                                return;
+                            }
+
+                            const year = parseInt(dateParts[0], 10);
+                            const month = parseInt(dateParts[1], 10) - 1;
+                            const day = parseInt(dateParts[2], 10);
+
+                            const selectedDate = new Date(
+                                year,
+                                month,
+                                day
+                            );
+
+                            displayInput.value = selectedDate
+                                .toLocaleDateString('en-GB', {
+                                    day: '2-digit',
+                                    month: 'short',
+                                    year: 'numeric'
+                                })
+                                .replace(/ /g, '-');
                         }
+
+                        /**
+                        * Retrieved copies issued copies se zyada nahi honi chahiye.
+                        * Destructed copies retrieved copies se zyada nahi honi chahiye.
+                        */
+                        function validateGridCopies(index) {
+                            const retrievedInput =
+                                document.getElementById(
+                                    'retrieved_copies_' + index
+                                );
+
+                            const destructedInput =
+                                document.getElementById(
+                                    'destructed_copies_' + index
+                                );
+
+                            const retrievedError =
+                                document.getElementById(
+                                    'retrieved_error_' + index
+                                );
+
+                            const destructedError =
+                                document.getElementById(
+                                    'destructed_error_' + index
+                                );
+
+                            if (
+                                !retrievedInput ||
+                                !destructedInput
+                            ) {
+                                return true;
+                            }
+
+                            const issuedCopies =
+                                parseInt(
+                                    retrievedInput.dataset.issuedCopies || '0',
+                                    10
+                                );
+
+                            const retrievedCopies =
+                                retrievedInput.value === ''
+                                    ? null
+                                    : parseInt(retrievedInput.value, 10);
+
+                            const destructedCopies =
+                                destructedInput.value === ''
+                                    ? null
+                                    : parseInt(destructedInput.value, 10);
+
+                            retrievedError.textContent = '';
+                            destructedError.textContent = '';
+
+                            retrievedInput.classList.remove(
+                                'grid-invalid-field'
+                            );
+
+                            destructedInput.classList.remove(
+                                'grid-invalid-field'
+                            );
+
+                            destructedInput.max =
+                                retrievedCopies !== null
+                                    ? retrievedCopies
+                                    : issuedCopies;
+
+                            let isValid = true;
+
+                            if (
+                                retrievedCopies !== null &&
+                                retrievedCopies > issuedCopies
+                            ) {
+                                retrievedError.textContent =
+                                    'Retrieved copies cannot exceed issued copies.';
+
+                                retrievedInput.classList.add(
+                                    'grid-invalid-field'
+                                );
+
+                                isValid = false;
+                            }
+
+                            if (
+                                destructedCopies !== null &&
+                                retrievedCopies === null
+                            ) {
+                                destructedError.textContent =
+                                    'Enter retrieved copies first.';
+
+                                destructedInput.classList.add(
+                                    'grid-invalid-field'
+                                );
+
+                                isValid = false;
+                            }
+
+                            if (
+                                destructedCopies !== null &&
+                                retrievedCopies !== null &&
+                                destructedCopies > retrievedCopies
+                            ) {
+                                destructedError.textContent =
+                                    'Destructed copies cannot exceed retrieved copies.';
+
+                                destructedInput.classList.add(
+                                    'grid-invalid-field'
+                                );
+
+                                isValid = false;
+                            }
+
+                            return isValid;
+                        }
+
+                        /**
+                        * Main form submit se pehle complete grid validation.
+                        */
+                        document.addEventListener(
+                            'DOMContentLoaded',
+                            function () {
+                                const grid =
+                                    document.getElementById(
+                                        'distribution-retrieval-grid'
+                                    );
+
+                                if (!grid) {
+                                    return;
+                                }
+
+                                const mainForm = grid.closest('form');
+
+                                if (!mainForm) {
+                                    return;
+                                }
+
+                                mainForm.addEventListener(
+                                    'submit',
+                                    function (event) {
+                                        const retrievedInputs =
+                                            grid.querySelectorAll(
+                                                'input[id^="retrieved_copies_"]'
+                                            );
+
+                                        let gridIsValid = true;
+
+                                        retrievedInputs.forEach(
+                                            function (input) {
+                                                const index =
+                                                    input.id.replace(
+                                                        'retrieved_copies_',
+                                                        ''
+                                                    );
+
+                                                if (
+                                                    !validateGridCopies(index)
+                                                ) {
+                                                    gridIsValid = false;
+                                                }
+                                            }
+                                        );
+
+                                        if (!gridIsValid) {
+                                            event.preventDefault();
+
+                                            alert(
+                                                'Please correct Distribution, Retrieval & Destruction details.'
+                                            );
+                                        }
+                                    }
+                                );
+                            }
+                        );
                     </script>
 
+                    <style>
+                        #distribution-retrieval-grid {
+                            width: 100%;
+                            min-width: 1900px;
+                            border-collapse: collapse !important;
+                            border: 1px solid #000 !important;
+                        }
 
+                        #distribution-retrieval-grid thead,
+                        #distribution-retrieval-grid tbody,
+                        #distribution-retrieval-grid tr {
+                            border: 1px solid #000 !important;
+                        }
 
+                        #distribution-retrieval-grid th,
+                        #distribution-retrieval-grid td {
+                            border: 1px solid #000 !important;
+                            padding: 8px !important;
+                            vertical-align: middle !important;
+                        }
+
+                        #distribution-retrieval-grid thead th {
+                            background-color: #d9e3f4;
+                            text-align: center !important;
+                            font-weight: 600;
+                            color: #000;
+                            white-space: nowrap;
+                        }
+
+                        #distribution-retrieval-grid tbody td {
+                            background-color: #fff;
+                        }
+
+                        #distribution-retrieval-grid input,
+                        #distribution-retrieval-grid select,
+                        #distribution-retrieval-grid textarea {
+                            width: 100%;
+                            border: 1px solid #999 !important;
+                            border-radius: 2px;
+                            padding: 6px;
+                            box-sizing: border-box;
+                        }
+
+                        #distribution-retrieval-grid textarea {
+                            min-height: 65px;
+                            resize: vertical;
+                        }
+
+                        #distribution-retrieval-grid .grid-readonly-field {
+                            background-color: #f3f3f3 !important;
+                            border: 1px solid #aaa !important;
+                            color: #333 !important;
+                            cursor: not-allowed;
+                        }
+
+                        #distribution-retrieval-grid .grid-editable-field,
+                        #distribution-retrieval-grid .grid-editable-textarea {
+                            background-color: #fff !important;
+                        }
+
+                        .grid-date-wrapper {
+                            position: relative;
+                            width: 100%;
+                        }
+
+                        .grid-hidden-date {
+                            position: absolute;
+                            width: 1px !important;
+                            height: 1px !important;
+                            opacity: 0;
+                            pointer-events: none;
+                            bottom: 0;
+                            left: 0;
+                        }
+
+                        .grid-error-message {
+                            display: block;
+                            margin-top: 4px;
+                            color: #dc3545;
+                            font-size: 12px;
+                        }
+
+                        #distribution-retrieval-grid .grid-invalid-field {
+                            border: 1px solid #dc3545 !important;
+                            background-color: #fff5f5 !important;
+                        }
+                    </style>
                     <div class="button-block">
                         <button type="submit" name="submit" value="save" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                     </div>
                 </div>
-
-                {{-- <div id="print-download" class="tabcontent">
-                    <div class="orig-head">
-                        Print Permissions
-                    </div>
-                    <div class="input-fields">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="person-print">Person Print Permission</label>
-                                    <select id="choices-multiple-remove-button" placeholder="Select Persons" multiple>
-                                        <option value="HTML">HTML</option>
-                                        <option value="Jquery">Jquery</option>
-                                        <option value="CSS">CSS</option>
-                                        <option value="Bootstrap 3">Bootstrap 3</option>
-                                        <option value="Bootstrap 4">Bootstrap 4</option>
-                                        <option value="Java">Java</option>
-                                        <option value="Javascript">Javascript</option>
-                                        <option value="Angular">Angular</option>
-                                        <option value="Python">Python</option>
-                                        <option value="Hybris">Hybris</option>
-                                        <option value="SQL">SQL</option>
-                                        <option value="NOSQL">NOSQL</option>
-                                        <option value="NodeJS">NodeJS</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <table class="table-bordered table">
-                                        <thead>
-                                            <th class="person">Person</th>
-                                            <th class="permission">Daily</th>
-                                            <th class="permission">Weekly</th>
-                                            <th class="permission">Monthly</th>
-                                            <th class="permission">Quarterly</th>
-                                            <th class="permission">Annually</th>
-                                        </thead>
-                                        <tbody>
-                                            <td class="person">
-                                                Amit Patel
-                                            </td>
-                                            <td class="permission">
-                                                6543
-                                            </td>
-                                            <td class="permission">
-                                                6543
-                                            </td>
-                                            <td class="permission">
-                                                6543
-                                            </td>
-                                            <td class="permission">
-                                                432
-                                            </td>
-                                            <td class="permission">
-                                                123
-                                            </td>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="group-print">Group Print Permission</label>
-                                    <select id="choices-multiple-remove-button" placeholder="Select Persons" multiple>
-                                        <option value="HTML">HTML</option>
-                                        <option value="Jquery">Jquery</option>
-                                        <option value="CSS">CSS</option>
-                                        <option value="Bootstrap 3">Bootstrap 3</option>
-                                        <option value="Bootstrap 4">Bootstrap 4</option>
-                                        <option value="Java">Java</option>
-                                        <option value="Javascript">Javascript</option>
-                                        <option value="Angular">Angular</option>
-                                        <option value="Python">Python</option>
-                                        <option value="Hybris">Hybris</option>
-                                        <option value="SQL">SQL</option>
-                                        <option value="NOSQL">NOSQL</option>
-                                        <option value="NodeJS">NodeJS</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <table class="table-bordered table">
-                                        <thead>
-                                            <th class="person">Groupd</th>
-                                            <th class="permission">Daily</th>
-                                            <th class="permission">Weekly</th>
-                                            <th class="permission">Monthly</th>
-                                            <th class="permission">Quarterly</th>
-                                            <th class="permission">Annually</th>
-                                        </thead>
-                                        <tbody>
-                                            <td class="person">
-                                                QA
-                                            </td>
-                                            <td class="permission">1</td>
-                                            <td class="permission">
-                                                54
-                                            </td>
-                                            <td class="permission">
-                                                654
-                                            </td>
-                                            <td class="permission">
-                                                765
-                                            </td>
-                                            <td class="permission">
-                                                654
-                                            </td>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="orig-head">
-                        Download Permissions
-                    </div>
-                    <div class="input-fields">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="person-print">Person Download Permission</label>
-                                    <select id="choices-multiple-remove-button" placeholder="Select Persons" multiple>
-                                        <option value="HTML">HTML</option>
-                                        <option value="Jquery">Jquery</option>
-                                        <option value="CSS">CSS</option>
-                                        <option value="Bootstrap 3">Bootstrap 3</option>
-                                        <option value="Bootstrap 4">Bootstrap 4</option>
-                                        <option value="Java">Java</option>
-                                        <option value="Javascript">Javascript</option>
-                                        <option value="Angular">Angular</option>
-                                        <option value="Python">Python</option>
-                                        <option value="Hybris">Hybris</option>
-                                        <option value="SQL">SQL</option>
-                                        <option value="NOSQL">NOSQL</option>
-                                        <option value="NodeJS">NodeJS</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <table class="table-bordered table">
-                                        <thead>
-                                            <th class="person">Groups</th>
-                                            <th class="permission">Daily</th>
-                                            <th class="permission">Weekly</th>
-                                            <th class="permission">Monthly</th>
-                                            <th class="permission">Quarterly</th>
-                                            <th class="permission">Annually</th>
-                                        </thead>
-                                        <tbody>
-                                            <td class="person">
-                                                QA
-                                            </td>
-                                            <td class="permission">1</td>
-                                            <td class="permission">
-                                                54
-                                            </td>
-                                            <td class="permission">
-                                                654
-                                            </td>
-                                            <td class="permission">
-                                                765
-                                            </td>
-                                            <td class="permission">
-                                                654
-                                            </td>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="group-print">Group Download Permission</label>
-                                    <select id="choices-multiple-remove-button" placeholder="Select Persons" multiple>
-                                        <option value="HTML">HTML</option>
-                                        <option value="Jquery">Jquery</option>
-                                        <option value="CSS">CSS</option>
-                                        <option value="Bootstrap 3">Bootstrap 3</option>
-                                        <option value="Bootstrap 4">Bootstrap 4</option>
-                                        <option value="Java">Java</option>
-                                        <option value="Javascript">Javascript</option>
-                                        <option value="Angular">Angular</option>
-                                        <option value="Python">Python</option>
-                                        <option value="Hybris">Hybris</option>
-                                        <option value="SQL">SQL</option>
-                                        <option value="NOSQL">NOSQL</option>
-                                        <option value="NodeJS">NodeJS</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <table class="table-bordered table">
-                                        <thead>
-                                            <th class="person">Person</th>
-                                            <th class="permission">Daily</th>
-                                            <th class="permission">Weekly</th>
-                                            <th class="permission">Monthly</th>
-                                            <th class="permission">Quarterly</th>
-                                            <th class="permission">Annually</th>
-                                        </thead>
-                                        <tbody>
-                                            <td class="person">
-                                                Amit Patel
-                                            </td>
-                                            <td class="permission">1</td>
-                                            <td class="permission">
-                                                54
-                                            </td>
-                                            <td class="permission">
-                                                654
-                                            </td>
-                                            <td class="permission">
-                                                765
-                                            </td>
-                                            <td class="permission">
-                                                654
-                                            </td>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" name="submit" value="save" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                    </div>
-                </div> --}}
-
-
                    
                 <div id="sign" class="tabcontent">
                     <div class="row">

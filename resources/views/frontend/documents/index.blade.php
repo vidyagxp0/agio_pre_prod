@@ -14,12 +14,6 @@
                                 <a href="#" id="set-division">
                                     <i class="fa-solid fa-plus"></i> Create Document
                                 </a>
-                                {{-- <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        Import Data
-                                    </button> --}}
-                                {{-- <a href="{{route('documentExportEXCEL')}}">
-                                Export EXCEL
-                                </a> --}}
                             </div>
 
                         </div>
@@ -45,11 +39,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    {{-- <div class="search-bar">
-                                            <input id="searchInput" type="text" name="search"
-                                                placeholder="Search from the list...">
-                                            <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
-                                        </div> --}}
+                           
                                 </div>
 
                                 <div class="filter-block">
@@ -118,46 +108,6 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="col-xl-3 col-lg-3">
-                        <div class="document-right-block">
-                            <div class="inner-block recent-record">
-                                <div class="head">
-                                    Recent Records
-                                </div>
-                                <div class="record-list">
-                                    <div>
-                                        <div class="icon">
-                                            <i class="fa-solid fa-gauge-high"></i>
-                                        </div>
-                                        <div><a href="#">DMS/TMS Dashboard</a></div>
-                                    </div>
-                                    <div>
-                                        <div class="icon">
-                                            <i class="fa-solid fa-gauge-high"></i>
-                                        </div>
-                                        <div><a href="#">Amit Guru</a></div>
-                                    </div>
-                                    <div>
-                                        <div class="icon">
-                                            <i class="fa-solid fa-gauge-high"></i>
-                                        </div>
-                                        <div><a href="#">Change Control Dashboard</a></div>
-                                    </div>
-                                    <div class="mb-0">
-                                        <div class="icon">
-                                            <i class="fa-solid fa-gauge-high"></i>
-                                        </div>
-                                        <div><a href="#">EQMS Home Dashboard</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="inner-block recent-items">
-                                <div class="head">
-                                    Recent Items (0)
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
             </div>
         </div>
     </div>

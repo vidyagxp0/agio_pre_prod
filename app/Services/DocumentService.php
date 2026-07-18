@@ -11,165 +11,345 @@ use App\Models\Extension;
 use App\Models\QMSDivision;
 use App\Models\QmsRecordNumber;
 use App\Models\RecordNumber;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class DocumentService
 {
-    static function handleDistributionGrid(Document $document, $distributions)
-    {
-        try {
-
-            $existing_distribution_grid = DocumentGridData::where('document_id', $document->id)->get();
-
-            foreach ($existing_distribution_grid as $grid)
-            {
-                $grid->delete();
-            }
-
-            foreach ($distributions as $key => $distribution)
-            {
-                $document_distribution_grid = new DocumentGridData();
-                $document_distribution_grid->document_id = $document->id;
-                $document_distribution_grid->document_title = isset($distribution['document_title']) ? $distribution['document_title'] : '';
-                $document_distribution_grid->document_number = isset($distribution['document_number']) ? $distribution['document_number'] : '';
-                $document_distribution_grid->document_printed_by = isset($distribution['document_printed_by']) ? $distribution['document_printed_by'] : '';
-                $document_distribution_grid->document_printed_on = isset($distribution['document_printed_on']) ? $distribution['document_printed_on'] : '';
-                $document_distribution_grid->document_printed_copies = isset($distribution['document_printed_copies']) ? $distribution['document_printed_copies'] : '';
-                $document_distribution_grid->issuance_date = isset($distribution['issuance_date']) ? $distribution['issuance_date'] : '';
-                $document_distribution_grid->issuance_to = isset($distribution['issuance_to']) ? $distribution['issuance_to'] : '';
-                $document_distribution_grid->location = isset($distribution['location']) ? $distribution['location'] : '';
-                $document_distribution_grid->issued_copies = isset($distribution['issued_copies']) ? $distribution['issued_copies'] : '';
-                $document_distribution_grid->issued_reason = isset($distribution['issued_reason']) ? $distribution['issued_reason'] : '';
-                $document_distribution_grid->retrieval_date = isset($distribution['retrieval_date']) ? $distribution['retrieval_date'] : '';
-                $document_distribution_grid->retrieval_by = isset($distribution['retrieval_by']) ? $distribution['retrieval_by'] : '';
-                $document_distribution_grid->retrieved_department = isset($distribution['retrieved_department']) ? $distribution['retrieved_department'] : '';
-                $document_distribution_grid->retrieved_copies = isset($distribution['retrieved_copies']) ? $distribution['retrieved_copies'] : '';
-                $document_distribution_grid->retrieved_reason =  isset($distribution['retrieved_reason']) ? $distribution['retrieved_reason'] : '';
-                $document_distribution_grid->remark = isset($distribution['remark']) ? $distribution['remark'] : '';
-                $document_distribution_grid->save();
-            }
-        } catch (\Exception $e) {
-            info('Error in DocumentService@handleDistributionGrid', [
-                'message' => $e->getMessage(),
-                'object' => $e
-            ]);
+    public static function handleDistributionGrid(
+        Document $document,
+        $distributions
+    ): void {
+        if (empty($distributions) || !is_array($distributions)) {
+            return;
         }
+
+        DB::transaction(function () use ($document, $distributions) {
+
+            foreach ($distributions as $index => $distribution) {
+
+                /*
+                |--------------------------------------------------------------------------
+                | History source
+                |--------------------------------------------------------------------------
+                */
+
+                $historyType = trim(
+                    (string) ($distribution['history_type'] ?? '')
+                );
+
+                $historyId = !empty($distribution['history_id'])
+                    ? (int) $distribution['history_id']
+                    : null;
+
+                if (
+                    !in_array($historyType, ['print', 'download'], true)
+                    || !$historyId
+                ) {
+                    throw new \RuntimeException(
+                        'Row ' . ($index + 1) .
+                        ': Distribution history reference missing.'
+                    );
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Create or update grid record
+                |--------------------------------------------------------------------------
+                */
+
+                $grid = DocumentGridData::firstOrNew([
+                    'document_id' => $document->id,
+                    'history_type' => $historyType,
+                    'history_id' => $historyId,
+                ]);
+
+                $grid->document_id = $document->id;
+                $grid->history_type = $historyType;
+                $grid->history_id = $historyId;
+
+                /*
+                |--------------------------------------------------------------------------
+                | Distribution section
+                |--------------------------------------------------------------------------
+                */
+
+                $grid->document_title = self::nullableString(
+                    $distribution['document_title']
+                        ?? $document->document_name
+                );
+
+                $grid->document_number = self::nullableString(
+                    $distribution['document_number']
+                        ?? $document->document_number
+                );
+
+                $grid->document_printed_by = self::nullableInteger(
+                    $distribution['issued_by'] ?? null
+                );
+
+                $issuedDate = self::nullableDate(
+                    $distribution['issued_date'] ?? null
+                );
+
+                $grid->document_printed_on = $issuedDate;
+                $grid->issuance_date = $issuedDate;
+
+                $issuedCopies = self::nullableInteger(
+                    $distribution['issued_copies'] ?? null
+                );
+
+                $grid->document_printed_copies = $issuedCopies;
+                $grid->issued_copies = $issuedCopies;
+
+                $grid->issuance_to = self::nullableInteger(
+                    $distribution['issued_to'] ?? null
+                );
+
+                $grid->issued_reason = self::nullableString(
+                    $distribution['issued_reason'] ?? null
+                );
+
+                $grid->location = self::nullableString(
+                    $distribution['location'] ?? null
+                );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Retrieval section
+                |--------------------------------------------------------------------------
+                */
+
+                $retrievedCopies = self::nullableInteger(
+                    $distribution['retrieved_copies'] ?? null
+                );
+
+                if (
+                    $retrievedCopies !== null
+                    && $issuedCopies !== null
+                    && $retrievedCopies > $issuedCopies
+                ) {
+                    throw new \RuntimeException(
+                        'Row ' . ($index + 1) .
+                        ': Retrieved copies issued copies se zyada nahi ho sakti.'
+                    );
+                }
+
+                $grid->retrieved_copies = $retrievedCopies;
+
+                $grid->retrieval_by = self::nullableInteger(
+                    $distribution['retrieval_by'] ?? null
+                );
+
+                $grid->retrieval_date = self::nullableDate(
+                    $distribution['retrieval_date'] ?? null
+                );
+
+                $grid->retrieved_reason = self::nullableString(
+                    $distribution['retrieved_reason'] ?? null
+                );
+
+                $grid->retrieved_department = self::nullableString(
+                    $distribution['retrieved_department'] ?? null
+                );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Destruction section
+                |--------------------------------------------------------------------------
+                */
+
+                $destructedCopies = self::nullableInteger(
+                    $distribution['destructed_copies'] ?? null
+                );
+
+                if (
+                    $destructedCopies !== null
+                    && $retrievedCopies === null
+                ) {
+                    throw new \RuntimeException(
+                        'Row ' . ($index + 1) .
+                        ': Destruction se pehle retrieved copies enter karo.'
+                    );
+                }
+
+                if (
+                    $destructedCopies !== null
+                    && $retrievedCopies !== null
+                    && $destructedCopies > $retrievedCopies
+                ) {
+                    throw new \RuntimeException(
+                        'Row ' . ($index + 1) .
+                        ': Destructed copies retrieved copies se zyada nahi ho sakti.'
+                    );
+                }
+
+                $grid->destructed_by = self::nullableInteger(
+                    $distribution['destructed_by'] ?? null
+                );
+
+                $grid->destruction_date = self::nullableDate(
+                    $distribution['destruction_date'] ?? null
+                );
+
+                $grid->destructed_copies = $destructedCopies;
+
+                $grid->destruction_reason = self::nullableString(
+                    $distribution['destruction_reason'] ?? null
+                );
+
+                $grid->remark = self::nullableString(
+                    $distribution['remark'] ?? null
+                );
+
+                $grid->save();
+            }
+        });
     }
 
-    static function update_document_numbers()
+    private static function nullableString($value): ?string
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        $value = trim((string) $value);
+
+        return $value === '' ? null : $value;
+    }
+
+    private static function nullableInteger($value): ?int
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        return (int) $value;
+    }
+
+    private static function nullableDate($value): ?string
+    {
+        if ($value === null || trim((string) $value) === '') {
+            return null;
+        }
+
+        return \Carbon\Carbon::parse($value)->format('Y-m-d');
+    }
+    public static function update_document_numbers()
     {
         try {
-            
             $document_types = DocumentType::all();
 
-            foreach ($document_types as $document_type)
-            {
-                $documents = Document::where('document_type_id', $document_type->id)->get();
+            foreach ($document_types as $document_type) {
+                $documents = Document::where(
+                    'document_type_id',
+                    $document_type->id
+                )->get();
 
                 $record_number = 0;
 
-                foreach ($documents as $document)
-                {
+                foreach ($documents as $document) {
                     if ($document->revised !== 'Yes') {
                         $record_number++;
-                        $document->document_number = $record_number; 
+                        $document->document_number = $record_number;
                         $document->save();
                     } else {
-                        $parent_document = Document::find($document->revised_doc);
+                        $parent_document = Document::find(
+                            $document->revised_doc
+                        );
+
                         if ($parent_document) {
-                            $document->document_number = $parent_document->document_number;
+                            $document->document_number =
+                                $parent_document->document_number;
+
                             $document->save();
                         }
                     }
                 }
             }
-
         } catch (\Exception $e) {
             return $e->getMessage();
         }
     }
 
-    static function update_qms_numbers()
+    public static function update_qms_numbers()
     {
         try {
-
             $divisions = QMSDivision::all();
 
-            foreach ($divisions as $division)
-            {
-                $capas = Capa::where('division_id', $division->id)->get();
-                $extensions = Extension::where('division_id', $division->id)->get();
-                $change_controls = CC::where('division_id', $division->id)->get();
+            foreach ($divisions as $division) {
+                $capas = Capa::where(
+                    'division_id',
+                    $division->id
+                )->get();
+
+                $extensions = Extension::where(
+                    'division_id',
+                    $division->id
+                )->get();
+
+                $change_controls = CC::where(
+                    'division_id',
+                    $division->id
+                )->get();
 
                 $capa_record_number = 1;
                 $extensions_record_number = 1;
                 $change_controls_record_number = 1;
 
-                foreach ($capas as $capa)
-                {
+                foreach ($capas as $capa) {
                     if ($capa->record_number) {
-                        $r_n = $capa->record_number;
-                        $r_n->record_number = $capa_record_number;
+                        $record = $capa->record_number;
+                        $record->record_number =
+                            $capa_record_number;
                     } else {
-                        $r_n = new QmsRecordNumber;
-                        $r_n->record_number = $capa_record_number;
+                        $record = new QmsRecordNumber();
+                        $record->record_number =
+                            $capa_record_number;
                     }
 
-                    $r_n->save();
-
-                    $capa->record_number()->save($r_n);
+                    $record->save();
+                    $capa->record_number()->save($record);
 
                     $capa_record_number++;
                 }
 
-                foreach ($extensions as $extension)
-                {
+                foreach ($extensions as $extension) {
                     if ($extension->record_number) {
-                        $r_n = $extension->record_number;
-                        $r_n->record_number = $extensions_record_number;
+                        $record = $extension->record_number;
+                        $record->record_number =
+                            $extensions_record_number;
                     } else {
-                        $r_n = new QmsRecordNumber;
-                        $r_n->record_number = $extensions_record_number;
+                        $record = new QmsRecordNumber();
+                        $record->record_number =
+                            $extensions_record_number;
                     }
 
-                    $r_n->save();
-
-                    $extension->record_number()->save($r_n);
+                    $record->save();
+                    $extension->record_number()->save($record);
 
                     $extensions_record_number++;
                 }
-                
-                foreach ($change_controls as $change_control)
-                {
-                    if ($change_control->record_number) {
-                        $r_n = $change_control->record_number;
-                        $r_n->record_number = $change_controls_record_number;
+
+                foreach ($change_controls as $changeControl) {
+                    if ($changeControl->record_number) {
+                        $record = $changeControl->record_number;
+                        $record->record_number =
+                            $change_controls_record_number;
                     } else {
-                        $r_n = new QmsRecordNumber;
-                        $r_n->record_number = $change_controls_record_number;
+                        $record = new QmsRecordNumber();
+                        $record->record_number =
+                            $change_controls_record_number;
                     }
 
-                    $r_n->save();
-
-                    $change_control->record_number()->save($r_n);
+                    $record->save();
+                    $changeControl->record_number()->save($record);
 
                     $change_controls_record_number++;
                 }
-
-
-
             }
-            
-
-            $record_number = 1;
-            foreach ($capas as $capa)
-            {
-                $record_number++;
-            }
-
         } catch (\Exception $e) {
             return $e->getMessage();
         }
     }
-
-
 }

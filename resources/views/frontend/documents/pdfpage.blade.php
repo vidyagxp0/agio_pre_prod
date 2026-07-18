@@ -289,32 +289,7 @@
             margin-bottom: 15px;
         }
 
-        /* @page {
-            size: A4;
-            margin-top: 220px;
-            margin-bottom: 60px;
-        } */
-
-        /* header {
-            width: 100%;
-            position: fixed;
-            top: -215px;
-            right: 0;
-            left: 0;
-            display: block;
-
-        } */
-
-        /* .footer {
-            position: fixed;
-            bottom: -45px;
-            left: 0;
-            right: 0;
-            width: 100%;
-            display: block;
-            border-top: 1px solid #ddd;
-        } */
-
+       
         @page {
             size: A4;
         }
@@ -341,19 +316,9 @@
             margin-top: 20px;
         }
 
-        /* header table td{
-            font-size: 12px;
-            line-height: 1.3;
-        } */
-
         header .doc-num{
             /* font-weight: bold; */
         }
-
-        /* header table{
-            table-layout: fixed;
-            border-collapse: collapse;
-        } */
 
         .other-container {
             margin: 0 0 0 0;
@@ -720,11 +685,10 @@
                 </td>
 
                 <td style="border:1px solid #000; text-align:left; padding:6px;">
-                    @if($document->revised == 'Yes')
-                        @php
+                         @php
                             $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
                         @endphp
-
+                    {{-- @if($document->revised == 'Yes')
                         @if(in_array($document->sop_type_short,['EOP','IOP']))
                             {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-{{ $revisionNumber }}
                         @else
@@ -736,7 +700,22 @@
                         @else
                             {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-00
                         @endif
+                    @endif --}}
+                     @if($document->revised == 'Yes')
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @else
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @endif
+                    @else
+                        
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                            @else
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                            @endif
                     @endif
+
                 </td>
             </tr>
 
@@ -2088,6 +2067,7 @@
             ');
         }
     </script>
+    
 </body>
 
 </html>
