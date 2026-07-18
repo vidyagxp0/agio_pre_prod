@@ -46,7 +46,25 @@ class DocumentDetailsController extends Controller
       $approvers = User::where('role', 1)->get();
       $reviewergroup = Grouppermission::where('role_id', 2)->get();
       $approversgroup = Grouppermission::where('role_id', 1)->get();
-      return view('frontend.documents.document-details', compact('document', 'reviewer', 'approvers', 'reviewergroup', 'approversgroup'));
+      $documents = Document::where(
+            'department_id',
+            $document->department_id
+        )
+            ->where(
+                'sop_type_short',
+                $document->sop_type_short
+            )
+            ->orderBy('id')
+            ->pluck('id');
+
+        $position = $documents->search(
+            $document->id
+        );
+
+        $currentId = $position !== false
+            ? $position + 1
+            : 1;
+      return view('frontend.documents.document-details', compact('document', 'reviewer', 'approvers', 'reviewergroup', 'approversgroup','currentId'));
     } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
       return "Document Not Found";
     }
