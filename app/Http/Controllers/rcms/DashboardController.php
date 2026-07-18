@@ -1104,6 +1104,7 @@ class DashboardController extends Controller
                 'single' => fn ($id) => "internalSingleReport/{$id}",
                 'audit' => fn ($id) => "internalauditReport/{$id}",
                 'family' => fn ($id) => "internalFamilyReport/{$id}",
+                'summary' => fn ($id) => "InternalAuditsummary/{$id}",
             ],
             'risk-assesment' => [
                 'model' => RiskManagement::class,
@@ -1117,6 +1118,7 @@ class DashboardController extends Controller
                 'single' => fn ($id) => "OOCSingleReport/{$id}",
                 'audit' => fn ($id) => "ooc_Audit_Report/{$id}",
                 'family' => fn ($id) => "ooc_family_Report/{$id}",
+                 "summary" => fn ($id) => "ooc_summary/{$id}"
             ],
             'External-Audit' => [
                 'model' => Auditee::class,
@@ -1124,6 +1126,7 @@ class DashboardController extends Controller
                 'audit' => fn ($id) => "ExternalAuditTrialReport/{$id}",
                 'family' => fn ($id) => "external_family_report/{$id}",
                 'summary' => fn ($id) => "SummaryResponseReport/{$id}",
+                 "summary" => fn ($id) => "ExternalAuditSummary/{$id}"
             ],
             'Audit-Program' => [
                 'model' => AuditProgram::class,
@@ -1150,6 +1153,7 @@ class DashboardController extends Controller
                 'single' => fn ($id) => "ObservationSingleReport/{$id}",
                 'audit' => fn ($id) => "ObservationAuditTrialShow/{$id}",
                 'family' => fn ($id) => "ObservationfamilyReport/{$id}",
+                "summary" => fn ($id) => "ObservationSummery/{$id}"
             ],
             'Effectiveness-Check' => [
                 'model' => EffectivenessCheck::class,
@@ -1162,6 +1166,7 @@ class DashboardController extends Controller
                 'single' => fn ($id) => "managementReview/{$id}",
                 'audit' => fn ($id) => "managementReviewReport/{$id}",
                 'family' => fn ($id) => "managementReFamily_report/{$id}",
+                "summary" => fn ($id) => "managementReview_summary/{$id}"
             ],
             'OOS_OOT' => [
                 'model' => OOS::class,
@@ -1169,6 +1174,7 @@ class DashboardController extends Controller
                 'single' => fn ($id) => "oos/single_report/{$id}",
                 'audit' => fn ($id) => "oos/audit_report/{$id}",
                 'family' => fn ($id) => "oos/family_report/{$id}",
+                "summary" => fn ($id) => "oos/oos_summary_report/{$id}"
             ],
             'OOS Microbiology' => [
                 'model' => OOS_micro::class,
@@ -1189,12 +1195,14 @@ class DashboardController extends Controller
                 'single' => fn ($id) => "marketComplaintSingleReport/{$id}",
                 'audit' => fn ($id) => "MarketComplaintAuditReport/{$id}",
                 'family' => fn ($id) => '#',
+                
             ],
             'Market Complaint' => [
                 'model' => MarketComplaint::class,
                 'single' => fn ($id) => "pdf-report/{$id}",
                 'audit' => fn ($id) => "marketcomplaint/marketauditTrailPdf/{$id}",
                 'family' => fn ($id) => "pdf-family-report/{$id}",
+                "summary" => fn ($id) => "marketComplainSummary/{$id}"
             ],
             'Change-Control' => [
                 'model' => CC::class,
@@ -1291,9 +1299,16 @@ class DashboardController extends Controller
                             ' . ($displayType == 'CAPA' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
                             ' . ($displayType == 'risk-assesment' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
                             ' . ($displayType == 'Lab-Incident' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
-                             ' . ($displayType == 'Root-Cause-Analysis' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
+                            ' . ($displayType == 'Root-Cause-Analysis' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
                             ' . ($displayType == 'Deviation' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
                             ' . ($displayType == 'Incident' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
+                            ' . ($displayType == 'Market Complaint' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
+                            ' . ($displayType == 'External-Audit' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
+                            ' . ($displayType == 'Internal-Audit' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
+                            ' . ($displayType == 'Out Of Calibration' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
+                            ' . ($displayType == 'Management-Review' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
+                            ' . ($displayType == 'Observation' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
+                            ' . ($displayType == 'OOS/OOT' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $displayType . ' Summary Report</a>' : '') . '
 
                         </div>
                     </div>

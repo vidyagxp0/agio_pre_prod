@@ -3446,7 +3446,12 @@ class DeviationController extends Controller
             $deviation->objective = $request->objective;
             $deviation->scope = $request->scope;
             $deviation->imidiate_action = $request->imidiate_action;
-            $deviation->investigation_approach = is_array($request->investigation_approach) ? implode(',', $request->investigation_approach) : '';
+            // $deviation->investigation_approach = is_array($request->investigation_approach) ? implode(',', $request->investigation_approach) : '';
+
+            $deviation->investigation_approach =
+                    $request->filled('investigation_approach')
+                        ? implode(',', (array) $request->investigation_approach)
+                        : $deviation->investigation_approach;
             $deviation->attention_issues = $request->attention_issues;
             $deviation->attention_actions = $request->attention_actions;
             $deviation->attention_remarks = $request->attention_remarks;
@@ -13762,7 +13767,7 @@ class DeviationController extends Controller
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
 
-            $pdf = PDF::loadview('frontend.forms.deviation.familyReportDeviation', compact('data','grid_data2','riskEffectAnalysis','grid_data_qrms','grid_data_matrix_qrms','capaExtension','qrmExtension','investigationExtension','root_cause_data','why_data','investigation_data','grid_data','grid_data1', 'data1','fishboneData','extension','capa_Data','capa_teamNamesString','rcaData', 'lastAi'))
+            $pdf = PDF::loadview('frontend.forms.deviation.familyReportDeviation', compact('data','grid_data2','riskEffectAnalysis','grid_data_qrms','grid_data_matrix_qrms','capaExtension','qrmExtension','investigationExtension','root_cause_data','why_data','investigation_data','grid_data','grid_data1', 'data1','fishboneData','extension','capa_Data','rcaData', 'lastAi'))
                 ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,

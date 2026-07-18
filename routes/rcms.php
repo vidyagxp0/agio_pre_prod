@@ -234,13 +234,13 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('ObservationAuditTrialShow/{id}', [ObservationController::class, 'ObservationAuditTrailPdf'])->name('Observationaudit.pdf');
             Route::get('ObservationfamilyReport/{id}', [ObservationController::class, 'ObservationfamilyReport']);
             
-
+            Route::get('ObservationSummery/{id}', [ObservationController::class, 'summery_pdf']);
             //----------------------------------------------By PRIYA SHRIVASTAVA------------------
             Route::post('formDivision', [FormDivisionController::class, 'formDivision'])->name('formDivision');
             Route::get('ExternalAuditSingleReport/{id}', [AuditeeController::class, 'singleReport'])->name('ExternalAuditSingleReport');
             Route::get('external_family_report/{id}', [AuditeeController::class, 'familyReport'])->name('ExternalAuditFamilyReport');
             Route::get('SummaryResponseReport/{id}', [AuditeeController::class, 'SummaryResponseReport'])->name('SummaryResponseReport');
-            
+              Route::get('ExternalAuditSummary/{id}', [AuditeeController::class, 'summery_pdf']);
             Route::get('ExternalAuditTrialReport/{id}', [AuditeeController::class, 'auditReport'])->name('ExternalAuditTrialReport');
             Route::get('capaSingleReport/{id}', [CapaController::class, 'singleReport'])->name('capaSingleReport');
             Route::get('capaFamilyReport/{id}', [CapaController::class, 'familyReport'])->name('capaFamilyReport');
@@ -251,17 +251,19 @@ Route::group(['prefix' => 'rcms'], function () {
               Route::get('Risksummary/{id}', [RiskManagementController::class, 'summery_pdf']);
           
             Route::get('rootSingleReport/{id}', [RootCauseController::class, 'singleReport'])->name('rootSingleReport');
-                Route::get('RCASummary/{id}', [RootCauseController::class, 'summery_pdf']);
+            Route::get('RCASummary/{id}', [RootCauseController::class, 'summery_pdf']);
             Route::get('riskManagementfamily/{id}', [RiskManagementController::class, 'effectiveFamilyReport'])->name('riskManagementfamily');
             Route::get('rootFamilyReport/{id}', [RootCauseController::class, 'familyReport'])->name('rootFamilyReport');
             Route::get('rootAuditReport/{id}', [RootCauseController::class, 'auditReport'])->name('rootAuditReport');
             Route::get('managementReview/{id}', [ManagementReviewController::class, 'managementReport'])->name('managementReport');
             Route::get('managementReFamily_report/{id}', [ManagementReviewController::class, 'managementFamilyReport'])->name('managementFamilyReport');
             Route::get('managementReviewReport/{id}', [ManagementReviewController::class, 'managementReviewReport'])->name('managementReviewReport');
+             Route::get('managementReview_summary/{id}', [ManagementReviewController::class, 'summery_pdf']);
             Route::post('child_management_Review/{id}', [ManagementReviewController::class, 'child_management_Review'])->name('childmanagementReview');
             Route::get('internalSingleReport/{id}', [InternalauditController::class, 'singleReport'])->name('internalSingleReport');
             Route::get('internalFamilyReport/{id}', [InternalauditController::class, 'familyReport'])->name('internalFamilyReport');
             Route::get('internalauditReport/{id}', [InternalauditController::class, 'auditReport'])->name('internalauditReport');
+             Route::get('InternalAuditsummary/{id}', [InternalauditController::class, 'summery_pdf']);
             Route::post('management/cftnotrequired/{id}', [ManagementReviewController::class, 'managementIsCFTRequired'])->name('managementIsCFTRequired');
             // Route::get('oos_micro/audit_report/{id}', [OOSMicroController::class, 'auditReport'])->name('audit_report');
             // Route::get('oos_micro/single_report/{id}', [OOSMicroController::class, 'singleReport'])->name('oos_micro/single_report');
@@ -393,6 +395,7 @@ Route::group(['prefix' => 'rcms'], function () {
 
             Route::get('OOCSingleReport/{id}',[OOCController::class, 'singleReports']);
             Route::get('ooc_family_Report/{id}',[OOCController::class, 'familyReport']);
+            Route::get('ooc_summary/{id}', [OOCController::class, 'summery_pdf']);
             /**
              * OOT
              */
@@ -425,6 +428,8 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::get('audit_report/{id}', [OOSController::class, 'auditReport'])->name('audit_report');
                 Route::get('single_report/{id}', [OOSController::class, 'singleReport'])->name('single_report');
                 Route::get('family_report/{id}', [OOSController::class, 'familyReport'])->name('family_report');
+                Route::get('oos_summary_report/{id}', [OOSController::class, 'oos_summery_pdf'])->name('oos_summery_pdf');
+
             });
 
 
@@ -474,7 +479,7 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf');
                 Route::post('MarketComplaintC_AChild/{id}', [MarketComplaintController::class, 'MarketComplaintCapa_ActionChild'])->name('capa_action_child');
                 Route::post('marketCompalinExtensionChild/{id}', [MarketComplaintController::class, 'MarketCompalinExtensionChild'])->name('marketCompalinExtensionChild');
-
+                 
                 Route::post('MarketComplaintRCA_ActionChild/{id}', [MarketComplaintController::class, 'MarketComplaintRca_actionChild'])->name('rca_action_child');
                 Route::post('MarketComplaintRegul_Effec_Child/{id}', [MarketComplaintController::class, 'MarketComplaintRegu_Effec_Child'])->name('Regu_Effec_child');
                 Route::get('acknoledgment_report/{id}',[MarketComplaintController::class,'AcknoledgmentReport'])->name('acknoledgment_report');
@@ -482,6 +487,7 @@ Route::group(['prefix' => 'rcms'], function () {
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
+            Route::get('marketComplainSummary/{id}', [MarketComplaintController::class, 'summery_pdf']);
             Route::get('pdf-family-report/{id}', [MarketComplaintController::class, 'familyReport']);
             Route::get('GeneralInformationComplaint_report/{id}', [MarketComplaintController::class, 'General_Complaint_report']);
 

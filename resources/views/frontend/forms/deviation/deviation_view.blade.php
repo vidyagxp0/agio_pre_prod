@@ -8903,59 +8903,132 @@
                                     </div>
 
 
-                                    <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="audit type">Investigation Approach <span class="text-danger">*</span></label>
-                                            <select multiple id="investigation_approach" name="investigation_approach[]"   data-stage="{{$data->stage}}" {{$data->stage == 7 && $istab7 ? '' : 'disabled'}}>
-                                                <option value="Why-Why Chart"
-                                                    {{ strpos($data->investigation_approach, 'Why-Why Chart') !== false ? 'selected' : '' }}>
-                                                    Why-Why Chart
-                                                </option>
-                                                <option value="Category Of Human Error"
-                                                    {{ strpos($data->investigation_approach, 'Category Of Human Error') !== false ? 'selected' : '' }}>
-                                                    Category Of Human Error 
-                                                </option>
-                                                <option value="Fishbone or Ishikawa Diagram"
-                                                    {{ strpos($data->investigation_approach, 'Fishbone or Ishikawa Diagram') !== false ? 'selected' : '' }}>
-                                                    Fishbone or Ishikawa Diagram
-                                                </option>
-                                                <option value="Is/Is Not Analysis"
-                                                    {{ strpos($data->investigation_approach, 'Is/Is Not Analysis') !== false ? 'selected' : '' }}>
-                                                    Is/Is Not Analysis
-                                                </option>
-                                                <option value="Failure Mode and Effect Analysis"
-                                                    {{ strpos($data->investigation_approach, 'Failure Mode and Effect Analysis') !== false ? 'selected' : '' }}>
-                                                    Failure Mode and Effect Analysis
-                                                </option>
-                                                <option value="Others"
-                                                    {{ strpos($data->investigation_approach, 'Others') !== false ? 'selected' : '' }}>
-                                                    Others
-                                                </option>
-                                            </select>
+              @php
+    $selectedApproaches = [];
 
-                                        </div>
-                                    </div>
-                                    <script>
-                                        document.addEventListener("DOMContentLoaded", function () {
-                                            let fields = document.querySelectorAll(".stage-control7"); // Get all select fields with class "stage-control"
+    if (!empty($data->investigation_approach)) {
+        $decodedApproaches = json_decode($data->investigation_approach, true);
 
-                                            fields.forEach(field => {
-                                                let stage = parseInt(field.getAttribute("data-stage"));
+        if (is_array($decodedApproaches)) {
+            $selectedApproaches = $decodedApproaches;
+        } else {
+            $selectedApproaches = array_map(
+                'trim',
+                explode(',', $data->investigation_approach)
+            );
+        }
+    }
 
-                                                if (stage !== 7) {
-                                                    field.style.pointerEvents = "none";  // Prevent user interaction
-                                                    field.style.backgroundColor = "#e9ecef"; // Grey out field
-                                                    field.style.opacity = "0.7"; // Reduce visibility for disabled effect
-                                                }
-                                            });
-                                        });
-                                    </script>
-                                    <div class="col-lg-12 others-section" style="display: none;">
+    $canEditInvestigationApproach = $data->stage == 7 && $istab7;
+@endphp
+
+<div class="col-lg-12">
+    <div class="group-input">
+        <label for="investigation_approach">
+            Investigation Approach
+            <span class="text-danger">*</span>
+        </label>
+
+        <select
+            multiple
+            id="investigation_approach"
+            name="investigation_approach[]"
+            data-stage="{{ $data->stage }}"
+            class="{{ $canEditInvestigationApproach ? '' : 'readonly-multiselect' }}"
+        >
+            <option value="Why-Why Chart"
+                {{ in_array('Why-Why Chart', $selectedApproaches) ? 'selected' : '' }}>
+                Why-Why Chart
+            </option>
+
+            <option value="Category Of Human Error"
+                {{ in_array('Category Of Human Error', $selectedApproaches) ? 'selected' : '' }}>
+                Category Of Human Error
+            </option>
+
+            <option value="Fishbone or Ishikawa Diagram"
+                {{ in_array('Fishbone or Ishikawa Diagram', $selectedApproaches) ? 'selected' : '' }}>
+                Fishbone or Ishikawa Diagram
+            </option>
+
+            <option value="Is/Is Not Analysis"
+                {{ in_array('Is/Is Not Analysis', $selectedApproaches) ? 'selected' : '' }}>
+                Is/Is Not Analysis
+            </option>
+
+            <option value="Failure Mode and Effect Analysis"
+                {{ in_array('Failure Mode and Effect Analysis', $selectedApproaches) ? 'selected' : '' }}>
+                Failure Mode and Effect Analysis
+            </option>
+
+            <option value="Others"
+                {{ in_array('Others', $selectedApproaches) ? 'selected' : '' }}>
+                Others
+            </option>
+        </select>
+    </div>
+</div>
+
+<div
+    class="col-lg-12 others-section"
+    style="{{ in_array('Others', $selectedApproaches) ? '' : 'display:none;' }}"
+>
+    <div class="group-input">
+        <label for="other_specify">
+            Others
+            <span class="text-danger">*</span>
+        </label>
+
+        <textarea
+            id="other_specify"
+            name="others_data"
+            class="form-control"
+            rows="3"
+            placeholder="Please specify..."
+            {{ $canEditInvestigationApproach ? '' : 'readonly' }}
+        >{{ old('others_data', $data->others_data) }}</textarea>
+    </div>
+</div>
+
+<style>
+    .readonly-multiselect {
+        pointer-events: none;
+        background-color: #e9ecef;
+        opacity: 0.7;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const investigationApproach =
+            document.getElementById('investigation_approach');
+
+        const othersSection =
+            document.querySelector('.others-section');
+
+        function toggleOthersField() {
+            const selectedValues = Array.from(
+                investigationApproach.selectedOptions
+            ).map(option => option.value);
+
+            othersSection.style.display =
+                selectedValues.includes('Others') ? 'block' : 'none';
+        }
+
+        investigationApproach.addEventListener(
+            'change',
+            toggleOthersField
+        );
+
+        toggleOthersField();
+    });
+</script>
+                                    <!-- <div class="col-lg-12 others-section" style="display: none;">
                                     <div class="group-input">
                                         <label for="other_specify">Others <span class="text-danger">*</span></label>
                                         <textarea id="other_specify" {{ $data->stage == 7 && $istab7 ?  '' : 'readonly'  }} name="others_data"  class="form-control" rows="3" placeholder="Please specify...">{{ $data->others_data }}</textarea>
                                     </div>
-                                </div>
+                                </div> -->
 
 
                                 <div class="col-12 others-attachment-section" style="display: none;">
@@ -12775,6 +12848,8 @@
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #related_records, #investigation_approach, #audit_type',
         });
+
+
 
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
