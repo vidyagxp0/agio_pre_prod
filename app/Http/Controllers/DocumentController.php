@@ -849,6 +849,23 @@ class DocumentController extends Controller
                 }
             }
 
+            ///// Batch Packing Record
+
+              if (!empty($request->batchPackingRecordBpr)) {
+                $files = [];
+                if ($request->hasfile('batchPackingRecordBpr')) {
+                    foreach ($request->file('batchPackingRecordBpr') as $file) {
+
+                        // $name = $request->name . 'batchPackingRecordBpr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'batchPackingRecordBpr' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+
+                $document->batchPackingRecordBpr = json_encode($files);
+                }
+            }
+
             // Master Formula Recrd  tabs  of matrial tabs
             if (!empty($request->MasterFormulaRecordBMR)) {
                 $files = [];
@@ -3219,6 +3236,7 @@ class DocumentController extends Controller
         $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
 
         $sampleReconcilation = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "sampleReconcilation")->first();
+        // dd($sampleReconcilation);
         if ($sampleReconcilation && !empty($sampleReconcilation->data)) {
             $sampleReconcilation->data = json_decode($sampleReconcilation->data, true);
         }
@@ -3280,7 +3298,8 @@ class DocumentController extends Controller
              'RevisionGridmfpstpData',
              'ProductSpecification',
              'MaterialSpecification',
-             'revisedSopNumbers','PH'
+             'revisedSopNumbers','PH',
+             'sampleReconcilation'
 
         ));
     }
@@ -3709,6 +3728,37 @@ class DocumentController extends Controller
                     $document->batchManufacturingBmr = json_encode($allFiles);
                     }
 
+                // Batch Packing Records
+
+
+                if (!empty($request->batchPackingRecordBpr) || !empty($request->deleted_batchPackingRecordBpr)) {
+                                    $existingFiles = json_decode($document->batchPackingRecordBpr, true) ?? [];
+
+                                    // Handle deleted files
+                                    if (!empty($request->deleted_batchPackingRecordBpr)) {
+                                    $filesToDelete = explode(',', $request->deleted_batchPackingRecordBpr);
+                                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                        return !in_array($file, $filesToDelete);
+                                    });
+                                    }
+
+                                    // Handle new files
+                                    $newFiles = [];
+                                    if ($request->hasFile('batchPackingRecordBpr')) {
+                                    foreach ($request->file('batchPackingRecordBpr') as $file) {
+                                        $name = $request->name . 'batchPackingRecordBpr' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                        $file->move(public_path('upload/'), $name);
+                                        $newFiles[] = $name;
+                                    }
+                                    }
+
+                                    // Merge existing and new files
+                                    $allFiles = array_merge($existingFiles, $newFiles);
+                                    $document->batchPackingRecordBpr = json_encode($allFiles);
+                                    }
+
+
+                    
                  //-------------------- master formula reocrd tabs update
 
                     if (!empty($request->MasterFormulaRecordBMR) || !empty($request->deleted_MasterFormulaRecordBMR)) {
@@ -7934,7 +7984,7 @@ class DocumentController extends Controller
             
             'BMR' => 'frontend.documents.bmr-pdf',
             'BOM' => 'frontend.documents.bom-pdf',
-            // 'BPR' => 'frontend.documents.bpr-pdf',
+            'BPR' => 'frontend.documents.bpr-pdf',
             // 'PROTO' => 'frontend.documents.proto-pdf',
             'STUDYPROTOCOL' => 'frontend.documents.protocol.study_protocol',
             'STUDY' => 'frontend.documents.reports.study_report',

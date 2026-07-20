@@ -368,6 +368,8 @@
                 <button class="tablinks hidden-tabs" data-id="HOLDTIMESTUDYREPORT" onclick="openData(event, 'doc-holdtimstduy')">Hold Time Study Report</button>
                 <button class="tablinks hidden-tabs" data-id="BOM" onclick="openData(event, 'doc-billofmaterial')">Bill Of Material</button>
                 <button class="tablinks hidden-tabs" data-id="BMR" onclick="openData(event, 'doc-manufacturingRecord')">Batch Manufacturing Record (BMR)</button>
+                <button class="tablinks hidden-tabs" data-id="BPR" onclick="openData(event, 'doc-batchPackingRecord')">Batch Packing Record (BPR)</button>
+              
                 <button class="tablinks hidden-tabs" data-id="MAForRec" onclick="openData(event, 'doc-masterformulaRecord')">Master Formula Record</button>
                 <button class="tablinks hidden-tabs" data-id="MAPacRec" onclick="openData(event, 'doc-masterPackingRecord')">Master Packing Record</button>
                 <button class="tablinks hidden-tabs" data-id="SMF" onclick="openData(event, 'doc-SiteMasterFile')">Site Master File (SMF)</button>
@@ -10139,6 +10141,59 @@
                         </div>
                     </div>
 
+                {{-- Batch Packing Record BPR --}}
+                    <div id="doc-batchPackingRecord" class="tabcontent">
+                        <div class="orig-head">
+                           Batch Packing Record (BPR)                    
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="File_Attachment"><b>Batch Packing Record (BPR)  File Attachment</b></label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="batchPackingRecordBpr"></div>
+
+                                            <div class="add-btn">
+                                                <label for="batchPackingRecordBpr_I_gxp_attachment" style="cursor: pointer;">Add</label>
+                                                <input type="file" id="batchPackingRecordBpr_I_gxp_attachment" name="batchPackingRecordBpr[]"
+                                                    oninput="addMultipleFiles(this, 'batchPackingRecordBpr')" multiple hidden>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script>
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    fileList.innerHTML = ""; // Clear previous files (if needed)
+
+                                    for (let file of input.files) {
+                                        let fileItem = document.createElement("div");
+                                        fileItem.textContent = file.name;
+                                        fileList.appendChild(fileItem);
+                                    }
+                                }
+                                </script>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
 
 
                     {{-- Finished product,  Inprocess , Cleaning Validation Specification (Commercial  registration , re-registration) tabs --}}
