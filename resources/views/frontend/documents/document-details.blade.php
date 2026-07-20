@@ -71,12 +71,14 @@
                                         Print
                                     </button>
                                     @endif
-                                    @if (Helpers::checkControlAccess())
+                                    {{-- @if (Helpers::checkControlAccess()) --}}
+                                        @if(in_array($document->document_type_id, ['SOP']))
                                         <button onclick="location.href='{{ url('documents/printAnnexurePDF', $document->id) }}';"
                                             target="__blank">
                                             Print Annexure
                                         </button>
-                                    @endif
+                                        @endif
+                                    {{-- @endif --}}
 
                                     {{-- @if ($document->stage >= 7)
                                         <button data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
@@ -469,7 +471,7 @@
                                                     ->join('users', 'stage_manages.user_id', '=', 'users.id')
                                                     ->select('stage_manages.*', 'users.name as user_name')
                                                     ->where('document_id', $document->id)
-                                                    ->where('stage', 'HOD Review-Submit')
+                                                    ->where('stage', 'Review-Submit')
                                                     ->whereNull('deleted_at')
                                                     ->get();
                                             @endphp
