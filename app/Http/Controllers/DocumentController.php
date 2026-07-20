@@ -3280,7 +3280,7 @@ class DocumentController extends Controller
              'RevisionGridmfpstpData',
              'ProductSpecification',
              'MaterialSpecification',
-             'revisedSopNumbers','PH'
+             'revisedSopNumbers','PH','sampleReconcilation'
 
         ));
     }
@@ -6410,6 +6410,8 @@ class DocumentController extends Controller
         $issuanceTo = $request->issuance_to;
         $stampImpression = $request->department;
 
+        $issuedByName = User::where('id', $documentPrintBy)->value('name');
+
         if ($issue_copies < 1) {
             return redirect()->back()->withErrors([
                 'issued_copies' => 'Number of issued copies must be at least 1.'
@@ -6525,8 +6527,8 @@ class DocumentController extends Controller
                 default => 'frontend.documents.pdfpage',
             };
 
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document','documents','currentId'))
-                ->setOptions([
+            
+            $pdf = PDF::loadView($viewName, compact('data','time','document','documents','currentId','stampImpression','issuedDate','issuedByName'))->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
                     'isRemoteEnabled' => true,
@@ -8225,7 +8227,10 @@ class DocumentController extends Controller
         $IssueDate = request('issued_date');
         $IssuanceTo = request('issuance_to');
         $IssuedCopies = (int) request('issued_copies');
-        $depart = request('department');
+        $stampImpression = request('department');
+
+        $issuedByName = User::where('id', $document_print_by)
+        ->value('name');
        
         if ($issue_copies < 1) {
             return redirect()->back()->withErrors([
@@ -8369,13 +8374,8 @@ class DocumentController extends Controller
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
 
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document','annexures','currentId','documents','sopNumber','IssuedCopies'))
-                ->setOptions([
-                    'defaultFont' => 'sans-serif',
-                    'isHtml5ParserEnabled' => true,
-                    'isRemoteEnabled' => true,
-                    'isPhpEnabled' => true,
-                ]);
+            $pdf = PDF::loadView($viewName, compact('data','time','document','annexures','currentId','documents','sopNumber','IssuedCopies','IssueDate','stampImpression','issuedByName'))
+            ->setOptions(['defaultFont' => 'sans-serif', 'isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'isPhpEnabled' => true,]);
 
             $pdf->setPaper('A4');
 
@@ -8423,7 +8423,7 @@ class DocumentController extends Controller
                     // $download->issuance_date = $IssueDate;
                     $download->issuance_to = $IssuanceTo;
                     $download->issued_copies = $IssuedCopies;
-                    $download->department = $depart;
+                    $download->department = $stampImpression;
         
                     $download->save();
 
@@ -8455,7 +8455,7 @@ class DocumentController extends Controller
                     $download->issuance_to = $IssuanceTo;
                     $download->issued_copies = $IssuedCopies;
                     $download->issued_reason = $reasonIssue;
-                    $download->department = $depart;
+                    $download->department = $stampImpression;
 
                     $download->save();
 
@@ -8488,7 +8488,7 @@ class DocumentController extends Controller
                     $download->issuance_to = $IssuanceTo;
                     $download->issued_copies = $IssuedCopies;
                     $download->issued_reason = $reasonIssue;
-                    $download->department = $depart;
+                    $download->department = $stampImpression;
 
                     $download->save();
 
@@ -8518,7 +8518,7 @@ class DocumentController extends Controller
                     $download->issuance_to = $IssuanceTo;
                     $download->issued_copies = $IssuedCopies;
                     $download->issued_reason = $reasonIssue;
-                    $download->department = $depart;
+                    $download->department = $stampImpression;
 
                     $download->save();
 
@@ -8548,7 +8548,7 @@ class DocumentController extends Controller
                     $download->issuance_to = $IssuanceTo;
                     $download->issued_copies = $IssuedCopies;
                     $download->issued_reason = $reasonIssue;
-                    $download->department = $depart;
+                    $download->department = $stampImpression;
          
                     $download->save();
 
@@ -8575,8 +8575,40 @@ class DocumentController extends Controller
     public function printAnnexurePDF($id)
     {
     
-        $roles = explode(',', Auth::user()->role);
-        $controls = PrintControl::whereIn('role_id', $roles)->first();
+        $roleIds = DB::table('user_roles')
+            ->where('user_id', Auth::id())
+            ->pluck('role_id')
+            ->filter()
+            ->map(function ($roleId) {
+                return (int) $roleId;
+            })
+            ->unique()
+            ->values()
+            ->toArray();
+
+        if (empty($roleIds)) {
+            toastr()->error('No role is assigned to your account.');
+            return redirect()->back()->withInput();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Find Print Control
+        |--------------------------------------------------------------------------
+        */
+
+        $controls = PrintControl::whereIn('role_id', $roleIds)
+            ->orderByDesc('id')
+            ->first();
+       
+        if (!$controls) {
+            toastr()->error(
+                'There is no print control configured for your assigned roles.'
+            );
+
+            return redirect()->back()->withInput();
+        }
+
 
         $department = Department::find(Auth::user()->departmentid);
         $document = Document::find($id);

@@ -256,139 +256,292 @@
 
     <style>
         
-        /*Main Table Styling */
-        #isPasted {
-            width: 690px !important;
-            border-collapse: collapse;
-            table-layout: fixed;
+        /* =====================================================
+        ANNEXURE CONTENT
+        Supports text, headings, lists, tables and images
+        ===================================================== */
+
+        .annexure-wrapper {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
-        /* First column adjusts to its content */
-        #isPasted td:first-child,
-        #isPasted th:first-child {
-            white-space: nowrap; 
-            width: 1%;
-            vertical-align: top;
+        .annexure-main-title {
+            font-size: 14px !important;
+            line-height: 1.4 !important;
+            text-align: center !important;
+            font-weight: bold !important;
+            text-transform: uppercase;
+            margin: 0 0 15px 0 !important;
+            padding: 0 !important;
         }
 
-        /* Second column takes remaining space */
-        #isPasted td:last-child,
-        #isPasted th:last-child {
-            width: auto;
-            vertical-align: top;
-
+        .annexure-item {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 15px;
         }
 
-        /* Common Table Cell Styling */
-        #isPasted th,
-        #isPasted td {
-            border: 1px solid #000 !important;
-            padding: 8px;
-            text-align: left;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+        .annexure-title {
+            font-size: 13px !important;
+            line-height: 1.4 !important;
+            font-weight: bold !important;
+            text-align: left !important;
+            margin: 0 0 10px 0 !important;
+            padding: 0 !important;
         }
 
-        /* Paragraph Styling Inside Table Cells */
-        #isPasted td > p {
-            text-align: justify;
-            text-justify: inter-word;
-            margin: 0;
-            max-width: 700px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        #isPasted img {
-            max-width: 500px !important;
-            height: 100%;
-            display: block; /* Remove extra space below the image */
-            margin: 5px auto; /* Add spacing and center align */
-        }
-
-        /* If you want larger images */
-        #isPasted td img {
-            max-width: 400px !important; /* Adjust this to your preferred maximum width */
-            height: 300px;
-            margin: 5px auto;
-        }
-
-        .table-containers {
-            width: 690px;
-            overflow-x: fixed; /* Enable horsizontal scrolling */
-        }
-
-    
-        #isPasted table {
+        .annexure-quill-content {
             width: 100% !important;
-            border-collapse: collapse;
-            table-layout: fixed;
+            max-width: 100% !important;
+            box-sizing: border-box;
+            font-size: 12px !important;
+            line-height: 1.5 !important;
+            text-align: justify;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
         }
 
-
-        #isPasted table th,
-        #isPasted table td {
-            border: 1px solid #000 !important;
-            padding: 8px;
-            text-align: left;
-            max-width: 500px;
+        /* Normal paragraphs */
+        .annexure-quill-content p {
+            font-size: 12px !important;
+            line-height: 1.5 !important;
+            font-weight: normal;
+            margin: 4px 0 8px 0 !important;
+            padding: 0 !important;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
+        /* Quill headings */
+        .annexure-quill-content h1,
+        .annexure-quill-content h2,
+        .annexure-quill-content h3,
+        .annexure-quill-content h4,
+        .annexure-quill-content h5,
+        .annexure-quill-content h6 {
+            font-size: 12px !important;
+            line-height: 1.5 !important;
+            font-weight: bold !important;
+            margin: 10px 0 6px 0 !important;
+            padding: 0 !important;
+            page-break-after: avoid;
+        }
 
-        #isPasted table img {
+        /* Inline content */
+        .annexure-quill-content span,
+        .annexure-quill-content div,
+        .annexure-quill-content label {
+            font-size: 12px;
+            line-height: 1.5;
+            max-width: 100%;
+            box-sizing: border-box;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Bold and italic */
+        .annexure-quill-content strong,
+        .annexure-quill-content b {
+            font-weight: bold !important;
+        }
+
+        .annexure-quill-content em,
+        .annexure-quill-content i {
+            font-style: italic !important;
+        }
+
+        .annexure-quill-content u {
+            text-decoration: underline !important;
+        }
+
+        /* Lists */
+        .annexure-quill-content ul,
+        .annexure-quill-content ol {
+            font-size: 12px !important;
+            line-height: 1.5 !important;
+            margin: 5px 0 10px 0 !important;
+            padding-left: 25px !important;
+        }
+
+        .annexure-quill-content li {
+            font-size: 12px !important;
+            line-height: 1.5 !important;
+            margin: 2px 0 !important;
+            padding: 0 !important;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* =====================================================
+        TABLE HANDLING
+        ===================================================== */
+
+        .annexure-quill-content table,
+        .annexure-quill-content .table,
+        .annexure-quill-content .MsoNormalTable {
+            width: 100% !important;
             max-width: 100% !important;
-            height: auto;
+            border-collapse: collapse !important;
+            table-layout: fixed !important;
+            box-sizing: border-box;
+            margin: 8px 0 12px 0 !important;
+            page-break-inside: auto;
+        }
+
+        .annexure-quill-content thead {
+            display: table-header-group;
+        }
+
+        .annexure-quill-content tfoot {
+            display: table-footer-group;
+        }
+
+        .annexure-quill-content tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
+
+        .annexure-quill-content table,
+        .annexure-quill-content th,
+        .annexure-quill-content td {
+            border: 1px solid #000 !important;
+        }
+
+        .annexure-quill-content th,
+        .annexure-quill-content td {
+            font-size: 10px !important;
+            line-height: 1.35 !important;
+            padding: 5px !important;
+            text-align: left;
+            vertical-align: top !important;
+            word-break: break-word;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal !important;
+            box-sizing: border-box;
+        }
+
+        .annexure-quill-content th {
+            font-weight: bold !important;
+            text-align: center;
+        }
+
+        /* Remove unwanted pasted Word dimensions */
+        .annexure-quill-content table[width],
+        .annexure-quill-content td[width],
+        .annexure-quill-content th[width] {
+            width: auto !important;
+        }
+
+        /* Paragraphs inside table cells */
+        .annexure-quill-content td p,
+        .annexure-quill-content th p {
+            font-size: 10px !important;
+            line-height: 1.35 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* =====================================================
+        IMAGE HANDLING
+        ===================================================== */
+
+        .annexure-quill-content img {
             display: block;
-            margin: 5px auto;
+            width: auto !important;
+            max-width: 100% !important;
+            height: auto !important;
+            max-height: 600px;
+            object-fit: contain;
+            margin: 8px auto !important;
+            page-break-inside: avoid;
         }
 
-        .quill-pdf-content{
-            width:100%;
-            font-size:12px;
-            line-height:1.4;
+        /* Images inside table cells */
+        .annexure-quill-content td img,
+        .annexure-quill-content th img {
+            display: block;
+            width: auto !important;
+            max-width: 100% !important;
+            height: auto !important;
+            max-height: 300px;
+            object-fit: contain;
+            margin: 4px auto !important;
         }
 
-        .quill-pdf-content p{
-            margin:5px 0;
+        /* =====================================================
+        QUILL ALIGNMENT CLASSES
+        ===================================================== */
+
+        .annexure-quill-content .ql-align-center {
+            text-align: center !important;
         }
 
-        .quill-pdf-content table{
-            width:100%;
-            border-collapse:collapse;
-            margin-top:10px;
-            margin-bottom:10px;
+        .annexure-quill-content .ql-align-right {
+            text-align: right !important;
         }
 
-        .quill-pdf-content table,
-        .quill-pdf-content th,
-        .quill-pdf-content td{
-            border:1px solid #000;
+        .annexure-quill-content .ql-align-justify {
+            text-align: justify !important;
         }
 
-        .quill-pdf-content td,
-        .quill-pdf-content th{
-            padding:5px;
-            vertical-align:top;
+        .annexure-quill-content .ql-align-left {
+            text-align: left !important;
         }
 
-        .quill-pdf-content img{
-            max-width:100%;
-            height:auto;
+        /* Quill indentation */
+        .annexure-quill-content .ql-indent-1 {
+            margin-left: 20px !important;
         }
 
-        .quill-pdf-content ul,
-        .quill-pdf-content ol{
-            padding-left:20px;
+        .annexure-quill-content .ql-indent-2 {
+            margin-left: 40px !important;
         }
 
-        .quill-pdf-content strong,
-        .quill-pdf-content b{
-            font-weight:bold;
+        .annexure-quill-content .ql-indent-3 {
+            margin-left: 60px !important;
         }
-        
+
+        .annexure-quill-content .ql-indent-4 {
+            margin-left: 80px !important;
+        }
+
+        /* Links */
+        .annexure-quill-content a {
+            color: #000 !important;
+            text-decoration: underline;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Blockquote */
+        .annexure-quill-content blockquote {
+            font-size: 12px !important;
+            line-height: 1.5 !important;
+            margin: 8px 0 8px 15px !important;
+            padding-left: 10px !important;
+            border-left: 3px solid #777;
+        }
+
+        /* Code blocks */
+        .annexure-quill-content pre,
+        .annexure-quill-content code {
+            font-family: "DejaVu Sans Mono", monospace !important;
+            font-size: 10px !important;
+            white-space: pre-wrap !important;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Prevent pasted content from overflowing */
+        .annexure-quill-content * {
+            max-width: 100%;
+            box-sizing: border-box;
+        }
     </style>
 
 </head>
@@ -454,29 +607,41 @@
     </footer>
     
     <div class="content">
-        <section> 
+        <section>
             <div class="procedure-block">
                 <div class="w-100">
-                    <div class="w-100" style="display:inline-block;" id="table1">
-                        <div class="w-100">
-                            <div class="anne">
-                                @if (!empty($annexures))
-                                    <h3 style="text-align: center; margin-bottom: 1rem; font-weight:bold">Annexures</h3>
-                                    @foreach ($annexures as $index => $annexure)
-                                        @if (!empty($annexure))
-                                            <div style="{{ $index > 0 ? 'page-break-before: always;' : '' }} margin-bottom: 1rem;">
-                                                <h4 style="font-weight:bold">Annexure {{ $index + 1 }}</h4>
-                                                <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
-                                            
-                                                    <div class="quill-pdf-content">
-                                                        {!! $annexure !!}
-                                                    </div>
-                                                </div>
+                    <div class="w-100" id="table1">
+                        <div class="annexure-wrapper">
+
+                            @if (!empty($annexures))
+
+                                <h3 class="annexure-main-title">
+                                    ANNEXURES
+                                </h3>
+
+                                @foreach ($annexures as $index => $annexure)
+
+                                    @if (!empty(trim(strip_tags($annexure))))
+
+                                        <div
+                                            class="annexure-item"
+                                            style="{{ $index > 0 ? 'page-break-before: always;' : '' }}"
+                                        >
+                                            <h4 class="annexure-title">
+                                                Annexure {{ $index + 1 }}
+                                            </h4>
+
+                                            <div class="annexure-quill-content">
+                                                {!! $annexure !!}
                                             </div>
-                                        @endif
-                                    @endforeach
-                                @endif
-                            </div>
+                                        </div>
+
+                                    @endif
+
+                                @endforeach
+
+                            @endif
+
                         </div>
                     </div>
                 </div>

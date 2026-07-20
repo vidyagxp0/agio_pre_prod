@@ -2245,68 +2245,68 @@
                     <div class="input-fields">
                         <div class="row">
                            <div class="col-md-12">
-    <div class="group-input">
-        <label for="purpose">Objective</label>
-        <textarea name="purpose" 
-            @if($document->status == 'Effective') readonly @else {{ Helpers::isRevised($document->stage) }} @endif>
-            {{ $document->document_content ? $document->document_content->purpose : '' }}
-        </textarea>
-        @foreach ($history as $tempHistory)
-            @if ($tempHistory->activity_type == 'Purpose' && !empty($tempHistory->comment))
-                @php
-                    $users_name = DB::table('users')
-                        ->where('id', $tempHistory->user_id)
-                        ->value('name');
-                @endphp
-                <p style="color: blue">Modify by {{ $users_name }} at {{ $tempHistory->created_at }}</p>
-                <input class="input-field" style="background: #ffff0061; color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
-            @endif
-        @endforeach
-    </div>
-</div>
+                                <div class="group-input">
+                                    <label for="purpose">Objective</label>
+                                    <textarea name="purpose" 
+                                        @if($document->status == 'Effective') readonly @else {{ Helpers::isRevised($document->stage) }} @endif>
+                                        {{ $document->document_content ? $document->document_content->purpose : '' }}
+                                    </textarea>
+                                    @foreach ($history as $tempHistory)
+                                        @if ($tempHistory->activity_type == 'Purpose' && !empty($tempHistory->comment))
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at {{ $tempHistory->created_at }}</p>
+                                            <input class="input-field" style="background: #ffff0061; color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
 
-@if (Auth::user()->role != 3 && $document->stage < 8 && $document->status != 'Effective') 
-    {{-- Add Comment  --}}
-    <div class="comment">
-        <div>
-            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}</p>
-            <input class="input-field" type="text" name="purpose_comment">
-        </div>
-        <div class="button">Add Comment</div>
-    </div>
-@endif
+                            @if (Auth::user()->role != 3 && $document->stage < 8 && $document->status != 'Effective') 
+                                {{-- Add Comment  --}}
+                                <div class="comment">
+                                    <div>
+                                        <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}</p>
+                                        <input class="input-field" type="text" name="purpose_comment">
+                                    </div>
+                                    <div class="button">Add Comment</div>
+                                </div>
+                            @endif
 
-<div class="col-md-12">
-    <div class="group-input">
-        <label for="scope">Scope</label>
-        <textarea name="scope" 
-            @if($document->status == 'Effective') readonly @else {{ Helpers::isRevised($document->stage) }} @endif>
-            {{ $document->document_content ? $document->document_content->scope : '' }}
-        </textarea>
-        @foreach ($history as $tempHistory)
-            @if ($tempHistory->activity_type == 'Scope' && !empty($tempHistory->comment))
-                @php
-                    $users_name = DB::table('users')
-                        ->where('id', $tempHistory->user_id)
-                        ->value('name');
-                @endphp
-                <p style="color: blue">Modify by {{ $users_name }} at {{ $tempHistory->created_at }}</p>
-                <input class="input-field" style="background: #ffff0061; color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
-            @endif
-        @endforeach
-    </div>
-</div>
+                            <div class="col-md-12">
+                                <div class="group-input">
+                                    <label for="scope">Scope</label>
+                                    <textarea name="scope" 
+                                        @if($document->status == 'Effective') readonly @else {{ Helpers::isRevised($document->stage) }} @endif>
+                                        {{ $document->document_content ? $document->document_content->scope : '' }}
+                                    </textarea>
+                                    @foreach ($history as $tempHistory)
+                                        @if ($tempHistory->activity_type == 'Scope' && !empty($tempHistory->comment))
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at {{ $tempHistory->created_at }}</p>
+                                            <input class="input-field" style="background: #ffff0061; color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
 
-@if (Auth::user()->role != 3 && $document->stage < 8 && $document->status != 'Effective') 
-    {{-- Add Comment  --}}
-    <div class="comment">
-        <div>
-            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}</p>
-            <input class="input-field" type="text" name="scope_comment">
-        </div>
-        <div class="button">Add Comment</div>
-    </div>
-@endif
+                            @if (Auth::user()->role != 3 && $document->stage < 8 && $document->status != 'Effective') 
+                                {{-- Add Comment  --}}
+                                <div class="comment">
+                                    <div>
+                                        <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}</p>
+                                        <input class="input-field" type="text" name="scope_comment">
+                                    </div>
+                                    <div class="button">Add Comment</div>
+                                </div>
+                            @endif
 
 
                             <div class="col-md-12">
@@ -14502,24 +14502,7 @@
                         </div>
                     </div>
 
-                    {{-- <div class="input-fields">
-                        @if ($document->document_content && !empty($document->document_content->annexuredata))
-                            @foreach (unserialize($document->document_content->annexuredata) as $data)
-                                <div class="group-input mb-3">
-                                    <label>Annexure A-{{ $loop->index + 1 }}</label>
-                                    <textarea class="summernote" name="annexuredata[]">{{ $data }}</textarea>
-                                </div>
-                            @endforeach
-                        @else
-                            @for ($i = 1; $i <= 20; $i++)
-                                <div class="group-input mb-3">
-                                    <label for="annexure-{{ $i }}">Annexure A-{{ $i }}</label>
-                                    <textarea class="summernote" name="annexuredata[]" id="annexure-{{ $i }}"></textarea>
-                                </div>
-                            @endfor
-                        @endif
-                    </div> --}}
-
+                    
                     <div class="input-fields">
 
                         @if ($document->document_content && !empty($document->document_content->annexuredata))

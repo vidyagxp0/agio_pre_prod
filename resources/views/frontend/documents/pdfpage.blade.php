@@ -473,154 +473,397 @@
 
             background: #fff;
         }
+
+                /* Download modal se selected stamp */
+        .selected-download-stamp {
+            position: absolute;
+            top: -45px;
+            right: 10px;
+            width: 190px;
+            height: 95px;
+            z-index: 99999;
+            text-align: center;
+        }
+
+        /* Common rectangle stamp */
+        .stamp-box {
+            display: inline-block;
+            min-width: 145px;
+            max-width: 185px;
+            padding: 5px 8px;
+            border: 2px solid;
+            background: #fff;
+            font-family: "DejaVu Sans", Arial, sans-serif;
+            font-size: 15px;
+            line-height: 1.2;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            box-sizing: border-box;
+            transform: rotate(-2deg);
+            opacity: 0.9;
+        }
+
+        /* Common round stamp */
+        .stamp-round {
+            display: inline-block;
+            width: 82px;
+            height: 82px;
+            border: 3px double;
+            border-radius: 50%;
+            background: #fff;
+            font-family: "DejaVu Sans", Arial, sans-serif;
+            font-weight: bold;
+            text-align: center;
+            box-sizing: border-box;
+            transform: rotate(-5deg);
+            opacity: 0.9;
+            padding-top: 17px;
+        }
+
+        .stamp-round-top {
+            font-size: 9px;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+
+        .stamp-round-center {
+            width: 42px;
+            margin: 6px auto 0;
+            padding: 7px 0;
+            border: 1px solid;
+            border-radius: 50%;
+            font-size: 9px;
+            line-height: 1;
+        }
+
+        .stamp-main-text {
+            font-size: 14px;
+            line-height: 1.15;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .stamp-small-text {
+            margin-top: 3px;
+            font-size: 8px;
+            line-height: 1.15;
+            font-weight: normal;
+            text-align: left;
+            text-transform: none;
+        }
+
+        /* Master copy green */
+        .stamp-master {
+            color: #00a99d;
+            border-color: #00a99d;
+            letter-spacing: 1px;
+        }
+
+        /* Controlled copy blue/purple */
+        .stamp-controlled {
+            color: #7048e8;
+            border-color: #7048e8;
+        }
+
+        /* Red stamps */
+        .stamp-red {
+            color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        /* Purple stamps */
+        .stamp-purple {
+            color: #8b5cf6;
+            border-color: #8b5cf6;
+        }
+
+        .stamp-obsolete {
+            font-size: 16px;
+        }
+
+        .stamp-issued-by {
+            min-width: 155px;
+        }
     </style>
 
 
     <style>
         
-        #isPasted {
-            width: 690px !important;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-
-        #isPasted td:first-child,
-        #isPasted th:first-child {
-            white-space: nowrap; 
-            width: 1%;
-            vertical-align: top;
-        }
-
-        #isPasted td:last-child,
-        #isPasted th:last-child {
-            width: auto;
-            vertical-align: top;
-
-        }
-
-        #isPasted th,
-        #isPasted td {
-            border: 1px solid #000 !important;
-            padding: 8px;
-            text-align: left;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        #isPasted td > p {
-            text-align: justify;
-            text-justify: inter-word;
-            margin: 0;
-            max-width: 680px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        #isPasted td > p span {
-            display: inline-block;
+       .quill-pdf-content {
+            margin-left: 2.5rem;
             width: 650px;
+            max-width: 650px;
+            font-size: 12px;
+            line-height: 1.6;
+            text-align: justify;
             word-wrap: break-word;
             overflow-wrap: break-word;
+            box-sizing: border-box;
         }
 
-        #isPasted img {
-            max-width: 500px !important;
-            height: 100%;
-            display: block;
-            margin: 5px auto;
+        .quill-pdf-content p {
+            margin: 0 0 12px 0;
+            font-size: 12px;
+            line-height: 1.6;
+            font-weight: normal;
         }
 
-        #isPasted td img {
-            max-width: 400px !important;
-            height: 300px;
-            margin: 5px auto;
+        .quill-pdf-content .proc-heading {
+            margin: 18px 0 8px 0;
+            font-size: 12px;
+            line-height: 1.5;
+            font-weight: bold;
         }
 
-        .table-containers {
-            width: 690px;
-            overflow-x: fixed;
+        .quill-pdf-content span {
+            font-size: 12px;
         }
 
-    
-        #isPasted table {
+        .quill-pdf-content h1,
+        .quill-pdf-content h2,
+        .quill-pdf-content h3,
+        .quill-pdf-content h4,
+        .quill-pdf-content h5,
+        .quill-pdf-content h6 {
+            font-size: 12px !important;
+            line-height: 1.5 !important;
+            font-weight: bold !important;
+            margin: 18px 0 8px 0 !important;
+        }
+
+        /* Procedure tables */
+        .quill-pdf-content table {
             width: 100% !important;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-
-
-        #isPasted table th,
-        #isPasted table td {
-            border: 1px solid #000 !important;
-            padding: 8px;
-            text-align: left;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        #isPasted table img {
             max-width: 100% !important;
-            height: auto;
-            display: block;
-            margin: 5px auto;
-        }
-        
-        .quill-pdf-content{
-            width:100%;
-            font-size:12px;
-            line-height:1.4;
-        }
-
-        .quill-pdf-content p{
-            margin:5px 0;
-        }
-
-        .quill-pdf-content table{
-            width:100%;
-            border-collapse:collapse;
-            margin-top:10px;
-            margin-bottom:10px;
+            border-collapse: collapse !important;
+            border-spacing: 0 !important;
+            table-layout: fixed !important;
+            margin: 10px 0 15px 0 !important;
+            page-break-inside: auto;
         }
 
         .quill-pdf-content table,
-        .quill-pdf-content th,
-        .quill-pdf-content td{
-            border:1px solid #000;
+        .quill-pdf-content table tr,
+        .quill-pdf-content table th,
+        .quill-pdf-content table td {
+            border: 1px solid #000 !important;
         }
 
-        .quill-pdf-content td,
-        .quill-pdf-content th{
-            padding:5px;
-            vertical-align:top;
+        .quill-pdf-content table th,
+        .quill-pdf-content table td {
+            font-size: 10px !important;
+            line-height: 1.35 !important;
+            padding: 5px !important;
+            vertical-align: top !important;
+            text-align: left !important;
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
+            word-break: break-word !important;
+            white-space: normal !important;
         }
 
-        .quill-pdf-content img{
-            max-width:100%;
-            height:auto;
+        .quill-pdf-content table tr:first-child td,
+        .quill-pdf-content table tr:first-child th {
+            font-weight: bold !important;
+            text-align: center !important;
         }
 
+        .quill-pdf-content table td p,
+        .quill-pdf-content table th p,
+        .quill-pdf-content table td div,
+        .quill-pdf-content table th div,
+        .quill-pdf-content table td span,
+        .quill-pdf-content table th span {
+            font-size: 10px !important;
+            line-height: 1.35 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            text-align: inherit !important;
+        }
+
+        .quill-pdf-content table tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
+
+        .quill-pdf-content table thead {
+            display: table-header-group;
+        }
+
+        .quill-pdf-content table tfoot {
+            display: table-footer-group;
+        }
+
+        .quill-pdf-content table[width] {
+            width: 100% !important;
+        }
+
+        .quill-pdf-content td[width],
+        .quill-pdf-content th[width] {
+            width: auto !important;
+        }
+
+        /* Lists */
         .quill-pdf-content ul,
-        .quill-pdf-content ol{
-            padding-left:20px;
+        .quill-pdf-content ol {
+            padding-left: 25px !important;
+            margin: 5px 0 10px 0 !important;
         }
 
-        .quill-pdf-content strong,
-        .quill-pdf-content b{
-            font-weight:bold;
+        .quill-pdf-content li {
+            font-size: 12px !important;
+            line-height: 1.5 !important;
+            margin-bottom: 3px;
+        }
+
+        /* Images */
+        .quill-pdf-content img {
+            display: block;
+            width: auto !important;
+            max-width: 100% !important;
+            height: auto !important;
+            margin: 8px auto !important;
+            page-break-inside: avoid;
         }
     </style>
 
 </head>
 
 <body>
-<div class="header-wrapper">
+    <div class="header-wrapper">
 
-    @if($document->status == 'Effective' || $document->status == 'Obsolete')
+    @php
+        $downloadStamp = isset($stampImpression) && $stampImpression !== '';
+        $stampValue = isset($stampImpression) ? (string) $stampImpression : '';
+
+        $formattedIssuedDate = !empty($issuedDate)
+            ? \Carbon\Carbon::parse($issuedDate)->format('d-M-Y')
+            : '';
+    @endphp
+
+    @if ($downloadStamp)
+
+        <div class="selected-download-stamp">
+
+            {{-- 1. MASTER COPY --}}
+            @if ($stampValue === '1')
+                <div class="stamp-box stamp-master">
+                    MASTER COPY
+                </div>
+
+            {{-- 2. CONTROLLED COPY ROUND --}}
+            @elseif ($stampValue === '2')
+                <div class="stamp-round stamp-controlled">
+                    <div class="stamp-round-top">CONTROLLED COPY</div>
+                    <div class="stamp-round-center">Q.A.</div>
+                </div>
+
+            {{-- 3. CONTROLLED COPY WITH SIGN/DATE --}}
+            @elseif ($stampValue === '3')
+                <div class="stamp-box stamp-controlled">
+                    <div class="stamp-main-text">CONTROLLED COPY</div>
+                    <div class="stamp-small-text">Sign: _____________</div>
+                    <div class="stamp-small-text">
+                        Date: {{ $formattedIssuedDate }}
+                    </div>
+                </div>
+
+            {{-- 4. UNCONTROLLED COPY WITH SIGN/DATE --}}
+            @elseif ($stampValue === '4')
+                <div class="stamp-box stamp-red">
+                    <div class="stamp-main-text">UNCONTROLLED COPY</div>
+                    <div class="stamp-small-text">Sign: _____________</div>
+                    <div class="stamp-small-text">
+                        Date: {{ $formattedIssuedDate }}
+                    </div>
+                </div>
+
+            {{-- 5. UNCONTROLLED COPY --}}
+            @elseif ($stampValue === '5')
+                <div class="stamp-box stamp-red">
+                    UNCONTROLLED COPY
+                </div>
+
+            {{-- 6. OBSOLETE WITH SIGN/DATE --}}
+            @elseif ($stampValue === '6')
+                <div class="stamp-box stamp-red">
+                    <div class="stamp-main-text">OBSOLETE COPY</div>
+                    <div class="stamp-small-text">Sign: _____________</div>
+                    <div class="stamp-small-text">
+                        Date: {{ $formattedIssuedDate }}
+                    </div>
+                </div>
+
+            {{-- 7. OBSOLETE --}}
+            @elseif ($stampValue === '7')
+                <div class="stamp-box stamp-red stamp-obsolete">
+                    OBSOLETE COPY
+                </div>
+
+            {{-- 8. APPROVED ROUND --}}
+            @elseif ($stampValue === '8')
+                <div class="stamp-round stamp-red">
+                    <div class="stamp-round-top">APPROVED</div>
+                    <div class="stamp-round-center">Q.A.</div>
+                </div>
+
+            {{-- 9. REFERENCE COPY --}}
+            @elseif ($stampValue === '9')
+                <div class="stamp-box stamp-purple">
+                    REFERENCE COPY
+                </div>
+
+            {{-- 10. ISSUED COPY ROUND --}}
+            @elseif ($stampValue === '10')
+                <div class="stamp-round stamp-purple">
+                    <div class="stamp-round-top">ISSUED COPY</div>
+                    <div class="stamp-round-center">Q.A.</div>
+                </div>
+
+            {{-- 11. ISSUED BY --}}
+            @elseif ($stampValue === '11')
+                <div class="stamp-box stamp-purple stamp-issued-by">
+                    <div class="stamp-main-text">ISSUED BY</div>
+
+                    <div class="stamp-small-text">
+                        {{ $issuedByName ?? '' }}
+                    </div>
+
+                    <div class="stamp-small-text">
+                        Sign: _____________
+                    </div>
+
+                    <div class="stamp-small-text">
+                        Date: {{ $formattedIssuedDate }}
+                    </div>
+                </div>
+
+            {{-- 12. REVIEWED NO CHANGE --}}
+            @elseif ($stampValue === '12')
+                <div class="stamp-box stamp-purple">
+                    <div class="stamp-main-text">REVIEWED</div>
+                    <div class="stamp-main-text">NO CHANGE</div>
+
+                    <div class="stamp-small-text">
+                        Sign: _____________
+                    </div>
+
+                    <div class="stamp-small-text">
+                        Date: {{ $formattedIssuedDate }}
+                    </div>
+                </div>
+            @endif
+
+        </div>
+
+    @elseif ($document->status == 'Effective' || $document->status == 'Obsolete')
+
+        {{-- Existing normal SOP master-copy logic --}}
         <div class="master-copy">
             MASTER COPY
         </div>
+
     @endif
     <header class="">
         <table class="border" style="width: 100%;">
@@ -1238,9 +1481,19 @@
                             </tr>
                         </thead>
                     </table>
-                        <div class="quill-pdf-content">
-                            {!! $data->document_content->procedure !!}
-                        </div>
+                    @php
+                        $procedure = $data->document_content->procedure ?? '';
+
+                        $procedure = str_replace(
+                            ['<h1', '<h2', '<h3', '</h1>', '</h2>', '</h3>'],
+                            ['<p class="proc-heading"', '<p class="proc-heading"', '<p class="proc-heading"', '</p>', '</p>', '</p>'],
+                            $procedure
+                        );
+                    @endphp
+
+                    <div class="quill-pdf-content">
+                        {!! $procedure !!}
+                    </div>
                 </div>
                 {{-- PROCEDURE END --}}
 
