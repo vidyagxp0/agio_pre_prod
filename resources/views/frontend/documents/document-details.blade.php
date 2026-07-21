@@ -53,20 +53,20 @@
                                             onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
                                         </button>
                                     @endif --}}
-                                    @if(in_array($document->document_type_id, ['SOP', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
+                                    @if(in_array($document->document_type_id, ['BMR', 'BOM', 'BPR','SOP', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
                                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print-modal1">
                                         Download
                                     </button>
                                     @endif
                                     {{-- @if (Helpers::checkControlAccess())
-                                        @if(in_array($document->document_type_id, ['SOP', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
+                                        @if(in_array($document->document_type_id, ['BMR', 'BOM', 'BPR','SOP', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
                                         <button onclick="location.href='{{ url('documents/printPDF', $document->id) }}';"
                                             target="__blank">
                                             Print
                                         </button>
                                         @endif
                                     @endif --}}
-                                    @if(in_array($document->document_type_id, ['SOP', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
+                                    @if(in_array($document->document_type_id, ['BMR', 'BOM', 'BPR','SOP', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
                                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print-modal">
                                         Print
                                     </button>
