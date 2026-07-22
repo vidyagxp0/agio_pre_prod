@@ -116,7 +116,6 @@
 
         @page {
             size: A4;
-            /* margin: 20mm; */
         }
 
         header {
@@ -140,6 +139,11 @@
             z-index: 1000;
             margin-top: 20px;
         }
+
+        header .doc-num{
+            /* font-weight: bold; */
+        }
+
 
         .table-responsive {
             overflow-x: auto;
@@ -310,7 +314,7 @@
             font-size: 12px !important;
             line-height: 1.5 !important;
             font-weight: normal;
-            margin: 4px 0 8px 0 !important;
+            margin: 3px 0 6px 0 !important;
             padding: 0 !important;
             word-wrap: break-word;
             overflow-wrap: break-word;
@@ -326,7 +330,7 @@
             font-size: 12px !important;
             line-height: 1.5 !important;
             font-weight: bold !important;
-            margin: 10px 0 6px 0 !important;
+            margin: 8px 0 4px 0 !important;
             padding: 0 !important;
             page-break-after: avoid;
         }
@@ -363,7 +367,7 @@
         .annexure-quill-content ol {
             font-size: 12px !important;
             line-height: 1.5 !important;
-            margin: 5px 0 10px 0 !important;
+            margin: 4px 0 8px 0 !important;
             padding-left: 25px !important;
         }
 
@@ -388,7 +392,7 @@
             border-collapse: collapse !important;
             table-layout: fixed !important;
             box-sizing: border-box;
-            margin: 8px 0 12px 0 !important;
+            margin: 6px 0 10px 0 !important;
             page-break-inside: auto;
         }
 
@@ -457,7 +461,7 @@
             height: auto !important;
             max-height: 600px;
             object-fit: contain;
-            margin: 8px auto !important;
+            margin: 6px auto !important;
             page-break-inside: avoid;
         }
 
@@ -542,6 +546,7 @@
             max-width: 100%;
             box-sizing: border-box;
         }
+        
     </style>
 
 </head>
@@ -611,38 +616,15 @@
             <div class="procedure-block">
                 <div class="w-100">
                     <div class="w-100" id="table1">
-                        <div class="annexure-wrapper">
 
-                            @if (!empty($annexures))
+                        <h3 style="text-align:center;margin-bottom:20px;">
+                            ANNEXURE {{ $annexureNo }}
+                        </h3>
 
-                                <h3 class="annexure-main-title">
-                                    ANNEXURES
-                                </h3>
-
-                                @foreach ($annexures as $index => $annexure)
-
-                                    @if (!empty(trim(strip_tags($annexure))))
-
-                                        <div
-                                            class="annexure-item"
-                                            style="{{ $index > 0 ? 'page-break-before: always;' : '' }}"
-                                        >
-                                            <h4 class="annexure-title">
-                                                Annexure {{ $index + 1 }}
-                                            </h4>
-
-                                            <div class="annexure-quill-content">
-                                                {!! $annexure !!}
-                                            </div>
-                                        </div>
-
-                                    @endif
-
-                                @endforeach
-
-                            @endif
-
+                        <div class="annexure-quill-content">
+                            {!! $annexure !!}
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -651,15 +633,23 @@
 
     <script type="text/php">
         if (isset($pdf)) {
+
             $pdf->page_script('
-                $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
+                $font = $fontMetrics->get_font("Helvetica", "bold");
+
                 $size = 12;
-                $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 775;
-                $x = 480;
-                $pdf->text($x, $y, $pageText, $font, $size);
+
+                $text = $PAGE_NUM . " - " . $PAGE_COUNT;
+
+                $width = $fontMetrics->get_text_width($text, $font, $size);
+
+                $x = 500 - $width;
+
+                $y = 790;
+
+                $pdf->text($x, $y, $text, $font, $size);
             ');
         }
-    </script>
+</script>
 </body>
 </html>
