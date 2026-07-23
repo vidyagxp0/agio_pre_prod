@@ -7,6 +7,7 @@ use App\Models\Annexure;
 use App\Models\Department;
 use App\Models\Division;
 use App\Models\Document;
+use App\Models\DocumentRequest;
 use App\Models\DocumentContent;
 
 use App\Models\DocumentGrid;
@@ -265,6 +266,28 @@ class DocumentController extends Controller
             ->orderBy('name')
             ->get();
 
+        $requestDocuments = DocumentRequest::orderByDesc('id')
+            ->paginate(10, ['*'], 'request_page')
+            ->withQueryString();
+
+        foreach ($requestDocuments as $requestDocument) {
+
+            $requestDocument->document_number = Document::where(
+                'id',
+                $requestDocument->document_id
+            )->value('document_number');
+
+            $requestDocument->request_by_name = User::where(
+                'id',
+                $requestDocument->request_by
+            )->value('name');
+
+            $requestDocument->request_to_name = User::where(
+                'id',
+                $requestDocument->request_to
+            )->value('name');
+        } 
+
         return view(
             'frontend.documents.index',
             compact(
@@ -273,7 +296,7 @@ class DocumentController extends Controller
                 'divisions',
                 'originator',
                 'documentTypes',
-                'documentStatus'
+                'documentStatus','requestDocuments'
             )
         );
     }
@@ -283,7 +306,6 @@ class DocumentController extends Controller
         $res = [];
 
         $query = Document::query();
-        
 
         if ($request->status && !empty($request->status)) {
             $query->where('status', $request->status);
@@ -301,19 +323,32 @@ class DocumentController extends Controller
             $query->where('originator_id', $request->originator_id);
         }
 
-        // $documents = $query->get();
-        $documents = $query->orderBy('id', 'desc')->get();
+        $requestDocuments = DocumentRequest::orderByDesc('id')
+            ->paginate(10, ['*'], 'request_page')
+            ->withQueryString();
 
-        foreach ($documents as $doc) {
-            $doctype = DocumentType::where('id', $doc->document_type_id)->value('name');
-            $originatorName = User::where('id', $doc->originator_id)->value('name');
+        foreach ($requestDocuments as $requestDocument) {
 
-            // Assign the retrieved names to the document object
-            $doc['document_type_name'] = $doctype;
-            $doc['originator_name'] = $originatorName;
+            $requestDocument->document_number = Document::where(
+                'id',
+                $requestDocument->document_id
+            )->value('document_number');
+
+            $requestDocument->request_by_name = User::where(
+                'id',
+                $requestDocument->request_by
+            )->value('name');
+
+            $requestDocument->request_to_name = User::where(
+                'id',
+                $requestDocument->request_to
+            )->value('name');
         }
 
-        $html = view('frontend.documents.comps.record_table', compact('documents'))->render();
+        $html = view(
+            'frontend.documents.comps.record_table',
+            compact('documents', 'requestDocuments')
+        )->render();
 
         $res['html'] = $html;
 
@@ -546,6 +581,7 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
+       
         if ($request->submit == 'save') {
 
             $document = new Document();
@@ -637,6 +673,14 @@ class DocumentController extends Controller
             $document->minor = $request->minor;
             $document->sop_type = $request->sop_type;
             $document->sop_type_short = $request->sop_type_short;
+
+            /*
+            |--------------------------------------------------------------------------
+            | Generate Document Number
+            |--------------------------------------------------------------------------
+            */
+
+            $document->document_number = $this->generateDocumentNumber($request->department_id, $request->document_type_id, $request->sop_type, $request->sop_type_short, $request->revised ?? 'No', $request->revised_doc);
             $document->notify_to = json_encode($request->notify_to);
 
             $document->master_copy_number = $request->master_copy_number;
@@ -2969,31 +3013,41 @@ class DocumentController extends Controller
         }
         /*
         |--------------------------------------------------------------------------
-        | Distribution history
+        | Distribution history - copy wise rows
         |--------------------------------------------------------------------------
         */
 
-        $printHistory = PrintHistory::where('document_id', $id)
-            ->get()
-            ->map(function ($row) {
-                $row->history_type = 'print';
-                $row->history_id = $row->id;
+        $printHistory = PrintHistory::where(
+            'document_id',
+            $id
+        )
+        ->orderBy('created_at', 'asc')
+        ->get()
+        ->map(function ($row) {
 
-                return $row;
-            });
+            $row->history_type = 'print';
+            $row->history_id = $row->id;
 
-        $downloadHistory = DownloadHistory::where('document_id', $id)
-            ->get()
-            ->map(function ($row) {
-                $row->history_type = 'download';
-                $row->history_id = $row->id;
+            return $row;
+        });
 
-                return $row;
-            });
+        $downloadHistory = DownloadHistory::where(
+            'document_id',
+            $id
+        )
+        ->orderBy('created_at', 'asc')
+        ->get()
+        ->map(function ($row) {
+
+            $row->history_type = 'download';
+            $row->history_id = $row->id;
+
+            return $row;
+        });
 
         /*
         |--------------------------------------------------------------------------
-        | Saved retrieval/destruction records
+        | Existing saved per-copy grid records
         |--------------------------------------------------------------------------
         */
 
@@ -3001,106 +3055,221 @@ class DocumentController extends Controller
             'document_id',
             $id
         )
-            ->get()
-            ->keyBy(function ($row) {
-                return $row->history_type . '_' . $row->history_id;
-            });
+        ->get()
+        ->keyBy(function ($row) {
+
+            return $row->history_type
+                . '_'
+                . $row->history_id
+                . '_'
+                . (int) $row->copy_number;
+        });
 
         /*
         |--------------------------------------------------------------------------
-        | History + saved grid data merge
+        | Print + download histories
         |--------------------------------------------------------------------------
         */
 
-        $PH = $printHistory
+        $combinedHistories = $printHistory
             ->concat($downloadHistory)
             ->sortBy('created_at')
-            ->values()
-            ->map(function ($history) use ($savedDistributionRecords) {
+            ->values();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Expand every issuance into individual copy rows
+        |--------------------------------------------------------------------------
+        |
+        | Example:
+        |
+        | History issued_copies = 3
+        |
+        | Generated rows:
+        | copy_number = 1
+        | copy_number = 2
+        | copy_number = 3
+        |--------------------------------------------------------------------------
+        */
+
+        $PH = collect();
+
+        foreach ($combinedHistories as $history) {
+
+            $issuedCopies = (int) (
+                $history->total_issued_copies
+                ?? $history->issued_copies
+                ?? $history->document_printed_copies
+                ?? $history->issue_copies
+                ?? 0
+            );
+
+            if ($issuedCopies < 1) {
+                continue;
+            }
+
+            for (
+                $copyNumber = 1;
+                $copyNumber <= $issuedCopies;
+                $copyNumber++
+            ) {
+
+                /*
+                |--------------------------------------------------------------------------
+                | Clone history so every copy becomes an independent row
+                |--------------------------------------------------------------------------
+                */
+
+                $copyRow = clone $history;
+
+                $copyRow->copy_number = $copyNumber;
+
+                $copyRow->formatted_copy_number = str_pad(
+                    $copyNumber,
+                    3,
+                    '0',
+                    STR_PAD_LEFT
+                );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Since one row represents one physical copy
+                |--------------------------------------------------------------------------
+                */
+
+                $copyRow->issued_copies = 1;
+
+                /*
+                |--------------------------------------------------------------------------
+                | Request ID
+                |--------------------------------------------------------------------------
+                */
+
+                $copyRow->request_id =
+                    $history->request_id
+                    ?? null;
+
+                /*
+                |--------------------------------------------------------------------------
+                | Find saved retrieval/destruction record for this exact copy
+                |--------------------------------------------------------------------------
+                */
 
                 $historyKey =
-                    $history->history_type . '_' . $history->history_id;
+                    $history->history_type
+                    . '_'
+                    . $history->history_id
+                    . '_'
+                    . $copyNumber;
 
                 $savedGrid =
-                    $savedDistributionRecords->get($historyKey);
+                    $savedDistributionRecords->get(
+                        $historyKey
+                    );
 
+                /*
+                |--------------------------------------------------------------------------
+                | Saved grid identity
+                |--------------------------------------------------------------------------
+                */
 
-                $history->distribution_grid_id =
+                $copyRow->distribution_grid_id =
                     $savedGrid->id ?? null;
 
-                $history->retrieved_copies =
-                    $savedGrid->retrieved_copies ?? null;
+                /*
+                |--------------------------------------------------------------------------
+                | Distribution values
+                |--------------------------------------------------------------------------
+                */
 
-                $history->retrieval_by =
-                    $savedGrid->retrieval_by ?? null;
-
-                $history->retrieval_date =
-                    $savedGrid->retrieval_date ?? null;
-
-                $history->retrieved_reason =
-                    $savedGrid->retrieved_reason ?? null;
-
-                $history->retrieved_department =
-                    $savedGrid->retrieved_department ?? null;
-
-                $history->destructed_by =
-                    $savedGrid->destructed_by ?? null;
-
-                $history->destruction_date =
-                    $savedGrid->destruction_date ?? null;
-
-                $history->destructed_copies =
-                    $savedGrid->destructed_copies ?? null;
-
-                $history->destruction_reason =
-                    $savedGrid->destruction_reason ?? null;
-
-                $history->remark =
-                    $savedGrid->remark ?? null;
-
-                $history->document_title =
+                $copyRow->document_title =
                     $savedGrid->document_title
                     ?? $history->document_title
                     ?? null;
 
-                $history->document_number =
+                $copyRow->document_number =
                     $savedGrid->document_number
                     ?? $history->document_number
                     ?? null;
 
-                $history->document_printed_by =
+                $copyRow->document_printed_by =
                     $savedGrid->document_printed_by
+                    ?? $history->issued_by
                     ?? $history->user_id
                     ?? null;
 
-                $history->issuance_date =
+                $copyRow->issuance_date =
                     $savedGrid->issuance_date
+                    ?? $history->issued_date
                     ?? $history->date
                     ?? null;
 
-                $history->issued_copies =
-                    $savedGrid->issued_copies
-                    ?? $history->issued_copies
-                    ?? $history->issue_copies
-                    ?? null;
-
-                $history->issuance_to =
+                $copyRow->issuance_to =
                     $savedGrid->issuance_to
                     ?? $history->issuance_to
                     ?? null;
 
-                $history->issued_reason =
+                $copyRow->issued_reason =
                     $savedGrid->issued_reason
+                    ?? $history->print_reason
                     ?? $history->issued_reason
                     ?? null;
 
-                $history->location =
+                $copyRow->location =
                     $savedGrid->location
+                    ?? $history->issued_to_department
                     ?? $history->department
                     ?? null;
 
-                return $history;
-            });
+                /*
+                |--------------------------------------------------------------------------
+                | Retrieval values
+                |--------------------------------------------------------------------------
+                */
+
+                $copyRow->retrieval_status =
+                    $savedGrid->retrieval_status
+                    ?? null;
+
+                $copyRow->retrieval_by =
+                    $savedGrid->retrieval_by
+                    ?? null;
+
+                $copyRow->retrieval_date =
+                    $savedGrid->retrieval_date
+                    ?? null;
+
+                $copyRow->retrieved_reason =
+                    $savedGrid->retrieved_reason
+                    ?? null;
+
+                /*
+                |--------------------------------------------------------------------------
+                | Destruction values
+                |--------------------------------------------------------------------------
+                */
+
+                $copyRow->destructed_by =
+                    $savedGrid->destructed_by
+                    ?? null;
+
+                $copyRow->destruction_date =
+                    $savedGrid->destruction_date
+                    ?? null;
+
+                $copyRow->destructed_copies =
+                    $savedGrid->destructed_copies
+                    ?? null;
+
+                $copyRow->destruction_reason =
+                    $savedGrid->destruction_reason
+                    ?? null;
+
+                $copyRow->remark = $savedGrid->remark ?? null;
+
+                $PH->push($copyRow);
+            }
+        }
 
         $print_history = PrintHistory::join('users', 'print_histories.user_id', 'users.id')->select('print_histories.*', 'users.name as user_name')->where('document_id', $id)->get();
         $document = Document::join('users', 'documents.originator_id', 'users.id')->leftjoin('document_types', 'documents.document_type_id', 'document_types.id')
@@ -3343,11 +3512,6 @@ class DocumentController extends Controller
 
     public function update($id, Request $request)
     {
-      
-        $document = Document::find($id);
-        $document->document_number = $request->document_number;
-        $document->update();
-
 
         if ($request->submit == 'save') {
             $lastDocument = Document::find($id);
@@ -3364,12 +3528,54 @@ class DocumentController extends Controller
 
                 $document->legacy_number = $request->legacy_number;
                 $document->due_dateDoc = $request->due_dateDoc;
-                $document->sop_type = $request->sop_type;
-                $document->sop_type_short = $request->sop_type_short;
-                $document->department_id = $request->department_id;
-                $document->document_type_id = $request->document_type_id;
+
+                /*
+                |--------------------------------------------------------------------------
+                | Old Numbering Values
+                |--------------------------------------------------------------------------
+                */
+
+                $oldDepartmentId = $document->department_id;
+                $oldDocumentTypeId = $document->document_type_id;
+                $oldSopType = $document->sop_type;
+                $oldSopTypeShort = $document->sop_type_short;
+
+                $oldRevised = $document->revised ?? 'No';
+                $oldRevisedDoc = $document->revised_doc;
+
+                /*
+                |--------------------------------------------------------------------------
+                | New Numbering Values
+                |--------------------------------------------------------------------------
+                */
+
+                $newDepartmentId = $request->department_id;
+                $newDocumentTypeId = $request->document_type_id;
+                $newSopType = $request->sop_type;
+                $newSopTypeShort = $request->sop_type_short;
+
+                $newRevised = $request->revised ?? $document->revised ?? 'No';
+                $newRevisedDoc = $request->revised_doc ?? $document->revised_doc;
+
+                $documentNumberFieldsChanged =
+                (string) $oldDepartmentId !== (string) $newDepartmentId
+                || (string) $oldDocumentTypeId !== (string) $newDocumentTypeId
+                || (string) $oldSopType !== (string) $newSopType
+                || $oldSopTypeShort !== $newSopTypeShort
+                || (string) $oldRevised !== (string) $newRevised
+                || (string) $oldRevisedDoc !== (string) $newRevisedDoc;
+
+                $document->sop_type = $newSopType;
+                $document->sop_type_short = $newSopTypeShort;
+                $document->department_id = $newDepartmentId;
+                $document->document_type_id = $newDocumentTypeId;
                 $document->document_subtype_id = $request->document_subtype_id;
+
                 $document->document_language_id = $request->document_language_id;
+
+                if ($documentNumberFieldsChanged) {
+                $document->document_number = $this->generateDocumentNumber($newDepartmentId, $newDocumentTypeId, $newSopType, $newSopTypeShort, $newRevised, $newRevisedDoc, $document->id);
+                }
 
                 //tds
                 $document->product_material_name = $request->product_material_name;
@@ -6447,25 +6653,438 @@ class DocumentController extends Controller
         return redirect()->back();
     }
 
+    // public function printDownloadPDF($id)
+    // {
+    //     $request = request();
+
+    //     $issue_copies = (int) $request->issued_copies;
+    //     $IssuedCopies = (int) $request->issued_copies;
+    //     $print_reason = $request->print_reason;
+    //     $documentPrintBy = $request->user_id;
+    //     $issuedDate = $request->issued_date;
+    //     $issuanceTo = $request->issuance_to;
+    //     $issuedToUser = User::find($issuanceTo);
+
+    //     $department = $issuedToUser
+    //         ? Department::where('id', $issuedToUser->departmentid)->value('name')
+    //         : null;
+
+    //     $issuedByName = User::where('id', $documentPrintBy)->value('name');
+
+    //     if ($issue_copies < 1) {
+    //         return redirect()->back()->withErrors([
+    //             'issued_copies' => 'Number of issued copies must be at least 1.'
+    //         ])->withInput();
+    //     }
+
+    //     $roleIds = DB::table('user_roles')
+    //         ->where('user_id', Auth::id())
+    //         ->pluck('role_id')
+    //         ->filter()
+    //         ->map(function ($roleId) {
+    //             return (int) $roleId;
+    //         })
+    //         ->unique()
+    //         ->values()
+    //         ->toArray();
+
+    //     if (empty($roleIds)) {
+    //         toastr()->error('No role is assigned to your account.');
+    //         return redirect()->back()->withInput();
+    //     }
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Find Print Control
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $controls = PrintControl::whereIn('role_id', $roleIds)
+    //         ->orderByDesc('id')
+    //         ->first();
+       
+    //     if (!$controls) {
+    //         toastr()->error(
+    //             'There is no print control configured for your assigned roles.'
+    //         );
+
+    //         return redirect()->back()->withInput();
+    //     }
+
+    //     // $department = Department::find(Auth::user()->departmentid);
+    //     $document = Document::find($id);
+
+    //     if ($document->revised == 'Yes') {
+    //         $latestRevision = Document::where('revised_doc', $document->id)
+    //                                    ->max('minor');
+    //         $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
+    //         $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+    //     } else {
+    //         $revisionNumber = '00';
+    //     }
+
+    //     $departmentId = $document->department_id;
+
+    //     if (!$departmentId) {
+    //         return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
+    //     }
+
+    //     $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
+
+    //     $counter = 0;
+    //     foreach ($documents as $doc) {
+    //         $counter++;
+    //         $doc->currentId = $counter;
+
+
+    //         if ($doc->id == $id) {
+    //             $currentId = $doc->currentId;
+    //         }
+    //     }
+
+
+    //     if ($controls) {
+    //         set_time_limit(30);
+    //         $document = Document::find($id);
+    //         $data = Document::find($id);
+    //         $data->department = Department::find($data->department_id);
+    //         $data['originator'] = User::where('id', $data->originator_id)->value('name');
+    //         $time = Carbon::now();
+    //         $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
+    //         $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
+    //         $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
+    //         $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+    //         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
+    //         $data['year'] = Carbon::parse($data->created_at)->format('Y');
+    //         // $document = Document::where('id', $id)->get();
+    //         // $pdf = PDF::loadView('frontend.documents.pdfpage', compact('data'))->setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+
+    //         $pdf = App::make('dompdf.wrapper');
+
+
+    //         $viewName = match ($data->document_type_id) {
+    //             'SOP' => 'frontend.documents.pdfpage',
+    //             'BOM' => 'frontend.documents.bom-pdf',
+    //             'FPS' => 'frontend.documents.finished-product-pdf',
+    //             'INPS' => 'frontend.documents.inprocess_s-pdf',
+    //             'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
+    //             'RAWMS' => 'frontend.documents.raw_ms-pdf',
+    //             'PAMS' => 'frontend.documents.package_ms-pdf',
+    //             'PIAS' => 'frontend.documents.product_item-pdf',
+    //             'MFPS' => 'frontend.documents.mfps-pdf',
+    //             'MFPSTP' => 'frontend.documents.mfpstp-pdf',
+    //             'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
+    //             'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+    //             'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
+    //             'RMSTP' => 'frontend.documents.raw_mstp-pdf',
+    //             'BMR' => 'frontend.documents.bmr-pdf',
+    //             'BPR' => 'frontend.documents.bpr-pdf',
+    //             'SPEC' => 'frontend.documents.spec-pdf',
+    //             'STP' => 'frontend.documents.stp-pdf',
+    //             'TDS' => 'frontend.documents.tds-pdf',
+    //             'GTP' => 'frontend.documents.gtp-pdf',
+    //             default => 'frontend.documents.pdfpage',
+    //         };
+
+            
+    //         $pdf = PDF::loadView($viewName, compact('data','time','document','documents','currentId','issuedDate','issuedByName'))->setOptions([
+    //                 'defaultFont' => 'sans-serif',
+    //                 'isHtml5ParserEnabled' => true,
+    //                 'isRemoteEnabled' => true,
+    //                 'isPhpEnabled' => true,
+    //             ]);
+    //         $pdf->setPaper('A4');
+    //         $pdf->render();
+    //         $canvas = $pdf->getDomPDF()->getCanvas();
+    //         $height = $canvas->get_height();
+    //         $width = $canvas->get_width();
+
+    //         $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
+
+    //         $watermarkText = strtoupper($data->status);
+    //         $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
+    //         $fontSize = 25;
+    //         $textWidth = $pdf->getDomPDF()->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
+            
+    //         $canvas->page_text(
+    //             ($width - $textWidth) / 2,
+    //             ($height / 2) + 50,
+    //             $watermarkText,  
+    //             $font,  
+    //             $fontSize,  
+    //             [0, 0, 0],  
+    //             0.9,  
+    //             6,
+    //             -20  
+    //         );
+
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Common Download History Save
+    //         |--------------------------------------------------------------------------
+    //         */
+
+    //         $saveDownloadHistory = function () use (
+    //             $id,
+    //             $request,
+    //             $issue_copies,
+    //             $IssuedCopies,
+    //             $print_reason,
+    //             $issuanceTo,
+    //             $department
+    //         ) {
+    //             $download = new DownloadHistory();
+
+    //             $download->document_id = $id;
+
+    //             /*
+    //             | Issued By/Login user
+    //             */
+    //             $download->user_id = Auth::id();
+    //             $download->role_id = Auth::user()->role;
+
+    //             $download->date = Carbon::now()->format('d-m-Y');
+
+    //             /*
+    //             | Distribution details
+    //             */
+    //             $download->issue_copies = $issue_copies;
+    //             $download->issued_copies = $IssuedCopies;
+    //             $download->print_reason = $print_reason;
+
+    //             $download->document_number =
+    //                 $request->document_number;
+
+    //             $download->document_printed_copies =
+    //                 $request->document_printed_copies;
+
+    //             /*
+    //             | Selected Issued To user
+    //             */
+    //             $download->issuance_to = $issuanceTo;
+
+    //             /*
+    //             | Selected Issued To user's department
+    //             */
+    //             $download->department = $department;
+
+    //             $download->issued_reason =
+    //                 $request->issued_reason;
+
+    //             /*
+    //             | Modal selected issue date
+    //             | Column agar issued_date hai tab use karo
+    //             */
+    //             if (\Schema::hasColumn('download_histories', 'issued_date')) {
+    //                 $download->issued_date = $request->issued_date;
+    //             }
+
+    //             $download->save();
+
+    //             return $download;
+    //         };
+
+    //         if ($controls->daily != 0) {
+    //             $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->where('date', Carbon::now()->format('d-m-Y'))->count();
+    //             if ($user + 1 <= $controls->daily) {
+    //                 //Downlad History
+    //                 $saveDownloadHistory();
+    //                 // download PDF file with download method
+
+    //                 return $this->downloadRepeatedPdfCopies($pdf, (int) $id, $IssuedCopies);
+    //             } else {
+    //                 toastr()->error('You breach your daily download limit.');
+
+    //                 return back();
+    //             }
+    //         } elseif ($controls->weekly != 0) {
+    //             $weekDate = Carbon::now()->subDays(7)->format('d-m-Y');
+    //             $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+    //             if ($user + 1 <= $controls->weekly) {
+    //                 //Downlad History
+    //                 $saveDownloadHistory();
+
+    //                 // download PDF file with download method
+
+    //                 return $this->downloadRepeatedPdfCopies($pdf, (int) $id, $IssuedCopies);
+    //             } else {
+    //                 toastr()->error('You breach your weekly download limit.');
+
+    //                 return back();
+    //             }
+    //         } elseif ($controls->monthly != 0) {
+    //             $weekDate = Carbon::now()->subDays(30)->format('d-m-Y');
+    //             $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+    //             if ($user + 1 <= $controls->monthly) {
+    //                 //Downlad History
+    //                 $saveDownloadHistory();
+
+    //                 // download PDF file with download method
+
+    //                 return $this->downloadRepeatedPdfCopies($pdf, (int) $id, $IssuedCopies);
+    //             } else {
+    //                 toastr()->error('You breach your monthly download limit.');
+
+    //                 return back();
+    //             }
+    //         } elseif ($controls->quatarly != 0) {
+    //             $weekDate = Carbon::now()->subDays(90)->format('d-m-Y');
+    //             $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+    //             if ($user + 1 <= $controls->quatarly) {
+    //                 //Downlad History
+    //                 $saveDownloadHistory();
+
+    //                 // download PDF file with download method
+
+    //                 return $this->downloadRepeatedPdfCopies($pdf, (int) $id, $IssuedCopies);
+    //             } else {
+    //                 toastr()->error('You breach your quaterly download limit.');
+
+    //                 return back();
+    //             }
+    //         } elseif ($controls->yearly != 0) {
+    //             $weekDate = Carbon::now()->subDays(365)->format('d-m-Y');
+    //             $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+    //             if ($user + 1 <= $controls->yearly) {
+    //                 //Downlad History
+    //                 $saveDownloadHistory();
+
+    //                 // download PDF file with download method
+
+    //                 return $this->downloadRepeatedPdfCopies($pdf, (int) $id, $IssuedCopies);
+    //             } else {
+    //                 toastr()->error('You breach your yearly download limit.');
+
+    //                 return back();
+    //             }
+    //         } else {
+    //             toastr()->error('There is no controls provide for your role.');
+
+    //             return back();
+    //         }
+    //     } else {
+    //         toastr()->error('There is no controls provide for your role.');
+
+    //         return back();
+    //     }
+    // }
+
     public function printDownloadPDF($id)
     {
         $request = request();
 
-        $issue_copies = (int) $request->issued_copies;
-        $IssuedCopies = (int) $request->issued_copies;
-        $print_reason = $request->print_reason;
-        $documentPrintBy = $request->user_id;
-        $issuedDate = $request->issued_date;
-        $issuanceTo = $request->issuance_to;
-        $stampImpression = $request->department;
+        /*
+        |--------------------------------------------------------------------------
+        | Basic validation
+        |--------------------------------------------------------------------------
+        */
 
-        $issuedByName = User::where('id', $documentPrintBy)->value('name');
-
-        if ($issue_copies < 1) {
-            return redirect()->back()->withErrors([
-                'issued_copies' => 'Number of issued copies must be at least 1.'
-            ])->withInput();
+        if (!$request->document_request_id) {
+            toastr()->error('Please select Request ID.');
+            return redirect()->back();
         }
+
+        if (!$request->issued_date) {
+            toastr()->error('Issued Date is required.');
+            return redirect()->back();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Find document
+        |--------------------------------------------------------------------------
+        */
+
+        $document = Document::find($id);
+
+        if (!$document) {
+            toastr()->error('Document not found.');
+            return redirect()->back();
+        }
+
+
+        $documentRequest = DocumentRequest::where(
+            'id',
+            $request->document_request_id
+        )
+        ->where('document_id', $document->id)
+        ->where('status', 'Opened')
+        ->first();
+
+        if (!$documentRequest) {
+            toastr()->error(
+                'Selected request is invalid, closed or does not belong to this document.'
+            );
+
+            return redirect()->back();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Request ID format
+        |--------------------------------------------------------------------------
+        */
+
+        $formattedRequestId =
+            $documentRequest->request_id
+            ?? (
+                'Request-' .
+                str_pad(
+                    $documentRequest->record,
+                    3,
+                    '0',
+                    STR_PAD_LEFT
+                )
+            );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Issuance data
+        |--------------------------------------------------------------------------
+        */
+
+        $issuedCopies = (int) $documentRequest->number_of_copies;
+
+        $printReason = $documentRequest->reason;
+
+        $issuedDate = $request->issued_date;
+
+        $issuedById = Auth::id();
+
+        $issuedByName = Auth::user()->name;
+
+        $issuanceTo = $documentRequest->request_to;
+
+        $issuedToUser = User::find($issuanceTo);
+
+        if (!$issuedToUser) {
+            toastr()->error(
+                'Request To user is not available.'
+            );
+
+            return redirect()->back();
+        }
+
+        $issuedToName = $issuedToUser->name;
+
+        $issuedToDepartment = Department::where(
+            'id',
+            $issuedToUser->departmentid
+        )->value('name');
+
+        if ($issuedCopies < 1) {
+            toastr()->error(
+                'Number of issued copies must be at least 1.'
+            );
+
+            return redirect()->back();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Fetch authenticated user's roles
+        |--------------------------------------------------------------------------
+        */
 
         $roleIds = DB::table('user_roles')
             ->where('user_id', Auth::id())
@@ -6479,271 +7098,313 @@ class DocumentController extends Controller
             ->toArray();
 
         if (empty($roleIds)) {
-            toastr()->error('No role is assigned to your account.');
-            return redirect()->back()->withInput();
+            toastr()->error(
+                'No role is assigned to your account.'
+            );
+
+            return redirect()->back();
         }
 
         /*
         |--------------------------------------------------------------------------
-        | Find Print Control
+        | Find print control
         |--------------------------------------------------------------------------
         */
 
-        $controls = PrintControl::whereIn('role_id', $roleIds)
-            ->orderByDesc('id')
-            ->first();
-       
+        $controls = PrintControl::whereIn(
+            'role_id',
+            $roleIds
+        )
+        ->orderByDesc('id')
+        ->first();
+
         if (!$controls) {
             toastr()->error(
                 'There is no print control configured for your assigned roles.'
             );
 
-            return redirect()->back()->withInput();
+            return redirect()->back();
         }
 
-        $department = Department::find(Auth::user()->departmentid);
-        $document = Document::find($id);
-
-        if ($document->revised == 'Yes') {
-            $latestRevision = Document::where('revised_doc', $document->id)
-                                       ->max('minor');
-            $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
-            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
-        } else {
-            $revisionNumber = '00';
-        }
+        /*
+        |--------------------------------------------------------------------------
+        | Check document department
+        |--------------------------------------------------------------------------
+        */
 
         $departmentId = $document->department_id;
 
         if (!$departmentId) {
-            return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
-        }
-
-        $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
-
-        $counter = 0;
-        foreach ($documents as $doc) {
-            $counter++;
-            $doc->currentId = $counter;
-
-
-            if ($doc->id == $id) {
-                $currentId = $doc->currentId;
-            }
-        }
-
-
-        if ($controls) {
-            set_time_limit(30);
-            $document = Document::find($id);
-            $data = Document::find($id);
-            $data->department = Department::find($data->department_id);
-            $data['originator'] = User::where('id', $data->originator_id)->value('name');
-            $time = Carbon::now();
-            $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
-            $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
-            $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
-            $data['document_division'] = Division::where('id', $data->division_id)->value('name');
-            $data['document_content'] = DocumentContent::where('document_id', $id)->first();
-            $data['year'] = Carbon::parse($data->created_at)->format('Y');
-            // $document = Document::where('id', $id)->get();
-            // $pdf = PDF::loadView('frontend.documents.pdfpage', compact('data'))->setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
-
-            $pdf = App::make('dompdf.wrapper');
-
-
-            $viewName = match ($data->document_type_id) {
-                'SOP' => 'frontend.documents.pdfpage',
-                'BOM' => 'frontend.documents.bom-pdf',
-                'FPS' => 'frontend.documents.finished-product-pdf',
-                'INPS' => 'frontend.documents.inprocess_s-pdf',
-                'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-                'RAWMS' => 'frontend.documents.raw_ms-pdf',
-                'PAMS' => 'frontend.documents.package_ms-pdf',
-                'PIAS' => 'frontend.documents.product_item-pdf',
-                'MFPS' => 'frontend.documents.mfps-pdf',
-                'MFPSTP' => 'frontend.documents.mfpstp-pdf',
-                'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
-                'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
-                'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
-                'RMSTP' => 'frontend.documents.raw_mstp-pdf',
-                'BMR' => 'frontend.documents.bmr-pdf',
-                'BPR' => 'frontend.documents.bpr-pdf',
-                'SPEC' => 'frontend.documents.spec-pdf',
-                'STP' => 'frontend.documents.stp-pdf',
-                'TDS' => 'frontend.documents.tds-pdf',
-                'GTP' => 'frontend.documents.gtp-pdf',
-                default => 'frontend.documents.pdfpage',
-            };
-
-            
-            $pdf = PDF::loadView($viewName, compact('data','time','document','documents','currentId','stampImpression','issuedDate','issuedByName'))->setOptions([
-                    'defaultFont' => 'sans-serif',
-                    'isHtml5ParserEnabled' => true,
-                    'isRemoteEnabled' => true,
-                    'isPhpEnabled' => true,
-                ]);
-            $pdf->setPaper('A4');
-            $pdf->render();
-            $canvas = $pdf->getDomPDF()->getCanvas();
-            $height = $canvas->get_height();
-            $width = $canvas->get_width();
-
-            $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
-
-            $watermarkText = strtoupper($data->status);
-            $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
-            $fontSize = 25;
-            $textWidth = $pdf->getDomPDF()->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
-            
-            $canvas->page_text(
-                ($width - $textWidth) / 2,
-                ($height / 2) + 50,
-                $watermarkText,  
-                $font,  
-                $fontSize,  
-                [0, 0, 0],  
-                0.9,  
-                6,
-                -20  
+            toastr()->error(
+                'Department is not associated with this document.'
             );
 
-        
-            if ($controls->daily != 0) {
-                $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->where('date', Carbon::now()->format('d-m-Y'))->count();
-                if ($user + 1 <= $controls->daily) {
-                    //Downlad History
-                    $download = new DownloadHistory;
-                    $download->document_id = $id;
-                    $download->user_id = Auth::user()->id;
-                    $download->role_id = Auth::user()->role;
-                    $download->date = Carbon::now()->format('d-m-Y');
-
-                    $download->issue_copies = $issue_copies;
-                    $download->print_reason = $print_reason;
-                    $download->document_number = request('document_number');
-                    $download->document_printed_copies = request('document_printed_copies');
-                    $download->issuance_to = request('issuance_to');
-                    $download->issued_copies = $IssuedCopies;
-                    $download->issued_reason = request('issued_reason');
-                    $download->department = request('department');
-
-                    $download->save();
-
-                    // download PDF file with download method
-
-                    return $this->downloadRepeatedPdfCopies($pdf, (int) $id, $IssuedCopies);
-                } else {
-                    toastr()->error('You breach your daily download limit.');
-
-                    return back();
-                }
-            } elseif ($controls->weekly != 0) {
-                $weekDate = Carbon::now()->subDays(7)->format('d-m-Y');
-                $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-                if ($user + 1 <= $controls->weekly) {
-                    //Downlad History
-                    $download = new DownloadHistory;
-                    $download->document_id = $id;
-                    $download->user_id = Auth::user()->id;
-                    $download->role_id = Auth::user()->role;
-                    $download->date = Carbon::now()->format('d-m-Y');
-
-                    $download->issue_copies = $issue_copies;
-                    $download->print_reason = $print_reason;
-                    $download->issued_copies = $IssuedCopies;
-                    $download->save();
-
-                    // download PDF file with download method
-
-                    return $this->downloadRepeatedPdfCopies($pdf, (int) $id, $IssuedCopies);
-                } else {
-                    toastr()->error('You breach your weekly download limit.');
-
-                    return back();
-                }
-            } elseif ($controls->monthly != 0) {
-                $weekDate = Carbon::now()->subDays(30)->format('d-m-Y');
-                $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-                if ($user + 1 <= $controls->monthly) {
-                    //Downlad History
-                    $download = new DownloadHistory;
-                    $download->document_id = $id;
-                    $download->user_id = Auth::user()->id;
-                    $download->role_id = Auth::user()->role;
-                    $download->date = Carbon::now()->format('d-m-Y');
-
-                    $download->issue_copies = $issue_copies;
-                    $download->print_reason = $print_reason;
-                    $download->issued_copies = $IssuedCopies;
-                    $download->save();
-
-                    // download PDF file with download method
-
-                    return $this->downloadRepeatedPdfCopies($pdf, (int) $id, $IssuedCopies);
-                } else {
-                    toastr()->error('You breach your monthly download limit.');
-
-                    return back();
-                }
-            } elseif ($controls->quatarly != 0) {
-                $weekDate = Carbon::now()->subDays(90)->format('d-m-Y');
-                $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-                if ($user + 1 <= $controls->quatarly) {
-                    //Downlad History
-                    $download = new DownloadHistory;
-                    $download->document_id = $id;
-                    $download->user_id = Auth::user()->id;
-                    $download->role_id = Auth::user()->role;
-                    $download->date = Carbon::now()->format('d-m-Y');
-
-                    $download->issue_copies = $issue_copies;
-                    $download->print_reason = $print_reason;
-                    $download->issued_copies = $IssuedCopies;
-                    $download->save();
-
-                    // download PDF file with download method
-
-                    return $this->downloadRepeatedPdfCopies($pdf, (int) $id, $IssuedCopies);
-                } else {
-                    toastr()->error('You breach your quaterly download limit.');
-
-                    return back();
-                }
-            } elseif ($controls->yearly != 0) {
-                $weekDate = Carbon::now()->subDays(365)->format('d-m-Y');
-                $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-                if ($user + 1 <= $controls->yearly) {
-                    //Downlad History
-                    $download = new DownloadHistory;
-                    $download->document_id = $id;
-                    $download->user_id = Auth::user()->id;
-                    $download->role_id = Auth::user()->role;
-                    $download->date = Carbon::now()->format('d-m-Y');
-
-                    $download->issue_copies = $issue_copies;
-                    $download->print_reason = $print_reason;
-                    $download->issued_copies = $IssuedCopies;
-                    $download->save();
-
-                    // download PDF file with download method
-
-                    return $this->downloadRepeatedPdfCopies($pdf, (int) $id, $IssuedCopies);
-                } else {
-                    toastr()->error('You breach your yearly download limit.');
-
-                    return back();
-                }
-            } else {
-                toastr()->error('There is no controls provide for your role.');
-
-                return back();
-            }
-        } else {
-            toastr()->error('There is no controls provide for your role.');
-
-            return back();
+            return redirect()->back();
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Existing current document serial
+        |--------------------------------------------------------------------------
+        */
+
+        $documents = Document::where(
+            'department_id',
+            $departmentId
+        )
+        ->orderBy('id')
+        ->get();
+
+        $currentId = 1;
+
+        foreach ($documents as $key => $doc) {
+
+            if ((int) $doc->id === (int) $document->id) {
+                $currentId = $key + 1;
+                break;
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Prepare document data
+        |--------------------------------------------------------------------------
+        */
+
+        set_time_limit(120);
+
+        $data = Document::find($id);
+
+        $data->department = Department::find(
+            $data->department_id
+        );
+
+        $data['originator'] = User::where(
+            'id',
+            $data->originator_id
+        )->value('name');
+
+        $data['originator_email'] = User::where(
+            'id',
+            $data->originator_id
+        )->value('email');
+
+        $data['document_type_name'] = DocumentType::where(
+            'id',
+            $data->document_type_id
+        )->value('name');
+
+        $data['document_type_code'] = DocumentType::where(
+            'id',
+            $data->document_type_id
+        )->value('typecode');
+
+        $data['document_division'] = Division::where(
+            'id',
+            $data->division_id
+        )->value('name');
+
+        $data['document_content'] = DocumentContent::where(
+            'document_id',
+            $id
+        )->first();
+
+        $data['year'] = Carbon::parse(
+            $data->created_at
+        )->format('Y');
+
+        $time = Carbon::now();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Select PDF view
+        |--------------------------------------------------------------------------
+        */
+
+        $viewName = match ($data->document_type_id) {
+            'SOP' => 'frontend.documents.pdfpage',
+            'BOM' => 'frontend.documents.bom-pdf',
+            'FPS' => 'frontend.documents.finished-product-pdf',
+            'INPS' => 'frontend.documents.inprocess_s-pdf',
+            'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
+            'RAWMS' => 'frontend.documents.raw_ms-pdf',
+            'PAMS' => 'frontend.documents.package_ms-pdf',
+            'PIAS' => 'frontend.documents.product_item-pdf',
+            'MFPS' => 'frontend.documents.mfps-pdf',
+            'MFPSTP' => 'frontend.documents.mfpstp-pdf',
+            'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
+            'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+            'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
+            'RMSTP' => 'frontend.documents.raw_mstp-pdf',
+            'BMR' => 'frontend.documents.bmr-pdf',
+            'BPR' => 'frontend.documents.bpr-pdf',
+            'SPEC' => 'frontend.documents.spec-pdf',
+            'STP' => 'frontend.documents.stp-pdf',
+            'TDS' => 'frontend.documents.tds-pdf',
+            'GTP' => 'frontend.documents.gtp-pdf',
+            default => 'frontend.documents.pdfpage',
+        };
+
+        /*
+        |--------------------------------------------------------------------------
+        | Check print/download limit
+        |--------------------------------------------------------------------------
+        */
+
+        $limitResult = $this->checkDocumentDownloadLimit(
+            $controls,
+            Auth::id(),
+            $document->id
+        );
+
+        if (!$limitResult['allowed']) {
+            toastr()->error($limitResult['message']);
+
+            return redirect()->back();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Save download history
+        |--------------------------------------------------------------------------
+        */
+
+        $download = new DownloadHistory();
+
+        $download->document_id = $document->id;
+
+        $download->document_request_id =
+            $documentRequest->id;
+
+        $download->request_id =
+            $formattedRequestId;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Issued By
+        |--------------------------------------------------------------------------
+        */
+
+        $download->user_id = $issuedById;
+
+        $download->issued_by = $issuedById;
+
+        $download->issued_by_name =
+            $issuedByName;
+
+        $download->role_id =
+            Auth::user()->role;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Issued Date
+        |--------------------------------------------------------------------------
+        */
+
+        $download->date =
+            Carbon::now()->format('d-m-Y');
+
+        $download->issued_date =
+            Carbon::parse($issuedDate)->format('Y-m-d');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Copies and reason
+        |--------------------------------------------------------------------------
+        */
+
+        $download->issue_copies =
+            $issuedCopies;
+
+        $download->issued_copies =
+            $issuedCopies;
+
+        $download->total_issued_copies =
+            $issuedCopies;
+
+        $download->copy_number_range = str_pad(1, 3, '0', STR_PAD_LEFT) . '-' . str_pad($issuedCopies, 3, '0', STR_PAD_LEFT);
+
+        $download->print_reason =
+            $printReason;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Document number
+        |--------------------------------------------------------------------------
+        */
+
+        $download->document_number =
+            $document->document_number;
+
+        $download->document_printed_copies =
+            $issuedCopies;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Issued To
+        |--------------------------------------------------------------------------
+        */
+
+        $download->issuance_to =
+            $issuanceTo;
+
+        $download->issued_to_name =
+            $issuedToName;
+
+        $download->department =
+            $issuedToDepartment;
+
+        $download->issued_to_department =
+            $issuedToDepartment;
+
+        $download->issued_reason =
+            $printReason;
+
+        $download->save();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Optional: request status update
+        |--------------------------------------------------------------------------
+        |
+        | Issuance complete hone ke baad request ko completed karna ho to
+        | ye uncomment kar dena.
+        |
+        */
+
+        // $documentRequest->status = 'Completed';
+        // $documentRequest->stage = 4;
+        // $documentRequest->completed_by = Auth::id();
+        // $documentRequest->completed_on = Carbon::now();
+        // $documentRequest->save();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Generate separately numbered PDF copies
+        |--------------------------------------------------------------------------
+        */
+
+        return $this->downloadIssuedDocumentCopies(
+            $viewName,
+            [
+                'data' => $data,
+                'time' => $time,
+                'document' => $document,
+                'documents' => $documents,
+                'currentId' => $currentId,
+
+                'requestId' => $formattedRequestId,
+                'issuedByName' => $issuedByName,
+                'issuedById' => $issuedById,
+                'issuedDate' => $issuedDate,
+                'issuedToName' => $issuedToName,
+                'issuedToDepartment' => $issuedToDepartment,
+                'printReason' => $printReason,
+                'totalIssuedCopies' => $issuedCopies,
+            ],
+            $issuedCopies,
+            $document
+        );
     }
     
     private function downloadRepeatedPdfCopies(
@@ -6822,34 +7483,9 @@ class DocumentController extends Controller
                 $sourcePdfPath
             );
 
-            /*
-            |--------------------------------------------------------------------------
-            | Repeat complete SOP according to issued_copies
-            |--------------------------------------------------------------------------
-            |
-            | issued_copies = 3:
-            |
-            | Copy 1:
-            | Page 1, Page 2, Page 3...
-            |
-            | Copy 2:
-            | Page 1, Page 2, Page 3...
-            |
-            | Copy 3:
-            | Page 1, Page 2, Page 3...
-            |--------------------------------------------------------------------------
-            */
 
-            for (
-                $copyNumber = 1;
-                $copyNumber <= $issuedCopies;
-                $copyNumber++
-            ) {
-                for (
-                    $pageNumber = 1;
-                    $pageNumber <= $pageCount;
-                    $pageNumber++
-                ) {
+            for ($copyNumber = 1; $copyNumber <= $issuedCopies; $copyNumber++) {
+                for ($pageNumber = 1; $pageNumber <= $pageCount; $pageNumber++) {
                     $templateId = $finalPdf->importPage(
                         $pageNumber
                     );
@@ -8341,24 +8977,471 @@ class DocumentController extends Controller
 }
 
 
-    public function printPDF($id){
+    // public function printPDF($id){
 
-        $issue_copies = (int) request('issued_copies');
-        $print_reason = request('print_reason');
-        $document_print_by = request('user_id');
-        $IssueDate = request('issued_date');
-        $IssuanceTo = request('issuance_to');
-        $IssuedCopies = (int) request('issued_copies');
-        $stampImpression = request('department');
+    //     $issue_copies = (int) request('issued_copies');
+    //     $print_reason = request('print_reason');
+    //     $document_print_by = request('user_id');
+    //     $IssueDate = request('issued_date');
+    //     $IssuanceTo = request('issuance_to');
+    //     $IssuedCopies = (int) request('issued_copies');
+    //     $stampImpression = request('department');
 
-        $issuedByName = User::where('id', $document_print_by)
-        ->value('name');
+    //     $issuedByName = User::where('id', $document_print_by)
+    //     ->value('name');
        
-        if ($issue_copies < 1) {
-            return redirect()->back()->withErrors([
-                'issued_copies' => 'Number of issued copies must be at least 1.'
-            ])->withInput();
+    //     if ($issue_copies < 1) {
+    //         return redirect()->back()->withErrors([
+    //             'issued_copies' => 'Number of issued copies must be at least 1.'
+    //         ])->withInput();
+    //     }
+
+    //     $roleIds = DB::table('user_roles')
+    //         ->where('user_id', Auth::id())
+    //         ->pluck('role_id')
+    //         ->filter()
+    //         ->map(function ($roleId) {
+    //             return (int) $roleId;
+    //         })
+    //         ->unique()
+    //         ->values()
+    //         ->toArray();
+
+    //     if (empty($roleIds)) {
+    //         toastr()->error('No role is assigned to your account.');
+    //         return redirect()->back()->withInput();
+    //     }
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Find Print Control
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $controls = PrintControl::whereIn('role_id', $roleIds)
+    //         ->orderByDesc('id')
+    //         ->first();
+       
+    //     if (!$controls) {
+    //         toastr()->error(
+    //             'There is no print control configured for your assigned roles.'
+    //         );
+
+    //         return redirect()->back()->withInput();
+    //     }
+
+    //     $department = Department::find(Auth::user()->departmentid);
+    //     $document = Document::find($id);
+
+    //     if ($document->revised == 'Yes') {
+    //         $latestRevision = Document::where('revised_doc', $document->id)
+    //                                 ->max('minor');
+    //         $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
+    //         $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+    //     } else {
+    //         $revisionNumber = '00';
+    //     }
+
+    //     // Filter documents by department_id and sop_type_short
+    //     $departmentId = $document->department_id;
+    //     $sopTypeShort = $document->sop_type_short;
+
+    //     if (!$departmentId) {
+    //         return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
+    //     }
+
+    //     $documents = Document::where('department_id', $departmentId)
+    //         ->where('sop_type_short', $sopTypeShort)
+    //         ->orderBy('id')
+    //         ->get();
+
+    //     $counter = 0;
+    //     foreach ($documents as $doc) {
+    //         $counter++;
+    //         $doc->currentId = $counter;
+
+    //         if ($doc->id == $id) {
+    //             $currentId = $doc->currentId;
+    //         }
+    //     }
+
+
+    //     // 🔹 SOP Number Generate
+    //     if ($document->revised == 'Yes') {
+    //         $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+    //     } else {
+    //         $revisionNumber = '00';
+    //     }
+
+    //     if (in_array($document->sop_type_short, ['EOP', 'IOP'])) {
+    //         $sopNumber = "{$document->department_id}/{$document->sop_type_short}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
+    //     } else {
+    //         $sopNumber = "{$document->sop_type_short}/{$document->department_id}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
+    //     }
+
+
+    //     if ($controls) {
+    //         set_time_limit(30);
+    //         $document = Document::find($id);
+    //         $data = Document::find($id);
+    //         $data->department = Department::find($data->department_id);
+    //         $data['originator'] = User::where('id', $data->originator_id)->value('name');
+    //         $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
+    //         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
+    //         $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
+    //         $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
+    //         $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+
+    //         $data['year'] = Carbon::parse($data->created_at)->format('Y');
+    //         // $document = Document::where('id', $id)->get();
+    //         // $pdf = PDF::loadView('frontend.documents.pdfpage', compact('data'))->setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+    //         $documentContent = DocumentContent::where('document_id', $id)->first();
+    //         $annexures = [];
+    //         if (!empty($documentContent->annexuredata)) {
+    //             $annexures = unserialize($documentContent->annexuredata);
+    //         }
+
+    //     if (empty($data->document_type_id)) {
+    //         return redirect()->back()->withErrors(['error' => 'Document type ID is missing']);
+    //     }
+
+    //         $viewName = match ($data->document_type_id) {
+    //             'SOP' => 'frontend.documents.pdfpage',
+    //             'BOM' => 'frontend.documents.bom-pdf',
+    //             'FPS' => 'frontend.documents.finished-product-pdf',
+    //             'INPS' => 'frontend.documents.inprocess_s-pdf',
+    //             'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
+    //             'RAWMS' => 'frontend.documents.raw_ms-pdf',
+    //             'PAMS' => 'frontend.documents.package_ms-pdf',
+    //             'PIAS' => 'frontend.documents.product_item-pdf',
+    //             'MFPS' => 'frontend.documents.mfps-pdf',
+    //             'MFPSTP' => 'frontend.documents.mfpstp-pdf',
+    //             'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
+    //             'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+    //             'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
+    //             'RMSTP' => 'frontend.documents.raw_mstp-pdf',
+    //             'BMR' => 'frontend.documents.bmr-pdf',
+    //             'BPR' => 'frontend.documents.bpr-pdf',
+    //             'SPEC' => 'frontend.documents.spec-pdf',
+    //             'STP' => 'frontend.documents.stp-pdf',
+    //             'TDS' => 'frontend.documents.tds-pdf',
+    //             'GTP' => 'frontend.documents.gtp-pdf',
+    //             default => 'frontend.documents.pdfpage',
+    //         };
+
+    //         $pdf = App::make('dompdf.wrapper');
+    //         $time = Carbon::now();
+
+    //         $pdf = PDF::loadView($viewName, compact('data','time','document','annexures','currentId','documents','sopNumber','IssuedCopies','IssueDate','stampImpression','issuedByName'))
+    //         ->setOptions(['defaultFont' => 'sans-serif', 'isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'isPhpEnabled' => true,]);
+
+    //         $pdf->setPaper('A4');
+
+    //         $pdf->render();
+    //         $canvas = $pdf->getDomPDF()->getCanvas();
+    //         $height = $canvas->get_height();
+    //         $width = $canvas->get_width();
+
+    //         $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
+
+
+    //         $watermarkText = strtoupper($data->status);
+    //         $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
+    //         $fontSize = 25;
+    //         $textWidth = $pdf->getDomPDF()->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
+            
+    //         $canvas->page_text(
+    //             ($width - $textWidth) / 2,
+    //             ($height / 2) + 50,
+    //             $watermarkText,  
+    //             $font,  
+    //             $fontSize,  
+    //             [0, 0, 0],  
+    //             0.9,  
+    //             6,
+    //             -20  
+    //         );
+
+
+
+    //         if ($controls->daily != 0) {
+    //             $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->where('date', Carbon::now()->format('d-m-Y'))->count();
+    //             if ($user + 1 <= $controls->daily) {
+    //                 //Downlad History
+    //                 $download = new PrintHistory;
+    
+    //                 $download->document_id = $id;
+    //                 $download->user_id = Auth::user()->id;
+    //                 $download->role_id = Auth::user()->role;
+    //                 $download->date = Carbon::now()->format('d-m-Y');
+
+    //                 $download->issue_copies = $issue_copies;
+    //                 $download->print_reason = $print_reason;
+    //                 $download->document_printed_copies = $IssuedCopies;
+    //                 // $download->issuance_date = $IssueDate;
+    //                 $download->issuance_to = $IssuanceTo;
+    //                 $download->issued_copies = $IssuedCopies;
+    //                 $download->department = $stampImpression;
+        
+    //                 $download->save();
+
+    //                 // download PDF file with download method
+
+    //                 return $pdf->stream('SOP-' . $id . '.pdf', ['Attachment' => false]);
+    //             } else {
+    //                 toastr()->error('You breach your daily print limit.');
+
+    //                 return back();
+    //             }
+    //         } elseif ($controls->weekly != 0) {
+    //             $weekDate = Carbon::now()->subDays(7)->format('d-m-Y');
+    //             $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+    //             if ($user + 1 <= $controls->weekly) {
+    //                 //Downlad History
+    //                 $download = new PrintHistory;
+    //                 $download->document_id = $id;
+    //                 $download->user_id = Auth::user()->id;
+    //                 $download->role_id = Auth::user()->role;
+    //                 $download->date = Carbon::now()->format('d-m-Y');
+
+    //                 $download->issue_copies = $issue_copies;
+    //                 $download->print_reason = $print_reason;
+    //                 $download->document_number = $documentNo;
+    //                 $download->document_printed_copies = $NoofCopies;
+    //                 // $download->document_printed_by = Auth::user()->name;
+    //                 // $download->issuance_date = $IssueDate;
+    //                 $download->issuance_to = $IssuanceTo;
+    //                 $download->issued_copies = $IssuedCopies;
+    //                 $download->issued_reason = $reasonIssue;
+    //                 $download->department = $stampImpression;
+
+    //                 $download->save();
+
+    //                 // download PDF file with download method
+    //                 return $pdf->stream('SOP-' . $id . '.pdf', ['Attachment' => false]);
+    //             } else {
+    //                 toastr()->error('You breach your weekly print limit.');
+
+    //                 return back();
+    //             }
+    //         } elseif ($controls->monthly != 0) {
+    //             $weekDate = Carbon::now()->subDays(30)->format('d-m-Y');
+    //             $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+    //             if ($user + 1 <= $controls->monthly) {
+    //                 //Downlad History
+    //                 $download = new PrintHistory;
+    //                 $download->document_id = $id;
+    //                 $download->user_id = Auth::user()->id;
+    //                 $download->role_id = Auth::user()->role;
+    //                 $download->date = Carbon::now()->format('d-m-Y');
+
+    //                 $download->issue_copies = $issue_copies;
+    //                 $download->print_reason = $print_reason;
+    //                 $download->document_number = $documentNo;
+    //                 $download->document_printed_copies = $NoofCopies;
+
+    //                 // $download->document_printed_by = Auth::user()->name;
+    //                 // $download->issuance_date = $IssueDate;
+
+    //                 $download->issuance_to = $IssuanceTo;
+    //                 $download->issued_copies = $IssuedCopies;
+    //                 $download->issued_reason = $reasonIssue;
+    //                 $download->department = $stampImpression;
+
+    //                 $download->save();
+
+    //                 // download PDF file with download method
+
+    //                 return $pdf->stream('SOP-' . $id . '.pdf', ['Attachment' => false]);
+    //             } else {
+    //                 toastr()->error('You breach your monthly print limit.');
+
+    //                 return back();
+    //             }
+    //         } elseif ($controls->quatarly != 0) {
+    //             $weekDate = Carbon::now()->subDays(90)->format('d-m-Y');
+    //             $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+    //             if ($user + 1 <= $controls->quatarly) {
+    //                 //Downlad History
+    //                 $download = new PrintHistory;
+    //                 $download->document_id = $id;
+    //                 $download->user_id = Auth::user()->id;
+    //                 $download->role_id = Auth::user()->role;
+    //                 $download->date = Carbon::now()->format('d-m-Y');
+
+    //                 $download->issue_copies = $issue_copies;
+    //                 $download->print_reason = $print_reason;
+    //                 $download->document_number = $documentNo;
+    //                 $download->document_printed_copies = $NoofCopies;
+    //                 $download->issuance_to = $IssuanceTo;
+    //                 $download->issued_copies = $IssuedCopies;
+    //                 $download->issued_reason = $reasonIssue;
+    //                 $download->department = $stampImpression;
+
+    //                 $download->save();
+
+    //                 // download PDF file with download method
+
+    //                 return $pdf->stream('SOP-' . $id . '.pdf', ['Attachment' => false]);
+    //             } else {
+    //                 toastr()->error('You breach your quaterly print limit.');
+
+    //                 return back();
+    //             }
+    //         } elseif ($controls->yearly != 0) {
+    //             $weekDate = Carbon::now()->subDays(365)->format('d-m-Y');
+    //             $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+    //             if ($user + 1 <= $controls->yearly) {
+    //                 //Downlad History
+    //                 $download = new PrintHistory;
+    //                 $download->document_id = $id;
+    //                 $download->user_id = Auth::user()->id;
+    //                 $download->role_id = Auth::user()->role;
+    //                 $download->date = Carbon::now()->format('d-m-Y');
+
+    //                 $download->issue_copies = $issue_copies;
+    //                 $download->print_reason = $print_reason;
+    //                 $download->document_number = $documentNo;
+    //                 $download->document_printed_copies = $NoofCopies;
+    //                 $download->issuance_to = $IssuanceTo;
+    //                 $download->issued_copies = $IssuedCopies;
+    //                 $download->issued_reason = $reasonIssue;
+    //                 $download->department = $stampImpression;
+         
+    //                 $download->save();
+
+    //                 // download PDF file with download method
+
+    //                 return $pdf->stream('SOP-' . $id . '.pdf', ['Attachment' => false]);
+    //             } else {
+    //                 toastr()->error('You breach your yearly print limit.');
+
+    //                 return back();
+    //             }
+    //         } else {
+    //             toastr()->error('There is no controls provide for your role.');
+
+    //             return back();
+    //         }
+    //     } else {
+    //         toastr()->error('There is no controls provide for your role.');
+
+    //         return back();
+    //     }
+    // }
+
+    public function printPDF($id)
+    {
+        $request = request();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Manual validation
+        |--------------------------------------------------------------------------
+        */
+
+        if (!$request->document_request_id) {
+            toastr()->error('Please select Request ID.');
+            return redirect()->back();
         }
+
+        if (!$request->issued_date) {
+            toastr()->error('Issued Date is required.');
+            return redirect()->back();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Find document
+        |--------------------------------------------------------------------------
+        */
+
+        $document = Document::find($id);
+
+        if (!$document) {
+            toastr()->error('Document not found.');
+            return redirect()->back();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Fetch actual request from database
+        |--------------------------------------------------------------------------
+        */
+
+        $documentRequest = DocumentRequest::where(
+            'id',
+            $request->document_request_id
+        )
+        ->where('document_id', $document->id)
+        ->where('status', 'Opened')
+        ->first();
+
+        if (!$documentRequest) {
+
+            toastr()->error(
+                'Selected request is invalid, closed or does not belong to this document.'
+            );
+
+            return redirect()->back();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Request ID
+        |--------------------------------------------------------------------------
+        */
+
+        $formattedRequestId =
+            $documentRequest->request_id ?? ( 'Request-' . str_pad($documentRequest->record, 3, '0', STR_PAD_LEFT));
+
+        /*
+        |--------------------------------------------------------------------------
+        | Actual issuance data database se
+        |--------------------------------------------------------------------------
+        */
+
+        $issuedCopies = (int) $documentRequest->number_of_copies;
+
+        $printReason = $documentRequest->reason;
+
+        $issuedDate = $request->issued_date;
+
+        $issuedById = Auth::id();
+
+        $issuedByName = Auth::user()->name;
+
+        $issuanceTo = $documentRequest->request_to;
+
+        $issuedToUser = User::find($issuanceTo);
+
+        if (!$issuedToUser) {
+
+            toastr()->error(
+                'Request To user is not available.'
+            );
+
+            return redirect()->back();
+        }
+
+        $issuedToName = $issuedToUser->name;
+
+        $issuedToDepartment = Department::where( 'id', $issuedToUser->departmentid)->value('name');
+
+        if ($issuedCopies < 1) {
+
+            toastr()->error(
+                'Number of issued copies must be at least 1.'
+            );
+
+            return redirect()->back();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Authenticated user roles
+        |--------------------------------------------------------------------------
+        */
 
         $roleIds = DB::table('user_roles')
             ->where('user_id', Auth::id())
@@ -8372,326 +9455,305 @@ class DocumentController extends Controller
             ->toArray();
 
         if (empty($roleIds)) {
-            toastr()->error('No role is assigned to your account.');
-            return redirect()->back()->withInput();
+
+            toastr()->error(
+                'No role is assigned to your account.'
+            );
+
+            return redirect()->back();
         }
 
         /*
         |--------------------------------------------------------------------------
-        | Find Print Control
+        | Print control
         |--------------------------------------------------------------------------
         */
 
-        $controls = PrintControl::whereIn('role_id', $roleIds)
-            ->orderByDesc('id')
-            ->first();
-       
+        $controls = PrintControl::whereIn(
+            'role_id',
+            $roleIds
+        )
+        ->orderByDesc('id')
+        ->first();
+
         if (!$controls) {
+
             toastr()->error(
                 'There is no print control configured for your assigned roles.'
             );
 
-            return redirect()->back()->withInput();
+            return redirect()->back();
         }
 
-        $department = Department::find(Auth::user()->departmentid);
-        $document = Document::find($id);
+        /*
+        |--------------------------------------------------------------------------
+        | Check print limit
+        |--------------------------------------------------------------------------
+        */
 
-        if ($document->revised == 'Yes') {
-            $latestRevision = Document::where('revised_doc', $document->id)
-                                    ->max('minor');
-            $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
-            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
-        } else {
-            $revisionNumber = '00';
+        $limitResult = $this->checkDocumentPrintLimit( $controls, Auth::id(), $document->id);
+
+        if (!$limitResult['allowed']) {
+
+            toastr()->error(
+                $limitResult['message']
+            );
+
+            return redirect()->back();
         }
 
-        // Filter documents by department_id and sop_type_short
+        /*
+        |--------------------------------------------------------------------------
+        | Department documents and current serial
+        |--------------------------------------------------------------------------
+        */
+
         $departmentId = $document->department_id;
+
         $sopTypeShort = $document->sop_type_short;
 
         if (!$departmentId) {
-            return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
-        }
 
-        $documents = Document::where('department_id', $departmentId)
-            ->where('sop_type_short', $sopTypeShort)
-            ->orderBy('id')
-            ->get();
-
-        $counter = 0;
-        foreach ($documents as $doc) {
-            $counter++;
-            $doc->currentId = $counter;
-
-            if ($doc->id == $id) {
-                $currentId = $doc->currentId;
-            }
-        }
-
-
-        // 🔹 SOP Number Generate
-        if ($document->revised == 'Yes') {
-            $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-        } else {
-            $revisionNumber = '00';
-        }
-
-        if (in_array($document->sop_type_short, ['EOP', 'IOP'])) {
-            $sopNumber = "{$document->department_id}/{$document->sop_type_short}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
-        } else {
-            $sopNumber = "{$document->sop_type_short}/{$document->department_id}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
-        }
-
-
-        if ($controls) {
-            set_time_limit(30);
-            $document = Document::find($id);
-            $data = Document::find($id);
-            $data->department = Department::find($data->department_id);
-            $data['originator'] = User::where('id', $data->originator_id)->value('name');
-            $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
-            $data['document_content'] = DocumentContent::where('document_id', $id)->first();
-            $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
-            $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
-            $data['document_division'] = Division::where('id', $data->division_id)->value('name');
-
-            $data['year'] = Carbon::parse($data->created_at)->format('Y');
-            // $document = Document::where('id', $id)->get();
-            // $pdf = PDF::loadView('frontend.documents.pdfpage', compact('data'))->setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
-            $documentContent = DocumentContent::where('document_id', $id)->first();
-            $annexures = [];
-            if (!empty($documentContent->annexuredata)) {
-                $annexures = unserialize($documentContent->annexuredata);
-            }
-
-        if (empty($data->document_type_id)) {
-            return redirect()->back()->withErrors(['error' => 'Document type ID is missing']);
-        }
-
-            $viewName = match ($data->document_type_id) {
-                'SOP' => 'frontend.documents.pdfpage',
-                'BOM' => 'frontend.documents.bom-pdf',
-                'FPS' => 'frontend.documents.finished-product-pdf',
-                'INPS' => 'frontend.documents.inprocess_s-pdf',
-                'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-                'RAWMS' => 'frontend.documents.raw_ms-pdf',
-                'PAMS' => 'frontend.documents.package_ms-pdf',
-                'PIAS' => 'frontend.documents.product_item-pdf',
-                'MFPS' => 'frontend.documents.mfps-pdf',
-                'MFPSTP' => 'frontend.documents.mfpstp-pdf',
-                'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
-                'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
-                'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
-                'RMSTP' => 'frontend.documents.raw_mstp-pdf',
-                'BMR' => 'frontend.documents.bmr-pdf',
-                'BPR' => 'frontend.documents.bpr-pdf',
-                'SPEC' => 'frontend.documents.spec-pdf',
-                'STP' => 'frontend.documents.stp-pdf',
-                'TDS' => 'frontend.documents.tds-pdf',
-                'GTP' => 'frontend.documents.gtp-pdf',
-                default => 'frontend.documents.pdfpage',
-            };
-
-            $pdf = App::make('dompdf.wrapper');
-            $time = Carbon::now();
-
-            $pdf = PDF::loadView($viewName, compact('data','time','document','annexures','currentId','documents','sopNumber','IssuedCopies','IssueDate','stampImpression','issuedByName'))
-            ->setOptions(['defaultFont' => 'sans-serif', 'isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'isPhpEnabled' => true,]);
-
-            $pdf->setPaper('A4');
-
-            $pdf->render();
-            $canvas = $pdf->getDomPDF()->getCanvas();
-            $height = $canvas->get_height();
-            $width = $canvas->get_width();
-
-            $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
-
-
-            $watermarkText = strtoupper($data->status);
-            $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
-            $fontSize = 25;
-            $textWidth = $pdf->getDomPDF()->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
-            
-            $canvas->page_text(
-                ($width - $textWidth) / 2,
-                ($height / 2) + 50,
-                $watermarkText,  
-                $font,  
-                $fontSize,  
-                [0, 0, 0],  
-                0.9,  
-                6,
-                -20  
+            toastr()->error(
+                'Department ID is not associated with this document.'
             );
 
-
-
-            if ($controls->daily != 0) {
-                $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->where('date', Carbon::now()->format('d-m-Y'))->count();
-                if ($user + 1 <= $controls->daily) {
-                    //Downlad History
-                    $download = new PrintHistory;
-    
-                    $download->document_id = $id;
-                    $download->user_id = Auth::user()->id;
-                    $download->role_id = Auth::user()->role;
-                    $download->date = Carbon::now()->format('d-m-Y');
-
-                    $download->issue_copies = $issue_copies;
-                    $download->print_reason = $print_reason;
-                    $download->document_printed_copies = $IssuedCopies;
-                    // $download->issuance_date = $IssueDate;
-                    $download->issuance_to = $IssuanceTo;
-                    $download->issued_copies = $IssuedCopies;
-                    $download->department = $stampImpression;
-        
-                    $download->save();
-
-                    // download PDF file with download method
-
-                    return $pdf->stream('SOP-' . $id . '.pdf', ['Attachment' => false]);
-                } else {
-                    toastr()->error('You breach your daily print limit.');
-
-                    return back();
-                }
-            } elseif ($controls->weekly != 0) {
-                $weekDate = Carbon::now()->subDays(7)->format('d-m-Y');
-                $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-                if ($user + 1 <= $controls->weekly) {
-                    //Downlad History
-                    $download = new PrintHistory;
-                    $download->document_id = $id;
-                    $download->user_id = Auth::user()->id;
-                    $download->role_id = Auth::user()->role;
-                    $download->date = Carbon::now()->format('d-m-Y');
-
-                    $download->issue_copies = $issue_copies;
-                    $download->print_reason = $print_reason;
-                    $download->document_number = $documentNo;
-                    $download->document_printed_copies = $NoofCopies;
-                    // $download->document_printed_by = Auth::user()->name;
-                    // $download->issuance_date = $IssueDate;
-                    $download->issuance_to = $IssuanceTo;
-                    $download->issued_copies = $IssuedCopies;
-                    $download->issued_reason = $reasonIssue;
-                    $download->department = $stampImpression;
-
-                    $download->save();
-
-                    // download PDF file with download method
-                    return $pdf->stream('SOP-' . $id . '.pdf', ['Attachment' => false]);
-                } else {
-                    toastr()->error('You breach your weekly print limit.');
-
-                    return back();
-                }
-            } elseif ($controls->monthly != 0) {
-                $weekDate = Carbon::now()->subDays(30)->format('d-m-Y');
-                $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-                if ($user + 1 <= $controls->monthly) {
-                    //Downlad History
-                    $download = new PrintHistory;
-                    $download->document_id = $id;
-                    $download->user_id = Auth::user()->id;
-                    $download->role_id = Auth::user()->role;
-                    $download->date = Carbon::now()->format('d-m-Y');
-
-                    $download->issue_copies = $issue_copies;
-                    $download->print_reason = $print_reason;
-                    $download->document_number = $documentNo;
-                    $download->document_printed_copies = $NoofCopies;
-
-                    // $download->document_printed_by = Auth::user()->name;
-                    // $download->issuance_date = $IssueDate;
-
-                    $download->issuance_to = $IssuanceTo;
-                    $download->issued_copies = $IssuedCopies;
-                    $download->issued_reason = $reasonIssue;
-                    $download->department = $stampImpression;
-
-                    $download->save();
-
-                    // download PDF file with download method
-
-                    return $pdf->stream('SOP-' . $id . '.pdf', ['Attachment' => false]);
-                } else {
-                    toastr()->error('You breach your monthly print limit.');
-
-                    return back();
-                }
-            } elseif ($controls->quatarly != 0) {
-                $weekDate = Carbon::now()->subDays(90)->format('d-m-Y');
-                $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-                if ($user + 1 <= $controls->quatarly) {
-                    //Downlad History
-                    $download = new PrintHistory;
-                    $download->document_id = $id;
-                    $download->user_id = Auth::user()->id;
-                    $download->role_id = Auth::user()->role;
-                    $download->date = Carbon::now()->format('d-m-Y');
-
-                    $download->issue_copies = $issue_copies;
-                    $download->print_reason = $print_reason;
-                    $download->document_number = $documentNo;
-                    $download->document_printed_copies = $NoofCopies;
-                    $download->issuance_to = $IssuanceTo;
-                    $download->issued_copies = $IssuedCopies;
-                    $download->issued_reason = $reasonIssue;
-                    $download->department = $stampImpression;
-
-                    $download->save();
-
-                    // download PDF file with download method
-
-                    return $pdf->stream('SOP-' . $id . '.pdf', ['Attachment' => false]);
-                } else {
-                    toastr()->error('You breach your quaterly print limit.');
-
-                    return back();
-                }
-            } elseif ($controls->yearly != 0) {
-                $weekDate = Carbon::now()->subDays(365)->format('d-m-Y');
-                $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-                if ($user + 1 <= $controls->yearly) {
-                    //Downlad History
-                    $download = new PrintHistory;
-                    $download->document_id = $id;
-                    $download->user_id = Auth::user()->id;
-                    $download->role_id = Auth::user()->role;
-                    $download->date = Carbon::now()->format('d-m-Y');
-
-                    $download->issue_copies = $issue_copies;
-                    $download->print_reason = $print_reason;
-                    $download->document_number = $documentNo;
-                    $download->document_printed_copies = $NoofCopies;
-                    $download->issuance_to = $IssuanceTo;
-                    $download->issued_copies = $IssuedCopies;
-                    $download->issued_reason = $reasonIssue;
-                    $download->department = $stampImpression;
-         
-                    $download->save();
-
-                    // download PDF file with download method
-
-                    return $pdf->stream('SOP-' . $id . '.pdf', ['Attachment' => false]);
-                } else {
-                    toastr()->error('You breach your yearly print limit.');
-
-                    return back();
-                }
-            } else {
-                toastr()->error('There is no controls provide for your role.');
-
-                return back();
-            }
-        } else {
-            toastr()->error('There is no controls provide for your role.');
-
-            return back();
+            return redirect()->back();
         }
+
+        $documents = Document::where( 'department_id', $departmentId)->when(
+            !empty($sopTypeShort),
+            function ($query) use ($sopTypeShort) {
+                $query->where(
+                    'sop_type_short',
+                    $sopTypeShort
+                );
+            }
+        )->orderBy('id')->get();
+
+        $currentId = 1;
+
+        foreach ($documents as $key => $doc) {
+
+            if ((int) $doc->id === (int) $document->id) {
+                $currentId = $key + 1;
+                break;
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Use saved document number
+        |--------------------------------------------------------------------------
+        | Revised document ka updated document_number yahi se aayega.
+        */
+
+        $sopNumber = $document->document_number;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Document PDF data
+        |--------------------------------------------------------------------------
+        */
+
+        set_time_limit(120);
+
+        $data = Document::find($id);
+
+        $data->department = Department::find($data->department_id);
+
+        $data['originator'] = User::where('id', $data->originator_id)->value('name');
+
+        $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
+
+        $data['document_content'] = DocumentContent::where('document_id', $id)->first();
+
+        $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
+
+        $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
+
+        $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+
+        $data['year'] = Carbon::parse($data->created_at)->format('Y');
+
+        $time = Carbon::now();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Annexure data
+        |--------------------------------------------------------------------------
+        */
+
+        $documentContent = DocumentContent::where('document_id', $id)->first();
+
+        $annexures = [];
+
+        if ($documentContent && !empty($documentContent->annexuredata)) {
+            $annexures = unserialize($documentContent->annexuredata);
+        }
+
+        if (empty($data->document_type_id)) {
+
+            toastr()->error('Document type ID is missing.');
+
+            return redirect()->back();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Select PDF view
+        |--------------------------------------------------------------------------
+        */
+
+        $viewName = match ($data->document_type_id) {
+            'SOP' => 'frontend.documents.pdfpage',
+
+            'BOM' => 'frontend.documents.bom-pdf',
+
+            'FPS' => 'frontend.documents.finished-product-pdf',
+
+            'INPS' => 'frontend.documents.inprocess_s-pdf',
+
+            'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
+
+            'RAWMS' => 'frontend.documents.raw_ms-pdf',
+
+            'PAMS' => 'frontend.documents.package_ms-pdf',
+
+            'PIAS' => 'frontend.documents.product_item-pdf',
+
+            'MFPS' => 'frontend.documents.mfps-pdf',
+
+            'MFPSTP' => 'frontend.documents.mfpstp-pdf',
+
+            'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
+
+            'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+
+            'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
+
+            'RMSTP' => 'frontend.documents.raw_mstp-pdf',
+
+            'BMR' => 'frontend.documents.bmr-pdf',
+
+            'BPR' => 'frontend.documents.bpr-pdf',
+
+            'SPEC' => 'frontend.documents.spec-pdf',
+
+            'STP' => 'frontend.documents.stp-pdf',
+
+            'TDS' => 'frontend.documents.tds-pdf',
+
+            'GTP' => 'frontend.documents.gtp-pdf',
+
+            default => 'frontend.documents.pdfpage',
+        };
+
+        /*
+        |--------------------------------------------------------------------------
+        | Save print history once
+        |--------------------------------------------------------------------------
+        */
+
+        $printHistory = new PrintHistory();
+
+        $printHistory->document_id = $document->id;
+
+        $printHistory->document_request_id = $documentRequest->id;
+
+        $printHistory->request_id = $formattedRequestId;
+
+        $printHistory->document_number = $document->document_number;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Issued By
+        |--------------------------------------------------------------------------
+        */
+
+        $printHistory->user_id = $issuedById;
+
+        $printHistory->issued_by = $issuedById;
+
+        $printHistory->issued_by_name = $issuedByName;
+
+        $printHistory->role_id = Auth::user()->role;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Issued date
+        |--------------------------------------------------------------------------
+        */
+
+        $printHistory->date = Carbon::now()->format('d-m-Y');
+
+        $printHistory->issued_date = Carbon::parse($issuedDate)->format('Y-m-d');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Copies
+        |--------------------------------------------------------------------------
+        */
+
+        $printHistory->issue_copies = $issuedCopies;
+
+        $printHistory->issued_copies = $issuedCopies;
+
+        $printHistory->total_issued_copies = $issuedCopies;
+
+        $printHistory->document_printed_copies = $issuedCopies;
+
+        $printHistory->copy_number_range =str_pad(1, 3, '0', STR_PAD_LEFT) . '-' . str_pad($issuedCopies, 3, '0', STR_PAD_LEFT);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Reason
+        |--------------------------------------------------------------------------
+        */
+
+        $printHistory->print_reason = $printReason;
+
+        $printHistory->issued_reason = $printReason;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Issued To
+        |--------------------------------------------------------------------------
+        */
+
+        $printHistory->issuance_to = $issuanceTo;
+
+        $printHistory->issued_to_name = $issuedToName;
+
+        $printHistory->department = $issuedToDepartment;
+
+        $printHistory->issued_to_department = $issuedToDepartment;
+
+        $printHistory->save();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Generate copy-wise printable PDF
+        |--------------------------------------------------------------------------
+        */
+
+        return $this->streamIssuedDocumentCopies($viewName, ['data' =>$data, 'time' =>$time,
+
+                'document' =>$document, 'annexures' =>$annexures, 'currentId' =>$currentId, 'documents' =>$documents, 'sopNumber' =>$sopNumber, 'requestId' =>$formattedRequestId, 
+                'issuedByName' =>$issuedByName, 'issuedById' =>$issuedById, 'issuedDate' =>$issuedDate, 'issuedToName' =>$issuedToName, 
+                'issuedToDepartment' =>$issuedToDepartment, 'printReason' =>$printReason, 'totalIssuedCopies' =>$issuedCopies,
+
+                /*
+                | Old Blade variable compatibility
+                */
+                'IssuedCopies' =>$issuedCopies,
+
+                'IssueDate' =>$issuedDate,
+
+                'stampImpression' =>$issuedToDepartment,
+            ],
+            $issuedCopies,$document
+        );
     }
 
     public function printAnnexurePDF($id)
@@ -9015,18 +10077,6 @@ class DocumentController extends Controller
                 $requestedMajor += 1;
             }
 
-            // **Step 4: Check if this version already exists**
-            // $revisionExists = Document::where([
-            //     'document_type_id' => $document->document_type_id,
-            //     'document_number' => $document->document_number,
-            //     'major' => $requestedMajor,
-            //     'minor' => $requestedMinor
-            // ])->first();
-
-            // if ($revisionExists) {
-            //     toastr()->error('A document with this version already exists!');
-            //     return redirect()->back();
-            // }
 
             // **Step 5: Mark original document as revised**
             $document->revision = 'Yes';
@@ -9034,16 +10084,34 @@ class DocumentController extends Controller
             $document->update();
 
             // **Step 6: Create a new revision**
+            // $newdoc = $document->replicate();
+            // $newdoc->revised = 'Yes';
+            // $newdoc->revised_doc = $nextRevision;
+            // $newdoc->major = $requestedMajor;
+            // $newdoc->minor = $requestedMinor;
+            // $newdoc->reason = $request->reason;
+            // $newdoc->trainer = $request->trainer;
+            // $newdoc->comments = $request->comment;
+            // $newdoc->stage = 1;
+            // $newdoc->status = Stage::where('id', 1)->value('name');
+            // $newdoc->save();
+
             $newdoc = $document->replicate();
             $newdoc->revised = 'Yes';
             $newdoc->revised_doc = $nextRevision;
+
             $newdoc->major = $requestedMajor;
             $newdoc->minor = $requestedMinor;
+
             $newdoc->reason = $request->reason;
             $newdoc->trainer = $request->trainer;
             $newdoc->comments = $request->comment;
+
             $newdoc->stage = 1;
             $newdoc->status = Stage::where('id', 1)->value('name');
+
+            $newdoc->document_number = $this->generateRevisedDocumentNumber($document->document_number, $nextRevision);
+
             $newdoc->save();
 
             // \Log::info("New Document Saved: Major: $newdoc->major, Minor: $newdoc->minor");
@@ -9453,5 +10521,1141 @@ class DocumentController extends Controller
         }
 
     }
+
+    private function generateDocumentNumber($departmentId, $documentTypeId, $sopType, $sopTypeShort, $revised = 'No', $revisedDoc = null, $excludeDocumentId = null ) {
+        $sopTypeShort = strtoupper(trim($sopTypeShort ?? ''));
+
+        $query = Document::where('department_id', $departmentId)
+            ->where('document_type_id', $documentTypeId);
+
+        if (!empty($sopType)) {
+            $query->where('sop_type', $sopType);
+        } else {
+            $query->where(function ($subQuery) {
+                $subQuery->whereNull('sop_type')
+                    ->orWhere('sop_type', '');
+            });
+        }
+
+        if (!empty($sopTypeShort)) {
+            $query->where('sop_type_short', $sopTypeShort);
+        } else {
+            $query->where(function ($subQuery) {
+                $subQuery->whereNull('sop_type_short')
+                    ->orWhere('sop_type_short', '');
+            });
+        }
+
+        if (!empty($excludeDocumentId)) {
+            $query->where('id', '!=', $excludeDocumentId);
+        }
+
+        $currentId = $query->count() + 1;
+
+        $formattedId = str_pad($currentId, 3, '0', STR_PAD_LEFT );
+
+        $revisionNumber = $revised === 'Yes'
+            ? str_pad($revisedDoc ?? 0, 2, '0', STR_PAD_LEFT)
+            : '00';
+
+
+        if ($sopTypeShort === 'SOP') {
+            return "{$sopTypeShort}/{$departmentId}/{$formattedId}-{$revisionNumber}";
+
+        } elseif (in_array($sopTypeShort, ['EOP', 'IOP'])) {
+            return "{$departmentId}/{$sopTypeShort}/{$formattedId}-{$revisionNumber}";
+        } else {
+            return "{$documentTypeId}/{$departmentId}/{$formattedId}-{$revisionNumber}";
+        }
+    }
+
+    private function checkDocumentDownloadLimit(
+        $controls,
+        $userId,
+        $documentId
+    ) {
+        $query = DownloadHistory::where(
+            'user_id',
+            $userId
+        )->where(
+            'document_id',
+            $documentId
+        );
+
+        if ((int) $controls->daily !== 0) {
+
+            $count = (clone $query)
+                ->where('created_at', '>=', Carbon::now()->startOfDay())
+                ->count();
+
+            if ($count + 1 > (int) $controls->daily) {
+                return [
+                    'allowed' => false,
+                    'message' => 'You breached your daily download limit.',
+                ];
+            }
+
+            return ['allowed' => true];
+        }
+
+        if ((int) $controls->weekly !== 0) {
+
+            $count = (clone $query)
+                ->where(
+                    'created_at',
+                    '>=',
+                    Carbon::now()->subDays(7)
+                )
+                ->count();
+
+            if ($count + 1 > (int) $controls->weekly) {
+                return [
+                    'allowed' => false,
+                    'message' => 'You breached your weekly download limit.',
+                ];
+            }
+
+            return ['allowed' => true];
+        }
+
+        if ((int) $controls->monthly !== 0) {
+
+            $count = (clone $query)
+                ->where(
+                    'created_at',
+                    '>=',
+                    Carbon::now()->subDays(30)
+                )
+                ->count();
+
+            if ($count + 1 > (int) $controls->monthly) {
+                return [
+                    'allowed' => false,
+                    'message' => 'You breached your monthly download limit.',
+                ];
+            }
+
+            return ['allowed' => true];
+        }
+
+        if ((int) $controls->quatarly !== 0) {
+
+            $count = (clone $query)
+                ->where(
+                    'created_at',
+                    '>=',
+                    Carbon::now()->subDays(90)
+                )
+                ->count();
+
+            if ($count + 1 > (int) $controls->quatarly) {
+                return [
+                    'allowed' => false,
+                    'message' => 'You breached your quarterly download limit.',
+                ];
+            }
+
+            return ['allowed' => true];
+        }
+
+        if ((int) $controls->yearly !== 0) {
+
+            $count = (clone $query)
+                ->where(
+                    'created_at',
+                    '>=',
+                    Carbon::now()->subDays(365)
+                )
+                ->count();
+
+            if ($count + 1 > (int) $controls->yearly) {
+                return [
+                    'allowed' => false,
+                    'message' => 'You breached your yearly download limit.',
+                ];
+            }
+
+            return ['allowed' => true];
+        }
+
+        return [
+            'allowed' => false,
+            'message' => 'There is no download control configured for your role.',
+        ];
+    }
+
+    private function downloadIssuedDocumentCopies(
+        $viewName,
+        array $viewData,
+        int $totalCopies,
+        $document
+    ) {
+        $tempFiles = [];
+
+        try {
+
+            $this->loadFpdiDependencies();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Complete document ko copy-wise generate karna
+            |--------------------------------------------------------------------------
+            |
+            | Example:
+            | SOP pages = 3
+            | Copies    = 3
+            |
+            | Copy 001 => complete 3-page SOP
+            | Copy 002 => complete 3-page SOP
+            | Copy 003 => complete 3-page SOP
+            |
+            */
+
+            for (
+                $copyNumber = 1;
+                $copyNumber <= $totalCopies;
+                $copyNumber++
+            ) {
+
+                /*
+                |--------------------------------------------------------------------------
+                | Same copy number complete PDF ke sabhi pages ko milega
+                |--------------------------------------------------------------------------
+                */
+
+                $formattedCopyNumber = str_pad(
+                    $copyNumber,
+                    3,
+                    '0',
+                    STR_PAD_LEFT
+                );
+
+                $currentViewData = array_merge(
+                    $viewData,
+                    [
+                        'copyNumber' => $copyNumber,
+
+                        'formattedCopyNumber' =>
+                            $formattedCopyNumber,
+
+                        'totalIssuedCopies' =>
+                            $totalCopies,
+                    ]
+                );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Complete SOP/document PDF generate hoga
+                |--------------------------------------------------------------------------
+                */
+
+                $pdf = PDF::loadView(
+                    $viewName,
+                    $currentViewData
+                )->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+
+                $pdf->setPaper('A4');
+
+                $pdf->render();
+
+                /*
+                |--------------------------------------------------------------------------
+                | Status watermark
+                |--------------------------------------------------------------------------
+                */
+
+                $canvas = $pdf
+                    ->getDomPDF()
+                    ->getCanvas();
+
+                $height = $canvas->get_height();
+                $width = $canvas->get_width();
+
+                $watermarkText = strtoupper(
+                    $document->status ?? ''
+                );
+
+                if (!empty($watermarkText)) {
+
+                    $font = $pdf
+                        ->getDomPDF()
+                        ->getFontMetrics()
+                        ->get_font(
+                            'sans-serif',
+                            'bold'
+                        );
+
+                    $fontSize = 25;
+
+                    $textWidth = $pdf
+                        ->getDomPDF()
+                        ->getFontMetrics()
+                        ->getTextWidth(
+                            $watermarkText,
+                            $font,
+                            $fontSize
+                        );
+
+                    $canvas->set_opacity(
+                        0.2,
+                        'Multiply'
+                    );
+
+                    $canvas->page_text(
+                        ($width - $textWidth) / 2,
+                        ($height / 2) + 50,
+                        $watermarkText,
+                        $font,
+                        $fontSize,
+                        [0, 0, 0],
+                        0.9,
+                        6,
+                        -20
+                    );
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Page numbering
+                |--------------------------------------------------------------------------
+                |
+                | Har generated copy ek separate PDF hai.
+                | Isliye page numbering har copy me automatically reset hogi.
+                |
+                | Copy 001 => Page 1 of 3, 2 of 3, 3 of 3
+                | Copy 002 => Page 1 of 3, 2 of 3, 3 of 3
+                |
+                */
+
+                $pageFont = $pdf
+                    ->getDomPDF()
+                    ->getFontMetrics()
+                    ->get_font(
+                        'sans-serif',
+                        'normal'
+                    );
+
+                $canvas->page_text(
+                    $width - 100,
+                    $height - 28,
+                    'Page {PAGE_NUM} of {PAGE_COUNT}',
+                    $pageFont,
+                    8,
+                    [0, 0, 0]
+                );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Temporary PDF save
+                |--------------------------------------------------------------------------
+                */
+
+                $tempFile = storage_path(
+                    'app/temp-document-copy-' .
+                    $document->id .
+                    '-' .
+                    $formattedCopyNumber .
+                    '-' .
+                    uniqid() .
+                    '.pdf'
+                );
+
+                file_put_contents(
+                    $tempFile,
+                    $pdf->output()
+                );
+
+                $tempFiles[] = $tempFile;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Sab complete copies ko merge karna
+            |--------------------------------------------------------------------------
+            */
+
+            $mergedPdf = new \setasign\Fpdi\Fpdi();
+
+            foreach ($tempFiles as $tempFile) {
+
+                $pageCount = $mergedPdf->setSourceFile(
+                    $tempFile
+                );
+
+                for (
+                    $pageNumber = 1;
+                    $pageNumber <= $pageCount;
+                    $pageNumber++
+                ) {
+
+                    $templateId = $mergedPdf->importPage(
+                        $pageNumber
+                    );
+
+                    $size = $mergedPdf->getTemplateSize(
+                        $templateId
+                    );
+
+                    $orientation =
+                        $size['width'] > $size['height']
+                            ? 'L'
+                            : 'P';
+
+                    $mergedPdf->AddPage(
+                        $orientation,
+                        [
+                            $size['width'],
+                            $size['height'],
+                        ]
+                    );
+
+                    $mergedPdf->useTemplate(
+                        $templateId
+                    );
+                }
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Download filename
+            |--------------------------------------------------------------------------
+            */
+
+            $safeDocumentNumber = preg_replace(
+                '/[^A-Za-z0-9\-_]/',
+                '-',
+                $document->document_number
+                    ?? ('document-' . $document->id)
+            );
+
+            $fileName =
+                $safeDocumentNumber .
+                '-issued-copies.pdf';
+
+            $output = $mergedPdf->Output(
+                'S'
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Temporary files delete
+            |--------------------------------------------------------------------------
+            */
+
+            foreach ($tempFiles as $tempFile) {
+
+                if (file_exists($tempFile)) {
+                    unlink($tempFile);
+                }
+            }
+
+            return response(
+                $output,
+                200,
+                [
+                    'Content-Type' =>
+                        'application/pdf',
+
+                    'Content-Disposition' =>
+                        'attachment; filename="' .
+                        $fileName .
+                        '"',
+                ]
+            );
+
+        } catch (\Exception $e) {
+
+            foreach ($tempFiles as $tempFile) {
+
+                if (file_exists($tempFile)) {
+                    unlink($tempFile);
+                }
+            }
+
+            \Log::error(
+                'Document issuance PDF generation failed',
+                [
+                    'document_id' =>
+                        $document->id ?? null,
+
+                    'message' =>
+                        $e->getMessage(),
+
+                    'line' =>
+                        $e->getLine(),
+                ]
+            );
+
+            toastr()->error(
+                'Unable to generate document copies: ' .
+                $e->getMessage()
+            );
+
+            return redirect()->back();
+        }
+    }
+
+    private function loadFpdiDependencies(): void
+    {
+        if (!class_exists('FPDF')) {
+            require_once base_path(
+                'vendor/setasign/fpdf/fpdf.php'
+            );
+        }
+
+        if (!class_exists(\setasign\Fpdi\Fpdi::class)) {
+            throw new \RuntimeException(
+                'FPDI class could not be loaded.'
+            );
+        }
+    }
+
+    private function checkDocumentPrintLimit($controls, $userId, $documentId) {
+        $query = PrintHistory::where(
+            'user_id',
+            $userId
+        )
+        ->where(
+            'document_id',
+            $documentId
+        );
+
+        if ((int) $controls->daily !== 0) {
+
+            $count = (clone $query)
+                ->where(
+                    'created_at',
+                    '>=',
+                    Carbon::now()->startOfDay()
+                )
+                ->count();
+
+            if (
+                $count + 1 >
+                (int) $controls->daily
+            ) {
+                return [
+                    'allowed' => false,
+                    'message' =>
+                        'You breached your daily print limit.',
+                ];
+            }
+
+            return ['allowed' => true];
+        }
+
+        if ((int) $controls->weekly !== 0) {
+
+            $count = (clone $query)
+                ->where(
+                    'created_at',
+                    '>=',
+                    Carbon::now()->subDays(7)
+                )
+                ->count();
+
+            if (
+                $count + 1 >
+                (int) $controls->weekly
+            ) {
+                return [
+                    'allowed' => false,
+                    'message' =>
+                        'You breached your weekly print limit.',
+                ];
+            }
+
+            return ['allowed' => true];
+        }
+
+        if ((int) $controls->monthly !== 0) {
+
+            $count = (clone $query)
+                ->where(
+                    'created_at',
+                    '>=',
+                    Carbon::now()->subDays(30)
+                )
+                ->count();
+
+            if (
+                $count + 1 >
+                (int) $controls->monthly
+            ) {
+                return [
+                    'allowed' => false,
+                    'message' =>
+                        'You breached your monthly print limit.',
+                ];
+            }
+
+            return ['allowed' => true];
+        }
+
+        if ((int) $controls->quatarly !== 0) {
+
+            $count = (clone $query)
+                ->where(
+                    'created_at',
+                    '>=',
+                    Carbon::now()->subDays(90)
+                )
+                ->count();
+
+            if (
+                $count + 1 >
+                (int) $controls->quatarly
+            ) {
+                return [
+                    'allowed' => false,
+                    'message' =>
+                        'You breached your quarterly print limit.',
+                ];
+            }
+
+            return ['allowed' => true];
+        }
+
+        if ((int) $controls->yearly !== 0) {
+
+            $count = (clone $query)
+                ->where(
+                    'created_at',
+                    '>=',
+                    Carbon::now()->subDays(365)
+                )
+                ->count();
+
+            if (
+                $count + 1 >
+                (int) $controls->yearly
+            ) {
+                return [
+                    'allowed' => false,
+                    'message' =>
+                        'You breached your yearly print limit.',
+                ];
+            }
+
+            return ['allowed' => true];
+        }
+
+        return [
+            'allowed' => false,
+            'message' =>
+                'There is no print control configured for your role.',
+        ];
+    }
+
+private function streamIssuedDocumentCopies(
+    $viewName,
+    array $viewData,
+    int $totalCopies,
+    $document
+) {
+    $tempFiles = [];
+
+    try {
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validate total copies
+        |--------------------------------------------------------------------------
+        */
+
+        if ($totalCopies < 1) {
+            throw new \RuntimeException(
+                'Total copies must be at least 1.'
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Load FPDF dependency
+        |--------------------------------------------------------------------------
+        */
+
+        if (!class_exists('FPDF')) {
+
+            $fpdfPath = base_path(
+                'vendor/setasign/fpdf/fpdf.php'
+            );
+
+            if (!file_exists($fpdfPath)) {
+                throw new \RuntimeException(
+                    'FPDF file not found at: ' .
+                    $fpdfPath
+                );
+            }
+
+            require_once $fpdfPath;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Check FPDI dependency
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            !class_exists(
+                \setasign\Fpdi\Fpdi::class
+            )
+        ) {
+            throw new \RuntimeException(
+                'FPDI class could not be loaded.'
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Temporary directory
+        |--------------------------------------------------------------------------
+        */
+
+        $temporaryDirectory = storage_path(
+            'app/document-print-copies'
+        );
+
+        if (!is_dir($temporaryDirectory)) {
+
+            $directoryCreated = mkdir(
+                $temporaryDirectory,
+                0775,
+                true
+            );
+
+            if (
+                !$directoryCreated &&
+                !is_dir($temporaryDirectory)
+            ) {
+                throw new \RuntimeException(
+                    'Unable to create temporary PDF directory.'
+                );
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Generate every complete document copy separately
+        |--------------------------------------------------------------------------
+        |
+        | Example:
+        |
+        | SOP pages = 3
+        | Copies    = 3
+        |
+        | Copy 001 = complete pages 1, 2, 3
+        | Copy 002 = complete pages 1, 2, 3
+        | Copy 003 = complete pages 1, 2, 3
+        |
+        */
+
+        for (
+            $copyNumber = 1;
+            $copyNumber <= $totalCopies;
+            $copyNumber++
+        ) {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Format copy number
+            |--------------------------------------------------------------------------
+            */
+
+            $formattedCopyNumber = str_pad(
+                $copyNumber,
+                3,
+                '0',
+                STR_PAD_LEFT
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Current copy data pass to PDF Blade
+            |--------------------------------------------------------------------------
+            */
+
+            $currentViewData = array_merge(
+                $viewData,
+                [
+                    'copyNumber' =>
+                        $copyNumber,
+
+                    'formattedCopyNumber' =>
+                        $formattedCopyNumber,
+
+                    'totalIssuedCopies' =>
+                        $totalCopies,
+                ]
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Generate current complete PDF copy
+            |--------------------------------------------------------------------------
+            */
+
+            $pdf = PDF::loadView(
+                $viewName,
+                $currentViewData
+            )->setOptions([
+                'defaultFont' =>
+                    'sans-serif',
+
+                'isHtml5ParserEnabled' =>
+                    true,
+
+                'isRemoteEnabled' =>
+                    true,
+
+                'isPhpEnabled' =>
+                    true,
+            ]);
+
+            $pdf->setPaper(
+                'A4',
+                'portrait'
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Render PDF first
+            |--------------------------------------------------------------------------
+            */
+
+            $pdf->render();
+
+            /*
+            |--------------------------------------------------------------------------
+            | DomPDF canvas details
+            |--------------------------------------------------------------------------
+            */
+
+            $domPdf = $pdf->getDomPDF();
+
+            $canvas = $domPdf->getCanvas();
+
+            $fontMetrics =
+                $domPdf->getFontMetrics();
+
+            $height =
+                $canvas->get_height();
+
+            $width =
+                $canvas->get_width();
+
+           
+
+            /*
+            |--------------------------------------------------------------------------
+            | Watermark - old working code
+            |--------------------------------------------------------------------------
+            |
+            | Important:
+            | New direct set_opacity() approach use nahi ki hai.
+            | Tumhara old page_script() approach same rakha hai.
+            |--------------------------------------------------------------------------
+            */
+
+            $watermarkText = strtoupper(
+                trim((string) ($document->status ?? '')
+                )
+            );
+
+            if (!empty($watermarkText)) {
+
+                /*
+                |--------------------------------------------------------------------------
+                | Old working opacity
+                |--------------------------------------------------------------------------
+                */
+
+                $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
+
+                /*
+                |--------------------------------------------------------------------------
+                | Watermark font
+                |--------------------------------------------------------------------------
+                */
+
+                $watermarkFont = $fontMetrics->get_font('sans-serif','bold');
+
+                $watermarkFontSize = 25;
+
+                /*
+                |--------------------------------------------------------------------------
+                | Watermark text width
+                |--------------------------------------------------------------------------
+                */
+
+                $watermarkTextWidth = $fontMetrics->getTextWidth($watermarkText, $watermarkFont, $watermarkFontSize);
+
+                /*
+                |--------------------------------------------------------------------------
+                | Watermark on every page
+                |--------------------------------------------------------------------------
+                */
+
+                $canvas->page_text(($width - $watermarkTextWidth) / 2, ($height / 2) + 50, $watermarkText, $watermarkFont, $watermarkFontSize, [0, 0, 0], 0.9, 6, -20);
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Generate temporary PDF filename
+            |--------------------------------------------------------------------------
+            */
+
+            $tempFile = $temporaryDirectory . DIRECTORY_SEPARATOR . 'document-' . $document->id . '-copy-' . $formattedCopyNumber . '-' . uniqid('', true) . '.pdf';
+
+            /*
+            |--------------------------------------------------------------------------
+            | Get current PDF output
+            |--------------------------------------------------------------------------
+            */
+
+            $pdfOutput = $pdf->output();
+
+            if (empty($pdfOutput)) {
+                throw new \RuntimeException(
+                    'Generated PDF output is empty for copy ' .
+                    $formattedCopyNumber .
+                    '.'
+                );
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Save current complete copy temporarily
+            |--------------------------------------------------------------------------
+            */
+
+            $writtenBytes = file_put_contents(
+                $tempFile,
+                $pdfOutput
+            );
+
+            if ($writtenBytes === false) {
+                throw new \RuntimeException(
+                    'Unable to save temporary PDF copy ' .
+                    $formattedCopyNumber .
+                    '.'
+                );
+            }
+
+            $tempFiles[] = $tempFile;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Create merged PDF
+        |--------------------------------------------------------------------------
+        */
+
+        $mergedPdf = new \setasign\Fpdi\Fpdi();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Merge all complete copies
+        |--------------------------------------------------------------------------
+        */
+
+        foreach ($tempFiles as $tempFile) {
+
+            if (!file_exists($tempFile)) {
+                throw new \RuntimeException(
+                    'Temporary PDF file not found: ' .
+                    $tempFile
+                );
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Read complete current copy
+            |--------------------------------------------------------------------------
+            */
+
+            $pageCount =
+                $mergedPdf->setSourceFile(
+                    $tempFile
+                );
+
+            if ($pageCount < 1) {
+                throw new \RuntimeException(
+                    'No pages found in temporary PDF: ' .
+                    basename($tempFile)
+                );
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Import all pages from current copy
+            |--------------------------------------------------------------------------
+            */
+
+            for ($pageNumber = 1; $pageNumber <= $pageCount; $pageNumber++ ) {
+
+                $templateId = $mergedPdf->importPage($pageNumber);
+
+                $pageSize = $mergedPdf->getTemplateSize($templateId);
+
+                if (empty($pageSize['width']) || empty($pageSize['height'])) { throw new \RuntimeException( 'Unable to determine PDF page size.');}
+
+                /*
+                |--------------------------------------------------------------------------
+                | Detect page orientation
+                |--------------------------------------------------------------------------
+                */
+
+                $orientation = $pageSize['width'] > $pageSize['height'] ? 'L' : 'P';
+
+                /*
+                |--------------------------------------------------------------------------
+                | Add same-size page
+                |--------------------------------------------------------------------------
+                */
+
+                $mergedPdf->AddPage(
+                    $orientation,
+                    [
+                        $pageSize['width'],
+                        $pageSize['height'],
+                    ]
+                );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Place imported page
+                |--------------------------------------------------------------------------
+                */
+
+                $mergedPdf->useTemplate($templateId, 0, 0, $pageSize['width'], $pageSize['height']);
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Prepare output filename
+        |--------------------------------------------------------------------------
+        */
+
+        $documentNumber = $document->document_number ?? ('document-' . $document->id);
+
+        $safeDocumentNumber =
+            preg_replace('/[^A-Za-z0-9\-_]/', '-',$documentNumber);
+
+        $safeDocumentNumber = trim( $safeDocumentNumber, '-' );
+
+        if (empty($safeDocumentNumber)) {
+            $safeDocumentNumber = 'document-' . $document->id;
+        }
+
+        $fileName =
+            $safeDocumentNumber . '-print-copies.pdf';
+
+        /*
+        |--------------------------------------------------------------------------
+        | Get merged PDF output
+        |--------------------------------------------------------------------------
+        */
+
+        $mergedOutput =
+            $mergedPdf->Output('S');
+
+        if (empty($mergedOutput)) {
+            throw new \RuntimeException(
+                'Merged PDF output is empty.'
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Delete temporary files after successful merge
+        |--------------------------------------------------------------------------
+        */
+
+        foreach ($tempFiles as $tempFile) {
+
+            if (file_exists($tempFile)) {
+                @unlink($tempFile);
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Open PDF in browser
+        |--------------------------------------------------------------------------
+        */
+
+        return response(
+            $mergedOutput,
+            200,
+            [ 'Content-Type' =>'application/pdf',
+
+                'Content-Disposition' =>'inline; filename="' . $fileName . '"',
+
+                'Content-Length' =>strlen($mergedOutput),
+
+                'Cache-Control' =>'private, no-store, no-cache, must-revalidate',
+
+                'Pragma' =>'no-cache',
+
+                'Expires' =>'0',
+            ]
+        );
+
+    } catch (\Throwable $e) {
+
+        /*
+        |--------------------------------------------------------------------------
+        | Delete temporary files after error
+        |--------------------------------------------------------------------------
+        */
+
+        foreach ($tempFiles as $tempFile) {
+
+            if (file_exists($tempFile)) {
+                @unlink($tempFile);
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Log full error
+        |--------------------------------------------------------------------------
+        */
+
+        \Log::error('Document print PDF generation failed',[
+                'document_id' =>$document->id ?? null,
+
+                'document_number' =>$document->document_number ?? null,
+
+                'total_copies' =>$totalCopies,
+
+                'view_name' =>$viewName,
+
+                'error_message' =>$e->getMessage(),
+
+                'error_file' =>$e->getFile(),
+
+                'error_line' =>$e->getLine(),
+
+                'error_trace' =>$e->getTraceAsString(),
+            ]
+        );
+
+        toastr()->error(
+            'Unable to generate print copies: ' .
+            $e->getMessage()
+        );
+
+        return redirect()->back();
+    }
+}
 
 }

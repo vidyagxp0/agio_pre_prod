@@ -12,6 +12,7 @@ use App\Http\Controllers\TMSController;
 use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\ChangeControlController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DocumentRequestController;
 use App\Http\Controllers\DocumentDetailsController;
 use App\Http\Controllers\rcms\DesktopController;
 use App\Http\Controllers\rcms\MarketComplaintController;
@@ -159,6 +160,11 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('document/view-attachments/{id}', [DocumentController::class, 'viewAttachments'])->name('view.attachments');
     Route::post('documentReviewComment/{id}', [DocumentController::class, 'documentReviewComment'])->name('documentReviewComment');
    
+    Route::get('document-request', [DocumentRequestController::class, 'create'])->name('document-request.create');
+    Route::post('document-request/store',[DocumentRequestController::class, 'store'])->name('document-request.store');
+    Route::get('document-request/edit/{id}',[DocumentRequestController::class, 'show'])->name('document-request.show');
+    Route::put('document-request/update/{id}',[DocumentRequestController::class, 'update'])->name('document-request.update');
+    Route::post('document-request/stage/{id}', [DocumentRequestController::class, 'docReq_sendstage'])->name('docReq_sendstage');
         
     Route::resource('documentsContent', DocumentContentController::class);
     Route::get('doc-details/{id}', [DocumentDetailsController::class, 'viewdetails']);

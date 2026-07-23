@@ -18,193 +18,407 @@ class DocumentService
 {
     public static function handleDistributionGrid(
         Document $document,
-        $distributions
-    ): void {
-        if (empty($distributions) || !is_array($distributions)) {
+        $distributions): void {
+        if (
+            empty($distributions)
+            || !is_array($distributions)
+        ) {
             return;
         }
 
-        DB::transaction(function () use ($document, $distributions) {
+        foreach ($distributions as $index => $distribution) {
 
-            foreach ($distributions as $index => $distribution) {
+            /*
+            |--------------------------------------------------------------------------
+            | History source
+            |--------------------------------------------------------------------------
+            */
 
-                /*
-                |--------------------------------------------------------------------------
-                | History source
-                |--------------------------------------------------------------------------
-                */
+            $historyType = trim(
+                (string) (
+                    $distribution['history_type']
+                    ?? ''
+                )
+            );
 
-                $historyType = trim(
-                    (string) ($distribution['history_type'] ?? '')
+            $historyId = !empty(
+                $distribution['history_id']
+            )
+                ? (int) $distribution['history_id']
+                : null;
+
+            $copyNumber = !empty(
+                $distribution['copy_number']
+            )
+                ? (int) $distribution['copy_number']
+                : null;
+
+            if (
+                !in_array(
+                    $historyType,
+                    ['print', 'download'],
+                    true
+                )
+                || !$historyId
+                || !$copyNumber
+            ) {
+                throw new \RuntimeException(
+                    'Row '
+                    . ($index + 1)
+                    . ': Distribution history or copy number missing.'
+                );
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Retrieval status
+            |--------------------------------------------------------------------------
+            */
+
+            $retrievalStatus = self::nullableString(
+                $distribution['retrieval_status']
+                ?? null
+            );
+
+            if (
+                $retrievalStatus !== null
+                && !in_array(
+                    $retrievalStatus,
+                    ['Retrieved', 'Used'],
+                    true
+                )
+            ) {
+                throw new \RuntimeException(
+                    'Row '
+                    . ($index + 1)
+                    . ': Invalid retrieval status.'
+                );
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Find copy-specific record
+            |--------------------------------------------------------------------------
+            */
+
+            $grid = DocumentGridData::firstOrNew([
+                'document_id' =>
+                    $document->id,
+
+                'history_type' =>
+                    $historyType,
+
+                'history_id' =>
+                    $historyId,
+
+                'copy_number' =>
+                    $copyNumber,
+            ]);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Do not allow changing completed retrieval status
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                !empty($grid->retrieval_status)
+                && $retrievalStatus !== null
+                && $grid->retrieval_status !== $retrievalStatus
+            ) {
+                throw new \RuntimeException(
+                    'Row '
+                    . ($index + 1)
+                    . ': Retrieval status is already completed and cannot be changed.'
+                );
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Basic identity
+            |--------------------------------------------------------------------------
+            */
+
+            $grid->document_id =
+                $document->id;
+
+            $grid->history_type =
+                $historyType;
+
+            $grid->history_id =
+                $historyId;
+
+            $grid->copy_number =
+                $copyNumber;
+
+            $grid->request_id =
+                self::nullableString(
+                    $distribution['request_id']
+                    ?? null
                 );
 
-                $historyId = !empty($distribution['history_id'])
-                    ? (int) $distribution['history_id']
-                    : null;
+            /*
+            |--------------------------------------------------------------------------
+            | Distribution data - locked values
+            |--------------------------------------------------------------------------
+            */
 
-                if (
-                    !in_array($historyType, ['print', 'download'], true)
-                    || !$historyId
-                ) {
-                    throw new \RuntimeException(
-                        'Row ' . ($index + 1) .
-                        ': Distribution history reference missing.'
-                    );
-                }
-
-                /*
-                |--------------------------------------------------------------------------
-                | Create or update grid record
-                |--------------------------------------------------------------------------
-                */
-
-                $grid = DocumentGridData::firstOrNew([
-                    'document_id' => $document->id,
-                    'history_type' => $historyType,
-                    'history_id' => $historyId,
-                ]);
-
-                $grid->document_id = $document->id;
-                $grid->history_type = $historyType;
-                $grid->history_id = $historyId;
-
-                /*
-                |--------------------------------------------------------------------------
-                | Distribution section
-                |--------------------------------------------------------------------------
-                */
-
-                $grid->document_title = self::nullableString(
+            $grid->document_title =
+                self::nullableString(
                     $distribution['document_title']
-                        ?? $document->document_name
+                    ?? $document->document_name
                 );
 
-                $grid->document_number = self::nullableString(
+            $grid->document_number =
+                self::nullableString(
                     $distribution['document_number']
-                        ?? $document->document_number
+                    ?? $document->document_number
                 );
 
-                $grid->document_printed_by = self::nullableInteger(
-                    $distribution['issued_by'] ?? null
+            $grid->document_printed_by =
+                self::nullableInteger(
+                    $distribution['issued_by']
+                    ?? null
                 );
 
-                $issuedDate = self::nullableDate(
-                    $distribution['issued_date'] ?? null
+            $issuedDate = self::nullableDate(
+                $distribution['issued_date']
+                ?? null
+            );
+
+            $grid->document_printed_on =
+                $issuedDate;
+
+            $grid->issuance_date =
+                $issuedDate;
+
+            /*
+            |--------------------------------------------------------------------------
+            | Every row represents exactly one copy
+            |--------------------------------------------------------------------------
+            */
+
+            $grid->document_printed_copies = 1;
+            $grid->issued_copies = 1;
+
+            $grid->issuance_to =
+                self::nullableInteger(
+                    $distribution['issued_to']
+                    ?? null
                 );
 
-                $grid->document_printed_on = $issuedDate;
-                $grid->issuance_date = $issuedDate;
-
-                $issuedCopies = self::nullableInteger(
-                    $distribution['issued_copies'] ?? null
+            $grid->issued_reason =
+                self::nullableString(
+                    $distribution['issued_reason']
+                    ?? null
                 );
 
-                $grid->document_printed_copies = $issuedCopies;
-                $grid->issued_copies = $issuedCopies;
-
-                $grid->issuance_to = self::nullableInteger(
-                    $distribution['issued_to'] ?? null
+            $grid->location =
+                self::nullableString(
+                    $distribution['location']
+                    ?? null
                 );
 
-                $grid->issued_reason = self::nullableString(
-                    $distribution['issued_reason'] ?? null
+            /*
+            |--------------------------------------------------------------------------
+            | No retrieval status selected
+            |--------------------------------------------------------------------------
+            |
+            | Only distribution data is stored.
+            |--------------------------------------------------------------------------
+            */
+
+            if ($retrievalStatus === null) {
+                $grid->save();
+                continue;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Retrieval details required
+            |--------------------------------------------------------------------------
+            */
+
+            $retrievalBy = self::nullableInteger(
+                $distribution['retrieval_by']
+                ?? null
+            );
+
+            $retrievalDate = self::nullableDate(
+                $distribution['retrieval_date']
+                ?? null
+            );
+
+            $retrievalReason = self::nullableString(
+                $distribution['retrieved_reason']
+                ?? null
+            );
+
+            if (!$retrievalBy) {
+                throw new \RuntimeException(
+                    'Row '
+                    . ($index + 1)
+                    . ': Retrieved/Used By is required.'
                 );
+            }
 
-                $grid->location = self::nullableString(
-                    $distribution['location'] ?? null
+            if (!$retrievalDate) {
+                throw new \RuntimeException(
+                    'Row '
+                    . ($index + 1)
+                    . ': Retrieval/Used Date is required.'
                 );
+            }
 
-                /*
-                |--------------------------------------------------------------------------
-                | Retrieval section
-                |--------------------------------------------------------------------------
-                */
-
-                $retrievedCopies = self::nullableInteger(
-                    $distribution['retrieved_copies'] ?? null
+            if (!$retrievalReason) {
+                throw new \RuntimeException(
+                    'Row '
+                    . ($index + 1)
+                    . ': Retrieval/Used Reason is required.'
                 );
+            }
 
-                if (
-                    $retrievedCopies !== null
-                    && $issuedCopies !== null
-                    && $retrievedCopies > $issuedCopies
-                ) {
-                    throw new \RuntimeException(
-                        'Row ' . ($index + 1) .
-                        ': Retrieved copies issued copies se zyada nahi ho sakti.'
-                    );
-                }
+            $grid->retrieval_status =
+                $retrievalStatus;
 
-                $grid->retrieved_copies = $retrievedCopies;
+            $grid->retrieval_by =
+                $retrievalBy;
 
-                $grid->retrieval_by = self::nullableInteger(
-                    $distribution['retrieval_by'] ?? null
-                );
+            $grid->retrieval_date =
+                $retrievalDate;
 
-                $grid->retrieval_date = self::nullableDate(
-                    $distribution['retrieval_date'] ?? null
-                );
+            $grid->retrieved_reason =
+                $retrievalReason;
 
-                $grid->retrieved_reason = self::nullableString(
-                    $distribution['retrieved_reason'] ?? null
-                );
+            /*
+            |--------------------------------------------------------------------------
+            | Compatibility with old numeric columns
+            |--------------------------------------------------------------------------
+            */
 
-                $grid->retrieved_department = self::nullableString(
-                    $distribution['retrieved_department'] ?? null
-                );
+            if ($retrievalStatus === 'Retrieved') {
+                $grid->retrieved_copies = 1;
+                $grid->used_copies = 0;
+            }
 
-                /*
-                |--------------------------------------------------------------------------
-                | Destruction section
-                |--------------------------------------------------------------------------
-                */
+            if ($retrievalStatus === 'Used') {
+                $grid->retrieved_copies = 0;
+                $grid->used_copies = 1;
+            }
 
-                $destructedCopies = self::nullableInteger(
-                    $distribution['destructed_copies'] ?? null
-                );
+            /*
+            |--------------------------------------------------------------------------
+            | Used copy can never move to destruction
+            |--------------------------------------------------------------------------
+            */
 
-                if (
-                    $destructedCopies !== null
-                    && $retrievedCopies === null
-                ) {
-                    throw new \RuntimeException(
-                        'Row ' . ($index + 1) .
-                        ': Destruction se pehle retrieved copies enter karo.'
-                    );
-                }
+            if ($retrievalStatus === 'Used') {
 
-                if (
-                    $destructedCopies !== null
-                    && $retrievedCopies !== null
-                    && $destructedCopies > $retrievedCopies
-                ) {
-                    throw new \RuntimeException(
-                        'Row ' . ($index + 1) .
-                        ': Destructed copies retrieved copies se zyada nahi ho sakti.'
-                    );
-                }
-
-                $grid->destructed_by = self::nullableInteger(
-                    $distribution['destructed_by'] ?? null
-                );
-
-                $grid->destruction_date = self::nullableDate(
-                    $distribution['destruction_date'] ?? null
-                );
-
-                $grid->destructed_copies = $destructedCopies;
-
-                $grid->destruction_reason = self::nullableString(
-                    $distribution['destruction_reason'] ?? null
-                );
-
-                $grid->remark = self::nullableString(
-                    $distribution['remark'] ?? null
-                );
+                $grid->destructed_by = null;
+                $grid->destruction_date = null;
+                $grid->destructed_copies = null;
+                $grid->destruction_reason = null;
 
                 $grid->save();
+
+                continue;
             }
-        });
+
+            /*
+            |--------------------------------------------------------------------------
+            | Retrieved copy destruction section
+            |--------------------------------------------------------------------------
+            */
+
+            $destructedBy = self::nullableInteger(
+                $distribution['destructed_by']
+                ?? null
+            );
+
+            $destructionDate = self::nullableDate(
+                $distribution['destruction_date']
+                ?? null
+            );
+
+            $destructionReason = self::nullableString(
+                $distribution['destruction_reason']
+                ?? null
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | If destruction has not started, save retrieval only
+            |--------------------------------------------------------------------------
+            */
+
+            $hasDestructionData =
+                $destructedBy !== null
+                || $destructionDate !== null
+                || $destructionReason !== null;
+
+            if (!$hasDestructionData) {
+
+                $grid->destructed_copies = null;
+                $grid->save();
+
+                continue;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Complete destruction details required together
+            |--------------------------------------------------------------------------
+            */
+
+            if (!$destructedBy) {
+                throw new \RuntimeException(
+                    'Row '
+                    . ($index + 1)
+                    . ': Destructed By is required.'
+                );
+            }
+
+            if (!$destructionDate) {
+                throw new \RuntimeException(
+                    'Row '
+                    . ($index + 1)
+                    . ': Destruction Date is required.'
+                );
+            }
+
+            if (!$destructionReason) {
+                throw new \RuntimeException(
+                    'Row '
+                    . ($index + 1)
+                    . ': Destruction Reason is required.'
+                );
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | One row means one destroyed physical copy
+            |--------------------------------------------------------------------------
+            */
+
+            $grid->destructed_by =
+                $destructedBy;
+
+            $grid->destruction_date =
+                $destructionDate;
+
+            $grid->destructed_copies = 1;
+
+            $grid->destruction_reason =
+                $destructionReason;
+
+            $grid->remark =
+                self::nullableString(
+                    $distribution['remark']
+                    ?? null
+                );
+
+            $grid->save();
+        }
     }
 
     private static function nullableString($value): ?string

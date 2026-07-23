@@ -1834,36 +1834,213 @@
     </div>
 
     <!-- updated print-model -->
-    <div class="modal fade" id="print-modal">
-        <div class="modal-dialog modal-dialog-centered">
+    @php
+    /*
+    |--------------------------------------------------------------------------
+    | Current document ke opened requests
+    |--------------------------------------------------------------------------
+    */
+
+    $printDocumentRequests = collect();
+
+    if (!empty($document->id)) {
+
+        $printDocumentRequests =
+            \App\Models\DocumentRequest::where(
+                'document_id',
+                $document->id
+            )
+            ->where('status', 'Opened')
+            ->orderBy('record', 'asc')
+            ->get();
+    }
+@endphp
+
+    {{--Print Documents--}}
+    <div class="modal fade" id="print-modal" tabindex="-1" aria-labelledby="printDocumentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+
             <div class="modal-content">
 
-                <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Print Document</h4>
+
+                    <h4
+                        class="modal-title"
+                        id="printDocumentModalLabel"
+                    >
+                        Print Document
+                    </h4>
 
                     <button
                         type="button"
                         class="btn-close"
-                        data-bs-dismiss="modal">
-                    </button>
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+
                 </div>
 
+
                 <form
-                    action="{{ route('document.print.pdf', $document->id) }}"
+                    id="document-print-form"
+                    action="{{ route(
+                        'document.print.pdf',
+                        $document->id
+                    ) }}"
                     method="GET"
-                    target="_blank">
+                    target="_blank"
+                >
 
                     @csrf
 
-                    <!-- Modal body -->
+                    <input
+                        type="hidden"
+                        name="current_document_record"
+                        value="{{ $document->id }}"
+                    >
+
+
                     <div class="modal-body">
 
-                        @php
-                            $currentUser = Auth::user();
-                        @endphp
+                        {{-- ================================================= --}}
+                        {{-- Request ID --}}
+                        {{-- ================================================= --}}
 
                         <div class="group-input mb-3">
+
+                            <label for="print_document_request_id">
+                                Request ID
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <select
+                                id="print_document_request_id"
+                                name="document_request_id"
+                                class="form-control w-100"
+                                required
+                                onchange="fillPrintRequestDetails(this)"
+                            >
+                                <option value="">
+                                    -- Select Request ID --
+                                </option>
+
+                                @forelse(
+                                    $printDocumentRequests
+                                    as $printRequest
+                                )
+
+                                    @php
+                                        $printRequestToUser =
+                                            \App\Models\User::find(
+                                                $printRequest->request_to
+                                            );
+
+                                        $printRequestToName =
+                                            $printRequestToUser
+                                                ? $printRequestToUser->name
+                                                : '';
+
+                                        $printDepartmentName = '';
+
+                                        if ($printRequestToUser) {
+                                            $printDepartmentName =
+                                                \App\Models\Department::where(
+                                                    'id',
+                                                    $printRequestToUser
+                                                        ->departmentid
+                                                )
+                                                ->value('name');
+                                        }
+
+                                        $printRequestId =
+                                            $printRequest->request_id
+                                            ?? (
+                                                'Request-' .
+                                                str_pad(
+                                                    $printRequest->record,
+                                                    3,
+                                                    '0',
+                                                    STR_PAD_LEFT
+                                                )
+                                            );
+                                    @endphp
+
+                                    <option
+                                        value="{{ $printRequest->id }}"
+
+                                        data-request-id="{{
+                                            $printRequestId
+                                        }}"
+
+                                        data-request-record="{{
+                                            $printRequest->record
+                                        }}"
+
+                                        data-request-to="{{
+                                            $printRequest->request_to
+                                            ?? ''
+                                        }}"
+
+                                        data-request-to-name="{{
+                                            $printRequestToName
+                                        }}"
+
+                                        data-department="{{
+                                            $printDepartmentName
+                                        }}"
+
+                                        data-number-of-copies="{{
+                                            $printRequest->number_of_copies
+                                            ?? ''
+                                        }}"
+
+                                        data-reason="{{
+                                            $printRequest->reason
+                                            ?? ''
+                                        }}"
+                                    >
+                                        {{ $printRequestId }}
+                                    </option>
+
+                                @empty
+
+                                    <option
+                                        value=""
+                                        disabled
+                                    >
+                                        No opened request found
+                                    </option>
+
+                                @endforelse
+
+                            </select>
+
+                            @if($printDocumentRequests->isEmpty())
+
+                                <small class="text-danger">
+                                    Is document ke liye koi opened request available nahi hai.
+                                </small>
+
+                            @endif
+
+                        </div>
+
+
+                        {{-- Backend hidden request record --}}
+
+                        <input
+                            type="hidden"
+                            id="print_request_record"
+                            name="request_record"
+                        >
+
+
+                        {{-- ================================================= --}}
+                        {{-- Issued By --}}
+                        {{-- ================================================= --}}
+
+                        <div class="group-input mb-3">
+
                             <label for="print_issued_by">
                                 Issued By
                             </label>
@@ -1871,23 +2048,33 @@
                             <input
                                 type="text"
                                 id="print_issued_by"
-                                class="form-control w-100"
+                                class="form-control w-100 print-readonly-field"
                                 value="{{ Auth::user()->name }}"
-                                readonly>
+                                readonly
+                            >
 
                             <input
                                 type="hidden"
                                 name="user_id"
-                                value="{{ Auth::id() }}">
+                                value="{{ Auth::id() }}"
+                            >
+
                         </div>
 
+
+                        {{-- ================================================= --}}
+                        {{-- Issued Date --}}
+                        {{-- ================================================= --}}
+
                         <div class="group-input new-date-data-field mb-3">
+
                             <label for="print_issued_date">
                                 Issued Date
                                 <span class="text-danger">*</span>
                             </label>
 
                             <div class="input-date">
+
                                 <div class="calenderauditee">
 
                                     <input
@@ -1897,7 +2084,8 @@
                                         class="form-control w-100"
                                         readonly
                                         required
-                                        onclick="openPrintIssuedDatePicker()">
+                                        onclick="openPrintIssuedDatePicker()"
+                                    >
 
                                     <input
                                         type="date"
@@ -1905,16 +2093,25 @@
                                         name="issued_date"
                                         class="hide-input"
                                         required
-                                        oninput="handleDateInput(
+                                        oninput="handlePrintDateInput(
                                             this,
                                             'print_issued_date_display'
-                                        )">
+                                        )"
+                                    >
 
                                 </div>
+
                             </div>
+
                         </div>
 
+
+                        {{-- ================================================= --}}
+                        {{-- Copies --}}
+                        {{-- ================================================= --}}
+
                         <div class="group-input mb-3">
+
                             <label for="print_issued_copies">
                                 Number of Issued Copies
                                 <span class="text-danger">*</span>
@@ -1925,11 +2122,20 @@
                                 id="print_issued_copies"
                                 name="issued_copies"
                                 min="1"
-                                class="form-control w-100"
-                                required>
+                                class="form-control w-100 print-readonly-field"
+                                readonly
+                                required
+                            >
+
                         </div>
 
+
+                        {{-- ================================================= --}}
+                        {{-- Print Reason --}}
+                        {{-- ================================================= --}}
+
                         <div class="group-input mb-3">
+
                             <label for="print_reason_print">
                                 Print Reason
                                 <span class="text-danger">*</span>
@@ -1938,200 +2144,188 @@
                             <textarea
                                 id="print_reason_print"
                                 name="print_reason"
-                                class="form-control w-100"
+                                class="form-control w-100 print-readonly-field"
                                 maxlength="255"
-                                required></textarea>
+                                rows="3"
+                                readonly
+                                required
+                            ></textarea>
+
                         </div>
 
+
+                        {{-- ================================================= --}}
+                        {{-- Issued To --}}
+                        {{-- ================================================= --}}
+
                         <div class="group-input mb-3">
-                            <label for="print_issuance_to">
+
+                            <label for="print_issuance_to_name">
                                 Issued To
                                 <span class="text-danger">*</span>
                             </label>
 
-                            <select
+                            <input
+                                type="text"
+                                id="print_issuance_to_name"
+                                class="form-control w-100 print-readonly-field"
+                                readonly
+                                required
+                            >
+
+                            <input
+                                type="hidden"
                                 id="print_issuance_to"
                                 name="issuance_to"
-                                class="form-control w-100"
-                                required>
+                            >
 
-                                <option value="">
-                                    -- Select --
-                                </option>
-
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">
-                                        {{ $user->name }}
-                                    </option>
-                                @endforeach
-
-                            </select>
                         </div>
 
+
+                        {{-- ================================================= --}}
+                        {{-- Issued To Department --}}
+                        {{-- ================================================= --}}
+
                         <div class="group-input mb-3">
-                            <label for="print_stamp_impression">
-                                Stamp Impressions
+
+                            <label for="print_department_name">
+                                Issued To Department
                             </label>
 
-                            <select
-                                id="print_stamp_impression"
+                            <input
+                                type="text"
+                                id="print_department_name"
+                                class="form-control w-100 print-readonly-field"
+                                readonly
+                            >
+
+                            <input
+                                type="hidden"
+                                id="print_department"
                                 name="department"
-                                class="form-control w-100">
+                            >
 
-                                <option value="">
-                                    -- Select --
-                                </option>
-
-                                <option value="1">
-                                    Master Copy (Rectangle Shaped)
-                                </option>
-
-                                <option value="2">
-                                    Controlled Copy (Round Shaped)
-                                </option>
-
-                                <option value="3">
-                                    Controlled Copy (Rectangle Shaped with sign/date)
-                                </option>
-
-                                <option value="4">
-                                    UnControlled Copy (Rectangle Shaped with sign/date)
-                                </option>
-
-                                <option value="5">
-                                    UnControlled Copy (Rectangle Shaped)
-                                </option>
-
-                                <option value="6">
-                                    Obsolete (Rectangle Shaped with sign/date)
-                                </option>
-
-                                <option value="7">
-                                    Obsolete (Rectangle Shaped)
-                                </option>
-
-                                <option value="8">
-                                    Approved (Round Shaped)
-                                </option>
-
-                                <option value="9">
-                                    Reference Copy (Rectangle Shaped)
-                                </option>
-
-                                <option value="10">
-                                    Issued Copy (Round Shaped)
-                                </option>
-
-                                <option value="11">
-                                    Issue By (Rectangle Shaped with sign/date)
-                                </option>
-
-                                <option value="12">
-                                    Reviewed No Change (Rectangle Shaped with sign/date)
-                                </option>
-
-                            </select>
                         </div>
 
                     </div>
 
-                    <!-- Modal footer -->
+
                     <div class="modal-footer">
 
                         <button
                             type="submit"
-                            class="btn btn-primary rounded">
+                            class="btn btn-primary rounded"
+                            {{ $printDocumentRequests->isEmpty()
+                                ? 'disabled'
+                                : ''
+                            }}
+                        >
                             Submit
                         </button>
 
                         <button
                             type="button"
                             class="btn btn-secondary"
-                            data-bs-dismiss="modal">
+                            data-bs-dismiss="modal"
+                        >
                             Close
                         </button>
 
                     </div>
 
                 </form>
+
             </div>
+
         </div>
     </div>
 
     <script>
+        function fillPrintRequestDetails(selectElement) {
+
+            const selectedOption =
+                selectElement.options[
+                    selectElement.selectedIndex
+                ];
+
+            const requestRecord =
+                selectedOption.dataset.requestRecord || '';
+
+            const requestTo =
+                selectedOption.dataset.requestTo || '';
+
+            const requestToName =
+                selectedOption.dataset.requestToName || '';
+
+            const department =
+                selectedOption.dataset.department || '';
+
+            const numberOfCopies =
+                selectedOption.dataset.numberOfCopies || '';
+
+            const reason =
+                selectedOption.dataset.reason || '';
+
+
+            document
+                .getElementById('print_request_record')
+                .value = requestRecord;
+
+            document
+                .getElementById('print_issued_copies')
+                .value = numberOfCopies;
+
+            document
+                .getElementById('print_reason_print')
+                .value = reason;
+
+            document
+                .getElementById('print_issuance_to')
+                .value = requestTo;
+
+            document
+                .getElementById('print_issuance_to_name')
+                .value = requestToName;
+
+            document
+                .getElementById('print_department')
+                .value = department;
+
+            document
+                .getElementById('print_department_name')
+                .value = department;
+        }
+
+
         function openPrintIssuedDatePicker() {
+
             const dateInput =
-                document.getElementById('print_issued_date');
+                document.getElementById(
+                    'print_issued_date'
+                );
 
             if (!dateInput) {
                 return;
             }
-
-            if (typeof dateInput.showPicker === 'function') {
-                dateInput.showPicker();
-            } else {
-                dateInput.click();
-            }
-        }
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const issueCopiesInput =
-                document.getElementById('print_issue_copies');
-
-            const printedCopiesInput =
-                document.getElementById(
-                    'print_document_printed_copies'
-                );
-
-            const issuedCopiesInput =
-                document.getElementById('print_issued_copies');
 
             if (
-                issueCopiesInput &&
-                printedCopiesInput &&
-                issuedCopiesInput
+                typeof dateInput.showPicker ===
+                'function'
             ) {
-                const syncPrintCopies = function () {
-                    const copies =
-                        parseInt(issueCopiesInput.value || '1', 10);
-
-                    const validCopies = copies > 0 ? copies : 1;
-
-                    printedCopiesInput.value = validCopies;
-                    issuedCopiesInput.value = validCopies;
-                };
-
-                issueCopiesInput.addEventListener(
-                    'input',
-                    syncPrintCopies
-                );
-
-                syncPrintCopies();
-            }
-        });
-
-        function openPrintDatePicker() {
-            const dateInput =
-                document.getElementById('print_issuance_date');
-
-            if (!dateInput) {
-                return;
-            }
-
-            if (typeof dateInput.showPicker === 'function') {
                 dateInput.showPicker();
             } else {
                 dateInput.click();
             }
         }
 
-        function handlePrintIssuanceDate(dateInput) {
+
+        function handlePrintDateInput(
+            dateInput,
+            displayId
+        ) {
+
             const displayInput =
-                document.getElementById(
-                    'print_issuance_date_display'
-                );
+                document.getElementById(displayId);
 
             if (!displayInput) {
                 return;
@@ -2142,217 +2336,779 @@
                 return;
             }
 
-            const parts = dateInput.value.split('-');
+            const parts =
+                dateInput.value.split('-');
 
-            const selectedDate = new Date(
-                parseInt(parts[0], 10),
-                parseInt(parts[1], 10) - 1,
-                parseInt(parts[2], 10)
-            );
+            const selectedDate =
+                new Date(
+                    Number(parts[0]),
+                    Number(parts[1]) - 1,
+                    Number(parts[2])
+                );
 
-            displayInput.value = selectedDate
-                .toLocaleDateString('en-GB', {
-                    day: '2-digit',
-                    month: 'short',
-                    year: 'numeric'
-                })
-                .replace(/ /g, '-');
+            displayInput.value =
+                selectedDate
+                    .toLocaleDateString(
+                        'en-GB',
+                        {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric'
+                        }
+                    )
+                    .replace(/ /g, '-');
         }
+
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            function () {
+
+                const printForm =
+                    document.getElementById(
+                        'document-print-form'
+                    );
+
+                if (!printForm) {
+                    return;
+                }
+
+                printForm.addEventListener(
+                    'submit',
+                    function (event) {
+
+                        const documentRequestId =
+                            document
+                                .getElementById(
+                                    'print_document_request_id'
+                                )
+                                .value;
+
+                        const issuedDate =
+                            document
+                                .getElementById(
+                                    'print_issued_date'
+                                )
+                                .value;
+
+                        const issuedCopies =
+                            document
+                                .getElementById(
+                                    'print_issued_copies'
+                                )
+                                .value;
+
+                        const issuanceTo =
+                            document
+                                .getElementById(
+                                    'print_issuance_to'
+                                )
+                                .value;
+
+                        if (!documentRequestId) {
+
+                            event.preventDefault();
+
+                            alert(
+                                'Please select Request ID.'
+                            );
+
+                            return;
+                        }
+
+                        if (!issuedDate) {
+
+                            event.preventDefault();
+
+                            alert(
+                                'Please select Issued Date.'
+                            );
+
+                            return;
+                        }
+
+                        if (
+                            !issuedCopies ||
+                            parseInt(
+                                issuedCopies,
+                                10
+                            ) < 1
+                        ) {
+
+                            event.preventDefault();
+
+                            alert(
+                                'Invalid number of issued copies.'
+                            );
+
+                            return;
+                        }
+
+                        if (!issuanceTo) {
+
+                            event.preventDefault();
+
+                            alert(
+                                'Issued To user is not available.'
+                            );
+                        }
+                    }
+                );
+            }
+        );
     </script>
 
-    <!--updated print-model print as word-->
-    <div class="modal fade" id="print-modal1">
-        <div class=" modal-dialog modal-dialog-centered">
+    <style>
+        .hide-input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #print-modal .print-readonly-field {
+            background-color: #f3f3f3 !important;
+            color: #333 !important;
+            cursor: not-allowed;
+        }
+
+        #print-modal .modal-body {
+            max-height: 75vh;
+            overflow-y: auto;
+        }
+
+        #print-modal textarea {
+            resize: vertical;
+        }
+    </style>
+
+    {{-- Download documents --}}
+    @php
+        $currentDocumentRecord = $document->id ?? null;
+
+        $documentRequests = collect();
+
+        if (!empty($currentDocumentRecord)) {
+            $documentRequests = \App\Models\DocumentRequest::where(
+                'document_id',
+                $currentDocumentRecord
+            )->where('status', 'Opened')->orderBy('request_id', 'asc')->get();
+        }
+        
+    @endphp
+
+    <div class="modal fade" id="print-modal1" tabindex="-1" aria-labelledby="printModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+
             <div class="modal-content">
-                <!-- Modal Header -->
+
+                {{-- Modal Header --}}
                 <div class="modal-header">
-                    <h4 class="modal-title">Download Document</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+                    <h4 class="modal-title" id="printModalLabel" >
+                        Download Document
+                    </h4>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+
                 </div>
-                <form id="document-download-form" action="{{ route('document.print.downloadpdf', $document->id) }}" method="GET" target="_blank">
+
+
+                <form id="document-download-form" action="{{ route('document.print.downloadpdf', $document->id ) }}" method="GET" target="_blank" >
+
                     @csrf
-                    <!-- Modal body -->
+
+                    {{-- Current document ID backend ke liye hidden rahega --}}
+                    <input type="hidden" name="current_document_record" value="{{ $currentDocumentRecord }}" >
+
+
                     <div class="modal-body">
 
-                        @php
-                        $currentUser = Auth::user();
-                        @endphp
+                        {{-- ================================================= --}}
+                        {{-- Request ID Dropdown --}}
+                        {{-- ================================================= --}}
+
                         <div class="group-input mb-3">
-                            <label for="Document_Printed_By">Issued By</label>
 
-                            <input type="text"
-                                id="Document_Printed_By"
-                                class="form-control w-100"
-                                value="{{ Auth::user()->name }}"
-                                readonly>
+                            <label for="document_request_id">
+                                Request ID
+                                <span class="text-danger">*</span>
+                            </label>
 
-                            <input type="hidden"
-                                name="user_id"
-                                value="{{ Auth::id() }}">
+                            <select id="document_request_id" name="document_request_id" class="form-control w-100" required onchange="fillDocumentRequestDetails(this)">
+
+                                <option value="">
+                                    -- Select Request ID --
+                                </option>
+
+                                @forelse (
+                                    $documentRequests
+                                    as $documentRequest)
+
+                                    @php
+                                        $requestToUser =\App\Models\User::find($documentRequest->request_to);
+
+                                        $requestToName = $requestToUser ? $requestToUser->name : '';
+                                    @endphp
+
+                                    <option
+                                        value="{{ $documentRequest->id }}"
+
+                                        data-request-record="{{$documentRequest->request_id}}"
+
+                                        data-department="{{ $documentRequest->department ?? '' }}"
+
+                                        data-request-to="{{ $documentRequest->request_to ?? '' }}"
+
+                                        data-request-to-name="{{ $requestToName }}"
+
+                                        data-number-of-copies="{{ $documentRequest->number_of_copies ?? '' }}"
+
+                                        data-reason="{{ $documentRequest->reason ?? '' }}">
+                                        {{
+                                            str_pad( $documentRequest->request_id, 3, '0', STR_PAD_LEFT)
+                                        }}
+                                    </option>
+
+                                @empty
+
+                                    <option value="" disabled >
+                                        No opened request found
+                                    </option>
+
+                                @endforelse
+
+                            </select>
+
+                            @if ($documentRequests->isEmpty())
+
+                                <small class="text-danger">
+                                    Is document ke liye koi opened request available nahi hai.
+                                </small>
+
+                            @else
+
+                                <small class="text-muted">
+                                    Total matching requests:
+                                    {{ $documentRequests->count() }}
+                                </small>
+
+                            @endif
+
                         </div>
 
+
+                        {{-- Request record backend ke liye hidden --}}
+                        <input
+                            type="hidden"
+                            id="request_record"
+                            name="request_record"
+                        >
+
+
+                        {{-- ================================================= --}}
+                        {{-- Issued By --}}
+                        {{-- ================================================= --}}
+
+                        <div class="group-input mb-3">
+
+                            <label for="Document_Printed_By">
+                                Issued By
+                            </label>
+
+                            <input
+                                type="text"
+                                id="Document_Printed_By"
+                                class="form-control w-100 modal-readonly-field"
+                                value="{{ Auth::user()->name }}"
+                                readonly
+                            >
+
+                            <input
+                                type="hidden"
+                                name="user_id"
+                                value="{{ Auth::id() }}"
+                            >
+
+                        </div>
+
+
+                        {{-- ================================================= --}}
+                        {{-- Issued Date --}}
+                        {{-- ================================================= --}}
+
                         <div class="group-input new-date-data-field mb-3">
+
                             <label for="issued_date">
-                                Issued Date <span class="text-danger">*</span>
+                                Issued Date
+                                <span class="text-danger">*</span>
                             </label>
 
                             <div class="input-date">
+
                                 <div class="calenderauditee">
 
-                                    <input type="text"
+                                    {{-- Display date field --}}
+                                    <input
+                                        type="text"
                                         id="issued_date_display"
                                         placeholder="DD-MMM-YYYY"
                                         class="form-control w-100"
                                         readonly
                                         required
-                                        onclick="openIssuedDatePicker()">
+                                        onclick="openIssuedDatePicker()"
+                                    >
 
-                                    <input type="date"
+                                    {{-- Actual date field --}}
+                                    <input
+                                        type="date"
                                         id="issued_date"
                                         name="issued_date"
                                         class="hide-input"
                                         required
-                                        oninput="handleDateInput(this, 'issued_date_display')">
+                                        oninput="handleDateInput(
+                                            this,
+                                            'issued_date_display'
+                                        )"
+                                    >
 
                                 </div>
+
                             </div>
+
                         </div>
 
+
+                        {{-- ================================================= --}}
+                        {{-- Number of Copies --}}
+                        {{-- ================================================= --}}
+
                         <div class="group-input mb-3">
+
                             <label for="issued_copies">
-                                Number of Issued Copies <span class="text-danger">*</span>
+                                Number of Issued Copies
+                                <span class="text-danger">*</span>
                             </label>
 
-                            <input type="number"
+                            <input
+                                type="number"
                                 id="issued_copies"
                                 name="issued_copies"
                                 min="1"
-                                class="form-control w-100"
-                                required>
+                                class="form-control w-100 modal-readonly-field"
+                                readonly
+                                required
+                            >
+
                         </div>
 
+
+                        {{-- ================================================= --}}
+                        {{-- Download Reason --}}
+                        {{-- ================================================= --}}
+
                         <div class="group-input mb-3">
+
                             <label for="print_reason">
-                                Download Reason <span class="text-danger">*</span>
+                                Download Reason
+                                <span class="text-danger">*</span>
                             </label>
 
                             <textarea
                                 id="print_reason"
                                 name="print_reason"
-                                class="form-control w-100"
+                                class="form-control w-100 modal-readonly-field"
                                 maxlength="255"
-                                required></textarea>
+                                rows="3"
+                                readonly
+                                required
+                            ></textarea>
+
                         </div>
 
+
+                        {{-- ================================================= --}}
+                        {{-- Issued To --}}
+                        {{-- ================================================= --}}
+
                         <div class="group-input mb-3">
-                            <label for="issuance_to">
-                                Issued To <span class="text-danger">*</span>
+
+                            <label for="issuance_to_name">
+                                Issued To
+                                <span class="text-danger">*</span>
                             </label>
 
-                            <select id="issuance_to"
+                            {{-- Display user name --}}
+                            <input
+                                type="text"
+                                id="issuance_to_name"
+                                class="form-control w-100 modal-readonly-field"
+                                readonly
+                                required
+                            >
+
+                            {{-- Actual user ID --}}
+                            <input
+                                type="hidden"
+                                id="issuance_to"
                                 name="issuance_to"
-                                class="form-control w-100"
-                                required>
+                            >
 
-                                <option value="">-- Select --</option>
-
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">
-                                        {{ $user->name }}
-                                    </option>
-                                @endforeach
-
-                            </select>
                         </div>
+
+
+                        {{-- ================================================= --}}
+                        {{-- Issued To Department --}}
+                        {{-- ================================================= --}}
 
                         <div class="group-input mb-3">
-                            <label for="stamp_impression">
-                                Stamp Impressions
+
+                            <label for="department_name">
+                                Issued To Department
                             </label>
 
-                            <select id="stamp_impression"
+                            <input
+                                type="text"
+                                id="department_name"
+                                class="form-control w-100 modal-readonly-field"
+                                readonly
+                            >
+
+                            <input
+                                type="hidden"
+                                id="department"
                                 name="department"
-                                class="form-control w-100">
+                            >
 
-                                <option value="">-- Select --</option>
-                                <option value="1">Master Copy (Rectangle Shaped)</option>
-                                <option value="2">Controlled Copy (Round Shaped)</option>
-                                <option value="3">Controlled Copy (Rectangle Shaped with sign/date)</option>
-                                <option value="4">UnControlled Copy (Rectangle Shaped with sign/date)</option>
-                                <option value="5">UnControlled Copy (Rectangle Shaped)</option>
-                                <option value="6">Obsolete (Rectangle Shaped with sign/date)</option>
-                                <option value="7">Obsolete (Rectangle Shaped)</option>
-                                <option value="8">Approved (Round Shaped)</option>
-                                <option value="9">Reference Copy (Rectangle Shaped)</option>
-                                <option value="10">Issued Copy (Round Shaped)</option>
-                                <option value="11">Issue By (Rectangle Shaped with sign/date)</option>
-                                <option value="12">Reviewed No Change (Rectangle Shaped with sign/date)</option>
-                            </select>
                         </div>
+
                     </div>
 
-                    <!-- Modal footer -->
+
+                    {{-- Modal Footer --}}
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary rounded">Submit</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary rounded"
+                            {{ $documentRequests->isEmpty()
+                                ? 'disabled'
+                                : ''
+                            }}
+                        >
+                            Submit
+                        </button>
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Close
+                        </button>
+
                     </div>
+
                 </form>
+
             </div>
+
         </div>
     </div>
-        <script>
-            function openIssuedDatePicker() {
-                const dateInput = document.getElementById('issued_date');
 
-                if (typeof dateInput.showPicker === 'function') {
-                    dateInput.showPicker();
-                } else {
-                    dateInput.click();
-                }
+    <script>
+        /**
+         * Selected request ka data fields me auto-fill karega.
+         */
+        function fillDocumentRequestDetails(select) {
+
+            const option =
+                select.options[select.selectedIndex];
+
+            const requestRecord =
+                option.dataset.requestRecord || '';
+
+            const department =
+                option.dataset.department || '';
+
+            const requestTo =
+                option.dataset.requestTo || '';
+
+            const requestToName =
+                option.dataset.requestToName || '';
+
+            const numberOfCopies =
+                option.dataset.numberOfCopies || '';
+
+            const reason =
+                option.dataset.reason || '';
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Request record hidden field
+            |--------------------------------------------------------------------------
+            */
+
+            document
+                .getElementById('request_record')
+                .value = requestRecord;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Number of copies
+            |--------------------------------------------------------------------------
+            */
+
+            document
+                .getElementById('issued_copies')
+                .value = numberOfCopies;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Download reason
+            |--------------------------------------------------------------------------
+            */
+
+            document
+                .getElementById('print_reason')
+                .value = reason;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Issued To
+            |--------------------------------------------------------------------------
+            */
+
+            document
+                .getElementById('issuance_to')
+                .value = requestTo;
+
+            document
+                .getElementById('issuance_to_name')
+                .value = requestToName;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Department
+            |--------------------------------------------------------------------------
+            */
+
+            document
+                .getElementById('department_name')
+                .value = department;
+
+            document
+                .getElementById('department')
+                .value = department;
+        }
+
+
+        /**
+         * Hidden date input open karega.
+         */
+        function openIssuedDatePicker() {
+
+            const dateInput =
+                document.getElementById('issued_date');
+
+            if (!dateInput) {
+                return;
             }
 
-            function handleDateInput(dateInput, displayId) {
-                const displayInput = document.getElementById(displayId);
+            if (
+                typeof dateInput.showPicker ===
+                'function'
+            ) {
+                dateInput.showPicker();
+            } else {
+                dateInput.click();
+            }
+        }
 
-                if (!dateInput.value) {
-                    displayInput.value = '';
-                    return;
-                }
 
-                const [year, month, day] = dateInput.value.split('-');
+        /**
+         * YYYY-MM-DD date ko DD-MMM-YYYY me show karega.
+         */
+        function handleDateInput(
+            dateInput,
+            displayId
+        ) {
 
-                const selectedDate = new Date(
+            const displayInput =
+                document.getElementById(displayId);
+
+            if (!displayInput) {
+                return;
+            }
+
+            if (!dateInput.value) {
+
+                displayInput.value = '';
+
+                return;
+            }
+
+            const [year, month, day] =
+                dateInput.value.split('-');
+
+            const selectedDate =
+                new Date(
                     Number(year),
                     Number(month) - 1,
                     Number(day)
                 );
 
-                displayInput.value = selectedDate
-                    .toLocaleDateString('en-GB', {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric'
-                    })
+            displayInput.value =
+                selectedDate
+                    .toLocaleDateString(
+                        'en-GB',
+                        {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric'
+                        }
+                    )
                     .replace(/ /g, '-');
-            }
-        </script>
+        }
 
 
-        <style>
-            .hide-input {
-                position: absolute;
-                width: 1px;
-                height: 1px;
-                opacity: 0;
-                pointer-events: none;
+        /**
+         * Form validation.
+         */
+        document.addEventListener(
+            'DOMContentLoaded',
+            function () {
+
+                const form =
+                    document.getElementById(
+                        'document-download-form'
+                    );
+
+                if (!form) {
+                    return;
+                }
+
+                form.addEventListener(
+                    'submit',
+                    function (event) {
+
+                        const requestId =
+                            document
+                                .getElementById(
+                                    'document_request_id'
+                                )
+                                .value;
+
+                        const issuedDate =
+                            document
+                                .getElementById(
+                                    'issued_date'
+                                )
+                                .value;
+
+                        const issuedCopies =
+                            document
+                                .getElementById(
+                                    'issued_copies'
+                                )
+                                .value;
+
+                        const issuanceTo =
+                            document
+                                .getElementById(
+                                    'issuance_to'
+                                )
+                                .value;
+
+
+                        if (!requestId) {
+
+                            event.preventDefault();
+
+                            alert(
+                                'Please select Request ID.'
+                            );
+
+                            return;
+                        }
+
+
+                        if (!issuedDate) {
+
+                            event.preventDefault();
+
+                            alert(
+                                'Please select Issued Date.'
+                            );
+
+                            return;
+                        }
+
+
+                        if (
+                            !issuedCopies ||
+                            parseInt(
+                                issuedCopies,
+                                10
+                            ) < 1
+                        ) {
+
+                            event.preventDefault();
+
+                            alert(
+                                'Invalid number of copies.'
+                            );
+
+                            return;
+                        }
+
+
+                        if (!issuanceTo) {
+
+                            event.preventDefault();
+
+                            alert(
+                                'Issued To user is not available.'
+                            );
+
+                            return;
+                        }
+                    }
+                );
             }
-        </style>
-    <script>
-        document.getElementById('issue_copie').addEventListener('input', function() {
-            const issueCopies = document.getElementById('issue_copie').value;
-            document.getElementById('issued_copie').value = issueCopies;
-        });
+        );
     </script>
+
+    <style>
+        .hide-input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #print-modal1 .modal-readonly-field {
+            background-color: #f3f3f3 !important;
+            color: #333 !important;
+            cursor: not-allowed;
+        }
+
+        #print-modal1 .modal-body {
+            max-height: 75vh;
+            overflow-y: auto;
+        }
+
+        #print-modal1 textarea {
+            resize: vertical;
+        }
+    </style>
 
     <style>
         .group-input input {

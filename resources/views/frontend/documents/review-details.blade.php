@@ -65,17 +65,15 @@
                                    
 
                                     @if ($showEdit)
-                                    {{-- <a href="{{ route('documents.edit', $document->id) }}" class="button">Edit</a> --}}
                                     <button onclick="location.href='{{ route('documents.edit', $document->id) }}';" style="cursor:pointer;">Edit</button>
 
-                                        {{-- <button ><a href="{{ route('documents.edit', $document->id) }}">Edit</a></button> --}}
                                     @endif
                                     @if(Helpers::checkControlAccess())
-                                    <button onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
+                                    {{-- <button onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
                                     </button>
                                     <button onclick="location.href='{{ url('documents/printPDF', $document->id) }}';"
                                             target="__blank">Print
-                                    </button>
+                                    </button> --}}
                                     @endif
                                 </div>
                             </div>
