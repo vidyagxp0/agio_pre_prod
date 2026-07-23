@@ -19,6 +19,7 @@ use App\Models\Stage;
 use App\Models\DocumentHistory;
 use App\Models\Grouppermission;
 use App\Models\DocumentType;
+use App\Models\DocumentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -64,7 +65,10 @@ class DocumentDetailsController extends Controller
         $currentId = $position !== false
             ? $position + 1
             : 1;
-      return view('frontend.documents.document-details', compact('document', 'reviewer', 'approvers', 'reviewergroup', 'approversgroup','currentId'));
+
+        $documentRequests = DocumentRequest::get();
+
+      return view('frontend.documents.document-details', compact('document', 'reviewer', 'approvers', 'reviewergroup', 'approversgroup','currentId','documentRequests'));
     } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
       return "Document Not Found";
     }

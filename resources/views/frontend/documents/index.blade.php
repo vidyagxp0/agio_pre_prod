@@ -14,7 +14,12 @@
                                 <a href="#" id="set-division">
                                     <i class="fa-solid fa-plus"></i> Create Document
                                 </a>
+                         
+                                <a href="{{route('document-request.create')}}" id="set-division">
+                                    <i class="fa-solid fa-plus"></i> Document Issuance Request
+                                </a>
                             </div>
+
 
                         </div>
                         <div class="inner-block table-block">

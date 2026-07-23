@@ -739,112 +739,19 @@
                     </div>
                     <div class="input-fields">
                         <div class="row">
-
-                            {{-- @if($document->document_type_id == 'SOP')
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-num">Document Number</label>
-                                        <input type="text" id="doc-num" name="document_number" class="default-name" readonly
-                                            value="
-                                            @if ($document->revised === 'Yes')
-                                                @php
-                                                    $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-                                                @endphp
 
-                                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                                    {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                                @else
-                                                    {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                                @endif
-                                            @else
-                                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                                    {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                                                @else
-                                                    {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                                                @endif
-                                            @endif">
+                                        <input
+                                            type="text"
+                                            id="doc-num"
+                                            class="default-name"
+                                            value="{{ $document->document_number ?? '' }}"
+                                            readonly
+                                        >
                                     </div>
                                 </div>
-                            @else
-                                <div class="col-md-6" style="display: none;">
-                                    <div class="group-input">
-                                        <label for="doc-num">Document Number</label>
-                                        <input type="text" id="doc-num" name="document_number" class="default-name" readonly
-                                            value="
-                                            @if ($document->revised === 'Yes')
-                                                @php
-                                                    $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-                                                @endphp
-
-                                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                                    {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                                @else
-                                                    {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                                @endif
-                                            @else
-                                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                                    {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                                                @else
-                                                    {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                                                @endif
-                                            @endif">
-                                    </div>
-                                </div>
-                            @endif --}}
-
-                            @if($document->document_type_id == 'SOP')
-
-                                @php
-                                    // Revision number
-                                    $revisionNumber = $document->revised === 'Yes'
-                                        ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT)
-                                        : '00';
-
-                                    // Main ID formatting
-                                    $formattedId = str_pad($currentId, 3, '0', STR_PAD_LEFT);
-
-                                    // SOP Type check
-                                    if (in_array($document->sop_type_short, ['EOP', 'IOP'])) {
-                                        $finalDocNumber = "{$document->department_id}/{$document->sop_type_short}/{$formattedId}-{$revisionNumber}";
-                                    } else {
-                                        $finalDocNumber = "{$document->sop_type_short}/{$document->department_id}/{$formattedId}-{$revisionNumber}";
-                                    }
-                                @endphp
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="doc-num">Document Number</label>
-                                        <input type="text" id="doc-num" name="document_number" class="default-name" readonly
-                                            value="{{ $finalDocNumber }}">
-                                    </div>
-                                </div>
-
-                            @else
-
-                                @php
-                                    // Same logic for NON-SOP also
-                                    $revisionNumber = $document->revised === 'Yes'
-                                        ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT)
-                                        : '00';
-
-                                    $formattedId = str_pad($currentId, 3, '0', STR_PAD_LEFT);
-
-                                    if (in_array($document->sop_type_short, ['EOP', 'IOP'])) {
-                                        $finalDocNumber = "{$document->department_id}/{$document->sop_type_short}/{$formattedId}-{$revisionNumber}";
-                                    } else {
-                                        $finalDocNumber = "{$document->sop_type_short}/{$document->department_id}/{$formattedId}-{$revisionNumber}";
-                                    }
-                                @endphp
-
-                                <div class="col-md-6" style="display: none;">
-                                    <div class="group-input">
-                                        <label for="doc-num">Document Number</label>
-                                        <input type="text" id="doc-num" name="document_number" class="default-name" readonly
-                                            value="{{ $finalDocNumber }}">
-                                    </div>
-                                </div>
-
-                            @endif
 
                             @if($document->document_type_id == 'SOP') 
                             <div class="col-md-6">
@@ -2810,31 +2717,7 @@
                             @endif
 
 
-                            {{-- <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="procedure">Procedure</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <textarea name="procedure" id="" class="summernote">{{ $document->document_content ? $document->document_content->procedure : '' }}</textarea>
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div> --}}
-
+                            
                             <div class="col-md-12">
                                 {!! quillEditor(
                                     'procedure',
@@ -14659,9 +14542,9 @@
                     </div>
 
                     <div class="input-fields">
+
                         <div class="group-input">
 
-                            {{-- Validation / service error --}}
                             @if ($errors->has('distribution'))
                                 <div class="alert alert-danger">
                                     {{ $errors->first('distribution') }}
@@ -14669,19 +14552,21 @@
                             @endif
 
                             <div class="table-responsive">
+
                                 <table
                                     class="table table-bordered"
-                                    id="distribution-retrieval-grid">
+                                    id="distribution-retrieval-grid"
+                                >
                                     <thead>
                                         <tr>
                                             <th rowspan="2">Sr. No.</th>
 
-                                            <th colspan="7">
+                                            <th colspan="10">
                                                 Distribution
                                             </th>
 
                                             <th colspan="4">
-                                                Retrieval
+                                                Retrieval / Usage
                                             </th>
 
                                             <th colspan="4">
@@ -14693,18 +14578,20 @@
                                             {{-- Distribution --}}
                                             <th>Doc. Title</th>
                                             <th>Doc. No.</th>
+                                            <th>Request ID</th>
+                                            <th>Copy No.</th>
                                             <th>Issued By</th>
                                             <th>Issued Date</th>
                                             <th>No. of Copies Issued</th>
                                             <th>Issued To</th>
+                                            <th>Department</th>
                                             <th>Issued Reason</th>
 
-
-                                            {{-- Retrieval --}}
-                                            <th>No. of Copies Retrieved</th>
-                                            <th>Retrieved By</th>
-                                            <th>Retrieve Date</th>
-                                            <th>Retrieve Reason</th>
+                                            {{-- Retrieval / Usage --}}
+                                            <th>Retrieved / Used</th>
+                                            <th>Retrieved / Used By</th>
+                                            <th>Retrieved / Used Date</th>
+                                            <th>Reason</th>
 
                                             {{-- Destruction --}}
                                             <th>Destructed By</th>
@@ -14719,114 +14606,60 @@
                                         @forelse ($PH as $index => $grid)
 
                                             @php
-                                                /*
-                                                |--------------------------------------------------------------------------
-                                                | Document number
-                                                |--------------------------------------------------------------------------
-                                                */
-
-                                                $documentNumber =
-                                                    $grid->document_number
-                                                    ?? (
-                                                        Helpers::getDivisionName(
-                                                            $document->division_id
-                                                        )
-                                                        . '/' .
-                                                        (
-                                                            $document->document_type_name
-                                                            ?? $document->sop_type_short
-                                                            ?? 'DOC'
-                                                        )
-                                                        . '/' .
-                                                        optional(
-                                                            $document->created_at
-                                                        )->format('Y')
-                                                        . '/' .
-                                                        str_pad(
-                                                            $document->id,
-                                                            4,
-                                                            '0',
-                                                            STR_PAD_LEFT
-                                                        )
-                                                        . 'R' .
-                                                        (
-                                                            $document->major
-                                                            ?? '1.0'
-                                                        )
-                                                    );
-
-                                                /*
-                                                |--------------------------------------------------------------------------
-                                                | Issued date
-                                                |--------------------------------------------------------------------------
-                                                */
-
                                                 $issuedDate = null;
-
-                                                $storedIssuedDate =
-                                                    $grid->issuance_date
-                                                    ?? $grid->document_printed_on
-                                                    ?? $grid->issued_date
-                                                    ?? $grid->date
-                                                    ?? null;
-
-                                                if (!empty($storedIssuedDate)) {
-                                                    try {
-                                                        $issuedDate =
-                                                            \Carbon\Carbon::parse(
-                                                                $storedIssuedDate
-                                                            );
-                                                    } catch (\Throwable $e) {
-                                                        $issuedDate = null;
-                                                    }
-                                                }
-
-                                                /*
-                                                |--------------------------------------------------------------------------
-                                                | Retrieval date
-                                                |--------------------------------------------------------------------------
-                                                */
-
                                                 $retrievalDate = null;
-
-                                                if (!empty($grid->retrieval_date)) {
-                                                    try {
-                                                        $retrievalDate =
-                                                            \Carbon\Carbon::parse(
-                                                                $grid->retrieval_date
-                                                            );
-                                                    } catch (\Throwable $e) {
-                                                        $retrievalDate = null;
-                                                    }
-                                                }
-
-                                                /*
-                                                |--------------------------------------------------------------------------
-                                                | Destruction date
-                                                |--------------------------------------------------------------------------
-                                                */
-
                                                 $destructionDate = null;
 
-                                                if (!empty($grid->destruction_date)) {
-                                                    try {
-                                                        $destructionDate =
-                                                            \Carbon\Carbon::parse(
-                                                                $grid->destruction_date
-                                                            );
-                                                    } catch (\Throwable $e) {
-                                                        $destructionDate = null;
+                                                try {
+                                                    if (!empty($grid->issuance_date)) {
+                                                        $issuedDate = \Carbon\Carbon::parse(
+                                                            $grid->issuance_date
+                                                        );
                                                     }
+                                                } catch (\Throwable $e) {
+                                                    $issuedDate = null;
                                                 }
 
-                                                /*
-                                                |--------------------------------------------------------------------------
-                                                | Issued information
-                                                |--------------------------------------------------------------------------
-                                                */
+                                                try {
+                                                    if (!empty($grid->retrieval_date)) {
+                                                        $retrievalDate = \Carbon\Carbon::parse(
+                                                            $grid->retrieval_date
+                                                        );
+                                                    }
+                                                } catch (\Throwable $e) {
+                                                    $retrievalDate = null;
+                                                }
+
+                                                try {
+                                                    if (!empty($grid->destruction_date)) {
+                                                        $destructionDate = \Carbon\Carbon::parse(
+                                                            $grid->destruction_date
+                                                        );
+                                                    }
+                                                } catch (\Throwable $e) {
+                                                    $destructionDate = null;
+                                                }
+
+                                                $retrievalStatus = old(
+                                                    "distribution.$index.retrieval_status",
+                                                    $grid->retrieval_status ?? ''
+                                                );
+
+                                                $retrievalCompleted = !empty(
+                                                    $grid->retrieval_status
+                                                );
+
+                                                $destructionCompleted =
+                                                    !empty($grid->destructed_by)
+                                                    && !empty($grid->destruction_date)
+                                                    && !empty($grid->destructed_copies);
+
+                                                $isUsed = $retrievalStatus === 'Used';
+                                                $isRetrieved = $retrievalStatus === 'Retrieved';
 
                                                 $issuedById =
                                                     $grid->document_printed_by
+                                                    ?? $grid->issued_by
                                                     ?? $grid->user_id
                                                     ?? null;
 
@@ -14834,35 +14667,88 @@
                                                     $grid->issuance_to
                                                     ?? null;
 
-                                                $issuedCopies =
-                                                    $grid->issued_copies
-                                                    ?? $grid->document_printed_copies
-                                                    ?? $grid->issue_copies
-                                                    ?? 0;
+                                                $departmentValue =
+                                                    $grid->location
+                                                    ?? $grid->issued_to_department
+                                                    ?? $grid->department
+                                                    ?? '';
 
-                                                $print_reason =
-                                                    $grid->print_reason
-                                                    ?? null;
-
-                                                $retrievedCopies =
-                                                    old(
-                                                        "distribution.$index.retrieved_copies",
-                                                        $grid->retrieved_copies ?? ''
+                                                if (is_string($departmentValue)) {
+                                                    $decodedDepartment = json_decode(
+                                                        $departmentValue,
+                                                        true
                                                     );
 
-                                                $destructedCopies =
-                                                    old(
-                                                        "distribution.$index.destructed_copies",
-                                                        $grid->destructed_copies ?? ''
+                                                    if (
+                                                        json_last_error() === JSON_ERROR_NONE
+                                                        && is_array($decodedDepartment)
+                                                    ) {
+                                                        $departmentValue =
+                                                            $decodedDepartment['name']
+                                                            ?? '';
+                                                    }
+                                                }
+
+                                                $requestId =
+                                                    $grid->request_id
+                                                    ?? '';
+
+                                                $copyNumberValue =
+                                                    (int) ($grid->copy_number ?? 1);
+
+                                                $copyNumber =
+                                                    $grid->formatted_copy_number
+                                                    ?? str_pad(
+                                                        $copyNumberValue,
+                                                        3,
+                                                        '0',
+                                                        STR_PAD_LEFT
                                                     );
+
+                                                $documentNumber =
+                                                    $grid->document_number
+                                                    ?? $document->document_number
+                                                    ?? '';
+
+                                                $documentTitle =
+                                                    $grid->document_title
+                                                    ?? $document->document_name
+                                                    ?? '';
+
+                                                $issuedReason =
+                                                    $grid->issued_reason
+                                                    ?? $grid->print_reason
+                                                    ?? '';
+
+                                                $retrievalByValue = old(
+                                                    "distribution.$index.retrieval_by",
+                                                    $grid->retrieval_by ?? ''
+                                                );
+
+                                                $retrievedReasonValue = old(
+                                                    "distribution.$index.retrieved_reason",
+                                                    $grid->retrieved_reason ?? ''
+                                                );
+
+                                                $destructedByValue = old(
+                                                    "distribution.$index.destructed_by",
+                                                    $grid->destructed_by ?? ''
+                                                );
+
+                                                $destructionReasonValue = old(
+                                                    "distribution.$index.destruction_reason",
+                                                    $grid->destruction_reason ?? ''
+                                                );
                                             @endphp
 
-                                            <tr>
+                                            <tr
+                                                id="distribution_row_{{ $index }}"
+                                                data-row-index="{{ $index }}"
+                                                data-retrieval-completed="{{ $retrievalCompleted ? 1 : 0 }}"
+                                                data-destruction-completed="{{ $destructionCompleted ? 1 : 0 }}"
+                                            >
 
-                                                {{-- ================================================= --}}
-                                                {{-- Hidden IDs --}}
-                                                {{-- ================================================= --}}
-
+                                                {{-- Sr. No. and hidden identities --}}
                                                 <td class="text-center">
 
                                                     {{ $index + 1 }}
@@ -14884,140 +14770,209 @@
                                                         name="distribution[{{ $index }}][document_id]"
                                                         value="{{ $document->id }}"
                                                     >
+
                                                     <input
                                                         type="hidden"
-                                                        name="distribution[{{ $index }}][issued_reason]"
-                                                        value="{{ $grid->issued_reason ?? '' }}"
+                                                        name="distribution[{{ $index }}][copy_number]"
+                                                        value="{{ $copyNumberValue }}"
                                                     >
 
                                                     <input
                                                         type="hidden"
-                                                        name="distribution[{{ $index }}][location]"
-                                                        value="{{ $grid->location ?? $grid->department ?? '' }}"
+                                                        name="distribution[{{ $index }}][request_id]"
+                                                        value="{{ $requestId }}"
                                                     >
 
                                                 </td>
 
-                                                {{-- ================================================= --}}
-                                                {{-- Distribution section --}}
-                                                {{-- ================================================= --}}
-
-                                                {{-- Document title --}}
+                                                {{-- Document Title --}}
                                                 <td>
                                                     <textarea
                                                         name="distribution[{{ $index }}][document_title]"
                                                         class="grid-readonly-field"
-                                                        readonly>{{ $document->document_name }}</textarea>
+                                                        readonly
+                                                    >{{ $documentTitle }}</textarea>
                                                 </td>
 
-                                                {{-- Document number --}}
+                                                {{-- Document Number --}}
                                                 <td>
                                                     <textarea
                                                         name="distribution[{{ $index }}][document_number]"
                                                         class="grid-readonly-field"
-                                                        readonly>{{ $documentNumber }}</textarea>
+                                                        readonly
+                                                    >{{ $documentNumber }}</textarea>
                                                 </td>
 
-                                                {{-- Issued by --}}
+                                                {{-- Request ID --}}
                                                 <td>
+                                                    <input
+                                                        type="text"
+                                                        value="{{ $requestId }}"
+                                                        class="grid-readonly-field"
+                                                        readonly
+                                                    >
+                                                </td>
 
+                                                {{-- Copy Number --}}
+                                                <td>
+                                                    <input
+                                                        type="text"
+                                                        value="{{ $copyNumber }}"
+                                                        class="grid-readonly-field text-center"
+                                                        readonly
+                                                    >
+                                                </td>
+
+                                                {{-- Issued By --}}
+                                                <td>
                                                     <input
                                                         type="text"
                                                         value="{{ !empty($issuedById)
                                                             ? Helpers::getInitiatorName($issuedById)
-                                                            : '' }}"
+                                                            : ($grid->issued_by_name ?? '') }}"
                                                         class="grid-readonly-field"
-                                                        readonly>
+                                                        readonly
+                                                    >
 
                                                     <input
                                                         type="hidden"
                                                         name="distribution[{{ $index }}][issued_by]"
-                                                        value="{{ $issuedById }}">
-
+                                                        value="{{ $issuedById }}"
+                                                    >
                                                 </td>
 
-                                                {{-- Issued date --}}
+                                                {{-- Issued Date --}}
                                                 <td>
-
                                                     <input
                                                         type="text"
                                                         value="{{ $issuedDate
                                                             ? $issuedDate->format('d-M-Y')
                                                             : '' }}"
                                                         class="grid-readonly-field"
-                                                        readonly>
+                                                        readonly
+                                                    >
+
                                                     <input
                                                         type="hidden"
                                                         name="distribution[{{ $index }}][issued_date]"
                                                         value="{{ $issuedDate
                                                             ? $issuedDate->format('Y-m-d')
-                                                            : '' }}">
-
+                                                            : '' }}"
+                                                    >
                                                 </td>
 
-                                                {{-- Issued copies --}}
+                                                {{-- Every row represents one physical issued copy --}}
                                                 <td>
-
                                                     <input
                                                         type="number"
                                                         name="distribution[{{ $index }}][issued_copies]"
-                                                        value="{{ $issuedCopies }}" class="grid-readonly-field text-center"  min="0" readonly>
-
+                                                        value="1"
+                                                        min="1"
+                                                        max="1"
+                                                        class="grid-readonly-field text-center"
+                                                        readonly
+                                                    >
                                                 </td>
 
-                                                {{-- Issued to --}}
+                                                {{-- Issued To --}}
                                                 <td>
-
                                                     <input
                                                         type="text"
                                                         value="{{ !empty($issuedToId)
                                                             ? Helpers::getInitiatorName($issuedToId)
-                                                            : '' }}"
+                                                            : ($grid->issued_to_name ?? '') }}"
                                                         class="grid-readonly-field"
-                                                        readonly>
+                                                        readonly
+                                                    >
 
                                                     <input
                                                         type="hidden"
                                                         name="distribution[{{ $index }}][issued_to]"
-                                                        value="{{ $issuedToId }}">
-
+                                                        value="{{ $issuedToId }}"
+                                                    >
                                                 </td>
-                    
 
+                                                {{-- Department --}}
                                                 <td>
-                                                    <textarea
-                                                        name="distribution[{{ $index }}][print_reason]"
+                                                    <input
+                                                        type="text"
+                                                        value="{{ $departmentValue }}"
                                                         class="grid-readonly-field"
-                                                        readonly>{{ $print_reason }}</textarea>
-                                                </td>
-
-                                    
-
-                                                {{-- ================================================= --}}
-                                                {{-- Retrieval section --}}
-                                                {{-- ================================================= --}}
-
-                                                {{-- Retrieved copies --}}
-                                                <td>
+                                                        readonly
+                                                    >
 
                                                     <input
-                                                        type="number"
-                                                        id="retrieved_copies_{{ $index }}"
-                                                        name="distribution[{{ $index }}][retrieved_copies]"
-                                                        value="{{ $retrievedCopies }}" min="0" max="{{ $issuedCopies }}" class="form-control grid-editable-field" data-issued-copies="{{ $issuedCopies }}" oninput="validateGridCopies({{ $index }})">
-                                                    <small
-                                                        id="retrieved_error_{{ $index }}"
-                                                        class="grid-error-message"
-                                                    ></small>
-
+                                                        type="hidden"
+                                                        name="distribution[{{ $index }}][location]"
+                                                        value="{{ $departmentValue }}"
+                                                    >
                                                 </td>
 
-                                                {{-- Retrieved by --}}
+                                                {{-- Issued Reason --}}
                                                 <td>
+                                                    <textarea
+                                                        name="distribution[{{ $index }}][issued_reason]"
+                                                        class="grid-readonly-field"
+                                                        readonly
+                                                    >{{ $issuedReason }}</textarea>
+                                                </td>
 
+                                                {{-- Retrieval / Used Status --}}
+                                                <td>
                                                     <select
+                                                        id="retrieval_status_{{ $index }}"
+                                                        name="distribution[{{ $index }}][retrieval_status]"
+                                                        class="form-control retrieval-status-field {{
+                                                            $retrievalCompleted
+                                                                ? 'grid-readonly-field'
+                                                                : 'grid-editable-field'
+                                                        }}"
+                                                        onchange="handleCopyStatus({{ $index }})"
+                                                        {{ $retrievalCompleted ? 'disabled' : '' }}
+                                                    >
+                                                        <option value="">
+                                                            -- Select --
+                                                        </option>
+
+                                                        <option
+                                                            value="Retrieved"
+                                                            {{ $retrievalStatus === 'Retrieved'
+                                                                ? 'selected'
+                                                                : '' }}
+                                                        >
+                                                            Retrieved
+                                                        </option>
+
+                                                        <option
+                                                            value="Used"
+                                                            {{ $retrievalStatus === 'Used'
+                                                                ? 'selected'
+                                                                : '' }}
+                                                        >
+                                                            Used
+                                                        </option>
+                                                    </select>
+
+                                                    @if ($retrievalCompleted)
+                                                        <input
+                                                            type="hidden"
+                                                            name="distribution[{{ $index }}][retrieval_status]"
+                                                            value="{{ $retrievalStatus }}"
+                                                        >
+                                                    @endif
+                                                </td>
+
+                                                {{-- Retrieved / Used By --}}
+                                                <td>
+                                                    <select
+                                                        id="retrieval_by_{{ $index }}"
                                                         name="distribution[{{ $index }}][retrieval_by]"
-                                                        class="form-control grid-editable-field"
+                                                        class="form-control retrieval-detail-field {{
+                                                            $retrievalCompleted
+                                                                ? 'grid-readonly-field'
+                                                                : 'grid-editable-field'
+                                                        }}"
+                                                        {{ $retrievalCompleted ? 'disabled' : '' }}
                                                     >
                                                         <option value="">
                                                             -- Select --
@@ -15026,85 +14981,110 @@
                                                         @foreach ($users as $user)
                                                             <option
                                                                 value="{{ $user->id }}"
-                                                                {{
-                                                                    old(
-                                                                        "distribution.$index.retrieval_by",
-                                                                        $grid->retrieval_by ?? ''
-                                                                    ) == $user->id
-                                                                        ? 'selected'
-                                                                        : ''
-                                                                }}
+                                                                {{ (string) $retrievalByValue ===
+                                                                    (string) $user->id
+                                                                    ? 'selected'
+                                                                    : '' }}
                                                             >
                                                                 {{ $user->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
 
+                                                    @if ($retrievalCompleted)
+                                                        <input
+                                                            type="hidden"
+                                                            name="distribution[{{ $index }}][retrieval_by]"
+                                                            value="{{ $grid->retrieval_by }}"
+                                                        >
+                                                    @endif
                                                 </td>
 
-                                                {{-- Retrieval date --}}
+                                                {{-- Retrieved / Used Date --}}
                                                 <td>
-
                                                     <div class="grid-date-wrapper">
 
                                                         <input
                                                             type="text"
                                                             id="retrieval_date_display_{{ $index }}"
-                                                            class="form-control grid-editable-field"
                                                             value="{{ $retrievalDate
                                                                 ? $retrievalDate->format('d-M-Y')
                                                                 : '' }}"
+                                                            class="{{
+                                                                $retrievalCompleted
+                                                                    ? 'grid-readonly-field'
+                                                                    : 'grid-editable-field'
+                                                            }}"
                                                             placeholder="DD-MMM-YYYY"
                                                             readonly
-                                                            onclick="openGridDatePicker(
-                                                                'retrieval_date_{{ $index }}'
-                                                            )"
+                                                            @if (!$retrievalCompleted)
+                                                                onclick="openGridDatePicker(
+                                                                    'retrieval_date_{{ $index }}'
+                                                                )"
+                                                            @endif
                                                         >
 
                                                         <input
                                                             type="date"
                                                             id="retrieval_date_{{ $index }}"
                                                             name="distribution[{{ $index }}][retrieval_date]"
-                                                            value="{{ old(
-                                                                "distribution.$index.retrieval_date",
-                                                                $retrievalDate
-                                                                    ? $retrievalDate->format('Y-m-d')
-                                                                    : '' ) }}"
-                                                            class="grid-hidden-date"
+                                                            value="{{ $retrievalDate
+                                                                ? $retrievalDate->format('Y-m-d')
+                                                                : '' }}"
+                                                            class="grid-hidden-date retrieval-detail-field"
                                                             onchange="handleGridDate(
                                                                 this,
                                                                 'retrieval_date_display_{{ $index }}'
                                                             )"
+                                                            {{ $retrievalCompleted ? 'disabled' : '' }}
                                                         >
 
+                                                        @if ($retrievalCompleted)
+                                                            <input
+                                                                type="hidden"
+                                                                name="distribution[{{ $index }}][retrieval_date]"
+                                                                value="{{ $retrievalDate
+                                                                    ? $retrievalDate->format('Y-m-d')
+                                                                    : '' }}"
+                                                            >
+                                                        @endif
+
                                                     </div>
-
                                                 </td>
 
-                                                {{-- Retrieval reason --}}
+                                                {{-- Retrieval / Usage Reason --}}
                                                 <td>
-
                                                     <textarea
+                                                        id="retrieved_reason_{{ $index }}"
                                                         name="distribution[{{ $index }}][retrieved_reason]"
-                                                        class="form-control grid-editable-textarea"
-                                                        placeholder="Enter retrieval reason"
-                                                    >{{ old(
-                                                        "distribution.$index.retrieved_reason",
-                                                        $grid->retrieved_reason ?? ''
-                                                    ) }}</textarea>
-
+                                                        class="{{
+                                                            $retrievalCompleted
+                                                                ? 'grid-readonly-field'
+                                                                : 'grid-editable-textarea retrieval-detail-field'
+                                                        }}"
+                                                        {{ $retrievalCompleted ? 'readonly' : '' }}
+                                                    >{{ $retrievedReasonValue }}</textarea>
                                                 </td>
 
-                                                {{-- ================================================= --}}
-                                                {{-- Destruction section --}}
-                                                {{-- ================================================= --}}
-
-                                                {{-- Destructed by --}}
+                                                {{-- Destructed By --}}
                                                 <td>
-
                                                     <select
+                                                        id="destructed_by_{{ $index }}"
                                                         name="distribution[{{ $index }}][destructed_by]"
-                                                        class="form-control grid-editable-field"
+                                                        class="form-control destruction-field {{
+                                                            (
+                                                                !$isRetrieved
+                                                                || $isUsed
+                                                                || $destructionCompleted
+                                                            )
+                                                                ? 'grid-readonly-field'
+                                                                : 'grid-editable-field'
+                                                        }}"
+                                                        {{ (
+                                                            !$isRetrieved
+                                                            || $isUsed
+                                                            || $destructionCompleted
+                                                        ) ? 'disabled' : '' }}
                                                     >
                                                         <option value="">
                                                             -- Select --
@@ -15113,97 +15093,123 @@
                                                         @foreach ($users as $user)
                                                             <option
                                                                 value="{{ $user->id }}"
-                                                                {{
-                                                                    old(
-                                                                        "distribution.$index.destructed_by",
-                                                                        $grid->destructed_by ?? ''
-                                                                    ) == $user->id
-                                                                        ? 'selected'
-                                                                        : ''
-                                                                }}
+                                                                {{ (string) $destructedByValue ===
+                                                                    (string) $user->id
+                                                                    ? 'selected'
+                                                                    : '' }}
                                                             >
                                                                 {{ $user->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
 
+                                                    @if ($destructionCompleted)
+                                                        <input
+                                                            type="hidden"
+                                                            name="distribution[{{ $index }}][destructed_by]"
+                                                            value="{{ $grid->destructed_by }}"
+                                                        >
+                                                    @endif
                                                 </td>
 
-                                                {{-- Destruction date --}}
+                                                {{-- Destruction Date --}}
                                                 <td>
-
                                                     <div class="grid-date-wrapper">
 
                                                         <input
                                                             type="text"
                                                             id="destruction_date_display_{{ $index }}"
-                                                            class="form-control grid-editable-field"
                                                             value="{{ $destructionDate
                                                                 ? $destructionDate->format('d-M-Y')
                                                                 : '' }}"
+                                                            class="{{
+                                                                (
+                                                                    !$isRetrieved
+                                                                    || $isUsed
+                                                                    || $destructionCompleted
+                                                                )
+                                                                    ? 'grid-readonly-field'
+                                                                    : 'grid-editable-field'
+                                                            }}"
                                                             placeholder="DD-MMM-YYYY"
                                                             readonly
-                                                            onclick="openGridDatePicker(
-                                                                'destruction_date_{{ $index }}'
-                                                            )"
+                                                            @if (
+                                                                $isRetrieved
+                                                                && !$isUsed
+                                                                && !$destructionCompleted
+                                                            )
+                                                                onclick="openGridDatePicker(
+                                                                    'destruction_date_{{ $index }}'
+                                                                )"
+                                                            @endif
                                                         >
 
                                                         <input
                                                             type="date"
                                                             id="destruction_date_{{ $index }}"
                                                             name="distribution[{{ $index }}][destruction_date]"
-                                                            value="{{ old(
-                                                                "distribution.$index.destruction_date",
-                                                                $destructionDate
-                                                                    ? $destructionDate->format('Y-m-d')
-                                                                    : ''
-                                                            ) }}"
-                                                            class="grid-hidden-date"
+                                                            value="{{ $destructionDate
+                                                                ? $destructionDate->format('Y-m-d')
+                                                                : '' }}"
+                                                            class="grid-hidden-date destruction-field"
                                                             onchange="handleGridDate(
                                                                 this,
                                                                 'destruction_date_display_{{ $index }}'
                                                             )"
+                                                            {{ (
+                                                                !$isRetrieved
+                                                                || $isUsed
+                                                                || $destructionCompleted
+                                                            ) ? 'disabled' : '' }}
                                                         >
 
-                                                    </div>
+                                                        @if ($destructionCompleted)
+                                                            <input
+                                                                type="hidden"
+                                                                name="distribution[{{ $index }}][destruction_date]"
+                                                                value="{{ $destructionDate
+                                                                    ? $destructionDate->format('Y-m-d')
+                                                                    : '' }}"
+                                                            >
+                                                        @endif
 
+                                                    </div>
                                                 </td>
 
-                                                {{-- Destructed copies --}}
+                                                {{-- Destructed Copy Count --}}
                                                 <td>
-
                                                     <input
                                                         type="number"
                                                         id="destructed_copies_{{ $index }}"
                                                         name="distribution[{{ $index }}][destructed_copies]"
-                                                        value="{{ $destructedCopies }}"
-                                                        min="0"
-                                                        max="{{ $retrievedCopies !== ''
-                                                            ? $retrievedCopies
-                                                            : $issuedCopies }}"
-                                                        class="form-control grid-editable-field"
-                                                        oninput="validateGridCopies({{ $index }})"
+                                                        value="{{ $destructionCompleted ? 1 : '' }}"
+                                                        min="1"
+                                                        max="1"
+                                                        class="grid-readonly-field text-center"
+                                                        readonly
                                                     >
-
-                                                    <small
-                                                        id="destructed_error_{{ $index }}"
-                                                        class="grid-error-message"
-                                                    ></small>
-
                                                 </td>
 
-                                                {{-- Destruction reason --}}
+                                                {{-- Destruction Reason --}}
                                                 <td>
-
                                                     <textarea
+                                                        id="destruction_reason_{{ $index }}"
                                                         name="distribution[{{ $index }}][destruction_reason]"
-                                                        class="form-control grid-editable-textarea"
-                                                        placeholder="Enter destruction reason"
-                                                    >{{ old(
-                                                        "distribution.$index.destruction_reason",
-                                                        $grid->destruction_reason ?? ''
-                                                    ) }}</textarea>
-
+                                                        class="destruction-field {{
+                                                            (
+                                                                !$isRetrieved
+                                                                || $isUsed
+                                                                || $destructionCompleted
+                                                            )
+                                                                ? 'grid-readonly-field'
+                                                                : 'grid-editable-textarea'
+                                                        }}"
+                                                        {{ (
+                                                            !$isRetrieved
+                                                            || $isUsed
+                                                            || $destructionCompleted
+                                                        ) ? 'readonly' : '' }}
+                                                    >{{ $destructionReasonValue }}</textarea>
                                                 </td>
 
                                             </tr>
@@ -15212,7 +15218,7 @@
 
                                             <tr>
                                                 <td
-                                                    colspan="15"
+                                                    colspan="19"
                                                     class="text-center"
                                                 >
                                                     No distribution record found.
@@ -15223,23 +15229,24 @@
 
                                     </tbody>
                                 </table>
+
                             </div>
                         </div>
                     </div>
 
-
                     <script>
-                        /**
-                        * Hidden HTML date input open karega.
-                        */
                         function openGridDatePicker(inputId) {
-                            const dateInput = document.getElementById(inputId);
+                            const dateInput =
+                                document.getElementById(inputId);
 
-                            if (!dateInput) {
+                            if (!dateInput || dateInput.disabled) {
                                 return;
                             }
 
-                            if (typeof dateInput.showPicker === 'function') {
+                            if (
+                                typeof dateInput.showPicker ===
+                                'function'
+                            ) {
                                 dateInput.showPicker();
                                 return;
                             }
@@ -15247,12 +15254,15 @@
                             dateInput.click();
                         }
 
-                        /**
-                        * YYYY-MM-DD ko DD-MMM-YYYY format me display karega.
-                        */
-                        function handleGridDate(dateInput, displayInputId) {
+
+                        function handleGridDate(
+                            dateInput,
+                            displayInputId
+                        ) {
                             const displayInput =
-                                document.getElementById(displayInputId);
+                                document.getElementById(
+                                    displayInputId
+                                );
 
                             if (!displayInput) {
                                 return;
@@ -15263,147 +15273,425 @@
                                 return;
                             }
 
-                            const dateParts = dateInput.value.split('-');
+                            const dateParts =
+                                dateInput.value.split('-');
 
                             if (dateParts.length !== 3) {
                                 displayInput.value = '';
                                 return;
                             }
 
-                            const year = parseInt(dateParts[0], 10);
-                            const month = parseInt(dateParts[1], 10) - 1;
-                            const day = parseInt(dateParts[2], 10);
-
-                            const selectedDate = new Date(
-                                year,
-                                month,
-                                day
-                            );
-
-                            displayInput.value = selectedDate
-                                .toLocaleDateString('en-GB', {
-                                    day: '2-digit',
-                                    month: 'short',
-                                    year: 'numeric'
-                                })
-                                .replace(/ /g, '-');
-                        }
-
-                        /**
-                        * Retrieved copies issued copies se zyada nahi honi chahiye.
-                        * Destructed copies retrieved copies se zyada nahi honi chahiye.
-                        */
-                        function validateGridCopies(index) {
-                            const retrievedInput =
-                                document.getElementById(
-                                    'retrieved_copies_' + index
+                            const selectedDate =
+                                new Date(
+                                    parseInt(dateParts[0], 10),
+                                    parseInt(dateParts[1], 10) - 1,
+                                    parseInt(dateParts[2], 10)
                                 );
 
-                            const destructedInput =
+                            displayInput.value =
+                                selectedDate
+                                    .toLocaleDateString(
+                                        'en-GB',
+                                        {
+                                            day: '2-digit',
+                                            month: 'short',
+                                            year: 'numeric'
+                                        }
+                                    )
+                                    .replace(/ /g, '-');
+                        }
+
+
+                        function setFieldReadonlyStyle(
+                            field,
+                            readonlyState
+                        ) {
+                            if (!field) {
+                                return;
+                            }
+
+                            if (readonlyState) {
+                                field.classList.add(
+                                    'grid-readonly-field'
+                                );
+
+                                field.classList.remove(
+                                    'grid-editable-field',
+                                    'grid-editable-textarea'
+                                );
+                            } else {
+                                field.classList.remove(
+                                    'grid-readonly-field'
+                                );
+
+                                if (
+                                    field.tagName.toLowerCase() ===
+                                    'textarea'
+                                ) {
+                                    field.classList.add(
+                                        'grid-editable-textarea'
+                                    );
+                                } else {
+                                    field.classList.add(
+                                        'grid-editable-field'
+                                    );
+                                }
+                            }
+                        }
+
+
+                        function clearDestructionFields(index) {
+                            const destructedBy =
+                                document.getElementById(
+                                    'destructed_by_' + index
+                                );
+
+                            const destructionDate =
+                                document.getElementById(
+                                    'destruction_date_' + index
+                                );
+
+                            const destructionDateDisplay =
+                                document.getElementById(
+                                    'destruction_date_display_' + index
+                                );
+
+                            const destructedCopies =
                                 document.getElementById(
                                     'destructed_copies_' + index
                                 );
 
-                            const retrievedError =
+                            const destructionReason =
                                 document.getElementById(
-                                    'retrieved_error_' + index
+                                    'destruction_reason_' + index
                                 );
 
-                            const destructedError =
-                                document.getElementById(
-                                    'destructed_error_' + index
-                                );
-
-                            if (
-                                !retrievedInput ||
-                                !destructedInput
-                            ) {
-                                return true;
+                            if (destructedBy) {
+                                destructedBy.value = '';
                             }
 
-                            const issuedCopies =
-                                parseInt(
-                                    retrievedInput.dataset.issuedCopies || '0',
-                                    10
-                                );
-
-                            const retrievedCopies =
-                                retrievedInput.value === ''
-                                    ? null
-                                    : parseInt(retrievedInput.value, 10);
-
-                            const destructedCopies =
-                                destructedInput.value === ''
-                                    ? null
-                                    : parseInt(destructedInput.value, 10);
-
-                            retrievedError.textContent = '';
-                            destructedError.textContent = '';
-
-                            retrievedInput.classList.remove(
-                                'grid-invalid-field'
-                            );
-
-                            destructedInput.classList.remove(
-                                'grid-invalid-field'
-                            );
-
-                            destructedInput.max =
-                                retrievedCopies !== null
-                                    ? retrievedCopies
-                                    : issuedCopies;
-
-                            let isValid = true;
-
-                            if (
-                                retrievedCopies !== null &&
-                                retrievedCopies > issuedCopies
-                            ) {
-                                retrievedError.textContent =
-                                    'Retrieved copies cannot exceed issued copies.';
-
-                                retrievedInput.classList.add(
-                                    'grid-invalid-field'
-                                );
-
-                                isValid = false;
+                            if (destructionDate) {
+                                destructionDate.value = '';
                             }
 
-                            if (
-                                destructedCopies !== null &&
-                                retrievedCopies === null
-                            ) {
-                                destructedError.textContent =
-                                    'Enter retrieved copies first.';
-
-                                destructedInput.classList.add(
-                                    'grid-invalid-field'
-                                );
-
-                                isValid = false;
+                            if (destructionDateDisplay) {
+                                destructionDateDisplay.value = '';
                             }
 
-                            if (
-                                destructedCopies !== null &&
-                                retrievedCopies !== null &&
-                                destructedCopies > retrievedCopies
-                            ) {
-                                destructedError.textContent =
-                                    'Destructed copies cannot exceed retrieved copies.';
-
-                                destructedInput.classList.add(
-                                    'grid-invalid-field'
-                                );
-
-                                isValid = false;
+                            if (destructedCopies) {
+                                destructedCopies.value = '';
                             }
 
-                            return isValid;
+                            if (destructionReason) {
+                                destructionReason.value = '';
+                            }
                         }
 
-                        /**
-                        * Main form submit se pehle complete grid validation.
-                        */
+
+                        function handleCopyStatus(index) {
+                            const row =
+                                document.getElementById(
+                                    'distribution_row_' + index
+                                );
+
+                            const statusSelect =
+                                document.getElementById(
+                                    'retrieval_status_' + index
+                                );
+
+                            if (!row || !statusSelect) {
+                                return;
+                            }
+
+                            const destructionCompleted =
+                                row.dataset.destructionCompleted === '1';
+
+                            const status =
+                                statusSelect.value;
+
+                            const allowDestruction =
+                                status === 'Retrieved'
+                                && !destructionCompleted;
+
+                            const destructedBy =
+                                document.getElementById(
+                                    'destructed_by_' + index
+                                );
+
+                            const destructionDate =
+                                document.getElementById(
+                                    'destruction_date_' + index
+                                );
+
+                            const destructionDateDisplay =
+                                document.getElementById(
+                                    'destruction_date_display_' + index
+                                );
+
+                            const destructionReason =
+                                document.getElementById(
+                                    'destruction_reason_' + index
+                                );
+
+                            if (destructedBy) {
+                                destructedBy.disabled =
+                                    !allowDestruction;
+
+                                setFieldReadonlyStyle(
+                                    destructedBy,
+                                    !allowDestruction
+                                );
+                            }
+
+                            if (destructionDate) {
+                                destructionDate.disabled =
+                                    !allowDestruction;
+                            }
+
+                            if (destructionDateDisplay) {
+                                setFieldReadonlyStyle(
+                                    destructionDateDisplay,
+                                    !allowDestruction
+                                );
+
+                                if (allowDestruction) {
+                                    destructionDateDisplay.onclick =
+                                        function () {
+                                            openGridDatePicker(
+                                                'destruction_date_' +
+                                                index
+                                            );
+                                        };
+                                } else {
+                                    destructionDateDisplay.onclick =
+                                        null;
+                                }
+                            }
+
+                            if (destructionReason) {
+                                destructionReason.readOnly =
+                                    !allowDestruction;
+
+                                setFieldReadonlyStyle(
+                                    destructionReason,
+                                    !allowDestruction
+                                );
+                            }
+
+                            if (!allowDestruction) {
+                                clearDestructionFields(index);
+                            }
+                        }
+
+
+                        function validateDistributionRows() {
+                            const rows =
+                                document.querySelectorAll(
+                                    '#distribution-retrieval-grid tbody tr[data-row-index]'
+                                );
+
+                            let valid = true;
+                            let validationMessage = '';
+
+                            rows.forEach(function (row) {
+                                if (!valid) {
+                                    return;
+                                }
+
+                                const index =
+                                    row.dataset.rowIndex;
+
+                                const retrievalCompleted =
+                                    row.dataset.retrievalCompleted === '1';
+
+                                const destructionCompleted =
+                                    row.dataset.destructionCompleted === '1';
+
+                                const statusSelect =
+                                    document.getElementById(
+                                        'retrieval_status_' + index
+                                    );
+
+                                const status =
+                                    statusSelect
+                                        ? statusSelect.value
+                                        : '';
+
+                                /*
+                                |--------------------------------------------------------------------------
+                                | Blank status means retrieval is not processed yet
+                                |--------------------------------------------------------------------------
+                                */
+
+                                if (!status) {
+                                    return;
+                                }
+
+                                const retrievalBy =
+                                    document.getElementById(
+                                        'retrieval_by_' + index
+                                    );
+
+                                const retrievalDate =
+                                    document.getElementById(
+                                        'retrieval_date_' + index
+                                    );
+
+                                const retrievalReason =
+                                    document.getElementById(
+                                        'retrieved_reason_' + index
+                                    );
+
+                                if (
+                                    !retrievalCompleted
+                                    && retrievalBy
+                                    && !retrievalBy.value
+                                ) {
+                                    valid = false;
+
+                                    validationMessage =
+                                        'Row '
+                                        + (parseInt(index, 10) + 1)
+                                        + ': Retrieved/Used By is required.';
+
+                                    return;
+                                }
+
+                                if (
+                                    !retrievalCompleted
+                                    && retrievalDate
+                                    && !retrievalDate.value
+                                ) {
+                                    valid = false;
+
+                                    validationMessage =
+                                        'Row '
+                                        + (parseInt(index, 10) + 1)
+                                        + ': Retrieved/Used Date is required.';
+
+                                    return;
+                                }
+
+                                if (
+                                    !retrievalCompleted
+                                    && retrievalReason
+                                    && !retrievalReason.value.trim()
+                                ) {
+                                    valid = false;
+
+                                    validationMessage =
+                                        'Row '
+                                        + (parseInt(index, 10) + 1)
+                                        + ': Retrieval/Usage Reason is required.';
+
+                                    return;
+                                }
+
+                                /*
+                                |--------------------------------------------------------------------------
+                                | Used copy must never contain destruction details
+                                |--------------------------------------------------------------------------
+                                */
+
+                                if (status === 'Used') {
+                                    return;
+                                }
+
+                                if (
+                                    status !== 'Retrieved'
+                                    || destructionCompleted
+                                ) {
+                                    return;
+                                }
+
+                                const destructedBy =
+                                    document.getElementById(
+                                        'destructed_by_' + index
+                                    );
+
+                                const destructionDate =
+                                    document.getElementById(
+                                        'destruction_date_' + index
+                                    );
+
+                                const destructionReason =
+                                    document.getElementById(
+                                        'destruction_reason_' + index
+                                    );
+
+                                const hasDestructionData =
+                                    (
+                                        destructedBy
+                                        && destructedBy.value
+                                    )
+                                    || (
+                                        destructionDate
+                                        && destructionDate.value
+                                    )
+                                    || (
+                                        destructionReason
+                                        && destructionReason.value.trim()
+                                    );
+
+                                /*
+                                |--------------------------------------------------------------------------
+                                | Retrieved copy can be saved without immediate destruction
+                                |--------------------------------------------------------------------------
+                                */
+
+                                if (!hasDestructionData) {
+                                    return;
+                                }
+
+                                if (
+                                    !destructedBy
+                                    || !destructedBy.value
+                                ) {
+                                    valid = false;
+
+                                    validationMessage =
+                                        'Row '
+                                        + (parseInt(index, 10) + 1)
+                                        + ': Destructed By is required.';
+
+                                    return;
+                                }
+
+                                if (
+                                    !destructionDate
+                                    || !destructionDate.value
+                                ) {
+                                    valid = false;
+
+                                    validationMessage =
+                                        'Row '
+                                        + (parseInt(index, 10) + 1)
+                                        + ': Destruction Date is required.';
+
+                                    return;
+                                }
+
+                                if (
+                                    !destructionReason
+                                    || !destructionReason.value.trim()
+                                ) {
+                                    valid = false;
+
+                                    validationMessage =
+                                        'Row '
+                                        + (parseInt(index, 10) + 1)
+                                        + ': Destruction Reason is required.';
+                                }
+                            });
+
+                            if (!valid) {
+                                alert(validationMessage);
+                            }
+
+                            return valid;
+                        }
+
+
                         document.addEventListener(
                             'DOMContentLoaded',
                             function () {
@@ -15416,7 +15704,42 @@
                                     return;
                                 }
 
-                                const mainForm = grid.closest('form');
+                                /*
+                                |--------------------------------------------------------------------------
+                                | Set destruction fields according to current status
+                                |--------------------------------------------------------------------------
+                                */
+
+                                const rows =
+                                    grid.querySelectorAll(
+                                        'tbody tr[data-row-index]'
+                                    );
+
+                                rows.forEach(function (row) {
+                                    const index =
+                                        row.dataset.rowIndex;
+
+                                    const retrievalCompleted =
+                                        row.dataset.retrievalCompleted === '1';
+
+                                    /*
+                                    | Completed rows already have correct server-side lock state.
+                                    | Only pending rows need dynamic status handling.
+                                    */
+
+                                    if (!retrievalCompleted) {
+                                        handleCopyStatus(index);
+                                    }
+                                });
+
+                                /*
+                                |--------------------------------------------------------------------------
+                                | Validate complete grid before main form submission
+                                |--------------------------------------------------------------------------
+                                */
+
+                                const mainForm =
+                                    grid.closest('form');
 
                                 if (!mainForm) {
                                     return;
@@ -15425,35 +15748,10 @@
                                 mainForm.addEventListener(
                                     'submit',
                                     function (event) {
-                                        const retrievedInputs =
-                                            grid.querySelectorAll(
-                                                'input[id^="retrieved_copies_"]'
-                                            );
-
-                                        let gridIsValid = true;
-
-                                        retrievedInputs.forEach(
-                                            function (input) {
-                                                const index =
-                                                    input.id.replace(
-                                                        'retrieved_copies_',
-                                                        ''
-                                                    );
-
-                                                if (
-                                                    !validateGridCopies(index)
-                                                ) {
-                                                    gridIsValid = false;
-                                                }
-                                            }
-                                        );
-
-                                        if (!gridIsValid) {
+                                        if (
+                                            !validateDistributionRows()
+                                        ) {
                                             event.preventDefault();
-
-                                            alert(
-                                                'Please correct Distribution, Retrieval & Destruction details.'
-                                            );
                                         }
                                     }
                                 );
@@ -15464,7 +15762,7 @@
                     <style>
                         #distribution-retrieval-grid {
                             width: 100%;
-                            min-width: 1900px;
+                            min-width: 2400px;
                             border-collapse: collapse !important;
                             border: 1px solid #000 !important;
                         }
@@ -15478,7 +15776,7 @@
                         #distribution-retrieval-grid th,
                         #distribution-retrieval-grid td {
                             border: 1px solid #000 !important;
-                            padding: 8px !important;
+                            padding: 7px !important;
                             vertical-align: middle !important;
                         }
 
@@ -15498,6 +15796,7 @@
                         #distribution-retrieval-grid select,
                         #distribution-retrieval-grid textarea {
                             width: 100%;
+                            min-width: 125px;
                             border: 1px solid #999 !important;
                             border-radius: 2px;
                             padding: 6px;
@@ -15505,7 +15804,7 @@
                         }
 
                         #distribution-retrieval-grid textarea {
-                            min-height: 65px;
+                            min-height: 62px;
                             resize: vertical;
                         }
 
@@ -15519,6 +15818,14 @@
                         #distribution-retrieval-grid .grid-editable-field,
                         #distribution-retrieval-grid .grid-editable-textarea {
                             background-color: #fff !important;
+                            color: #000 !important;
+                        }
+
+                        #distribution-retrieval-grid select:disabled {
+                            background-color: #f3f3f3 !important;
+                            color: #333 !important;
+                            opacity: 1;
+                            cursor: not-allowed;
                         }
 
                         .grid-date-wrapper {
@@ -15529,6 +15836,7 @@
                         .grid-hidden-date {
                             position: absolute;
                             width: 1px !important;
+                            min-width: 1px !important;
                             height: 1px !important;
                             opacity: 0;
                             pointer-events: none;
@@ -15536,18 +15844,11 @@
                             left: 0;
                         }
 
-                        .grid-error-message {
-                            display: block;
-                            margin-top: 4px;
-                            color: #dc3545;
-                            font-size: 12px;
-                        }
-
-                        #distribution-retrieval-grid .grid-invalid-field {
-                            border: 1px solid #dc3545 !important;
-                            background-color: #fff5f5 !important;
+                        #distribution-retrieval-grid .text-center {
+                            text-align: center !important;
                         }
                     </style>
+
                     <div class="button-block">
                         <button type="submit" name="submit" value="save" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
