@@ -548,6 +548,7 @@
         }
         
     </style>
+    
 
 </head>
 <body>
@@ -583,22 +584,25 @@
                             ->where('stage', 'Approval-Submit')
                             ->where('deleted_at', null)
                             ->get();
+                          
                     @endphp
                     <td style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Approved By:Head QA/CQA
-                        @if ($inreviews->isEmpty())
+                        <!-- @if ($inreviews->isEmpty())
                             <div>Yet Not Performed</div>
                         @else
                             @foreach ($inreviews as $temp)
                                 <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
                             @endforeach
-                        @endif 
+                        @endif  -->
                     </td>
                     <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">
                         @if ($inreviews->isEmpty())
                             <div>Yet Not Performed</div>
                         @else
                             @foreach ($inreviews as $temp)
-                              <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                            
+                                <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                                  <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
                             @endforeach
                         @endif
                     </th>
@@ -611,45 +615,24 @@
         </table>
     </footer>
     
-    <div class="content">
-        <section>
-            <div class="procedure-block">
-                <div class="w-100">
-                    <div class="w-100" id="table1">
+  <div class="content">
+    <section>
+        <div class="procedure-block">
+            <div class="w-100">
+                <div class="w-100" id="table1">
 
-                        <h3 style="text-align:center;margin-bottom:20px;">
-                            ANNEXURE {{ $annexureNo }}
-                        </h3>
+                    <h3 style="text-align:center;margin-bottom:20px;">
+                        ANNEXURE {{ $annexureNo }}
+                    </h3>
 
-                        <div class="annexure-quill-content">
-                            {!! $annexure !!}
-                        </div>
-
+                    <div class="annexure-quill-content">
+                        {!! $annexure !!}
                     </div>
+
                 </div>
             </div>
-        </section>
-    </div>
-
-    <script type="text/php">
-        if (isset($pdf)) {
-
-            $pdf->page_script('
-                $font = $fontMetrics->get_font("Helvetica", "bold");
-
-                $size = 12;
-
-                $text = $PAGE_NUM . " - " . $PAGE_COUNT;
-
-                $width = $fontMetrics->get_text_width($text, $font, $size);
-
-                $x = 500 - $width;
-
-                $y = 790;
-
-                $pdf->text($x, $y, $text, $font, $size);
-            ');
-        }
-</script>
+        </div>
+    </section>
+</div>
 </body>
 </html>

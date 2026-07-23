@@ -1495,6 +1495,9 @@
                     @if (Helpers::checkRoles(2) AND Helpers::checkRoles_check_reviewers($document) && $document->stage == 4)
                         <input type="hidden" name="stage_id" value="Cancel-by-Reviewer" />
                     @endif
+                    @if (Helpers::checkRoles(2) AND Helpers::checkRoles_check_reviewers($document) && $document->stage == 10)
+                        <input type="hidden" name="stage_id" value="Cancel-by-InEffective" />
+                    @endif
 
                     <!-- Modal footer -->
                     <div class="modal-footer">

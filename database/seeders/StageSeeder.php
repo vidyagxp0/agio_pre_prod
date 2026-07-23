@@ -71,6 +71,9 @@ class StageSeeder extends Seeder
         $stage->name = "Cancel-by-Approver";
         $stage->save();
 
+        $stage = new Stage();
+        $stage->name = "Cancel-by-InEffective";
+        $stage->save();
 
 
         $stage = new RecordNumber();

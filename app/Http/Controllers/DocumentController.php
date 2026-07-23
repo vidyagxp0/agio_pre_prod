@@ -8120,216 +8120,225 @@ class DocumentController extends Controller
         return view($viewName, compact('data', 'attachments'));
     }
 
-    public function annexureviewPdf($id)
-    {
 
-                $depaArr = ['ACC' => 'Accounting', 'ACC3' => 'Accounting',];
-                $data = Document::find($id);
-                //$data->department = Department::find($data->department_id);
-                $department = Department::find(Auth::user()->departmentid);
-                $document = Document::find($id);
+  public function annexureviewPdf($id)
+{
+    $document = Document::find($id);
 
-                if ($document->revised == 'Yes') {
-                    $latestRevision = Document::where('revised_doc', $document->id)
-                                            ->max('minor');
-                    $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
-                    $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
-                } else {
-                    $revisionNumber = '00';
-                }
-
-                // department code wise number
-                // $documents = Document::orderBy('department_id')->get();
-                $departmentId = $document->department_id;
-
-                if (!$departmentId) {
-                    return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
-                }
-
-                $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
-
-                $counter = 0;
-                foreach ($documents as $doc) {
-                    $counter++;
-                    $doc->currentId = $counter;
-
-
-                    if ($doc->id == $id) {
-                        $currentId = $doc->currentId;
-                    }
-                }
-
-
-                if ($department) {
-                    $data['department_name'] = $department->name;
-                } else {
-                    $data['department_name'] = '';
-                }
-                $data->department = $department;
-
-                $data['originator'] = User::where('id', $data->originator_id)->value('name');
-                $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
-                $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
-                $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
-
-                $data['document_division'] = Division::where('id', $data->division_id)->value('name');
-                $data['year'] = Carbon::parse($data->created_at)->format('Y');
-                $data['document_content'] = DocumentContent::where('document_id', $id)->first();
-
-                $documentContent = DocumentContent::where('document_id', $id)->first();
-                $annexures = [];
-                if (!empty($documentContent->annexuredata)) {
-                    $annexures = unserialize($documentContent->annexuredata);
-                }
-
-
-                // pdf related work
-                $time = Carbon::now();
-                    $tempFiles = [];
-
-                foreach ($annexures as $index => $annexure) {
-
-                    if (empty(trim(strip_tags($annexure)))) {
-                        continue;
-                    }
-
-                    $annexurePdf = PDF::loadView(
-                        'frontend.documents.annexure-pdf',
-                        [
-                            'data'             => $data,
-                            'time'             => $time,
-                            'document'         => $document,
-                            'annexure'         => $annexure,
-                            'annexureNo'       => $index + 1,
-                            'currentId'        => $currentId,
-                            'revisionNumber'   => $revisionNumber,
-                        ]
-                    );
-
-                    $annexurePdf->setPaper('A4');
-
-                    $annexurePdf->setOptions([
-                        'defaultFont' => 'sans-serif',
-                        'isHtml5ParserEnabled' => true,
-                        'isRemoteEnabled' => true,
-                        'isPhpEnabled' => true,
-                    ]);
-
-                    $annexurePdf->render();
-
-                    $dompdf = $annexurePdf->getDomPDF();
-
-                    $canvas = $dompdf->getCanvas();
-
-                    $canvas->set_default_view('FitB');
-
-                    $width  = $canvas->get_width();
-                    $height = $canvas->get_height();
-
-                    $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
-
-                    $watermarkText = strtoupper(
-                        Helpers::getDocStatusByStage(
-                            $data->stage,
-                            $data->training_required
-                        )
-                    );
-
-                    $font = $dompdf->getFontMetrics()->get_font('sans-serif', 'bold');
-
-                    $fontSize = 25;
-
-                    $textWidth = $dompdf->getFontMetrics()->getTextWidth(
-                        $watermarkText,
-                        $font,
-                        $fontSize
-                    );
-
-                    $canvas->page_text(
-                        ($width - $textWidth) / 2,
-                        ($height / 2) + 50,
-                        $watermarkText,
-                        $font,
-                        $fontSize,
-                        [0, 0, 0],
-                        0.2,
-                        6,
-                        -25
-                    );
-
-                    $filePath = storage_path('app/temp_annexure_' . ($index + 1) . '.pdf');
-
-                    file_put_contents($filePath, $annexurePdf->output());
-
-                    $tempFiles[] = $filePath;
-                }
-
-                $mergedPdf = new \setasign\Fpdi\Fpdi();
-
-                foreach ($tempFiles as $file) {
-
-                    $pageCount = $mergedPdf->setSourceFile($file);
-
-                    for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
-
-                        $template = $mergedPdf->importPage($pageNo);
-
-                        $size = $mergedPdf->getTemplateSize($template);
-
-                        $mergedPdf->AddPage(
-                            $size['orientation'],
-                            [$size['width'], $size['height']]
-                        );
-
-                        $mergedPdf->useTemplate($template);
-                    }
-                }
-                if ($data->documents) {
-
-                $pdfArray = explode(',', $data->documents);
-
-                foreach ($pdfArray as $pdfFile) {
-
-                    $existingPdfPath = public_path('upload/PDF/' . trim($pdfFile));
-
-                    if (!file_exists($existingPdfPath)) {
-                        continue;
-                    }
-
-                    $pageCount = $mergedPdf->setSourceFile($existingPdfPath);
-
-                    for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
-
-                        $template = $mergedPdf->importPage($pageNo);
-
-                        $size = $mergedPdf->getTemplateSize($template);
-
-                        $mergedPdf->AddPage(
-                            $size['orientation'],
-                            [$size['width'], $size['height']]
-                        );
-
-                        $mergedPdf->useTemplate($template);
-                    }
-                }
-            }
-
-                $pdfContent = $mergedPdf->Output('S');
-
-            foreach ($tempFiles as $file) {
-
-                if (file_exists($file)) {
-                    unlink($file);
-                }
-            }
-
-        return response($pdfContent)
-            ->header('Content-Type', 'application/pdf')
-            ->header(
-                'Content-Disposition',
-                'inline; filename="Annexures.pdf"'
-            );
+    if (!$document) {
+        return redirect()->back()->withErrors(['error' => 'Document not found']);
     }
+
+    $data = $document;
+
+    $departmentId = $document->department_id;
+
+    if (!$departmentId) {
+        return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
+    }
+
+    $department = Department::find($departmentId);
+    $data->department = $department;
+    $data['department_name'] = $department ? $department->name : '';
+
+    if ($document->revised == 'Yes') {
+        $latestRevision = Document::where('revised_doc', $document->id)->max('minor');
+        $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
+        $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+    } else {
+        $revisionNumber = '00';
+    }
+
+    $currentId = Document::where('department_id', $departmentId)
+        ->orderBy('id')
+        ->pluck('id')
+        ->search($id);
+    $currentId = $currentId !== false ? $currentId + 1 : null;
+
+    $originatorUser = User::find($document->originator_id);
+    $data['originator'] = $originatorUser->name ?? null;
+    $data['originator_email'] = $originatorUser->email ?? null;
+
+    $docType = DocumentType::find($document->document_type_id);
+    $data['document_type_name'] = $docType->name ?? null;
+    $data['document_type_code'] = $docType->typecode ?? null;
+
+    $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+    $data['year'] = Carbon::parse($data->created_at)->format('Y');
+
+    $documentContent = DocumentContent::where('document_id', $id)->first();
+    $data['document_content'] = $documentContent;
+
+    $annexures = [];
+    if (!empty($documentContent->annexuredata)) {
+        $annexures = unserialize($documentContent->annexuredata);
+    }
+
+    $time = Carbon::now();
+    $tempFiles = [];
+
+    foreach ($annexures as $index => $annexure) {
+
+        if (empty(trim(strip_tags($annexure)))) {
+            continue;
+        }
+
+        $annexurePdf = PDF::loadView(
+            'frontend.documents.annexure-pdf',
+            [
+                'data'             => $data,
+                'time'             => $time,
+                'document'         => $document,
+                'annexure'         => $annexure,
+                'annexureNo'       => $index + 1,
+                'currentId'        => $currentId,
+                'revisionNumber'   => $revisionNumber,
+            ]
+        );
+
+        $annexurePdf->setPaper('A4');
+
+        $annexurePdf->setOptions([
+            'defaultFont'          => 'sans-serif',
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled'      => false,
+            'isPhpEnabled'         => false, // security ke liye off hi rakho
+        ]);
+
+        $annexurePdf->render();
+
+        $dompdf = $annexurePdf->getDomPDF();
+        $canvas = $dompdf->getCanvas();
+        $canvas->set_default_view('FitB');
+
+        $width  = $canvas->get_width();
+        $height = $canvas->get_height();
+
+        // ---------- WATERMARK (light gray, diagonal) ----------
+        $watermarkText = strtoupper(
+            Helpers::getDocStatusByStage(
+                $data->stage,
+                $data->training_required
+            )
+        );
+
+        $watermarkFont = $dompdf->getFontMetrics()->get_font('sans-serif', 'bold');
+        $watermarkSize = 25;
+
+        $watermarkTextWidth = $dompdf->getFontMetrics()->getTextWidth(
+            $watermarkText,
+            $watermarkFont,
+            $watermarkSize
+        );
+
+        // Light gray color (RGB 0-1 range) — koi global opacity trick nahi,
+        // isliye page ke baaki content (page number included) fully visible rahega
+        $lightGray = [0.82, 0.82, 0.82];
+
+        $canvas->page_text(
+            ($width - $watermarkTextWidth) / 2,
+            ($height / 2) + 50,
+            $watermarkText,
+            $watermarkFont,
+            $watermarkSize,
+            $lightGray,   // color
+            0.0,          // word_space
+            6,            // char_space (letters ke beech spacing — diagonal look ke liye)
+            -25           // angle (diagonal watermark)
+        );
+
+        // ---------- PAGE NUMBER (dark, fully visible, annexure-wise: 1-3, 2-3...) ----------
+        $pageFont = $dompdf->getFontMetrics()->get_font('sans-serif', 'bold');
+        $pageFontSize = 14;
+        $pageText = "{PAGE_NUM} - {PAGE_COUNT}";
+
+        // approx width nikal ke right-align karo (exact placeholder replace hone ke baad
+        // width thoda vary kar sakta hai, isliye thoda margin rakha hai)
+                $pageTextWidth = $dompdf->getFontMetrics()->getTextWidth(
+                    $pageText,
+                    $pageFont,
+                    $pageFontSize
+                );
+
+                $canvas->page_text(
+            $width - 130,          // right side
+            $height - 60,         // page bottom ke bilkul paas
+            "{PAGE_NUM} - {PAGE_COUNT}",
+            $pageFont,
+            $pageFontSize,
+            [0, 0, 0]
+        );
+
+        $filePath = tempnam(sys_get_temp_dir(), 'annex_') . '.pdf';
+        file_put_contents($filePath, $annexurePdf->output());
+
+        $tempFiles[] = $filePath;
+    }
+
+    $mergedPdf = new \setasign\Fpdi\Fpdi();
+
+    foreach ($tempFiles as $file) {
+
+        $pageCount = $mergedPdf->setSourceFile($file);
+
+        for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+
+            $template = $mergedPdf->importPage($pageNo);
+            $size = $mergedPdf->getTemplateSize($template);
+
+            $mergedPdf->AddPage(
+                $size['orientation'],
+                [$size['width'], $size['height']]
+            );
+
+            $mergedPdf->useTemplate($template);
+        }
+    }
+
+    if ($data->documents) {
+
+        $pdfArray = explode(',', $data->documents);
+
+        foreach ($pdfArray as $pdfFile) {
+
+            $existingPdfPath = public_path('upload/PDF/' . trim($pdfFile));
+
+            if (!file_exists($existingPdfPath)) {
+                continue;
+            }
+
+            $pageCount = $mergedPdf->setSourceFile($existingPdfPath);
+
+            for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+
+                $template = $mergedPdf->importPage($pageNo);
+                $size = $mergedPdf->getTemplateSize($template);
+
+                $mergedPdf->AddPage(
+                    $size['orientation'],
+                    [$size['width'], $size['height']]
+                );
+
+                $mergedPdf->useTemplate($template);
+            }
+        }
+    }
+
+    $pdfContent = $mergedPdf->Output('S');
+
+    foreach ($tempFiles as $file) {
+        if (file_exists($file)) {
+            unlink($file);
+        }
+    }
+
+    return response($pdfContent)
+        ->header('Content-Type', 'application/pdf')
+        ->header(
+            'Content-Disposition',
+            'inline; filename="Annexures.pdf"'
+        );
+}
 
 
     public function printPDF($id){
@@ -9383,6 +9392,7 @@ class DocumentController extends Controller
 
     public function printAnnexure($documentId, $annexure_number)
     {
+       
         try {
             $document = Document::findOrFail($documentId);
             // dd($document);

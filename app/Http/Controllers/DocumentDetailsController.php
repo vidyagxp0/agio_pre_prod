@@ -251,11 +251,13 @@ class DocumentDetailsController extends Controller
 
         }
 
-        if (Helpers::checkRoles(2) && in_array(Auth::user()->id, explode(",", $document->reviewers)) && ($document->stage == 4 || $document->stage == 5)) {
+
+
+        if (Helpers::checkRoles(2) && in_array(Auth::user()->id, explode(",", $document->reviewers)) && ($document->stage == 4 || $document->stage == 5 || $document->stage == 10)) {
           if ($request->stage_id == "Cancel-by-Reviewer") {
             if ($document->document_type_id == "SOP") {
-                $document->stage = 3;
-                $document->status = "HOD Review Complete";
+                $document->stage = 1;
+                $document->status = "Draft";
             } else {
                 $document->stage = 1;
                 $document->status = "Draft";
@@ -288,7 +290,52 @@ class DocumentDetailsController extends Controller
             } catch (\Exception $e) {
               // 
             }
-          } else {
+          }else
+           
+          if ($request->stage_id == "Cancel-by-InEffective") {
+            if ($document->document_type_id == "SOP") {
+                $document->stage = 7;
+                $document->status = "Approved";
+            } else {
+                $document->stage = 7;
+                $document->status = "Approved";
+            }
+            // $document->stage = 3;
+            // $document->status = "HOD Review Complete";
+            $history = new DocumentHistory();
+            $history->document_id = $request->document_id;
+            $history->activity_type = 'Cancel-by-Reviewer';
+            $history->previous = '';
+            $history->current = '';
+            $history->comment = $request->comment;
+            $history->action_name = 'Submit';
+            $history->change_from = 'In-Review';
+            $history->change_to = 'HOD Review Complete';
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = 'In-Review';
+            $history->save();
+            try {
+              Mail::send(
+                'mail.review-reject',
+                ['document' => $document],
+                function ($message) use ($originator) {
+                  $message->to($originator->email)
+                    ->subject('Rejected By' . Auth::user()->name . '(Reviewer)');
+                }
+              );
+            } catch (\Exception $e) {
+              // 
+            }
+          }
+          
+          
+          
+          
+          
+          
+          else {
             try {
               Mail::send(
                 'mail.reviewed',
