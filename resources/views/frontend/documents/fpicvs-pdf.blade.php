@@ -299,10 +299,47 @@
         .quill-pdf-content b{
             font-weight:bold;
         }
+        .header-wrapper{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .master-copy{
+            position: absolute;
+            top: -35px;
+            right: 10px;
+
+            border: 2px solid #00bcd4;
+            color: #00bcd4;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            padding: 4px 12px;
+
+            transform: rotate(-4deg);
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            background: #fff;
+        }
     </style>
 
 </head>
 <body>
+    <div class="header-wrapper">
+
+        @if ($document->status == 'Effective' || $document->status == 'Obsolete')
+
+            {{-- Existing normal SOP master-copy logic --}}
+            <div class="master-copy">
+                MASTER COPY
+            </div>
+
+        @endif
     <header class="">
         <table class="border" style="width: 100%;">
             <tbody>
@@ -377,7 +414,7 @@
             </tbody>
         </table>
     </header>
-
+    </div>
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
             <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">

@@ -255,95 +255,6 @@
 
 
     <style>
-        /* Main Table Styling */
-        #isPasted {
-            width: 100% !important;
-            border-collapse: collapse;
-            table-layout: fixed;
-            font-size: 12px;
-        }
-
-        /* First column: Sr. No */
-        #isPasted td:first-child,
-        #isPasted th:first-child {
-            white-space: nowrap;
-            width: 40px; /* Fixed width for Sr. No. */
-            vertical-align: top;
-        }
-
-        /* Second column: Main content */
-        #isPasted td:last-child,
-        #isPasted th:last-child {
-            width: auto;
-            vertical-align: top;
-        }
-
-        /* Common Table Cell Styling */
-        #isPasted th,
-        #isPasted td {
-            border: 1px solid #000 !important;
-            padding: 8px;
-            text-align: left;
-            vertical-align: top;
-            word-break: break-word;
-        }
-
-        /* Paragraph Styling Inside Table Cells */
-        #isPasted td p {
-            margin: 0;
-            text-align: justify;
-            text-justify: inter-word;
-            word-break: break-word;
-        }
-
-        #isPasted td > p span {
-            display: inline; /* or block */
-            width: auto;
-            word-wrap: break-word;
-        }
-
-        /* Remove inline-block spans causing PDF issues */
-        #isPasted td span {
-            display: block;
-            word-break: break-word;
-            white-space: normal;
-        }
-
-        /* Image Styling */
-        #isPasted img,
-        #isPasted td img {
-            max-width: 100% !important;
-            height: auto;
-            display: block;
-            margin: 5px auto;
-        }
-
-        .table-containers {
-            width: 100%;
-            overflow-x: auto;
-        }
-
-        /* Nested Table Styling (if any inside cell) */
-        #isPasted table {
-            width: 100% !important;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-
-        #isPasted table th,
-        #isPasted table td {
-            border: 1px solid #000 !important;
-            padding: 8px;
-            text-align: left;
-            word-break: break-word;
-        }
-
-        #isPasted table img {
-            max-width: 100% !important;
-            height: auto;
-            display: block;
-            margin: 5px auto;
-        }
         .quill-pdf-content{
             width:100%;
             font-size:12px;
@@ -387,10 +298,47 @@
         .quill-pdf-content b{
             font-weight:bold;
         }
+        .header-wrapper{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .master-copy{
+            position: absolute;
+            top: -35px;
+            right: 10px;
+
+            border: 2px solid #00bcd4;
+            color: #00bcd4;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            padding: 4px 12px;
+
+            transform: rotate(-4deg);
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            background: #fff;
+        }
     </style>
 
 </head>
 <body>
+    <div class="header-wrapper">
+
+        @if ($data->status == 'Effective' || $data->status == 'Obsolete')
+
+            {{-- Existing normal SOP master-copy logic --}}
+            <div class="master-copy">
+                MASTER COPY
+            </div>
+
+        @endif
     <header class="">
         <table class="border" style="width: 100%;">
             <tbody>
@@ -436,7 +384,7 @@
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No.:
                     
                     <span>
-                        @if($document->revised == 'Yes')
+                        {{-- @if($document->revised == 'Yes')
                             @php
                                 $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
                             @endphp
@@ -452,7 +400,8 @@
                                 @else
                                    IPSTP/{{ str_pad($data->record_spec2, 4, '0', STR_PAD_LEFT) }}-00
                                 @endif
-                        @endif
+                        @endif --}}
+                        {{$data->document_number}}
                         </span>
                     </td>
                     <td class="w-50"
@@ -484,14 +433,17 @@
                                 ->value('typecode');
                         @endphp
 
-                        @if($document->revised == 'Yes')
-                            @php
-                                $revisionNumber = str_pad($document->revised_doc - 1, 2, '0', STR_PAD_LEFT);
-                            @endphp
-                            IPSTP/{{ str_pad($data->record_spec2, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                        @else                        
-                            Nil
-                        @endif
+                    @if($document->revised == 'Yes' && $document->revised_doc)
+
+                        @php
+                            $previousDocument = \App\Models\Document::find($document->revised_doc);
+                        @endphp
+
+                        {{ $previousDocument->document_number ?? 'Nil' }}
+
+                    @else
+                        Nil
+                    @endif
                     </span>
                 
                    </td>
@@ -503,7 +455,7 @@
             </tbody>
         </table>
     </header>
-
+    </div>
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
             <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">

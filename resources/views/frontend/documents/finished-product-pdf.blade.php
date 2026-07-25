@@ -384,11 +384,48 @@
         .quill-pdf-content b{
             font-weight:bold;
         }
+        .header-wrapper{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .master-copy{
+            position: absolute;
+            top: -35px;
+            right: 10px;
+
+            border: 2px solid #00bcd4;
+            color: #00bcd4;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            padding: 4px 12px;
+
+            transform: rotate(-4deg);
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            background: #fff;
+        }
         
     </style>
 
 </head>
 <body>
+    <div class="header-wrapper">
+
+        @if ($document->status == 'Effective' || $document->status == 'Obsolete')
+
+            {{-- Existing normal SOP master-copy logic --}}
+            <div class="master-copy">
+                MASTER COPY
+            </div>
+
+        @endif
     <header class="">
         <table class="border" style="width: 100%;">
             <tbody>
@@ -434,23 +471,11 @@
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.:
                     
                         <span>
-                        @if($document->revised == 'Yes')
                             @php
                                 $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
                             @endphp
-
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    FPS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @else
-                                    FPS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @endif
-                        @else
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   FPS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
-                                @else
-                                   FPS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
-                                @endif
-                        @endif
+             
+                          {{$data->document_number}}
                         </span>
                     </td>
                     <td class="w-50"
@@ -490,6 +515,7 @@
                         @else                        
                             Nil
                         @endif
+
                    </span>
                 
                     </td>
@@ -528,6 +554,7 @@
             </tbody>
         </table>
     </header>
+    </div>
 
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">

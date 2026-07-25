@@ -120,7 +120,7 @@
                                 <div>
                                     <div class="head">Document Number</div>
                                     <div>
-                                        {{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}
+                                        {{ $document->document_number }}
                                     </div>
                                 </div>                                
                                 <div>
@@ -1804,7 +1804,7 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="group-input">
-                        <label for="revision">Choose Revision Version</label>
+                        {{-- <label for="revision">Choose Revision Version</label>
                         <label for="major">
                             Major Version<span class="text-primary" data-bs-toggle="modal"
                                 data-bs-target="#document-management-system-modal"
@@ -1812,10 +1812,10 @@
                                 (Launch Instruction)
                             </span>
                         </label>
-                        <input type="number" name="major" id="major" min="0">
+                        <input type="number" name="major" id="major" min="0"> --}}
 
                         <label for="reason">
-                            Comment
+                            Reason For Revision
                         </label>
                         <input type="text" name="reason" required>
                     </div>
@@ -1835,26 +1835,77 @@
 
     <!-- updated print-model -->
     @php
-    /*
-    |--------------------------------------------------------------------------
-    | Current document ke opened requests
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | Current document ke opened requests
+        |--------------------------------------------------------------------------
+        */
 
-    $printDocumentRequests = collect();
+        $printDocumentRequests = collect();
 
-    if (!empty($document->id)) {
+        if (!empty($document->id)) {
 
-        $printDocumentRequests =
-            \App\Models\DocumentRequest::where(
-                'document_id',
-                $document->id
-            )
-            ->where('status', 'Opened')
-            ->orderBy('record', 'asc')
-            ->get();
-    }
-@endphp
+            /*
+            |--------------------------------------------------------------------------
+            | Already used Request IDs in Download
+            |--------------------------------------------------------------------------
+            */
+
+            $downloadRequestIds = \App\Models\DownloadHistory::where(
+                    'document_id',
+                    $document->id
+                )
+                ->whereNotNull('request_id')
+                ->pluck('request_id')
+                ->toArray();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Already used Request IDs in Print
+            |--------------------------------------------------------------------------
+            */
+
+            $printRequestIds = \App\Models\PrintHistory::where(
+                    'document_id',
+                    $document->id
+                )
+                ->whereNotNull('request_id')
+                ->pluck('request_id')
+                ->toArray();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Merge both
+            |--------------------------------------------------------------------------
+            */
+
+            $usedRequestIds = array_unique(
+                array_merge(
+                    $downloadRequestIds,
+                    $printRequestIds
+                )
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Only unused opened Request IDs
+            |--------------------------------------------------------------------------
+            */
+
+            $printDocumentRequests =
+                \App\Models\DocumentRequest::where(
+                        'document_id',
+                        $document->id
+                    )
+                    ->where('status', 'Opened')
+                    ->whereNotIn(
+                        'request_id',
+                        $usedRequestIds
+                    )
+                    ->orderBy('record', 'asc')
+                    ->get();
+        }
+    @endphp
 
     {{--Print Documents--}}
     <div class="modal fade" id="print-modal" tabindex="-1" aria-labelledby="printDocumentModalLabel" aria-hidden="true">
@@ -2485,17 +2536,64 @@
 
     {{-- Download documents --}}
     @php
+
         $currentDocumentRecord = $document->id ?? null;
 
         $documentRequests = collect();
 
         if (!empty($currentDocumentRecord)) {
-            $documentRequests = \App\Models\DocumentRequest::where(
+
+            /*
+            |--------------------------------------------------------------------------
+            | Already used Request IDs
+            |--------------------------------------------------------------------------
+            */
+
+            $downloadRequestIds = \App\Models\DownloadHistory::where(
                 'document_id',
                 $currentDocumentRecord
-            )->where('status', 'Opened')->orderBy('request_id', 'asc')->get();
+            )
+            ->whereNotNull('request_id')
+            ->pluck('request_id')
+            ->toArray();
+
+            $printRequestIds = \App\Models\PrintHistory::where(
+                'document_id',
+                $currentDocumentRecord
+            )
+            ->whereNotNull('request_id')
+            ->pluck('request_id')
+            ->toArray();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Merge both arrays
+            |--------------------------------------------------------------------------
+            */
+
+            $usedRequestIds = array_unique(
+                array_merge(
+                    $downloadRequestIds,
+                    $printRequestIds
+                )
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Only unused request ids
+            |--------------------------------------------------------------------------
+            */
+
+            $documentRequests = \App\Models\DocumentRequest::where(
+                    'document_id',
+                    $currentDocumentRecord
+                )
+                ->where('status', 'Opened')
+                ->whereNotIn('request_id', $usedRequestIds)
+                ->orderBy('request_id', 'asc')
+                ->get();
         }
-        
+
     @endphp
 
     <div class="modal fade" id="print-modal1" tabindex="-1" aria-labelledby="printModalLabel" aria-hidden="true">
