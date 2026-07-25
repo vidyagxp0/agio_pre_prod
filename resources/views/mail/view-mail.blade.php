@@ -279,16 +279,14 @@
                                     @endif
                                     <th style="width: 50%">Short Description</th>
                                     <th style="width: 10%">Due Date</th>
-                                    <th style="width: 20%">Status-Ashish</th>
+                                    <th style="width: 20%">Status</th>
                                 </tr>
 
                              @endif   
                             </thead>
                             <tbody>
                                 
-
                                 @if(isset($data->form_type) && $data->form_type == 'Document Issuance Request')
-
                                     <tr>
                                         <td>{{ $data->request_id }}</td>
                                         <td>{{ Helpers::getInitiatorName($data->request_by) }}</td>
@@ -298,7 +296,7 @@
                                         <td>{{ $data->reason }}</td>
                                     </tr>
 
-                                    @else
+                                @else
                                     <tr>
 
                                         <td>
@@ -350,7 +348,8 @@
                                             @elseif($process == 'Market Complaint')
                                             {{ Helpers::getDateFormat($data->due_date_gi) }} 
                                             @else
-                                            {{ $data->due_date ?  Helpers::getDateFormat($data->due_date) : 'Not Applicable' }}                                        @endif
+                                            {{ $data->due_date ?  Helpers::getDateFormat($data->due_date) : 'Not Applicable' }}                                        
+                                            @endif
                                         </td>
                                         <td>{{ $data->status }}</td>
                                     </tr>
