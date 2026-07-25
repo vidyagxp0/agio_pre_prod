@@ -9034,478 +9034,487 @@ class DocumentController extends Controller
     //     }
     // }
 
-    public function printPDF($id)
-    {
-        $request = request();
+public function printPDF($id)
+{
+    $request = request();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Manual validation
-        |--------------------------------------------------------------------------
-        */
+    /*
+    |--------------------------------------------------------------------------
+    | Manual validation
+    |--------------------------------------------------------------------------
+    */
 
-        if (!$request->document_request_id) {
-            toastr()->error('Please select Request ID.');
-            return redirect()->back();
-        }
+    if (!$request->document_request_id) {
+        toastr()->error('Please select Request ID.');
+        return redirect()->back();
+    }
 
-        if (!$request->issued_date) {
-            toastr()->error('Issued Date is required.');
-            return redirect()->back();
-        }
+    if (!$request->issued_date) {
+        toastr()->error('Issued Date is required.');
+        return redirect()->back();
+    }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Find document
-        |--------------------------------------------------------------------------
-        */
+    /*
+    |--------------------------------------------------------------------------
+    | Find document
+    |--------------------------------------------------------------------------
+    */
 
-        $document = Document::find($id);
+    $document = Document::find($id);
 
-        if (!$document) {
-            toastr()->error('Document not found.');
-            return redirect()->back();
-        }
+    if (!$document) {
+        toastr()->error('Document not found.');
+        return redirect()->back();
+    }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Fetch actual request from database
-        |--------------------------------------------------------------------------
-        */
+    /*
+    |--------------------------------------------------------------------------
+    | Fetch actual closed request
+    |--------------------------------------------------------------------------
+    */
 
-        $documentRequest = DocumentRequest::where(
+    $documentRequest = DocumentRequest::where(
             'id',
             $request->document_request_id
         )
         ->where('document_id', $document->id)
-        ->where('status', 'Opened')
+        ->where('status', 'Closed - Done')
         ->first();
 
-        if (!$documentRequest) {
+    if (!$documentRequest) {
+        toastr()->error(
+            'Selected request is invalid, not completed or does not belong to this document.'
+        );
 
-            toastr()->error(
-                'Selected request is invalid, closed or does not belong to this document.'
-            );
+        return redirect()->back();
+    }
 
-            return redirect()->back();
-        }
+    /*
+    |--------------------------------------------------------------------------
+    | Prevent same request from being printed twice
+    |--------------------------------------------------------------------------
+    */
 
-        /*
-        |--------------------------------------------------------------------------
-        | Request ID
-        |--------------------------------------------------------------------------
-        */
+    $alreadyPrinted = PrintHistory::where(
+            'document_request_id',
+            $documentRequest->id
+        )
+        ->exists();
 
-        $formattedRequestId =
-            $documentRequest->request_id ?? ( 'Request-' . str_pad($documentRequest->record, 3, '0', STR_PAD_LEFT));
+    if ($alreadyPrinted) {
+        toastr()->error(
+            'This Request ID has already been used for printing.'
+        );
 
-        /*
-        |--------------------------------------------------------------------------
-        | Actual issuance data database se
-        |--------------------------------------------------------------------------
-        */
+        return redirect()->back();
+    }
 
-        $issuedCopies = (int) $documentRequest->number_of_copies;
+    /*
+    |--------------------------------------------------------------------------
+    | Request and issuance details
+    |--------------------------------------------------------------------------
+    */
 
-        $printReason = $documentRequest->reason;
+    $formattedRequestId =
+        $documentRequest->request_id
+        ?? (
+            'Request-' .
+            str_pad(
+                $documentRequest->record,
+                3,
+                '0',
+                STR_PAD_LEFT
+            )
+        );
 
-        $issuedDate = $request->issued_date;
+    $issuedCopies =
+        (int) $documentRequest->number_of_copies;
 
-        $issuedById = Auth::id();
+    $printReason =
+        $documentRequest->reason;
 
-        $issuedByName = Auth::user()->name;
+    $issuedDate =
+        $request->issued_date;
 
-        $issuanceTo = $documentRequest->request_to;
+    $issuedById =
+        Auth::id();
 
-        $issuedToUser = User::find($issuanceTo);
+    $issuedByName =
+        Auth::user()->name;
 
-        if (!$issuedToUser) {
+    $issuanceTo =
+        $documentRequest->request_to;
 
-            toastr()->error(
-                'Request To user is not available.'
-            );
+    $issuedToUser =
+        User::find($issuanceTo);
 
-            return redirect()->back();
-        }
+    if (!$issuedToUser) {
+        toastr()->error(
+            'Request To user is not available.'
+        );
 
-        $issuedToName = $issuedToUser->name;
+        return redirect()->back();
+    }
 
-        $issuedToDepartment = Department::where( 'id', $issuedToUser->departmentid)->value('name');
+    $issuedToName =
+        $issuedToUser->name;
 
-        if ($issuedCopies < 1) {
+    $issuedToDepartment =
+        Department::where(
+            'id',
+            $issuedToUser->departmentid
+        )->value('name');
 
-            toastr()->error(
-                'Number of issued copies must be at least 1.'
-            );
+    if ($issuedCopies < 1) {
+        toastr()->error(
+            'Number of issued copies must be at least 1.'
+        );
 
-            return redirect()->back();
-        }
+        return redirect()->back();
+    }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Authenticated user roles
-        |--------------------------------------------------------------------------
-        */
+    /*
+    |--------------------------------------------------------------------------
+    | Authenticated user roles
+    |--------------------------------------------------------------------------
+    */
 
-        $roleIds = DB::table('user_roles')
-            ->where('user_id', Auth::id())
-            ->pluck('role_id')
-            ->filter()
-            ->map(function ($roleId) {
-                return (int) $roleId;
-            })
-            ->unique()
-            ->values()
-            ->toArray();
+    $roleIds = DB::table('user_roles')
+        ->where('user_id', Auth::id())
+        ->pluck('role_id')
+        ->filter()
+        ->map(function ($roleId) {
+            return (int) $roleId;
+        })
+        ->unique()
+        ->values()
+        ->toArray();
 
-        if (empty($roleIds)) {
+    if (empty($roleIds)) {
+        toastr()->error(
+            'No role is assigned to your account.'
+        );
 
-            toastr()->error(
-                'No role is assigned to your account.'
-            );
+        return redirect()->back();
+    }
 
-            return redirect()->back();
-        }
+    /*
+    |--------------------------------------------------------------------------
+    | Print control
+    |--------------------------------------------------------------------------
+    */
 
-        /*
-        |--------------------------------------------------------------------------
-        | Print control
-        |--------------------------------------------------------------------------
-        */
-
-        $controls = PrintControl::whereIn(
+    $controls = PrintControl::whereIn(
             'role_id',
             $roleIds
         )
         ->orderByDesc('id')
         ->first();
 
-        if (!$controls) {
+    if (!$controls) {
+        toastr()->error(
+            'There is no print control configured for your assigned roles.'
+        );
 
-            toastr()->error(
-                'There is no print control configured for your assigned roles.'
-            );
+        return redirect()->back();
+    }
 
-            return redirect()->back();
-        }
+    $limitResult =
+        $this->checkDocumentPrintLimit(
+            $controls,
+            Auth::id(),
+            $document->id
+        );
 
-        /*
-        |--------------------------------------------------------------------------
-        | Check print limit
-        |--------------------------------------------------------------------------
-        */
+    if (!$limitResult['allowed']) {
+        toastr()->error(
+            $limitResult['message']
+        );
 
-        $limitResult = $this->checkDocumentPrintLimit( $controls, Auth::id(), $document->id);
+        return redirect()->back();
+    }
 
-        if (!$limitResult['allowed']) {
+    /*
+    |--------------------------------------------------------------------------
+    | Department documents and serial
+    |--------------------------------------------------------------------------
+    */
 
-            toastr()->error(
-                $limitResult['message']
-            );
+    $departmentId = $document->department_id;
 
-            return redirect()->back();
-        }
+    $sopTypeShort = $document->sop_type_short;
 
-        /*
-        |--------------------------------------------------------------------------
-        | Department documents and current serial
-        |--------------------------------------------------------------------------
-        */
+    if (!$departmentId) {
+        toastr()->error(
+            'Department ID is not associated with this document.'
+        );
 
-        $departmentId = $document->department_id;
+        return redirect()->back();
+    }
 
-        $sopTypeShort = $document->sop_type_short;
-
-        if (!$departmentId) {
-
-            toastr()->error(
-                'Department ID is not associated with this document.'
-            );
-
-            return redirect()->back();
-        }
-
-        $documents = Document::where( 'department_id', $departmentId)->when(
-            !empty($sopTypeShort),
+    $documents = Document::where('department_id', $departmentId)
+        ->when(!empty($sopTypeShort),
             function ($query) use ($sopTypeShort) {
                 $query->where(
                     'sop_type_short',
                     $sopTypeShort
                 );
             }
-        )->orderBy('id')->get();
+        )
+        ->orderBy('id')
+        ->get();
 
-        $currentId = 1;
+    $currentId = 1;
 
-        foreach ($documents as $key => $doc) {
-
-            if ((int) $doc->id === (int) $document->id) {
-                $currentId = $key + 1;
-                break;
-            }
+    foreach ($documents as $key => $doc) {
+        if ((int) $doc->id === (int) $document->id) {
+            $currentId = $key + 1;
+            break;
         }
+    }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Use saved document number
-        |--------------------------------------------------------------------------
-        | Revised document ka updated document_number yahi se aayega.
-        */
+    $sopNumber = $document->document_number;
 
-        $sopNumber = $document->document_number;
+    /*
+    |--------------------------------------------------------------------------
+    | Prepare document data
+    |--------------------------------------------------------------------------
+    */
 
-        /*
-        |--------------------------------------------------------------------------
-        | Document PDF data
-        |--------------------------------------------------------------------------
-        */
+    set_time_limit(180);
 
-        set_time_limit(120);
+    $data = Document::find($id);
 
-        $data = Document::find($id);
+    $data->department = Department::find($data->department_id);
 
-        $data->department = Department::find($data->department_id);
+    $data['originator'] = User::where('id', $data->originator_id)->value('name');
 
-        $data['originator'] = User::where('id', $data->originator_id)->value('name');
+    $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
 
-        $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
+    $documentContent = DocumentContent::where('document_id', $id)->first();
 
-        $data['document_content'] = DocumentContent::where('document_id', $id)->first();
+    $data['document_content'] = $documentContent;
 
-        $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
+    $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
 
-        $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
+    $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
 
-        $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+    $data['document_division'] = Division::where('id', $data->division_id)->value('name');
 
-        $data['year'] = Carbon::parse($data->created_at)->format('Y');
+    $data['year'] = Carbon::parse($data->created_at)->format('Y');
 
-        $time = Carbon::now();
+    $time = Carbon::now();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Annexure data
-        |--------------------------------------------------------------------------
-        */
+    /*
+    |--------------------------------------------------------------------------
+    | Annexure data
+    |--------------------------------------------------------------------------
+    */
 
-        $documentContent = DocumentContent::where('document_id', $id)->first();
+    $annexures = [];
 
-        $annexures = [];
+    if ($documentContent && !empty($documentContent->annexuredata)) {
+        $unserializedAnnexures =
+            @unserialize(
+                $documentContent->annexuredata
+            );
 
-        if ($documentContent && !empty($documentContent->annexuredata)) {
-            $annexures = unserialize($documentContent->annexuredata);
+        if (is_array($unserializedAnnexures)) {
+            $annexures =
+                $unserializedAnnexures;
         }
+    }
 
-        if (empty($data->document_type_id)) {
+    if (empty($data->document_type_id)) {
+        toastr()->error(
+            'Document type ID is missing.'
+        );
 
-            toastr()->error('Document type ID is missing.');
+        return redirect()->back();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Select Blade view
+    |--------------------------------------------------------------------------
+    */
+
+    $viewName = match ($data->document_type_id) {
+        'SOP' => 'frontend.documents.pdfpage',
+        'BOM' => 'frontend.documents.bom-pdf',
+        'FPS' => 'frontend.documents.finished-product-pdf',
+        'INPS' => 'frontend.documents.inprocess_s-pdf',
+        'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
+        'RAWMS' => 'frontend.documents.raw_ms-pdf',
+        'PAMS' => 'frontend.documents.package_ms-pdf',
+        'PIAS' => 'frontend.documents.product_item-pdf',
+        'MFPS' => 'frontend.documents.mfps-pdf',
+        'MFPSTP' => 'frontend.documents.mfpstp-pdf',
+        'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
+        'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+        'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
+        'RMSTP' => 'frontend.documents.raw_mstp-pdf',
+        'BMR' => 'frontend.documents.bmr-pdf',
+        'BPR' => 'frontend.documents.bpr-pdf',
+        'SPEC' => 'frontend.documents.spec-pdf',
+        'STP' => 'frontend.documents.stp-pdf',
+        'TDS' => 'frontend.documents.tds-pdf',
+        'GTP' => 'frontend.documents.gtp-pdf',
+        default => 'frontend.documents.pdfpage',
+    };
+
+    /*
+    | These document types contain real HTML content in Blade.
+    | Non-SOP types containing iframe/upload attachments use actual files.
+    |--------------------------------------------------------------------------
+    */
+
+    $bladeGeneratedTypes = ['SOP','FPS','INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP',];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Get actual attachments for non-SOP
+    |--------------------------------------------------------------------------
+    */
+
+    $sourceAttachmentPaths = [];
+
+    if (!in_array($document->document_type_id, $bladeGeneratedTypes, true)) {
+        $sourceAttachmentPaths =
+            $this->getNonSopDocumentPdfPaths(
+                $document,
+                $documentContent
+            );
+
+        if (empty($sourceAttachmentPaths)) {
+            toastr()->error(
+                'No printable PDF or image attachment was found for this document.'
+            );
 
             return redirect()->back();
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Select PDF view
-        |--------------------------------------------------------------------------
-        */
-
-        $viewName = match ($data->document_type_id) {
-            'SOP' => 'frontend.documents.pdfpage',
-
-            'BOM' => 'frontend.documents.bom-pdf',
-
-            'FPS' => 'frontend.documents.finished-product-pdf',
-
-            'INPS' => 'frontend.documents.inprocess_s-pdf',
-
-            'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-
-            'RAWMS' => 'frontend.documents.raw_ms-pdf',
-
-            'PAMS' => 'frontend.documents.package_ms-pdf',
-
-            'PIAS' => 'frontend.documents.product_item-pdf',
-
-            'MFPS' => 'frontend.documents.mfps-pdf',
-
-            'MFPSTP' => 'frontend.documents.mfpstp-pdf',
-
-            'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
-
-            'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
-
-            'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
-
-            'RMSTP' => 'frontend.documents.raw_mstp-pdf',
-
-            'BMR' => 'frontend.documents.bmr-pdf',
-
-            'BPR' => 'frontend.documents.bpr-pdf',
-
-            'SPEC' => 'frontend.documents.spec-pdf',
-
-            'STP' => 'frontend.documents.stp-pdf',
-
-            'TDS' => 'frontend.documents.tds-pdf',
-
-            'GTP' => 'frontend.documents.gtp-pdf',
-
-            default => 'frontend.documents.pdfpage',
-        };
-
-        /*
-        |--------------------------------------------------------------------------
-        | Save print history once
-        |--------------------------------------------------------------------------
-        */
-
-        $printHistory = new PrintHistory();
-
-        $printHistory->document_id = $document->id;
-
-        $printHistory->document_request_id = $documentRequest->id;
-
-        $printHistory->request_id = $formattedRequestId;
-
-        $printHistory->document_number = $document->document_number;
-
-        /*
-        |--------------------------------------------------------------------------
-        | Issued By
-        |--------------------------------------------------------------------------
-        */
-
-        $printHistory->user_id = $issuedById;
-
-        $printHistory->issued_by = $issuedById;
-
-        $printHistory->issued_by_name = $issuedByName;
-
-        $printHistory->role_id = Auth::user()->role;
-
-        /*
-        |--------------------------------------------------------------------------
-        | Issued date
-        |--------------------------------------------------------------------------
-        */
-
-        $printHistory->date = Carbon::now()->format('d-m-Y');
-
-        $printHistory->issued_date = Carbon::parse($issuedDate)->format('Y-m-d');
-
-        /*
-        |--------------------------------------------------------------------------
-        | Copies
-        |--------------------------------------------------------------------------
-        */
-
-        $printHistory->issue_copies = $issuedCopies;
-
-        $printHistory->issued_copies = $issuedCopies;
-
-        $printHistory->total_issued_copies = $issuedCopies;
-
-        $printHistory->document_printed_copies = $issuedCopies;
-
-        $printHistory->copy_number_range =str_pad(1, 3, '0', STR_PAD_LEFT) . '-' . str_pad($issuedCopies, 3, '0', STR_PAD_LEFT);
-
-        /*
-        |--------------------------------------------------------------------------
-        | Reason
-        |--------------------------------------------------------------------------
-        */
-
-        $printHistory->print_reason = $printReason;
-
-        $printHistory->issued_reason = $printReason;
-
-        /*
-        |--------------------------------------------------------------------------
-        | Issued To
-        |--------------------------------------------------------------------------
-        */
-
-        $printHistory->issuance_to = $issuanceTo;
-
-        $printHistory->issued_to_name = $issuedToName;
-
-        $printHistory->department = $issuedToDepartment;
-
-        $printHistory->issued_to_department = $issuedToDepartment;
-
-        $printHistory->save();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Uploaded PDF path
-        |--------------------------------------------------------------------------
-        */
-
-        $sourcePdfPath = null;
-
-        if (!empty($document->attach_effective_docuement)) {
-
-            $uploadedPdfPath = public_path(
-                'upload/' .
-                $document->attach_effective_docuement
-            );
-
-            $extension = strtolower(
-                pathinfo(
-                    $uploadedPdfPath,
-                    PATHINFO_EXTENSION
-                )
-            );
-
-            if (
-                file_exists($uploadedPdfPath)
-                && $extension === 'pdf'
-            ) {
-                $sourcePdfPath = $uploadedPdfPath;
-            }
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Generate copy-wise printable PDF
-        |--------------------------------------------------------------------------
-        */
-
-        return $this->streamIssuedDocumentCopies(
-            $viewName,
-            [
-                'data' => $data,
-                'time' => $time,
-                'document' => $document,
-                'annexures' => $annexures,
-                'currentId' => $currentId,
-                'documents' => $documents,
-                'sopNumber' => $sopNumber,
-
-                'requestId' => $formattedRequestId,
-                'issuedByName' => $issuedByName,
-                'issuedById' => $issuedById,
-                'issuedDate' => $issuedDate,
-                'issuedToName' => $issuedToName,
-                'issuedToDepartment' => $issuedToDepartment,
-                'printReason' => $printReason,
-                'totalIssuedCopies' => $issuedCopies,
-
-                /*
-                |--------------------------------------------------------------------------
-                | Old Blade compatibility
-                |--------------------------------------------------------------------------
-                */
-
-                'IssuedCopies' => $issuedCopies,
-                'IssueDate' => $issuedDate,
-                'stampImpression' => $issuedToDepartment,
-            ],
-            $issuedCopies,
-            $document,
-            $sourcePdfPath
-        );
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Save print history only after source is confirmed
+    |--------------------------------------------------------------------------
+    */
+
+    $printHistory =
+        new PrintHistory();
+
+    $printHistory->document_id =
+        $document->id;
+
+    $printHistory->document_request_id =
+        $documentRequest->id;
+
+    $printHistory->request_id =
+        $formattedRequestId;
+
+    $printHistory->document_number =
+        $document->document_number;
+
+    $printHistory->user_id =
+        $issuedById;
+
+    $printHistory->issued_by =
+        $issuedById;
+
+    $printHistory->issued_by_name =
+        $issuedByName;
+
+    $printHistory->role_id =
+        Auth::user()->role;
+
+    $printHistory->date =
+        Carbon::now()->format('d-m-Y');
+
+    $printHistory->issued_date =
+        Carbon::parse(
+            $issuedDate
+        )->format('Y-m-d');
+
+    $printHistory->issue_copies =
+        $issuedCopies;
+
+    $printHistory->issued_copies =
+        $issuedCopies;
+
+    $printHistory->total_issued_copies =
+        $issuedCopies;
+
+    $printHistory->document_printed_copies =
+        $issuedCopies;
+
+    $printHistory->copy_number_range =
+        str_pad(1, 3, '0', STR_PAD_LEFT)
+        . '-'
+        . str_pad(
+            $issuedCopies,
+            3,
+            '0',
+            STR_PAD_LEFT
+        );
+
+    $printHistory->print_reason =
+        $printReason;
+
+    $printHistory->issued_reason =
+        $printReason;
+
+    $printHistory->issuance_to =
+        $issuanceTo;
+
+    $printHistory->issued_to_name =
+        $issuedToName;
+
+    $printHistory->department =
+        $issuedToDepartment;
+
+    $printHistory->issued_to_department =
+        $issuedToDepartment;
+
+    $printHistory->save();
+
+    /*
+    |--------------------------------------------------------------------------
+    | Stream printable issued copies
+    |--------------------------------------------------------------------------
+    */
+
+    return $this->streamIssuedDocumentCopies(
+        $viewName,
+        [
+            'data' => $data,
+            'time' => $time,
+            'document' => $document,
+            'annexures' => $annexures,
+            'currentId' => $currentId,
+            'documents' => $documents,
+            'sopNumber' => $sopNumber,
+
+            'requestId' => $formattedRequestId,
+            'issuedByName' => $issuedByName,
+            'issuedById' => $issuedById,
+            'issuedDate' => $issuedDate,
+            'issuedToName' => $issuedToName,
+            'issuedToDepartment' => $issuedToDepartment,
+            'printReason' => $printReason,
+            'totalIssuedCopies' => $issuedCopies,
+
+            'IssuedCopies' => $issuedCopies,
+            'IssueDate' => $issuedDate,
+            'stampImpression' => $issuedToDepartment,
+        ],
+        $issuedCopies,
+        $document,
+        $sourceAttachmentPaths
+    );
+}
+
+
 
     public function printAnnexurePDF($id)
     {
@@ -11456,16 +11465,10 @@ class DocumentController extends Controller
         ];
     }
 
-    private function streamIssuedDocumentCopies($viewName, array $viewData, int $totalCopies, $document, $sourcePdfPath = null) {
+    private function streamIssuedDocumentCopies($viewName, array $viewData, int $totalCopies, $document, array $sourceAttachmentPaths = []) {
         $temporaryFiles = [];
 
         try {
-
-            /*
-            |--------------------------------------------------------------------------
-            | Validate copies
-            |--------------------------------------------------------------------------
-            */
 
             if ($totalCopies < 1) {
                 throw new \RuntimeException(
@@ -11475,31 +11478,25 @@ class DocumentController extends Controller
 
             /*
             |--------------------------------------------------------------------------
-            | Load FPDF
+            | Load FPDF and FPDI
             |--------------------------------------------------------------------------
             */
 
             if (!class_exists('FPDF')) {
-
-                $fpdfPath = base_path(
-                    'vendor/setasign/fpdf/fpdf.php'
-                );
+                $fpdfPath =
+                    base_path(
+                        'vendor/setasign/fpdf/fpdf.php'
+                    );
 
                 if (!file_exists($fpdfPath)) {
                     throw new \RuntimeException(
-                        'FPDF file not found at: ' .
-                        $fpdfPath
+                        'FPDF file not found at: '
+                        . $fpdfPath
                     );
                 }
 
                 require_once $fpdfPath;
             }
-
-            /*
-            |--------------------------------------------------------------------------
-            | Check FPDI
-            |--------------------------------------------------------------------------
-            */
 
             if (
                 !class_exists(
@@ -11517,17 +11514,18 @@ class DocumentController extends Controller
             |--------------------------------------------------------------------------
             */
 
-            $temporaryDirectory = storage_path(
-                'app/document-print-copies'
-            );
+            $temporaryDirectory =
+                storage_path(
+                    'app/document-print-copies'
+                );
 
             if (!is_dir($temporaryDirectory)) {
-
-                $directoryCreated = mkdir(
-                    $temporaryDirectory,
-                    0775,
-                    true
-                );
+                $directoryCreated =
+                    mkdir(
+                        $temporaryDirectory,
+                        0775,
+                        true
+                    );
 
                 if (
                     !$directoryCreated
@@ -11541,54 +11539,236 @@ class DocumentController extends Controller
 
             /*
             |--------------------------------------------------------------------------
-            | Prepare source PDF
+            | Prepare PDF sources
             |--------------------------------------------------------------------------
             |
-            | Uploaded PDF mila:
-            | Direct wahi use hoga.
-            |
-            | Uploaded PDF nahi mila:
-            | Blade se PDF generate hoga.
+            | PDF attachments are used directly.
+            | JPG/JPEG/PNG attachments are converted to temporary PDF.
+            | If no attachment exists, Blade is converted to PDF.
             |--------------------------------------------------------------------------
             */
 
-            if (
-                !empty($sourcePdfPath)
-                && file_exists($sourcePdfPath)
-                && strtolower(
-                    pathinfo(
-                        $sourcePdfPath,
-                        PATHINFO_EXTENSION
-                    )
-                ) === 'pdf'
+            $validSourcePdfPaths = [];
+
+            foreach (
+                $sourceAttachmentPaths
+                as $sourceAttachmentPath
             ) {
+                if (
+                    !is_string($sourceAttachmentPath)
+                    || !file_exists($sourceAttachmentPath)
+                ) {
+                    continue;
+                }
 
-                $baseSourcePdf = $sourcePdfPath;
-
-            } else {
+                $extension =
+                    strtolower(
+                        pathinfo(
+                            $sourceAttachmentPath,
+                            PATHINFO_EXTENSION
+                        )
+                    );
 
                 /*
                 |--------------------------------------------------------------------------
-                | Generate source PDF from Blade
+                | Direct PDF attachment
                 |--------------------------------------------------------------------------
                 */
 
-                $sourcePdf = PDF::loadView(
-                    $viewName,
-                    $viewData
-                )->setOptions([
-                    'defaultFont' =>
-                        'sans-serif',
+                if ($extension === 'pdf') {
+                    $realPath =
+                        realpath($sourceAttachmentPath)
+                        ?: $sourceAttachmentPath;
 
-                    'isHtml5ParserEnabled' =>
-                        true,
+                    if (
+                        !in_array(
+                            $realPath,
+                            $validSourcePdfPaths,
+                            true
+                        )
+                    ) {
+                        $validSourcePdfPaths[] =
+                            $realPath;
+                    }
 
-                    'isRemoteEnabled' =>
-                        true,
+                    continue;
+                }
 
-                    'isPhpEnabled' =>
-                        true,
-                ]);
+                /*
+                |--------------------------------------------------------------------------
+                | Image attachment to temporary PDF
+                |--------------------------------------------------------------------------
+                */
+
+                if (
+                    !in_array(
+                        $extension,
+                        ['jpg', 'jpeg', 'png'],
+                        true
+                    )
+                ) {
+                    continue;
+                }
+
+                $imageInformation =
+                    @getimagesize(
+                        $sourceAttachmentPath
+                    );
+
+                if (!$imageInformation) {
+                    continue;
+                }
+
+                $imageWidthPixel =
+                    $imageInformation[0] ?? 0;
+
+                $imageHeightPixel =
+                    $imageInformation[1] ?? 0;
+
+                if (
+                    $imageWidthPixel < 1
+                    || $imageHeightPixel < 1
+                ) {
+                    continue;
+                }
+
+                $imagePdfPath =
+                    $temporaryDirectory
+                    . DIRECTORY_SEPARATOR
+                    . 'image-source-'
+                    . uniqid('', true)
+                    . '.pdf';
+
+                $imagePdf =
+                    new \setasign\Fpdi\Fpdi();
+
+                $orientation =
+                    $imageWidthPixel > $imageHeightPixel
+                        ? 'L'
+                        : 'P';
+
+                $pageWidth =
+                    $orientation === 'L'
+                        ? 297
+                        : 210;
+
+                $pageHeight =
+                    $orientation === 'L'
+                        ? 210
+                        : 297;
+
+                /*
+                |--------------------------------------------------------------------------
+                | Space reserved for top and bottom issuance information
+                |--------------------------------------------------------------------------
+                */
+
+                $leftMargin = 8;
+                $rightMargin = 8;
+                $topMargin = 12;
+                $bottomMargin = 12;
+
+                $availableWidth =
+                    $pageWidth
+                    - $leftMargin
+                    - $rightMargin;
+
+                $availableHeight =
+                    $pageHeight
+                    - $topMargin
+                    - $bottomMargin;
+
+                $imageRatio =
+                    $imageWidthPixel
+                    / $imageHeightPixel;
+
+                $availableRatio =
+                    $availableWidth
+                    / $availableHeight;
+
+                if ($imageRatio > $availableRatio) {
+                    $renderWidth =
+                        $availableWidth;
+
+                    $renderHeight =
+                        $renderWidth
+                        / $imageRatio;
+                } else {
+                    $renderHeight =
+                        $availableHeight;
+
+                    $renderWidth =
+                        $renderHeight
+                        * $imageRatio;
+                }
+
+                $imageX =
+                    ($pageWidth - $renderWidth)
+                    / 2;
+
+                $imageY =
+                    $topMargin
+                    + (
+                        ($availableHeight - $renderHeight)
+                        / 2
+                    );
+
+                $imagePdf->SetAutoPageBreak(false);
+
+                $imagePdf->AddPage(
+                    $orientation,
+                    [
+                        $pageWidth,
+                        $pageHeight,
+                    ]
+                );
+
+                $imagePdf->Image(
+                    $sourceAttachmentPath,
+                    $imageX,
+                    $imageY,
+                    $renderWidth,
+                    $renderHeight
+                );
+
+                $imagePdf->Output(
+                    'F',
+                    $imagePdfPath
+                );
+
+                if (file_exists($imagePdfPath)) {
+                    $temporaryFiles[] =
+                        $imagePdfPath;
+
+                    $validSourcePdfPaths[] =
+                        $imagePdfPath;
+                }
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | No attachment supplied: render Blade
+            |--------------------------------------------------------------------------
+            */
+
+            if (empty($validSourcePdfPaths)) {
+                $sourcePdf =
+                    PDF::loadView(
+                        $viewName,
+                        $viewData
+                    )->setOptions([
+                        'defaultFont' =>
+                            'sans-serif',
+
+                        'isHtml5ParserEnabled' =>
+                            true,
+
+                        'isRemoteEnabled' =>
+                            true,
+
+                        'isPhpEnabled' =>
+                            true,
+                    ]);
 
                 $sourcePdf->setPaper(
                     'A4',
@@ -11599,7 +11779,7 @@ class DocumentController extends Controller
 
                 /*
                 |--------------------------------------------------------------------------
-                | Existing old-style watermark
+                | Existing watermark
                 |--------------------------------------------------------------------------
                 */
 
@@ -11615,36 +11795,39 @@ class DocumentController extends Controller
                 $width =
                     $canvas->get_width();
 
-                $watermarkText = strtoupper(
-                    trim(
-                        (string) (
-                            $document->status ?? ''
+                $watermarkText =
+                    strtoupper(
+                        trim(
+                            (string) (
+                                $document->status
+                                ?? ''
+                            )
                         )
-                    )
-                );
+                    );
 
                 if (!empty($watermarkText)) {
-
                     $canvas->page_script(
                         '$pdf->set_opacity(0.2,"Multiply");'
                     );
 
-                    $font = $domPdf
-                        ->getFontMetrics()
-                        ->get_font(
-                            'sans-serif',
-                            'bold'
-                        );
+                    $font =
+                        $domPdf
+                            ->getFontMetrics()
+                            ->get_font(
+                                'sans-serif',
+                                'bold'
+                            );
 
                     $fontSize = 25;
 
-                    $textWidth = $domPdf
-                        ->getFontMetrics()
-                        ->getTextWidth(
-                            $watermarkText,
-                            $font,
-                            $fontSize
-                        );
+                    $textWidth =
+                        $domPdf
+                            ->getFontMetrics()
+                            ->getTextWidth(
+                                $watermarkText,
+                                $font,
+                                $fontSize
+                            );
 
                     $canvas->page_text(
                         ($width - $textWidth) / 2,
@@ -11658,12 +11841,6 @@ class DocumentController extends Controller
                         -20
                     );
                 }
-
-                /*
-                |--------------------------------------------------------------------------
-                | Save source PDF
-                |--------------------------------------------------------------------------
-                */
 
                 $baseSourcePdf =
                     $temporaryDirectory
@@ -11683,10 +11860,11 @@ class DocumentController extends Controller
                     );
                 }
 
-                $writtenBytes = file_put_contents(
-                    $baseSourcePdf,
-                    $sourceOutput
-                );
+                $writtenBytes =
+                    file_put_contents(
+                        $baseSourcePdf,
+                        $sourceOutput
+                    );
 
                 if ($writtenBytes === false) {
                     throw new \RuntimeException(
@@ -11696,6 +11874,15 @@ class DocumentController extends Controller
 
                 $temporaryFiles[] =
                     $baseSourcePdf;
+
+                $validSourcePdfPaths[] =
+                    $baseSourcePdf;
+            }
+
+            if (empty($validSourcePdfPaths)) {
+                throw new \RuntimeException(
+                    'No printable PDF source could be prepared.'
+                );
             }
 
             /*
@@ -11717,23 +11904,18 @@ class DocumentController extends Controller
                 ?? null;
 
             if (!empty($issuedDate)) {
-
                 try {
-
                     $formattedIssuedDate =
-                        \Carbon\Carbon::parse(
+                        Carbon::parse(
                             $issuedDate
                         )->format('d-M-Y');
-
                 } catch (\Throwable $e) {
-
                     $formattedIssuedDate =
                         (string) $issuedDate;
                 }
-
             } else {
-
-                $formattedIssuedDate = 'N/A';
+                $formattedIssuedDate =
+                    'N/A';
             }
 
             /*
@@ -11742,351 +11924,280 @@ class DocumentController extends Controller
             |--------------------------------------------------------------------------
             */
 
-            $finalPdf = new \setasign\Fpdi\Fpdi();
-
-            /*
-            |--------------------------------------------------------------------------
-            | Prevent extra blank pages
-            |--------------------------------------------------------------------------
-            */
+            $finalPdf =
+                new \setasign\Fpdi\Fpdi();
 
             $finalPdf->SetAutoPageBreak(false);
 
             /*
             |--------------------------------------------------------------------------
-            | Read source PDF
+            | Generate all physical copies
             |--------------------------------------------------------------------------
             */
 
-            $sourcePageCount = $finalPdf->setSourceFile($baseSourcePdf);
+            for (
+                $copyNumber = 1;
+                $copyNumber <= $totalCopies;
+                $copyNumber++
+            ) {
+                $formattedCopyNumber =
+                    str_pad(
+                        $copyNumber,
+                        3,
+                        '0',
+                        STR_PAD_LEFT
+                    );
 
-            if ($sourcePageCount < 1) {
-                throw new \RuntimeException(
-                    'No pages found in source PDF.'
-                );
-            }
+                /*
+                |--------------------------------------------------------------------------
+                | Merge all attachments in original order
+                |--------------------------------------------------------------------------
+                */
 
-            /*
-            |--------------------------------------------------------------------------
-            | Generate complete physical copies
-            |--------------------------------------------------------------------------
-            */
-
-            for ($copyNumber = 1; $copyNumber <= $totalCopies; $copyNumber++) {
-
-                $formattedCopyNumber = str_pad($copyNumber, 3, '0', STR_PAD_LEFT);
-
-                for ($sourcePageNumber = 1; $sourcePageNumber <= $sourcePageCount; $sourcePageNumber++) {
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Import current source page
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $templateId = $finalPdf->importPage(
-                            $sourcePageNumber
+                foreach (
+                    $validSourcePdfPaths
+                    as $sourcePdfPath
+                ) {
+                    $sourcePageCount =
+                        $finalPdf->setSourceFile(
+                            $sourcePdfPath
                         );
 
-                    $pageSize = $finalPdf->getTemplateSize(
-                            $templateId
+                    if ($sourcePageCount < 1) {
+                        continue;
+                    }
+
+                    for (
+                        $sourcePageNumber = 1;
+                        $sourcePageNumber <= $sourcePageCount;
+                        $sourcePageNumber++
+                    ) {
+                        $templateId =
+                            $finalPdf->importPage(
+                                $sourcePageNumber
+                            );
+
+                        $pageSize =
+                            $finalPdf->getTemplateSize(
+                                $templateId
+                            );
+
+                        $pageWidth =
+                            $pageSize['width'];
+
+                        $pageHeight =
+                            $pageSize['height'];
+
+                        $orientation =
+                            $pageWidth > $pageHeight
+                                ? 'L'
+                                : 'P';
+
+                        $finalPdf->AddPage(
+                            $orientation,
+                            [
+                                $pageWidth,
+                                $pageHeight,
+                            ]
                         );
 
-                    $pageWidth = $pageSize['width'];
-
-                    $pageHeight = $pageSize['height'];
-
-                    $orientation = $pageWidth > $pageHeight
-                            ? 'L'
-                            : 'P';
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Exact original page size
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $finalPdf->AddPage($orientation,
-                        [
+                        $finalPdf->useTemplate(
+                            $templateId,
+                            0,
+                            0,
                             $pageWidth,
-                            $pageHeight,
-                        ]
-                    );
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Original document without resize
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $finalPdf->useTemplate($templateId, 0, 0, $pageWidth, $pageHeight);
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Drawing configuration
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $finalPdf->SetTextColor(0, 0, 0);
-
-                    $finalPdf->SetDrawColor(80, 80, 80);
-
-                    $finalPdf->SetLineWidth(0.15);
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Top issuance row
-                    |--------------------------------------------------------------------------
-                    |
-                    | Date | Request No | Copy No.     MASTER COPY
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $leftMargin = 7;
-
-                    $topY = 3.2;
-
-                    $topLineY = 9;
-
-                    $topTextHeight = 4;
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Reserve right side for MASTER COPY
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $masterCopyReservedWidth = 47;
-
-                    $usableTopWidth =
-                        $pageWidth
-                        - $leftMargin
-                        - $masterCopyReservedWidth;
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Top column widths
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $dateWidth =
-                        $usableTopWidth * 0.35;
-
-                    $requestWidth =
-                        $usableTopWidth * 0.45;
-
-                    $copyWidth =
-                        $usableTopWidth * 0.20;
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Top underline
-                    |--------------------------------------------------------------------------
-                    */
-
-                    // $finalPdf->Line(
-                    //     $leftMargin,
-                    //     $topLineY,
-                    //     $leftMargin + $usableTopWidth,
-                    //     $topLineY
-                    // );
-
-                    $finalPdf->SetFont(
-                        'Arial',
-                        'B',
-                        7
-                    );
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Date - First
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $finalPdf->SetXY(
-                        $leftMargin,
-                        $topY
-                    );
-
-                    $finalPdf->Cell(
-                        $dateWidth,
-                        $topTextHeight,
-                        'Date: '
-                        . $this->sanitizePdfText(
-                            $formattedIssuedDate
-                        ),
-                        0,
-                        0,
-                        'L'
-                    );
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Request No - Second
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $finalPdf->SetXY(
-                        $leftMargin + $dateWidth,
-                        $topY
-                    );
-
-                    $finalPdf->Cell(
-                        $requestWidth,
-                        $topTextHeight,
-                        'Request No: '
-                        . $this->sanitizePdfText(
-                            $requestId
-                        ),
-                        0,
-                        0,
-                        'C'
-                    );
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Copy No - Third
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $finalPdf->SetXY(
-                        $leftMargin
-                        + $dateWidth
-                        + $requestWidth,
-                        $topY
-                    );
-
-                    $finalPdf->Cell(
-                        $copyWidth,
-                        $topTextHeight,
-                        'Copy No.: '
-                        . $formattedCopyNumber,
-                        0,
-                        0,
-                        'R'
-                    );
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Top vertical separators
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $firstSeparatorX =
-                        $leftMargin
-                        + $dateWidth;
-
-                    $secondSeparatorX =
-                        $leftMargin
-                        + $dateWidth
-                        + $requestWidth;
-
-                    $finalPdf->Line(
-                        $firstSeparatorX,
-                        3,
-                        $firstSeparatorX,
-                        $topLineY
-                    );
-
-                    $finalPdf->Line(
-                        $secondSeparatorX,
-                        3,
-                        $secondSeparatorX,
-                        $topLineY
-                    );
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Bottom print information
-                    |--------------------------------------------------------------------------
-                    |
-                    | Left:
-                    | Document printed from master electronically & signature is not required.
-                    |
-                    | Right:
-                    | Issued By: User Name
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $bottomLineY =
-                        $pageHeight - 8;
-
-                    $bottomTextY =
-                        $pageHeight - 4;
-
-                    $bottomLeftMargin = 7;
-
-                    $bottomRightMargin = 7;
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Full-width bottom separator
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $finalPdf->Line(
-                        $bottomLeftMargin,
-                        $bottomLineY,
-                        $pageWidth - $bottomRightMargin,
-                        $bottomLineY
-                    );
-
-                    $finalPdf->SetFont(
-                        'Arial',
-                        'B',
-                        7
-                    );
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Left-side disclaimer
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $disclaimerText =
-                        'Document printed from master electronically & signature is not required.';
-
-                    $finalPdf->Text(
-                        $bottomLeftMargin,
-                        $bottomTextY,
-                        $this->sanitizePdfText(
-                            $disclaimerText
-                        )
-                    );
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Right-side Issued By
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $issuedByText =
-                        'Issued By: '
-                        . $this->sanitizePdfText(
-                            $issuedByName
+                            $pageHeight
                         );
 
-                    $issuedByTextWidth =
-                        $finalPdf->GetStringWidth(
+                        $finalPdf->SetTextColor(
+                            0,
+                            0,
+                            0
+                        );
+
+                        $finalPdf->SetDrawColor(
+                            80,
+                            80,
+                            80
+                        );
+
+                        $finalPdf->SetLineWidth(
+                            0.15
+                        );
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Top issuance row
+                        |--------------------------------------------------------------------------
+                        */
+
+                        $leftMargin = 7;
+                        $topY = 3.2;
+                        $topLineY = 9;
+                        $topTextHeight = 4;
+
+                        $masterCopyReservedWidth = 47;
+
+                        $usableTopWidth =
+                            $pageWidth
+                            - $leftMargin
+                            - $masterCopyReservedWidth;
+
+                        $dateWidth =
+                            $usableTopWidth
+                            * 0.35;
+
+                        $requestWidth =
+                            $usableTopWidth
+                            * 0.45;
+
+                        $copyWidth =
+                            $usableTopWidth
+                            * 0.20;
+
+                        $finalPdf->SetFont(
+                            'Arial',
+                            'B',
+                            7
+                        );
+
+                        $finalPdf->SetXY(
+                            $leftMargin,
+                            $topY
+                        );
+
+                        $finalPdf->Cell(
+                            $dateWidth,
+                            $topTextHeight,
+                            'Date: '
+                            . $this->sanitizePdfText(
+                                $formattedIssuedDate
+                            ),
+                            0,
+                            0,
+                            'L'
+                        );
+
+                        $finalPdf->SetXY(
+                            $leftMargin
+                            + $dateWidth,
+                            $topY
+                        );
+
+                        $finalPdf->Cell(
+                            $requestWidth,
+                            $topTextHeight,
+                            'Request No: '
+                            . $this->sanitizePdfText(
+                                $requestId
+                            ),
+                            0,
+                            0,
+                            'C'
+                        );
+
+                        $finalPdf->SetXY(
+                            $leftMargin
+                            + $dateWidth
+                            + $requestWidth,
+                            $topY
+                        );
+
+                        $finalPdf->Cell(
+                            $copyWidth,
+                            $topTextHeight,
+                            'Copy No.: '
+                            . $formattedCopyNumber,
+                            0,
+                            0,
+                            'R'
+                        );
+
+                        $firstSeparatorX =
+                            $leftMargin
+                            + $dateWidth;
+
+                        $secondSeparatorX =
+                            $leftMargin
+                            + $dateWidth
+                            + $requestWidth;
+
+                        $finalPdf->Line(
+                            $firstSeparatorX,
+                            3,
+                            $firstSeparatorX,
+                            $topLineY
+                        );
+
+                        $finalPdf->Line(
+                            $secondSeparatorX,
+                            3,
+                            $secondSeparatorX,
+                            $topLineY
+                        );
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Bottom print information
+                        |--------------------------------------------------------------------------
+                        */
+
+                        $bottomLineY =
+                            $pageHeight - 8;
+
+                        $bottomTextY =
+                            $pageHeight - 4;
+
+                        $bottomLeftMargin = 7;
+                        $bottomRightMargin = 7;
+
+                        $finalPdf->Line(
+                            $bottomLeftMargin,
+                            $bottomLineY,
+                            $pageWidth
+                            - $bottomRightMargin,
+                            $bottomLineY
+                        );
+
+                        $finalPdf->SetFont(
+                            'Arial',
+                            'B',
+                            7
+                        );
+
+                        $disclaimerText =
+                            'Document printed from master electronically & signature is not required.';
+
+                        $finalPdf->Text(
+                            $bottomLeftMargin,
+                            $bottomTextY,
+                            $this->sanitizePdfText(
+                                $disclaimerText
+                            )
+                        );
+
+                        $issuedByText =
+                            'Issued By: '
+                            . $this->sanitizePdfText(
+                                $issuedByName
+                            );
+
+                        $issuedByTextWidth =
+                            $finalPdf->GetStringWidth(
+                                $issuedByText
+                            );
+
+                        $issuedByX =
+                            $pageWidth
+                            - $bottomRightMargin
+                            - $issuedByTextWidth;
+
+                        $finalPdf->Text(
+                            $issuedByX,
+                            $bottomTextY,
                             $issuedByText
                         );
-
-                    $issuedByX =
-                        $pageWidth
-                        - $bottomRightMargin
-                        - $issuedByTextWidth;
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Text() prevents automatic extra blank pages
-                    |--------------------------------------------------------------------------
-                    */
-
-                    $finalPdf->Text(
-                        $issuedByX,
-                        $bottomTextY,
-                        $issuedByText
-                    );
+                    }
                 }
             }
 
@@ -12117,7 +12228,6 @@ class DocumentController extends Controller
                 );
 
             if (empty($safeDocumentNumber)) {
-
                 $safeDocumentNumber =
                     'document-'
                     . $document->id;
@@ -12126,12 +12236,6 @@ class DocumentController extends Controller
             $fileName =
                 $safeDocumentNumber
                 . '-print-copies.pdf';
-
-            /*
-            |--------------------------------------------------------------------------
-            | Final output
-            |--------------------------------------------------------------------------
-            */
 
             $finalOutput =
                 $finalPdf->Output('S');
@@ -12152,7 +12256,6 @@ class DocumentController extends Controller
                 $temporaryFiles
                 as $temporaryFile
             ) {
-
                 if (file_exists($temporaryFile)) {
                     @unlink($temporaryFile);
                 }
@@ -12192,40 +12295,28 @@ class DocumentController extends Controller
 
         } catch (\Throwable $e) {
 
-            /*
-            |--------------------------------------------------------------------------
-            | Cleanup after error
-            |--------------------------------------------------------------------------
-            */
-
             foreach (
                 $temporaryFiles
                 as $temporaryFile
             ) {
-
                 if (file_exists($temporaryFile)) {
                     @unlink($temporaryFile);
                 }
             }
 
-            /*
-            |--------------------------------------------------------------------------
-            | Log error
-            |--------------------------------------------------------------------------
-            */
-
             \Log::error(
                 'Document print PDF generation failed',
                 [
                     'document_id' =>
-                        $document->id ?? null,
+                        $document->id
+                        ?? null,
 
                     'document_number' =>
                         $document->document_number
                         ?? null,
 
-                    'source_pdf_path' =>
-                        $sourcePdfPath,
+                    'source_attachment_paths' =>
+                        $sourceAttachmentPaths,
 
                     'total_copies' =>
                         $totalCopies,
@@ -12881,7 +12972,7 @@ class DocumentController extends Controller
                 $request->document_request_id
             )
             ->where('document_id', $document->id)
-            ->where('status', 'Opened')
+            ->where('status', 'Closed - Done')
             ->first();
 
         if (!$documentRequest) {
