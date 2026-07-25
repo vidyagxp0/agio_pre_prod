@@ -4,7 +4,7 @@
                     DOCUMENT TRACKER
     ======================================= --}}
 
-      <!-- Example Blade View -->
+<!-- Example Blade View -->
 <head>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
@@ -20,7 +20,7 @@
         });
     </script>
 @endif
-   @php
+    @php
         $users = DB::table('users')->orderByRaw('LOWER(name) ASC')->get();
     @endphp
 
@@ -474,24 +474,13 @@
                                 
                             @else
 
-                              
-                             
-                               
                                     <iframe
                                         src="{{ route('view.attachments', $document->id) }}"
                                         width="100%"
                                         height="700"
                                         frameborder="0">
                                     </iframe>
-
-
-                                    
-
                                
-                                <!-- <a href="{{ route('view.attachments', $document->id) }}" target="_blank" class="btn btn-primary mt-3">
-                                    View Attachments
-                                </a> -->
-
                                 @if(in_array($document->document_type_id, ['SOP','FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
                 
 
@@ -1892,18 +1881,15 @@
             |--------------------------------------------------------------------------
             */
 
-            $printDocumentRequests =
-                \App\Models\DocumentRequest::where(
+            $printDocumentRequests = \App\Models\DocumentRequest::where(
                         'document_id',
                         $document->id
                     )
-                    ->where('status', 'Opened')
+                    ->where('status', 'Closed - Done')
                     ->whereNotIn(
                         'request_id',
-                        $usedRequestIds
-                    )
-                    ->orderBy('record', 'asc')
-                    ->get();
+                        $usedRequestIds)
+                    ->orderBy('record', 'asc')->get();
         }
     @endphp
 
@@ -1915,42 +1901,18 @@
 
                 <div class="modal-header">
 
-                    <h4
-                        class="modal-title"
-                        id="printDocumentModalLabel"
-                    >
+                    <h4 class="modal-title" id="printDocumentModalLabel">
                         Print Document
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
                 </div>
 
-
-                <form
-                    id="document-print-form"
-                    action="{{ route(
-                        'document.print.pdf',
-                        $document->id
-                    ) }}"
-                    method="GET"
-                    target="_blank"
-                >
+                <form id="document-print-form" action="{{ route('document.print.pdf', $document->id) }}" method="GET" target="_blank" >
 
                     @csrf
-
-                    <input
-                        type="hidden"
-                        name="current_document_record"
-                        value="{{ $document->id }}"
-                    >
-
-
+                    <input type="hidden" name="current_document_record" value="{{ $document->id }}" >
                     <div class="modal-body">
 
                         {{-- ================================================= --}}
@@ -1964,102 +1926,54 @@
                                 <span class="text-danger">*</span>
                             </label>
 
-                            <select
-                                id="print_document_request_id"
-                                name="document_request_id"
-                                class="form-control w-100"
-                                required
-                                onchange="fillPrintRequestDetails(this)"
-                            >
+                            <select id="print_document_request_id" name="document_request_id" class="form-control w-100" required onchange="fillPrintRequestDetails(this)">
                                 <option value="">
                                     -- Select Request ID --
                                 </option>
 
-                                @forelse(
-                                    $printDocumentRequests
-                                    as $printRequest
-                                )
+                                @forelse($printDocumentRequests as $printRequest)
 
                                     @php
-                                        $printRequestToUser =
-                                            \App\Models\User::find(
-                                                $printRequest->request_to
+                                        $printRequestToUser = \App\Models\User::find($printRequest->request_to
                                             );
 
-                                        $printRequestToName =
-                                            $printRequestToUser
-                                                ? $printRequestToUser->name
-                                                : '';
+                                        $printRequestToName = $printRequestToUser ? $printRequestToUser->name : '';
 
                                         $printDepartmentName = '';
 
                                         if ($printRequestToUser) {
-                                            $printDepartmentName =
-                                                \App\Models\Department::where(
+                                            $printDepartmentName = \App\Models\Department::where(
                                                     'id',
                                                     $printRequestToUser
                                                         ->departmentid
-                                                )
-                                                ->value('name');
+                                                )->value('name');
                                         }
 
-                                        $printRequestId =
-                                            $printRequest->request_id
-                                            ?? (
-                                                'Request-' .
-                                                str_pad(
-                                                    $printRequest->record,
-                                                    3,
-                                                    '0',
-                                                    STR_PAD_LEFT
-                                                )
-                                            );
+                                        $printRequestId = $printRequest->request_id ?? ('Request-' . str_pad($printRequest->record, 3, '0', STR_PAD_LEFT));
                                     @endphp
 
-                                    <option
-                                        value="{{ $printRequest->id }}"
+                                    <option value="{{ $printRequest->id }}"
 
-                                        data-request-id="{{
-                                            $printRequestId
-                                        }}"
+                                        data-request-id="{{ $printRequestId }}"
 
-                                        data-request-record="{{
-                                            $printRequest->record
-                                        }}"
+                                        data-request-record="{{ $printRequest->record }}"
 
-                                        data-request-to="{{
-                                            $printRequest->request_to
-                                            ?? ''
-                                        }}"
+                                        data-request-to="{{ $printRequest->request_to ?? '' }}"
 
-                                        data-request-to-name="{{
-                                            $printRequestToName
-                                        }}"
+                                        data-request-to-name="{{ $printRequestToName}}"
 
-                                        data-department="{{
-                                            $printDepartmentName
-                                        }}"
+                                        data-department="{{ $printDepartmentName }}"
 
-                                        data-number-of-copies="{{
-                                            $printRequest->number_of_copies
-                                            ?? ''
-                                        }}"
+                                        data-number-of-copies="{{ $printRequest->number_of_copies ?? '' }}"
 
-                                        data-reason="{{
-                                            $printRequest->reason
-                                            ?? ''
-                                        }}"
-                                    >
+                                        data-reason="{{$printRequest->reason ?? '' }}">
                                         {{ $printRequestId }}
                                     </option>
 
                                 @empty
 
-                                    <option
-                                        value=""
-                                        disabled
-                                    >
-                                        No opened request found
+                                    <option value="" disabled>
+                                        Not request found
                                     </option>
 
                                 @endforelse
@@ -2069,7 +1983,7 @@
                             @if($printDocumentRequests->isEmpty())
 
                                 <small class="text-danger">
-                                    Is document ke liye koi opened request available nahi hai.
+                                    Not found request for this document.
                                 </small>
 
                             @endif
@@ -2079,12 +1993,7 @@
 
                         {{-- Backend hidden request record --}}
 
-                        <input
-                            type="hidden"
-                            id="print_request_record"
-                            name="request_record"
-                        >
-
+                        <input type="hidden" id="print_request_record" name="request_record" >
 
                         {{-- ================================================= --}}
                         {{-- Issued By --}}
@@ -2096,19 +2005,9 @@
                                 Issued By
                             </label>
 
-                            <input
-                                type="text"
-                                id="print_issued_by"
-                                class="form-control w-100 print-readonly-field"
-                                value="{{ Auth::user()->name }}"
-                                readonly
-                            >
+                            <input type="text" id="print_issued_by" class="form-control w-100 print-readonly-field" value="{{ Auth::user()->name }}" readonly>
 
-                            <input
-                                type="hidden"
-                                name="user_id"
-                                value="{{ Auth::id() }}"
-                            >
+                            <input type="hidden" name="user_id" value="{{ Auth::id() }}">
 
                         </div>
 
@@ -2128,27 +2027,9 @@
 
                                 <div class="calenderauditee">
 
-                                    <input
-                                        type="text"
-                                        id="print_issued_date_display"
-                                        placeholder="DD-MMM-YYYY"
-                                        class="form-control w-100"
-                                        readonly
-                                        required
-                                        onclick="openPrintIssuedDatePicker()"
-                                    >
+                                    <input type="text" id="print_issued_date_display" placeholder="DD-MMM-YYYY" class="form-control w-100" readonly required onclick="openPrintIssuedDatePicker()">
 
-                                    <input
-                                        type="date"
-                                        id="print_issued_date"
-                                        name="issued_date"
-                                        class="hide-input"
-                                        required
-                                        oninput="handlePrintDateInput(
-                                            this,
-                                            'print_issued_date_display'
-                                        )"
-                                    >
+                                    <input type="date" id="print_issued_date" name="issued_date" class="hide-input" required oninput="handlePrintDateInput(this, 'print_issued_date_display')">
 
                                 </div>
 
@@ -2168,15 +2049,7 @@
                                 <span class="text-danger">*</span>
                             </label>
 
-                            <input
-                                type="number"
-                                id="print_issued_copies"
-                                name="issued_copies"
-                                min="1"
-                                class="form-control w-100 print-readonly-field"
-                                readonly
-                                required
-                            >
+                            <input type="number" id="print_issued_copies" name="issued_copies" min="1" class="form-control w-100 print-readonly-field" readonly required >
 
                         </div>
 
@@ -2192,15 +2065,7 @@
                                 <span class="text-danger">*</span>
                             </label>
 
-                            <textarea
-                                id="print_reason_print"
-                                name="print_reason"
-                                class="form-control w-100 print-readonly-field"
-                                maxlength="255"
-                                rows="3"
-                                readonly
-                                required
-                            ></textarea>
+                            <textarea id="print_reason_print" name="print_reason" class="form-control w-100 print-readonly-field" maxlength="255" rows="3" readonly required></textarea>
 
                         </div>
 
@@ -2216,19 +2081,9 @@
                                 <span class="text-danger">*</span>
                             </label>
 
-                            <input
-                                type="text"
-                                id="print_issuance_to_name"
-                                class="form-control w-100 print-readonly-field"
-                                readonly
-                                required
-                            >
+                            <input type="text" id="print_issuance_to_name" class="form-control w-100 print-readonly-field" readonly required >
 
-                            <input
-                                type="hidden"
-                                id="print_issuance_to"
-                                name="issuance_to"
-                            >
+                            <input type="hidden" id="print_issuance_to" name="issuance_to" >
 
                         </div>
 
@@ -2243,18 +2098,9 @@
                                 Issued To Department
                             </label>
 
-                            <input
-                                type="text"
-                                id="print_department_name"
-                                class="form-control w-100 print-readonly-field"
-                                readonly
-                            >
+                            <input type="text" id="print_department_name" class="form-control w-100 print-readonly-field" readonly >
 
-                            <input
-                                type="hidden"
-                                id="print_department"
-                                name="department"
-                            >
+                            <input type="hidden" id="print_department" name="department" >
 
                         </div>
 
@@ -2263,22 +2109,12 @@
 
                     <div class="modal-footer">
 
-                        <button
-                            type="submit"
-                            class="btn btn-primary rounded"
-                            {{ $printDocumentRequests->isEmpty()
-                                ? 'disabled'
-                                : ''
-                            }}
-                        >
+                        <button type="submit" class="btn btn-primary rounded"
+                            {{ $printDocumentRequests->isEmpty() ? 'disabled' : '' }} >
                             Submit
                         </button>
 
-                        <button
-                            type="button"
-                            class="btn btn-secondary"
-                            data-bs-dismiss="modal"
-                        >
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Close
                         </button>
 
@@ -2549,18 +2385,12 @@
             |--------------------------------------------------------------------------
             */
 
-            $downloadRequestIds = \App\Models\DownloadHistory::where(
-                'document_id',
-                $currentDocumentRecord
-            )
+            $downloadRequestIds = \App\Models\DownloadHistory::where('document_id', $currentDocumentRecord)
             ->whereNotNull('request_id')
             ->pluck('request_id')
             ->toArray();
 
-            $printRequestIds = \App\Models\PrintHistory::where(
-                'document_id',
-                $currentDocumentRecord
-            )
+            $printRequestIds = \App\Models\PrintHistory::where('document_id', $currentDocumentRecord)
             ->whereNotNull('request_id')
             ->pluck('request_id')
             ->toArray();
@@ -2584,11 +2414,8 @@
             |--------------------------------------------------------------------------
             */
 
-            $documentRequests = \App\Models\DocumentRequest::where(
-                    'document_id',
-                    $currentDocumentRecord
-                )
-                ->where('status', 'Opened')
+            $documentRequests = \App\Models\DocumentRequest::where('document_id', $currentDocumentRecord)
+                ->where('status', 'Closed - Done')
                 ->whereNotIn('request_id', $usedRequestIds)
                 ->orderBy('request_id', 'asc')
                 ->get();
@@ -2614,13 +2441,8 @@
 
 
                 <form id="document-download-form" action="{{ route('document.print.downloadpdf', $document->id ) }}" method="GET" target="_blank" >
-
                     @csrf
-
-                    {{-- Current document ID backend ke liye hidden rahega --}}
                     <input type="hidden" name="current_document_record" value="{{ $currentDocumentRecord }}" >
-
-
                     <div class="modal-body">
 
                         {{-- ================================================= --}}
@@ -2641,8 +2463,7 @@
                                 </option>
 
                                 @forelse (
-                                    $documentRequests
-                                    as $documentRequest)
+                                    $documentRequests as $documentRequest)
 
                                     @php
                                         $requestToUser =\App\Models\User::find($documentRequest->request_to);
@@ -2672,7 +2493,7 @@
                                 @empty
 
                                     <option value="" disabled >
-                                        No opened request found
+                                        Not request found
                                     </option>
 
                                 @endforelse
@@ -2682,7 +2503,7 @@
                             @if ($documentRequests->isEmpty())
 
                                 <small class="text-danger">
-                                    Is document ke liye koi opened request available nahi hai.
+                                    Not found request for this document.
                                 </small>
 
                             @else
