@@ -121,7 +121,7 @@
                   
                     <div class="d-flex" style="gap:20px;">
                         <button class="button_theme1"> <a class="text-white"
-                                href="#">Audit Trail</a> </button>
+                                href="{{ url('document-requestAudittrial', $data->id) }}">Audit Trail</a> </button>
                         @if ($data->stage == 1 && ($data->request_by == Auth::user()->id || Helpers::check_roles($data->division_id, 'Document Issuance Request', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Request Sent
@@ -314,7 +314,7 @@
                             <div class="row">
 
                                 @php
-                                $istab1 = ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Document Issuance Request', 3)));
+                                $istab1 = ($data->stage == 1 && (($data->request_by == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Document Issuance Request', 3)));
                                 $istab2 = ($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Document Issuance Request', 4)  || Helpers::check_roles($data->division_id, 'Document Issuance Request', 18)));
                                 @endphp
 
@@ -365,7 +365,7 @@
 
                                         <select
                                             name="document_id"
-                                            id="document_id"
+                                            id="document_id" {{ $data->stage == 1 && $istab1 ? 'required' : 'disabled' }}
                                         >
                                             <option value="">
                                                 -- Select Document --
@@ -384,6 +384,9 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                          @if (in_array($data->stage, [0, 2, 3]))
+                                                <input type="hidden" name="document_id" value="{{ old('document_id', $data->document_id) }}">
+                                        @endif
                                     </div>
                                 </div>
 
@@ -396,7 +399,7 @@
 
                                         <select
                                             name="request_to"
-                                            id="request_to"
+                                            id="request_to" {{ $data->stage == 1 && $istab1 ? 'required' : 'disabled' }}
                                         >
                                             <option value="">
                                                 -- Select User --
@@ -411,6 +414,9 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                         @if (in_array($data->stage, [0, 2, 3]))
+                                                <input type="hidden" name="request_to" value="{{ old('request_to', $data->request_to) }}">
+                                        @endif
                                     </div>
                                 </div>
 
@@ -426,7 +432,7 @@
                                             name="number_of_copies"
                                             id="number_of_copies"
                                             value="{{ $data->number_of_copies }}"
-                                            min="1"
+                                            min="1" {{ $data->stage == 1 && $istab1 ? 'required' : 'readonly' }}
                                         >
                                     </div>
                                 </div>
@@ -440,7 +446,7 @@
 
                                         <textarea
                                             name="reason"
-                                            id="reason"
+                                            id="reason" {{ $data->stage == 1 && $istab1 ? 'required' : 'readonly' }}
                                         >{{ $data->reason }}</textarea>
                                     </div>
                                 </div>
@@ -484,21 +490,21 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Activated By">Submit By</label>
-                                    <div class="static">{{ $data->submit_by ?? 'Not Applicable' }}</div>
+                                    <label for="Activated By">Sent For Request By</label>
+                                    <div class="static">{{ $data->submitted_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Activated On">Submit On</label>
-                                    <div class="static">{{ $data->submit_on ?? 'Not Applicable' }}</div>
+                                    <label for="Activated On">Sent For Request On</label>
+                                    <div class="static">{{ $data->submitted_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Activated On">Submit Comment</label>
+                                    <label for="Activated On">Sent For Request Comment</label>
                                     <div class="static">
-                                        {{ !empty($data->submit_comment) ? $data->submit_comment : 'Not Applicable' }}
+                                        {{ !empty($data->submitted_comment) ? $data->submitted_comment : 'Not Applicable' }}
                                     </div>
                                 </div>
                             </div>
@@ -508,98 +514,54 @@
                                 <div class="group-input">
                                     <label for=" Rejected By">Cancel By</label>
                                     <div class="static">
-                                        {{ !empty($data->cancelled_by) ? $data->cancelled_by : 'Not Applicable' }}</div>
+                                        {{ !empty($data->stagecancelfirstby) ? $data->stagecancelfirstby : 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">Cancel On</label>
                                     <div class="static">
-                                        {{ !empty($data->cancelled_on) ? $data->cancelled_on : 'Not Applicable' }}</div>
+                                        {{ !empty($data->stagecancelfirst_on) ? $data->stagecancelfirst_on : 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">Cancel Comment</label>
                                     <div class="static">
-                                        {{ !empty($data->cancel_comment) ? $data->cancel_comment : 'Not Applicable' }}
+                                        {{ !empty($data->stagecancelfirst_comment) ? $data->stagecancelfirst_comment : 'Not Applicable' }}
                                     </div>
                                 </div>
                             </div>
 
                             
-                                <div class="col-lg-4">
+                               
+
+                            <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Cancel hod By">Cancel By</label>
+                                    <label for=" Rejected By">Approved By</label>
                                     <div class="static">
-                                        {{ !empty($data->hod_cancelled_by) ? $data->hod_cancelled_by : 'Not Applicable' }}</div>
+                                        {{ !empty($data->completed_by) ? $data->completed_by : 'Not Applicable' }}
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="HOD cancel On">Cancel On</label>
+                                    <label for="Rejected On">Approved On</label>
                                     <div class="static">
-                                        {{ !empty($data->hod_cancelled_on) ? $data->hod_cancelled_on : 'Not Applicable' }}</div>
+                                        {{ !empty($data->completed_on) ? $data->completed_on : 'Not Applicable' }}
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="HOD CancelOn">Cancel Comment</label>
+                                    <label for="Rejected On">Approved Comment</label>
                                     <div class="static">
-                                        {{ !empty($data->hod_cancel_comment) ? $data->hod_cancel_comment : 'Not Applicable' }}
+                                        {{ !empty($data->complete_comment) ? $data->complete_comment : 'Not Applicable' }}
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for=" Rejected By">QA Approved By</label>
-                                    <div class="static">
-                                        {{ !empty($data->qa_cqa_Review_Complete_By) ? $data->qa_cqa_Review_Complete_By : 'Not Applicable' }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Rejected On">QA Approved On</label>
-                                    <div class="static">
-                                        {{ !empty($data->qa_cqa__Review_Complete_On) ? $data->qa_cqa__Review_Complete_On : 'Not Applicable' }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Rejected On">QA Approved Comment</label>
-                                    <div class="static">
-                                        {{ !empty($data->qa_cqa__Review_Comments) ? $data->qa_cqa__Review_Comments : 'Not Applicable' }}
-                                    </div>
-                                </div>
-                            </div>
-
-                             <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for=" Rejected By">Rejected By</label>
-                                    <div class="static">
-                                        {{ !empty($data->rejected_by) ? $data->rejected_by : 'Not Applicable' }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Rejected On">Rejected On</label>
-                                    <div class="static">
-                                        {{ !empty($data->rejected_on) ? $data->rejected_on : 'Not Applicable' }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Rejected On">Rejected Comment</label>
-                                    <div class="static">
-                                        {{ !empty($data->reject_comment) ? $data->reject_comment : 'Not Applicable' }}
-                                    </div>
-                                </div>
-                            </div>
+                            
 
                         </div>
                         
@@ -799,7 +761,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('more_info_stage', $data->id) }}" method="POST"  id="RejectModalFormData">
+                <form action="{{ route('docReq_stageBack', $data->id) }}" method="POST"  id="RejectModalFormData">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -904,7 +866,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('cpjCancle', $data->id) }}" method="POST" id="pendingInitiatorForm">
+                <form action="{{ route('docReq_stageCancel', $data->id) }}" method="POST" id="pendingInitiatorForm">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">

@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ChangeProposalAuditTrial extends Model
+class DocumentRequestAuditTrial extends Model
 {
     use HasFactory;
-    
+
+     protected $table = 'document_request_audit_trials';
 }

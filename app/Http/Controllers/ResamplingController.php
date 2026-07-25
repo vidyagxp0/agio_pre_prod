@@ -2262,7 +2262,7 @@ public function resamplingStageCancel(Request $request, $id)
                                 $data = [
                                     'data' => $changeControl,
                                     'site' => "Resampling",
-                                    'history' => "Cancle",
+                                    'history' => "Cancel",
                                     'process' => 'Resampling',
                                     'comment' => $request->comment,
                                     'user'=> Auth::user()->name

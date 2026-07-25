@@ -59,6 +59,8 @@ return new class extends Migration
             $table->string('status')->default('Opened');
 
             $table->integer('stage')->default(1);
+             $table->string('form_type')->nullable();
+
 
             /*
             |--------------------------------------------------------------------------
@@ -95,6 +97,21 @@ return new class extends Migration
             $table->string('verification_complete_on')->nullable();
 
             $table->longText('verification_complete_comment')->nullable();
+
+
+            $table->string('stagebackfirstby')->nullable();
+
+            $table->string('stagebackfirst_on')->nullable();
+
+            $table->longText('stagebackfirst_comment')->nullable();
+
+           
+             $table->string('stagecancelfirstby')->nullable();
+
+            $table->string('stagecancelfirst_on')->nullable();
+
+            $table->longText('stagecancelfirst_comment')->nullable();
+
 
             $table->timestamps();
             $table->softDeletes();

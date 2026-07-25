@@ -200,7 +200,6 @@
 </head>
 
 <body>
-
   
     <div id="main-container">
         <div class="notification-container">
@@ -208,6 +207,7 @@
                 <div style="display: flex; justify-content: space-between;" class="logo-container">
 
                     <div style="width: 60%;">
+                  
                         <p>{{ $process }} No.:-
                             @if($process == 'Extension')
                                 {{ Helpers::getDivisionName($data->site_location_code) }}/{{ $site }}/{{ date('Y') }}/{{ Helpers::record($data->record_number) }}
@@ -215,6 +215,8 @@
                                 {{ Helpers::getDivisionName($data->division_code) }}/{{ $site }}/{{ date('Y') }}/{{ Helpers::record($data->record) }}
                             @elseif($process == 'OOS/OOT')
                                 {{Helpers::getDivisionName($data->division_id) }}/{{ $data->Form_type }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, '0', STR_PAD_LEFT) : '1' }}
+                            @elseif($data->form_type == 'Document Issuance Request')
+                                 {{ $data->request_id }}
                             @else
                                 {{ Helpers::getDivisionName($data->division_id) }}/{{ $site }}/{{ date('Y') }}/{{ Helpers::record($data->record) }}
                             @endif
@@ -227,8 +229,11 @@
                              <!-- {{ Helpers::getInitiatorName($data->initiator_id) }} -->
                             @if ($data->initiator_id)
                                 {{ Helpers::getInitiatorName($data->initiator_id) }}
+                           
+                           @elseif($data->form_type == 'Document Issuance Request')
+                                {{ Helpers::getInitiatorName($data->request_by) }}
                             @else
-                                {{ Helpers::getInitiatorName($data->initiator) }}
+                                 {{ Helpers::getInitiatorName($data->initiator) }}
                             @endif
                         </p>
 
@@ -237,6 +242,7 @@
                                {{ Helpers::getDateFormat($data->intiation_date) }}
                             @else
                                {{ $data->created_at->format('d-M-Y H:i:s') }}
+                               
                             @endif
                         </p>
 
@@ -252,6 +258,19 @@
                     <div class="table-wrapper">
                         <table class="fl-table">
                             <thead>
+
+                              @if(isset($data->form_type) && $data->form_type == 'Document Issuance Request')
+
+                                    <tr>
+                                        <th style="width: 15%">Request ID</th>
+                                        <th style="width: 20%">Request By</th>
+                                        <th style="width: 25%">Request Department</th>
+                                        <th style="width: 20%">Request To</th>
+                                        <th style="width: 20%">Number of Copies</th>
+                                        <th style="width: 20%">Reason</th>
+                                    </tr>
+
+                                @else
                                 <tr>
                                     <th style="width: 10%">Record ID</th>
                                     <th style="width: 10%">Division</th>
@@ -260,64 +279,82 @@
                                     @endif
                                     <th style="width: 50%">Short Description</th>
                                     <th style="width: 10%">Due Date</th>
-                                    <th style="width: 20%">Status</th>
+                                    <th style="width: 20%">Status-Ashish</th>
                                 </tr>
+
+                             @endif   
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        @if ($process == 'Extension')
-                                            {{ Helpers::record($data->record_number) }}
-                                        @elseif($process == 'OOS/OOT')
-                                            {{ Helpers::record($data->dashboard_unique_id) }}
-                                        @else
-                                            {{ Helpers::record($data->dashboard_unique_id) }}    
-                                        @endif
-                                    </td>
+                                
 
-                                    <td>
-                                        @if ($process == 'Extension')
-                                            {{ Helpers::getDivisionName($data->site_location_code) }}
-                                        @elseif ($process == 'Observation')
-                                            {{ Helpers::getDivisionName($data->division_code) }}
-                                        @else
-                                            {{ Helpers::getDivisionName($data->division_id) }}
-                                        @endif
-                                    </td>
-                                    @if ($process == 'OOS/OOT')
-                                    <td>
-                                        {{ $data->Form_type }}
-                                    </td>
-                                    @endif
-                                    
-                                    <td>
-                                    @if ($process == 'Lab Incident')
-                                    {{ $data->short_desc }}
-                                    @elseif($process == 'OOC')
-                                    {{ $data->description_ooc }}
-                                    @elseif($process == 'OOS/OOT')
-                                    {{ $data->description_gi }}
-                                    @elseif($process == 'Market Complaint')
-                                    {{ $data->description_gi }}
-                                     @elseif($process == 'Change Proposal And Justification')
-                                    {{ $data->cpdescription }}
+                                @if(isset($data->form_type) && $data->form_type == 'Document Issuance Request')
+
+                                    <tr>
+                                        <td>{{ $data->request_id }}</td>
+                                        <td>{{ Helpers::getInitiatorName($data->request_by) }}</td>
+                                        <td>{{ $data->department }}</td>
+                                        <td>{{ Helpers::getInitiatorName($data->request_to) }}</td>
+                                        <td>{{ $data->number_of_copies }}</td>
+                                        <td>{{ $data->reason }}</td>
+                                    </tr>
+
                                     @else
-                                    {{ $data->short_description }}
-                                    @endif
-                                    </td>
+                                    <tr>
 
-                                    <td>
-                                        @if ($process == 'Extension')
-                                        {{ Helpers::getDateFormat($data->due_date) }}    
+                                        <td>
+                                            @if ($process == 'Extension')
+                                                {{ Helpers::record($data->record_number) }}
+                                            @elseif($process == 'OOS/OOT')
+                                                {{ Helpers::record($data->dashboard_unique_id) }}
+                                            @else
+                                                {{ Helpers::record($data->dashboard_unique_id) }}    
+                                            @endif
+                                        </td>
+
+                                        <td>
+                                            @if ($process == 'Extension')
+                                                {{ Helpers::getDivisionName($data->site_location_code) }}
+                                            @elseif ($process == 'Observation')
+                                                {{ Helpers::getDivisionName($data->division_code) }}
+                                            @else
+                                                {{ Helpers::getDivisionName($data->division_id) }}
+                                            @endif
+                                        </td>
+                                        @if ($process == 'OOS/OOT')
+                                        <td>
+                                            {{ $data->Form_type }}
+                                        </td>
+                                        @endif
+                                        
+                                        <td>
+                                        @if ($process == 'Lab Incident')
+                                        {{ $data->short_desc }}
+                                        @elseif($process == 'OOC')
+                                        {{ $data->description_ooc }}
                                         @elseif($process == 'OOS/OOT')
-                                        {{ Helpers::getDateFormat($data->due_date) }}    
+                                        {{ $data->description_gi }}
                                         @elseif($process == 'Market Complaint')
-                                        {{ Helpers::getDateFormat($data->due_date_gi) }} 
+                                        {{ $data->description_gi }}
+                                        @elseif($process == 'Change Proposal And Justification')
+                                        {{ $data->cpdescription }}
                                         @else
-                                        {{ $data->due_date ?  Helpers::getDateFormat($data->due_date) : 'Not Applicable' }}                                        @endif
-                                    </td>
-                                    <td>{{ $data->status }}</td>
-                                </tr>
+                                        {{ $data->short_description }}
+                                        @endif
+                                        </td>
+
+                                        <td>
+                                            @if ($process == 'Extension')
+                                            {{ Helpers::getDateFormat($data->due_date) }}    
+                                            @elseif($process == 'OOS/OOT')
+                                            {{ Helpers::getDateFormat($data->due_date) }}    
+                                            @elseif($process == 'Market Complaint')
+                                            {{ Helpers::getDateFormat($data->due_date_gi) }} 
+                                            @else
+                                            {{ $data->due_date ?  Helpers::getDateFormat($data->due_date) : 'Not Applicable' }}                                        @endif
+                                        </td>
+                                        <td>{{ $data->status }}</td>
+                                    </tr>
+                                @endif    
                             </tbody>
                         </table>
                     </div>

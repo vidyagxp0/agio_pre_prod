@@ -165,7 +165,11 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('document-request/edit/{id}',[DocumentRequestController::class, 'show'])->name('document-request.show');
     Route::put('document-request/update/{id}',[DocumentRequestController::class, 'update'])->name('document-request.update');
     Route::post('document-request/stage/{id}', [DocumentRequestController::class, 'docReq_sendstage'])->name('docReq_sendstage');
-        
+    Route::post('document-request-Back/stage/{id}', [DocumentRequestController::class, 'docReq_stageBack'])->name('docReq_stageBack');
+    Route::post('document-request-Cancel/stage/{id}', [DocumentRequestController::class, 'docReq_stageCancel'])->name('docReq_stageCancel');
+  
+    Route::get('document-requestAudittrial/{id}', [DocumentRequestController::class, 'DocumentRequestAuditTrail']);
+  
     Route::resource('documentsContent', DocumentContentController::class);
     Route::get('doc-details/{id}', [DocumentDetailsController::class, 'viewdetails']);
     Route::put('sendforstagechanage', [DocumentDetailsController::class, 'sendforstagechanage']);

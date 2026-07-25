@@ -12,5 +12,6 @@ class DocumentRequest extends Model
 
     protected $table = 'document_requests';
 
+     protected $guarded = [];
     
 }
