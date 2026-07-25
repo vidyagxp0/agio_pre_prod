@@ -92,7 +92,7 @@
                                             <span class="text-danger">*</span>
                                         </label>
 
-                                        <select name="document_id" id="document_id">
+                                        <select name="document_id" id="document_id" required>
                                             <option value="">-- Select Document Number --</option>
                                             @foreach ($documents as $document)
                                                 <option
@@ -113,7 +113,7 @@
                                         </label>
 
                                         <select
-                                            name="request_to" id="request_to">
+                                            name="request_to" id="request_to" required>
                                             <option value="">
                                                 -- Select User --
                                             </option>
@@ -136,7 +136,7 @@
                                             <span class="text-danger">*</span>
                                         </label>
 
-                                        <input type="number" name="number_of_copies" id="number_of_copies" value="{{ old('number_of_copies') }}" min="1">
+                                        <input type="number" name="number_of_copies" id="number_of_copies" value="{{ old('number_of_copies') }}" min="1" required>
                                     </div>
                                 </div>
 
@@ -148,7 +148,7 @@
                                         </label>
 
                                         <textarea
-                                            name="reason" id="reason"
+                                            name="reason" id="reason" required
                                         >{{ old('reason') }}</textarea>
                                     </div>
                                 </div>

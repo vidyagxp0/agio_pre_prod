@@ -363,7 +363,7 @@
                                             <span class="text-danger">*</span>
                                         </label>
 
-                                        <select name="document_id" id="document_id">
+                                        <select name="document_id" id="document_id" {{ $data->stage == 1 && $istab1 ? 'required' : 'disabled' }}>
                                        
                                                 <option value="">-- Select Document Number --</option>
 
@@ -459,7 +459,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Assigned To">Comment</label>
+                                    <label for="Assigned To">Comment  @if($data->stage == 2)<span class="text-danger">*</span>@endif</label>
                                     <textarea name="comment" id="comment" cols="30" >{{ $data->comment }}</textarea>
                                 </div>
                             </div>

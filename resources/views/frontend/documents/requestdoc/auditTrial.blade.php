@@ -329,7 +329,7 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID : </strong> {{$document->request_id}}</div>
+                            <div> <strong>Request ID : </strong> {{$document->request_id}}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator                       
                                 : {{ Helpers::getInitiatorName($document->request_by) }} </div>
                            {{--   <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
