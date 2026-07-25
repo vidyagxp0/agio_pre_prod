@@ -363,26 +363,17 @@
                                             <span class="text-danger">*</span>
                                         </label>
 
-                                        <select
-                                            name="document_id"
-                                            id="document_id" {{ $data->stage == 1 && $istab1 ? 'required' : 'disabled' }}
-                                        >
-                                            <option value="">
-                                                -- Select Document --
-                                            </option>
+                                        <select name="document_id" id="document_id">
+                                       
+                                                <option value="">-- Select Document Number --</option>
 
-                                            @foreach ($documents as $document)
-                                                <option
-                                                    value="{{ $document->id }}"
-                                                    {{ $data->document_id == $document->id ? 'selected' : '' }}
-                                                >
-                                                    {{ $document->document_name
-                                                        ?? $document->title
-                                                        ?? $document->name
-                                                        ?? $document->document_number
-                                                    }}
-                                                </option>
-                                            @endforeach
+                                                @foreach ($documents as $document)
+                                                    <option
+                                                        value="{{ $document->id }}"
+                                                        {{ old('document_id', $data->document_id) == $document->id ? 'selected' : '' }}>
+                                                        {{ $document->document_number }}
+                                                    </option>
+                                                @endforeach
                                         </select>
                                           @if (in_array($data->stage, [0, 2, 3]))
                                                 <input type="hidden" name="document_id" value="{{ old('document_id', $data->document_id) }}">

@@ -29,6 +29,8 @@ return new class extends Migration
             $table->string('issued_to_name')
                 ->nullable()
                 ->after('issuance_to');
+            $table->string('issue_copies')->default(0)->nullable();
+    
 
             $table->string('issued_to_department')
                 ->nullable()

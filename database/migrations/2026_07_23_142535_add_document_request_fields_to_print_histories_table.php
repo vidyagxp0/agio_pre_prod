@@ -18,6 +18,14 @@ return new class extends Migration
                 ->nullable()
                 ->after('document_request_id');
 
+            $table->text('document_number')->nullable();
+            $table->string('issue_copies')->default(0)->nullable();
+            $table->text('issued_copies')->nullable();
+            $table->text('document_printed_copies')->nullable();
+            $table->longText('print_reason')->nullable();
+            $table->text('issued_reason')->nullable();
+            $table->string('issuance_to')->nullable();
+            $table->text('department')->nullable();
             $table->unsignedBigInteger('issued_by')
                 ->nullable()
                 ->after('user_id');
@@ -31,16 +39,14 @@ return new class extends Migration
                 ->after('date');
 
             $table->string('issued_to_name')
-                ->nullable()
-                ->after('issuance_to');
+                ->nullable();
 
             $table->string('issued_to_department')
                 ->nullable()
                 ->after('issued_to_name');
 
             $table->integer('total_issued_copies')
-                ->nullable()
-                ->after('issued_copies');
+                ->nullable();
 
             $table->string('copy_number_range')
                 ->nullable()

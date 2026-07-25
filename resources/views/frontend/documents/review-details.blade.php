@@ -80,12 +80,9 @@
                             <div class="bottom-block">
                                 <div>
                                     <div class="head">Document Number</div>
-                                    <div>000{{ $document->record }}</div>
+                                    <div>{{ $document->document_number }}</div>
                                 </div>
-                                {{-- <div>
-                                    <div class="head">Department</div>
-                                    <div>{{ $document->department_name->name }}</div>
-                                </div> --}}
+
                                 <div>
                                     <div class="head">Document Type</div>
                                     <div>{{ Helpers::getDocumentTypes()[$document->document_type_id] }}</div>   

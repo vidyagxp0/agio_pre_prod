@@ -6653,29 +6653,123 @@ class DocumentController extends Controller
         return redirect()->back();
     }
 
+
     // public function printDownloadPDF($id)
     // {
     //     $request = request();
 
-    //     $issue_copies = (int) $request->issued_copies;
-    //     $IssuedCopies = (int) $request->issued_copies;
-    //     $print_reason = $request->print_reason;
-    //     $documentPrintBy = $request->user_id;
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Basic validation
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     if (!$request->document_request_id) {
+    //         toastr()->error('Please select Request ID.');
+    //         return redirect()->back();
+    //     }
+
+    //     if (!$request->issued_date) {
+    //         toastr()->error('Issued Date is required.');
+    //         return redirect()->back();
+    //     }
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Find document
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $document = Document::find($id);
+
+    //     if (!$document) {
+    //         toastr()->error('Document not found.');
+    //         return redirect()->back();
+    //     }
+
+
+    //     $documentRequest = DocumentRequest::where(
+    //         'id',
+    //         $request->document_request_id
+    //     )
+    //     ->where('document_id', $document->id)
+    //     ->where('status', 'Opened')
+    //     ->first();
+
+    //     if (!$documentRequest) {
+    //         toastr()->error(
+    //             'Selected request is invalid, closed or does not belong to this document.'
+    //         );
+
+    //         return redirect()->back();
+    //     }
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Request ID format
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $formattedRequestId =
+    //         $documentRequest->request_id
+    //         ?? (
+    //             'Request-' .
+    //             str_pad(
+    //                 $documentRequest->record,
+    //                 3,
+    //                 '0',
+    //                 STR_PAD_LEFT
+    //             )
+    //         );
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Issuance data
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $issuedCopies = (int) $documentRequest->number_of_copies;
+
+    //     $printReason = $documentRequest->reason;
+
     //     $issuedDate = $request->issued_date;
-    //     $issuanceTo = $request->issuance_to;
+
+    //     $issuedById = Auth::id();
+
+    //     $issuedByName = Auth::user()->name;
+
+    //     $issuanceTo = $documentRequest->request_to;
+
     //     $issuedToUser = User::find($issuanceTo);
 
-    //     $department = $issuedToUser
-    //         ? Department::where('id', $issuedToUser->departmentid)->value('name')
-    //         : null;
+    //     if (!$issuedToUser) {
+    //         toastr()->error(
+    //             'Request To user is not available.'
+    //         );
 
-    //     $issuedByName = User::where('id', $documentPrintBy)->value('name');
-
-    //     if ($issue_copies < 1) {
-    //         return redirect()->back()->withErrors([
-    //             'issued_copies' => 'Number of issued copies must be at least 1.'
-    //         ])->withInput();
+    //         return redirect()->back();
     //     }
+
+    //     $issuedToName = $issuedToUser->name;
+
+    //     $issuedToDepartment = Department::where(
+    //         'id',
+    //         $issuedToUser->departmentid
+    //     )->value('name');
+
+    //     if ($issuedCopies < 1) {
+    //         toastr()->error(
+    //             'Number of issued copies must be at least 1.'
+    //         );
+
+    //         return redirect()->back();
+    //     }
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Fetch authenticated user's roles
+    //     |--------------------------------------------------------------------------
+    //     */
 
     //     $roleIds = DB::table('user_roles')
     //         ->where('user_id', Auth::id())
@@ -6689,723 +6783,333 @@ class DocumentController extends Controller
     //         ->toArray();
 
     //     if (empty($roleIds)) {
-    //         toastr()->error('No role is assigned to your account.');
-    //         return redirect()->back()->withInput();
+    //         toastr()->error(
+    //             'No role is assigned to your account.'
+    //         );
+
+    //         return redirect()->back();
     //     }
 
     //     /*
     //     |--------------------------------------------------------------------------
-    //     | Find Print Control
+    //     | Find print control
     //     |--------------------------------------------------------------------------
     //     */
 
-    //     $controls = PrintControl::whereIn('role_id', $roleIds)
-    //         ->orderByDesc('id')
-    //         ->first();
-       
+    //     $controls = PrintControl::whereIn(
+    //         'role_id',
+    //         $roleIds
+    //     )
+    //     ->orderByDesc('id')
+    //     ->first();
+
     //     if (!$controls) {
     //         toastr()->error(
     //             'There is no print control configured for your assigned roles.'
     //         );
 
-    //         return redirect()->back()->withInput();
+    //         return redirect()->back();
     //     }
 
-    //     // $department = Department::find(Auth::user()->departmentid);
-    //     $document = Document::find($id);
-
-    //     if ($document->revised == 'Yes') {
-    //         $latestRevision = Document::where('revised_doc', $document->id)
-    //                                    ->max('minor');
-    //         $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
-    //         $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
-    //     } else {
-    //         $revisionNumber = '00';
-    //     }
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Check document department
+    //     |--------------------------------------------------------------------------
+    //     */
 
     //     $departmentId = $document->department_id;
 
     //     if (!$departmentId) {
-    //         return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
-    //     }
-
-    //     $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
-
-    //     $counter = 0;
-    //     foreach ($documents as $doc) {
-    //         $counter++;
-    //         $doc->currentId = $counter;
-
-
-    //         if ($doc->id == $id) {
-    //             $currentId = $doc->currentId;
-    //         }
-    //     }
-
-
-    //     if ($controls) {
-    //         set_time_limit(30);
-    //         $document = Document::find($id);
-    //         $data = Document::find($id);
-    //         $data->department = Department::find($data->department_id);
-    //         $data['originator'] = User::where('id', $data->originator_id)->value('name');
-    //         $time = Carbon::now();
-    //         $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
-    //         $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
-    //         $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
-    //         $data['document_division'] = Division::where('id', $data->division_id)->value('name');
-    //         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
-    //         $data['year'] = Carbon::parse($data->created_at)->format('Y');
-    //         // $document = Document::where('id', $id)->get();
-    //         // $pdf = PDF::loadView('frontend.documents.pdfpage', compact('data'))->setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
-
-    //         $pdf = App::make('dompdf.wrapper');
-
-
-    //         $viewName = match ($data->document_type_id) {
-    //             'SOP' => 'frontend.documents.pdfpage',
-    //             'BOM' => 'frontend.documents.bom-pdf',
-    //             'FPS' => 'frontend.documents.finished-product-pdf',
-    //             'INPS' => 'frontend.documents.inprocess_s-pdf',
-    //             'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-    //             'RAWMS' => 'frontend.documents.raw_ms-pdf',
-    //             'PAMS' => 'frontend.documents.package_ms-pdf',
-    //             'PIAS' => 'frontend.documents.product_item-pdf',
-    //             'MFPS' => 'frontend.documents.mfps-pdf',
-    //             'MFPSTP' => 'frontend.documents.mfpstp-pdf',
-    //             'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
-    //             'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
-    //             'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
-    //             'RMSTP' => 'frontend.documents.raw_mstp-pdf',
-    //             'BMR' => 'frontend.documents.bmr-pdf',
-    //             'BPR' => 'frontend.documents.bpr-pdf',
-    //             'SPEC' => 'frontend.documents.spec-pdf',
-    //             'STP' => 'frontend.documents.stp-pdf',
-    //             'TDS' => 'frontend.documents.tds-pdf',
-    //             'GTP' => 'frontend.documents.gtp-pdf',
-    //             default => 'frontend.documents.pdfpage',
-    //         };
-
-            
-    //         $pdf = PDF::loadView($viewName, compact('data','time','document','documents','currentId','issuedDate','issuedByName'))->setOptions([
-    //                 'defaultFont' => 'sans-serif',
-    //                 'isHtml5ParserEnabled' => true,
-    //                 'isRemoteEnabled' => true,
-    //                 'isPhpEnabled' => true,
-    //             ]);
-    //         $pdf->setPaper('A4');
-    //         $pdf->render();
-    //         $canvas = $pdf->getDomPDF()->getCanvas();
-    //         $height = $canvas->get_height();
-    //         $width = $canvas->get_width();
-
-    //         $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
-
-    //         $watermarkText = strtoupper($data->status);
-    //         $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
-    //         $fontSize = 25;
-    //         $textWidth = $pdf->getDomPDF()->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
-            
-    //         $canvas->page_text(
-    //             ($width - $textWidth) / 2,
-    //             ($height / 2) + 50,
-    //             $watermarkText,  
-    //             $font,  
-    //             $fontSize,  
-    //             [0, 0, 0],  
-    //             0.9,  
-    //             6,
-    //             -20  
+    //         toastr()->error(
+    //             'Department is not associated with this document.'
     //         );
 
-    //         /*
-    //         |--------------------------------------------------------------------------
-    //         | Common Download History Save
-    //         |--------------------------------------------------------------------------
-    //         */
-
-    //         $saveDownloadHistory = function () use (
-    //             $id,
-    //             $request,
-    //             $issue_copies,
-    //             $IssuedCopies,
-    //             $print_reason,
-    //             $issuanceTo,
-    //             $department
-    //         ) {
-    //             $download = new DownloadHistory();
-
-    //             $download->document_id = $id;
-
-    //             /*
-    //             | Issued By/Login user
-    //             */
-    //             $download->user_id = Auth::id();
-    //             $download->role_id = Auth::user()->role;
-
-    //             $download->date = Carbon::now()->format('d-m-Y');
-
-    //             /*
-    //             | Distribution details
-    //             */
-    //             $download->issue_copies = $issue_copies;
-    //             $download->issued_copies = $IssuedCopies;
-    //             $download->print_reason = $print_reason;
-
-    //             $download->document_number =
-    //                 $request->document_number;
-
-    //             $download->document_printed_copies =
-    //                 $request->document_printed_copies;
-
-    //             /*
-    //             | Selected Issued To user
-    //             */
-    //             $download->issuance_to = $issuanceTo;
-
-    //             /*
-    //             | Selected Issued To user's department
-    //             */
-    //             $download->department = $department;
-
-    //             $download->issued_reason =
-    //                 $request->issued_reason;
-
-    //             /*
-    //             | Modal selected issue date
-    //             | Column agar issued_date hai tab use karo
-    //             */
-    //             if (\Schema::hasColumn('download_histories', 'issued_date')) {
-    //                 $download->issued_date = $request->issued_date;
-    //             }
-
-    //             $download->save();
-
-    //             return $download;
-    //         };
-
-    //         if ($controls->daily != 0) {
-    //             $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->where('date', Carbon::now()->format('d-m-Y'))->count();
-    //             if ($user + 1 <= $controls->daily) {
-    //                 //Downlad History
-    //                 $saveDownloadHistory();
-    //                 // download PDF file with download method
-
-    //                 return $this->downloadRepeatedPdfCopies($pdf, (int) $id, $IssuedCopies);
-    //             } else {
-    //                 toastr()->error('You breach your daily download limit.');
-
-    //                 return back();
-    //             }
-    //         } elseif ($controls->weekly != 0) {
-    //             $weekDate = Carbon::now()->subDays(7)->format('d-m-Y');
-    //             $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-    //             if ($user + 1 <= $controls->weekly) {
-    //                 //Downlad History
-    //                 $saveDownloadHistory();
-
-    //                 // download PDF file with download method
-
-    //                 return $this->downloadRepeatedPdfCopies($pdf, (int) $id, $IssuedCopies);
-    //             } else {
-    //                 toastr()->error('You breach your weekly download limit.');
-
-    //                 return back();
-    //             }
-    //         } elseif ($controls->monthly != 0) {
-    //             $weekDate = Carbon::now()->subDays(30)->format('d-m-Y');
-    //             $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-    //             if ($user + 1 <= $controls->monthly) {
-    //                 //Downlad History
-    //                 $saveDownloadHistory();
-
-    //                 // download PDF file with download method
-
-    //                 return $this->downloadRepeatedPdfCopies($pdf, (int) $id, $IssuedCopies);
-    //             } else {
-    //                 toastr()->error('You breach your monthly download limit.');
-
-    //                 return back();
-    //             }
-    //         } elseif ($controls->quatarly != 0) {
-    //             $weekDate = Carbon::now()->subDays(90)->format('d-m-Y');
-    //             $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-    //             if ($user + 1 <= $controls->quatarly) {
-    //                 //Downlad History
-    //                 $saveDownloadHistory();
-
-    //                 // download PDF file with download method
-
-    //                 return $this->downloadRepeatedPdfCopies($pdf, (int) $id, $IssuedCopies);
-    //             } else {
-    //                 toastr()->error('You breach your quaterly download limit.');
-
-    //                 return back();
-    //             }
-    //         } elseif ($controls->yearly != 0) {
-    //             $weekDate = Carbon::now()->subDays(365)->format('d-m-Y');
-    //             $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-    //             if ($user + 1 <= $controls->yearly) {
-    //                 //Downlad History
-    //                 $saveDownloadHistory();
-
-    //                 // download PDF file with download method
-
-    //                 return $this->downloadRepeatedPdfCopies($pdf, (int) $id, $IssuedCopies);
-    //             } else {
-    //                 toastr()->error('You breach your yearly download limit.');
-
-    //                 return back();
-    //             }
-    //         } else {
-    //             toastr()->error('There is no controls provide for your role.');
-
-    //             return back();
-    //         }
-    //     } else {
-    //         toastr()->error('There is no controls provide for your role.');
-
-    //         return back();
+    //         return redirect()->back();
     //     }
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Existing current document serial
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $documents = Document::where(
+    //         'department_id',
+    //         $departmentId
+    //     )
+    //     ->orderBy('id')
+    //     ->get();
+
+    //     $currentId = 1;
+
+    //     foreach ($documents as $key => $doc) {
+
+    //         if ((int) $doc->id === (int) $document->id) {
+    //             $currentId = $key + 1;
+    //             break;
+    //         }
+    //     }
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Prepare document data
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     set_time_limit(120);
+
+    //     $data = Document::find($id);
+
+    //     $data->department = Department::find(
+    //         $data->department_id
+    //     );
+
+    //     $data['originator'] = User::where(
+    //         'id',
+    //         $data->originator_id
+    //     )->value('name');
+
+    //     $data['originator_email'] = User::where(
+    //         'id',
+    //         $data->originator_id
+    //     )->value('email');
+
+    //     $data['document_type_name'] = DocumentType::where(
+    //         'id',
+    //         $data->document_type_id
+    //     )->value('name');
+
+    //     $data['document_type_code'] = DocumentType::where(
+    //         'id',
+    //         $data->document_type_id
+    //     )->value('typecode');
+
+    //     $data['document_division'] = Division::where(
+    //         'id',
+    //         $data->division_id
+    //     )->value('name');
+
+    //     $data['document_content'] = DocumentContent::where(
+    //         'document_id',
+    //         $id
+    //     )->first();
+
+    //     $data['year'] = Carbon::parse(
+    //         $data->created_at
+    //     )->format('Y');
+
+    //     $time = Carbon::now();
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Select PDF view
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $viewName = match ($data->document_type_id) {
+    //         'SOP' => 'frontend.documents.pdfpage',
+    //         'BOM' => 'frontend.documents.bom-pdf',
+    //         'FPS' => 'frontend.documents.finished-product-pdf',
+    //         'INPS' => 'frontend.documents.inprocess_s-pdf',
+    //         'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
+    //         'RAWMS' => 'frontend.documents.raw_ms-pdf',
+    //         'PAMS' => 'frontend.documents.package_ms-pdf',
+    //         'PIAS' => 'frontend.documents.product_item-pdf',
+    //         'MFPS' => 'frontend.documents.mfps-pdf',
+    //         'MFPSTP' => 'frontend.documents.mfpstp-pdf',
+    //         'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
+    //         'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+    //         'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
+    //         'RMSTP' => 'frontend.documents.raw_mstp-pdf',
+    //         'BMR' => 'frontend.documents.bmr-pdf',
+    //         'BPR' => 'frontend.documents.bpr-pdf',
+    //         'SPEC' => 'frontend.documents.spec-pdf',
+    //         'STP' => 'frontend.documents.stp-pdf',
+    //         'TDS' => 'frontend.documents.tds-pdf',
+    //         'GTP' => 'frontend.documents.gtp-pdf',
+    //         default => 'frontend.documents.pdfpage',
+    //     };
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Check print/download limit
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $limitResult = $this->checkDocumentDownloadLimit(
+    //         $controls,
+    //         Auth::id(),
+    //         $document->id
+    //     );
+
+    //     if (!$limitResult['allowed']) {
+    //         toastr()->error($limitResult['message']);
+
+    //         return redirect()->back();
+    //     }
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Save download history
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $download = new DownloadHistory();
+
+    //     $download->document_id = $document->id;
+
+    //     $download->document_request_id =
+    //         $documentRequest->id;
+
+    //     $download->request_id =
+    //         $formattedRequestId;
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Issued By
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $download->user_id = $issuedById;
+
+    //     $download->issued_by = $issuedById;
+
+    //     $download->issued_by_name =
+    //         $issuedByName;
+
+    //     $download->role_id =
+    //         Auth::user()->role;
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Issued Date
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $download->date =
+    //         Carbon::now()->format('d-m-Y');
+
+    //     $download->issued_date =
+    //         Carbon::parse($issuedDate)->format('Y-m-d');
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Copies and reason
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $download->issue_copies =
+    //         $issuedCopies;
+
+    //     $download->issued_copies =
+    //         $issuedCopies;
+
+    //     $download->total_issued_copies =
+    //         $issuedCopies;
+
+    //     $download->copy_number_range = str_pad(1, 3, '0', STR_PAD_LEFT) . '-' . str_pad($issuedCopies, 3, '0', STR_PAD_LEFT);
+
+    //     $download->print_reason =
+    //         $printReason;
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Document number
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $download->document_number =
+    //         $document->document_number;
+
+    //     $download->document_printed_copies =
+    //         $issuedCopies;
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Issued To
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $download->issuance_to =
+    //         $issuanceTo;
+
+    //     $download->issued_to_name =
+    //         $issuedToName;
+
+    //     $download->department =
+    //         $issuedToDepartment;
+
+    //     $download->issued_to_department =
+    //         $issuedToDepartment;
+
+    //     $download->issued_reason =
+    //         $printReason;
+
+    //     $download->save();
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Uploaded effective PDF path
+    //     |--------------------------------------------------------------------------
+    //     |
+    //     | PDF attachment available hua to wahi print hoga.
+    //     | PDF attachment nahi hua to Blade view se PDF generate hoga.
+    //     |
+    //     */
+
+    //     $sourcePdfPath = null;
+
+    //     if (!empty($document->attach_effective_docuement)) {
+
+    //         $uploadedPdfPath = public_path(
+    //             'upload/' .
+    //             $document->attach_effective_docuement
+    //         );
+
+    //         $extension = strtolower(
+    //             pathinfo(
+    //                 $uploadedPdfPath,
+    //                 PATHINFO_EXTENSION
+    //             )
+    //         );
+
+    //         if (
+    //             file_exists($uploadedPdfPath)
+    //             && $extension === 'pdf'
+    //         ) {
+    //             $sourcePdfPath = $uploadedPdfPath;
+    //         }
+    //     }
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Generate final issued copies
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     return $this->downloadIssuedDocumentCopies(
+    //         $viewName,
+    //         [
+    //             'data' => $data,
+    //             'time' => $time,
+    //             'document' => $document,
+    //             'documents' => $documents,
+    //             'currentId' => $currentId,
+
+    //             'requestId' => $formattedRequestId,
+    //             'issuedByName' => $issuedByName,
+    //             'issuedById' => $issuedById,
+    //             'issuedDate' => $issuedDate,
+    //             'issuedToName' => $issuedToName,
+    //             'issuedToDepartment' => $issuedToDepartment,
+    //             'printReason' => $printReason,
+    //             'totalIssuedCopies' => $issuedCopies,
+    //         ],
+    //         $issuedCopies,
+    //         $document,
+    //         $sourcePdfPath
+    //     );
     // }
-
-    public function printDownloadPDF($id)
-    {
-        $request = request();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Basic validation
-        |--------------------------------------------------------------------------
-        */
-
-        if (!$request->document_request_id) {
-            toastr()->error('Please select Request ID.');
-            return redirect()->back();
-        }
-
-        if (!$request->issued_date) {
-            toastr()->error('Issued Date is required.');
-            return redirect()->back();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Find document
-        |--------------------------------------------------------------------------
-        */
-
-        $document = Document::find($id);
-
-        if (!$document) {
-            toastr()->error('Document not found.');
-            return redirect()->back();
-        }
-
-
-        $documentRequest = DocumentRequest::where(
-            'id',
-            $request->document_request_id
-        )
-        ->where('document_id', $document->id)
-        ->where('status', 'Opened')
-        ->first();
-
-        if (!$documentRequest) {
-            toastr()->error(
-                'Selected request is invalid, closed or does not belong to this document.'
-            );
-
-            return redirect()->back();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Request ID format
-        |--------------------------------------------------------------------------
-        */
-
-        $formattedRequestId =
-            $documentRequest->request_id
-            ?? (
-                'Request-' .
-                str_pad(
-                    $documentRequest->record,
-                    3,
-                    '0',
-                    STR_PAD_LEFT
-                )
-            );
-
-        /*
-        |--------------------------------------------------------------------------
-        | Issuance data
-        |--------------------------------------------------------------------------
-        */
-
-        $issuedCopies = (int) $documentRequest->number_of_copies;
-
-        $printReason = $documentRequest->reason;
-
-        $issuedDate = $request->issued_date;
-
-        $issuedById = Auth::id();
-
-        $issuedByName = Auth::user()->name;
-
-        $issuanceTo = $documentRequest->request_to;
-
-        $issuedToUser = User::find($issuanceTo);
-
-        if (!$issuedToUser) {
-            toastr()->error(
-                'Request To user is not available.'
-            );
-
-            return redirect()->back();
-        }
-
-        $issuedToName = $issuedToUser->name;
-
-        $issuedToDepartment = Department::where(
-            'id',
-            $issuedToUser->departmentid
-        )->value('name');
-
-        if ($issuedCopies < 1) {
-            toastr()->error(
-                'Number of issued copies must be at least 1.'
-            );
-
-            return redirect()->back();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Fetch authenticated user's roles
-        |--------------------------------------------------------------------------
-        */
-
-        $roleIds = DB::table('user_roles')
-            ->where('user_id', Auth::id())
-            ->pluck('role_id')
-            ->filter()
-            ->map(function ($roleId) {
-                return (int) $roleId;
-            })
-            ->unique()
-            ->values()
-            ->toArray();
-
-        if (empty($roleIds)) {
-            toastr()->error(
-                'No role is assigned to your account.'
-            );
-
-            return redirect()->back();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Find print control
-        |--------------------------------------------------------------------------
-        */
-
-        $controls = PrintControl::whereIn(
-            'role_id',
-            $roleIds
-        )
-        ->orderByDesc('id')
-        ->first();
-
-        if (!$controls) {
-            toastr()->error(
-                'There is no print control configured for your assigned roles.'
-            );
-
-            return redirect()->back();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Check document department
-        |--------------------------------------------------------------------------
-        */
-
-        $departmentId = $document->department_id;
-
-        if (!$departmentId) {
-            toastr()->error(
-                'Department is not associated with this document.'
-            );
-
-            return redirect()->back();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Existing current document serial
-        |--------------------------------------------------------------------------
-        */
-
-        $documents = Document::where(
-            'department_id',
-            $departmentId
-        )
-        ->orderBy('id')
-        ->get();
-
-        $currentId = 1;
-
-        foreach ($documents as $key => $doc) {
-
-            if ((int) $doc->id === (int) $document->id) {
-                $currentId = $key + 1;
-                break;
-            }
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Prepare document data
-        |--------------------------------------------------------------------------
-        */
-
-        set_time_limit(120);
-
-        $data = Document::find($id);
-
-        $data->department = Department::find(
-            $data->department_id
-        );
-
-        $data['originator'] = User::where(
-            'id',
-            $data->originator_id
-        )->value('name');
-
-        $data['originator_email'] = User::where(
-            'id',
-            $data->originator_id
-        )->value('email');
-
-        $data['document_type_name'] = DocumentType::where(
-            'id',
-            $data->document_type_id
-        )->value('name');
-
-        $data['document_type_code'] = DocumentType::where(
-            'id',
-            $data->document_type_id
-        )->value('typecode');
-
-        $data['document_division'] = Division::where(
-            'id',
-            $data->division_id
-        )->value('name');
-
-        $data['document_content'] = DocumentContent::where(
-            'document_id',
-            $id
-        )->first();
-
-        $data['year'] = Carbon::parse(
-            $data->created_at
-        )->format('Y');
-
-        $time = Carbon::now();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Select PDF view
-        |--------------------------------------------------------------------------
-        */
-
-        $viewName = match ($data->document_type_id) {
-            'SOP' => 'frontend.documents.pdfpage',
-            'BOM' => 'frontend.documents.bom-pdf',
-            'FPS' => 'frontend.documents.finished-product-pdf',
-            'INPS' => 'frontend.documents.inprocess_s-pdf',
-            'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-            'RAWMS' => 'frontend.documents.raw_ms-pdf',
-            'PAMS' => 'frontend.documents.package_ms-pdf',
-            'PIAS' => 'frontend.documents.product_item-pdf',
-            'MFPS' => 'frontend.documents.mfps-pdf',
-            'MFPSTP' => 'frontend.documents.mfpstp-pdf',
-            'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
-            'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
-            'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
-            'RMSTP' => 'frontend.documents.raw_mstp-pdf',
-            'BMR' => 'frontend.documents.bmr-pdf',
-            'BPR' => 'frontend.documents.bpr-pdf',
-            'SPEC' => 'frontend.documents.spec-pdf',
-            'STP' => 'frontend.documents.stp-pdf',
-            'TDS' => 'frontend.documents.tds-pdf',
-            'GTP' => 'frontend.documents.gtp-pdf',
-            default => 'frontend.documents.pdfpage',
-        };
-
-        /*
-        |--------------------------------------------------------------------------
-        | Check print/download limit
-        |--------------------------------------------------------------------------
-        */
-
-        $limitResult = $this->checkDocumentDownloadLimit(
-            $controls,
-            Auth::id(),
-            $document->id
-        );
-
-        if (!$limitResult['allowed']) {
-            toastr()->error($limitResult['message']);
-
-            return redirect()->back();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Save download history
-        |--------------------------------------------------------------------------
-        */
-
-        $download = new DownloadHistory();
-
-        $download->document_id = $document->id;
-
-        $download->document_request_id =
-            $documentRequest->id;
-
-        $download->request_id =
-            $formattedRequestId;
-
-        /*
-        |--------------------------------------------------------------------------
-        | Issued By
-        |--------------------------------------------------------------------------
-        */
-
-        $download->user_id = $issuedById;
-
-        $download->issued_by = $issuedById;
-
-        $download->issued_by_name =
-            $issuedByName;
-
-        $download->role_id =
-            Auth::user()->role;
-
-        /*
-        |--------------------------------------------------------------------------
-        | Issued Date
-        |--------------------------------------------------------------------------
-        */
-
-        $download->date =
-            Carbon::now()->format('d-m-Y');
-
-        $download->issued_date =
-            Carbon::parse($issuedDate)->format('Y-m-d');
-
-        /*
-        |--------------------------------------------------------------------------
-        | Copies and reason
-        |--------------------------------------------------------------------------
-        */
-
-        $download->issue_copies =
-            $issuedCopies;
-
-        $download->issued_copies =
-            $issuedCopies;
-
-        $download->total_issued_copies =
-            $issuedCopies;
-
-        $download->copy_number_range = str_pad(1, 3, '0', STR_PAD_LEFT) . '-' . str_pad($issuedCopies, 3, '0', STR_PAD_LEFT);
-
-        $download->print_reason =
-            $printReason;
-
-        /*
-        |--------------------------------------------------------------------------
-        | Document number
-        |--------------------------------------------------------------------------
-        */
-
-        $download->document_number =
-            $document->document_number;
-
-        $download->document_printed_copies =
-            $issuedCopies;
-
-        /*
-        |--------------------------------------------------------------------------
-        | Issued To
-        |--------------------------------------------------------------------------
-        */
-
-        $download->issuance_to =
-            $issuanceTo;
-
-        $download->issued_to_name =
-            $issuedToName;
-
-        $download->department =
-            $issuedToDepartment;
-
-        $download->issued_to_department =
-            $issuedToDepartment;
-
-        $download->issued_reason =
-            $printReason;
-
-        $download->save();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Optional: request status update
-        |--------------------------------------------------------------------------
-        |
-        | Issuance complete hone ke baad request ko completed karna ho to
-        | ye uncomment kar dena.
-        |
-        */
-
-        // $documentRequest->status = 'Completed';
-        // $documentRequest->stage = 4;
-        // $documentRequest->completed_by = Auth::id();
-        // $documentRequest->completed_on = Carbon::now();
-        // $documentRequest->save();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Generate separately numbered PDF copies
-        |--------------------------------------------------------------------------
-        */
-
-        return $this->downloadIssuedDocumentCopies(
-            $viewName,
-            [
-                'data' => $data,
-                'time' => $time,
-                'document' => $document,
-                'documents' => $documents,
-                'currentId' => $currentId,
-
-                'requestId' => $formattedRequestId,
-                'issuedByName' => $issuedByName,
-                'issuedById' => $issuedById,
-                'issuedDate' => $issuedDate,
-                'issuedToName' => $issuedToName,
-                'issuedToDepartment' => $issuedToDepartment,
-                'printReason' => $printReason,
-                'totalIssuedCopies' => $issuedCopies,
-            ],
-            $issuedCopies,
-            $document
-        );
-    }
     
     private function downloadRepeatedPdfCopies(
         $domPdf,
@@ -9733,26 +9437,73 @@ class DocumentController extends Controller
 
         /*
         |--------------------------------------------------------------------------
+        | Uploaded PDF path
+        |--------------------------------------------------------------------------
+        */
+
+        $sourcePdfPath = null;
+
+        if (!empty($document->attach_effective_docuement)) {
+
+            $uploadedPdfPath = public_path(
+                'upload/' .
+                $document->attach_effective_docuement
+            );
+
+            $extension = strtolower(
+                pathinfo(
+                    $uploadedPdfPath,
+                    PATHINFO_EXTENSION
+                )
+            );
+
+            if (
+                file_exists($uploadedPdfPath)
+                && $extension === 'pdf'
+            ) {
+                $sourcePdfPath = $uploadedPdfPath;
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
         | Generate copy-wise printable PDF
         |--------------------------------------------------------------------------
         */
 
-        return $this->streamIssuedDocumentCopies($viewName, ['data' =>$data, 'time' =>$time,
+        return $this->streamIssuedDocumentCopies(
+            $viewName,
+            [
+                'data' => $data,
+                'time' => $time,
+                'document' => $document,
+                'annexures' => $annexures,
+                'currentId' => $currentId,
+                'documents' => $documents,
+                'sopNumber' => $sopNumber,
 
-                'document' =>$document, 'annexures' =>$annexures, 'currentId' =>$currentId, 'documents' =>$documents, 'sopNumber' =>$sopNumber, 'requestId' =>$formattedRequestId, 
-                'issuedByName' =>$issuedByName, 'issuedById' =>$issuedById, 'issuedDate' =>$issuedDate, 'issuedToName' =>$issuedToName, 
-                'issuedToDepartment' =>$issuedToDepartment, 'printReason' =>$printReason, 'totalIssuedCopies' =>$issuedCopies,
+                'requestId' => $formattedRequestId,
+                'issuedByName' => $issuedByName,
+                'issuedById' => $issuedById,
+                'issuedDate' => $issuedDate,
+                'issuedToName' => $issuedToName,
+                'issuedToDepartment' => $issuedToDepartment,
+                'printReason' => $printReason,
+                'totalIssuedCopies' => $issuedCopies,
 
                 /*
-                | Old Blade variable compatibility
+                |--------------------------------------------------------------------------
+                | Old Blade compatibility
+                |--------------------------------------------------------------------------
                 */
-                'IssuedCopies' =>$issuedCopies,
 
-                'IssueDate' =>$issuedDate,
-
-                'stampImpression' =>$issuedToDepartment,
+                'IssuedCopies' => $issuedCopies,
+                'IssueDate' => $issuedDate,
+                'stampImpression' => $issuedToDepartment,
             ],
-            $issuedCopies,$document
+            $issuedCopies,
+            $document,
+            $sourcePdfPath
         );
     }
 
@@ -9869,17 +9620,6 @@ class DocumentController extends Controller
 
             $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
 
-            // $canvas->page_text(
-            //     $width / 2.9,
-            //     $height / 2,
-            //     $data->status,
-            //     null,
-            //     25,
-            //     [0, 0, 0],
-            //     12,
-            //     6,
-            //     -20
-            // );
 
             $watermarkText = strtoupper($data->status);
             $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
@@ -10684,320 +10424,884 @@ class DocumentController extends Controller
         ];
     }
 
-    private function downloadIssuedDocumentCopies(
-        $viewName,
-        array $viewData,
-        int $totalCopies,
-        $document
-    ) {
-        $tempFiles = [];
+    // private function downloadIssuedDocumentCopies(
+    //     $viewName,
+    //     array $viewData,
+    //     int $totalCopies,
+    //     $document,
+    //     $sourcePdfPath = null) {
+    //     $temporaryFiles = [];
 
-        try {
+    //     try {
 
-            $this->loadFpdiDependencies();
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Validate copies
+    //         |--------------------------------------------------------------------------
+    //         */
 
-            /*
-            |--------------------------------------------------------------------------
-            | Complete document ko copy-wise generate karna
-            |--------------------------------------------------------------------------
-            |
-            | Example:
-            | SOP pages = 3
-            | Copies    = 3
-            |
-            | Copy 001 => complete 3-page SOP
-            | Copy 002 => complete 3-page SOP
-            | Copy 003 => complete 3-page SOP
-            |
-            */
+    //         if ($totalCopies < 1) {
+    //             throw new \RuntimeException(
+    //                 'Total copies must be at least 1.'
+    //             );
+    //         }
 
-            for (
-                $copyNumber = 1;
-                $copyNumber <= $totalCopies;
-                $copyNumber++
-            ) {
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Load FPDF
+    //         |--------------------------------------------------------------------------
+    //         */
 
-                /*
-                |--------------------------------------------------------------------------
-                | Same copy number complete PDF ke sabhi pages ko milega
-                |--------------------------------------------------------------------------
-                */
+    //         if (!class_exists('FPDF')) {
 
-                $formattedCopyNumber = str_pad(
-                    $copyNumber,
-                    3,
-                    '0',
-                    STR_PAD_LEFT
-                );
+    //             $fpdfPath = base_path(
+    //                 'vendor/setasign/fpdf/fpdf.php'
+    //             );
 
-                $currentViewData = array_merge(
-                    $viewData,
-                    [
-                        'copyNumber' => $copyNumber,
+    //             if (!file_exists($fpdfPath)) {
+    //                 throw new \RuntimeException(
+    //                     'FPDF file not found at: ' .
+    //                     $fpdfPath
+    //                 );
+    //             }
 
-                        'formattedCopyNumber' =>
-                            $formattedCopyNumber,
+    //             require_once $fpdfPath;
+    //         }
 
-                        'totalIssuedCopies' =>
-                            $totalCopies,
-                    ]
-                );
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Check FPDI
+    //         |--------------------------------------------------------------------------
+    //         */
 
-                /*
-                |--------------------------------------------------------------------------
-                | Complete SOP/document PDF generate hoga
-                |--------------------------------------------------------------------------
-                */
+    //         if (
+    //             !class_exists(
+    //                 \setasign\Fpdi\Fpdi::class
+    //             )
+    //         ) {
+    //             throw new \RuntimeException(
+    //                 'FPDI package is not available.'
+    //             );
+    //         }
 
-                $pdf = PDF::loadView(
-                    $viewName,
-                    $currentViewData
-                )->setOptions([
-                    'defaultFont' => 'sans-serif',
-                    'isHtml5ParserEnabled' => true,
-                    'isRemoteEnabled' => true,
-                    'isPhpEnabled' => true,
-                ]);
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Temporary directory
+    //         |--------------------------------------------------------------------------
+    //         */
 
-                $pdf->setPaper('A4');
+    //         $temporaryDirectory = storage_path(
+    //             'app/issued-document-pdfs'
+    //         );
 
-                $pdf->render();
+    //         if (!is_dir($temporaryDirectory)) {
 
-                /*
-                |--------------------------------------------------------------------------
-                | Status watermark
-                |--------------------------------------------------------------------------
-                */
+    //             $directoryCreated = mkdir(
+    //                 $temporaryDirectory,
+    //                 0775,
+    //                 true
+    //             );
 
-                $canvas = $pdf
-                    ->getDomPDF()
-                    ->getCanvas();
+    //             if (
+    //                 !$directoryCreated
+    //                 && !is_dir($temporaryDirectory)
+    //             ) {
+    //                 throw new \RuntimeException(
+    //                     'Unable to create temporary PDF directory.'
+    //                 );
+    //             }
+    //         }
 
-                $height = $canvas->get_height();
-                $width = $canvas->get_width();
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Prepare original source PDF
+    //         |--------------------------------------------------------------------------
+    //         |
+    //         | Uploaded PDF present:
+    //         | Direct uploaded PDF use hoga.
+    //         |
+    //         | Uploaded PDF absent:
+    //         | Current Blade view se original PDF generate hoga.
+    //         |--------------------------------------------------------------------------
+    //         */
 
-                $watermarkText = strtoupper(
-                    $document->status ?? ''
-                );
+    //         if (
+    //             !empty($sourcePdfPath)
+    //             && file_exists($sourcePdfPath)
+    //             && strtolower(
+    //                 pathinfo(
+    //                     $sourcePdfPath,
+    //                     PATHINFO_EXTENSION
+    //                 )
+    //             ) === 'pdf'
+    //         ) {
 
-                if (!empty($watermarkText)) {
+    //             $baseSourcePdf = $sourcePdfPath;
 
-                    $font = $pdf
-                        ->getDomPDF()
-                        ->getFontMetrics()
-                        ->get_font(
-                            'sans-serif',
-                            'bold'
-                        );
+    //         } else {
 
-                    $fontSize = 25;
+    //             /*
+    //             |--------------------------------------------------------------------------
+    //             | Generate original PDF from Blade
+    //             |--------------------------------------------------------------------------
+    //             */
 
-                    $textWidth = $pdf
-                        ->getDomPDF()
-                        ->getFontMetrics()
-                        ->getTextWidth(
-                            $watermarkText,
-                            $font,
-                            $fontSize
-                        );
+    //             $sourcePdf = PDF::loadView(
+    //                 $viewName,
+    //                 $viewData
+    //             )->setOptions([
+    //                 'defaultFont' =>
+    //                     'sans-serif',
 
-                    $canvas->set_opacity(
-                        0.2,
-                        'Multiply'
-                    );
+    //                 'isHtml5ParserEnabled' =>
+    //                     true,
 
-                    $canvas->page_text(
-                        ($width - $textWidth) / 2,
-                        ($height / 2) + 50,
-                        $watermarkText,
-                        $font,
-                        $fontSize,
-                        [0, 0, 0],
-                        0.9,
-                        6,
-                        -20
-                    );
-                }
+    //                 'isRemoteEnabled' =>
+    //                     true,
 
-                /*
-                |--------------------------------------------------------------------------
-                | Page numbering
-                |--------------------------------------------------------------------------
-                |
-                | Har generated copy ek separate PDF hai.
-                | Isliye page numbering har copy me automatically reset hogi.
-                |
-                | Copy 001 => Page 1 of 3, 2 of 3, 3 of 3
-                | Copy 002 => Page 1 of 3, 2 of 3, 3 of 3
-                |
-                */
+    //                 'isPhpEnabled' =>
+    //                     true,
+    //             ]);
 
-                $pageFont = $pdf
-                    ->getDomPDF()
-                    ->getFontMetrics()
-                    ->get_font(
-                        'sans-serif',
-                        'normal'
-                    );
+    //             $sourcePdf->setPaper(
+    //                 'A4',
+    //                 'portrait'
+    //             );
 
-                $canvas->page_text(
-                    $width - 100,
-                    $height - 28,
-                    'Page {PAGE_NUM} of {PAGE_COUNT}',
-                    $pageFont,
-                    8,
-                    [0, 0, 0]
-                );
+    //             $sourcePdf->render();
 
-                /*
-                |--------------------------------------------------------------------------
-                | Temporary PDF save
-                |--------------------------------------------------------------------------
-                */
+    //             /*
+    //             |--------------------------------------------------------------------------
+    //             | Existing status watermark
+    //             |--------------------------------------------------------------------------
+    //             |
+    //             | Old working watermark logic retained.
+    //             |--------------------------------------------------------------------------
+    //             */
 
-                $tempFile = storage_path(
-                    'app/temp-document-copy-' .
-                    $document->id .
-                    '-' .
-                    $formattedCopyNumber .
-                    '-' .
-                    uniqid() .
-                    '.pdf'
-                );
+    //             $domPdf =
+    //                 $sourcePdf->getDomPDF();
 
-                file_put_contents(
-                    $tempFile,
-                    $pdf->output()
-                );
+    //             $canvas =
+    //                 $domPdf->getCanvas();
 
-                $tempFiles[] = $tempFile;
-            }
+    //             $height =
+    //                 $canvas->get_height();
 
-            /*
-            |--------------------------------------------------------------------------
-            | Sab complete copies ko merge karna
-            |--------------------------------------------------------------------------
-            */
+    //             $width =
+    //                 $canvas->get_width();
 
-            $mergedPdf = new \setasign\Fpdi\Fpdi();
+    //             $watermarkText = strtoupper(
+    //                 trim(
+    //                     (string) (
+    //                         $document->status ?? ''
+    //                     )
+    //                 )
+    //             );
 
-            foreach ($tempFiles as $tempFile) {
+    //             if (!empty($watermarkText)) {
 
-                $pageCount = $mergedPdf->setSourceFile(
-                    $tempFile
-                );
+    //                 $canvas->page_script(
+    //                     '$pdf->set_opacity(0.2,"Multiply");'
+    //                 );
 
-                for (
-                    $pageNumber = 1;
-                    $pageNumber <= $pageCount;
-                    $pageNumber++
-                ) {
+    //                 $font = $domPdf
+    //                     ->getFontMetrics()
+    //                     ->get_font(
+    //                         'sans-serif',
+    //                         'bold'
+    //                     );
 
-                    $templateId = $mergedPdf->importPage(
-                        $pageNumber
-                    );
+    //                 $fontSize = 25;
 
-                    $size = $mergedPdf->getTemplateSize(
-                        $templateId
-                    );
+    //                 $textWidth = $domPdf
+    //                     ->getFontMetrics()
+    //                     ->getTextWidth(
+    //                         $watermarkText,
+    //                         $font,
+    //                         $fontSize
+    //                     );
 
-                    $orientation =
-                        $size['width'] > $size['height']
-                            ? 'L'
-                            : 'P';
+    //                 $canvas->page_text(
+    //                     ($width - $textWidth) / 2,
+    //                     ($height / 2) + 50,
+    //                     $watermarkText,
+    //                     $font,
+    //                     $fontSize,
+    //                     [0, 0, 0],
+    //                     0.9,
+    //                     6,
+    //                     -20
+    //                 );
+    //             }
 
-                    $mergedPdf->AddPage(
-                        $orientation,
-                        [
-                            $size['width'],
-                            $size['height'],
-                        ]
-                    );
+    //             /*
+    //             |--------------------------------------------------------------------------
+    //             | Save original generated PDF
+    //             |--------------------------------------------------------------------------
+    //             */
 
-                    $mergedPdf->useTemplate(
-                        $templateId
-                    );
-                }
-            }
+    //             $baseSourcePdf =
+    //                 $temporaryDirectory
+    //                 . DIRECTORY_SEPARATOR
+    //                 . 'source-document-'
+    //                 . $document->id
+    //                 . '-'
+    //                 . uniqid('', true)
+    //                 . '.pdf';
 
-            /*
-            |--------------------------------------------------------------------------
-            | Download filename
-            |--------------------------------------------------------------------------
-            */
+    //             $sourceOutput =
+    //                 $sourcePdf->output();
 
-            $safeDocumentNumber = preg_replace(
-                '/[^A-Za-z0-9\-_]/',
-                '-',
-                $document->document_number
-                    ?? ('document-' . $document->id)
+    //             if (empty($sourceOutput)) {
+    //                 throw new \RuntimeException(
+    //                     'Generated source PDF is empty.'
+    //                 );
+    //             }
+
+    //             $writtenBytes = file_put_contents(
+    //                 $baseSourcePdf,
+    //                 $sourceOutput
+    //             );
+
+    //             if ($writtenBytes === false) {
+    //                 throw new \RuntimeException(
+    //                     'Unable to save generated source PDF.'
+    //                 );
+    //             }
+
+    //             $temporaryFiles[] =
+    //                 $baseSourcePdf;
+    //         }
+
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Issuance information
+    //         |--------------------------------------------------------------------------
+    //         */
+
+    //         $requestId =
+    //             $viewData['requestId']
+    //             ?? 'N/A';
+
+    //         $issuedByName =
+    //             $viewData['issuedByName']
+    //             ?? 'N/A';
+
+    //         $issuedDate =
+    //             $viewData['issuedDate']
+    //             ?? null;
+
+    //         if (!empty($issuedDate)) {
+
+    //             try {
+
+    //                 $formattedIssuedDate =
+    //                     \Carbon\Carbon::parse(
+    //                         $issuedDate
+    //                     )->format('d-M-Y');
+
+    //             } catch (\Throwable $e) {
+
+    //                 $formattedIssuedDate =
+    //                     (string) $issuedDate;
+    //             }
+
+    //         } else {
+
+    //             $formattedIssuedDate =
+    //                 'N/A';
+    //         }
+
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Create final issued PDF
+    //         |--------------------------------------------------------------------------
+    //         */
+
+    //         $finalPdf =
+    //             new \setasign\Fpdi\Fpdi();
+
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Important: disable automatic page break
+    //         |--------------------------------------------------------------------------
+    //         |
+    //         | Iske bina bottom me Issued By likhte waqt FPDF ek extra blank page
+    //         | create kar raha tha.
+    //         |--------------------------------------------------------------------------
+    //         */
+
+    //         $finalPdf->SetAutoPageBreak(
+    //             false
+    //         );
+
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Read original source PDF once
+    //         |--------------------------------------------------------------------------
+    //         */
+
+    //         $sourcePageCount =
+    //             $finalPdf->setSourceFile(
+    //                 $baseSourcePdf
+    //             );
+
+    //         if ($sourcePageCount < 1) {
+    //             throw new \RuntimeException(
+    //                 'No pages found in source PDF.'
+    //             );
+    //         }
+
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Generate physical copies
+    //         |--------------------------------------------------------------------------
+    //         |
+    //         | Example:
+    //         |
+    //         | Original pages = 9
+    //         | Copies = 2
+    //         |
+    //         | Pages 1-9   => Copy No. 001
+    //         | Pages 10-18 => Copy No. 002
+    //         |--------------------------------------------------------------------------
+    //         */
+
+    //         for (
+    //             $copyNumber = 1;
+    //             $copyNumber <= $totalCopies;
+    //             $copyNumber++
+    //         ) {
+
+    //             $formattedCopyNumber = str_pad(
+    //                 $copyNumber,
+    //                 3,
+    //                 '0',
+    //                 STR_PAD_LEFT
+    //             );
+
+    //             /*
+    //             |--------------------------------------------------------------------------
+    //             | Import all original pages for current copy
+    //             |--------------------------------------------------------------------------
+    //             */
+
+    //             for ($sourcePageNumber = 1; $sourcePageNumber <= $sourcePageCount; $sourcePageNumber++) {
+
+    //                 $templateId = $finalPdf->importPage($sourcePageNumber);
+
+    //                 $originalPageSize = $finalPdf->getTemplateSize($templateId);
+
+    //                 $originalWidth = $originalPageSize['width'];
+
+    //                 $originalHeight = $originalPageSize['height'];
+
+    //                 $orientation = $originalWidth >$originalHeight ? 'L' : 'P';
+
+    //                 /*
+    //                 |--------------------------------------------------------------------------
+    //                 | Add page with original exact dimensions
+    //                 |--------------------------------------------------------------------------
+    //                 */
+
+    //                 $finalPdf->AddPage(
+    //                     $orientation,
+    //                     [
+    //                         $originalWidth,
+    //                         $originalHeight,
+    //                     ]
+    //                 );
+
+    //                 /*
+    //                 |--------------------------------------------------------------------------
+    //                 | Place original PDF without scaling
+    //                 |--------------------------------------------------------------------------
+    //                 |
+    //                 | x = 0
+    //                 | y = 0
+    //                 | width = original width
+    //                 | height = original height
+    //                 |
+    //                 | Existing SOP CSS/alignment remains unchanged.
+    //                 |--------------------------------------------------------------------------
+    //                 */
+
+    //                 $finalPdf->useTemplate(
+    //                     $templateId,
+    //                     0,
+    //                     0,
+    //                     $originalWidth,
+    //                     $originalHeight
+    //                 );
+
+    //                 /*
+    //                 |--------------------------------------------------------------------------
+    //                 | Reset drawing settings
+    //                 |--------------------------------------------------------------------------
+    //                 */
+
+    //                 $finalPdf->SetTextColor(
+    //                     0,
+    //                     0,
+    //                     0
+    //                 );
+
+    //                 $finalPdf->SetDrawColor(
+    //                     80,
+    //                     80,
+    //                     80
+    //                 );
+
+    //                 $finalPdf->SetLineWidth(
+    //                     0.15
+    //                 );
+
+    //                 /*
+    //                 |--------------------------------------------------------------------------
+    //                 | Top issuance information
+    //                 |--------------------------------------------------------------------------
+    //                 |
+    //                 | Existing SOP header ke upar ki blank space me.
+    //                 |
+    //                 | Right side approximately 45 mm MASTER COPY ke liye blank rakhi
+    //                 | gayi hai.
+    //                 |--------------------------------------------------------------------------
+    //                 */
+
+    //                 $topY = 3.5;
+
+    //                 $topTextHeight = 4;
+
+    //                 $leftMargin = 7;
+
+    //                 /*
+    //                 |--------------------------------------------------------------------------
+    //                 | Available width excluding MASTER COPY area
+    //                 |--------------------------------------------------------------------------
+    //                 */
+
+    //                 $masterCopyReservedWidth = 46;
+
+    //                 $usableTopWidth =
+    //                     $originalWidth
+    //                     - $leftMargin
+    //                     - $masterCopyReservedWidth;
+
+    //                 /*
+    //                 |--------------------------------------------------------------------------
+    //                 | Column widths
+    //                 |--------------------------------------------------------------------------
+    //                 |
+    //                 | Required order:
+    //                 | Date | Request No | Copy No
+    //                 |--------------------------------------------------------------------------
+    //                 */
+
+    //                 $dateWidth =
+    //                     $usableTopWidth * 0.35;
+
+    //                 $requestWidth =
+    //                     $usableTopWidth * 0.45;
+
+    //                 $copyWidth =
+    //                     $usableTopWidth * 0.20;
+
+    //                 /*
+    //                 |--------------------------------------------------------------------------
+    //                 | Bottom border below issuance top row
+    //                 |--------------------------------------------------------------------------
+    //                 */
+
+    //                 $topLineEndX =
+    //                     $leftMargin
+    //                     + $usableTopWidth;
+
+    //                 // $finalPdf->Line(
+    //                 //     $leftMargin,
+    //                 //     9,
+    //                 //     $topLineEndX,
+    //                 //     9
+    //                 // );
+
+    //                 $finalPdf->SetFont(
+    //                     'Arial',
+    //                     'B',
+    //                     7
+    //                 );
+
+    //                 /*
+    //                 |--------------------------------------------------------------------------
+    //                 | Date - First
+    //                 |--------------------------------------------------------------------------
+    //                 */
+
+    //                 $finalPdf->SetXY(
+    //                     $leftMargin,
+    //                     $topY
+    //                 );
+
+    //                 $finalPdf->Cell(
+    //                     $dateWidth,
+    //                     $topTextHeight,
+    //                     'Date: '
+    //                     . $this->sanitizePdfText(
+    //                         $formattedIssuedDate
+    //                     ),
+    //                     0,
+    //                     0,
+    //                     'L'
+    //                 );
+
+    //                 /*
+    //                 |--------------------------------------------------------------------------
+    //                 | Request Number - Second
+    //                 |--------------------------------------------------------------------------
+    //                 */
+
+    //                 $finalPdf->SetXY(
+    //                     $leftMargin
+    //                     + $dateWidth,
+    //                     $topY
+    //                 );
+
+    //                 $finalPdf->Cell(
+    //                     $requestWidth,
+    //                     $topTextHeight,
+    //                     'Request No: '
+    //                     . $this->sanitizePdfText(
+    //                         $requestId
+    //                     ),
+    //                     0,
+    //                     0,
+    //                     'C'
+    //                 );
+
+    //                 /*
+    //                 |--------------------------------------------------------------------------
+    //                 | Copy Number - Third
+    //                 |--------------------------------------------------------------------------
+    //                 */
+
+    //                 $finalPdf->SetXY(
+    //                     $leftMargin
+    //                     + $dateWidth
+    //                     + $requestWidth,
+    //                     $topY
+    //                 );
+
+    //                 $finalPdf->Cell(
+    //                     $copyWidth,
+    //                     $topTextHeight,
+    //                     'Copy No.: '
+    //                     . $formattedCopyNumber,
+    //                     0,
+    //                     0,
+    //                     'R'
+    //                 );
+
+    //                 /*
+    //                 |--------------------------------------------------------------------------
+    //                 | Small separators
+    //                 |--------------------------------------------------------------------------
+    //                 */
+
+    //                 $firstSeparatorX =
+    //                     $leftMargin
+    //                     + $dateWidth;
+
+    //                 $secondSeparatorX =
+    //                     $leftMargin
+    //                     + $dateWidth
+    //                     + $requestWidth;
+
+    //                 $finalPdf->Line(
+    //                     $firstSeparatorX,
+    //                     3,
+    //                     $firstSeparatorX,
+    //                     9
+    //                 );
+
+    //                 $finalPdf->Line(
+    //                     $secondSeparatorX,
+    //                     3,
+    //                     $secondSeparatorX,
+    //                     9
+    //                 );
+
+    //                 /*
+    //                 |--------------------------------------------------------------------------
+    //                 | Bottom issuance information
+    //                 |--------------------------------------------------------------------------
+    //                 |
+    //                 | Left:
+    //                 | Document printed from master electronically & signature is not required.
+    //                 |
+    //                 | Right:
+    //                 | Issued By: User Name
+    //                 |--------------------------------------------------------------------------
+    //                 */
+
+    //                 $bottomLineY =
+    //                     $originalHeight - 8;
+
+    //                 $bottomTextY =
+    //                     $originalHeight - 4;
+
+    //                 $bottomLeftMargin = 7;
+
+    //                 $bottomRightMargin = 7;
+
+    //                 /*
+    //                 |--------------------------------------------------------------------------
+    //                 | Full width bottom separator
+    //                 |--------------------------------------------------------------------------
+    //                 */
+
+    //                 $finalPdf->Line(
+    //                     $bottomLeftMargin,
+    //                     $bottomLineY,
+    //                     $originalWidth - $bottomRightMargin,
+    //                     $bottomLineY
+    //                 );
+
+    //                 $finalPdf->SetFont(
+    //                     'Arial',
+    //                     'B',
+    //                     7
+    //                 );
+
+    //                 /*
+    //                 |--------------------------------------------------------------------------
+    //                 | Left disclaimer
+    //                 |--------------------------------------------------------------------------
+    //                 */
+
+    //                 $disclaimerText =
+    //                     'Document printed from master electronically & signature is not required.';
+
+    //                 $finalPdf->Text(
+    //                     $bottomLeftMargin,
+    //                     $bottomTextY,
+    //                     $this->sanitizePdfText(
+    //                         $disclaimerText
+    //                     )
+    //                 );
+
+    //                 /*
+    //                 |--------------------------------------------------------------------------
+    //                 | Right side Issued By
+    //                 |--------------------------------------------------------------------------
+    //                 */
+
+    //                 $issuedByText =
+    //                     'Issued By: '
+    //                     . $this->sanitizePdfText(
+    //                         $issuedByName
+    //                     );
+
+    //                 $issuedByTextWidth =
+    //                     $finalPdf->GetStringWidth(
+    //                         $issuedByText
+    //                     );
+
+    //                 $issuedByX =
+    //                     $originalWidth
+    //                     - $bottomRightMargin
+    //                     - $issuedByTextWidth;
+
+    //                 $finalPdf->Text(
+    //                     $issuedByX,
+    //                     $bottomTextY,
+    //                     $issuedByText
+    //                 );
+    //             }
+    //         }
+
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Output filename
+    //         |--------------------------------------------------------------------------
+    //         */
+
+    //         $documentNumber =
+    //             $document->document_number
+    //             ?? (
+    //                 'document-'
+    //                 . $document->id
+    //             );
+
+    //         $safeDocumentNumber =
+    //             preg_replace(
+    //                 '/[^A-Za-z0-9\-_]/',
+    //                 '-',
+    //                 $documentNumber
+    //             );
+
+    //         $safeDocumentNumber =
+    //             trim(
+    //                 $safeDocumentNumber,
+    //                 '-'
+    //             );
+
+    //         if (empty($safeDocumentNumber)) {
+
+    //             $safeDocumentNumber =
+    //                 'document-'
+    //                 . $document->id;
+    //         }
+
+    //         $fileName =
+    //             $safeDocumentNumber
+    //             . '-issued-copies.pdf';
+
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Generate final PDF output
+    //         |--------------------------------------------------------------------------
+    //         */
+
+    //         $finalOutput =
+    //             $finalPdf->Output('S');
+
+    //         if (empty($finalOutput)) {
+    //             throw new \RuntimeException(
+    //                 'Final issued PDF output is empty.'
+    //             );
+    //         }
+
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Delete temporary generated files
+    //         |--------------------------------------------------------------------------
+    //         */
+
+    //         foreach (
+    //             $temporaryFiles
+    //             as $temporaryFile
+    //         ) {
+
+    //             if (file_exists($temporaryFile)) {
+    //                 @unlink($temporaryFile);
+    //             }
+    //         }
+
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Return PDF as download
+    //         |--------------------------------------------------------------------------
+    //         */
+
+    //         return response(
+    //             $finalOutput,
+    //             200,
+    //             [
+    //                 'Content-Type' =>
+    //                     'application/pdf',
+
+    //                 'Content-Disposition' =>
+    //                     'attachment; filename="'
+    //                     . $fileName
+    //                     . '"',
+
+    //                 'Content-Length' =>
+    //                     strlen($finalOutput),
+
+    //                 'Cache-Control' =>
+    //                     'private, no-store, no-cache, must-revalidate',
+
+    //                 'Pragma' =>
+    //                     'no-cache',
+
+    //                 'Expires' =>
+    //                     '0',
+    //             ]
+    //         );
+
+    //     } catch (\Throwable $e) {
+
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Cleanup after error
+    //         |--------------------------------------------------------------------------
+    //         */
+
+    //         foreach (
+    //             $temporaryFiles
+    //             as $temporaryFile
+    //         ) {
+
+    //             if (file_exists($temporaryFile)) {
+    //                 @unlink($temporaryFile);
+    //             }
+    //         }
+
+    //         /*
+    //         |--------------------------------------------------------------------------
+    //         | Log error
+    //         |--------------------------------------------------------------------------
+    //         */
+
+    //         \Log::error(
+    //             'Issued PDF generation failed',
+    //             [
+    //                 'document_id' =>
+    //                     $document->id
+    //                     ?? null,
+
+    //                 'document_number' =>
+    //                     $document->document_number
+    //                     ?? null,
+
+    //                 'source_pdf_path' =>
+    //                     $sourcePdfPath,
+
+    //                 'total_copies' =>
+    //                     $totalCopies,
+
+    //                 'error_message' =>
+    //                     $e->getMessage(),
+
+    //                 'error_file' =>
+    //                     $e->getFile(),
+
+    //                 'error_line' =>
+    //                     $e->getLine(),
+
+    //                 'error_trace' =>
+    //                     $e->getTraceAsString(),
+    //             ]
+    //         );
+
+    //         toastr()->error(
+    //             'Unable to generate issued PDF: '
+    //             . $e->getMessage()
+    //         );
+
+    //         return redirect()->back();
+    //     }
+    // }
+
+    private function sanitizePdfText($value): string
+    {
+        $value = (string) $value;
+
+        $convertedValue = iconv(
+            'UTF-8',
+            'windows-1252//TRANSLIT//IGNORE',
+            $value
+        );
+
+        if ($convertedValue === false) {
+
+            return preg_replace(
+                '/[^\x20-\x7E]/',
+                '',
+                $value
             );
-
-            $fileName =
-                $safeDocumentNumber .
-                '-issued-copies.pdf';
-
-            $output = $mergedPdf->Output(
-                'S'
-            );
-
-            /*
-            |--------------------------------------------------------------------------
-            | Temporary files delete
-            |--------------------------------------------------------------------------
-            */
-
-            foreach ($tempFiles as $tempFile) {
-
-                if (file_exists($tempFile)) {
-                    unlink($tempFile);
-                }
-            }
-
-            return response(
-                $output,
-                200,
-                [
-                    'Content-Type' =>
-                        'application/pdf',
-
-                    'Content-Disposition' =>
-                        'attachment; filename="' .
-                        $fileName .
-                        '"',
-                ]
-            );
-
-        } catch (\Exception $e) {
-
-            foreach ($tempFiles as $tempFile) {
-
-                if (file_exists($tempFile)) {
-                    unlink($tempFile);
-                }
-            }
-
-            \Log::error(
-                'Document issuance PDF generation failed',
-                [
-                    'document_id' =>
-                        $document->id ?? null,
-
-                    'message' =>
-                        $e->getMessage(),
-
-                    'line' =>
-                        $e->getLine(),
-                ]
-            );
-
-            toastr()->error(
-                'Unable to generate document copies: ' .
-                $e->getMessage()
-            );
-
-            return redirect()->back();
         }
+
+        return $convertedValue;
     }
 
     private function loadFpdiDependencies(): void
@@ -11152,510 +11456,2629 @@ class DocumentController extends Controller
         ];
     }
 
-private function streamIssuedDocumentCopies(
-    $viewName,
-    array $viewData,
-    int $totalCopies,
-    $document
-) {
-    $tempFiles = [];
+    private function streamIssuedDocumentCopies($viewName, array $viewData, int $totalCopies, $document, $sourcePdfPath = null) {
+        $temporaryFiles = [];
 
-    try {
-
-        /*
-        |--------------------------------------------------------------------------
-        | Validate total copies
-        |--------------------------------------------------------------------------
-        */
-
-        if ($totalCopies < 1) {
-            throw new \RuntimeException(
-                'Total copies must be at least 1.'
-            );
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Load FPDF dependency
-        |--------------------------------------------------------------------------
-        */
-
-        if (!class_exists('FPDF')) {
-
-            $fpdfPath = base_path(
-                'vendor/setasign/fpdf/fpdf.php'
-            );
-
-            if (!file_exists($fpdfPath)) {
-                throw new \RuntimeException(
-                    'FPDF file not found at: ' .
-                    $fpdfPath
-                );
-            }
-
-            require_once $fpdfPath;
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Check FPDI dependency
-        |--------------------------------------------------------------------------
-        */
-
-        if (
-            !class_exists(
-                \setasign\Fpdi\Fpdi::class
-            )
-        ) {
-            throw new \RuntimeException(
-                'FPDI class could not be loaded.'
-            );
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Temporary directory
-        |--------------------------------------------------------------------------
-        */
-
-        $temporaryDirectory = storage_path(
-            'app/document-print-copies'
-        );
-
-        if (!is_dir($temporaryDirectory)) {
-
-            $directoryCreated = mkdir(
-                $temporaryDirectory,
-                0775,
-                true
-            );
-
-            if (
-                !$directoryCreated &&
-                !is_dir($temporaryDirectory)
-            ) {
-                throw new \RuntimeException(
-                    'Unable to create temporary PDF directory.'
-                );
-            }
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Generate every complete document copy separately
-        |--------------------------------------------------------------------------
-        |
-        | Example:
-        |
-        | SOP pages = 3
-        | Copies    = 3
-        |
-        | Copy 001 = complete pages 1, 2, 3
-        | Copy 002 = complete pages 1, 2, 3
-        | Copy 003 = complete pages 1, 2, 3
-        |
-        */
-
-        for (
-            $copyNumber = 1;
-            $copyNumber <= $totalCopies;
-            $copyNumber++
-        ) {
+        try {
 
             /*
             |--------------------------------------------------------------------------
-            | Format copy number
+            | Validate copies
             |--------------------------------------------------------------------------
             */
 
-            $formattedCopyNumber = str_pad(
-                $copyNumber,
+            if ($totalCopies < 1) {
+                throw new \RuntimeException(
+                    'Total copies must be at least 1.'
+                );
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Load FPDF
+            |--------------------------------------------------------------------------
+            */
+
+            if (!class_exists('FPDF')) {
+
+                $fpdfPath = base_path(
+                    'vendor/setasign/fpdf/fpdf.php'
+                );
+
+                if (!file_exists($fpdfPath)) {
+                    throw new \RuntimeException(
+                        'FPDF file not found at: ' .
+                        $fpdfPath
+                    );
+                }
+
+                require_once $fpdfPath;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Check FPDI
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                !class_exists(
+                    \setasign\Fpdi\Fpdi::class
+                )
+            ) {
+                throw new \RuntimeException(
+                    'FPDI class could not be loaded.'
+                );
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Temporary directory
+            |--------------------------------------------------------------------------
+            */
+
+            $temporaryDirectory = storage_path(
+                'app/document-print-copies'
+            );
+
+            if (!is_dir($temporaryDirectory)) {
+
+                $directoryCreated = mkdir(
+                    $temporaryDirectory,
+                    0775,
+                    true
+                );
+
+                if (
+                    !$directoryCreated
+                    && !is_dir($temporaryDirectory)
+                ) {
+                    throw new \RuntimeException(
+                        'Unable to create temporary PDF directory.'
+                    );
+                }
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Prepare source PDF
+            |--------------------------------------------------------------------------
+            |
+            | Uploaded PDF mila:
+            | Direct wahi use hoga.
+            |
+            | Uploaded PDF nahi mila:
+            | Blade se PDF generate hoga.
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                !empty($sourcePdfPath)
+                && file_exists($sourcePdfPath)
+                && strtolower(
+                    pathinfo(
+                        $sourcePdfPath,
+                        PATHINFO_EXTENSION
+                    )
+                ) === 'pdf'
+            ) {
+
+                $baseSourcePdf = $sourcePdfPath;
+
+            } else {
+
+                /*
+                |--------------------------------------------------------------------------
+                | Generate source PDF from Blade
+                |--------------------------------------------------------------------------
+                */
+
+                $sourcePdf = PDF::loadView(
+                    $viewName,
+                    $viewData
+                )->setOptions([
+                    'defaultFont' =>
+                        'sans-serif',
+
+                    'isHtml5ParserEnabled' =>
+                        true,
+
+                    'isRemoteEnabled' =>
+                        true,
+
+                    'isPhpEnabled' =>
+                        true,
+                ]);
+
+                $sourcePdf->setPaper(
+                    'A4',
+                    'portrait'
+                );
+
+                $sourcePdf->render();
+
+                /*
+                |--------------------------------------------------------------------------
+                | Existing old-style watermark
+                |--------------------------------------------------------------------------
+                */
+
+                $domPdf =
+                    $sourcePdf->getDomPDF();
+
+                $canvas =
+                    $domPdf->getCanvas();
+
+                $height =
+                    $canvas->get_height();
+
+                $width =
+                    $canvas->get_width();
+
+                $watermarkText = strtoupper(
+                    trim(
+                        (string) (
+                            $document->status ?? ''
+                        )
+                    )
+                );
+
+                if (!empty($watermarkText)) {
+
+                    $canvas->page_script(
+                        '$pdf->set_opacity(0.2,"Multiply");'
+                    );
+
+                    $font = $domPdf
+                        ->getFontMetrics()
+                        ->get_font(
+                            'sans-serif',
+                            'bold'
+                        );
+
+                    $fontSize = 25;
+
+                    $textWidth = $domPdf
+                        ->getFontMetrics()
+                        ->getTextWidth(
+                            $watermarkText,
+                            $font,
+                            $fontSize
+                        );
+
+                    $canvas->page_text(
+                        ($width - $textWidth) / 2,
+                        ($height / 2) + 50,
+                        $watermarkText,
+                        $font,
+                        $fontSize,
+                        [0, 0, 0],
+                        0.9,
+                        6,
+                        -20
+                    );
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Save source PDF
+                |--------------------------------------------------------------------------
+                */
+
+                $baseSourcePdf =
+                    $temporaryDirectory
+                    . DIRECTORY_SEPARATOR
+                    . 'print-source-'
+                    . $document->id
+                    . '-'
+                    . uniqid('', true)
+                    . '.pdf';
+
+                $sourceOutput =
+                    $sourcePdf->output();
+
+                if (empty($sourceOutput)) {
+                    throw new \RuntimeException(
+                        'Generated source PDF is empty.'
+                    );
+                }
+
+                $writtenBytes = file_put_contents(
+                    $baseSourcePdf,
+                    $sourceOutput
+                );
+
+                if ($writtenBytes === false) {
+                    throw new \RuntimeException(
+                        'Unable to save generated source PDF.'
+                    );
+                }
+
+                $temporaryFiles[] =
+                    $baseSourcePdf;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Issuance information
+            |--------------------------------------------------------------------------
+            */
+
+            $requestId =
+                $viewData['requestId']
+                ?? 'N/A';
+
+            $issuedByName =
+                $viewData['issuedByName']
+                ?? 'N/A';
+
+            $issuedDate =
+                $viewData['issuedDate']
+                ?? null;
+
+            if (!empty($issuedDate)) {
+
+                try {
+
+                    $formattedIssuedDate =
+                        \Carbon\Carbon::parse(
+                            $issuedDate
+                        )->format('d-M-Y');
+
+                } catch (\Throwable $e) {
+
+                    $formattedIssuedDate =
+                        (string) $issuedDate;
+                }
+
+            } else {
+
+                $formattedIssuedDate = 'N/A';
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Final print PDF
+            |--------------------------------------------------------------------------
+            */
+
+            $finalPdf = new \setasign\Fpdi\Fpdi();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Prevent extra blank pages
+            |--------------------------------------------------------------------------
+            */
+
+            $finalPdf->SetAutoPageBreak(false);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Read source PDF
+            |--------------------------------------------------------------------------
+            */
+
+            $sourcePageCount = $finalPdf->setSourceFile($baseSourcePdf);
+
+            if ($sourcePageCount < 1) {
+                throw new \RuntimeException(
+                    'No pages found in source PDF.'
+                );
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Generate complete physical copies
+            |--------------------------------------------------------------------------
+            */
+
+            for ($copyNumber = 1; $copyNumber <= $totalCopies; $copyNumber++) {
+
+                $formattedCopyNumber = str_pad($copyNumber, 3, '0', STR_PAD_LEFT);
+
+                for ($sourcePageNumber = 1; $sourcePageNumber <= $sourcePageCount; $sourcePageNumber++) {
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Import current source page
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $templateId = $finalPdf->importPage(
+                            $sourcePageNumber
+                        );
+
+                    $pageSize = $finalPdf->getTemplateSize(
+                            $templateId
+                        );
+
+                    $pageWidth = $pageSize['width'];
+
+                    $pageHeight = $pageSize['height'];
+
+                    $orientation = $pageWidth > $pageHeight
+                            ? 'L'
+                            : 'P';
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Exact original page size
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $finalPdf->AddPage($orientation,
+                        [
+                            $pageWidth,
+                            $pageHeight,
+                        ]
+                    );
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Original document without resize
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $finalPdf->useTemplate($templateId, 0, 0, $pageWidth, $pageHeight);
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Drawing configuration
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $finalPdf->SetTextColor(0, 0, 0);
+
+                    $finalPdf->SetDrawColor(80, 80, 80);
+
+                    $finalPdf->SetLineWidth(0.15);
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Top issuance row
+                    |--------------------------------------------------------------------------
+                    |
+                    | Date | Request No | Copy No.     MASTER COPY
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $leftMargin = 7;
+
+                    $topY = 3.2;
+
+                    $topLineY = 9;
+
+                    $topTextHeight = 4;
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Reserve right side for MASTER COPY
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $masterCopyReservedWidth = 47;
+
+                    $usableTopWidth =
+                        $pageWidth
+                        - $leftMargin
+                        - $masterCopyReservedWidth;
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Top column widths
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $dateWidth =
+                        $usableTopWidth * 0.35;
+
+                    $requestWidth =
+                        $usableTopWidth * 0.45;
+
+                    $copyWidth =
+                        $usableTopWidth * 0.20;
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Top underline
+                    |--------------------------------------------------------------------------
+                    */
+
+                    // $finalPdf->Line(
+                    //     $leftMargin,
+                    //     $topLineY,
+                    //     $leftMargin + $usableTopWidth,
+                    //     $topLineY
+                    // );
+
+                    $finalPdf->SetFont(
+                        'Arial',
+                        'B',
+                        7
+                    );
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Date - First
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $finalPdf->SetXY(
+                        $leftMargin,
+                        $topY
+                    );
+
+                    $finalPdf->Cell(
+                        $dateWidth,
+                        $topTextHeight,
+                        'Date: '
+                        . $this->sanitizePdfText(
+                            $formattedIssuedDate
+                        ),
+                        0,
+                        0,
+                        'L'
+                    );
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Request No - Second
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $finalPdf->SetXY(
+                        $leftMargin + $dateWidth,
+                        $topY
+                    );
+
+                    $finalPdf->Cell(
+                        $requestWidth,
+                        $topTextHeight,
+                        'Request No: '
+                        . $this->sanitizePdfText(
+                            $requestId
+                        ),
+                        0,
+                        0,
+                        'C'
+                    );
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Copy No - Third
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $finalPdf->SetXY(
+                        $leftMargin
+                        + $dateWidth
+                        + $requestWidth,
+                        $topY
+                    );
+
+                    $finalPdf->Cell(
+                        $copyWidth,
+                        $topTextHeight,
+                        'Copy No.: '
+                        . $formattedCopyNumber,
+                        0,
+                        0,
+                        'R'
+                    );
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Top vertical separators
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $firstSeparatorX =
+                        $leftMargin
+                        + $dateWidth;
+
+                    $secondSeparatorX =
+                        $leftMargin
+                        + $dateWidth
+                        + $requestWidth;
+
+                    $finalPdf->Line(
+                        $firstSeparatorX,
+                        3,
+                        $firstSeparatorX,
+                        $topLineY
+                    );
+
+                    $finalPdf->Line(
+                        $secondSeparatorX,
+                        3,
+                        $secondSeparatorX,
+                        $topLineY
+                    );
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Bottom print information
+                    |--------------------------------------------------------------------------
+                    |
+                    | Left:
+                    | Document printed from master electronically & signature is not required.
+                    |
+                    | Right:
+                    | Issued By: User Name
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $bottomLineY =
+                        $pageHeight - 8;
+
+                    $bottomTextY =
+                        $pageHeight - 4;
+
+                    $bottomLeftMargin = 7;
+
+                    $bottomRightMargin = 7;
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Full-width bottom separator
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $finalPdf->Line(
+                        $bottomLeftMargin,
+                        $bottomLineY,
+                        $pageWidth - $bottomRightMargin,
+                        $bottomLineY
+                    );
+
+                    $finalPdf->SetFont(
+                        'Arial',
+                        'B',
+                        7
+                    );
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Left-side disclaimer
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $disclaimerText =
+                        'Document printed from master electronically & signature is not required.';
+
+                    $finalPdf->Text(
+                        $bottomLeftMargin,
+                        $bottomTextY,
+                        $this->sanitizePdfText(
+                            $disclaimerText
+                        )
+                    );
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Right-side Issued By
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $issuedByText =
+                        'Issued By: '
+                        . $this->sanitizePdfText(
+                            $issuedByName
+                        );
+
+                    $issuedByTextWidth =
+                        $finalPdf->GetStringWidth(
+                            $issuedByText
+                        );
+
+                    $issuedByX =
+                        $pageWidth
+                        - $bottomRightMargin
+                        - $issuedByTextWidth;
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Text() prevents automatic extra blank pages
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $finalPdf->Text(
+                        $issuedByX,
+                        $bottomTextY,
+                        $issuedByText
+                    );
+                }
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Output filename
+            |--------------------------------------------------------------------------
+            */
+
+            $documentNumber =
+                $document->document_number
+                ?? (
+                    'document-'
+                    . $document->id
+                );
+
+            $safeDocumentNumber =
+                preg_replace(
+                    '/[^A-Za-z0-9\-_]/',
+                    '-',
+                    $documentNumber
+                );
+
+            $safeDocumentNumber =
+                trim(
+                    $safeDocumentNumber,
+                    '-'
+                );
+
+            if (empty($safeDocumentNumber)) {
+
+                $safeDocumentNumber =
+                    'document-'
+                    . $document->id;
+            }
+
+            $fileName =
+                $safeDocumentNumber
+                . '-print-copies.pdf';
+
+            /*
+            |--------------------------------------------------------------------------
+            | Final output
+            |--------------------------------------------------------------------------
+            */
+
+            $finalOutput =
+                $finalPdf->Output('S');
+
+            if (empty($finalOutput)) {
+                throw new \RuntimeException(
+                    'Final print PDF output is empty.'
+                );
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Cleanup
+            |--------------------------------------------------------------------------
+            */
+
+            foreach (
+                $temporaryFiles
+                as $temporaryFile
+            ) {
+
+                if (file_exists($temporaryFile)) {
+                    @unlink($temporaryFile);
+                }
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Inline browser print
+            |--------------------------------------------------------------------------
+            */
+
+            return response(
+                $finalOutput,
+                200,
+                [
+                    'Content-Type' =>
+                        'application/pdf',
+
+                    'Content-Disposition' =>
+                        'inline; filename="'
+                        . $fileName
+                        . '"',
+
+                    'Content-Length' =>
+                        strlen($finalOutput),
+
+                    'Cache-Control' =>
+                        'private, no-store, no-cache, must-revalidate',
+
+                    'Pragma' =>
+                        'no-cache',
+
+                    'Expires' =>
+                        '0',
+                ]
+            );
+
+        } catch (\Throwable $e) {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Cleanup after error
+            |--------------------------------------------------------------------------
+            */
+
+            foreach (
+                $temporaryFiles
+                as $temporaryFile
+            ) {
+
+                if (file_exists($temporaryFile)) {
+                    @unlink($temporaryFile);
+                }
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Log error
+            |--------------------------------------------------------------------------
+            */
+
+            \Log::error(
+                'Document print PDF generation failed',
+                [
+                    'document_id' =>
+                        $document->id ?? null,
+
+                    'document_number' =>
+                        $document->document_number
+                        ?? null,
+
+                    'source_pdf_path' =>
+                        $sourcePdfPath,
+
+                    'total_copies' =>
+                        $totalCopies,
+
+                    'view_name' =>
+                        $viewName,
+
+                    'error_message' =>
+                        $e->getMessage(),
+
+                    'error_file' =>
+                        $e->getFile(),
+
+                    'error_line' =>
+                        $e->getLine(),
+
+                    'error_trace' =>
+                        $e->getTraceAsString(),
+                ]
+            );
+
+            toastr()->error(
+                'Unable to generate print copies: '
+                . $e->getMessage()
+            );
+
+            return redirect()->back();
+        }
+    }
+
+    private function generateRevisedDocumentNumber($currentDocumentNumber, $revisionNumber) {
+        /*
+        |--------------------------------------------------------------------------
+        | Revision ko 2 digits me convert karo
+        |--------------------------------------------------------------------------
+        */
+
+        $formattedRevision = str_pad(
+            (int) $revisionNumber,
+            2,
+            '0',
+            STR_PAD_LEFT
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Empty document number handling
+        |--------------------------------------------------------------------------
+        */
+
+        if (empty($currentDocumentNumber)) {
+            return null;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Existing revision suffix replace karo
+        |--------------------------------------------------------------------------
+        |
+        | SOP/QA/001-00 => SOP/QA/001-01
+        | SOP/QA/001-01 => SOP/QA/001-02
+        |
+        */
+
+        if (
+            preg_match(
+                '/-\d{2}$/',
+                $currentDocumentNumber
+            )
+        ) {
+            return preg_replace(
+                '/-\d{2}$/',
+                '-' . $formattedRevision,
+                $currentDocumentNumber
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Agar old number me suffix nahi hai
+        |--------------------------------------------------------------------------
+        |
+        | SOP/QA/001 => SOP/QA/001-01
+        |
+        */
+
+        return $currentDocumentNumber
+            . '-'
+            . $formattedRevision;
+    }
+
+    private function getDocumentPdfViewName($documentTypeId)
+    {
+        return match ($documentTypeId) {
+            'SOP' => 'frontend.documents.pdfpage',
+            'BOM' => 'frontend.documents.bom-pdf',
+            'BMR' => 'frontend.documents.bmr-pdf',
+            'BPR' => 'frontend.documents.bpr-pdf',
+
+            'FPS' => 'frontend.documents.finished-product-pdf',
+            'INPS' => 'frontend.documents.inprocess_s-pdf',
+            'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
+            'RAWMS' => 'frontend.documents.raw_ms-pdf',
+            'PAMS' => 'frontend.documents.package_ms-pdf',
+            'PIAS' => 'frontend.documents.product_item-pdf',
+            'MFPS' => 'frontend.documents.mfps-pdf',
+            'MFPSTP' => 'frontend.documents.mfpstp-pdf',
+            'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
+            'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+            'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
+            'RMSTP' => 'frontend.documents.raw_mstp-pdf',
+            'SPEC' => 'frontend.documents.spec-pdf',
+            'STP' => 'frontend.documents.stp-pdf',
+            'TDS' => 'frontend.documents.tds-pdf',
+            'GTP' => 'frontend.documents.gtp-pdf',
+
+            'STUDYPROTOCOL' => 'frontend.documents.protocol.study_protocol',
+            'STUDY' => 'frontend.documents.reports.study_report',
+            'EQUIPMENTHOLDREPORT' => 'frontend.documents.reports.equipment_hold_report',
+            'TEMPMAPPING' => 'frontend.documents.reports.temperatur-mapping-report',
+            'PROVALIDRE' => 'frontend.documents.reports.process-validation-report',
+            'PROCUMREPORT' => 'frontend.documents.reports.procumreport',
+            'REQULIFICATION' => 'frontend.documents.reports.requlification',
+            'EQUIPMENTHOLDPROTOCOL' => 'frontend.documents.protocol.equipment_hold_protocol',
+            'ANNEQUALPROTO' => 'frontend.documents.protocol.annexure_for_qualification_protocol',
+            'ANNEQUALREPORT' => 'frontend.documents.reports.annexure_for_qualification_report',
+            'AAEUSERREQUESPECI' => 'frontend.documents.reports.annexure_for_user_requirement_specification_report',
+            'PROVALIPROTOCOL' => 'frontend.documents.protocol.provaliprotocol',
+            'REQULIFICATIONPROTOCOL' => 'frontend.documents.protocol.requliprotocol',
+            'REPORTFORMEDIAFILL' => 'frontend.documents.reports.reportformediafill',
+            'PROTOCOLFORMEDIAFILL' => 'frontend.documents.protocol.protocolformediafill',
+            'ANNACINQULIPROTOCOL' => 'frontend.documents.protocol.anacinquliprotocol',
+            'ANNACOPERQULIPROTOCOL' => 'frontend.documents.protocol.anacoperaquliprotocol',
+            'ANNACPERMQULIPROTOCOL' => 'frontend.documents.protocol.anacperquliprotocol',
+            'PROVALIINTERRE' => 'frontend.documents.reports.process-interim-report',
+            'PACKVALIREPORT' => 'frontend.documents.reports.pack-vali-report',
+            'PACKVALIPROTOCOL' => 'frontend.documents.protocol.packvaliprotocol',
+            'HOLDTIMESTUDYREPORT' => 'frontend.documents.reports.hold-time-study-report',
+            'HOLDTIMESTUDYPROTOCOL' => 'frontend.documents.protocol.hold-time-study-protocol',
+            'FOCONITOGENREPORT' => 'frontend.documents.reports.for-com-air-nitogen-report',
+            'FOCONITOGENPROTOCOL' => 'frontend.documents.protocol.for-com-air-nitogen-protocol',
+            'STABILITYPROTOCOL' => 'frontend.documents.protocol.stability-protocol',
+            'CLEAVALIPROTODOC' => 'frontend.documents.protocol.cleaning_validation_protocoldoc',
+            'CLEAVALIREPORTDOC' => 'frontend.documents.reports.cleaning_validation_reportdoc',
+
+            'ANNIGxPASSES' => 'frontend.documents.csv.anne_I_Gxp_assessment',
+            'ANNIIRiskASSES' => 'frontend.documents.csv.ann_II_Initial_risk_assessment',
+            'ANNIIIERESASSES' => 'frontend.documents.csv.ann_III_ERES_assessment',
+            'ANNIVPlanASSES' => 'frontend.documents.csv.ann_IV_validation_plan',
+            'ANNVUserReqSpe' => 'frontend.documents.csv.ann_V_user_req_spec',
+            'ANNIXFunRiskASSES' => 'frontend.documents.csv.ann_IX_fun_risk_ass',
+            'ANNVIFunReqSpe' => 'frontend.documents.csv.ann_VI_fun_req_spec',
+            'ANNVIIFunSpe' => 'frontend.documents.csv.ann_VII_fun_spec',
+            'ANNVIIITechSpe' => 'frontend.documents.csv.ann_VIII_tech_spec',
+            'ANNXDesignSpe' => 'frontend.documents.csv.ann_X_Des_spec',
+            'ANNXIConfiSpe' => 'frontend.documents.csv.ann_XI_confi_spec',
+            'ANNXIIQualiProto' => 'frontend.documents.csv.ann_XII_Insta_InfrOperPerqualipro',
+            'ANNXIIIUnitInTest' => 'frontend.documents.csv.ann_XIII_unit_Inte_test_scr',
+            'ANNXIVDataMigPro' => 'frontend.documents.csv.ann_XIV_data_migr_pro',
+            'ANNEXUREXIXSYSTEMRETIREMENT' => 'frontend.documents.csv.ann_XIX_sys_reti',
+            'ANNEXUREXVIINSTALLATION' => 'frontend.documents.csv.ann_XVI_Insta_Infr_oper_perfquali',
+            'ANNEXUREXVIIVALIDATION' => 'frontend.documents.csv.ann_XVII_vali_sum_rep',
+            'ANNEXUREXVIIITRACEABILITYMATRIX' => 'frontend.documents.csv.ann_XVIII_trace_matr',
+            'ANNXVPerfQualif' => 'frontend.documents.csv.ann_XV_data_quali_pro',
+            'MAForRec' => 'frontend.documents.csv.mast_for_rec',
+            'MAPacRec' => 'frontend.documents.csv.Mast_pac_rec',
+            'QM' => 'frontend.documents.csv.quality_manual',
+            'SMF' => 'frontend.documents.csv.site_master_file',
+            'VMP' => 'frontend.documents.csv.valid_master_plan',
+
+            default => 'frontend.documents.pdfpage',
+        };
+    }
+
+
+    private function getNonSopAttachmentFieldMap()
+    {
+        return [
+            'BOM' => [
+                'billMatrial',
+            ],
+
+            'BMR' => [
+                'batchManufacturingBmr',
+            ],
+
+            'BPR' => [
+                'batchPackingRecordBpr',
+            ],
+
+            'MAForRec' => [
+                'MasterFormulaRecordBMR',
+            ],
+
+            'MAPacRec' => [
+                'MasterPackingRecord',
+            ],
+
+            'SMF' => [
+                'SiteMasterFileatt',
+            ],
+
+            'QM' => [
+                'file_attach_qm',
+            ],
+
+            'VMP' => [
+                'file_attach_vmp',
+            ],
+
+            'PROVALIPROTOCOL' => [
+                'ProValProtocol',
+                'studyattachment',
+            ],
+
+            'PACKVALIREPORT' => [
+                'PacValRepfile_attach',
+                'studyattachment',
+            ],
+
+            'HOLDTIMESTUDYREPORT' => [
+                'HolTimSutRepfile_attach',
+                'htspattachement',
+                'studyattachment',
+            ],
+
+            'HOLDTIMESTUDYPROTOCOL' => [
+                'htspattachement',
+                'studyattachment',
+            ],
+
+            'TEMPMAPPING' => [
+                'TemMapProCumRepfile_attach',
+                'studyattachment',
+            ],
+
+            'FOCONITOGENPROTOCOL' => [
+                'ForComANiGasProtocolfile_attach',
+                'studyattachment',
+            ],
+
+            'FOCONITOGENREPORT' => [
+                'attach_comp_nitrogen',
+                'studyattachment',
+            ],
+
+            'PROVALIDRE' => [
+                'file_attach_pvr',
+                'validationreportattachment',
+                'studyattachment',
+            ],
+
+            'PROVALIINTERRE' => [
+                'pvir_attachment',
+                'studyattachment',
+            ],
+
+            'PROCUMREPORT' => [
+                'procumrepo_file_attach',
+                'studyattachment',
+            ],
+
+            'REQULIFICATION' => [
+                'rfmfattachement',
+                'studyattachment',
+            ],
+
+            'REQULIFICATIONPROTOCOL' => [
+                'aqpattachement',
+                'studyattachment',
+            ],
+
+            'ANNEQUALPROTO' => [
+                'annexureattachment',
+                'studyattachment',
+            ],
+
+            'ANNEQUALREPORT' => [
+                'annexurereportattachment',
+                'studyattachment',
+            ],
+
+            'AAEUSERREQUESPECI' => [
+                'afursattachement',
+                'studyattachment',
+            ],
+
+            'PACKVALIPROTOCOL' => [
+                'pvpattachement',
+                'studyattachment',
+            ],
+
+            'STUDYPROTOCOL' => [
+                'attachment_spt',
+                'studyattachment',
+            ],
+
+            'STUDY' => [
+                'attachment_srt',
+                'studyattachment',
+                'study_attachments',
+            ],
+
+            'EQUIPMENTHOLDREPORT' => [
+                'attachment_ehtsr',
+                'studyattachment',
+            ],
+
+            'EQUIPMENTHOLDPROTOCOL' => [
+                'attachment_ehtsprt',
+                'studyattachment',
+            ],
+
+            'ANNIGxPASSES' => ['annex_I_gxp_attachment'],
+            'ANNIIRiskASSES' => ['annex_II_risk_attachment'],
+            'ANNIIIERESASSES' => ['annex_III_eres_attachment'],
+            'ANNIVPlanASSES' => ['annex_IV_plan_attachment'],
+            'ANNVUserReqSpe' => ['annex_V_user_attachment'],
+            'ANNVIFunReqSpe' => ['annex_VI_req_attachment'],
+            'ANNVIIFunSpe' => ['annex_VII_fun_attachment'],
+            'ANNVIIITechSpe' => ['annex_VIII_tech_attachment'],
+            'ANNIXFunRiskASSES' => ['annex_IX_risk_attachment'],
+            'ANNXDesignSpe' => ['annex_X_design_attachment'],
+            'ANNXIConfiSpe' => ['annex_XI_confi_attachment'],
+            'ANNXIIQualiProto' => ['annex_XII_qua_proto_attachment'],
+            'ANNXIIIUnitInTest' => ['annex_XIII_unit_integ_attachment'],
+            'ANNXIVDataMigPro' => ['annex_XIV_data_migra_attachment'],
+            'ANNXVPerfQualif' => ['annex_XV_data_qualif_attachment'],
+            'ANNEXUREXVIINSTALLATION' => ['annex_XVI_per_qualif_attachment'],
+            'ANNEXUREXVIIVALIDATION' => ['annex_XVII_valid_summ_attachment'],
+            'ANNEXUREXVIIITRACEABILITYMATRIX' => ['annex_XVIII_trac_matri_attachment'],
+            'ANNEXUREXIXSYSTEMRETIREMENT' => ['annex_XIX_syst_retir_attachment'],
+        ];
+    }
+
+
+    private function getAllKnownDocumentAttachmentFields()
+    {
+        return [
+                'ForComANiGasProtocolfile_attach',
+                'PacValRepfile_attach',
+                'HolTimSutRepfile_attach',
+                'TemMapProCumRepfile_attach',
+                'billMatrial',
+                'batchManufacturingBmr',
+                'batchPackingRecordBpr',
+                'MasterFormulaRecordBMR',
+                'MasterPackingRecord',
+                'SiteMasterFileatt',
+                'ProValProtocol',
+                'file_attach',
+                'attach_cvpd',
+                'attachment_srt',
+                'attachment_spt',
+                'attachment_ehtsr',
+                'attachment_ehtsprt',
+                'attach_comp_nitrogen',
+                'file_attach_qm',
+                'file_attach_vmp',
+                'procumrepo_file_attach',
+                'file_attach_pvr',
+                'file_attach_cvrd',
+                'attach_draft_doocument',
+                'attach_effective_docuement',
+        ];
+    }
+
+
+    private function getAllKnownDocumentContentAttachmentFields()
+    {
+        return [
+                'hod_attachments',
+                'pvir_attachment',
+                'annex_I_gxp_attachment',
+                'annex_II_risk_attachment',
+                'annex_III_eres_attachment',
+                'annex_IV_plan_attachment',
+                'annex_V_user_attachment',
+                'annex_VI_req_attachment',
+                'annex_VII_fun_attachment',
+                'annex_VIII_tech_attachment',
+                'annex_IX_risk_attachment',
+                'annex_X_design_attachment',
+                'annex_XI_confi_attachment',
+                'annex_XII_qua_proto_attachment',
+                'annex_XIII_unit_integ_attachment',
+                'annex_XIV_data_migra_attachment',
+                'annex_XV_data_qualif_attachment',
+                'htspattachement',
+                'pvpattachement',
+                'AIQPattachement',
+                'AOQPattachement',
+                'APQPattachement',
+                'afqpattachement',
+                'afqrattachement',
+                'afursattachement',
+                'aqpattachement',
+                'aqrattachement',
+                'pfmfattachement',
+                'rfmfattachement',
+                'annex_XVI_per_qualif_attachment',
+                'annex_XVII_valid_summ_attachment',
+                'annex_XVIII_trac_matri_attachment',
+                'annex_XIX_syst_retir_attachment',
+        ];
+    }
+
+
+    private function decodeDocumentAttachmentValue($value)
+    {
+        if ($value === null || $value === '') {
+            return [];
+        }
+
+        if (is_array($value)) {
+            $files = [];
+
+            foreach ($value as $item) {
+                $files = array_merge(
+                    $files,
+                    $this->decodeDocumentAttachmentValue($item)
+                );
+            }
+
+            return $files;
+        }
+
+        if (!is_string($value)) {
+            return [];
+        }
+
+        $value = trim($value);
+
+        if ($value === '') {
+            return [];
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | JSON array
+        |--------------------------------------------------------------------------
+        */
+
+        $decoded = json_decode($value, true);
+
+        if (
+            json_last_error() === JSON_ERROR_NONE
+            && is_array($decoded)
+        ) {
+            return $this->decodeDocumentAttachmentValue($decoded);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Serialized array
+        |--------------------------------------------------------------------------
+        */
+
+        $unserialized = @unserialize($value);
+
+        if (is_array($unserialized)) {
+            return $this->decodeDocumentAttachmentValue($unserialized);
+        }
+
+        return [$value];
+    }
+
+
+    private function resolveUploadedAttachmentPath($file)
+    {
+        if (!is_string($file) || trim($file) === '') {
+            return null;
+        }
+
+        $file = trim($file);
+
+        $file = preg_replace('/#.*$/', '', $file);
+        $file = preg_replace('/\?.*$/', '', $file);
+
+        $urlPath = parse_url($file, PHP_URL_PATH);
+
+        if (!empty($urlPath)) {
+            $file = ltrim($urlPath, '/');
+        }
+
+        $baseName = basename($file);
+
+        $possiblePaths = [
+            public_path($file),
+            public_path('upload/' . $file),
+            public_path('upload/' . $baseName),
+            public_path('upload/document/' . $file),
+            public_path('upload/document/' . $baseName),
+            storage_path('app/public/' . $file),
+            storage_path('app/public/' . $baseName),
+        ];
+
+        $allowedExtensions = [
+            'pdf',
+            'jpg',
+            'jpeg',
+            'png',
+        ];
+
+        foreach ($possiblePaths as $possiblePath) {
+
+            if (!file_exists($possiblePath)) {
+                continue;
+            }
+
+            $extension = strtolower(
+                pathinfo(
+                    $possiblePath,
+                    PATHINFO_EXTENSION
+                )
+            );
+
+            if (!in_array($extension, $allowedExtensions, true)) {
+                continue;
+            }
+
+            return realpath($possiblePath) ?: $possiblePath;
+        }
+
+        return null;
+    }
+
+
+    private function getNonSopDocumentPdfPaths($document, $documentContent = null)
+    {
+        $pdfPaths = [];
+
+        if (!$document) {
+            return $pdfPaths;
+        }
+
+        $documentTypeId = (string) $document->document_type_id;
+
+        $fieldMap = $this->getNonSopAttachmentFieldMap();
+
+        /*
+        |--------------------------------------------------------------------------
+        | First priority: fields mapped to current document type
+        |--------------------------------------------------------------------------
+        */
+
+        $mappedFields = $fieldMap[$documentTypeId] ?? [];
+
+        /*
+        |--------------------------------------------------------------------------
+        | Fallback: every real upload field found in this controller
+        |--------------------------------------------------------------------------
+        |
+        | This handles future/other non-SOP types without writing another if block.
+        |--------------------------------------------------------------------------
+        */
+
+        $documentFields = array_values(
+            array_unique(
+                array_merge(
+                    $mappedFields,
+                    $this->getAllKnownDocumentAttachmentFields()
+                )
+            )
+        );
+
+        $contentFields = array_values(
+            array_unique(
+                array_merge(
+                    $mappedFields,
+                    $this->getAllKnownDocumentContentAttachmentFields()
+                )
+            )
+        );
+
+        foreach ($documentFields as $fieldName) {
+
+            $attributes = $document->getAttributes();
+
+            if (!array_key_exists($fieldName, $attributes)) {
+                continue;
+            }
+
+            $files = $this->decodeDocumentAttachmentValue(
+                $attributes[$fieldName]
+            );
+
+            foreach ($files as $file) {
+
+                $attachmentPath = $this->resolveUploadedAttachmentPath($file);
+
+                if (
+                    $attachmentPath
+                    && !in_array($attachmentPath, $pdfPaths, true)
+                ) {
+                    $pdfPaths[] = $attachmentPath;
+                }
+            }
+        }
+
+        if ($documentContent) {
+
+            foreach ($contentFields as $fieldName) {
+
+                $attributes = $documentContent->getAttributes();
+
+                if (!array_key_exists($fieldName, $attributes)) {
+                    continue;
+                }
+
+                $files = $this->decodeDocumentAttachmentValue(
+                    $attributes[$fieldName]
+                );
+
+                foreach ($files as $file) {
+
+                    $attachmentPath = $this->resolveUploadedAttachmentPath($file);
+
+                    if ($attachmentPath && !in_array($attachmentPath, $pdfPaths, true)) {
+                        $pdfPaths[] = $attachmentPath;
+                    }
+                }
+            }
+        }
+
+        return $pdfPaths;
+    }
+
+
+    public function printDownloadPDF($id)
+    {
+        $request = request();
+
+        if (!$request->document_request_id) {
+            toastr()->error('Please select Request ID.');
+            return redirect()->back();
+        }
+
+        if (!$request->issued_date) {
+            toastr()->error('Issued Date is required.');
+            return redirect()->back();
+        }
+
+        $document = Document::find($id);
+
+        if (!$document) {
+            toastr()->error('Document not found.');
+            return redirect()->back();
+        }
+
+        $documentRequest = DocumentRequest::where(
+                'id',
+                $request->document_request_id
+            )
+            ->where('document_id', $document->id)
+            ->where('status', 'Opened')
+            ->first();
+
+        if (!$documentRequest) {
+            toastr()->error(
+                'Selected request is invalid, closed or does not belong to this document.'
+            );
+
+            return redirect()->back();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Prevent same Request ID from being used again
+        |--------------------------------------------------------------------------
+        */
+
+        $alreadyUsedInDownload = DownloadHistory::where(
+                'document_request_id',
+                $documentRequest->id
+            )
+            ->exists();
+
+        $alreadyUsedInPrint = PrintHistory::where(
+                'document_request_id',
+                $documentRequest->id
+            )
+            ->exists();
+
+        if ($alreadyUsedInDownload || $alreadyUsedInPrint) {
+            toastr()->error(
+                'This Request ID has already been used.'
+            );
+
+            return redirect()->back();
+        }
+
+        $formattedRequestId =
+            $documentRequest->request_id
+            ?? (
+                'Request-' .
+                str_pad(
+                    $documentRequest->record,
+                    3,
+                    '0',
+                    STR_PAD_LEFT
+                )
+            );
+
+        $issuedCopies =
+            (int) $documentRequest->number_of_copies;
+
+        $printReason =
+            $documentRequest->reason;
+
+        $issuedDate =
+            $request->issued_date;
+
+        $issuedById =
+            Auth::id();
+
+        $issuedByName =
+            Auth::user()->name;
+
+        $issuanceTo =
+            $documentRequest->request_to;
+
+        $issuedToUser =
+            User::find($issuanceTo);
+
+        if (!$issuedToUser) {
+            toastr()->error(
+                'Request To user is not available.'
+            );
+
+            return redirect()->back();
+        }
+
+        $issuedToName =
+            $issuedToUser->name;
+
+        $issuedToDepartment =
+            Department::where(
+                'id',
+                $issuedToUser->departmentid
+            )->value('name');
+
+        if ($issuedCopies < 1) {
+            toastr()->error(
+                'Number of issued copies must be at least 1.'
+            );
+
+            return redirect()->back();
+        }
+
+        $roleIds = DB::table('user_roles')
+            ->where('user_id', Auth::id())
+            ->pluck('role_id')
+            ->filter()
+            ->map(function ($roleId) {
+                return (int) $roleId;
+            })
+            ->unique()
+            ->values()
+            ->toArray();
+
+        if (empty($roleIds)) {
+            toastr()->error(
+                'No role is assigned to your account.'
+            );
+
+            return redirect()->back();
+        }
+
+        $controls = PrintControl::whereIn(
+                'role_id',
+                $roleIds
+            )
+            ->orderByDesc('id')
+            ->first();
+
+        if (!$controls) {
+            toastr()->error(
+                'There is no print control configured for your assigned roles.'
+            );
+
+            return redirect()->back();
+        }
+
+        $departmentId =
+            $document->department_id;
+
+        if (!$departmentId) {
+            toastr()->error(
+                'Department is not associated with this document.'
+            );
+
+            return redirect()->back();
+        }
+
+        $documents = Document::where(
+                'department_id',
+                $departmentId
+            )
+            ->orderBy('id')
+            ->get();
+
+        $currentId = 1;
+
+        foreach ($documents as $key => $doc) {
+
+            if ((int) $doc->id === (int) $document->id) {
+                $currentId = $key + 1;
+                break;
+            }
+        }
+
+        set_time_limit(180);
+
+        $data = Document::find($id);
+
+        $data->department =
+            Department::find(
+                $data->department_id
+            );
+
+        $data['originator'] =
+            User::where(
+                'id',
+                $data->originator_id
+            )->value('name');
+
+        $data['originator_email'] =
+            User::where(
+                'id',
+                $data->originator_id
+            )->value('email');
+
+        $data['document_type_name'] =
+            DocumentType::where(
+                'id',
+                $data->document_type_id
+            )->value('name');
+
+        $data['document_type_code'] =
+            DocumentType::where(
+                'id',
+                $data->document_type_id
+            )->value('typecode');
+
+        $data['document_division'] =
+            Division::where(
+                'id',
+                $data->division_id
+            )->value('name');
+
+        $documentContent =
+            DocumentContent::where(
+                'document_id',
+                $id
+            )->first();
+
+        $data['document_content'] =
+            $documentContent;
+
+        $data['year'] =
+            Carbon::parse(
+                $data->created_at
+            )->format('Y');
+
+        $time = Carbon::now();
+
+        $viewName =
+            $this->getDocumentPdfViewName(
+                $data->document_type_id
+            );
+
+        $limitResult =
+            $this->checkDocumentDownloadLimit(
+                $controls,
+                Auth::id(),
+                $document->id
+            );
+
+        if (!$limitResult['allowed']) {
+            toastr()->error(
+                $limitResult['message']
+            );
+
+            return redirect()->back();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Get real uploaded PDFs for non-SOP documents
+        |--------------------------------------------------------------------------
+        |
+        | iframe is ignored by DomPDF, therefore actual file paths are merged by FPDI.
+        |--------------------------------------------------------------------------
+        */
+
+        $bladeGeneratedTypes = [
+            'SOP',
+            'FPS',
+            'INPS',
+            'CVS',
+            'RAWMS',
+            'PAMS',
+            'PIAS',
+            'MFPS',
+            'MFPSTP',
+            'FPSTP',
+            'INPSTP',
+            'CVSTP',
+            'RMSTP',
+            'SPEC',
+            'STP',
+            'TDS',
+            'GTP',
+        ];
+
+        $sourcePdfPaths = [];
+
+        if (
+            !in_array(
+                $document->document_type_id,
+                $bladeGeneratedTypes,
+                true
+            )
+        ) {
+            $sourcePdfPaths =
+                $this->getNonSopDocumentPdfPaths(
+                    $document,
+                    $documentContent
+                );
+
+            if (empty($sourcePdfPaths)) {
+                toastr()->error(
+                    'No printable PDF or image attachment was found for this document.'
+                );
+
+                return redirect()->back();
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Save history only after printable source is confirmed
+        |--------------------------------------------------------------------------
+        */
+
+        $download = new DownloadHistory();
+
+        $download->document_id =
+            $document->id;
+
+        $download->document_request_id =
+            $documentRequest->id;
+
+        $download->request_id =
+            $formattedRequestId;
+
+        $download->user_id =
+            $issuedById;
+
+        $download->issued_by =
+            $issuedById;
+
+        $download->issued_by_name =
+            $issuedByName;
+
+        $download->role_id =
+            Auth::user()->role;
+
+        $download->date =
+            Carbon::now()->format('d-m-Y');
+
+        $download->issued_date =
+            Carbon::parse(
+                $issuedDate
+            )->format('Y-m-d');
+
+        $download->issue_copies =
+            $issuedCopies;
+
+        $download->issued_copies =
+            $issuedCopies;
+
+        $download->total_issued_copies =
+            $issuedCopies;
+
+        $download->copy_number_range =
+            str_pad(1, 3, '0', STR_PAD_LEFT)
+            . '-'
+            . str_pad(
+                $issuedCopies,
                 3,
                 '0',
                 STR_PAD_LEFT
             );
 
+        $download->print_reason =
+            $printReason;
+
+        $download->document_number =
+            $document->document_number;
+
+        $download->document_printed_copies =
+            $issuedCopies;
+
+        $download->issuance_to =
+            $issuanceTo;
+
+        $download->issued_to_name =
+            $issuedToName;
+
+        $download->department =
+            $issuedToDepartment;
+
+        $download->issued_to_department =
+            $issuedToDepartment;
+
+        $download->issued_reason =
+            $printReason;
+
+        $download->save();
+
+        return $this->downloadIssuedDocumentCopies(
+            $viewName,
+            [
+                'data' => $data,
+                'time' => $time,
+                'document' => $document,
+                'documents' => $documents,
+                'currentId' => $currentId,
+
+                'requestId' => $formattedRequestId,
+                'issuedByName' => $issuedByName,
+                'issuedById' => $issuedById,
+                'issuedDate' => $issuedDate,
+                'issuedToName' => $issuedToName,
+                'issuedToDepartment' => $issuedToDepartment,
+                'printReason' => $printReason,
+                'totalIssuedCopies' => $issuedCopies,
+            ],
+            $issuedCopies,
+            $document,
+            $sourcePdfPaths
+        );
+    }
+
+
+    private function downloadIssuedDocumentCopies(
+        $viewName,
+        array $viewData,
+        int $totalCopies,
+        $document,
+        array $sourcePdfPaths = []
+    ) {
+        $temporaryFiles = [];
+
+        try {
+
+            if ($totalCopies < 1) {
+                throw new \RuntimeException(
+                    'Total copies must be at least 1.'
+                );
+            }
+
+            if (!class_exists('FPDF')) {
+
+                $fpdfPath = base_path(
+                    'vendor/setasign/fpdf/fpdf.php'
+                );
+
+                if (!file_exists($fpdfPath)) {
+                    throw new \RuntimeException(
+                        'FPDF file not found at: '
+                        . $fpdfPath
+                    );
+                }
+
+                require_once $fpdfPath;
+            }
+
+            if (
+                !class_exists(
+                    \setasign\Fpdi\Fpdi::class
+                )
+            ) {
+                throw new \RuntimeException(
+                    'FPDI package is not available.'
+                );
+            }
+
+            $temporaryDirectory =
+                storage_path(
+                    'app/issued-document-pdfs'
+                );
+
+            if (!is_dir($temporaryDirectory)) {
+
+                $directoryCreated = mkdir(
+                    $temporaryDirectory,
+                    0775,
+                    true
+                );
+
+                if (
+                    !$directoryCreated
+                    && !is_dir($temporaryDirectory)
+                ) {
+                    throw new \RuntimeException(
+                        'Unable to create temporary PDF directory.'
+                    );
+                }
+            }
+
             /*
             |--------------------------------------------------------------------------
-            | Current copy data pass to PDF Blade
+            | Validate supplied uploaded PDF paths
             |--------------------------------------------------------------------------
             */
 
-            $currentViewData = array_merge(
-                $viewData,
-                [
-                    'copyNumber' =>
+            $validSourcePdfPaths = [];
+
+            foreach ($sourcePdfPaths as $sourceAttachmentPath) {
+
+                if (
+                    !is_string($sourceAttachmentPath)
+                    || !file_exists($sourceAttachmentPath)
+                ) {
+                    continue;
+                }
+
+                $extension = strtolower(
+                    pathinfo(
+                        $sourceAttachmentPath,
+                        PATHINFO_EXTENSION
+                    )
+                );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Direct PDF
+                |--------------------------------------------------------------------------
+                */
+
+                if ($extension === 'pdf') {
+
+                    $realPath =
+                        realpath($sourceAttachmentPath)
+                        ?: $sourceAttachmentPath;
+
+                    if (
+                        !in_array(
+                            $realPath,
+                            $validSourcePdfPaths,
+                            true
+                        )
+                    ) {
+                        $validSourcePdfPaths[] = $realPath;
+                    }
+
+                    continue;
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Image attachment convert to temporary PDF
+                |--------------------------------------------------------------------------
+                */
+
+                if (
+                    in_array(
+                        $extension,
+                        ['jpg', 'jpeg', 'png'],
+                        true
+                    )
+                ) {
+                    $imagePdfPath =
+                        $temporaryDirectory
+                        . DIRECTORY_SEPARATOR
+                        . 'attachment-image-'
+                        . uniqid('', true)
+                        . '.pdf';
+
+                    $imagePdf = new \setasign\Fpdi\Fpdi();
+
+                    list(
+                        $imageWidthPixel,
+                        $imageHeightPixel
+                    ) = getimagesize($sourceAttachmentPath);
+
+                    if (
+                        !$imageWidthPixel
+                        || !$imageHeightPixel
+                    ) {
+                        continue;
+                    }
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Orientation according to image
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $orientation =
+                        $imageWidthPixel > $imageHeightPixel
+                            ? 'L'
+                            : 'P';
+
+                    $pageWidth =
+                        $orientation === 'L'
+                            ? 297
+                            : 210;
+
+                    $pageHeight =
+                        $orientation === 'L'
+                            ? 210
+                            : 297;
+
+                    $margin = 10;
+
+                    $availableWidth =
+                        $pageWidth - ($margin * 2);
+
+                    $availableHeight =
+                        $pageHeight - ($margin * 2);
+
+                    $imageRatio =
+                        $imageWidthPixel
+                        / $imageHeightPixel;
+
+                    $availableRatio =
+                        $availableWidth
+                        / $availableHeight;
+
+                    if ($imageRatio > $availableRatio) {
+
+                        $renderWidth =
+                            $availableWidth;
+
+                        $renderHeight =
+                            $renderWidth
+                            / $imageRatio;
+
+                    } else {
+
+                        $renderHeight =
+                            $availableHeight;
+
+                        $renderWidth =
+                            $renderHeight
+                            * $imageRatio;
+                    }
+
+                    $imageX =
+                        ($pageWidth - $renderWidth)
+                        / 2;
+
+                    $imageY =
+                        ($pageHeight - $renderHeight)
+                        / 2;
+
+                    $imagePdf->AddPage(
+                        $orientation,
+                        [
+                            $pageWidth,
+                            $pageHeight,
+                        ]
+                    );
+
+                    $imagePdf->Image(
+                        $sourceAttachmentPath,
+                        $imageX,
+                        $imageY,
+                        $renderWidth,
+                        $renderHeight
+                    );
+
+                    $imagePdf->Output(
+                        'F',
+                        $imagePdfPath
+                    );
+
+                    if (file_exists($imagePdfPath)) {
+
+                        $temporaryFiles[] =
+                            $imagePdfPath;
+
+                        $validSourcePdfPaths[] =
+                            $imagePdfPath;
+                    }
+                }
+            }
+            /*
+            |--------------------------------------------------------------------------
+            | No uploaded PDFs: generate PDF from Blade
+            |--------------------------------------------------------------------------
+            */
+
+            if (empty($validSourcePdfPaths)) {
+
+                $sourcePdf = PDF::loadView(
+                    $viewName,
+                    $viewData
+                )->setOptions([
+                    'defaultFont' =>
+                        'sans-serif',
+
+                    'isHtml5ParserEnabled' =>
+                        true,
+
+                    'isRemoteEnabled' =>
+                        true,
+
+                    'isPhpEnabled' =>
+                        true,
+                ]);
+
+                $sourcePdf->setPaper(
+                    'A4',
+                    'portrait'
+                );
+
+                $sourcePdf->render();
+
+                $domPdf =
+                    $sourcePdf->getDomPDF();
+
+                $canvas =
+                    $domPdf->getCanvas();
+
+                $height =
+                    $canvas->get_height();
+
+                $width =
+                    $canvas->get_width();
+
+                $watermarkText =
+                    strtoupper(
+                        trim(
+                            (string) (
+                                $document->status
+                                ?? ''
+                            )
+                        )
+                    );
+
+                if (!empty($watermarkText)) {
+
+                    $canvas->page_script(
+                        '$pdf->set_opacity(0.2,"Multiply");'
+                    );
+
+                    $font = $domPdf
+                        ->getFontMetrics()
+                        ->get_font(
+                            'sans-serif',
+                            'bold'
+                        );
+
+                    $fontSize = 25;
+
+                    $textWidth = $domPdf
+                        ->getFontMetrics()
+                        ->getTextWidth(
+                            $watermarkText,
+                            $font,
+                            $fontSize
+                        );
+
+                    $canvas->page_text(
+                        ($width - $textWidth) / 2,
+                        ($height / 2) + 50,
+                        $watermarkText,
+                        $font,
+                        $fontSize,
+                        [0, 0, 0],
+                        0.9,
+                        6,
+                        -20
+                    );
+                }
+
+                $generatedSourcePath =
+                    $temporaryDirectory
+                    . DIRECTORY_SEPARATOR
+                    . 'source-document-'
+                    . $document->id
+                    . '-'
+                    . uniqid('', true)
+                    . '.pdf';
+
+                $sourceOutput =
+                    $sourcePdf->output();
+
+                if (empty($sourceOutput)) {
+                    throw new \RuntimeException(
+                        'Generated source PDF is empty.'
+                    );
+                }
+
+                $writtenBytes =
+                    file_put_contents(
+                        $generatedSourcePath,
+                        $sourceOutput
+                    );
+
+                if ($writtenBytes === false) {
+                    throw new \RuntimeException(
+                        'Unable to save generated source PDF.'
+                    );
+                }
+
+                $temporaryFiles[] =
+                    $generatedSourcePath;
+
+                $validSourcePdfPaths[] =
+                    $generatedSourcePath;
+            }
+
+            $requestId =
+                $viewData['requestId']
+                ?? 'N/A';
+
+            $issuedByName =
+                $viewData['issuedByName']
+                ?? 'N/A';
+
+            $issuedDate =
+                $viewData['issuedDate']
+                ?? null;
+
+            if (!empty($issuedDate)) {
+
+                try {
+                    $formattedIssuedDate =
+                        Carbon::parse(
+                            $issuedDate
+                        )->format('d-M-Y');
+
+                } catch (\Throwable $e) {
+                    $formattedIssuedDate =
+                        (string) $issuedDate;
+                }
+
+            } else {
+                $formattedIssuedDate =
+                    'N/A';
+            }
+
+            $finalPdf =
+                new \setasign\Fpdi\Fpdi();
+
+            $finalPdf->SetAutoPageBreak(false);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Generate every physical copy
+            |--------------------------------------------------------------------------
+            */
+
+            for (
+                $copyNumber = 1;
+                $copyNumber <= $totalCopies;
+                $copyNumber++
+            ) {
+                $formattedCopyNumber =
+                    str_pad(
                         $copyNumber,
+                        3,
+                        '0',
+                        STR_PAD_LEFT
+                    );
 
-                    'formattedCopyNumber' =>
-                        $formattedCopyNumber,
+                /*
+                |--------------------------------------------------------------------------
+                | Merge every uploaded PDF in stored order
+                |--------------------------------------------------------------------------
+                */
 
-                    'totalIssuedCopies' =>
-                        $totalCopies,
+                foreach (
+                    $validSourcePdfPaths
+                    as $sourcePdfPath
+                ) {
+                    $sourcePageCount =
+                        $finalPdf->setSourceFile(
+                            $sourcePdfPath
+                        );
+
+                    if ($sourcePageCount < 1) {
+                        continue;
+                    }
+
+                    for (
+                        $sourcePageNumber = 1;
+                        $sourcePageNumber <= $sourcePageCount;
+                        $sourcePageNumber++
+                    ) {
+                        $templateId =
+                            $finalPdf->importPage(
+                                $sourcePageNumber
+                            );
+
+                        $pageSize =
+                            $finalPdf->getTemplateSize(
+                                $templateId
+                            );
+
+                        $pageWidth =
+                            $pageSize['width'];
+
+                        $pageHeight =
+                            $pageSize['height'];
+
+                        $orientation =
+                            $pageWidth > $pageHeight
+                                ? 'L'
+                                : 'P';
+
+                        $finalPdf->AddPage(
+                            $orientation,
+                            [
+                                $pageWidth,
+                                $pageHeight,
+                            ]
+                        );
+
+                        $finalPdf->useTemplate(
+                            $templateId,
+                            0,
+                            0,
+                            $pageWidth,
+                            $pageHeight
+                        );
+
+                        $finalPdf->SetTextColor(
+                            0,
+                            0,
+                            0
+                        );
+
+                        $finalPdf->SetDrawColor(
+                            80,
+                            80,
+                            80
+                        );
+
+                        $finalPdf->SetLineWidth(
+                            0.15
+                        );
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Top: Date | Request No | Copy No
+                        |--------------------------------------------------------------------------
+                        */
+
+                        $leftMargin = 7;
+                        $topY = 3.5;
+                        $topTextHeight = 4;
+
+                        $masterCopyReservedWidth = 46;
+
+                        $usableTopWidth =
+                            $pageWidth
+                            - $leftMargin
+                            - $masterCopyReservedWidth;
+
+                        $dateWidth =
+                            $usableTopWidth * 0.35;
+
+                        $requestWidth =
+                            $usableTopWidth * 0.45;
+
+                        $copyWidth =
+                            $usableTopWidth * 0.20;
+
+                        $finalPdf->SetFont(
+                            'Arial',
+                            'B',
+                            7
+                        );
+
+                        $finalPdf->SetXY(
+                            $leftMargin,
+                            $topY
+                        );
+
+                        $finalPdf->Cell(
+                            $dateWidth,
+                            $topTextHeight,
+                            'Date: '
+                            . $this->sanitizePdfText(
+                                $formattedIssuedDate
+                            ),
+                            0,
+                            0,
+                            'L'
+                        );
+
+                        $finalPdf->SetXY(
+                            $leftMargin
+                            + $dateWidth,
+                            $topY
+                        );
+
+                        $finalPdf->Cell(
+                            $requestWidth,
+                            $topTextHeight,
+                            'Request No: '
+                            . $this->sanitizePdfText(
+                                $requestId
+                            ),
+                            0,
+                            0,
+                            'C'
+                        );
+
+                        $finalPdf->SetXY(
+                            $leftMargin
+                            + $dateWidth
+                            + $requestWidth,
+                            $topY
+                        );
+
+                        $finalPdf->Cell(
+                            $copyWidth,
+                            $topTextHeight,
+                            'Copy No.: '
+                            . $formattedCopyNumber,
+                            0,
+                            0,
+                            'R'
+                        );
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Vertical separators only
+                        |--------------------------------------------------------------------------
+                        |
+                        | Top horizontal line intentionally removed.
+                        |--------------------------------------------------------------------------
+                        */
+
+                        $firstSeparatorX =
+                            $leftMargin
+                            + $dateWidth;
+
+                        $secondSeparatorX =
+                            $leftMargin
+                            + $dateWidth
+                            + $requestWidth;
+
+                        $finalPdf->Line(
+                            $firstSeparatorX,
+                            3,
+                            $firstSeparatorX,
+                            9
+                        );
+
+                        $finalPdf->Line(
+                            $secondSeparatorX,
+                            3,
+                            $secondSeparatorX,
+                            9
+                        );
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Bottom disclaimer and Issued By
+                        |--------------------------------------------------------------------------
+                        */
+
+                        $bottomLineY =
+                            $pageHeight - 8;
+
+                        $bottomTextY =
+                            $pageHeight - 4;
+
+                        $bottomLeftMargin = 7;
+                        $bottomRightMargin = 7;
+
+                        $finalPdf->Line(
+                            $bottomLeftMargin,
+                            $bottomLineY,
+                            $pageWidth
+                            - $bottomRightMargin,
+                            $bottomLineY
+                        );
+
+                        $finalPdf->SetFont(
+                            'Arial',
+                            'B',
+                            7
+                        );
+
+                        $disclaimerText =
+                            'Document printed from master electronically & signature is not required.';
+
+                        $finalPdf->Text(
+                            $bottomLeftMargin,
+                            $bottomTextY,
+                            $this->sanitizePdfText(
+                                $disclaimerText
+                            )
+                        );
+
+                        $issuedByText =
+                            'Issued By: '
+                            . $this->sanitizePdfText(
+                                $issuedByName
+                            );
+
+                        $issuedByTextWidth =
+                            $finalPdf->GetStringWidth(
+                                $issuedByText
+                            );
+
+                        $issuedByX =
+                            $pageWidth
+                            - $bottomRightMargin
+                            - $issuedByTextWidth;
+
+                        $finalPdf->Text(
+                            $issuedByX,
+                            $bottomTextY,
+                            $issuedByText
+                        );
+                    }
+                }
+            }
+
+            $documentNumber =
+                $document->document_number
+                ?? (
+                    'document-'
+                    . $document->id
+                );
+
+            $safeDocumentNumber =
+                preg_replace(
+                    '/[^A-Za-z0-9\-_]/',
+                    '-',
+                    $documentNumber
+                );
+
+            $safeDocumentNumber =
+                trim(
+                    $safeDocumentNumber,
+                    '-'
+                );
+
+            if (empty($safeDocumentNumber)) {
+                $safeDocumentNumber =
+                    'document-'
+                    . $document->id;
+            }
+
+            $fileName =
+                $safeDocumentNumber
+                . '-issued-copies.pdf';
+
+            $finalOutput =
+                $finalPdf->Output('S');
+
+            if (empty($finalOutput)) {
+                throw new \RuntimeException(
+                    'Final issued PDF output is empty.'
+                );
+            }
+
+            foreach (
+                $temporaryFiles
+                as $temporaryFile
+            ) {
+                if (file_exists($temporaryFile)) {
+                    @unlink($temporaryFile);
+                }
+            }
+
+            return response(
+                $finalOutput,
+                200,
+                [
+                    'Content-Type' =>
+                        'application/pdf',
+
+                    'Content-Disposition' =>
+                        'attachment; filename="'
+                        . $fileName
+                        . '"',
+
+                    'Content-Length' =>
+                        strlen($finalOutput),
+
+                    'Cache-Control' =>
+                        'private, no-store, no-cache, must-revalidate',
+
+                    'Pragma' =>
+                        'no-cache',
+
+                    'Expires' =>
+                        '0',
                 ]
             );
 
-            /*
-            |--------------------------------------------------------------------------
-            | Generate current complete PDF copy
-            |--------------------------------------------------------------------------
-            */
+        } catch (\Throwable $e) {
 
-            $pdf = PDF::loadView(
-                $viewName,
-                $currentViewData
-            )->setOptions([
-                'defaultFont' =>
-                    'sans-serif',
+            foreach (
+                $temporaryFiles
+                as $temporaryFile
+            ) {
+                if (file_exists($temporaryFile)) {
+                    @unlink($temporaryFile);
+                }
+            }
 
-                'isHtml5ParserEnabled' =>
-                    true,
+            \Log::error(
+                'Issued PDF generation failed',
+                [
+                    'document_id' =>
+                        $document->id
+                        ?? null,
 
-                'isRemoteEnabled' =>
-                    true,
+                    'document_number' =>
+                        $document->document_number
+                        ?? null,
 
-                'isPhpEnabled' =>
-                    true,
-            ]);
+                    'source_pdf_paths' =>
+                        $sourcePdfPaths,
 
-            $pdf->setPaper(
-                'A4',
-                'portrait'
+                    'total_copies' =>
+                        $totalCopies,
+
+                    'error_message' =>
+                        $e->getMessage(),
+
+                    'error_file' =>
+                        $e->getFile(),
+
+                    'error_line' =>
+                        $e->getLine(),
+
+                    'error_trace' =>
+                        $e->getTraceAsString(),
+                ]
             );
 
-            /*
-            |--------------------------------------------------------------------------
-            | Render PDF first
-            |--------------------------------------------------------------------------
-            */
-
-            $pdf->render();
-
-            /*
-            |--------------------------------------------------------------------------
-            | DomPDF canvas details
-            |--------------------------------------------------------------------------
-            */
-
-            $domPdf = $pdf->getDomPDF();
-
-            $canvas = $domPdf->getCanvas();
-
-            $fontMetrics =
-                $domPdf->getFontMetrics();
-
-            $height =
-                $canvas->get_height();
-
-            $width =
-                $canvas->get_width();
-
-           
-
-            /*
-            |--------------------------------------------------------------------------
-            | Watermark - old working code
-            |--------------------------------------------------------------------------
-            |
-            | Important:
-            | New direct set_opacity() approach use nahi ki hai.
-            | Tumhara old page_script() approach same rakha hai.
-            |--------------------------------------------------------------------------
-            */
-
-            $watermarkText = strtoupper(
-                trim((string) ($document->status ?? '')
-                )
+            toastr()->error(
+                'Unable to generate issued PDF: '
+                . $e->getMessage()
             );
 
-            if (!empty($watermarkText)) {
-
-                /*
-                |--------------------------------------------------------------------------
-                | Old working opacity
-                |--------------------------------------------------------------------------
-                */
-
-                $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
-
-                /*
-                |--------------------------------------------------------------------------
-                | Watermark font
-                |--------------------------------------------------------------------------
-                */
-
-                $watermarkFont = $fontMetrics->get_font('sans-serif','bold');
-
-                $watermarkFontSize = 25;
-
-                /*
-                |--------------------------------------------------------------------------
-                | Watermark text width
-                |--------------------------------------------------------------------------
-                */
-
-                $watermarkTextWidth = $fontMetrics->getTextWidth($watermarkText, $watermarkFont, $watermarkFontSize);
-
-                /*
-                |--------------------------------------------------------------------------
-                | Watermark on every page
-                |--------------------------------------------------------------------------
-                */
-
-                $canvas->page_text(($width - $watermarkTextWidth) / 2, ($height / 2) + 50, $watermarkText, $watermarkFont, $watermarkFontSize, [0, 0, 0], 0.9, 6, -20);
-            }
-
-            /*
-            |--------------------------------------------------------------------------
-            | Generate temporary PDF filename
-            |--------------------------------------------------------------------------
-            */
-
-            $tempFile = $temporaryDirectory . DIRECTORY_SEPARATOR . 'document-' . $document->id . '-copy-' . $formattedCopyNumber . '-' . uniqid('', true) . '.pdf';
-
-            /*
-            |--------------------------------------------------------------------------
-            | Get current PDF output
-            |--------------------------------------------------------------------------
-            */
-
-            $pdfOutput = $pdf->output();
-
-            if (empty($pdfOutput)) {
-                throw new \RuntimeException(
-                    'Generated PDF output is empty for copy ' .
-                    $formattedCopyNumber .
-                    '.'
-                );
-            }
-
-            /*
-            |--------------------------------------------------------------------------
-            | Save current complete copy temporarily
-            |--------------------------------------------------------------------------
-            */
-
-            $writtenBytes = file_put_contents(
-                $tempFile,
-                $pdfOutput
-            );
-
-            if ($writtenBytes === false) {
-                throw new \RuntimeException(
-                    'Unable to save temporary PDF copy ' .
-                    $formattedCopyNumber .
-                    '.'
-                );
-            }
-
-            $tempFiles[] = $tempFile;
+            return redirect()->back();
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Create merged PDF
-        |--------------------------------------------------------------------------
-        */
-
-        $mergedPdf = new \setasign\Fpdi\Fpdi();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Merge all complete copies
-        |--------------------------------------------------------------------------
-        */
-
-        foreach ($tempFiles as $tempFile) {
-
-            if (!file_exists($tempFile)) {
-                throw new \RuntimeException(
-                    'Temporary PDF file not found: ' .
-                    $tempFile
-                );
-            }
-
-            /*
-            |--------------------------------------------------------------------------
-            | Read complete current copy
-            |--------------------------------------------------------------------------
-            */
-
-            $pageCount =
-                $mergedPdf->setSourceFile(
-                    $tempFile
-                );
-
-            if ($pageCount < 1) {
-                throw new \RuntimeException(
-                    'No pages found in temporary PDF: ' .
-                    basename($tempFile)
-                );
-            }
-
-            /*
-            |--------------------------------------------------------------------------
-            | Import all pages from current copy
-            |--------------------------------------------------------------------------
-            */
-
-            for ($pageNumber = 1; $pageNumber <= $pageCount; $pageNumber++ ) {
-
-                $templateId = $mergedPdf->importPage($pageNumber);
-
-                $pageSize = $mergedPdf->getTemplateSize($templateId);
-
-                if (empty($pageSize['width']) || empty($pageSize['height'])) { throw new \RuntimeException( 'Unable to determine PDF page size.');}
-
-                /*
-                |--------------------------------------------------------------------------
-                | Detect page orientation
-                |--------------------------------------------------------------------------
-                */
-
-                $orientation = $pageSize['width'] > $pageSize['height'] ? 'L' : 'P';
-
-                /*
-                |--------------------------------------------------------------------------
-                | Add same-size page
-                |--------------------------------------------------------------------------
-                */
-
-                $mergedPdf->AddPage(
-                    $orientation,
-                    [
-                        $pageSize['width'],
-                        $pageSize['height'],
-                    ]
-                );
-
-                /*
-                |--------------------------------------------------------------------------
-                | Place imported page
-                |--------------------------------------------------------------------------
-                */
-
-                $mergedPdf->useTemplate($templateId, 0, 0, $pageSize['width'], $pageSize['height']);
-            }
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Prepare output filename
-        |--------------------------------------------------------------------------
-        */
-
-        $documentNumber = $document->document_number ?? ('document-' . $document->id);
-
-        $safeDocumentNumber =
-            preg_replace('/[^A-Za-z0-9\-_]/', '-',$documentNumber);
-
-        $safeDocumentNumber = trim( $safeDocumentNumber, '-' );
-
-        if (empty($safeDocumentNumber)) {
-            $safeDocumentNumber = 'document-' . $document->id;
-        }
-
-        $fileName =
-            $safeDocumentNumber . '-print-copies.pdf';
-
-        /*
-        |--------------------------------------------------------------------------
-        | Get merged PDF output
-        |--------------------------------------------------------------------------
-        */
-
-        $mergedOutput =
-            $mergedPdf->Output('S');
-
-        if (empty($mergedOutput)) {
-            throw new \RuntimeException(
-                'Merged PDF output is empty.'
-            );
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Delete temporary files after successful merge
-        |--------------------------------------------------------------------------
-        */
-
-        foreach ($tempFiles as $tempFile) {
-
-            if (file_exists($tempFile)) {
-                @unlink($tempFile);
-            }
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Open PDF in browser
-        |--------------------------------------------------------------------------
-        */
-
-        return response(
-            $mergedOutput,
-            200,
-            [ 'Content-Type' =>'application/pdf',
-
-                'Content-Disposition' =>'inline; filename="' . $fileName . '"',
-
-                'Content-Length' =>strlen($mergedOutput),
-
-                'Cache-Control' =>'private, no-store, no-cache, must-revalidate',
-
-                'Pragma' =>'no-cache',
-
-                'Expires' =>'0',
-            ]
-        );
-
-    } catch (\Throwable $e) {
-
-        /*
-        |--------------------------------------------------------------------------
-        | Delete temporary files after error
-        |--------------------------------------------------------------------------
-        */
-
-        foreach ($tempFiles as $tempFile) {
-
-            if (file_exists($tempFile)) {
-                @unlink($tempFile);
-            }
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Log full error
-        |--------------------------------------------------------------------------
-        */
-
-        \Log::error('Document print PDF generation failed',[
-                'document_id' =>$document->id ?? null,
-
-                'document_number' =>$document->document_number ?? null,
-
-                'total_copies' =>$totalCopies,
-
-                'view_name' =>$viewName,
-
-                'error_message' =>$e->getMessage(),
-
-                'error_file' =>$e->getFile(),
-
-                'error_line' =>$e->getLine(),
-
-                'error_trace' =>$e->getTraceAsString(),
-            ]
-        );
-
-        toastr()->error(
-            'Unable to generate print copies: ' .
-            $e->getMessage()
-        );
-
-        return redirect()->back();
     }
-}
 
 }

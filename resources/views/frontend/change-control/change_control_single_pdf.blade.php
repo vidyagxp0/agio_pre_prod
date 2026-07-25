@@ -3765,18 +3765,20 @@ Not Applicable
                                         </div>
                                     </td>
                                 </tr>
-                                
-                                <!-- <tr>
-                                    <th class="w-20">Due Date Extension Justification</th>
+                            </table>
+                            @if($cc_cfts->effect_check == 'No')
+                            <table>
+                                <tr>
+                                    <th class="w-20">Comments</th>
                                     <td>
                                         <div>
-                                            {{  $data->due_date_extension ?? 'Not Applicable' }}
+                                            {{ $cc_cfts->effect_comment ?? 'Not Applicable'}}
                                         </div>
                                     </td>
-                                </tr> -->
+                                </tr>
                                 
-                            
                             </table>
+                            @endif
                         
 
                     <div class="border-table">

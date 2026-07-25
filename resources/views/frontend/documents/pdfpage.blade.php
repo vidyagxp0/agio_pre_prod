@@ -473,118 +473,7 @@
 
             background: #fff;
         }
-
-                /* Download modal se selected stamp */
-        .selected-download-stamp {
-            position: absolute;
-            top: -45px;
-            right: 10px;
-            width: 190px;
-            height: 95px;
-            z-index: 99999;
-            text-align: center;
-        }
-
-        /* Common rectangle stamp */
-        .stamp-box {
-            display: inline-block;
-            min-width: 145px;
-            max-width: 185px;
-            padding: 5px 8px;
-            border: 2px solid;
-            background: #fff;
-            font-family: "DejaVu Sans", Arial, sans-serif;
-            font-size: 15px;
-            line-height: 1.2;
-            font-weight: bold;
-            text-align: center;
-            text-transform: uppercase;
-            box-sizing: border-box;
-            transform: rotate(-2deg);
-            opacity: 0.9;
-        }
-
-        /* Common round stamp */
-        .stamp-round {
-            display: inline-block;
-            width: 82px;
-            height: 82px;
-            border: 3px double;
-            border-radius: 50%;
-            background: #fff;
-            font-family: "DejaVu Sans", Arial, sans-serif;
-            font-weight: bold;
-            text-align: center;
-            box-sizing: border-box;
-            transform: rotate(-5deg);
-            opacity: 0.9;
-            padding-top: 17px;
-        }
-
-        .stamp-round-top {
-            font-size: 9px;
-            line-height: 1.1;
-            text-transform: uppercase;
-        }
-
-        .stamp-round-center {
-            width: 42px;
-            margin: 6px auto 0;
-            padding: 7px 0;
-            border: 1px solid;
-            border-radius: 50%;
-            font-size: 9px;
-            line-height: 1;
-        }
-
-        .stamp-main-text {
-            font-size: 14px;
-            line-height: 1.15;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .stamp-small-text {
-            margin-top: 3px;
-            font-size: 8px;
-            line-height: 1.15;
-            font-weight: normal;
-            text-align: left;
-            text-transform: none;
-        }
-
-        /* Master copy green */
-        .stamp-master {
-            color: #00a99d;
-            border-color: #00a99d;
-            letter-spacing: 1px;
-        }
-
-        /* Controlled copy blue/purple */
-        .stamp-controlled {
-            color: #7048e8;
-            border-color: #7048e8;
-        }
-
-        /* Red stamps */
-        .stamp-red {
-            color: #dc3545;
-            border-color: #dc3545;
-        }
-
-        /* Purple stamps */
-        .stamp-purple {
-            color: #8b5cf6;
-            border-color: #8b5cf6;
-        }
-
-        .stamp-obsolete {
-            font-size: 16px;
-        }
-
-        .stamp-issued-by {
-            min-width: 155px;
-        }
+        
     </style>
 
 
@@ -733,301 +622,162 @@
 <body>
     <div class="header-wrapper">
 
-    @php
-        $downloadStamp = isset($stampImpression) && $stampImpression !== '';
-        $stampValue = isset($stampImpression) ? (string) $stampImpression : '';
+        @if ($document->status == 'Effective' || $document->status == 'Obsolete')
 
-        $formattedIssuedDate = !empty($issuedDate)
-            ? \Carbon\Carbon::parse($issuedDate)->format('d-M-Y')
-            : '';
-    @endphp
+            {{-- Existing normal SOP master-copy logic --}}
+            <div class="master-copy">
+                MASTER COPY
+            </div>
 
-    @if ($downloadStamp)
+        @endif
+        <header class="">
+            <table class="border" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td class="logo w-15">
+                            <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                                style="max-height: 55px; max-width: 40px;">
+                        </td>
+                        <td class="title w-60"
+                            style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
+                            <p style="margin: 0; text-align: center; font-weight:bold" >{{ config('site.pdf_title') }}</p>
+                            <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <div class="selected-download-stamp">
-
-            {{-- 1. MASTER COPY --}}
-            @if ($stampValue === '1')
-                <div class="stamp-box stamp-master">
-                    MASTER COPY
-                </div>
-
-            {{-- 2. CONTROLLED COPY ROUND --}}
-            @elseif ($stampValue === '2')
-                <div class="stamp-round stamp-controlled">
-                    <div class="stamp-round-top">CONTROLLED COPY</div>
-                    <div class="stamp-round-center">Q.A.</div>
-                </div>
-
-            {{-- 3. CONTROLLED COPY WITH SIGN/DATE --}}
-            @elseif ($stampValue === '3')
-                <div class="stamp-box stamp-controlled">
-                    <div class="stamp-main-text">CONTROLLED COPY</div>
-                    <div class="stamp-small-text">Sign: _____________</div>
-                    <div class="stamp-small-text">
-                        Date: {{ $formattedIssuedDate }}
-                    </div>
-                </div>
-
-            {{-- 4. UNCONTROLLED COPY WITH SIGN/DATE --}}
-            @elseif ($stampValue === '4')
-                <div class="stamp-box stamp-red">
-                    <div class="stamp-main-text">UNCONTROLLED COPY</div>
-                    <div class="stamp-small-text">Sign: _____________</div>
-                    <div class="stamp-small-text">
-                        Date: {{ $formattedIssuedDate }}
-                    </div>
-                </div>
-
-            {{-- 5. UNCONTROLLED COPY --}}
-            @elseif ($stampValue === '5')
-                <div class="stamp-box stamp-red">
-                    UNCONTROLLED COPY
-                </div>
-
-            {{-- 6. OBSOLETE WITH SIGN/DATE --}}
-            @elseif ($stampValue === '6')
-                <div class="stamp-box stamp-red">
-                    <div class="stamp-main-text">OBSOLETE COPY</div>
-                    <div class="stamp-small-text">Sign: _____________</div>
-                    <div class="stamp-small-text">
-                        Date: {{ $formattedIssuedDate }}
-                    </div>
-                </div>
-
-            {{-- 7. OBSOLETE --}}
-            @elseif ($stampValue === '7')
-                <div class="stamp-box stamp-red stamp-obsolete">
-                    OBSOLETE COPY
-                </div>
-
-            {{-- 8. APPROVED ROUND --}}
-            @elseif ($stampValue === '8')
-                <div class="stamp-round stamp-red">
-                    <div class="stamp-round-top">APPROVED</div>
-                    <div class="stamp-round-center">Q.A.</div>
-                </div>
-
-            {{-- 9. REFERENCE COPY --}}
-            @elseif ($stampValue === '9')
-                <div class="stamp-box stamp-purple">
-                    REFERENCE COPY
-                </div>
-
-            {{-- 10. ISSUED COPY ROUND --}}
-            @elseif ($stampValue === '10')
-                <div class="stamp-round stamp-purple">
-                    <div class="stamp-round-top">ISSUED COPY</div>
-                    <div class="stamp-round-center">Q.A.</div>
-                </div>
-
-            {{-- 11. ISSUED BY --}}
-            @elseif ($stampValue === '11')
-                <div class="stamp-box stamp-purple stamp-issued-by">
-                    <div class="stamp-main-text">ISSUED BY</div>
-
-                    <div class="stamp-small-text">
-                        {{ $issuedByName ?? '' }}
-                    </div>
-
-                    <div class="stamp-small-text">
-                        Sign: _____________
-                    </div>
-
-                    <div class="stamp-small-text">
-                        Date: {{ $formattedIssuedDate }}
-                    </div>
-                </div>
-
-            {{-- 12. REVIEWED NO CHANGE --}}
-            @elseif ($stampValue === '12')
-                <div class="stamp-box stamp-purple">
-                    <div class="stamp-main-text">REVIEWED</div>
-                    <div class="stamp-main-text">NO CHANGE</div>
-
-                    <div class="stamp-small-text">
-                        Sign: _____________
-                    </div>
-
-                    <div class="stamp-small-text">
-                        Date: {{ $formattedIssuedDate }}
-                    </div>
-                </div>
-            @endif
-
-        </div>
-
-    @elseif ($document->status == 'Effective' || $document->status == 'Obsolete')
-
-        {{-- Existing normal SOP master-copy logic --}}
-        <div class="master-copy">
-            MASTER COPY
-        </div>
-
-    @endif
-    <header class="">
-        <table class="border" style="width: 100%;">
-            <tbody>
+            <table class="border border-top-none" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td class="doc-num">
+                            STANDARD OPERATING PROCEDURE
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        <table style="width:100%; border-collapse:collapse; border-left:1px solid; border-right:1px solid #000; border-bottom:1px solid #000;" class="border border-top-none">
+                <!-- Department Row -->
                 <tr>
-                    <td class="logo w-15">
-                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
-                            style="max-height: 55px; max-width: 40px;">
+                    <td class="w-20" style="border:1px solid; font-weight:bold; text-align:left; padding:6px; ">
+                        Department:
                     </td>
-                    <td class="title w-60"
-                        style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
-                        <p style="margin: 0; text-align: center; font-weight:bold" >{{ config('site.pdf_title') }}</p>
-                        <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
+
+                    <td class="w-35" style="border:1px solid; text-align:left; padding:6px;">
+                        {{ Helpers::getFullDepartmentName($data->department_id) }}
                     </td>
-                </tr>
-            </tbody>
-        </table>
 
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td class="doc-num">
-                        STANDARD OPERATING PROCEDURE
+                    <td style="border:1px solid; font-weight:bold; text-align:left; padding:6px;">
+                        Page No.
                     </td>
-                </tr>
-            </tbody>
-        </table>
-       <table style="width:100%; border-collapse:collapse; border-left:1px solid; border-right:1px solid #000; border-bottom:1px solid #000;" class="border border-top-none">
-            <!-- Department Row -->
-            <tr>
-                <td class="w-20" style="border:1px solid; font-weight:bold; text-align:left; padding:6px; ">
-                    Department:
-                </td>
 
-                <td class="w-35" style="border:1px solid; text-align:left; padding:6px;">
-                    {{ Helpers::getFullDepartmentName($data->department_id) }}
-                </td>
-
-                <td style="border:1px solid; font-weight:bold; text-align:left; padding:6px;">
-                    Page No.
-                </td>
-
-                <td class="w-25" style="border:1px solid; text-align:center; padding:6px;">
-                    
-                </td>
-            </tr>
-
-            <!-- Title + SOP -->
-            <tr>
-                <td rowspan="2"
-                    style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px; vertical-align:middle;">
-                    Title:
-                </td>
-
-                <td rowspan="2"
-                    style="border:1px solid #000; text-align:left; padding:6px; vertical-align:middle;">
-                    {{ $data->document_name }}
-                </td>
-
-                <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
-                    SOP No.:
-                </td>
-
-                <td style="border:1px solid #000; text-align:left; padding:6px;">
-                         @php
-                            $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-                        @endphp
-                    {{-- @if($document->revised == 'Yes')
-                        @if(in_array($document->sop_type_short,['EOP','IOP']))
-                            {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                        @else
-                            {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                        @endif
-                    @else
-                        @if(in_array($document->sop_type_short,['EOP','IOP']))
-                            {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-00
-                        @else
-                            {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-00
-                        @endif
-                    @endif --}}
-                     @if($document->revised == 'Yes')
-                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @endif
-                    @else
+                    <td class="w-25" style="border:1px solid; text-align:center; padding:6px;">
                         
-                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                    </td>
+                </tr>
+
+                <!-- Title + SOP -->
+                <tr>
+                    <td rowspan="2"
+                        style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px; vertical-align:middle;">
+                        Title:
+                    </td>
+
+                    <td rowspan="2"
+                        style="border:1px solid #000; text-align:left; padding:6px; vertical-align:middle;">
+                        {{ $data->document_name }}
+                    </td>
+
+                    <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
+                        SOP No.:
+                    </td>
+
+                    <td style="border:1px solid #000; text-align:left; padding:6px;">
+                            @php
+                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+                            @endphp
+                        {{-- @if($document->revised == 'Yes')
+                            @if(in_array($document->sop_type_short,['EOP','IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @endif
-                    @endif
-
-                </td>
-            </tr>
-
-            <tr>
-                <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
-                    Effective Date:
-                </td>
-
-                <td style="border:1px solid #000; text-align:left; padding:6px;">
-                    @if ($data->training_required == 'yes')
-                        @if ($data->stage >= 11)
-                            {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                        @endif
-                    @else
-                        @if ($data->stage > 10)
-                            {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                        @endif
-                    @endif
-                </td>
-            </tr>
-
-            <!-- Area + Review -->
-            <tr>
-                <td rowspan="2"
-                    style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px; vertical-align:middle;">
-                    Area:
-                </td>
-
-                <td rowspan="2"
-                    style="border:1px solid #000; text-align:left; padding:6px; vertical-align:middle;">
-                    {{ Helpers::getFullDepartmentName($data->department_id) }}
-                </td>
-
-                <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
-                    Next Review Date:
-                </td>
-
-                <td style="border:1px solid #000; text-align:left; padding:6px;">
-                    @if($data->stage >= 11)
-                        {{ $data->next_review_date ? \Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') : '-' }}
-                    @endif
-                </td>
-            </tr>
-
-            <tr>
-                <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
-                    Supersedes No.:
-                </td>
-
-                <td style="border:1px solid #000; text-align:left; padding:6px;">
-                    @if($document->revised == 'Yes')
-                        @php
-                            $revisionNumber = str_pad(max(0, $document->revised_doc - 1), 2, '0', STR_PAD_LEFT);
-                        @endphp
-
-                        @if(in_array($document->sop_type_short,['EOP','IOP']))
-                            {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-{{ $revisionNumber }}
                         @else
-                            {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                        @endif
-                    @else
-                        Nil
-                    @endif
-                </td>
-            </tr>
+                            @if(in_array($document->sop_type_short,['EOP','IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-00
+                            @else
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-00
+                            @endif
+                        @endif --}}
 
-        </table>
-    </header>
-</div>    
+                        {{ $data->document_number }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
+                        Effective Date:
+                    </td>
+
+                    <td style="border:1px solid #000; text-align:left; padding:6px;">
+                        @if ($data->training_required == 'yes')
+                            @if ($data->stage >= 11)
+                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                            @endif
+                        @else
+                            @if ($data->stage > 10)
+                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                            @endif
+                        @endif
+                    </td>
+                </tr>
+
+                <!-- Area + Review -->
+                <tr>
+                    <td rowspan="2"
+                        style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px; vertical-align:middle;">
+                        Area:
+                    </td>
+
+                    <td rowspan="2"
+                        style="border:1px solid #000; text-align:left; padding:6px; vertical-align:middle;">
+                        {{ Helpers::getFullDepartmentName($data->department_id) }}
+                    </td>
+
+                    <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
+                        Next Review Date:
+                    </td>
+
+                    <td style="border:1px solid #000; text-align:left; padding:6px;">
+                        @if($data->stage >= 11)
+                            {{ $data->next_review_date ? \Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') : '-' }}
+                        @endif
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
+                        Supersedes No.:
+                    </td>
+
+                    <td style="border:1px solid #000; text-align:left; padding:6px;">
+                        @if($document->revised == 'Yes' && $document->revised_doc)
+
+                            @php
+                                $previousDocument = \App\Models\Document::find($document->revised_doc);
+                            @endphp
+
+                            {{ $previousDocument->document_number ?? 'Nil' }}
+
+                        @else
+                            Nil
+                        @endif
+                    </td>
+                </tr>
+
+            </table>
+        </header>
+    </div>    
     
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
         <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">
@@ -1773,7 +1523,7 @@
                                         <th class="w-30 text-left vertical-baseline">Document Number</th>
                                         <td class="w-70 text-left">
 
-                                            @if($document->revised == 'Yes')
+                                            {{-- @if($document->revised == 'Yes')
                                                     @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
                                                         {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                                     @else
@@ -1786,7 +1536,8 @@
                                                     @else
                                                         {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
                                                     @endif
-                                            @endif
+                                            @endif --}}
+                                            {{$document->document_number}}
 
                                         </td>
                                     </tr>

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('print_histories', function (Blueprint $table) {
-            // $table->string('issue_copies')->default(0)->nullable();
+            // $table->string('print_histories')->default(0)->nullable();
             // $table->longText('print_reason')->nullable();
             // $table->text('document_printed_copies')->nullable();
             // $table->string('issuance_to')->nullable();
