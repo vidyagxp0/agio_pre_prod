@@ -258,319 +258,321 @@
         <div class="content-table">
             <div class="block">
 
-                <div class="inner-block">
-    <div class="content-table">
+               <div class="inner-block">
+                    <div class="content-table">
 
-        @if(!empty($cpjDetails) && count($cpjDetails))
-
-            @foreach($cpjDetails as $cpj)
-
-            {{-- ================= CPJ HEADER ================= --}}
-            <div class="block">
-                <div class="block-head">
-                    Change Proposal & Justification 
-                </div>
-            </div>
-
-            {{-- ================= GENERAL INFO ================= --}}
-            <div class="block">
-                <div class="block-head">General Information</div>
-
-                <table>
-                    <tr>
-                        <th class="w-20">Record Number</th>
-                        <td class="w-30">
-                            {{ Helpers::getDivisionName($cpj->division_id) }}/CPJ/{{ Helpers::year($cpj->created_at) }}/{{ str_pad($cpj->record, 4, '0', STR_PAD_LEFT) }}
-                        </td>
-
-                        <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">
-                            {{ $cpj->division_code ?? 'Not Applicable' }}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>Initiator</th>
-                        <td>{{ Helpers::getInitiatorName($cpj->initiator_id) }}</td>
-
-                        <th>Date of Initiation</th>
-                        <td>{{ Helpers::getdateFormat($cpj->created_at) }}</td>
-                    </tr>
-                </table>
-
-                <table>
-                    <tr>
-                        <th class="w-20">Short Description</th>
-                        <td class="w-30">{{ $cpj->cpdescription ?? 'Not Applicable' }}</td>
-                    </tr>
-                </table>
-
-                <table>
-                    <tr>
-                        <th class="w-20">Description of Change</th>
-                        <td class="w-30">{{ $cpj->impassesment ?? 'Not Applicable' }}</td>
-                    </tr>
-                </table>
-            </div>
+              
+                @if(!empty($cpjDetails) && count($cpjDetails) > 0)
 
 
-            @php
-                $grid = is_array($cpj->gridData) 
-                    ? $cpj->gridData 
-                    : json_decode($cpj->gridData ?? '[]', true);
-            @endphp
+                    @foreach($cpjDetails as $cpj)
 
-            <div class="block">
-                <div class="block-head">Change Proposal And Justification Details Grid</div>
-                <table class="change-grid">
-                    <tr>
-                        <th class="sr-no">Sr No</th>
-                        <th class="text-col">Current Practice</th>
-                        <th class="text-col">Proposed Change</th>
-                        <th class="text-col">Justification</th>
-                    </tr>
+                          @if(!empty($cpj->id))
+                                        {{-- ================= CPJ HEADER ================= --}}
+                                        <div class="block">
+                                            <div class="block-head">
+                                                Change Proposal & Justification 
+                                            </div>
+                                        </div>
 
-                    @if(!empty($grid))
-                        @foreach($grid as $key => $row)
-                            <tr>
-                                <td class="sr-no">{{ $key + 1 }}</td>
+                                        {{-- ================= GENERAL INFO ================= --}}
+                                        <div class="block">
+                                            <div class="block-head">General Information</div>
 
-                                <td class="pdf-text">
-                                    {!! nl2br(e($row['existing_system'] ?? '')) !!}
-                                </td>
+                                            <table>
+                                                <tr>
+                                                    <th class="w-20">Record Number</th>
+                                                    <td class="w-30">
+                                                        {{ Helpers::getDivisionName($cpj->division_id) }}/CPJ/{{ Helpers::year($cpj->created_at) }}/{{ str_pad($cpj->record, 4, '0', STR_PAD_LEFT) }}
+                                                    </td>
 
-                                <td class="pdf-text">
-                                    {!! nl2br(e($row['proposed_change'] ?? '')) !!}
-                                </td>
+                                                    <th class="w-20">Site/Location Code</th>
+                                                    <td class="w-30">
+                                                        {{ $cpj->division_code ?? 'Not Applicable' }}
+                                                    </td>
+                                                </tr>
 
-                                <td class="pdf-text">
-                                    {!! nl2br(e($row['justification'] ?? '')) !!}
-                                </td>
-                            </tr>
-                        @endforeach
-                    @endif
-                </table>
-            </div>
+                                                <tr>
+                                                    <th>Initiator</th>
+                                                    <td>{{ Helpers::getInitiatorName($cpj->initiator_id) }}</td>
 
-            @php
-                $checklist = is_array($cpj->checklistData) 
-                    ? $cpj->checklistData 
-                    : json_decode($cpj->checklistData ?? '{}', true);
-            @endphp
+                                                    <th>Date of Initiation</th>
+                                                    <td>{{ Helpers::getdateFormat($cpj->created_at) }}</td>
+                                                </tr>
+                                            </table>
 
-            <div class="block">
-                <div class="block-head">Impact Assessment</div>
+                                            <table>
+                                                <tr>
+                                                    <th class="w-20">Short Description</th>
+                                                    <td class="w-30">{{ $cpj->cpdescription ?? 'Not Applicable' }}</td>
+                                                </tr>
+                                            </table>
 
-                <table>
-                    <tr>
-                        <th>Sr No</th>
-                        <th>Question</th>
-                        <th>Response</th>
-                    </tr>
-
-                  @if(!empty($checklist))
-                        @foreach($checklist as $key => $item)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-
-                                <td>
-                                    {{ is_array($item) ? ($item['question'] ?? $key) : $key }}
-                                </td>
-
-                                <td>
-                                    @if(is_array($item))
-                                        {{ $item['manual_response'] ?? $item['response'] ?? '' }}
-                                    @else
-                                        {{ $item }}
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    @endif
-                </table>
-            </div>
+                                            <table>
+                                                <tr>
+                                                    <th class="w-20">Description of Change</th>
+                                                    <td class="w-30">{{ $cpj->impassesment ?? 'Not Applicable' }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
 
 
-            {{-- ================= INITIATOR ATTACHMENT ================= --}}
-            <div class="block">
-                <div class="block-head">Initiator Attachment</div>
+                                        @php
+                                            $grid = is_array($cpj->gridData) 
+                                                ? $cpj->gridData 
+                                                : json_decode($cpj->gridData ?? '[]', true);
+                                        @endphp
 
-                <table>
-                    @if ($cpj->cpAttachment)
-                        @foreach (json_decode($cpj->cpAttachment) as $file)
-                            <tr><td>{{ $file }}</td></tr>
-                        @endforeach
-                    @else
-                        <tr><td>Not Applicable</td></tr>
-                    @endif
-                </table>
-            </div>
+                                        <div class="block">
+                                            <div class="block-head">Change Proposal And Justification Details Grid</div>
+                                            <table class="change-grid">
+                                                <tr>
+                                                    <th class="sr-no">Sr No</th>
+                                                    <th class="text-col">Current Practice</th>
+                                                    <th class="text-col">Proposed Change</th>
+                                                    <th class="text-col">Justification</th>
+                                                </tr>
 
-            {{-- ================= HOD ================= --}}
-            <div class="block">
-                <div class="block-head">HOD/Designee Review</div>
+                                                @if(!empty($grid))
+                                                    @foreach($grid as $key => $row)
+                                                        <tr>
+                                                            <td class="sr-no">{{ $key + 1 }}</td>
 
-                <table>
-                    <tr>
-                        <th class="w-20">HOD/Designee Review comment</th>
-                        <td class="w-80">{{ $cpj->hod_comment ?? 'Not Applicable' }}</td>
-                    </tr>
-                </table>
-            </div>
+                                                            <td class="pdf-text">
+                                                                {!! nl2br(e($row['existing_system'] ?? '')) !!}
+                                                            </td>
 
-             <div class="block">
-                <div class="block-head">HOD/Designee Attachment</div>
-                <div class="border-table">
-                    <table>
-                        <tr class="table_bg">
-                            <th>Sr.No.</th>
-                            <th>Attachment</th>
-                        </tr>
+                                                            <td class="pdf-text">
+                                                                {!! nl2br(e($row['proposed_change'] ?? '')) !!}
+                                                            </td>
 
-                        @if ($cpj->hodAttachment)
-                            @foreach (json_decode($cpj->hodAttachment) as $key => $file)
-                                <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $file }}</td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td>1</td>
-                                <td>Not Applicable</td>
-                            </tr>
+                                                            <td class="pdf-text">
+                                                                {!! nl2br(e($row['justification'] ?? '')) !!}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                            </table>
+                                        </div>
+
+                                        @php
+                                            $checklist = is_array($cpj->checklistData) 
+                                                ? $cpj->checklistData 
+                                                : json_decode($cpj->checklistData ?? '{}', true);
+                                        @endphp
+
+                                        <div class="block">
+                                            <div class="block-head">Impact Assessment</div>
+
+                                            <table>
+                                                <tr>
+                                                    <th>Sr No</th>
+                                                    <th>Question</th>
+                                                    <th>Response</th>
+                                                </tr>
+
+                                            @if(!empty($checklist))
+                                                    @foreach($checklist as $key => $item)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+
+                                                            <td>
+                                                                {{ is_array($item) ? ($item['question'] ?? $key) : $key }}
+                                                            </td>
+
+                                                            <td>
+                                                                @if(is_array($item))
+                                                                    {{ $item['manual_response'] ?? $item['response'] ?? '' }}
+                                                                @else
+                                                                    {{ $item }}
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                            </table>
+                                        </div>
+
+
+                                        {{-- ================= INITIATOR ATTACHMENT ================= --}}
+                                        <div class="block">
+                                            <div class="block-head">Initiator Attachment</div>
+
+                                            <table>
+                                                @if ($cpj->cpAttachment)
+                                                    @foreach (json_decode($cpj->cpAttachment) as $file)
+                                                        <tr><td>{{ $file }}</td></tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr><td>Not Applicable</td></tr>
+                                                @endif
+                                            </table>
+                                        </div>
+
+                                        {{-- ================= HOD ================= --}}
+                                        <div class="block">
+                                            <div class="block-head">HOD/Designee Review</div>
+
+                                            <table>
+                                                <tr>
+                                                    <th class="w-20">HOD/Designee Review comment</th>
+                                                    <td class="w-80">{{ $cpj->hod_comment ?? 'Not Applicable' }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <div class="block">
+                                            <div class="block-head">HOD/Designee Attachment</div>
+                                            <div class="border-table">
+                                                <table>
+                                                    <tr class="table_bg">
+                                                        <th>Sr.No.</th>
+                                                        <th>Attachment</th>
+                                                    </tr>
+
+                                                    @if ($cpj->hodAttachment)
+                                                        @foreach (json_decode($cpj->hodAttachment) as $key => $file)
+                                                            <tr>
+                                                                <td>{{ $key + 1 }}</td>
+                                                                <td>{{ $file }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>Not Applicable</td>
+                                                        </tr>
+                                                    @endif
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        {{-- ================= QA ================= --}}
+
+                                        <div class="block">
+                                            <div class="block-head">QA/CQA Review</div>
+                                            <table>
+                                                <tr>
+                                                    <th class="w-20">QA/CQA Review Comments</th>
+                                                    <td class="w-80">{{ $cpj->qa_comment ?? 'Not Applicable' }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <div class="block">
+                                            <div class="block-head">QA/CQA Review Attachments</div>
+                                            <table>
+                                                @if ($cpj->qaAttachment)
+                                                    @foreach (json_decode($cpj->qaAttachment) as $file)
+                                                        <tr><td>{{ $file }}</td></tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr><td>Not Applicable</td></tr>
+                                                @endif
+                                            </table>
+                                        </div>
+
+                                        {{-- ================= QA HEAD ================= --}}
+                                    
+                                        <div class="block">
+                                            <div class="block-head">QA/CQA Head / Designee Approval</div>
+                                            <table>
+                                                <tr>
+                                                    <th class="w-20">QA/CQA Head / Designee Approval Comments</th>
+                                                    <td class="w-80">{{ $cpj->qa_cqa_head_comment ?? 'Not Applicable' }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <div class="block">
+                                            <div class="block-head">QA/CQA Head Approval Attachments</div>
+                                            <table>
+                                                @if ($cpj->qa_cqa_head_Attachment)
+                                                    @foreach (json_decode($cpj->qa_cqa_head_Attachment) as $file)
+                                                        <tr><td>{{ $file }}</td></tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr><td>Not Applicable</td></tr>
+                                                @endif
+                                            </table>
+                                        </div>
+
+                                        {{-- PAGE BREAK --}}
+                                        <div style="page-break-after: always;"></div>
+
+                                    
+
+                                </div>
+
+                                <div class="block">
+                                            <div class="block-head">Activity Log</div>
+                                            <table>
+                                                <tr>
+                                                    <th class="w-20">Submit By</th>
+                                                    <td class="w-30">@if ($cpj->submit_by) {{ $cpj->submit_by }} @else Not Applicable @endif</td>
+                                                    <th class="w-20">Submit On</th>
+                                                    <td class="w-30">@if ($cpj->submit_on) {{ $cpj->submit_on }} @else Not Applicable @endif</td>
+                                                    <th class="w-20">Submit Comment</th>
+                                                    <td class="w-30">@if ($cpj->submit_comment) {{ $cpj->submit_comment }} @else Not Applicable @endif</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="w-20">Cancel By</th>
+                                                    <td class="w-30">@if ($cpj->reject_by) {{ $cpj->reject_by }} @else Not Applicable @endif</td>
+                                                    <th class="w-20">Cancel On</th>
+                                                    <td class="w-30">@if ($cpj->reject_on) {{ $cpj->reject_on }} @else Not Applicable @endif</td>
+                                                    <th class="w-20">Cancel Comment</th>
+                                                    <td class="w-30">@if ($cpj->reject_comment) {{ $cpj->reject_comment }} @else Not Applicable @endif</td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <th class="w-20">HOD/Designee Review By</th>
+                                                    <td class="w-30">@if ($cpj->HOD_Review_Complete_By) {{ $cpj->HOD_Review_Complete_By }} @else Not Applicable @endif</td>
+                                                    <th class="w-20">HOD/Designee Review On</th>
+                                                    <td class="w-30">@if ($cpj->HOD_Review_Complete_On) {{ $cpj->HOD_Review_Complete_On }} @else Not Applicable @endif</td>
+                                                    <th class="w-20">HOD/Designee Review Comment</th>
+                                                    <td class="w-30">@if ($cpj->HOD_Review_Comments) {{ $cpj->HOD_Review_Comments }} @else Not Applicable @endif</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th class="w-20">QA/CQA Review By</th>
+                                                    <td class="w-30">@if ($cpj->qa_cqa_Review_Complete_By) {{ $cpj->qa_cqa_Review_Complete_By }} @else Not Applicable @endif</td>
+                                                    <th class="w-20">QA/CQA Review On</th>
+                                                    <td class="w-30">@if ($cpj->qa_cqa__Review_Complete_On) {{ $cpj->qa_cqa__Review_Complete_On }} @else Not Applicable @endif</td>
+                                                    <th class="w-20">QA/CQA Review Comment</th>
+                                                    <td class="w-30">@if ($cpj->qa_cqa__Review_Comments) {{ $cpj->qa_cqa__Review_Comments }} @else Not Applicable @endif</td>
+                                                </tr>
+                                            
+                                                <tr>
+                                                    <th class="w-20">QA/CQA Head/Designee Complete By</th>
+                                                    <td class="w-30">@if ($cpj->qa_cqa_head_Review_Complete_By) {{ $cpj->qa_cqa_head_Review_Complete_By }} @else Not Applicable @endif</td>
+                                                    <th class="w-20">QA/CQA Head/Designee Complete On</th>
+                                                    <td class="w-30">@if ($cpj->qa_cqa_head_Review_Complete_On) {{ $cpj->qa_cqa_head_Review_Complete_On }} @else Not Applicable @endif</td>
+                                                    <th class="w-20">QA/CQA Head/Designee Complete Comment</th>
+                                                    <td class="w-30">@if ($cpj->qa_cqa_head_Review_Comments) {{ $cpj->qa_cqa_head_Review_Comments }} @else Not Applicable @endif</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th class="w-20">Reject By</th>
+                                                    <td class="w-30">@if ($cpj->rejected_by) {{ $cpj->rejected_by }} @else Not Applicable @endif</td>
+                                                    <th class="w-20">Reject On</th>
+                                                    <td class="w-30">@if ($cpj->rejected_on) {{ $cpj->rejected_on }} @else Not Applicable @endif</td>
+                                                    <th class="w-20">Reject Comment</th>
+                                                    <td class="w-30">@if ($cpj->reject_comment) {{ $cpj->reject_comment }} @else Not Applicable @endif</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                            </div>
+
                         @endif
-                    </table>
-                </div>
-            </div>
 
-            {{-- ================= QA ================= --}}
+                    @endforeach
 
-             <div class="block">
-                <div class="block-head">QA/CQA Review</div>
-                <table>
-                    <tr>
-                        <th class="w-20">QA/CQA Review Comments</th>
-                        <td class="w-80">{{ $cpj->qa_comment ?? 'Not Applicable' }}</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="block">
-                <div class="block-head">QA/CQA Review Attachments</div>
-                <table>
-                    @if ($cpj->qaAttachment)
-                        @foreach (json_decode($cpj->qaAttachment) as $file)
-                            <tr><td>{{ $file }}</td></tr>
-                        @endforeach
-                    @else
-                        <tr><td>Not Applicable</td></tr>
-                    @endif
-                </table>
-            </div>
-
-            {{-- ================= QA HEAD ================= --}}
-        
-            <div class="block">
-                <div class="block-head">QA/CQA Head / Designee Approval</div>
-                <table>
-                    <tr>
-                        <th class="w-20">QA/CQA Head / Designee Approval Comments</th>
-                        <td class="w-80">{{ $cpj->qa_cqa_head_comment ?? 'Not Applicable' }}</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="block">
-                <div class="block-head">QA/CQA Head Approval Attachments</div>
-                <table>
-                    @if ($cpj->qa_cqa_head_Attachment)
-                        @foreach (json_decode($cpj->qa_cqa_head_Attachment) as $file)
-                            <tr><td>{{ $file }}</td></tr>
-                        @endforeach
-                    @else
-                        <tr><td>Not Applicable</td></tr>
-                    @endif
-                </table>
-            </div>
-
-            {{-- PAGE BREAK --}}
-            <div style="page-break-after: always;"></div>
-
-         
-
-    </div>
-
-    <div class="block">
-                <div class="block-head">Activity Log</div>
-                <table>
-                    <tr>
-                        <th class="w-20">Submit By</th>
-                        <td class="w-30">@if ($cpj->submit_by) {{ $cpj->submit_by }} @else Not Applicable @endif</td>
-                        <th class="w-20">Submit On</th>
-                        <td class="w-30">@if ($cpj->submit_on) {{ $cpj->submit_on }} @else Not Applicable @endif</td>
-                        <th class="w-20">Submit Comment</th>
-                        <td class="w-30">@if ($cpj->submit_comment) {{ $cpj->submit_comment }} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Cancel By</th>
-                        <td class="w-30">@if ($cpj->reject_by) {{ $cpj->reject_by }} @else Not Applicable @endif</td>
-                        <th class="w-20">Cancel On</th>
-                        <td class="w-30">@if ($cpj->reject_on) {{ $cpj->reject_on }} @else Not Applicable @endif</td>
-                        <th class="w-20">Cancel Comment</th>
-                        <td class="w-30">@if ($cpj->reject_comment) {{ $cpj->reject_comment }} @else Not Applicable @endif</td>
-                    </tr>
-                    
-                    <tr>
-                        <th class="w-20">HOD/Designee Review By</th>
-                        <td class="w-30">@if ($cpj->HOD_Review_Complete_By) {{ $cpj->HOD_Review_Complete_By }} @else Not Applicable @endif</td>
-                        <th class="w-20">HOD/Designee Review On</th>
-                        <td class="w-30">@if ($cpj->HOD_Review_Complete_On) {{ $cpj->HOD_Review_Complete_On }} @else Not Applicable @endif</td>
-                        <th class="w-20">HOD/Designee Review Comment</th>
-                        <td class="w-30">@if ($cpj->HOD_Review_Comments) {{ $cpj->HOD_Review_Comments }} @else Not Applicable @endif</td>
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">QA/CQA Review By</th>
-                        <td class="w-30">@if ($cpj->qa_cqa_Review_Complete_By) {{ $cpj->qa_cqa_Review_Complete_By }} @else Not Applicable @endif</td>
-                        <th class="w-20">QA/CQA Review On</th>
-                        <td class="w-30">@if ($cpj->qa_cqa__Review_Complete_On) {{ $cpj->qa_cqa__Review_Complete_On }} @else Not Applicable @endif</td>
-                        <th class="w-20">QA/CQA Review Comment</th>
-                        <td class="w-30">@if ($cpj->qa_cqa__Review_Comments) {{ $cpj->qa_cqa__Review_Comments }} @else Not Applicable @endif</td>
-                    </tr>
                 
-                    <tr>
-                        <th class="w-20">QA/CQA Head/Designee Complete By</th>
-                        <td class="w-30">@if ($cpj->qa_cqa_head_Review_Complete_By) {{ $cpj->qa_cqa_head_Review_Complete_By }} @else Not Applicable @endif</td>
-                        <th class="w-20">QA/CQA Head/Designee Complete On</th>
-                        <td class="w-30">@if ($cpj->qa_cqa_head_Review_Complete_On) {{ $cpj->qa_cqa_head_Review_Complete_On }} @else Not Applicable @endif</td>
-                        <th class="w-20">QA/CQA Head/Designee Complete Comment</th>
-                        <td class="w-30">@if ($cpj->qa_cqa_head_Review_Comments) {{ $cpj->qa_cqa_head_Review_Comments }} @else Not Applicable @endif</td>
-                    </tr>
+                @endif
 
-                    <tr>
-                        <th class="w-20">Reject By</th>
-                        <td class="w-30">@if ($cpj->rejected_by) {{ $cpj->rejected_by }} @else Not Applicable @endif</td>
-                        <th class="w-20">Reject On</th>
-                        <td class="w-30">@if ($cpj->rejected_on) {{ $cpj->rejected_on }} @else Not Applicable @endif</td>
-                        <th class="w-20">Reject Comment</th>
-                        <td class="w-30">@if ($cpj->reject_comment) {{ $cpj->reject_comment }} @else Not Applicable @endif</td>
-                    </tr>
-                </table>
-            </div>
-</div>
-
-   @endforeach
-
-        @else
-            <div class="block">
-                <div class="block-head">No Change Proposal Found</div>
-            </div>
-        @endif
-
-        <center>
-            <h3>Change Control Report</h3>
-        </center>
+                <center>
+                    <h3>Change Control Report</h3>
+                </center>
 
 
 
@@ -674,6 +676,7 @@
                         </td>
                     </tr>
 
+                     @if($data->created_at >= '2026-07-02')
                     <tr>
                         <th class="w-20">Reference Change Proposal and Justification</th>
                         <td class="w-80" colspan="3">
@@ -684,7 +687,7 @@
                             @endif
                         </td>
                     </tr>
-
+                @endif
 
                     <tr>
                         <th class="w-20">Change Related To</th>
@@ -6677,6 +6680,11 @@
         @endforeach
     @endif
 
+
+
+
+
+
     @if (count($capa_Data) > 0)
         @foreach ($capa_Data as $data)
 
@@ -7444,6 +7452,482 @@
         @endforeach
     @endif
      
+
+
+      @if (count($effectivenessCheck) > 0)
+        @foreach ($effectivenessCheck as $data)
+
+        <center>
+            <h3>Effectiveness Check  Child Report</h3>
+        </center>
+
+            <div class="inner-block">
+                <div class="content-table">
+                    <div class="block">
+                        <div class="block-head">
+                            General Information
+                        </div>
+                        <table>
+                            <tr>
+                                <th class="w-20">Record Number</th>
+                                <td class="w-30">
+                                    @if ($data->record)
+                                        {{ Helpers::divisionNameForQMS($data->division_id) }}/EC/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                                <th class="w-20">Site/Location Code</th>
+                                <td class="w-30">
+                                    @if ($data->division_id)
+                                        {{ Helpers::getDivisionName($data->division_id) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+
+                            <tr> {{ $data->created_at }} added by {{ $data->originator }}
+                                <th class="w-20">Initiator</th>
+                                <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
+                                <th class="w-20">Date of Initiation</th>
+                                <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Assigned To</th>
+                                <td class="w-30">
+                                    @if ($data->assign_to)
+
+                                        {{ Helpers::getInitiatorName($data->assign_to) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                                <th class="w-20">Due Date</th>
+                                <td class="w-30">
+                                    @if ($data->due_date)
+                                        {{ Helpers::getdateFormat($data->due_date) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                            </tr>
+                            </table>
+                            <table>
+                                <tr>
+                                    <th class="w-20">Short Description</th>
+                                    <td class="w-80">
+                                        @if ($data->short_description)
+                                            {{ $data->short_description }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+                            </table>
+
+                        <div class="block-head">
+                            Effectiveness Planning Information
+                        </div>
+                        <table>
+
+                            <tr>
+                                <th class="w-20">Effectiveness check Plan</th>
+                                <td class="w-80">
+                                    @if ($data->Effectiveness_check_Plan)
+                                        {{ $data->Effectiveness_check_Plan }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="block-head">
+                            Attachment
+                        </div>
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-20">Sr.No.</th>
+                                    <th class="w-60">Attachment </th>
+                                </tr>
+                                @if ($data->Attachments)
+                                    @foreach (json_decode($data->Attachments) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-60">Not Applicable</td>
+                                    </tr>
+                                @endif
+
+                            </table>
+                        </div>
+                        </table>
+                    </div>
+
+
+                    <div class="block-head">
+                        Acknowledge
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="w-20">Acknowledge Comment</th>
+                            <td class="w-80">
+                                @if ($data->acknowledge_comment)
+                                    {{ $data->acknowledge_comment }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="block-head">
+                        Acknowledge Attachment
+                    </div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">Sr.No.</th>
+                                <th class="w-60">Attachment </th>
+                            </tr>
+                            @if ($data->acknowledge_Attachment)
+                                @foreach (json_decode($data->acknowledge_Attachment) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+
+                </div>
+
+
+                <br>
+                <div class="block-head">
+                    Effectiveness Check Results
+                </div>
+                <table>
+                    <tr>
+                        <th class="w-20">Effectiveness Results</th>
+                        <td class="w-80">
+                            @if ($data->Effectiveness_Results)
+                                {{ $data->Effectiveness_Results }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                    </tr>
+                </table>
+                <div class="block-head">
+                    Effectiveness check Attachment
+                </div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-60">Attachment </th>
+                        </tr>
+                        @if ($data->Effectiveness_check_Attachment)
+                            @foreach (json_decode($data->Effectiveness_check_Attachment) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div>
+
+                <br>
+                <div class="block-head">
+                    Effectiveness Summary
+                </div>
+                <table>
+                    <tr>
+                        <th class="w-20">Effectiveness Summary</th>
+                        <td class="w-80">
+                            @if ($data->effect_summary)
+                                {{ $data->effect_summary }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="block-head">
+                    HOD Review
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-20">HOD Review Comment</th>
+                        <td class="w-80">
+                            @if ($data->Comments)
+                                {{ $data->Comments }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+                <div class="block-head">
+                    HOD Review Attachment
+                </div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-60">Attachment </th>
+                        </tr>
+                        @if ($data->Attachment)
+                            @foreach (json_decode($data->Attachment) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div>
+
+                <br>
+                <div class="block-head">
+                    QA/CQA Review
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-20">QA/CQA Review Comment</th>
+                        <td class="w-80">
+                            @if ($data->qa_cqa_review_comment)
+                                {{ $data->qa_cqa_review_comment }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+                <div class="block-head">
+                    QA/CQA Review Attachment
+                </div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-60">Attachment </th>
+                        </tr>
+                        @if ($data->qa_cqa_review_Attachment)
+                            @foreach (json_decode($data->qa_cqa_review_Attachment) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div>
+
+                <br>
+                <div class="block-head">
+                    QA/CQA Approval
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-20">QA/CQA Approval Comment</th>
+                        <td class="w-80">
+                            @if ($data->qa_cqa_approval_comment)
+                                {{ $data->qa_cqa_approval_comment }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+                <div class="block-head">
+                    QA/CQA Approval Attachment
+                </div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-60">Attachment </th>
+                        </tr>
+                        @if ($data->qa_cqa_approval_Attachment)
+                            @foreach (json_decode($data->qa_cqa_approval_Attachment) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-60">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div><br>
+                <div class="block-head">
+                    Activity Log
+                </div>
+                <table>
+                    <tr>
+                        <th class="w-20">Submit By
+                        </th>
+                        <td class="w-30">@if( $data->submit_by ) {{ $data->submit_by }}  @else Not Applicable @endif </td>
+                        <th class="w-20">
+                            Submit On</th>
+                        <td class="w-30"> @if( $data->submit_on ) {{ $data->submit_on }}  @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            Submit Comment</th>
+                        <td class="w-30"> @if( $data->submit_comment ) {{ $data->submit_comment }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancel By
+                        </th>
+                        <td class="w-30">@if($data->closed_cancelled_by) {{ $data->closed_cancelled_by }} @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            Cancel On</th>
+                        <td class="w-30">@if($data->closed_cancelled_on) {{ $data->closed_cancelled_on }} @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            Cancel Comment</th>
+                        <td class="w-30"> @if($data->closed_cancelled_comment) {{ $data->closed_cancelled_comment }} @else Not Applicable @endif</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Acknowledge Complete By
+                        </th>
+                        <td class="w-30">@if($data->work_complition_by) {{ $data->work_complition_by }} @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            Acknowledge Complete On</th>
+                        <td class="w-30"> @if($data->work_complition_on){{ $data->work_complition_on }} @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            Acknowledge Complete Comment</th>
+                        <td class="w-30">@if($data->work_complition_comment){{ $data->work_complition_comment }} @else Not Applicable @endif</td>
+                    </tr>
+                    
+                    <tr>
+                        <th class="w-20"> Complete By
+                        </th>
+                        <td class="w-30">@if($data->effectiveness_check_complete_by) {{ $data->effectiveness_check_complete_by }} @else Not Applicable @endif </td>
+                        <th class="w-20">
+                            Complete On</th>
+                        <td class="w-30">@if($data->effectiveness_check_complete_on){{ $data->effectiveness_check_complete_on }} @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            Complete Comment</th>
+                        <td class="w-30">@if($data->effectiveness_check_complete_comment) {{ $data->effectiveness_check_complete_comment }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">HOD Review Complete By
+                        </th>
+                        <td class="w-30">@if($data->hod_review_complete_by) {{ $data->hod_review_complete_by }} @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            HOD Review Complete On</th>
+                        <td class="w-30">@if($data->hod_review_complete_on) {{ $data->hod_review_complete_on }} @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            HOD Review Complete Comment</th>
+                        <td class="w-30">@if($data->hod_review_complete_comment) {{ $data->hod_review_complete_comment }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Not Effective By
+                        </th>
+                        <td class="w-30">@if($data->qa_review_complete_by) {{ $data->qa_review_complete_by }} @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            Not Effective On</th>
+                        <td class="w-30">@if($data->qa_review_complete_on) {{ $data->qa_review_complete_on }} @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            Not Effective Comment</th>
+                        <td class="w-30">@if($data->qa_review_complete_comment) {{ $data->qa_review_complete_comment }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Effective By
+                        </th>
+                        <td class="w-30">@if($data->effective_by) {{ $data->effective_by }} @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            Effective On</th>
+                        <td class="w-30">@if($data->effective_on) {{ $data->effective_on }} @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            Effective Comment</th>
+                        <td class="w-30">@if($data->effective_comment) {{ $data->effective_comment }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Not Effective Approval Complete By
+                        </th>
+                        <td class="w-30">@if($data->not_effective_approval_complete_by) {{ $data->not_effective_approval_complete_by }} @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            Not Effective Approval Complete On</th>
+                        <td class="w-30">@if($data->not_effective_approval_complete_on) {{ $data->not_effective_approval_complete_on }} @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            Not Effective Approval Complete Comment</th>
+                        <td class="w-30">@if($data->not_effective_approval_complete_comment) {{ $data->not_effective_approval_complete_comment }} @else Not Applicable @endif</td>
+                    </tr>
+
+
+                    <tr>
+                        <th class="w-20">Effective Approval Completed By
+                        </th>
+                        <td class="w-30">@if($data->effective_approval_complete_by){{ $data->effective_approval_complete_by }} @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            Effective Approval Completed On</th>
+                        <td class="w-30">@if($data->effective_approval_complete_on) {{ $data->effective_approval_complete_on }} @else Not Applicable @endif</td>
+                        <th class="w-20">
+                            Effective Approval Completed Comment</th>
+                        <td class="w-30">@if($data->effective_approval_complete_comment) {{ $data->effective_approval_complete_comment }} @else Not Applicable @endif</td>
+                    </tr>
+
+
+
+
+                </table>
+                </table>
+            </div>
+
+        @endforeach
+
+      @endif  
 
     <footer>
         <table>
