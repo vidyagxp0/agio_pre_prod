@@ -3034,18 +3034,29 @@
             width: 60%;
         }
     </style>
-    <script>
+    {{-- <script>
         window.addEventListener('DOMContentLoaded', function() {
             var pdfObject = document.querySelector('iframe#theFrame"]');
             var pdfDocument = pdfObject.contentDocument;
             var firstPage = pdfDocument.querySelector('.page:first-of-type');
             firstPage.style.display = 'none';
         });
-    </script>
+    </script> --}}
     <script>
-        // JavaScript to open modal when obsolete button is clicked
-        document.getElementById('obsolete-button').addEventListener('click', function() {
-            $('#signature-modal').modal('show');
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const obsoleteButton =
+                document.getElementById('obsolete-button');
+
+            if (obsoleteButton) {
+                obsoleteButton.addEventListener(
+                    'click',
+                    function () {
+                        $('#signature-modal').modal('show');
+                    }
+                );
+            }
+
         });
     </script>
 @endsection
