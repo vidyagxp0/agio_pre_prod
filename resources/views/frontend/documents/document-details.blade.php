@@ -642,7 +642,8 @@
 
                         </div>
                     </div>
-                    @else
+                    @elseif(in_array($document->document_type_id, ['SOP','FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
+                   
                     <div class="col-12">
                         <div class="inner-block doc-overview">
 

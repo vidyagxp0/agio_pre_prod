@@ -14565,35 +14565,37 @@
                                 class="btn btn-primary">Annexure Print</button>
                         </div>
                     </div>
+                    @php
+                        $isReadOnly = ($document->status == 'Effective');
+                    @endphp
                     <div class="input-fields">
+  @if ($document->document_content && !empty($document->document_content->annexuredata))
 
-                        @if ($document->document_content && !empty($document->document_content->annexuredata))
+        @foreach (unserialize($document->document_content->annexuredata) as $index => $data)
 
-                            @foreach (unserialize($document->document_content->annexuredata) as $index => $data)
+            {!! quillEditor(
+                "annexuredata[$index]",
+                $data,
+                '<label>Annexure A-' . ($index + 1) . '</label>',
+                $isReadOnly
+            ) !!}
 
-                                {!! quillEditor(
-                                    "annexuredata[$index]",
-                                    $data,
-                                    '<label>Annexure A-' . ($index + 1) . '</label>',
-                                    false
-                                ) !!}
+        @endforeach
 
-                            @endforeach
+    @else
 
-                        @else
+        @for ($i = 0; $i < 30; $i++)
 
-                            @for ($i = 0; $i < 30; $i++)
+            {!! quillEditor(
+                "annexuredata[$i]",
+                '',
+                '<label>Annexure A-' . ($i + 1) . '</label>',
+                $isReadOnly
+            ) !!}
 
-                                {!! quillEditor(
-                                    "annexuredata[$i]",
-                                    '',
-                                    '<label>Annexure A-' . ($i + 1) . '</label>',
-                                    false
-                                ) !!}
+        @endfor
 
-                            @endfor
-
-                        @endif
+    @endif
 
                     </div>
                     <div class="button-block">
