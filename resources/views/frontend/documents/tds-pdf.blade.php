@@ -648,7 +648,7 @@
                 </td>
                 <td style="width: 18%; padding: 5px; text-align: left" class="doc-num">TDS No.: 
                     <span>
-                    @if($document->revised == 'Yes')
+                    {{-- @if($document->revised == 'Yes')
                         @php
                             $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
                         @endphp
@@ -665,7 +665,8 @@
                             @else
                                 {{$document->tds_name_code}}TDS/{{ str_pad($data->record_spec, 4, '0', STR_PAD_LEFT) }}-00
                             @endif
-                    @endif
+                    @endif --}}
+                    {{$document->document_number ?? 'NA'}}
                     </span>
                 </td>
              </tr>

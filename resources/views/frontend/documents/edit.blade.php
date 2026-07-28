@@ -14638,7 +14638,7 @@
                                                 Retrieval / Usage
                                             </th>
 
-                                            <th colspan="4">
+                                            <th colspan="3">
                                                 Destruction
                                             </th>
                                         </tr>
@@ -14665,7 +14665,6 @@
                                             {{-- Destruction --}}
                                             <th>Destructed By</th>
                                             <th>Destruction Date</th>
-                                            <th>No. of Copies Destructed</th>
                                             <th>Reason</th>
                                         </tr>
                                     </thead>
@@ -14721,7 +14720,7 @@
                                                 $destructionCompleted =
                                                     !empty($grid->destructed_by)
                                                     && !empty($grid->destruction_date)
-                                                    && !empty($grid->destructed_copies);
+                                                    && !empty($grid->destruction_reason);
 
                                                 $isUsed = $retrievalStatus === 'Used';
                                                 $isRetrieved = $retrievalStatus === 'Retrieved';
@@ -15155,21 +15154,25 @@
                                                             || $destructionCompleted
                                                         ) ? 'disabled' : '' }}
                                                     >
-                                                        <option value="">
-                                                            -- Select --
-                                                        </option>
-
-                                                        @foreach ($users as $user)
-                                                            <option
-                                                                value="{{ $user->id }}"
-                                                                {{ (string) $destructedByValue ===
-                                                                    (string) $user->id
-                                                                    ? 'selected'
-                                                                    : '' }}
-                                                            >
-                                                                {{ $user->name }}
+                                                        @if ($isUsed)
+                                                            <option value="NA" selected>N/A</option>
+                                                        @else
+                                                            <option value="">
+                                                                -- Select --
                                                             </option>
-                                                        @endforeach
+
+                                                            @foreach ($users as $user)
+                                                                <option
+                                                                    value="{{ $user->id }}"
+                                                                    {{ (string) $destructedByValue ===
+                                                                        (string) $user->id
+                                                                        ? 'selected'
+                                                                        : '' }}
+                                                                >
+                                                                    {{ $user->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
                                                     </select>
 
                                                     @if ($destructionCompleted)
@@ -15188,9 +15191,11 @@
                                                         <input
                                                             type="text"
                                                             id="destruction_date_display_{{ $index }}"
-                                                            value="{{ $destructionDate
-                                                                ? $destructionDate->format('d-M-Y')
-                                                                : '' }}"
+                                                            value="{{ $isUsed
+                                                                ? 'N/A'
+                                                                : ($destructionDate
+                                                                    ? $destructionDate->format('d-M-Y')
+                                                                    : '') }}"
                                                             class="{{
                                                                 (
                                                                     !$isRetrieved
@@ -15245,20 +15250,6 @@
                                                     </div>
                                                 </td>
 
-                                                {{-- Destructed Copy Count --}}
-                                                <td>
-                                                    <input
-                                                        type="number"
-                                                        id="destructed_copies_{{ $index }}"
-                                                        name="distribution[{{ $index }}][destructed_copies]"
-                                                        value="{{ $destructionCompleted ? 1 : '' }}"
-                                                        min="1"
-                                                        max="1"
-                                                        class="grid-readonly-field text-center"
-                                                        readonly
-                                                    >
-                                                </td>
-
                                                 {{-- Destruction Reason --}}
                                                 <td>
                                                     <textarea
@@ -15278,7 +15269,7 @@
                                                             || $isUsed
                                                             || $destructionCompleted
                                                         ) ? 'readonly' : '' }}
-                                                    >{{ $destructionReasonValue }}</textarea>
+                                                    >{{ $isUsed ? 'N/A' : $destructionReasonValue }}</textarea>
                                                 </td>
 
                                             </tr>
@@ -15287,7 +15278,7 @@
 
                                             <tr>
                                                 <td
-                                                    colspan="19"
+                                                    colspan="18"
                                                     class="text-center"
                                                 >
                                                     No distribution record found.
@@ -15409,7 +15400,7 @@
                         }
 
 
-                        function clearDestructionFields(index) {
+                        function resetDestructionFields(index, showNA = false) {
                             const destructedBy =
                                 document.getElementById(
                                     'destructed_by_' + index
@@ -15425,18 +15416,42 @@
                                     'destruction_date_display_' + index
                                 );
 
-                            const destructedCopies =
-                                document.getElementById(
-                                    'destructed_copies_' + index
-                                );
-
                             const destructionReason =
                                 document.getElementById(
                                     'destruction_reason_' + index
                                 );
 
                             if (destructedBy) {
-                                destructedBy.value = '';
+                                if (showNA) {
+                                    let naOption =
+                                        destructedBy.querySelector(
+                                            'option[value="NA"]'
+                                        );
+
+                                    if (!naOption) {
+                                        naOption = document.createElement('option');
+                                        naOption.value = 'NA';
+                                        naOption.textContent = 'N/A';
+
+                                        destructedBy.insertBefore(
+                                            naOption,
+                                            destructedBy.firstChild
+                                        );
+                                    }
+
+                                    destructedBy.value = 'NA';
+                                } else {
+                                    const naOption =
+                                        destructedBy.querySelector(
+                                            'option[value="NA"]'
+                                        );
+
+                                    if (naOption) {
+                                        naOption.remove();
+                                    }
+
+                                    destructedBy.value = '';
+                                }
                             }
 
                             if (destructionDate) {
@@ -15444,15 +15459,13 @@
                             }
 
                             if (destructionDateDisplay) {
-                                destructionDateDisplay.value = '';
-                            }
-
-                            if (destructedCopies) {
-                                destructedCopies.value = '';
+                                destructionDateDisplay.value =
+                                    showNA ? 'N/A' : '';
                             }
 
                             if (destructionReason) {
-                                destructionReason.value = '';
+                                destructionReason.value =
+                                    showNA ? 'N/A' : '';
                             }
                         }
 
@@ -15548,7 +15561,12 @@
                             }
 
                             if (!allowDestruction) {
-                                clearDestructionFields(index);
+                                resetDestructionFields(
+                                    index,
+                                    status === 'Used'
+                                );
+                            } else {
+                                resetDestructionFields(index, false);
                             }
                         }
 
@@ -15831,7 +15849,7 @@
                     <style>
                         #distribution-retrieval-grid {
                             width: 100%;
-                            min-width: 2400px;
+                            min-width: 2250px;
                             border-collapse: collapse !important;
                             border: 1px solid #000 !important;
                         }

@@ -490,12 +490,9 @@
                                 ->value('typecode');
                         @endphp
 
-                        @if($document->revised == 'Yes')
-                            @php
-                                $revisionNumber = str_pad($document->revised_doc - 1, 2, '0', STR_PAD_LEFT);
-                            @endphp
-                            PMS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                        @else                        
+                        @if($document->revised == 'Yes' && $document->revised_doc)
+                            {{ $document->supersedes_no ?? 'Nil' }}
+                        @else
                             Nil
                         @endif
                     </span> 

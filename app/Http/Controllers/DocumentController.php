@@ -603,14 +603,25 @@ class DocumentController extends Controller
             $document->document_name = $request->document_name;
             $document->short_description = $request->short_desc;
             $document->description = $request->description;
-            $document->stage = 1;
-            $document->status = Stage::where('id', 1)->value('name');
+            // $document->stage = 1;
+            // $document->status = Stage::where('id', 1)->value('name');
+
             $document->due_dateDoc = $request->due_dateDoc;
             $document->department_id = $request->department_id;
             $document->document_type_id = $request->document_type_id;
             $document->document_subtype_id = $request->document_subtype_id;
             $document->document_language_id = $request->document_language_id;
             $document->effective_date = $request->effective_date;
+            $stageOneDocuments = ['SOP','FPS','INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP'];
+
+            if (in_array($document->document_type_id, $stageOneDocuments)) {
+                $document->status = Stage::where('id', 1)->value('name');
+                 $document->stage = 1;
+            } else {
+                $document->status = Stage::where('id', 11)->value('name');
+                 $document->stage = 11;
+            }
+
             //mfps
             $document->specification_mfps_no = $request->specification_mfps_no;
             $document->stp_mfps_no = $request->stp_mfps_no;
@@ -681,6 +692,10 @@ class DocumentController extends Controller
             */
 
             $document->document_number = $this->generateDocumentNumber($request->department_id, $request->document_type_id, $request->sop_type, $request->sop_type_short, $request->revised ?? 'No', $request->revised_doc);
+
+            $document->base_document_number = $this->extractBaseDocumentNumber($document->document_number);
+
+            $document->supersedes_no = null;
             $document->notify_to = json_encode($request->notify_to);
 
             $document->master_copy_number = $request->master_copy_number;
@@ -3574,7 +3589,22 @@ class DocumentController extends Controller
                 $document->document_language_id = $request->document_language_id;
 
                 if ($documentNumberFieldsChanged) {
-                $document->document_number = $this->generateDocumentNumber($newDepartmentId, $newDocumentTypeId, $newSopType, $newSopTypeShort, $newRevised, $newRevisedDoc, $document->id);
+
+                    $document->document_number = $this->generateDocumentNumber(
+                        $newDepartmentId,
+                        $newDocumentTypeId,
+                        $newSopType,
+                        $newSopTypeShort,
+                        $newRevised,
+                        $newRevisedDoc,
+                        $document->id
+                    );
+
+                    $document->base_document_number =
+                        $this->extractBaseDocumentNumber(
+                            $document->document_number
+                        );
+
                 }
 
                 //tds
@@ -9797,200 +9827,493 @@ public function printPDF($id)
         return back();
     }    
 
-    public function revision(Request $request, $id){
+    // public function revision(Request $request, $id){
 
-            $document = Document::find($id);
+    //         $document = Document::find($id);
 
-            if (!$document) {
-                toastr()->error('Document not found!');
-                return redirect()->back();
-            }
+    //         if (!$document) {
+    //             toastr()->error('Document not found!');
+    //             return redirect()->back();
+    //         }
 
-            // **Step 1: Find the latest revised_doc for this document_number**
-            $lastRevision = Document::where('record', $document->record)
-                ->whereNotNull('revised_doc')
-                ->orderBy('revised_doc', 'desc') // Get the highest revised_doc
-                ->first();
+    //         // **Step 1: Find the latest revised_doc for this document_number**
+    //         $lastRevision = Document::where('record', $document->record)
+    //             ->whereNotNull('revised_doc')
+    //             ->orderBy('revised_doc', 'desc') // Get the highest revised_doc
+    //             ->first();
 
-            // **Step 2: Determine the next revision number**
-            $nextRevision = $lastRevision ? $lastRevision->revised_doc + 1 : 1;
+    //         // **Step 2: Determine the next revision number**
+    //         $nextRevision = $lastRevision ? $lastRevision->revised_doc + 1 : 1;
 
-            // **Step 3: Update major & minor version**
-            $requestedMajor = (int)$document->major;
-            $requestedMinor = (int)$document->minor;
+    //         // **Step 3: Update major & minor version**
+    //         $requestedMajor = (int)$document->major;
+    //         $requestedMinor = (int)$document->minor;
 
-            if ($requestedMinor < 9) {
-                $requestedMinor += 1;
-            } else {
-                $requestedMinor = 1;
-                $requestedMajor += 1;
-            }
+    //         if ($requestedMinor < 9) {
+    //             $requestedMinor += 1;
+    //         } else {
+    //             $requestedMinor = 1;
+    //             $requestedMajor += 1;
+    //         }
 
 
-            // **Step 5: Mark original document as revised**
-            $document->revision = 'Yes';
-            $document->revision_policy = $request->revision;
-            $document->update();
+    //         // **Step 5: Mark original document as revised**
+    //         $document->revision = 'Yes';
+    //         $document->revision_policy = $request->revision;
+    //         $document->update();
 
-            // **Step 6: Create a new revision**
-            // $newdoc = $document->replicate();
-            // $newdoc->revised = 'Yes';
-            // $newdoc->revised_doc = $nextRevision;
-            // $newdoc->major = $requestedMajor;
-            // $newdoc->minor = $requestedMinor;
-            // $newdoc->reason = $request->reason;
-            // $newdoc->trainer = $request->trainer;
-            // $newdoc->comments = $request->comment;
-            // $newdoc->stage = 1;
-            // $newdoc->status = Stage::where('id', 1)->value('name');
-            // $newdoc->save();
+    //         $newdoc = $document->replicate();
+    //         $newdoc->revised = 'Yes';
+    //         $newdoc->revised_doc = $nextRevision;
 
-            $newdoc = $document->replicate();
-            $newdoc->revised = 'Yes';
-            $newdoc->revised_doc = $nextRevision;
+    //         $newdoc->major = $requestedMajor;
+    //         $newdoc->minor = $requestedMinor;
 
-            $newdoc->major = $requestedMajor;
-            $newdoc->minor = $requestedMinor;
+    //         $newdoc->reason = $request->reason;
+    //         $newdoc->trainer = $request->trainer;
+    //         $newdoc->comments = $request->comment;
 
-            $newdoc->reason = $request->reason;
-            $newdoc->trainer = $request->trainer;
-            $newdoc->comments = $request->comment;
+    //         $newdoc->stage = 1;
+    //         $newdoc->status = Stage::where('id', 1)->value('name');
 
-            $newdoc->stage = 1;
-            $newdoc->status = Stage::where('id', 1)->value('name');
+    //         $newdoc->document_number = $this->generateRevisedDocumentNumber($document->document_number, $nextRevision);
 
-            $newdoc->document_number = $this->generateRevisedDocumentNumber($document->document_number, $nextRevision);
+    //         $newdoc->save();
 
-            $newdoc->save();
+    //         // \Log::info("New Document Saved: Major: $newdoc->major, Minor: $newdoc->minor");
 
-            // \Log::info("New Document Saved: Major: $newdoc->major, Minor: $newdoc->minor");
+    //         $docContent = DocumentContent::where('document_id', $document->id)->first();
+    //         if ($docContent) {
+    //             $newDocContent = $docContent->replicate();
+    //             $newDocContent->document_id = $newdoc->id;
+    //             $newDocContent->save();
+    //         }
 
-            $docContent = DocumentContent::where('document_id', $document->id)->first();
-            if ($docContent) {
-                $newDocContent = $docContent->replicate();
-                $newDocContent->document_id = $newdoc->id;
-                $newDocContent->save();
-            }
+    //         $annexure = Annexure::where('document_id', $document->id)->first();
+    //         if ($annexure) {
+    //             $newAnnexure = $annexure->replicate();
+    //             $newAnnexure->document_id = $newdoc->id;
+    //             $newAnnexure->save();
+    //         }
 
-            $annexure = Annexure::where('document_id', $document->id)->first();
-            if ($annexure) {
-                $newAnnexure = $annexure->replicate();
-                $newAnnexure->document_id = $newdoc->id;
-                $newAnnexure->save();
-            }
+    //         if ($document->training_required == 'yes') {
+    //             $docTrain = DocumentTraining::where('document_id', $document->id)->first();
+    //             if ($docTrain) {
+    //                 $newTraining = $docTrain->replicate();
+    //                 $newTraining->document_id = $newdoc->id;
+    //                 $newTraining->save();
+    //             }
+    //         }
 
-            if ($document->training_required == 'yes') {
-                $docTrain = DocumentTraining::where('document_id', $document->id)->first();
-                if ($docTrain) {
-                    $newTraining = $docTrain->replicate();
-                    $newTraining->document_id = $newdoc->id;
-                    $newTraining->save();
-                }
-            }
-
-            $distribution_grid = DocumentGridData::where('document_id', $document->id)->first();
-            if ($distribution_grid) {
-                $distribution = $distribution_grid->replicate();
-                $distribution->document_id = $newdoc->id;
-                $distribution->save();
-            }
+    //         $distribution_grid = DocumentGridData::where('document_id', $document->id)->first();
+    //         if ($distribution_grid) {
+    //             $distribution = $distribution_grid->replicate();
+    //             $distribution->document_id = $newdoc->id;
+    //             $distribution->save();
+    //         }
 
       
-            $RevisionGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_data'])->first();
-            $RevisionGridData = $RevisionGridData->replicate();
-            $RevisionGridData->document_type_id = $newdoc->id;
-            $RevisionGridData->identifier = 'revision_data';
-            $RevisionGridData->save();
+    //         $RevisionGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_data'])->first();
+    //         $RevisionGridData = $RevisionGridData->replicate();
+    //         $RevisionGridData->document_type_id = $newdoc->id;
+    //         $RevisionGridData->identifier = 'revision_data';
+    //         $RevisionGridData->save();
 
-            $RevisionGridpamsData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_pams_data'])->first();
-            $RevisionGridpamsData = $RevisionGridpamsData->replicate();
-            $RevisionGridpamsData->document_type_id = $newdoc->id;
-            $RevisionGridpamsData->identifier = 'revision_pams_data';
-            $RevisionGridpamsData->save();
+    //         $RevisionGridpamsData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_pams_data'])->first();
+    //         $RevisionGridpamsData = $RevisionGridpamsData->replicate();
+    //         $RevisionGridpamsData->document_type_id = $newdoc->id;
+    //         $RevisionGridpamsData->identifier = 'revision_pams_data';
+    //         $RevisionGridpamsData->save();
 
-            $RevisionGridpiasData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_pias_data'])->first();
-            $RevisionGridpiasData = $RevisionGridpiasData->replicate();
-            $RevisionGridpiasData->document_type_id = $newdoc->id;
-            $RevisionGridpiasData->identifier = 'revision_pias_data';
-            $RevisionGridpiasData->save();
+    //         $RevisionGridpiasData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_pias_data'])->first();
+    //         $RevisionGridpiasData = $RevisionGridpiasData->replicate();
+    //         $RevisionGridpiasData->document_type_id = $newdoc->id;
+    //         $RevisionGridpiasData->identifier = 'revision_pias_data';
+    //         $RevisionGridpiasData->save();
 
-            $RevisionGridcvstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_cvstp_data'])->first();
-            $RevisionGridcvstpData = $RevisionGridcvstpData->replicate();
-            $RevisionGridcvstpData->document_type_id = $newdoc->id;
-            $RevisionGridcvstpData->identifier = 'revision_cvstp_data';
-            $RevisionGridcvstpData->save();
+    //         $RevisionGridcvstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_cvstp_data'])->first();
+    //         $RevisionGridcvstpData = $RevisionGridcvstpData->replicate();
+    //         $RevisionGridcvstpData->document_type_id = $newdoc->id;
+    //         $RevisionGridcvstpData->identifier = 'revision_cvstp_data';
+    //         $RevisionGridcvstpData->save();
 
-            $RevisionGridinpstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_inpstp_data'])->first();
-            $RevisionGridinpstpData = $RevisionGridinpstpData->replicate();
-            $RevisionGridinpstpData->document_type_id = $newdoc->id;
-            $RevisionGridinpstpData->identifier = 'revision_inpstp_data';
-            $RevisionGridinpstpData->save();
+    //         $RevisionGridinpstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_inpstp_data'])->first();
+    //         $RevisionGridinpstpData = $RevisionGridinpstpData->replicate();
+    //         $RevisionGridinpstpData->document_type_id = $newdoc->id;
+    //         $RevisionGridinpstpData->identifier = 'revision_inpstp_data';
+    //         $RevisionGridinpstpData->save();
 
-            $RevisionGridfpstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_fpstp_data'])->first();
-            $RevisionGridfpstpData = $RevisionGridfpstpData->replicate();
-            $RevisionGridfpstpData->document_type_id = $newdoc->id;
-            $RevisionGridfpstpData->identifier = 'revision_fpstp_data';
-            $RevisionGridfpstpData->save();
+    //         $RevisionGridfpstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_fpstp_data'])->first();
+    //         $RevisionGridfpstpData = $RevisionGridfpstpData->replicate();
+    //         $RevisionGridfpstpData->document_type_id = $newdoc->id;
+    //         $RevisionGridfpstpData->identifier = 'revision_fpstp_data';
+    //         $RevisionGridfpstpData->save();
 
-            $RevisionGridrawmstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_rawmstp_data'])->first();
-            $RevisionGridrawmstpData = $RevisionGridrawmstpData->replicate();
-            $RevisionGridrawmstpData->document_type_id = $newdoc->id;
-            $RevisionGridrawmstpData->identifier = 'revision_rawmstp_data';
-            $RevisionGridrawmstpData->save();
+    //         $RevisionGridrawmstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_rawmstp_data'])->first();
+    //         $RevisionGridrawmstpData = $RevisionGridrawmstpData->replicate();
+    //         $RevisionGridrawmstpData->document_type_id = $newdoc->id;
+    //         $RevisionGridrawmstpData->identifier = 'revision_rawmstp_data';
+    //         $RevisionGridrawmstpData->save();
 
-            $RevisionGridrawmsData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_rawms_data'])->first();
-            $RevisionGridrawmsData = $RevisionGridrawmsData->replicate();
-            $RevisionGridrawmsData->document_type_id = $newdoc->id;
-            $RevisionGridrawmsData->identifier = 'revision_rawms_data';
-            $RevisionGridrawmsData->save();
+    //         $RevisionGridrawmsData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_rawms_data'])->first();
+    //         $RevisionGridrawmsData = $RevisionGridrawmsData->replicate();
+    //         $RevisionGridrawmsData->document_type_id = $newdoc->id;
+    //         $RevisionGridrawmsData->identifier = 'revision_rawms_data';
+    //         $RevisionGridrawmsData->save();
 
-            $RevisionGridmfpstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_mfpstp_data'])->first();
-            $RevisionGridmfpstpData = $RevisionGridmfpstpData->replicate();
-            $RevisionGridmfpstpData->document_type_id = $newdoc->id;
-            $RevisionGridmfpstpData->identifier = 'revision_mfpstp_data';
-            $RevisionGridmfpstpData->save();
+    //         $RevisionGridmfpstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_mfpstp_data'])->first();
+    //         $RevisionGridmfpstpData = $RevisionGridmfpstpData->replicate();
+    //         $RevisionGridmfpstpData->document_type_id = $newdoc->id;
+    //         $RevisionGridmfpstpData->identifier = 'revision_mfpstp_data';
+    //         $RevisionGridmfpstpData->save();
 
-            $RevisionGridmfpsData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_mfps_data'])->first();
-            $RevisionGridmfpsData = $RevisionGridmfpsData->replicate();
-            $RevisionGridmfpsData->document_type_id = $newdoc->id;
-            $RevisionGridmfpsData->identifier = 'revision_mfps_data';
-            $RevisionGridmfpsData->save();
+    //         $RevisionGridmfpsData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_mfps_data'])->first();
+    //         $RevisionGridmfpsData = $RevisionGridmfpsData->replicate();
+    //         $RevisionGridmfpsData->document_type_id = $newdoc->id;
+    //         $RevisionGridmfpsData->identifier = 'revision_mfps_data';
+    //         $RevisionGridmfpsData->save();
 
-            $RevisionHistoryData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_history'])->first();
-            $RevisionHistoryData = $RevisionHistoryData->replicate();
-            $RevisionHistoryData->document_type_id = $newdoc->id;
-            $RevisionHistoryData->identifier = 'revision_history';
-            $RevisionHistoryData->save();
+    //         $RevisionHistoryData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_history'])->first();
+    //         $RevisionHistoryData = $RevisionHistoryData->replicate();
+    //         $RevisionHistoryData->document_type_id = $newdoc->id;
+    //         $RevisionHistoryData->identifier = 'revision_history';
+    //         $RevisionHistoryData->save();
 
-            $GTPRevisionHistoryData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'gtp'])->first();
-            $GTPRevisionHistoryData = $GTPRevisionHistoryData->replicate();
-            $GTPRevisionHistoryData->document_type_id = $newdoc->id;
-            $GTPRevisionHistoryData->identifier = 'gtp';
-            $GTPRevisionHistoryData->save();
+    //         $GTPRevisionHistoryData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'gtp'])->first();
+    //         $GTPRevisionHistoryData = $GTPRevisionHistoryData->replicate();
+    //         $GTPRevisionHistoryData->document_type_id = $newdoc->id;
+    //         $GTPRevisionHistoryData->identifier = 'gtp';
+    //         $GTPRevisionHistoryData->save();
 
-            $TDSRevisionHistoryData = TDSDocumentGrid::where(['tds_id' =>$document->id, 'identifier' => 'summaryResult'])->first();
-            $TDSRevisionHistoryData = $TDSRevisionHistoryData->replicate();
-            $TDSRevisionHistoryData->tds_id = $newdoc->id;
-            $TDSRevisionHistoryData->identifier = 'summaryResult';
-            $TDSRevisionHistoryData->save();
+    //         $TDSRevisionHistoryData = TDSDocumentGrid::where(['tds_id' =>$document->id, 'identifier' => 'summaryResult'])->first();
+    //         $TDSRevisionHistoryData = $TDSRevisionHistoryData->replicate();
+    //         $TDSRevisionHistoryData->tds_id = $newdoc->id;
+    //         $TDSRevisionHistoryData->identifier = 'summaryResult';
+    //         $TDSRevisionHistoryData->save();
 
                     
-            $RevisionGridInpsData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_inps_data'])->first();
-            $RevisionGridInpsData = $RevisionGridInpsData->replicate();
-            $RevisionGridInpsData->document_type_id = $newdoc->id;
-            $RevisionGridInpsData->identifier = 'revision_inps_data';
-            $RevisionGridInpsData->save();
+    //         $RevisionGridInpsData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_inps_data'])->first();
+    //         $RevisionGridInpsData = $RevisionGridInpsData->replicate();
+    //         $RevisionGridInpsData->document_type_id = $newdoc->id;
+    //         $RevisionGridInpsData->identifier = 'revision_inps_data';
+    //         $RevisionGridInpsData->save();
 
-            $RevisionGridCvsData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_cvs_data'])->first();
-            $RevisionGridCvsData = $RevisionGridCvsData->replicate();
-            $RevisionGridCvsData->document_type_id = $newdoc->id;
-            $RevisionGridCvsData->identifier = 'revision_cvs_data';
-            $RevisionGridCvsData->save();
+    //         $RevisionGridCvsData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_cvs_data'])->first();
+    //         $RevisionGridCvsData = $RevisionGridCvsData->replicate();
+    //         $RevisionGridCvsData->document_type_id = $newdoc->id;
+    //         $RevisionGridCvsData->identifier = 'revision_cvs_data';
+    //         $RevisionGridCvsData->save();
 
-            DocumentService::update_document_numbers();
+    //         DocumentService::update_document_numbers();
 
-            toastr()->success('Document has been revised successfully! You can now edit the content.');
-            return redirect()->route('documents.edit', $newdoc->id);
+    //         toastr()->success('Document has been revised successfully! You can now edit the content.');
+    //         return redirect()->route('documents.edit', $newdoc->id);
+    // }
+
+    public function revision(Request $request, $id)
+    {
+        $document = Document::find($id);
+
+        if (!$document) {
+            toastr()->error('Document not found!');
+            return redirect()->back();
+        }
+
+        if (empty($document->document_number)) {
+            toastr()->error('Document number is missing.');
+            return redirect()->back();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Base document number
+        |--------------------------------------------------------------------------
+        |
+        | FPS/QC/001-01 => FPS/QC/001
+        |
+        */
+
+        $baseDocumentNumber = !empty($document->base_document_number)
+            ? $document->base_document_number
+            : $this->extractBaseDocumentNumber($document->document_number);
+
+        if (empty($baseDocumentNumber)) {
+            toastr()->error('Base document number could not be generated.');
+            return redirect()->back();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Find highest revision
+        |--------------------------------------------------------------------------
+        |
+        | Existing chain:
+        |
+        | FPS/QC/001-00
+        | FPS/QC/001-01
+        | FPS/QC/001-02
+        |
+        | Next revision = 03
+        |
+        */
+
+        $revisionDocuments = Document::where(function ($query) use ($baseDocumentNumber, $document) {
+                $query->where('base_document_number', $baseDocumentNumber)
+                    ->orWhere('record', $document->record);
+            })
+            ->get([
+                'id',
+                'document_number',
+                'revised_doc',
+            ]);
+
+        $highestRevisionNumber = $this->extractDocumentRevisionNumber(
+            $document->document_number
+        );
+
+        foreach ($revisionDocuments as $revisionDocument) {
+            $documentNumberRevision = $this->extractDocumentRevisionNumber(
+                $revisionDocument->document_number
+            );
+
+            $savedRevisionNumber = (int) ($revisionDocument->revised_doc ?? 0);
+
+            $highestRevisionNumber = max(
+                $highestRevisionNumber,
+                $documentNumberRevision,
+                $savedRevisionNumber
+            );
+        }
+
+        $nextRevision = $highestRevisionNumber + 1;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Major and minor version
+        |--------------------------------------------------------------------------
+        */
+
+        $requestedMajor = (int) ($document->major ?? 0);
+        $requestedMinor = (int) ($document->minor ?? 0);
+
+        if ($requestedMinor < 9) {
+            $requestedMinor++;
+        } else {
+            $requestedMinor = 1;
+            $requestedMajor++;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Mark current document as revised
+        |--------------------------------------------------------------------------
+        */
+
+        $document->revision = 'Yes';
+
+        /*
+        | Old function me ye null bhi store ho sakta tha.
+        | Isliye mandatory validation nahi rakhenge.
+        */
+        $document->revision_policy = $request->revision;
+
+        $document->base_document_number = $baseDocumentNumber;
+
+        $document->save();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Create new revised document
+        |--------------------------------------------------------------------------
+        */
+
+        $newdoc = $document->replicate();
+
+        $newdoc->document_number = $this->generateRevisedDocumentNumber(
+            $baseDocumentNumber,
+            $nextRevision
+        );
+
+        $newdoc->base_document_number = $baseDocumentNumber;
+
+        /*
+        | Jis document se current revision ban raha hai,
+        | wahi supersedes number hoga.
+        */
+        $newdoc->supersedes_no = $document->document_number;
+
+        $newdoc->revised = 'Yes';
+        $newdoc->revised_doc = $nextRevision;
+
+        /*
+        | New record abhi revise nahi hua hai.
+        | Future me ise revise kiya jayega.
+        */
+        $newdoc->revision = 'No';
+        $newdoc->revision_policy = null;
+
+        $newdoc->major = $requestedMajor;
+        $newdoc->minor = $requestedMinor;
+
+        /*
+        | Old request fields preserve kiye hain.
+        | Field na aaye to null ho sakta hai.
+        */
+        $newdoc->reason = $request->reason;
+        $newdoc->trainer = $request->trainer;
+        $newdoc->comments = $request->comment;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Workflow reset
+        |--------------------------------------------------------------------------
+        */
+
+        $newdoc->stage = 1;
+        $newdoc->status = Stage::where('id', 1)->value('name');
+
+        $newdoc->save();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Replicate complete DocumentContent
+        |--------------------------------------------------------------------------
+        */
+
+        $documentContents = DocumentContent::where(
+            'document_id',
+            $document->id
+        )->get();
+
+        foreach ($documentContents as $documentContent) {
+            $newDocumentContent = $documentContent->replicate();
+            $newDocumentContent->document_id = $newdoc->id;
+            $newDocumentContent->save();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Replicate complete Annexure data
+        |--------------------------------------------------------------------------
+        |
+        | first() ki jagah get() rakha hai.
+        | Agar multiple annexure records hain to sab copy honge.
+        |
+        */
+
+        $annexures = Annexure::where(
+            'document_id',
+            $document->id
+        )->get();
+
+        foreach ($annexures as $annexure) {
+            $newAnnexure = $annexure->replicate();
+            $newAnnexure->document_id = $newdoc->id;
+            $newAnnexure->save();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Replicate training data
+        |--------------------------------------------------------------------------
+        */
+
+        if (strtolower((string) $document->training_required) === 'yes') {
+            $documentTrainings = DocumentTraining::where(
+                'document_id',
+                $document->id
+            )->get();
+
+            foreach ($documentTrainings as $documentTraining) {
+                $newTraining = $documentTraining->replicate();
+                $newTraining->document_id = $newdoc->id;
+                $newTraining->save();
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Replicate complete distribution grid
+        |--------------------------------------------------------------------------
+        */
+
+        $distributionGrids = DocumentGridData::where(
+            'document_id',
+            $document->id
+        )->get();
+
+        foreach ($distributionGrids as $distributionGrid) {
+            $newDistributionGrid = $distributionGrid->replicate();
+            $newDistributionGrid->document_id = $newdoc->id;
+            $newDistributionGrid->save();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Replicate all DocumentGrid data
+        |--------------------------------------------------------------------------
+        |
+        | Old function me identifiers individually replicate ho rahe the.
+        | Is implementation me old document ke saare DocumentGrid records
+        | copy honge, isliye koi identifier miss nahi hoga.
+        |
+        */
+
+        $documentGrids = DocumentGrid::where(
+            'document_type_id',
+            $document->id
+        )->get();
+
+        foreach ($documentGrids as $documentGrid) {
+            $newDocumentGrid = $documentGrid->replicate();
+            $newDocumentGrid->document_type_id = $newdoc->id;
+            $newDocumentGrid->save();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Replicate all TDS grids
+        |--------------------------------------------------------------------------
+        |
+        | summaryResult, sampleReconcilation aur future identifiers sab copy honge.
+        |
+        */
+
+        $tdsDocumentGrids = TDSDocumentGrid::where(
+            'tds_id',
+            $document->id
+        )->get();
+
+        foreach ($tdsDocumentGrids as $tdsDocumentGrid) {
+            $newTdsDocumentGrid = $tdsDocumentGrid->replicate();
+            $newTdsDocumentGrid->tds_id = $newdoc->id;
+            $newTdsDocumentGrid->save();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Important
+        |--------------------------------------------------------------------------
+        |
+        | Is service ko फिलहाल comment rakho.
+        | Agar ye document number dobara regenerate karta hai to hamara
+        | FPS/QC/001-02 overwrite kar sakta hai.
+        |
+        */
+
+        // DocumentService::update_document_numbers();
+
+        toastr()->success(
+            'Document revised successfully. New Document No: '
+            . $newdoc->document_number
+            . ' | Supersedes No: '
+            . $newdoc->supersedes_no
+        );
+
+        return redirect()->route(
+            'documents.edit',
+            $newdoc->id
+        );
     }
 
 
@@ -12347,65 +12670,42 @@ public function printPDF($id)
         }
     }
 
-    private function generateRevisedDocumentNumber($currentDocumentNumber, $revisionNumber) {
-        /*
-        |--------------------------------------------------------------------------
-        | Revision ko 2 digits me convert karo
-        |--------------------------------------------------------------------------
-        */
+    private function extractBaseDocumentNumber($documentNumber)
+    {
+        $documentNumber = trim((string) $documentNumber);
 
-        $formattedRevision = str_pad(
-            (int) $revisionNumber,
-            2,
-            '0',
-            STR_PAD_LEFT
-        );
-
-        /*
-        |--------------------------------------------------------------------------
-        | Empty document number handling
-        |--------------------------------------------------------------------------
-        */
-
-        if (empty($currentDocumentNumber)) {
+        if ($documentNumber === '') {
             return null;
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Existing revision suffix replace karo
-        |--------------------------------------------------------------------------
-        |
-        | SOP/QA/001-00 => SOP/QA/001-01
-        | SOP/QA/001-01 => SOP/QA/001-02
-        |
-        */
+        return preg_replace(
+            '/-\d{2,}$/',
+            '',
+            $documentNumber
+        );
+    }
+
+    private function extractDocumentRevisionNumber($documentNumber)
+    {
+        $documentNumber = trim((string) $documentNumber);
 
         if (
             preg_match(
-                '/-\d{2}$/',
-                $currentDocumentNumber
+                '/-(\d{2,})$/',
+                $documentNumber,
+                $matches
             )
         ) {
-            return preg_replace(
-                '/-\d{2}$/',
-                '-' . $formattedRevision,
-                $currentDocumentNumber
-            );
+            return (int) $matches[1];
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Agar old number me suffix nahi hai
-        |--------------------------------------------------------------------------
-        |
-        | SOP/QA/001 => SOP/QA/001-01
-        |
-        */
+        return 0;
+    }
 
-        return $currentDocumentNumber
-            . '-'
-            . $formattedRevision;
+    private function generateRevisedDocumentNumber($baseDocumentNumber, $revisionNumber)
+    {
+        return $baseDocumentNumber . '-' .
+            str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
     }
 
     private function getDocumentPdfViewName($documentTypeId)
@@ -12490,7 +12790,6 @@ public function printPDF($id)
             default => 'frontend.documents.pdfpage',
         };
     }
-
 
     private function getNonSopAttachmentFieldMap()
     {
@@ -14170,6 +14469,47 @@ public function printPDF($id)
 
             return redirect()->back();
         }
+    }
+
+    private function replicateDocumentGrid($oldDocumentId,$newDocumentId,$identifier) {
+        $grid = DocumentGrid::where('document_type_id', $oldDocumentId)->where(
+            'identifier',
+            $identifier)->first();
+
+        if (!$grid) {
+            return;
+        }
+
+        $newGrid = $grid->replicate();
+
+        $newGrid->document_type_id = $newDocumentId;
+
+        $newGrid->identifier = $identifier;
+
+        $newGrid->save();
+    }
+
+
+    private function replicateTdsDocumentGrid($oldDocumentId, $newDocumentId, $identifier) {
+        $grid = TDSDocumentGrid::where('tds_id', $oldDocumentId)->where(
+                'identifier',
+                $identifier
+            )->first();
+
+        if (!$grid) {
+            return;
+        }
+
+        $newGrid =
+            $grid->replicate();
+
+        $newGrid->tds_id =
+            $newDocumentId;
+
+        $newGrid->identifier =
+            $identifier;
+
+        $newGrid->save();
     }
 
 }

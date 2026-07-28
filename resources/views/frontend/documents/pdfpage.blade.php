@@ -761,17 +761,11 @@
                     </td>
 
                     <td style="border:1px solid #000; text-align:left; padding:6px;">
-                        @if($document->revised == 'Yes' && $document->revised_doc)
-
-                            @php
-                                $previousDocument = \App\Models\Document::find($document->revised_doc);
-                            @endphp
-
-                            {{ $previousDocument->document_number ?? 'Nil' }}
-
-                        @else
-                            Nil
-                        @endif
+                    @if($document->revised == 'Yes' && $document->revised_doc)
+                        {{ $document->supersedes_no ?? 'Nil' }}
+                    @else
+                        Nil
+                    @endif
                     </td>
                 </tr>
 
@@ -1476,26 +1470,32 @@
                                     @foreach ($RevisionGridData as $key => $item)
                                         <tr>
                                             <td>{{ $item['revision_number'] ?? '' }}</td>
+
                                             <td>{{ $item['cc_no'] ?? '' }}</td>
+
                                             <td>
-                                                    @if ($data->training_required == 'yes' && $data->stage >= 11)
-                                                        {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                                                    @elseif ($data->training_required != 'yes' && $data->stage > 10)
-                                                        {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                                                    @else
-                                                        {{ !empty($item['effectiveDate_gtp']) ? \Carbon\Carbon::parse($item['effectiveDate_gtp'])->format('d-M-Y') : '' }}
-                                                    @endif
-                                               
+                                                @php
+                                                    $effectiveDate =
+                                                        $item['revised_effective_date']
+                                                        ?? $item['effectiveDate_gtp']
+                                                        ?? null;
+                                                @endphp
+
+                                                @if (!empty($effectiveDate))
+                                                    {{ \Carbon\Carbon::parse($effectiveDate)->format('d-M-Y') }}
+                                                @else
+                                                    -
+                                                @endif
                                             </td>
 
-                                            {{-- <td>{{ !empty($item['revised_effective_date']) ? 
-                                                \Carbon\Carbon::parse($item['revised_effective_date'])->format('d-F-Y') : '' }}</td> --}}
                                             <td>{{ $item['reason_of_revision'] ?? '' }}</td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
+                                        <td colspan="4" style="text-align: center; font-weight: bold;">
+                                            No Data Available
+                                        </td>
                                     </tr>
                                 @endif
                             </tbody>
