@@ -7279,7 +7279,7 @@ class DocumentController extends Controller
     
     public function viewPdf($id)
     {
-
+      
         $depaArr = ['ACC' => 'Accounting', 'ACC3' => 'Accounting',];
         $data = Document::find($id);
         //$data->department = Department::find($data->department_id);
@@ -8322,7 +8322,7 @@ class DocumentController extends Controller
         }
     
         $viewName = match ($data->document_type_id) {
-            
+       
             'BMR' => 'frontend.documents.bmr-pdf',
             'BOM' => 'frontend.documents.bom-pdf',
             'BPR' => 'frontend.documents.bpr-pdf',
@@ -9078,7 +9078,7 @@ public function printPDF($id)
             $request->document_request_id
         )
         ->where('document_id', $document->id)
-        ->where('status', 'Closed - Done')
+        ->where('status', 'QA Approval')
         ->first();
 
     if (!$documentRequest) {
@@ -12972,7 +12972,7 @@ public function printPDF($id)
                 $request->document_request_id
             )
             ->where('document_id', $document->id)
-            ->where('status', 'Closed - Done')
+            ->where('status', 'QA Approval')
             ->first();
 
         if (!$documentRequest) {

@@ -1782,12 +1782,7 @@
                     <h4 class="modal-title" style="font-weight: 900">Document Revision</h4>
                 </div>
 
-                @if ($document->revised === 'Yes')
-
-                    <form method="POST" action="{{ url('revision', $document->revised_doc) }}">
-                @else
-                    <form method="POST" action="{{ url('revision', $document->id) }}">
-                @endif
+                <form method="POST" action="{{ url('revision', $document->id) }}">
 
                 @csrf
                 <!-- Modal body -->
@@ -1885,7 +1880,7 @@
                         'document_id',
                         $document->id
                     )
-                    ->where('status', 'Closed - Done')
+                    ->where('status', 'QA Approval')
                     ->whereNotIn(
                         'request_id',
                         $usedRequestIds)
@@ -1918,7 +1913,6 @@
                         {{-- ================================================= --}}
                         {{-- Request ID --}}
                         {{-- ================================================= --}}
-
                         <div class="group-input mb-3">
 
                             <label for="print_document_request_id">
@@ -2415,7 +2409,7 @@
             */
 
             $documentRequests = \App\Models\DocumentRequest::where('document_id', $currentDocumentRecord)
-                ->where('status', 'Closed - Done')
+                ->where('status', 'QA Approval')
                 ->whereNotIn('request_id', $usedRequestIds)
                 ->orderBy('request_id', 'asc')
                 ->get();

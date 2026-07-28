@@ -15183,6 +15183,7 @@ class CCController extends Controller
         $cftData =  CcCft::where('cc_id', $id)->first();
         $cc_cfts =  CcCft::where('cc_id', $id)->first();
 
+        
         $QaApprovalComments = QaApprovalComments::where('cc_id', $id)->first();
 
         if (!empty($data)) {
@@ -15246,6 +15247,8 @@ class CCController extends Controller
 
             $ActionItem = ActionItem::where('parent_id', $parentId)->where('parent_type', 'CC')->get();
 
+            
+         $effectivenessCheck   = EffectivenessCheck::where('parent_id', $parentId)->where('parent_type', 'CC')->get();
             $capa_teamNamesString = null;
 
             $capa_Data = Capa::where('parent_id', $parentId)
@@ -15300,6 +15303,7 @@ class CCController extends Controller
                 'selectedMethodologies',
                 'investigation_teamNamesString',
                 'ActionItem',
+                'effectivenessCheck',
                 'capa_Data',
                 'capa_teamNamesString',
                 'cpjDetails',

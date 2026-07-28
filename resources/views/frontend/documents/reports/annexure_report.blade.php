@@ -1010,7 +1010,7 @@
                             ->where('deleted_at', null)
                             ->get();
                     @endphp
-                    <td style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Approved By:Head QA/CQA
+                    <td style="padding: 10px; border: 1px solid #ddd; font-size: 15px; font-weight: bold;">Approved By
                         <!-- @if ($inreviews->isEmpty())
                             <div>Yet Not Performed</div>
                         @else
@@ -1019,7 +1019,7 @@
                             @endforeach
                         @endif  -->
                     </td>
-                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 15px;">
                         @if ($inreviews->isEmpty())
                             <div>Yet Not Performed</div>
                         @else
