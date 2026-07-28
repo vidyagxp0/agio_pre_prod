@@ -1788,13 +1788,39 @@
 
                         </div>
                     </div>
+                        @php
+                            $showOtherInformation = in_array($document->document_type_id, [
+                                'SOP',
+                                'FPS',
+                                'INPS',
+                                'CVS',
+                                'RAWMS',
+                                'PAMS',
+                                'PIAS',
+                                'MFPS',
+                                'MFPSTP',
+                                'FPSTP',
+                                'INPSTP',
+                                'CVSTP',
+                                'RMSTP',
+                                'SPEC',
+                                'STP',
+                                'TDS',
+                                'GTP'
+                            ]);
+                        @endphp
+
+
+                  @if($showOtherInformation)  
                     <div class="orig-head">
                         Other Information
                     </div>
+                   @endif
+
                     <div class="input-fields">
                         <div class="row">
 
-                        @if($document->document_type_id == 'SOP')
+                        @if($showOtherInformation)
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="reviewers">Checked By</label>
@@ -1857,69 +1883,77 @@
 
                             </div>
                         @else
-                            <div class="col-md-6">
-                                <div class="group-input">
-                                    <label for="reviewers">Checked By</label>
 
-                                    <select id="choices-multiple-remove-button" class="choices-multiple-reviewer"
-                                        name="reviewers[]" placeholder="Select Reviewers" multiple
-                                        @if ($document->stage != 1) disabled @endif>
-                                        @if (!empty($reviewer))
-                                            @foreach ($reviewer as $lan)
-                                                @if (Helpers::checkUserRolesreviewer($lan))
-                                                    <option value="{{ $lan->id }}"
-                                                        @if ($document->reviewers) @php
-                                $data = explode(",", $document->reviewers);
-                                $count = count($data);
-                            @endphp
-                            @for ($i = 0; $i < $count; $i++)
-                                @if ($data[$i] == $lan->id)
-                                    selected @endif
-                                                        @endfor
-                                                @endif>
-                                                {{ $lan->name }}
-                                                </option>
+                            {{--
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reviewers">Checked By</label>
+
+                                        <select id="choices-multiple-remove-button" class="choices-multiple-reviewer"
+                                            name="reviewers[]" placeholder="Select Reviewers" multiple
+                                            @if ($document->stage != 1) disabled @endif>
+                                            @if (!empty($reviewer))
+                                                @foreach ($reviewer as $lan)
+                                                    @if (Helpers::checkUserRolesreviewer($lan))
+                                                        <option value="{{ $lan->id }}"
+                                                            @if ($document->reviewers) @php
+                                                        $data = explode(",", $document->reviewers);
+                                                        $count = count($data);
+                                                    @endphp
+                                                    @for ($i = 0; $i < $count; $i++)
+                                                        @if ($data[$i] == $lan->id)
+                                                            selected @endif
+                                                                                @endfor
+                                                                        @endif>
+                                                                        {{ $lan->name }}
+                                                                        </option>
+                                                        @endif
+                                                @endforeach
+                                            @endif
+                                        </select>
+
+                                        @foreach ($history as $tempHistory)
+                                            @if (
+                                                $tempHistory->activity_type == 'Reviewers' &&
+                                                    !empty($tempHistory->comment) &&
+                                                    $tempHistory->user_id == Auth::user()->id)
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
                                             @endif
                                         @endforeach
-                                        @endif
-                                    </select>
-
-                                    @foreach ($history as $tempHistory)
-                                        @if (
-                                            $tempHistory->activity_type == 'Reviewers' &&
-                                                !empty($tempHistory->comment) &&
-                                                $tempHistory->user_id == Auth::user()->id)
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                                <p id="reviewerError" style="color:red">**Reviewers are required</p>
-
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
-                                    <div class="comment">
-                                        <div>
-                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
-                                                at {{ date('d-M-Y h:i:s') }}</p>
-
-                                            <input class="input-field" type="text" name="reviewers_comment">
-                                        </div>
-                                        <div class="button">Add Comment</div>
                                     </div>
-                                @endif
+                                    <p id="reviewerError" style="color:red">**Reviewers are required</p>
 
-                            </div>
+                                    @if (Auth::user()->role != 3 && $document->stage < 8)
+                                        <div class="comment">
+                                            <div>
+                                                <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                                                    at {{ date('d-M-Y h:i:s') }}</p>
+
+                                                <input class="input-field" type="text" name="reviewers_comment">
+                                            </div>
+                                            <div class="button">Add Comment</div>
+                                        </div>
+                                    @endif
+
+                                </div>
+
+                             --}}
                         @endif
+
+
+
+                        @if($showOtherInformation)  
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="approvers">Approvers</label>
@@ -1932,12 +1966,12 @@
                                                 @if (Helpers::checkUserRolesApprovers($lan))
                                                     <option value="{{ $lan->id }}"
                                                         @if ($document->approvers) @php
-                            $data = explode(",",$document->approvers);
-                            $count = count($data);
-                            $i=0;
-                            @endphp
-                            @for ($i = 0; $i < $count; $i++) @if ($data[$i] == $lan->id)
-                                selected @endif
+                                                        $data = explode(",",$document->approvers);
+                                                        $count = count($data);
+                                                        $i=0;
+                                                        @endphp
+                                                        @for ($i = 0; $i < $count; $i++) @if ($data[$i] == $lan->id)
+                                                            selected @endif
                                                         @endfor
                                                 @endif>
                                                 {{ $lan->name }}
@@ -1981,6 +2015,7 @@
                                 @endif
 
                             </div>
+                        @endif         
 
                         {{-- @if($document->document_type_id == 'SOP')
                             <div class="col-md-6">  

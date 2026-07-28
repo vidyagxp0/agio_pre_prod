@@ -744,6 +744,33 @@
                                         const attachdraftContainer = document.getElementById('attachdraftContainer');
                                         const attacheffectContainer = document.getElementById('attacheffectContainer');
 
+const reviewersContainer = document.getElementById('reviewers-container');
+const approversContainer = document.getElementById('approvers-container');
+
+const reviewersDropdown = document.getElementById('reviewers-dropdown');
+const approversDropdown = document.getElementById('approvers-dropdown');
+const otherInformationHeading = document.getElementById('otherInformationHeading');
+const otherInformationSection = document.getElementById('otherInformationSection');
+
+const showReviewerApproverDocs = [
+    'SOP',
+    'FPS',
+    'INPS',
+    'CVS',
+    'RAWMS',
+    'PAMS',
+    'PIAS',
+    'MFPS',
+    'MFPSTP',
+    'FPSTP',
+    'INPSTP',
+    'CVSTP',
+    'RMSTP',
+    'SPEC',
+    'STP',
+    'TDS',
+    'GTP'
+];
 
                                             // HODs field
                                         // const hodsContainer = document.getElementById('hods-container');
@@ -751,6 +778,40 @@
                                         // const hodsError = document.getElementById('hodError');
 
                                         const reviewersLabel = document.getElementById('reviewers-label');
+
+
+                                    // YAHAN PASTE KARO
+if (showReviewerApproverDocs.includes(selectedType)) {
+
+    // Show Other Information
+    otherInformationHeading.style.display = "block";
+    otherInformationSection.style.display = "block";
+
+
+
+    reviewersContainer.style.display = "block";
+    approversContainer.style.display = "block";
+
+
+    reviewersDropdown.setAttribute("required", "required");
+    approversDropdown.setAttribute("required", "required");
+
+} else {
+
+ // Hide Other Information
+    otherInformationHeading.style.display = "none";
+    otherInformationSection.style.display = "none";
+
+    reviewersContainer.style.display = "none";
+    approversContainer.style.display = "none";
+
+    reviewersDropdown.removeAttribute("required");
+    approversDropdown.removeAttribute("required");
+
+    $('#reviewers-dropdown').val(null).trigger('change');
+    $('#approvers-dropdown').val(null).trigger('change');
+}
+
                                         
                                         if (selectedType === "SOP") {
                                             shortDescContainer.style.display = 'block';
@@ -911,43 +972,75 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="orig-head">
+                        <div class="orig-head" id="otherInformationHeading">
                             Other Information
                         </div>
-                        <div class="input-fields">
+                        <div class="input-fields" id="otherInformationSection">
                             <div class="row">
 
-                               <div class="col-md-6">
-                                   <div class="group-input">
-                                       <label for="reviewers" id="reviewers-label">Checked By<span class="text-danger">*</span></label>
-                                       <select id="reviewers-dropdown"  class="form-control" name="reviewers[]" multiple required style="display: none">
-                                           @if (!empty($reviewer))
-                                               @foreach ($reviewer as $lan)
-                                                   @if (Helpers::checkUserRolesreviewer($lan))
-                                                       <option value="{{ $lan->id }}">{{ $lan->name }}</option>
-                                                   @endif
-                                               @endforeach
-                                           @endif
-                                       </select>
-                                   </div>
-                                   <p id="reviewerError" style="color:red; display: none;">** Reviewers are required</p>
-                               </div>
+                               <div class="col-md-6" id="reviewers-container">
+    <div class="group-input">
+        <label for="reviewers" id="reviewers-label">
+            Checked By
+            <span class="text-danger">*</span>
+        </label>
 
-                               <div class="col-md-6">
-                                   <div class="group-input">
-                                       <label for="approvers">Approvers<span class="text-danger">*</span></label>
-                                       <select id="approvers-dropdown" class="form-control" name="approvers[]" multiple required style="display: none">
-                                           @if (!empty($approvers))
-                                               @foreach ($approvers as $lan)
-                                                   @if (Helpers::checkUserRolesApprovers($lan))
-                                                       <option value="{{ $lan->id }}">{{ $lan->name }}</option>
-                                                   @endif
-                                               @endforeach
-                                           @endif
-                                       </select>
-                                   </div>
-                                   <p id="approverError" style="color:red; display: none;">** Approvers are required</p>
-                               </div>
+        <select id="reviewers-dropdown"
+            class="form-control"
+            name="reviewers[]"
+            multiple
+            required
+            style="display:none">
+
+            @if (!empty($reviewer))
+                @foreach ($reviewer as $lan)
+                    @if (Helpers::checkUserRolesreviewer($lan))
+                        <option value="{{ $lan->id }}">
+                            {{ $lan->name }}
+                        </option>
+                    @endif
+                @endforeach
+            @endif
+
+        </select>
+    </div>
+
+    <p id="reviewerError" style="color:red; display:none;">
+        ** Reviewers are required
+    </p>
+</div>
+
+                              <div class="col-md-6" id="approvers-container">
+    <div class="group-input">
+        <label for="approvers">
+            Approvers
+            <span class="text-danger">*</span>
+        </label>
+
+        <select id="approvers-dropdown"
+            class="form-control"
+            name="approvers[]"
+            multiple
+            required
+            style="display:none">
+
+            @if (!empty($approvers))
+                @foreach ($approvers as $lan)
+                    @if (Helpers::checkUserRolesApprovers($lan))
+                        <option value="{{ $lan->id }}">
+                            {{ $lan->name }}
+                        </option>
+                    @endif
+                @endforeach
+            @endif
+
+        </select>
+    </div>
+
+    <p id="approverError" style="color:red; display:none;">
+        ** Approvers are required
+    </p>
+</div>
 
                                {{-- <div class="col-md-6" id="hods-container" style="display: none;">
                                    <div class="group-input">
