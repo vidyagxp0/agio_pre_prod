@@ -374,8 +374,8 @@
 
                     <tr>
 
-                        <td class="sr-no">
-                            {{ $requestDocuments->firstItem() + $key }}
+                       <td>
+                            {{ $requestDocuments->total() - (($requestDocuments->currentPage() - 1) * $requestDocuments->perPage()) - $key }}
                         </td>
 
                         <td

@@ -470,7 +470,7 @@ foreach ($fields as $field => $value) {
             if ($data->stage == 2) {
             
                 $data->stage = "1";
-                $data->status = "QA Approval";
+                $data->status = "Request For Print(Opened)";
                 $data->stagebackfirstby = Auth::user()->name;
                 $data->stagebackfirst_on = Carbon::now()->format('d-M-Y');
                 $data->stagebackfirst_comment = $request->comment;
