@@ -438,13 +438,7 @@
                         @endphp
 
                         @if($document->revised == 'Yes' && $document->revised_doc)
-
-                            @php
-                                $previousDocument = \App\Models\Document::find($document->revised_doc);
-                            @endphp
-
-                            {{ $previousDocument->document_number ?? 'Nil' }}
-
+                            {{ $document->supersedes_no ?? 'Nil' }}
                         @else
                             Nil
                         @endif

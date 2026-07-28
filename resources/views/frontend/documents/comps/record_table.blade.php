@@ -137,36 +137,36 @@
 
                         <td class="doc-no text-truncate-cell"
                             title="{{ $doc->document_number }}">
-                            {{ $doc->document_number }}
+                            {{ $doc->document_number ?? 'NA' }}
                         </td>
 
                         <td class="doc-title text-truncate-cell"
                             title="{{ $doc->document_name }}">
-                            {{ $doc->document_name }}
+                            {{ $doc->document_name ?? 'NA' }}
                         </td>
 
                         <td class="doc-type text-truncate-cell"
                             title="{{ Helpers::getDocumentTypes()[$doc->document_type_id] }}">
-                            {{ Helpers::getDocumentTypes()[$doc->document_type_id] }}
+                            {{ Helpers::getDocumentTypes()[$doc->document_type_id] ?? 'NA' }}
                         </td>
 
                         <td class="division text-truncate-cell"
                             title="{{ Helpers::getDivisionName($doc->division_id) }}">
-                            {{ Helpers::getDivisionName($doc->division_id) }}
+                            {{ Helpers::getDivisionName($doc->division_id) ?? 'NA'  }}
                         </td>
 
                         <td class="short-desc text-truncate-cell"
                             title="{{ $doc->short_description }}">
-                            {{ $doc->short_description }}
+                            {{ $doc->short_description ?? 'NA'  }}
                         </td>
 
                         <td class="create-date">
-                            {{ \Carbon\Carbon::parse($doc->created_at)->format('d-M-Y h:i A') }}
+                            {{ \Carbon\Carbon::parse($doc->created_at)->format('d-M-Y h:i A') ?? 'NA' }}
                         </td>
 
                         <td class="assign-name text-truncate-cell"
                             title="{{ $doc->originator_name }}">
-                            {{ $doc->originator_name }}
+                            {{ $doc->originator_name ?? 'NA' }}
                         </td>
 
                         <td class="modify-date">
@@ -174,7 +174,7 @@
                         </td>
 
                         <td class="status">
-                            {{ Helpers::getDocStatusByStage($doc->stage,$doc->training_required) }}
+                            {{ Helpers::getDocStatusByStage($doc->stage,$doc->training_required) ?? 'NA'  }}
                         </td>
 
                         <td class="action">
@@ -380,37 +380,34 @@
 
                         <td
                             class="request-id"
-                            style="text-decoration: underline;"
-                        >
+                            style="text-decoration: underline;">
                             <a
                                 href="{{ route(
                                     'document-request.show',
-                                    $requestDocument->id
-                                ) }}"
-                            >
+                                    $requestDocument->id) }}">
                              {{ $requestDocument->request_id}}
                             </a>
                         </td>
 
-                        <td class="document-number"> {{ $requestDocument->document_number ?? 'Not Applicable' }} 
+                        <td class="document-number"> {{ $requestDocument->document_number ?? 'NA' }} 
 
                         </td>
-                        <td class="request-by"> {{ $requestDocument->request_by_name ?? 'Not Applicable' }} 
+                        <td class="request-by"> {{ $requestDocument->request_by_name ?? 'NA' }} 
 
                         </td>
-                        <td class="department"> {{ $requestDocument->department ?? 'Not Applicable' }} 
+                        <td class="department"> {{ $requestDocument->department ?? 'NA' }} 
 
                         </td>
-                        <td class="request-to"> {{ $requestDocument->request_to_name ?? 'Not Applicable' }} 
+                        <td class="request-to"> {{ $requestDocument->request_to_name ?? 'NA' }} 
 
                         </td> {{-- Number of Copies --}} 
                         <td class="copies"> {{ $requestDocument->number_of_copies ?? '0' }} 
 
                         </td> {{-- Reason --}} 
-                        <td class="reason request-reason-text" title="{{ $requestDocument->reason }}" > {{ $requestDocument->reason ?? 'Not Applicable' }} 
+                        <td class="reason request-reason-text" title="{{ $requestDocument->reason }}" > {{ $requestDocument->reason ?? 'NA' }} 
 
                         </td> {{-- Created Date --}} 
-                        <td class="create-date"> {{ $requestDocument->created_at ? \Carbon\Carbon::parse( $requestDocument->created_at )->format('d-M-Y h:i A') : 'Not Applicable' }} 
+                        <td class="create-date"> {{ $requestDocument->created_at ? \Carbon\Carbon::parse( $requestDocument->created_at )->format('d-M-Y h:i A') : 'NA' }} 
 
                         </td> {{-- Status --}} 
                         <td class="status"> {{ $requestDocument->status ?? 'Opened' }} 

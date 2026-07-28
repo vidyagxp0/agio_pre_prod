@@ -83,13 +83,13 @@
                                                                     </td> --}}
 
                                                                     <td class="short-desc">
-                                                                        {{ $temp->short_description }}
+                                                                        {{ $temp->short_description ?? 'NA'}}
                                                                     </td>
                                                                     <td class="create-date">
                                                                         {{ $temp->created_at }}
                                                                     </td>
                                                                     <td class="assign-name">
-                                                                        {{ $temp->originator->name }}
+                                                                        {{ $temp->originator->name ?? 'NA'}}
                                                                     </td>
                                                                     <td class="modify-date">
                                                                         {{ $temp->updated_at }}
@@ -107,21 +107,12 @@
 
                                                                                 <a
                                                                                     href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                                                {{-- <form
-                                                                                    action="{{ route('documents.destroy', $temp->id) }}"
-                                                                                    method="post">
-                                                                                    @csrf
-                                                                                    @method('DELETE')
-                                                                                    <button type="submit">Delete</button>
-                                                                                </form> --}}
 
                                                                             </div>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
-
-
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -179,13 +170,13 @@
                                                                     </td> --}}
 
                                                                     <td class="short-desc">
-                                                                        {{ $temp->short_description }}
+                                                                        {{ $temp->short_description ?? 'NA' }}
                                                                     </td>
                                                                     <td class="create-date">
                                                                         {{ $temp->created_at }}
                                                                     </td>
                                                                     <td class="assign-name">
-                                                                        {{ $temp->originator->name }}
+                                                                        {{ $temp->originator->name ?? 'NA'}}
                                                                     </td>
                                                                     <td class="modify-date">
                                                                         {{ $temp->updated_at }}
@@ -203,14 +194,7 @@
 
                                                                                 <a
                                                                                     href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                                                {{-- <form
-                                                                                    action="{{ route('documents.destroy', $temp->id) }}"
-                                                                                    method="post">
-                                                                                    @csrf
-                                                                                    @method('DELETE')
-                                                                                    <button type="submit">Delete</button>
-                                                                                </form> --}}
-
+                                                                    
                                                                             </div>
                                                                         </div>
                                                                     </td>
@@ -273,13 +257,13 @@
                                                                     </td> --}}
 
                                                                     <td class="short-desc">
-                                                                        {{ $temp->short_description }}
+                                                                        {{ $temp->short_description ?? 'NA'}}
                                                                     </td>
                                                                     <td class="create-date">
                                                                         {{ $temp->created_at }}
                                                                     </td>
                                                                     <td class="assign-name">
-                                                                        {{ $temp->originator->name }}
+                                                                        {{ $temp->originator->name ?? NA}}
                                                                     </td>
                                                                     <td class="modify-date">
                                                                         {{ $temp->updated_at }}
@@ -297,13 +281,7 @@
 
                                                                                 <a
                                                                                     href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                                                {{-- <form
-                                                                                    action="{{ route('documents.destroy', $temp->id) }}"
-                                                                                    method="post">
-                                                                                    @csrf
-                                                                                    @method('DELETE')
-                                                                                    <button type="submit">Delete</button>
-                                                                                </form> --}}
+                                                                            
 
                                                                             </div>
                                                                         </div>
@@ -367,13 +345,13 @@
                                                                     </td> --}}
 
                                                                     <td class="short-desc">
-                                                                        {{ $temp->short_description }}
+                                                                        {{ $temp->short_description ?? 'NA'}}
                                                                     </td>
                                                                     <td class="create-date">
                                                                         {{ $temp->created_at }}
                                                                     </td>
                                                                     <td class="assign-name">
-                                                                        {{ $temp->originator->name }}
+                                                                        {{ $temp->originator->name ?? 'NA'}}
                                                                     </td>
                                                                     <td class="modify-date">
                                                                         {{ $temp->updated_at }}
@@ -391,14 +369,6 @@
 
                                                                                 <a
                                                                                     href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                                                {{-- <form
-                                                                                    action="{{ route('documents.destroy', $temp->id) }}"
-                                                                                    method="post">
-                                                                                    @csrf
-                                                                                    @method('DELETE')
-                                                                                    <button type="submit">Delete</button>
-                                                                                </form> --}}
-
                                                                             </div>
                                                                         </div>
                                                                     </td>
@@ -409,121 +379,6 @@
                                                 </div>
                                             </div>
                                         @endif
-
-
-                                        {{-- <div class="sub-block" id="pen-train">
-                                            <div class="head">
-                                                <div class="title">Pending Training</div>
-                                                <div class="result">2 Results</div>
-                                            </div>
-                                            <div class="table-list">
-                                                <table class="table table-bordered mb-0">
-                                                    <thead>
-                                                        <th class="pr-id" data-bs-toggle="modal"
-                                                            data-bs-target="#division-modal">
-                                                            SOP-ID
-                                                        </th>
-                                                        <th class="division">
-                                                            SOP Type
-                                                        </th>
-                                                        <th class="short-desc">
-                                                            Short Description
-                                                        </th>
-                                                        <th class="create-date">
-                                                            Create Date Time
-                                                        </th>
-                                                        <th class="assign-name">
-                                                            Assigned To
-                                                        </th>
-                                                        <th class="modify-date">
-                                                            Modify Date Time
-                                                        </th>
-                                                        <th class="status">
-                                                            Status
-                                                        </th>
-                                                        <th class="action">
-                                                            Action
-                                                        </th>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="pr-id" style="text-decoration:underline">
-                                                                <a href="#">
-                                                                    SOP-23
-                                                                </a>
-                                                            </td>
-                                                            <td class="division">
-                                                                Global
-                                                            </td>
-
-                                                            <td class="short-desc">
-                                                                Short Description 232
-                                                            </td>
-                                                            <td class="create-date">
-                                                                2023-03-12 15:46:40
-                                                            </td>
-                                                            <td class="assign-name">
-                                                                Piyush Sahu
-                                                            </td>
-                                                            <td class="modify-date">
-                                                                2023-03-12 15:46:40
-                                                            </td>
-                                                            <td class="status">
-                                                                Pending Training
-                                                            </td>
-                                                            <td class="action">
-                                                                <div class="action-dropdown">
-                                                                    <div class="action-down-btn">Action <i
-                                                                            class="fa-solid fa-angle-down"></i></div>
-                                                                    <div class="action-block">
-                                                                        <a href="#">View</a>
-                                                                        <a href="#">Edit</a>
-                                                                        <button type="submit">Delete</button>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="pr-id" style="text-decoration:underline">
-                                                                <a href="#">
-                                                                    SOP-23
-                                                                </a>
-                                                            </td>
-                                                            <td class="division">
-                                                                Global
-                                                            </td>
-
-                                                            <td class="short-desc">
-                                                                Short Description 232
-                                                            </td>
-                                                            <td class="create-date">
-                                                                2023-03-12 15:46:40
-                                                            </td>
-                                                            <td class="assign-name">
-                                                                Piyush Sahu
-                                                            </td>
-                                                            <td class="modify-date">
-                                                                2023-03-12 15:46:40
-                                                            </td>
-                                                            <td class="status">
-                                                                Pending Training
-                                                            </td>
-                                                            <td class="action">
-                                                                <div class="action-dropdown">
-                                                                    <div class="action-down-btn">Action <i
-                                                                            class="fa-solid fa-angle-down"></i></div>
-                                                                    <div class="action-block">
-                                                                        <a href="#">View</a>
-                                                                        <a href="#">Edit</a>
-                                                                        <button type="submit">Delete</button>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div> --}}
 
                                         @if (count($effective) > 0)
                                             <div class="sub-block inner-block" id="effective">
@@ -576,13 +431,13 @@
                                                                     </td> --}}
 
                                                                     <td class="short-desc">
-                                                                        {{ $temp->short_description }}
+                                                                        {{ $temp->short_description ?? 'NA'}}
                                                                     </td>
                                                                     <td class="create-date">
                                                                         {{ $temp->created_at }}
                                                                     </td>
                                                                     <td class="assign-name">
-                                                                        {{ $temp->originator->name }}
+                                                                        {{ $temp->originator->name ?? 'NA'}}
                                                                     </td>
                                                                     <td class="modify-date">
                                                                         {{ $temp->updated_at }}
@@ -600,14 +455,6 @@
 
                                                                                 <a
                                                                                     href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                                                {{-- <form
-                                                                                action="{{ route('documents.destroy', $temp->id) }}"
-                                                                                method="post">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button type="submit">Delete</button>
-                                                                            </form> --}}
-
                                                                             </div>
                                                                         </div>
                                                                     </td>
@@ -635,7 +482,6 @@
                                                     </div>
                                                     <div class="head">
                                                         <div class="title">Draft</div>
-                                                        {{-- <div class="result">{{ count($draft) }} Results</div> --}}
                                                     </div>
                                                     <div class="table-list">
                                                         <table class="table table-bordered mb-0">
@@ -679,13 +525,13 @@
                                                                     </td> --}}
 
                                                                     <td class="short-desc">
-                                                                        {{ $temp->short_description }}
+                                                                        {{ $temp->short_description ?? 'NA'}}
                                                                     </td>
                                                                     <td class="create-date">
                                                                         {{ $temp->created_at }}
                                                                     </td>
                                                                     <td class="assign-name">
-                                                                        {{ $temp->originator->name }}
+                                                                        {{ $temp->originator->name ?? 'NA'}}
                                                                     </td>
                                                                     <td class="modify-date">
                                                                         {{ $temp->updated_at }}
@@ -705,20 +551,10 @@
 
                                                                                 <a
                                                                                     href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                                                {{-- <form
-                                                                            action="{{ route('documents.destroy', $temp->id) }}"
-                                                                            method="post">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="submit">Delete</button>
-                                                                        </form> --}}
-
                                                                             </div>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-
-
 
                                                             </tbody>
                                                         </table>
@@ -775,13 +611,13 @@
                                                                     </td> --}}
 
                                                                     <td class="short-desc">
-                                                                        {{ $temp->short_description }}
+                                                                        {{ $temp->short_description ?? 'NA'}}
                                                                     </td>
                                                                     <td class="create-date">
                                                                         {{ $temp->created_at }}
                                                                     </td>
                                                                     <td class="assign-name">
-                                                                        {{ $temp->originator->name }}
+                                                                        {{ $temp->originator->name ?? 'NA'}}
                                                                     </td>
                                                                     <td class="modify-date">
                                                                         {{ $temp->updated_at }}
@@ -801,14 +637,6 @@
 
                                                                                 <a
                                                                                     href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                                                {{-- <form
-                                                                            action="{{ route('documents.destroy', $temp->id) }}"
-                                                                            method="post">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="submit">Delete</button>
-                                                                        </form> --}}
-
                                                                             </div>
                                                                         </div>
                                                                     </td>
@@ -865,13 +693,13 @@
                                                                     </a>
                                                                 </td>
                                                                     <td class="short-desc">
-                                                                        {{ $temp->short_description }}
+                                                                        {{ $temp->short_description ?? 'NA'}}
                                                                     </td>
                                                                     <td class="create-date">
                                                                         {{ $temp->created_at }}
                                                                     </td>
                                                                     <td class="assign-name">
-                                                                        {{ $temp->originator->name }}
+                                                                        {{ $temp->originator->name ?? 'NA'}}
                                                                     </td>
                                                                     <td class="modify-date">
                                                                         {{ $temp->updated_at }}
@@ -891,13 +719,7 @@
 
                                                                                 <a
                                                                                     href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                                                {{-- <form
-                                                                            action="{{ route('documents.destroy', $temp->id) }}"
-                                                                            method="post">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="submit">Delete</button>
-                                                                        </form> --}}
+                                                                            
 
                                                                             </div>
                                                                         </div>
@@ -959,13 +781,13 @@
                                                                     </td> --}}
 
                                                                     <td class="short-desc">
-                                                                        {{ $temp->short_description }}
+                                                                        {{ $temp->short_description ?? 'NA'}}
                                                                     </td>
                                                                     <td class="create-date">
                                                                         {{ $temp->created_at }}
                                                                     </td>
                                                                     <td class="assign-name">
-                                                                        {{ $temp->originator->name }}
+                                                                        {{ $temp->originator->name ?? 'NA'}}
                                                                     </td>
                                                                     <td class="modify-date">
                                                                         {{ $temp->updated_at }}
@@ -985,14 +807,7 @@
 
                                                                                 <a
                                                                                     href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                                                {{-- <form
-                                                                            action="{{ route('documents.destroy', $temp->id) }}"
-                                                                            method="post">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="submit">Delete</button>
-                                                                        </form> --}}
-
+                                                                         
                                                                             </div>
                                                                         </div>
                                                                     </td>
@@ -1002,119 +817,7 @@
                                                         </table>
                                                     </div>
                                                 </div>
-                                                {{-- <div class="sub-block" id="pen-train">
-                                                    <div class="head">
-                                                        <div class="title">Pending Training</div>
-                                                        <div class="result">2 Results</div>
-                                                    </div>
-                                                    <div class="table-list">
-                                                        <table class="table table-bordered mb-0">
-                                                            <thead>
-                                                                <th class="pr-id" data-bs-toggle="modal"
-                                                                    data-bs-target="#division-modal">
-                                                                    SOP-ID
-                                                                </th>
-                                                                <th class="division">
-                                                                    SOP Type
-                                                                </th>
-                                                                <th class="short-desc">
-                                                                    Short Description
-                                                                </th>
-                                                                <th class="create-date">
-                                                                    Create Date Time
-                                                                </th>
-                                                                <th class="assign-name">
-                                                                    Assigned To
-                                                                </th>
-                                                                <th class="modify-date">
-                                                                    Modify Date Time
-                                                                </th>
-                                                                <th class="status">
-                                                                    Status
-                                                                </th>
-                                                                <th class="action">
-                                                                    Action
-                                                                </th>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td class="pr-id" style="text-decoration:underline">
-                                                                        <a href="#">
-                                                                            SOP-23
-                                                                        </a>
-                                                                    </td>
-                                                                    <td class="division">
-                                                                        Global
-                                                                    </td>
-
-                                                                    <td class="short-desc">
-                                                                        Short Description 232
-                                                                    </td>
-                                                                    <td class="create-date">
-                                                                        2023-03-12 15:46:40
-                                                                    </td>
-                                                                    <td class="assign-name">
-                                                                        Piyush Sahu
-                                                                    </td>
-                                                                    <td class="modify-date">
-                                                                        2023-03-12 15:46:40
-                                                                    </td>
-                                                                    <td class="status">
-                                                                        Pending Training
-                                                                    </td>
-                                                                    <td class="action">
-                                                                        <div class="action-dropdown">
-                                                                            <div class="action-down-btn">Action <i
-                                                                                    class="fa-solid fa-angle-down"></i></div>
-                                                                            <div class="action-block">
-                                                                                <a href="#">View</a>
-                                                                                <a href="#">Edit</a>
-                                                                                <button type="submit">Delete</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="pr-id" style="text-decoration:underline">
-                                                                        <a href="#">
-                                                                            SOP-23
-                                                                        </a>
-                                                                    </td>
-                                                                    <td class="division">
-                                                                        Global
-                                                                    </td>
-
-                                                                    <td class="short-desc">
-                                                                        Short Description 232
-                                                                    </td>
-                                                                    <td class="create-date">
-                                                                        2023-03-12 15:46:40
-                                                                    </td>
-                                                                    <td class="assign-name">
-                                                                        Piyush Sahu
-                                                                    </td>
-                                                                    <td class="modify-date">
-                                                                        2023-03-12 15:46:40
-                                                                    </td>
-                                                                    <td class="status">
-                                                                        Pending Training
-                                                                    </td>
-                                                                    <td class="action">
-                                                                        <div class="action-dropdown">
-                                                                            <div class="action-down-btn">Action <i
-                                                                                    class="fa-solid fa-angle-down"></i></div>
-                                                                            <div class="action-block">
-                                                                                <a href="#">View</a>
-                                                                                <a href="#">Edit</a>
-                                                                                <button type="submit">Delete</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div> --}}
+                                              
                                             @elseif($temp->stage == 8)
                                                 <div class="sub-block inner-block" id="effective">
                                                     <div class="pill">
@@ -1122,7 +825,6 @@
                                                     </div>
                                                     <div class="head">
                                                         <div class="title">Effective</div>
-                                                        {{-- <div class="result">{{ count($effective) }} Results</div> --}}
                                                     </div>
                                                     <div class="table-list">
                                                         <table class="table table-bordered mb-0">
@@ -1166,13 +868,13 @@
                                                                     </td> --}}
 
                                                                     <td class="short-desc">
-                                                                        {{ $temp->short_description }}
+                                                                        {{ $temp->short_description ?? 'NA'}}
                                                                     </td>
                                                                     <td class="create-date">
                                                                         {{ $temp->created_at }}
                                                                     </td>
                                                                     <td class="assign-name">
-                                                                        {{ $temp->originator->name }}
+                                                                        {{ $temp->originator->name ?? 'NA'}}
                                                                     </td>
                                                                     <td class="modify-date">
                                                                         {{ $temp->updated_at }}
@@ -1192,13 +894,6 @@
 
                                                                                 <a
                                                                                     href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                                                {{-- <form
-                                                                            action="{{ route('documents.destroy', $temp->id) }}"
-                                                                            method="post">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="submit">Delete</button>
-                                                                        </form> --}}
 
                                                                             </div>
                                                                         </div>
@@ -1213,438 +908,9 @@
                                         @endforeach
                                     @endif
 
-                                    {{-- <div class="sub-block inner-block" id="cc-open">
-                                        <div class="pill">
-                                            Change Control
-                                        </div>
-                                        <div class="head">
-                                            <div class="title">Open State</div>
-                                            <div class="result">1 Results</div>
-                                        </div>
-                                        <div class="table-list">
-                                            <table class="table table-bordered mb-0">
-                                                <thead>
-                                                    <th class="pr-id" data-bs-toggle="modal"
-                                                        data-bs-target="#division-modal">
-                                                        Sr. No.
-                                                    </th>
-                                                    <th class="division">
-                                                        Title
-                                                    </th>
-                                                    <th class="short-desc">
-                                                        Due Date
-                                                    </th>
-                                                    <th class="create-date">
-                                                        HOD
-                                                    </th>
-                                                    <th>
-                                                        Action
-                                                    </th>
-                                                </thead>
-                                                <tbody id="searchTable">
-                                                    <tr>
-                                                        <td class="pr-id">
-                                                            <a href="#">
-                                                                1.
-                                                            </a>
-                                                        </td>
-                                                        <td class="division">
-                                                            EQMS - SOP
-                                                        </td>
-                                                        <td class="short-desc">
-                                                            12-03-2023 11:12PM
-                                                        </td>
-                                                        <td class="create-date">
-                                                            Piyush Sahu
-                                                        </td>
-                                                        <td class="action">
-                                                            <a href="#" class="view">
-                                                                <i class="fa-solid fa-eye"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div> --}}
-
-                                    {{-- <div class="sub-block inner-block" id="cc-hod-review">
-                                        <div class="pill">
-                                            Change Control
-                                        </div>
-                                        <div class="head">
-                                            <div class="title">Under HOD Review</div>
-                                            <div class="result">1 Results</div>
-                                        </div>
-                                        <div class="table-list">
-                                            <table class="table table-bordered mb-0">
-                                                <thead>
-                                                    <th class="pr-id" data-bs-toggle="modal"
-                                                        data-bs-target="#division-modal">
-                                                        Sr. No.
-                                                    </th>
-                                                    <th class="division">
-                                                        Title
-                                                    </th>
-                                                    <th class="short-desc">
-                                                        Due Date
-                                                    </th>
-                                                    <th class="create-date">
-                                                        HOD
-                                                    </th>
-                                                    <th>
-                                                        Action
-                                                    </th>
-                                                </thead>
-                                                <tbody id="searchTable">
-                                                    <tr>
-                                                        <td class="pr-id">
-                                                            <a href="#">
-                                                                1.
-                                                            </a>
-                                                        </td>
-                                                        <td class="division">
-                                                            EQMS - SOP
-                                                        </td>
-                                                        <td class="short-desc">
-                                                            12-03-2023 11:12PM
-                                                        </td>
-                                                        <td class="create-date">
-                                                            Piyush Sahu
-                                                        </td>
-                                                        <td class="action">
-                                                            <a href="#" class="view">
-                                                                <i class="fa-solid fa-eye"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div> --}}
-
-                                    {{-- <div class="sub-block inner-block" id="cc-reviewed">
-                                        <div class="pill">
-                                            Change Control
-                                        </div>
-                                        <div class="head">
-                                            <div class="title">Reviewed by HOD</div>
-                                            <div class="result">1 Results</div>
-                                        </div>
-                                        <div class="table-list">
-                                            <table class="table table-bordered mb-0">
-                                                <thead>
-                                                    <th class="pr-id" data-bs-toggle="modal"
-                                                        data-bs-target="#division-modal">
-                                                        Sr. No.
-                                                    </th>
-                                                    <th class="division">
-                                                        Title
-                                                    </th>
-                                                    <th class="short-desc">
-                                                        Due Date
-                                                    </th>
-                                                    <th class="create-date">
-                                                        HOD
-                                                    </th>
-                                                    <th>
-                                                        Action
-                                                    </th>
-                                                </thead>
-                                                <tbody id="searchTable">
-                                                    <tr>
-                                                        <td class="pr-id">
-                                                            <a href="#">
-                                                                1.
-                                                            </a>
-                                                        </td>
-                                                        <td class="division">
-                                                            EQMS - SOP
-                                                        </td>
-                                                        <td class="short-desc">
-                                                            12-03-2023 11:12PM
-                                                        </td>
-                                                        <td class="create-date">
-                                                            Piyush Sahu
-                                                        </td>
-                                                        <td class="action">
-                                                            <a href="#" class="view">
-                                                                <i class="fa-solid fa-eye"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div> --}}
-
-                                    {{-- <div class="sub-block inner-block" id="cc-cft-review">
-                                        <div class="pill">
-                                            Change Control
-                                        </div>
-                                        <div class="head">
-                                            <div class="title">Under CFT Review</div>
-                                            <div class="result">1 Results</div>
-                                        </div>
-                                        <div class="table-list">
-                                            <table class="table table-bordered mb-0">
-                                                <thead>
-                                                    <th class="pr-id" data-bs-toggle="modal"
-                                                        data-bs-target="#division-modal">
-                                                        Sr. No.
-                                                    </th>
-                                                    <th class="division">
-                                                        Title
-                                                    </th>
-                                                    <th class="short-desc">
-                                                        Due Date
-                                                    </th>
-                                                    <th class="create-date">
-                                                        HOD
-                                                    </th>
-                                                    <th>
-                                                        Action
-                                                    </th>
-                                                </thead>
-                                                <tbody id="searchTable">
-                                                    <tr>
-                                                        <td class="pr-id">
-                                                            <a href="#">
-                                                                1.
-                                                            </a>
-                                                        </td>
-                                                        <td class="division">
-                                                            EQMS - SOP
-                                                        </td>
-                                                        <td class="short-desc">
-                                                            12-03-2023 11:12PM
-                                                        </td>
-                                                        <td class="create-date">
-                                                            Piyush Sahu
-                                                        </td>
-                                                        <td class="action">
-                                                            <a href="#" class="view">
-                                                                <i class="fa-solid fa-eye"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div> --}}
-
-                                    {{-- <div class="sub-block inner-block" id="cc-approved">
-                                        <div class="pill">
-                                            Change Control
-                                        </div>
-                                        <div class="head">
-                                            <div class="title">Approved</div>
-                                            <div class="result">1 Results</div>
-                                        </div>
-                                        <div class="table-list">
-                                            <table class="table table-bordered mb-0">
-                                                <thead>
-                                                    <th class="pr-id" data-bs-toggle="modal"
-                                                        data-bs-target="#division-modal">
-                                                        Sr. No.
-                                                    </th>
-                                                    <th class="division">
-                                                        Title
-                                                    </th>
-                                                    <th class="short-desc">
-                                                        Due Date
-                                                    </th>
-                                                    <th class="create-date">
-                                                        HOD
-                                                    </th>
-                                                    <th>
-                                                        Action
-                                                    </th>
-                                                </thead>
-                                                <tbody id="searchTable">
-                                                    <tr>
-                                                        <td class="pr-id">
-                                                            <a href="#">
-                                                                1.
-                                                            </a>
-                                                        </td>
-                                                        <td class="division">
-                                                            EQMS - SOP
-                                                        </td>
-                                                        <td class="short-desc">
-                                                            12-03-2023 11:12PM
-                                                        </td>
-                                                        <td class="create-date">
-                                                            Piyush Sahu
-                                                        </td>
-                                                        <td class="action">
-                                                            <a href="#" class="view">
-                                                                <i class="fa-solid fa-eye"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div> --}}
-
-                                    {{-- <div class="sub-block inner-block" id="cc-effective">
-                                        <div class="pill">
-                                            Change Control
-                                        </div>
-                                        <div class="head">
-                                            <div class="title">Effective</div>
-                                            <div class="result">1 Results</div>
-                                        </div>
-                                        <div class="table-list">
-                                            <table class="table table-bordered mb-0">
-                                                <thead>
-                                                    <th class="pr-id" data-bs-toggle="modal"
-                                                        data-bs-target="#division-modal">
-                                                        Sr. No.
-                                                    </th>
-                                                    <th class="division">
-                                                        Title
-                                                    </th>
-                                                    <th class="short-desc">
-                                                        Due Date
-                                                    </th>
-                                                    <th class="create-date">
-                                                        HOD
-                                                    </th>
-                                                    <th>
-                                                        Action
-                                                    </th>
-                                                </thead>
-                                                <tbody id="searchTable">
-                                                    <tr>
-                                                        <td class="pr-id">
-                                                            <a href="#">
-                                                                1.
-                                                            </a>
-                                                        </td>
-                                                        <td class="division">
-                                                            EQMS - SOP
-                                                        </td>
-                                                        <td class="short-desc">
-                                                            12-03-2023 11:12PM
-                                                        </td>
-                                                        <td class="create-date">
-                                                            Piyush Sahu
-                                                        </td>
-                                                        <td class="action">
-                                                            <a href="#" class="view">
-                                                                <i class="fa-solid fa-eye"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div> --}}
-
                                 </div>
                             </div>
-                            {{-- <div class="col-md-3">
-                                <div class="sub-filter inner-block">
-                                    <div class="filter-block">
-                                        <div class="head">DMS Summary by Status</div>
-                                        <div class="filter-drop">
-                                            <div>
-                                                <label for="draft">
-                                                    <input type="checkbox" name="sub-filter" class="filter-checkbox"
-                                                        data-target="draft" checked>
-                                                    Draft
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label for="under-review">
-                                                    <input type="checkbox" name="sub-filter" class="filter-checkbox"
-                                                        data-target="under-review" checked>
-                                                    Under Review
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label for="review-com">
-                                                    <input type="checkbox" name="sub-filter" class="filter-checkbox"
-                                                        data-target="review-com" checked>
-                                                    Review Completed
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label for="pen-approv">
-                                                    <input type="checkbox" name="sub-filter" class="filter-checkbox"
-                                                        data-target="pen-approv" checked>
-                                                    Pending Approval
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label for="pen-train">
-                                                    <input type="checkbox" name="sub-filter" class="filter-checkbox"
-                                                        data-target="pen-train" checked>
-                                                    Pending Training
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label for="effective">
-                                                    <input type="checkbox" name="sub-filter" class="filter-checkbox"
-                                                        data-target="effective" checked>
-                                                    Effective
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sub-filter inner-block">
-                                    <div class="filter-block">
-                                        <div class="head">Change Control Summary by Status</div>
-                                        <div class="filter-drop">
-                                            <div>
-                                                <label for="cc-open">
-                                                    <input type="checkbox" name="sub-filter" class="filter-checkbox"
-                                                        data-target="cc-open" checked>
-                                                    Open State
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label for="cc-hod-review">
-                                                    <input type="checkbox" name="sub-filter" class="filter-checkbox"
-                                                        data-target="cc-hod-review" checked>
-                                                    Under HOD Review
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label for="cc-reviewed">
-                                                    <input type="checkbox" name="sub-filter" class="filter-checkbox"
-                                                        data-target="cc-reviewed" checked>
-                                                    Reviewed by HOD
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label for="cc-cft-review">
-                                                    <input type="checkbox" name="sub-filter" class="filter-checkbox"
-                                                        data-target="cc-cft-review" checked>
-                                                    Under CFT Review
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label for="cc-approved">
-                                                    <input type="checkbox" name="sub-filter" class="filter-checkbox"
-                                                        data-target="cc-approved" checked>
-                                                    Approved
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label for="cc-effective">
-                                                    <input type="checkbox" name="sub-filter" class="filter-checkbox"
-                                                        data-target="cc-effective" checked>
-                                                    Effective
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
+                        
                         </div>
                     </div>
 
