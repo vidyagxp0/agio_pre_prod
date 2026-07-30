@@ -2402,33 +2402,116 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         --}}
 
 
-                            <div class="col-12">
+                           <div class="col-12">
                                 <div class="group-input">
-                                    <label for="File_Attachment"><b>Temperature Mapping Protocol Cum Report Attachment</b></label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="File_Attachment">
+                                        <b>Temperature Mapping Protocol Cum Report Attachment</b>
+                                    </label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
+
                                         <div class="file-attachment-list" id="TemMapProCumRep_fileattachement"></div>
 
                                         <div class="add-btn">
-                                            <label for="TemMapProCumRep_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="TemMapProCumRep_I_gxp_attachment" name="TemMapProCumRepfile_attach[]"
-                                                oninput="addMultipleFiles(this, 'TemMapProCumRep_fileattachement')" multiple hidden>
+                                            <label for="TemMapProCumRep_I_gxp_attachment" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="TemMapProCumRep_I_gxp_attachment"
+                                                name="TemMapProCumRepfile_attach[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateTemMapProCumRepFiles(this)"
+                                                multiple
+                                                hidden
+                                            >
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
-                            <script>
-                            function addMultipleFiles(input, listId) {
-                                let fileList = document.getElementById(listId);
-                                fileList.innerHTML = "";
 
-                                for (let file of input.files) {
-                                    let fileItem = document.createElement("div");
-                                    fileItem.textContent = file.name;
-                                    fileList.appendChild(fileItem);
+                            <script>
+
+                                function validateTemMapProCumRepFiles(input){
+
+                                    const allowedExtensions = ['pdf','jpg','jpeg','png'];
+
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    const files = Array.from(input.files);
+
+                                    if(files.length === 0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const ext = file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(ext) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                            });
+
+                                            input.value = '';
+                                            return;
+                                        }
+                                    }
+
+                                    addMultipleFiles(input,'TemMapProCumRep_fileattachement');
                                 }
-                            }
+
+
+                                function addMultipleFiles(input,listId){
+
+                                    const fileList = document.getElementById(listId);
+
+                                    for(const file of input.files){
+
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container','text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let remove = document.createElement('a');
+                                        remove.type = 'button';
+                                        remove.classList.add('remove-file');
+
+                                        remove.innerHTML =
+                                            '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                        remove.onclick = function () {
+                                            fileContainer.remove();
+                                        };
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(remove);
+
+                                        fileList.appendChild(fileContainer);
+                                    }
+
+                                }
+
                             </script>
 
                         </div>
@@ -2772,22 +2855,117 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             </div>
                         </div>
                         --}}
-                            <div class="col-12">
+                           <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment"><b>File Attachment</b></label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachment_srt"></div>
 
                                         <div class="add-btn">
-                                            <label for="attachment_srtData" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="attachment_srtData" name="attachment_srt[]"
-                                                oninput="addMultipleFiles(this, 'attachment_srt')" multiple hidden>
+                                            <label for="attachment_srtData" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="attachment_srtData"
+                                                name="attachment_srt[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                multiple
+                                                hidden
+                                                onchange="validateSRTFiles(this)"
+                                            >
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <script>
+
+                                    function validateSRTFiles(input){
+
+                                        const allowedExtensions = [
+                                            'pdf',
+                                            'jpg',
+                                            'jpeg',
+                                            'png'
+                                        ];
+
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if(files.length === 0){
+                                            return;
+                                        }
+
+                                        for(const file of files){
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if(
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ){
+
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Invalid File',
+                                                    text: 'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                });
+
+                                                input.value = '';
+                                                return;
+                                            }
+                                        }
+
+                                        addMultipleFiles(input,'attachment_srt');
+                                    }
+
+                                    function addMultipleFiles(input, listId){
+
+                                        const fileList = document.getElementById(listId);
+
+                                        for(const file of input.files){
+
+                                            let fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container','text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                            let fileText = document.createElement('b');
+                                            fileText.textContent = file.name;
+
+                                            let remove = document.createElement('a');
+                                            remove.href = "javascript:void(0)";
+                                            remove.classList.add('remove-file');
+
+                                            remove.innerHTML =
+                                                '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                            remove.onclick = function(){
+                                                fileContainer.remove();
+                                            };
+
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(remove);
+
+                                            fileList.appendChild(fileContainer);
+                                        }
+
+                                    }
+
+                            </script>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -3112,22 +3290,111 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         </div>
 
                         --}}
-                                     <div class="col-12">
+                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="attachment_spt"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="attachment_sptData" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="attachment_sptData" name="attachment_spt[]"
-                                                        oninput="addMultipleFiles(this, 'attachment_spt')" multiple hidden>
+                                                    <label for="attachment_sptData" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="attachment_sptData"
+                                                        name="attachment_spt[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateSPTFiles(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
+
+                                    <script>
+
+                                            function validateSPTFiles(input){
+
+                                                const allowedExtensions = ['pdf','jpg','jpeg','png'];
+
+                                                const allowedMimeTypes = [
+                                                    'application/pdf',
+                                                    'image/jpeg',
+                                                    'image/png'
+                                                ];
+
+                                                const files = Array.from(input.files);
+
+                                                if(files.length === 0){
+                                                    return;
+                                                }
+
+                                                for(const file of files){
+
+                                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                                    if(
+                                                        !allowedExtensions.includes(ext) ||
+                                                        !allowedMimeTypes.includes(file.type)
+                                                    ){
+
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Invalid File',
+                                                            text: 'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                        });
+
+                                                        input.value = '';
+                                                        return;
+                                                    }
+                                                }
+
+                                                addMultipleFiles(input,'attachment_spt');
+
+                                            }
+
+                                            function addMultipleFiles(input,listId){
+
+                                                const fileList = document.getElementById(listId);
+
+                                                for(const file of input.files){
+
+                                                    let fileContainer = document.createElement('h6');
+                                                    fileContainer.classList.add('file-container','text-dark');
+                                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                                    let fileText = document.createElement('b');
+                                                    fileText.textContent = file.name;
+
+                                                    let remove = document.createElement('a');
+                                                    remove.href = "javascript:void(0)";
+                                                    remove.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                                    remove.onclick = function(){
+                                                        fileContainer.remove();
+                                                    };
+
+                                                    fileContainer.appendChild(fileText);
+                                                    fileContainer.appendChild(remove);
+
+                                                    fileList.appendChild(fileContainer);
+                                                }
+                                            }
+
+                                    </script>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -3560,22 +3827,116 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             </div>
                         </div>
                         --}}
-                                  <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                 <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="File_Attachment">
+                                            <b>File Attachment</b>
+                                        </label>
 
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="attachment_ehtsr"></div>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please attach only PDF, JPG, JPEG or PNG files.
+                                            </small>
+                                        </div>
 
-                                                <div class="add-btn">
-                                                    <label for="attachment_ehtsrData" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="attachment_ehtsrData" name="attachment_ehtsr[]"
-                                                        oninput="addMultipleFiles(this, 'attachment_ehtsr')" multiple hidden>
-                                                </div>
+                                        <div class="file-attachment-field">
+
+                                            <div class="file-attachment-list" id="attachment_ehtsr"></div>
+
+                                            <div class="add-btn">
+                                                <label for="attachment_ehtsrData" style="cursor:pointer;">
+                                                    Add
+                                                </label>
+
+                                                <input
+                                                    type="file"
+                                                    id="attachment_ehtsrData"
+                                                    name="attachment_ehtsr[]"
+                                                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                    onchange="validateEHTSRFiles(this)"
+                                                    multiple
+                                                    hidden
+                                                >
                                             </div>
+
                                         </div>
                                     </div>
+                                </div>
+
+                                <script>
+
+                                function validateEHTSRFiles(input){
+
+                                    const allowedExtensions = ['pdf','jpg','jpeg','png'];
+
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    const files = Array.from(input.files);
+
+                                    if(files.length === 0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const ext = file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(ext) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                            });
+
+                                            input.value = '';
+                                            return;
+                                        }
+                                    }
+
+                                    addMultipleFiles(input,'attachment_ehtsr');
+                                }
+
+
+                                function addMultipleFiles(input,listId){
+
+                                    const fileList = document.getElementById(listId);
+
+                                    for(const file of input.files){
+
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container','text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let remove = document.createElement('a');
+                                        remove.classList.add('remove-file');
+
+                                        remove.innerHTML =
+                                            '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                        remove.onclick = function(){
+                                            fileContainer.remove();
+                                        };
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(remove);
+
+                                        fileList.appendChild(fileContainer);
+                                    }
+
+                                }
+
+                                </script>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -4133,34 +4494,119 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                     <div class="col-12">
                         <div class="group-input">
-                            <label for="File_Attachment"><b>Packing validation Report Attachment</b></label>
-                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                            <label for="File_Attachment">
+                                <b>Packing Validation Report Attachment</b>
+                            </label>
+
+                            <div>
+                                <small class="text-primary">
+                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                </small>
+                            </div>
 
                             <div class="file-attachment-field">
+
                                 <div class="file-attachment-list" id="PacValRepfile_attach"></div>
 
                                 <div class="add-btn">
-                                    <label for="annex_I_gxp_attachmentPacValRepfile_attach" style="cursor: pointer;">Add</label>
-                                    <input type="file" id="annex_I_gxp_attachmentPacValRepfile_attach" name="PacValRepfile_attach[]"
-                                        oninput="addMultipleFiles(this, 'PacValRepfile_attach')" multiple hidden>
+                                    <label for="PacValRepfile_attachData" style="cursor:pointer;">
+                                        Add
+                                    </label>
+
+                                    <input
+                                        type="file"
+                                        id="PacValRepfile_attachData"
+                                        name="PacValRepfile_attach[]"
+                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                        onchange="validatePacValRepFiles(this)"
+                                        multiple
+                                        hidden
+                                    >
                                 </div>
+
                             </div>
                         </div>
                     </div>
 
-
-
                     <script>
-                    function addMultipleFiles(input, listId) {
-                        let fileList = document.getElementById(listId);
-                        fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                        for (let file of input.files) {
-                            let fileItem = document.createElement("div");
-                            fileItem.textContent = file.name;
-                            fileList.appendChild(fileItem);
+                    function validatePacValRepFiles(input){
+
+                        const allowedExtensions = [
+                            'pdf',
+                            'jpg',
+                            'jpeg',
+                            'png'
+                        ];
+
+                        const allowedMimeTypes = [
+                            'application/pdf',
+                            'image/jpeg',
+                            'image/png'
+                        ];
+
+                        const files = Array.from(input.files);
+
+                        if(files.length === 0){
+                            return;
                         }
+
+                        for(const file of files){
+
+                            const ext = file.name.split('.').pop().toLowerCase();
+
+                            if(
+                                !allowedExtensions.includes(ext) ||
+                                !allowedMimeTypes.includes(file.type)
+                            ){
+
+                                Swal.fire({
+                                    icon:'error',
+                                    title:'Invalid File',
+                                    text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                });
+
+                                input.value = '';
+                                return;
+                            }
+                        }
+
+                        addPacValRepFiles(input,'PacValRepfile_attach');
                     }
+
+                    function addPacValRepFiles(input,listId){
+
+                        const fileList = document.getElementById(listId);
+
+                        for(const file of input.files){
+
+                            let fileContainer = document.createElement('h6');
+                            fileContainer.classList.add('file-container','text-dark');
+                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                            let fileText = document.createElement('b');
+                            fileText.textContent = file.name;
+
+                            let remove = document.createElement('a');
+                            remove.type = 'button';
+
+                            remove.innerHTML =
+                                '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                            remove.onclick = function(){
+                                fileContainer.remove();
+                            };
+
+                            fileContainer.appendChild(fileText);
+                            fileContainer.appendChild(remove);
+
+                            fileList.appendChild(fileContainer);
+                        }
+
+                        input.value = "";
+
+                    }
+
                     </script>
 
 
@@ -4537,22 +4983,116 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         --}}
 
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="File_Attachment"><b>File Attachment</b></label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment">
+                                    <b>File Attachment</b>
+                                </label>
 
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="attachment_ehtsprt"></div>
+                                <div>
+                                    <small class="text-primary">
+                                        Please attach only PDF, JPG, JPEG or PNG files.
+                                    </small>
+                                </div>
 
-                                        <div class="add-btn">
-                                            <label for="attachment_ehtsprtData" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="attachment_ehtsprtData" name="attachment_ehtsprt[]"
-                                                oninput="addMultipleFiles(this, 'attachment_ehtsprt')" multiple hidden>
-                                        </div>
+                                <div class="file-attachment-field">
+
+                                    <div class="file-attachment-list" id="attachment_ehtsprt"></div>
+
+                                    <div class="add-btn">
+                                        <label for="attachment_ehtsprtData" style="cursor:pointer;">
+                                            Add
+                                        </label>
+
+                                        <input
+                                            type="file"
+                                            id="attachment_ehtsprtData"
+                                            name="attachment_ehtsprt[]"
+                                            accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                            onchange="validateEHTSPRTFiles(this)"
+                                            multiple
+                                            hidden
+                                        >
                                     </div>
+
                                 </div>
                             </div>
+                        </div>
+
+                        <script>
+
+                                function validateEHTSPRTFiles(input){
+
+                                    const allowedExtensions = ['pdf','jpg','jpeg','png'];
+
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    const files = Array.from(input.files);
+
+                                    if(files.length === 0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const ext = file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(ext) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                            });
+
+                                            input.value = '';
+                                            return;
+                                        }
+                                    }
+
+                                    addMultipleFiles(input,'attachment_ehtsprt');
+                                }
+
+
+                                function addMultipleFiles(input,listId){
+
+                                    const fileList = document.getElementById(listId);
+
+                                    for(const file of input.files){
+
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container','text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let remove = document.createElement('a');
+                                        remove.classList.add('remove-file');
+
+                                        remove.innerHTML =
+                                            '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                        remove.onclick = function(){
+                                            fileContainer.remove();
+                                        };
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(remove);
+
+                                        fileList.appendChild(fileContainer);
+                                    }
+
+                                }
+
+                        </script>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -5011,20 +5551,107 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <label for="File_Attachment">
+                                                <b>File Attachment</b>
+                                            </label>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="attach_comp_nitrogen"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="attach_comp_nitrogendata" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="attach_comp_nitrogendata" name="attach_comp_nitrogen[]"
-                                                        oninput="addMultipleFiles(this, 'attach_comp_nitrogen')" multiple hidden>
+                                                    <label for="attach_comp_nitrogendata" style="cursor:pointer">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="attach_comp_nitrogendata"
+                                                        name="attach_comp_nitrogen[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateAttachCompNitrogenCreate(this)"
+                                                        multiple
+                                                        hidden>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
+
+                                    <script>
+
+                                            function validateAttachCompNitrogenCreate(input){
+
+                                                const allowedExtensions = [
+                                                    'pdf',
+                                                    'jpg',
+                                                    'jpeg',
+                                                    'png'
+                                                ];
+
+                                                const allowedMimeTypes = [
+                                                    'application/pdf',
+                                                    'image/jpeg',
+                                                    'image/png'
+                                                ];
+
+                                                const files = Array.from(input.files);
+
+                                                if(files.length === 0){
+                                                    return;
+                                                }
+
+                                                for(const file of files){
+
+                                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                                    if(
+                                                        !allowedExtensions.includes(ext) ||
+                                                        !allowedMimeTypes.includes(file.type)
+                                                    ){
+
+                                                        Swal.fire({
+                                                            icon:'error',
+                                                            title:'Invalid File',
+                                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                            confirmButtonText:'OK'
+                                                        });
+
+                                                        input.value = '';
+                                                        document.getElementById('attach_comp_nitrogen').innerHTML = '';
+                                                        return;
+                                                    }
+
+                                                }
+
+                                                addAttachCompNitrogenCreateFiles(input,'attach_comp_nitrogen');
+
+                                            }
+
+                                            function addAttachCompNitrogenCreateFiles(input,listId){
+
+                                                let fileList = document.getElementById(listId);
+
+                                                fileList.innerHTML = "";
+
+                                                for(const file of input.files){
+
+                                                    let div = document.createElement("div");
+                                                    div.textContent = file.name;
+
+                                                    fileList.appendChild(div);
+
+                                                }
+
+                                            }
+
+                                    </script>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -6181,22 +6808,117 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
 
 
-                                    <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="File_Attachment">
+                                            <b>File Attachment</b>
+                                        </label>
 
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="file_attach_pvr"></div>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please attach only PDF, JPG, JPEG or PNG files.
+                                            </small>
+                                        </div>
 
-                                                <div class="add-btn">
-                                                    <label for="file_attach_pvrData" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="file_attach_pvrData" name="file_attach_pvr[]"
-                                                        oninput="addMultipleFiles(this, 'file_attach_pvr')" multiple hidden>
-                                                </div>
+                                        <div class="file-attachment-field">
+
+                                            <div class="file-attachment-list" id="file_attach_pvr"></div>
+
+                                            <div class="add-btn">
+                                                <label for="file_attach_pvrData" style="cursor:pointer;">
+                                                    Add
+                                                </label>
+
+                                                <input
+                                                    type="file"
+                                                    id="file_attach_pvrData"
+                                                    name="file_attach_pvr[]"
+                                                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                    onchange="validatePVRFiles(this)"
+                                                    multiple
+                                                    hidden
+                                                >
                                             </div>
+
                                         </div>
                                     </div>
+                                </div>
+
+                                <script>
+
+                                    function validatePVRFiles(input){
+
+                                        const allowedExtensions = ['pdf','jpg','jpeg','png'];
+
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if(files.length === 0){
+                                            return;
+                                        }
+
+                                        for(const file of files){
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if(
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ){
+
+                                                Swal.fire({
+                                                    icon:'error',
+                                                    title:'Invalid File',
+                                                    text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                });
+
+                                                input.value = '';
+                                                return;
+                                            }
+                                        }
+
+                                        addMultipleFiles(input,'file_attach_pvr');
+                                    }
+
+
+                                    function addMultipleFiles(input,listId){
+
+                                        const fileList = document.getElementById(listId);
+
+                                        for(const file of input.files){
+
+                                            let fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container','text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                            let fileText = document.createElement('b');
+                                            fileText.textContent = file.name;
+
+                                            let remove = document.createElement('a');
+                                            remove.type = 'button';
+                                            remove.classList.add('remove-file');
+
+                                            remove.innerHTML =
+                                                '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                            remove.onclick = function(){
+                                                fileContainer.remove();
+                                            };
+
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(remove);
+
+                                            fileList.appendChild(fileContainer);
+                                        }
+
+                                    }
+
+                                </script>
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -6838,37 +7560,112 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                          --}}
 
-                                <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                               <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="File_Attachment"><b>File Attachment</b></label>
 
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="attach_cvpd"></div>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please attach only PDF, JPG, JPEG or PNG files.
+                                            </small>
+                                        </div>
 
-                                                <div class="add-btn">
-                                                    <label for="annex_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_I_gxp_attachment" name="attach_cvpd[]"
-                                                        oninput="addMultipleFiles(this, 'attach_cvpd')" multiple hidden>
-                                                </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="attach_cvpd"></div>
+
+                                            <div class="add-btn">
+                                                <label for="annex_I_gxp_attachment" style="cursor:pointer;">
+                                                    Add
+                                                </label>
+
+                                                <input
+                                                    type="file"
+                                                    id="annex_I_gxp_attachment"
+                                                    name="attach_cvpd[]"
+                                                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                    multiple
+                                                    hidden
+                                                    onchange="validateCVPDFiles(this)"
+                                                >
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
+                                <script>
 
+                                function validateCVPDFiles(input){
 
-                                    <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    const allowedExtensions = ['pdf','jpg','jpeg','png'];
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    const files = Array.from(input.files);
+
+                                    if(files.length === 0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const ext = file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(ext) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                            });
+
+                                            input.value = '';
+                                            return;
                                         }
                                     }
-                                    </script>
+
+                                    addMultipleFiles(input,'attach_cvpd');
+                                }
+
+                                function addMultipleFiles(input, listId){
+
+                                    const fileList = document.getElementById(listId);
+
+                                    for(const file of input.files){
+
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container','text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let remove = document.createElement('a');
+                                        remove.href = "javascript:void(0)";
+                                        remove.classList.add('remove-file');
+
+                                        remove.innerHTML =
+                                            '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                        remove.onclick = function () {
+                                            fileContainer.remove();
+                                        };
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(remove);
+
+                                        fileList.appendChild(fileContainer);
+                                    }
+
+                                }
+
+                                </script>
 
 
 
@@ -7214,23 +8011,105 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
 
 
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
 
-                                    <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="file_attach_cvrd"></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach_cvrd"></div>
 
-                                                <div class="add-btn">
-                                                    <label for="file_attach_cvrdData" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="file_attach_cvrdData" name="file_attach_cvrd[]"
-                                                        oninput="addMultipleFiles(this, 'file_attach_cvrd')" multiple hidden>
-                                                </div>
-                                            </div>
+                                        <div class="add-btn">
+                                            <label for="file_attach_cvrdData" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="file_attach_cvrdData"
+                                                name="file_attach_cvrd[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                multiple
+                                                hidden
+                                                onchange="validateFileAttachCvrd(this)"
+                                            >
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                    function validateFileAttachCvrd(input) {
+
+                                        const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if (files.length === 0) {
+                                            return;
+                                        }
+
+                                        for (const file of files) {
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if (
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ) {
+
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Invalid File',
+                                                    text: 'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                });
+
+                                                input.value = '';
+                                                return;
+                                            }
+                                        }
+
+                                        addMultipleFiles(input, 'file_attach_cvrd');
+                                    }
+
+                                    function addMultipleFiles(input, listId) {
+
+                                        const fileList = document.getElementById(listId);
+
+                                        Array.from(input.files).forEach(file => {
+
+                                            let fileContainer = document.createElement('h6');
+                                            fileContainer.className = 'file-container text-dark';
+                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                            fileContainer.innerHTML = `
+                                                <b>${file.name}</b>
+                                                <a href="javascript:void(0)" class="remove-new-file">
+                                                    <i class="fa-solid fa-circle-xmark"
+                                                    style="color:red;font-size:20px;"></i>
+                                                </a>
+                                            `;
+
+                                            fileContainer.querySelector('.remove-new-file').addEventListener('click', function () {
+                                                fileContainer.remove();
+                                            });
+
+                                            fileList.appendChild(fileContainer);
+
+                                        });
+
+                                    }
+                            </script>
 
 
 
@@ -7767,23 +8646,109 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 <div class="row">
 
 
-                                <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                  <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="File_Attachment">
+                                            <b>File Attachment</b>
+                                        </label>
 
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="file_attach_vmp"></div>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please attach only PDF, JPG, JPEG or PNG files.
+                                            </small>
+                                        </div>
 
-                                                <div class="add-btn">
-                                                    <label for="file_attach_vmpData" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="file_attach_vmpData" name="file_attach_vmp[]"
-                                                        oninput="addMultipleFiles(this, 'file_attach_vmp')" multiple hidden>
-                                                </div>
+                                        <div class="file-attachment-field">
+
+                                            <div class="file-attachment-list" id="file_attach_vmp"></div>
+
+                                            <div class="add-btn">
+                                                <label for="file_attach_vmpData" style="cursor:pointer">
+                                                    Add
+                                                </label>
+
+                                                <input
+                                                    type="file"
+                                                    id="file_attach_vmpData"
+                                                    name="file_attach_vmp[]"
+                                                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                    onchange="validateFileAttachVmp(this)"
+                                                    multiple
+                                                    hidden>
                                             </div>
+
                                         </div>
                                     </div>
+                                </div>
 
+                                <script>
+
+                                    function validateFileAttachVmp(input){
+
+                                        const allowedExtensions = [
+                                            'pdf',
+                                            'jpg',
+                                            'jpeg',
+                                            'png'
+                                        ];
+
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if(files.length === 0){
+                                            return;
+                                        }
+
+                                        for(const file of files){
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if(
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ){
+
+                                                Swal.fire({
+                                                    icon:'error',
+                                                    title:'Invalid File',
+                                                    text:'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                    confirmButtonText:'OK'
+                                                });
+
+                                                input.value = '';
+                                                document.getElementById('file_attach_vmp').innerHTML = '';
+                                                return;
+                                            }
+
+                                        }
+
+                                        addFileAttachVmpFiles(input,'file_attach_vmp');
+
+                                    }
+
+                                    function addFileAttachVmpFiles(input,listId){
+
+                                        let fileList = document.getElementById(listId);
+
+                                        fileList.innerHTML = "";
+
+                                        for(const file of input.files){
+
+                                            let div = document.createElement("div");
+                                            div.textContent = file.name;
+
+                                            fileList.appendChild(div);
+
+                                        }
+
+                                    }
+
+                                </script>
 
 
 
@@ -7811,22 +8776,104 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 <div class="row">
 
 
-                                <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                               <div class="col-12">
+                                    <div class="group-input">
+                                        <label><b>File Attachment</b></label>
 
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="file_attach_qm"></div>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please attach only PDF, JPG, JPEG or PNG files.
+                                            </small>
+                                        </div>
 
-                                                <div class="add-btn">
-                                                    <label for="file_attach_qmData" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="file_attach_qmData" name="file_attach_qm[]"
-                                                        oninput="addMultipleFiles(this, 'file_attach_qm')" multiple hidden>
-                                                </div>
+                                        <div class="file-attachment-field">
+
+                                            <div class="file-attachment-list" id="file_attach_qm"></div>
+
+                                            <div class="add-btn">
+                                                <label for="file_attach_qmData" style="cursor:pointer;">
+                                                    Add
+                                                </label>
+
+                                                <input
+                                                    type="file"
+                                                    id="file_attach_qmData"
+                                                    name="file_attach_qm[]"
+                                                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                    onchange="validateFileAttachQmCreate(this)"
+                                                    multiple
+                                                    hidden
+                                                >
                                             </div>
+
                                         </div>
                                     </div>
+                                </div>
+
+                                <script>
+
+                                    function validateFileAttachQmCreate(input){
+
+                                        const allowedExtensions = [
+                                            'pdf',
+                                            'jpg',
+                                            'jpeg',
+                                            'png'
+                                        ];
+
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if(files.length === 0){
+                                            return;
+                                        }
+
+                                        for(const file of files){
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if(
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ){
+
+                                                alert('Only PDF, JPG, JPEG and PNG files are allowed.');
+
+                                                input.value = '';
+
+                                                document.getElementById('file_attach_qm').innerHTML = '';
+
+                                                return;
+                                            }
+                                        }
+
+                                        addMultipleFilesFileAttachQmCreate(input,'file_attach_qm');
+                                    }
+
+                                    function addMultipleFilesFileAttachQmCreate(input,listId){
+
+                                        const fileList = document.getElementById(listId);
+
+                                        fileList.innerHTML = '';
+
+                                        Array.from(input.files).forEach(file=>{
+
+                                            const div = document.createElement('div');
+
+                                            div.textContent = file.name;
+
+                                            fileList.appendChild(div);
+
+                                        });
+
+                                    }
+
+                                </script>
 
 
 
@@ -7979,19 +9026,103 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="procumrepo_file_attach"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="procumrepo_file_attachData" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="procumrepo_file_attachData" name="procumrepo_file_attach[]"
-                                                        oninput="addMultipleFiles(this, 'procumrepo_file_attach')" multiple hidden>
+                                                    <label for="procumrepo_file_attachData" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="procumrepo_file_attachData"
+                                                        name="procumrepo_file_attach[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        multiple
+                                                        hidden
+                                                        onchange="validateProcumRepoFiles(this)"
+                                                    >
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
+
+                                    <script>
+                                            function validateProcumRepoFiles(input) {
+
+                                                const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+                                                const allowedMimeTypes = [
+                                                    'application/pdf',
+                                                    'image/jpeg',
+                                                    'image/png'
+                                                ];
+
+                                                const files = Array.from(input.files);
+
+                                                if (files.length === 0) {
+                                                    return;
+                                                }
+
+                                                for (const file of files) {
+
+                                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                                    if (
+                                                        !allowedExtensions.includes(ext) ||
+                                                        !allowedMimeTypes.includes(file.type)
+                                                    ) {
+
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Invalid File',
+                                                            text: 'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                        });
+
+                                                        input.value = '';
+                                                        return;
+                                                    }
+                                                }
+
+                                                addMultipleFiles(input, 'procumrepo_file_attach');
+                                            }
+
+                                            function addMultipleFiles(input, listId) {
+
+                                                const fileList = document.getElementById(listId);
+
+                                                Array.from(input.files).forEach(file => {
+
+                                                    let fileContainer = document.createElement('h6');
+                                                    fileContainer.className = 'file-container text-dark';
+                                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                                    fileContainer.innerHTML = `
+                                                        <b>${file.name}</b>
+                                                        <a href="javascript:void(0)" class="remove-new-file">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>
+                                                        </a>
+                                                    `;
+
+                                                    fileContainer.querySelector('.remove-new-file').addEventListener('click', function () {
+                                                        fileContainer.remove();
+                                                    });
+
+                                                    fileList.appendChild(fileContainer);
+
+                                                });
+
+                                            }
+                                    </script>
 
 
                             </div>
@@ -8722,34 +9853,114 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                     </div>
                                 </div> --}}
 
-                                <div class="col-12">
+                               <div class="col-12">
                                     <div class="group-input">
-                                        <label for="File_Attachment"><b>Process Validation Protocol  File Attachment</b></label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <label for="File_Attachment">
+                                            <b>Process Validation Protocol File Attachment</b>
+                                        </label>
+
+                                        <div>
+                                            <small class="text-primary">
+                                                Please attach only PDF, JPG, JPEG or PNG files.
+                                            </small>
+                                        </div>
 
                                         <div class="file-attachment-field">
+
                                             <div class="file-attachment-list" id="ProValProtocol"></div>
 
                                             <div class="add-btn">
-                                                <label for="ProValProtocol_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                                <input type="file" id="ProValProtocol_I_gxp_attachment" name="ProValProtocol[]"
-                                                    oninput="addMultipleFiles(this, 'ProValProtocol')" multiple hidden>
+                                                <label for="ProValProtocol_I_gxp_attachment" style="cursor:pointer;">
+                                                    Add
+                                                </label>
+
+                                                <input
+                                                    type="file"
+                                                    id="ProValProtocol_I_gxp_attachment"
+                                                    name="ProValProtocol[]"
+                                                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                    onchange="validateProValProtocol(this)"
+                                                    multiple
+                                                    hidden>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
 
                                 <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                    function validateProValProtocol(input) {
+
+                                        const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if (files.length === 0) {
+                                            return;
                                         }
+
+                                        for (const file of files) {
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if (
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ) {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Invalid File',
+                                                    text: 'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                    confirmButtonText: 'OK'
+                                                });
+
+                                                input.value = '';
+                                                return;
+                                            }
+
+                                        }
+
+                                        addProValProtocolFiles(input, 'ProValProtocol');
+
                                     }
+
+                                    function addProValProtocolFiles(input, listId) {
+
+                                        const fileList = document.getElementById(listId);
+
+                                        for (const file of input.files) {
+
+                                            const fileContainer = document.createElement('h6');
+
+                                            fileContainer.className = 'file-container text-dark';
+                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                            fileContainer.innerHTML = `
+                                                <b>${file.name}</b>
+                                                <a href="javascript:void(0)" class="remove-new-file">
+                                                    <i class="fa-solid fa-circle-xmark"
+                                                    style="color:red;font-size:20px;"></i>
+                                                </a>
+                                            `;
+
+                                            fileContainer.querySelector('.remove-new-file')
+                                                .addEventListener('click', function () {
+                                                    fileContainer.remove();
+                                                });
+
+                                            fileList.appendChild(fileContainer);
+
+                                        }
+
+                                    }
+
                                 </script>
 
                                 <div class="button-block">
@@ -9965,31 +11176,112 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="File_Attachment"><b>Bill of Materia  File Attachment</b></label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="File_Attachment"><b>Bill of Material File Attachment</b></label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
+
                                         <div class="file-attachment-list" id="billMatrial"></div>
 
                                         <div class="add-btn">
-                                            <label for="billMatrial_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="billMatrial_I_gxp_attachment" name="billMatrial[]"
-                                                oninput="addMultipleFiles(this, 'billMatrial')" multiple hidden>
+                                            <label for="billMatrial_I_gxp_attachment" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="billMatrial_I_gxp_attachment"
+                                                name="billMatrial[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateBillMaterialFiles(this)"
+                                                multiple
+                                                hidden>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
-                            <script>
-                            function addMultipleFiles(input, listId) {
-                                let fileList = document.getElementById(listId);
-                                fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                for (let file of input.files) {
-                                    let fileItem = document.createElement("div");
-                                    fileItem.textContent = file.name;
-                                    fileList.appendChild(fileItem);
+                            <script>
+
+                                function validateBillMaterialFiles(input){
+
+                                    const allowedExtensions = [
+                                        'pdf',
+                                        'jpg',
+                                        'jpeg',
+                                        'png'
+                                    ];
+
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    const files = Array.from(input.files);
+
+                                    if(files.length === 0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const ext = file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(ext) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                            });
+
+                                            input.value = '';
+                                            return;
+                                        }
+                                    }
+
+                                    addMultipleFiles(input,'billMatrial');
                                 }
-                            }
+
+
+                                function addMultipleFiles(input,listId){
+
+                                    const fileList = document.getElementById(listId);
+
+                                    Array.from(input.files).forEach(file => {
+
+                                        const fileContainer = document.createElement('h6');
+                                        fileContainer.className = 'file-container text-dark';
+                                        fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                        fileContainer.innerHTML = `
+                                            <b>${file.name}</b>
+                                            <a href="javascript:void(0)" class="remove-new-file">
+                                                <i class="fa-solid fa-circle-xmark"
+                                                style="color:red;font-size:20px;"></i>
+                                            </a>
+                                        `;
+
+                                        fileContainer.querySelector('.remove-new-file').addEventListener('click', function () {
+                                            fileContainer.remove();
+                                        });
+
+                                        fileList.appendChild(fileContainer);
+
+                                    });
+
+                                }
+
                             </script>
 
 
@@ -10021,33 +11313,103 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="File_Attachment"><b>Master Formula Record  File Attachment</b></label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="File_Attachment">
+                                        <b>Master Formula Record File Attachment</b>
+                                    </label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
+
                                         <div class="file-attachment-list" id="MasterFormulaRecordBMR"></div>
 
                                         <div class="add-btn">
-                                            <label for="MasterFormulaRecordBMR_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="MasterFormulaRecordBMR_I_gxp_attachment" name="MasterFormulaRecordBMR[]"
-                                                oninput="addMultipleFiles(this, 'MasterFormulaRecordBMR')" multiple hidden>
+                                            <label for="MasterFormulaRecordBMR_I_gxp_attachment" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="MasterFormulaRecordBMR_I_gxp_attachment"
+                                                name="MasterFormulaRecordBMR[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateMasterFormulaRecordFiles(this)"
+                                                multiple
+                                                hidden>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
+
                             <script>
-                            function addMultipleFiles(input, listId) {
-                                let fileList = document.getElementById(listId);
-                                fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                for (let file of input.files) {
-                                    let fileItem = document.createElement("div");
-                                    fileItem.textContent = file.name;
-                                    fileList.appendChild(fileItem);
+                                function validateMasterFormulaRecordFiles(input){
+
+                                    const allowedExtensions = [
+                                        'pdf',
+                                        'jpg',
+                                        'jpeg',
+                                        'png'
+                                    ];
+
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    const files = Array.from(input.files);
+
+                                    if(files.length === 0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const extension = file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(extension) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            alert('Only PDF, JPG, JPEG and PNG files are allowed.');
+
+                                            input.value='';
+
+                                            return;
+                                        }
+                                    }
+
+                                    addMasterFormulaRecordFiles(input,'MasterFormulaRecordBMR');
+
                                 }
-                            }
-                            </script>
 
+
+                                function addMasterFormulaRecordFiles(input,listId){
+
+                                    let fileList=document.getElementById(listId);
+
+                                    fileList.innerHTML='';
+
+                                    for(const file of input.files){
+
+                                        let div=document.createElement('div');
+
+                                        div.textContent=file.name;
+
+                                        fileList.appendChild(div);
+
+                                    }
+
+                                }
+
+                            </script>
 
 
 
@@ -10077,33 +11439,102 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="File_Attachment"><b>Master Packing Record  File Attachment</b></label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="File_Attachment">
+                                        <b>Master Packing Record File Attachment</b>
+                                    </label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
+
                                         <div class="file-attachment-list" id="MasterPackingRecord"></div>
 
                                         <div class="add-btn">
-                                            <label for="MasterPackingRecord_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="MasterPackingRecord_I_gxp_attachment" name="MasterPackingRecord[]"
-                                                oninput="addMultipleFiles(this, 'MasterPackingRecord')" multiple hidden>
+                                            <label for="MasterPackingRecord_I_gxp_attachment" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="MasterPackingRecord_I_gxp_attachment"
+                                                name="MasterPackingRecord[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateMasterPackingRecordFiles(this)"
+                                                multiple
+                                                hidden
+                                            >
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
+
                             <script>
-                            function addMultipleFiles(input, listId) {
-                                let fileList = document.getElementById(listId);
-                                fileList.innerHTML = ""; // Clear previous files (if needed)
+                                function validateMasterPackingRecordFiles(input)
+                                {
+                                    const allowedExtensions = [
+                                        'pdf',
+                                        'jpg',
+                                        'jpeg',
+                                        'png'
+                                    ];
 
-                                for (let file of input.files) {
-                                    let fileItem = document.createElement("div");
-                                    fileItem.textContent = file.name;
-                                    fileList.appendChild(fileItem);
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    const files = Array.from(input.files);
+
+                                    if(files.length === 0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const extension = file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(extension) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                confirmButtonText:'OK'
+                                            });
+
+                                            input.value='';
+                                            document.getElementById('MasterPackingRecord').innerHTML='';
+                                            return;
+                                        }
+                                    }
+
+                                    addMasterPackingRecordFiles(input,'MasterPackingRecord');
                                 }
-                            }
-                            </script>
 
+                                function addMasterPackingRecordFiles(input,listId)
+                                {
+                                    let fileList=document.getElementById(listId);
+
+                                    fileList.innerHTML='';
+
+                                    for(const file of input.files){
+
+                                        let div=document.createElement('div');
+                                        div.textContent=file.name;
+
+                                        fileList.appendChild(div);
+                                    }
+                                }
+                            </script>
 
 
 
@@ -10131,35 +11562,108 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                     <div class="input-fields">
                         <div class="row">
 
-                            <div class="col-12">
+                           <div class="col-12">
                                 <div class="group-input">
-                                    <label for="File_Attachment"><b>Site Master Attachment</b></label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="File_Attachment">
+                                        <b>Site Master Attachment</b>
+                                    </label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
+
                                         <div class="file-attachment-list" id="SiteMasterFileatt"></div>
 
                                         <div class="add-btn">
-                                            <label for="SiteMasterFileatt_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="SiteMasterFileatt_I_gxp_attachment" name="SiteMasterFileatt[]"
-                                                oninput="addMultipleFiles(this, 'SiteMasterFileatt')" multiple hidden>
+                                            <label for="SiteMasterFileatt_I_gxp_attachment" style="cursor:pointer">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="SiteMasterFileatt_I_gxp_attachment"
+                                                name="SiteMasterFileatt[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateSiteMasterAttachment(this)"
+                                                multiple
+                                                hidden>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
+
                             <script>
-                            function addMultipleFiles(input, listId) {
-                                let fileList = document.getElementById(listId);
-                                fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                for (let file of input.files) {
-                                    let fileItem = document.createElement("div");
-                                    fileItem.textContent = file.name;
-                                    fileList.appendChild(fileItem);
+                                function validateSiteMasterAttachment(input){
+
+                                    const allowedExtensions = [
+                                        'pdf',
+                                        'jpg',
+                                        'jpeg',
+                                        'png'
+                                    ];
+
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    const files = Array.from(input.files);
+
+                                    if(files.length === 0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const ext = file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(ext) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                confirmButtonText:'OK'
+                                            });
+
+                                            input.value = '';
+                                            document.getElementById('SiteMasterFileatt').innerHTML = '';
+                                            return;
+                                        }
+                                    }
+
+                                    addSiteMasterFiles(input,'SiteMasterFileatt');
+
                                 }
-                            }
-                            </script>
 
+                                function addSiteMasterFiles(input,listId){
+
+                                    let fileList = document.getElementById(listId);
+
+                                    fileList.innerHTML = "";
+
+                                    for(const file of input.files){
+
+                                        let div = document.createElement("div");
+                                        div.textContent = file.name;
+
+                                        fileList.appendChild(div);
+
+                                    }
+
+                                }
+
+                            </script>
 
 
 
@@ -10190,31 +11694,109 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="File_Attachment"><b>Batch Manufacturing Record (BMR)  File Attachment</b></label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <label for="File_Attachment">
+                                            <b>Batch Manufacturing Record (BMR) File Attachment</b>
+                                        </label>
+
+                                        <div>
+                                            <small class="text-primary">
+                                                Please attach only PDF, JPG, JPEG or PNG files.
+                                            </small>
+                                        </div>
 
                                         <div class="file-attachment-field">
+
                                             <div class="file-attachment-list" id="batchManufacturingBmr"></div>
 
                                             <div class="add-btn">
-                                                <label for="batchManufacturingBmr_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                                <input type="file" id="batchManufacturingBmr_I_gxp_attachment" name="batchManufacturingBmr[]"
-                                                    oninput="addMultipleFiles(this, 'batchManufacturingBmr')" multiple hidden>
+                                                <label for="batchManufacturingBmr_I_gxp_attachment" style="cursor:pointer;">
+                                                    Add
+                                                </label>
+
+                                                <input
+                                                    type="file"
+                                                    id="batchManufacturingBmr_I_gxp_attachment"
+                                                    name="batchManufacturingBmr[]"
+                                                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                    onchange="validateBatchManufacturingBmrFiles(this)"
+                                                    multiple
+                                                    hidden>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
-                                <script>
-                                function addMultipleFiles(input, listId) {
-                                    let fileList = document.getElementById(listId);
-                                    fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                    for (let file of input.files) {
-                                        let fileItem = document.createElement("div");
-                                        fileItem.textContent = file.name;
-                                        fileList.appendChild(fileItem);
+                                <script>
+
+                                    function validateBatchManufacturingBmrFiles(input){
+
+                                        const allowedExtensions = ['pdf','jpg','jpeg','png'];
+
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if(files.length === 0){
+                                            return;
+                                        }
+
+                                        for(const file of files){
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if(
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ){
+
+                                                Swal.fire({
+                                                    icon:'error',
+                                                    title:'Invalid File',
+                                                    text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                });
+
+                                                input.value = '';
+                                                return;
+                                            }
+                                        }
+
+                                        addMultipleFiles(input,'batchManufacturingBmr');
                                     }
-                                }
+
+
+                                    function addMultipleFiles(input,listId){
+
+                                        const fileList = document.getElementById(listId);
+
+                                        Array.from(input.files).forEach(file => {
+
+                                            const fileContainer = document.createElement('h6');
+                                            fileContainer.className = 'file-container text-dark';
+                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                            fileContainer.innerHTML = `
+                                                <b>${file.name}</b>
+                                                <a href="javascript:void(0)" class="remove-new-file">
+                                                    <i class="fa-solid fa-circle-xmark"
+                                                        style="color:red;font-size:20px;"></i>
+                                                </a>
+                                            `;
+
+                                            fileContainer.querySelector('.remove-new-file').addEventListener('click', function () {
+                                                fileContainer.remove();
+                                            });
+
+                                            fileList.appendChild(fileContainer);
+
+                                        });
+
+                                    }
+
                                 </script>
 
 
@@ -10244,34 +11826,104 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="File_Attachment"><b>Batch Packing Record (BPR)  File Attachment</b></label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <label for="File_Attachment">
+                                            <b>Batch Packing Record (BPR) File Attachment</b>
+                                        </label>
+
+                                        <div>
+                                            <small class="text-primary">
+                                                Please attach only PDF, JPG, JPEG or PNG files.
+                                            </small>
+                                        </div>
 
                                         <div class="file-attachment-field">
+
                                             <div class="file-attachment-list" id="batchPackingRecordBpr"></div>
 
                                             <div class="add-btn">
-                                                <label for="batchPackingRecordBpr_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                                <input type="file" id="batchPackingRecordBpr_I_gxp_attachment" name="batchPackingRecordBpr[]"
-                                                    oninput="addMultipleFiles(this, 'batchPackingRecordBpr')" multiple hidden>
+                                                <label for="batchPackingRecordBpr_I_gxp_attachment" style="cursor:pointer;">
+                                                    Add
+                                                </label>
+
+                                                <input
+                                                    type="file"
+                                                    id="batchPackingRecordBpr_I_gxp_attachment"
+                                                    name="batchPackingRecordBpr[]"
+                                                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                    onchange="validateBatchPackingRecordFiles(this)"
+                                                    multiple
+                                                    hidden>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
+
                                 <script>
-                                function addMultipleFiles(input, listId) {
-                                    let fileList = document.getElementById(listId);
-                                    fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                    for (let file of input.files) {
-                                        let fileItem = document.createElement("div");
-                                        fileItem.textContent = file.name;
-                                        fileList.appendChild(fileItem);
+                                    function validateBatchPackingRecordFiles(input){
+
+                                        const allowedExtensions = [
+                                            'pdf',
+                                            'jpg',
+                                            'jpeg',
+                                            'png'
+                                        ];
+
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if(files.length === 0){
+                                            return;
+                                        }
+
+                                        for(const file of files){
+
+                                            const extension = file.name.split('.').pop().toLowerCase();
+
+                                            if(
+                                                !allowedExtensions.includes(extension) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ){
+
+                                                alert('Only PDF, JPG, JPEG and PNG files are allowed.');
+
+                                                input.value = '';
+
+                                                return;
+                                            }
+
+                                        }
+
+                                        addBatchPackingRecordFiles(input,'batchPackingRecordBpr');
+
                                     }
-                                }
+
+
+                                    function addBatchPackingRecordFiles(input,listId){
+
+                                        let fileList = document.getElementById(listId);
+
+                                        fileList.innerHTML = '';
+
+                                        for(const file of input.files){
+
+                                            let div = document.createElement('div');
+
+                                            div.textContent = file.name;
+
+                                            fileList.appendChild(div);
+
+                                        }
+
+                                    }
+
                                 </script>
-
-
 
 
 
@@ -11363,36 +13015,114 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="File_Attachment">File Attachment</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <label for="File_Attachment">
+                                                <b>File Attachment</b>
+                                            </label>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="pvir_fileattachement"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="pvir_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="pvir_attachment" name="pvir_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'pvir_fileattachement')" multiple hidden>
+                                                    <label for="pvir_attachment" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="pvir_attachment"
+                                                        name="pvir_attachment[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validatePVIRFiles(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
-
-
                                     <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
-                                        }
-                                    }
+                                            function validatePVIRFiles(input){
+
+                                                const allowedExtensions = ['pdf','jpg','jpeg','png'];
+
+                                                const allowedMimeTypes = [
+                                                    'application/pdf',
+                                                    'image/jpeg',
+                                                    'image/png'
+                                                ];
+
+                                                const files = Array.from(input.files);
+
+                                                if(files.length === 0){
+                                                    return;
+                                                }
+
+                                                for(const file of files){
+
+                                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                                    if(
+                                                        !allowedExtensions.includes(ext) ||
+                                                        !allowedMimeTypes.includes(file.type)
+                                                    ){
+
+                                                        Swal.fire({
+                                                            icon:'error',
+                                                            title:'Invalid File',
+                                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                        });
+
+                                                        input.value = '';
+                                                        return;
+                                                    }
+                                                }
+
+                                                addMultipleFiles(input,'pvir_fileattachement');
+                                            }
+
+
+                                            function addMultipleFiles(input,listId){
+
+                                                const fileList = document.getElementById(listId);
+
+                                                for(const file of input.files){
+
+                                                    let fileContainer = document.createElement('h6');
+                                                    fileContainer.classList.add('file-container','text-dark');
+                                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                                    let fileText = document.createElement('b');
+                                                    fileText.textContent = file.name;
+
+                                                    let remove = document.createElement('a');
+                                                    remove.classList.add('remove-file');
+
+                                                    remove.innerHTML =
+                                                        '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                                    remove.onclick = function(){
+                                                        fileContainer.remove();
+                                                    };
+
+                                                    fileContainer.appendChild(fileText);
+                                                    fileContainer.appendChild(remove);
+
+                                                    fileList.appendChild(fileContainer);
+                                                }
+
+                                            }
+
                                     </script>
-
 
 
 
@@ -11416,36 +13146,103 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                   <div class="col-12">
+                                    <div class="col-12">
                                         <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <label><b>File Attachment</b></label>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="annex_fileattachement"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="annex_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_I_gxp_attachment" name="annex_I_gxp_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'annex_fileattachement')" multiple hidden>
+                                                    <label for="annex_I_gxp_attachment" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="annex_I_gxp_attachment"
+                                                        name="annex_I_gxp_attachment[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateAnnexFiles(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
-
-
                                     <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                        function validateAnnexFiles(input){
+
+                                            const allowedExtensions = [
+                                                'pdf',
+                                                'jpg',
+                                                'jpeg',
+                                                'png'
+                                            ];
+
+                                            const allowedMimeTypes = [
+                                                'application/pdf',
+                                                'image/jpeg',
+                                                'image/png'
+                                            ];
+
+                                            const files = Array.from(input.files);
+
+                                            if(files.length === 0){
+                                                return;
+                                            }
+
+                                            for(const file of files){
+
+                                                const ext = file.name.split('.').pop().toLowerCase();
+
+                                                if(
+                                                    !allowedExtensions.includes(ext) ||
+                                                    !allowedMimeTypes.includes(file.type)
+                                                ){
+
+                                                    alert('Only PDF, JPG, JPEG and PNG files are allowed.');
+
+                                                    input.value = '';
+
+                                                    document.getElementById('annex_fileattachement').innerHTML = '';
+
+                                                    return;
+                                                }
+                                            }
+
+                                            addMultipleFilesAnnex(input,'annex_fileattachement');
                                         }
-                                    }
+
+                                        function addMultipleFilesAnnex(input,listId){
+
+                                            const fileList = document.getElementById(listId);
+
+                                            fileList.innerHTML = '';
+
+                                            Array.from(input.files).forEach(file => {
+
+                                                const div = document.createElement('div');
+
+                                                div.textContent = file.name;
+
+                                                fileList.appendChild(div);
+
+                                            });
+
+                                        }
+
                                     </script>
 
 
@@ -11474,33 +13271,99 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="annexIIRisk_fileattachement"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="annex_II_risk_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_II_risk_attachment" name="annex_II_risk_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'annexIIRisk_fileattachement')" multiple hidden>
+                                                    <label for="annex_II_risk_attachment" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="annex_II_risk_attachment"
+                                                        name="annex_II_risk_attachment[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateAnnexIIRiskCreate(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
-
-
                                     <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                    function validateAnnexIIRiskCreate(input){
+
+                                        const allowedExtensions = [
+                                            'pdf',
+                                            'jpg',
+                                            'jpeg',
+                                            'png'
+                                        ];
+
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if(files.length === 0){
+                                            return;
                                         }
+
+                                        for(const file of files){
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if(
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ){
+
+                                                alert('Only PDF, JPG, JPEG and PNG files are allowed.');
+
+                                                input.value = '';
+                                                document.getElementById('annexIIRisk_fileattachement').innerHTML = '';
+
+                                                return;
+                                            }
+                                        }
+
+                                        addMultipleFilesAnnexIIRisk(input,'annexIIRisk_fileattachement');
                                     }
+
+                                    function addMultipleFilesAnnexIIRisk(input,listId){
+
+                                        const fileList = document.getElementById(listId);
+
+                                        fileList.innerHTML = '';
+
+                                        Array.from(input.files).forEach(file => {
+
+                                            const div = document.createElement('div');
+
+                                            div.textContent = file.name;
+
+                                            fileList.appendChild(div);
+
+                                        });
+
+                                    }
+
                                     </script>
 
 
@@ -11528,30 +13391,86 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             <div class="row">
                                    <div class="col-12">
                                         <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <label for="File_Attachment">
+                                                <b>File Attachment</b>
+                                            </label>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annexIIIeres_fileattachement"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="annex_III_eres_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_III_eres_attachment" name="annex_III_eres_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'annexIIIeres_fileattachement')" multiple hidden>
+                                                    <label for="annex_III_eres_attachment" style="cursor: pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="annex_III_eres_attachment"
+                                                        name="annex_III_eres_attachment[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateAnnexIIIFiles(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-
                                     <script>
-                                        function addMultipleFiles(input, listId) {
-                                            let fileList = document.getElementById(listId);
-                                            fileList.innerHTML = ""; // Clear previous files (if needed)
+                                        function validateAnnexIIIFiles(input) {
 
-                                            for (let file of input.files) {
-                                                let fileItem = document.createElement("div");
+                                            const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+                                            const allowedMimeTypes = [
+                                                'application/pdf',
+                                                'image/jpeg',
+                                                'image/png'
+                                            ];
+
+                                            const files = Array.from(input.files);
+
+                                            if (files.length === 0) {
+                                                return;
+                                            }
+
+                                            for (const file of files) {
+
+                                                const ext = file.name.split('.').pop().toLowerCase();
+
+                                                if (
+                                                    !allowedExtensions.includes(ext) ||
+                                                    !allowedMimeTypes.includes(file.type)
+                                                ) {
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'Invalid File',
+                                                        text: 'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                    });
+
+                                                    input.value = '';
+                                                    return;
+                                                }
+                                            }
+
+                                            addMultipleFiles(input, 'annexIIIeres_fileattachement');
+                                        }
+
+                                        function addMultipleFiles(input, listId) {
+
+                                            let fileList = document.getElementById(listId);
+                                            fileList.innerHTML = '';
+
+                                            for (const file of input.files) {
+
+                                                let fileItem = document.createElement('div');
                                                 fileItem.textContent = file.name;
+
                                                 fileList.appendChild(fileItem);
                                             }
                                         }
@@ -11583,32 +13502,108 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="annexIVPlan_fileattachement"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="annex_IV_plan_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_IV_plan_attachment" name="annex_IV_plan_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'annexIVPlan_fileattachement')" multiple hidden>
+                                                    <label for="annex_IV_plan_attachment" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="annex_IV_plan_attachment"
+                                                        name="annex_IV_plan_attachment[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateAnnexIVPlanFiles(this)"
+                                                        multiple
+                                                        hidden>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
-
-
                                     <script>
-                                        function addMultipleFiles(input, listId) {
-                                            let fileList = document.getElementById(listId);
-                                            fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                            for (let file of input.files) {
-                                                let fileItem = document.createElement("div");
-                                                fileItem.textContent = file.name;
-                                                fileList.appendChild(fileItem);
+                                        function validateAnnexIVPlanFiles(input){
+
+                                            const allowedExt=[
+                                                'pdf',
+                                                'jpg',
+                                                'jpeg',
+                                                'png'
+                                            ];
+
+                                            const allowedMime=[
+                                                'application/pdf',
+                                                'image/jpeg',
+                                                'image/png'
+                                            ];
+
+                                            const files=Array.from(input.files);
+
+                                            if(files.length===0){
+                                                return;
                                             }
+
+                                            for(const file of files){
+
+                                                const ext=file.name.split('.').pop().toLowerCase();
+
+                                                if(
+                                                    !allowedExt.includes(ext) ||
+                                                    !allowedMime.includes(file.type)
+                                                ){
+
+                                                    Swal.fire({
+                                                        icon:'error',
+                                                        title:'Invalid File',
+                                                        text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                    });
+
+                                                    input.value='';
+                                                    return;
+                                                }
+                                            }
+
+                                            addMultipleFiles(input,'annexIVPlan_fileattachement');
+                                        }
+
+
+                                        function addMultipleFiles(input,listId){
+
+                                            const fileList=document.getElementById(listId);
+
+                                            fileList.innerHTML='';
+
+                                            for(const file of input.files){
+
+                                                const fileContainer=document.createElement('h6');
+
+                                                fileContainer.classList.add(
+                                                    'file-container',
+                                                    'text-dark'
+                                                );
+
+                                                fileContainer.style.backgroundColor='rgb(243,242,240)';
+
+                                                const fileText=document.createElement('b');
+                                                fileText.textContent=file.name;
+
+                                                fileContainer.appendChild(fileText);
+
+                                                fileList.appendChild(fileContainer);
+                                            }
+
                                         }
                                     </script>
 
@@ -11638,33 +13633,106 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="annexVUser_fileattachement"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="annex_V_user_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_V_user_attachment" name="annex_V_user_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'annexVUser_fileattachement')" multiple hidden>
+                                                    <label for="annex_V_user_attachment" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="annex_V_user_attachment"
+                                                        name="annex_V_user_attachment[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateAnnexVUserFiles(this)"
+                                                        multiple
+                                                        hidden>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
-
-
                                     <script>
-                                        function addMultipleFiles(input, listId) {
-                                            let fileList = document.getElementById(listId);
-                                            fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                            for (let file of input.files) {
-                                                let fileItem = document.createElement("div");
-                                                fileItem.textContent = file.name;
-                                                fileList.appendChild(fileItem);
-                                            }
+                                    function validateAnnexVUserFiles(input){
+
+                                        const allowedExt = [
+                                            'pdf',
+                                            'jpg',
+                                            'jpeg',
+                                            'png'
+                                        ];
+
+                                        const allowedMime = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if(files.length === 0){
+                                            return;
                                         }
+
+                                        for(const file of files){
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if(
+                                                !allowedExt.includes(ext) ||
+                                                !allowedMime.includes(file.type)
+                                            ){
+
+                                                Swal.fire({
+                                                    icon:'error',
+                                                    title:'Invalid File',
+                                                    text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                });
+
+                                                input.value = '';
+                                                return;
+                                            }
+
+                                        }
+
+                                        addMultipleFiles(input,'annexVUser_fileattachement');
+
+                                    }
+
+
+                                    function addMultipleFiles(input,listId){
+
+                                        const fileList = document.getElementById(listId);
+
+                                        fileList.innerHTML = '';
+
+                                        for(const file of input.files){
+
+                                            const fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container','text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                            const fileText = document.createElement('b');
+                                            fileText.textContent = file.name;
+
+                                            fileContainer.appendChild(fileText);
+
+                                            fileList.appendChild(fileContainer);
+                                        }
+
+                                    }
                                     </script>
 
 
@@ -11690,36 +13758,90 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                   <div class="col-12">
+                                    <div class="col-12">
                                         <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <label for="File_Attachment">
+                                                <b>File Attachment</b>
+                                            </label>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annex_VIreq_fileattachement"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="annex_VI_req_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_VI_req_attachment" name="annex_VI_req_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'annex_VIreq_fileattachement')" multiple hidden>
+                                                    <label for="annex_VI_req_attachment" style="cursor: pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="annex_VI_req_attachment"
+                                                        name="annex_VI_req_attachment[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateAnnexVIReqFiles(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-
-
                                     <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                        function validateAnnexVIReqFiles(input) {
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                            const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+                                            const allowedMimeTypes = [
+                                                'application/pdf',
+                                                'image/jpeg',
+                                                'image/png'
+                                            ];
+
+                                            const files = Array.from(input.files);
+
+                                            if (files.length === 0) return;
+
+                                            for (const file of files) {
+
+                                                const extension = file.name.split('.').pop().toLowerCase();
+
+                                                if (
+                                                    !allowedExtensions.includes(extension) ||
+                                                    !allowedMimeTypes.includes(file.type)
+                                                ) {
+
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'Invalid File',
+                                                        text: 'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                    });
+
+                                                    input.value = '';
+                                                    return;
+                                                }
+                                            }
+
+                                            addMultipleFiles(input, 'annex_VIreq_fileattachement');
                                         }
-                                    }
+
+                                        function addMultipleFiles(input, listId) {
+
+                                            let fileList = document.getElementById(listId);
+                                            fileList.innerHTML = "";
+
+                                            Array.from(input.files).forEach(file => {
+
+                                                let fileItem = document.createElement("div");
+                                                fileItem.textContent = file.name;
+                                                fileList.appendChild(fileItem);
+
+                                            });
+                                        }
                                     </script>
 
 
@@ -11745,37 +13867,123 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                   <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="File_Attachment"><b>File Attachment</b></label>
 
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="annex_VII_fun_fileattachement"></div>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please attach only PDF, JPG, JPEG or PNG files.
+                                            </small>
+                                        </div>
 
-                                                <div class="add-btn">
-                                                    <label for="annex_VII_fun_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_VII_fun_attachment" name="annex_VII_fun_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'annex_VII_fun_fileattachement')" multiple hidden>
-                                                </div>
+                                        <div class="file-attachment-field">
+
+                                            <div class="file-attachment-list" id="annex_VII_fun_fileattachement"></div>
+
+                                            <div class="add-btn">
+                                                <label for="annex_VII_fun_attachment" style="cursor:pointer;">
+                                                    Add
+                                                </label>
+
+                                                <input
+                                                    type="file"
+                                                    id="annex_VII_fun_attachment"
+                                                    name="annex_VII_fun_attachment[]"
+                                                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                    onchange="validateAnnexVIIFunFiles(this)"
+                                                    multiple
+                                                    hidden
+                                                >
                                             </div>
+
                                         </div>
                                     </div>
+                                </div>
+
+                                <script>
+
+                                    function validateAnnexVIIFunFiles(input){
+
+                                        const allowedExtensions = [
+                                            'pdf',
+                                            'jpg',
+                                            'jpeg',
+                                            'png'
+                                        ];
+
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if(files.length === 0){
+                                            return;
+                                        }
+
+                                        for(const file of files){
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if(
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ){
+
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Invalid File',
+                                                    text: 'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                });
+
+                                                input.value = '';
+                                                return;
+                                            }
+                                        }
+
+                                        addMultipleFiles(input,'annex_VII_fun_fileattachement');
+                                    }
 
 
+                                    function addMultipleFiles(input,listId){
 
-                                    <script>
-                                    function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                        fileList.innerHTML = '';
+
+                                        for(const file of input.files){
+
+                                            let fileContainer = document.createElement('h6');
+
+                                            fileContainer.classList.add('file-container','text-dark');
+
+                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                            let fileText = document.createElement('b');
+                                            fileText.textContent = file.name;
+
+                                            let removeLink = document.createElement('a');
+
+                                            removeLink.type = 'button';
+
+                                            removeLink.innerHTML =
+                                                '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                            removeLink.onclick = function(){
+                                                fileContainer.remove();
+                                            };
+
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(removeLink);
+
+                                            fileList.appendChild(fileContainer);
                                         }
                                     }
-                                    </script>
+
+                                </script>
 
 
 
@@ -11801,38 +14009,122 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         <div class="input-fields">
                             <div class="row">
 
-                                   <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                 <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="File_Attachment"><b>File Attachment</b></label>
 
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="annexVIII_tech_fileattachement"></div>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please attach only PDF, JPG, JPEG or PNG files.
+                                            </small>
+                                        </div>
 
-                                                <div class="add-btn">
-                                                    <label for="annex_VIII_tech_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_VIII_tech_attachment" name="annex_VIII_tech_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'annexVIII_tech_fileattachement')" multiple hidden>
-                                                </div>
+                                        <div class="file-attachment-field">
+
+                                            <div class="file-attachment-list" id="annexVIII_tech_fileattachement"></div>
+
+                                            <div class="add-btn">
+                                                <label for="annex_VIII_tech_attachment" style="cursor:pointer;">
+                                                    Add
+                                                </label>
+
+                                                <input
+                                                    type="file"
+                                                    id="annex_VIII_tech_attachment"
+                                                    name="annex_VIII_tech_attachment[]"
+                                                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                    onchange="validateAnnexVIIITechFiles(this)"
+                                                    multiple
+                                                    hidden
+                                                >
                                             </div>
+
                                         </div>
                                     </div>
+                                </div>
 
+                                <script>
 
+                                function validateAnnexVIIITechFiles(input){
 
-                                    <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    const allowedExtensions = [
+                                        'pdf',
+                                        'jpg',
+                                        'jpeg',
+                                        'png'
+                                    ];
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    const files = Array.from(input.files);
+
+                                    if(files.length === 0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const ext = file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(ext) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                            });
+
+                                            input.value = '';
+                                            return;
                                         }
                                     }
-                                    </script>
 
+                                    addMultipleFiles(input,'annexVIII_tech_fileattachement');
+                                }
+
+
+                                function addMultipleFiles(input,listId){
+
+                                    const fileList = document.getElementById(listId);
+
+                                    fileList.innerHTML = '';
+
+                                    for(const file of input.files){
+
+                                        let fileContainer = document.createElement('h6');
+
+                                        fileContainer.classList.add('file-container','text-dark');
+
+                                        fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let remove = document.createElement('a');
+                                        remove.type = 'button';
+
+                                        remove.innerHTML =
+                                            '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                        remove.onclick = function(){
+                                            fileContainer.remove();
+                                        };
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(remove);
+
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+
+                                </script>
 
 
 
@@ -11859,34 +14151,118 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="annex_IX_risk_fileattachement"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="annex_IX_risk_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_IX_risk_attachment" name="annex_IX_risk_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'annex_IX_risk_fileattachement')" multiple hidden>
+                                                    <label for="annex_IX_risk_attachment" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="annex_IX_risk_attachment"
+                                                        name="annex_IX_risk_attachment[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateAnnexIXRiskFiles(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
-
-
                                     <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                        function validateAnnexIXRiskFiles(input){
+
+                                            const allowedExtensions = [
+                                                'pdf',
+                                                'jpg',
+                                                'jpeg',
+                                                'png'
+                                            ];
+
+                                            const allowedMimeTypes = [
+                                                'application/pdf',
+                                                'image/jpeg',
+                                                'image/png'
+                                            ];
+
+                                            const files = Array.from(input.files);
+
+                                            if(files.length === 0){
+                                                return;
+                                            }
+
+                                            for(const file of files){
+
+                                                const ext = file.name.split('.').pop().toLowerCase();
+
+                                                if(
+                                                    !allowedExtensions.includes(ext) ||
+                                                    !allowedMimeTypes.includes(file.type)
+                                                ){
+
+                                                    Swal.fire({
+                                                        icon:'error',
+                                                        title:'Invalid File',
+                                                        text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                    });
+
+                                                    input.value = '';
+                                                    return;
+                                                }
+                                            }
+
+                                            addMultipleFiles(input,'annex_IX_risk_fileattachement');
                                         }
-                                    }
-                                    </script>
+
+
+                                        function addMultipleFiles(input,listId){
+
+                                            const fileList = document.getElementById(listId);
+
+                                            for(const file of input.files){
+
+                                                let fileContainer = document.createElement('h6');
+                                                fileContainer.classList.add('file-container','text-dark');
+                                                fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                                let fileText = document.createElement('b');
+                                                fileText.textContent = file.name;
+
+                                                let remove = document.createElement('a');
+                                                remove.href = 'javascript:void(0)';
+                                                remove.style.marginLeft = '10px';
+
+                                                remove.innerHTML =
+                                                    '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                                remove.onclick = function () {
+                                                    fileContainer.remove();
+                                                };
+
+                                                fileContainer.appendChild(fileText);
+                                                fileContainer.appendChild(remove);
+
+                                                fileList.appendChild(fileContainer);
+                                            }
+
+                                            input.value = '';
+                                        }
+
+</script>
 
 
 
@@ -11911,37 +14287,121 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                   <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                  <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="File_Attachment"><b>File Attachment</b></label>
 
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="annex_X_Design_fileattachement"></div>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please attach only PDF, JPG, JPEG or PNG files.
+                                            </small>
+                                        </div>
 
-                                                <div class="add-btn">
-                                                    <label for="annex_X_design_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_X_design_attachment" name="annex_X_design_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'annex_X_Design_fileattachement')" multiple hidden>
-                                                </div>
+                                        <div class="file-attachment-field">
+
+                                            <div class="file-attachment-list" id="annex_X_Design_fileattachement"></div>
+
+                                            <div class="add-btn">
+                                                <label for="annex_X_design_attachment" style="cursor:pointer;">
+                                                    Add
+                                                </label>
+
+                                                <input
+                                                    type="file"
+                                                    id="annex_X_design_attachment"
+                                                    name="annex_X_design_attachment[]"
+                                                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                    onchange="validateAnnexXDesignFiles(this)"
+                                                    multiple
+                                                    hidden
+                                                >
                                             </div>
+
                                         </div>
                                     </div>
+                                </div>
 
+                                <script>
 
+                                    function validateAnnexXDesignFiles(input){
 
-                                    <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                        const allowedExtensions = [
+                                            'pdf',
+                                            'jpg',
+                                            'jpeg',
+                                            'png'
+                                        ];
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if(files.length === 0){
+                                            return;
                                         }
+
+                                        for(const file of files){
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if(
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ){
+
+                                                Swal.fire({
+                                                    icon:'error',
+                                                    title:'Invalid File',
+                                                    text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                });
+
+                                                input.value = '';
+                                                return;
+                                            }
+                                        }
+
+                                        addMultipleFiles(input,'annex_X_Design_fileattachement');
                                     }
-                                    </script>
+
+
+                                    function addMultipleFiles(input,listId){
+
+                                        const fileList = document.getElementById(listId);
+
+                                        for(const file of input.files){
+
+                                            let fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container','text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                            let fileText = document.createElement('b');
+                                            fileText.textContent = file.name;
+
+                                            let remove = document.createElement('a');
+                                            remove.href = 'javascript:void(0)';
+                                            remove.style.marginLeft = '10px';
+
+                                            remove.innerHTML =
+                                                '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                            remove.onclick = function () {
+                                                fileContainer.remove();
+                                            };
+
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(remove);
+
+                                            fileList.appendChild(fileContainer);
+                                        }
+
+                                        input.value = '';
+                                    }
+
+                                </script>
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -11968,35 +14428,113 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="annex_XI_Config_fileattachement"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="annex_XI_confi_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_XI_confi_attachment" name="annex_XI_confi_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'annex_XI_Config_fileattachement')" multiple hidden>
+                                                    <label for="annex_XI_confi_attachment" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="annex_XI_confi_attachment"
+                                                        name="annex_XI_confi_attachment[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateAnnexXIConfigFiles(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
-
-
                                     <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                    function validateAnnexXIConfigFiles(input){
+
+                                        const allowedExtensions = ['pdf','jpg','jpeg','png'];
+
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if(files.length === 0){
+                                            return;
                                         }
-                                    }
-                                    </script>
 
+                                        for(const file of files){
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if(
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ){
+
+                                                Swal.fire({
+                                                    icon:'error',
+                                                    title:'Invalid File',
+                                                    text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                });
+
+                                                input.value = '';
+                                                return;
+                                            }
+                                        }
+
+                                        addMultipleFiles(input,'annex_XI_Config_fileattachement');
+                                    }
+
+
+                                    function addMultipleFiles(input,listId){
+
+                                        const fileList = document.getElementById(listId);
+
+                                        for(const file of input.files){
+
+                                            let fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container','text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                            let fileText = document.createElement('b');
+                                            fileText.textContent = file.name;
+
+                                            let remove = document.createElement('a');
+                                            remove.href = 'javascript:void(0)';
+                                            remove.style.marginLeft = '10px';
+
+                                            remove.innerHTML =
+                                                '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                            remove.onclick = function () {
+                                                fileContainer.remove();
+                                            };
+
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(remove);
+
+                                            fileList.appendChild(fileContainer);
+                                        }
+
+                                        input.value = '';
+                                    }
+
+                                    </script>
 
 
 
@@ -12020,41 +14558,118 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br> --}}
+                                
 
-                                   <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                  <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="File_Attachment"><b>File Attachment</b></label>
 
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="annex_XII_quaProto_fileattachement"></div>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please attach only PDF, JPG, JPEG or PNG files.
+                                            </small>
+                                        </div>
 
-                                                <div class="add-btn">
-                                                    <label for="annex_XII_qua_proto_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_XII_qua_proto_attachment" name="annex_XII_qua_proto_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'annex_XII_quaProto_fileattachement')" multiple hidden>
-                                                </div>
+                                        <div class="file-attachment-field">
+
+                                            <div class="file-attachment-list" id="annex_XII_quaProto_fileattachement"></div>
+
+                                            <div class="add-btn">
+                                                <label for="annex_XII_qua_proto_attachment" style="cursor:pointer;">
+                                                    Add
+                                                </label>
+
+                                                <input
+                                                    type="file"
+                                                    id="annex_XII_qua_proto_attachment"
+                                                    name="annex_XII_qua_proto_attachment[]"
+                                                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                    onchange="validateAnnexXIIFiles(this)"
+                                                    multiple
+                                                    hidden
+                                                >
                                             </div>
+
                                         </div>
                                     </div>
+                                </div>
 
+                                <script>
 
+                                    function validateAnnexXIIFiles(input){
 
-                                    <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                        const allowedExtensions = ['pdf','jpg','jpeg','png'];
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if(files.length === 0){
+                                            return;
                                         }
+
+                                        for(const file of files){
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if(
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ){
+
+                                                Swal.fire({
+                                                    icon:'error',
+                                                    title:'Invalid File',
+                                                    text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                });
+
+                                                input.value = '';
+                                                return;
+                                            }
+                                        }
+
+                                        addMultipleFiles(input,'annex_XII_quaProto_fileattachement');
                                     }
-                                    </script>
+
+
+                                    function addMultipleFiles(input,listId){
+
+                                        const fileList = document.getElementById(listId);
+
+                                        for(const file of input.files){
+
+                                            let fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container','text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                            let fileText = document.createElement('b');
+                                            fileText.textContent = file.name;
+
+                                            let remove = document.createElement('a');
+                                            remove.href = "javascript:void(0)";
+                                            remove.style.marginLeft = "10px";
+
+                                            remove.innerHTML =
+                                                '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                            remove.onclick = function(){
+                                                fileContainer.remove();
+                                            };
+
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(remove);
+
+                                            fileList.appendChild(fileContainer);
+                                        }
+
+                                        input.value = '';
+                                    }
+
+                                </script>
 
 
 
@@ -12079,40 +14694,117 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br> --}}
+                                
 
-                                   <div class="col-12">
+                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="annex_XIII_unitInteg_fileattachement"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="annex_XIII_unit_integ_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_XIII_unit_integ_attachment" name="annex_XIII_unit_integ_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'annex_XIII_unitInteg_fileattachement')" multiple hidden>
+                                                    <label for="annex_XIII_unit_integ_attachment" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="annex_XIII_unit_integ_attachment"
+                                                        name="annex_XIII_unit_integ_attachment[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateAnnexXIIIFiles(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
-
-
                                     <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
-                                        }
-                                    }
+                                            function validateAnnexXIIIFiles(input){
+
+                                                const allowedExtensions = ['pdf','jpg','jpeg','png'];
+
+                                                const allowedMimeTypes = [
+                                                    'application/pdf',
+                                                    'image/jpeg',
+                                                    'image/png'
+                                                ];
+
+                                                const files = Array.from(input.files);
+
+                                                if(files.length === 0){
+                                                    return;
+                                                }
+
+                                                for(const file of files){
+
+                                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                                    if(
+                                                        !allowedExtensions.includes(ext) ||
+                                                        !allowedMimeTypes.includes(file.type)
+                                                    ){
+
+                                                        Swal.fire({
+                                                            icon:'error',
+                                                            title:'Invalid File',
+                                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                        });
+
+                                                        input.value = '';
+                                                        return;
+                                                    }
+                                                }
+
+                                                addMultipleFiles(input,'annex_XIII_unitInteg_fileattachement');
+                                            }
+
+
+                                            function addMultipleFiles(input,listId){
+
+                                                const fileList = document.getElementById(listId);
+
+                                                for(const file of input.files){
+
+                                                    let fileContainer = document.createElement('h6');
+                                                    fileContainer.classList.add('file-container','text-dark');
+                                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                                    let fileText = document.createElement('b');
+                                                    fileText.textContent = file.name;
+
+                                                    let remove = document.createElement('a');
+                                                    remove.href = "javascript:void(0)";
+                                                    remove.style.marginLeft = "10px";
+
+                                                    remove.innerHTML =
+                                                        '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                                    remove.onclick = function(){
+                                                        fileContainer.remove();
+                                                    };
+
+                                                    fileContainer.appendChild(fileText);
+                                                    fileContainer.appendChild(remove);
+
+                                                    fileList.appendChild(fileContainer);
+                                                }
+
+                                                input.value = '';
+                                            }
+
                                     </script>
 
 
@@ -12138,42 +14830,118 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br> --}}
+                               
 
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="annex_XIV_dataMigra_fileattachement"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="annex_XIV_data_migra_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_XIV_data_migra_attachment" name="annex_XIV_data_migra_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'annex_XIV_dataMigra_fileattachement')" multiple hidden>
+                                                    <label for="annex_XIV_data_migra_attachment" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="annex_XIV_data_migra_attachment"
+                                                        name="annex_XIV_data_migra_attachment[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateAnnexXIVFiles(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
-
-
                                     <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
-                                        }
-                                    }
+                                            function validateAnnexXIVFiles(input){
+
+                                                const allowedExtensions = ['pdf','jpg','jpeg','png'];
+
+                                                const allowedMimeTypes = [
+                                                    'application/pdf',
+                                                    'image/jpeg',
+                                                    'image/png'
+                                                ];
+
+                                                const files = Array.from(input.files);
+
+                                                if(files.length === 0){
+                                                    return;
+                                                }
+
+                                                for(const file of files){
+
+                                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                                    if(
+                                                        !allowedExtensions.includes(ext) ||
+                                                        !allowedMimeTypes.includes(file.type)
+                                                    ){
+
+                                                        Swal.fire({
+                                                            icon:'error',
+                                                            title:'Invalid File',
+                                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                        });
+
+                                                        input.value = '';
+                                                        return;
+                                                    }
+                                                }
+
+                                                addMultipleFiles(input,'annex_XIV_dataMigra_fileattachement');
+                                            }
+
+
+                                            function addMultipleFiles(input,listId){
+
+                                                const fileList = document.getElementById(listId);
+
+                                                for(const file of input.files){
+
+                                                    let fileContainer = document.createElement('h6');
+                                                    fileContainer.classList.add('file-container','text-dark');
+                                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                                    let fileText = document.createElement('b');
+                                                    fileText.textContent = file.name;
+
+                                                    let remove = document.createElement('a');
+                                                    remove.href = "javascript:void(0)";
+                                                    remove.style.marginLeft = "10px";
+
+                                                    remove.innerHTML =
+                                                        '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                                    remove.onclick = function(){
+                                                        fileContainer.remove();
+                                                    };
+
+                                                    fileContainer.appendChild(fileText);
+                                                    fileContainer.appendChild(remove);
+
+                                                    fileList.appendChild(fileContainer);
+                                                }
+
+                                                input.value = '';
+                                            }
+
                                     </script>
-
 
 
 
@@ -12197,40 +14965,122 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br> --}}
-
+                               
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="annex_XV_dataQualif_fileattachement"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="annex_XV_data_qualif_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_XV_data_qualif_attachment" name="annex_XV_data_qualif_attachment[]"
-                                                        oninput="addMultipleFiles(this, 'annex_XV_dataQualif_fileattachement')" multiple hidden>
+                                                    <label for="annex_XV_data_qualif_attachment" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="annex_XV_data_qualif_attachment"
+                                                        name="annex_XV_data_qualif_attachment[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateAnnexXVDataQualifFiles(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
-
-
                                     <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                        function validateAnnexXVDataQualifFiles(input){
+
+                                            const allowedExtensions = [
+                                                'pdf',
+                                                'jpg',
+                                                'jpeg',
+                                                'png'
+                                            ];
+
+                                            const allowedMimeTypes = [
+                                                'application/pdf',
+                                                'image/jpeg',
+                                                'image/png'
+                                            ];
+
+                                            const files = Array.from(input.files);
+
+                                            if(files.length === 0){
+                                                return;
+                                            }
+
+                                            for(const file of files){
+
+                                                const ext = file.name.split('.').pop().toLowerCase();
+
+                                                if(
+                                                    !allowedExtensions.includes(ext) ||
+                                                    !allowedMimeTypes.includes(file.type)
+                                                ){
+
+                                                    Swal.fire({
+                                                        icon:'error',
+                                                        title:'Invalid File',
+                                                        text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                    });
+
+                                                    input.value = '';
+                                                    return;
+                                                }
+                                            }
+
+                                            addMultipleFiles(input,'annex_XV_dataQualif_fileattachement');
                                         }
-                                    }
+
+
+                                        function addMultipleFiles(input,listId){
+
+                                            const fileList = document.getElementById(listId);
+
+                                            for(const file of input.files){
+
+                                                let fileContainer = document.createElement('h6');
+                                                fileContainer.classList.add('file-container','text-dark');
+                                                fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                                let fileText = document.createElement('b');
+                                                fileText.textContent = file.name;
+
+                                                let remove = document.createElement('a');
+                                                remove.type = 'button';
+                                                remove.classList.add('remove-file');
+                                                remove.dataset.fileName = file.name;
+
+                                                remove.innerHTML =
+                                                    '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                                remove.onclick = function(){
+                                                    fileContainer.remove();
+                                                };
+
+                                                fileContainer.appendChild(fileText);
+                                                fileContainer.appendChild(remove);
+
+                                                fileList.appendChild(fileContainer);
+                                            }
+
+                                            input.value = "";
+                                        }
+
                                     </script>
 
 
@@ -12532,35 +15382,119 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             <!-- <div class="col-12 sub-head">
                                 STANDARD TESTING PROCEDURE
                             </div> -->
-                              <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Closure Attachments"> Attachment</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Closure Attachments"><b>Attachment</b></label>
 
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="attachement_afqp"></div>
-
-                                                <div class="add-btn">
-                                                    <label for="afqpfile" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="afqpfile" name="afqpattachement[]"
-                                                        oninput="addMultipleFiles(this, 'attachement_afqp')" multiple hidden>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
                                     </div>
 
-                                    <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    <div class="file-attachment-field">
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                        <div class="file-attachment-list" id="attachement_afqp"></div>
+
+                                        <div class="add-btn">
+                                            <label for="afqpfile" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="afqpfile"
+                                                name="afqpattachement[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateAFQPFiles(this)"
+                                                multiple
+                                                hidden
+                                            >
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+
+                                    function validateAFQPFiles(input) {
+
+                                        const allowedExtensions = [
+                                            'pdf',
+                                            'jpg',
+                                            'jpeg',
+                                            'png'
+                                        ];
+
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if (files.length === 0) {
+                                            return;
+                                        }
+
+                                        for (const file of files) {
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if (
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ) {
+
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Invalid File',
+                                                    text: 'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                });
+
+                                                input.value = '';
+                                                return;
+                                            }
+                                        }
+
+                                        addMultipleFiles(input, 'attachement_afqp');
+                                    }
+
+
+                                    function addMultipleFiles(input, listId) {
+
+                                        const fileList = document.getElementById(listId);
+
+                                        for (const file of input.files) {
+
+                                            let fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                            let fileText = document.createElement('b');
+                                            fileText.textContent = file.name;
+
+                                            let remove = document.createElement('a');
+                                            remove.type = 'button';
+                                            remove.classList.add('remove-file');
+
+                                            remove.innerHTML =
+                                                '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                            remove.onclick = function () {
+                                                fileContainer.remove();
+                                            };
+
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(remove);
+
+                                            fileList.appendChild(fileContainer);
                                         }
                                     }
-                                    </script>
+
+                            </script>
 
                             </div>
                         </div>
@@ -12583,39 +15517,107 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         <div class="input-fields">
                             <div class="row">
 
-                            <!-- <div class="col-12 sub-head">
-                                STANDARD TESTING PROCEDURE
-                            </div> -->
+                       
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"> Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="Closure Attachments"><b>Attachment</b></label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachement_afqr"></div>
 
                                         <div class="add-btn">
-                                            <label for="afqrfile" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="afqrfile" name="afqrattachement[]"
-                                                oninput="addMultipleFiles(this, 'attachement_afqr')" multiple hidden>
+                                            <label for="afqrfile" style="cursor:pointer;">Add</label>
+
+                                            <input
+                                                type="file"
+                                                id="afqrfile"
+                                                name="afqrattachement[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateAFQRFiles(this)"
+                                                multiple
+                                                hidden
+                                            >
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <script>
-                            function addMultipleFiles(input, listId) {
-                                let fileList = document.getElementById(listId);
-                                fileList.innerHTML = ""; // Clear previous files (if needed)
+                                function validateAFQRFiles(input) {
 
-                                for (let file of input.files) {
-                                    let fileItem = document.createElement("div");
-                                    fileItem.textContent = file.name;
-                                    fileList.appendChild(fileItem);
+                                    const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    const files = Array.from(input.files);
+
+                                    if (files.length === 0) {
+                                        return;
+                                    }
+
+                                    for (const file of files) {
+
+                                        const ext = file.name.split('.').pop().toLowerCase();
+
+                                        if (
+                                            !allowedExtensions.includes(ext) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ) {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Invalid File',
+                                                text: 'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                            });
+
+                                            input.value = '';
+                                            return;
+                                        }
+                                    }
+
+                                    addMultipleFiles(input, 'attachement_afqr');
                                 }
-                            }
-                            </script>
 
+                                function addMultipleFiles(input, listId) {
+
+                                    const fileList = document.getElementById(listId);
+
+                                    for (const file of input.files) {
+
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let remove = document.createElement('a');
+                                        remove.type = 'button';
+                                        remove.classList.add('remove-file');
+
+                                        remove.innerHTML =
+                                            '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                        remove.onclick = function () {
+                                            fileContainer.remove();
+                                        };
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(remove);
+
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
                             </div>
                         </div>
                         <div class="button-block">
@@ -12636,37 +15638,112 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         </div>
                         <div class="input-fields">
                             <div class="row">
-
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"> Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="Closure Attachments"><b>Attachment</b></label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachement_afurs"></div>
 
                                         <div class="add-btn">
-                                            <label for="afursfile" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="afursfile" name="afursattachement[]"
-                                                oninput="addMultipleFiles(this, 'attachement_afurs')" multiple hidden>
+                                            <label for="afursfile" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="afursfile"
+                                                name="afursattachement[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                multiple
+                                                hidden
+                                                onchange="validateAFURSFiles(this)"
+                                            >
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <script>
-                            function addMultipleFiles(input, listId) {
-                                let fileList = document.getElementById(listId);
-                                fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                for (let file of input.files) {
-                                    let fileItem = document.createElement("div");
-                                    fileItem.textContent = file.name;
-                                    fileList.appendChild(fileItem);
+                            function validateAFURSFiles(input){
+
+                                const allowedExtensions = ['pdf','jpg','jpeg','png'];
+
+                                const allowedMimeTypes = [
+                                    'application/pdf',
+                                    'image/jpeg',
+                                    'image/png'
+                                ];
+
+                                const files = Array.from(input.files);
+
+                                if(files.length === 0){
+                                    return;
                                 }
-                            }
-                            </script>
 
+                                for(const file of files){
+
+                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                    if(
+                                        !allowedExtensions.includes(ext) ||
+                                        !allowedMimeTypes.includes(file.type)
+                                    ){
+
+                                        Swal.fire({
+                                            icon:'error',
+                                            title:'Invalid File',
+                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                        });
+
+                                        input.value = '';
+                                        return;
+                                    }
+                                }
+
+                                addMultipleFiles(input,'attachement_afurs');
+                            }
+
+                            function addMultipleFiles(input, listId){
+
+                                const fileList = document.getElementById(listId);
+
+                                for(const file of input.files){
+
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container','text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let remove = document.createElement('a');
+                                    remove.href = "javascript:void(0)";
+                                    remove.classList.add('remove-file');
+
+                                    remove.innerHTML =
+                                        '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                    remove.onclick = function () {
+                                        fileContainer.remove();
+                                    };
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(remove);
+
+                                    fileList.appendChild(fileContainer);
+                                }
+
+                            }
+
+                            </script>
 
 
 
@@ -12691,37 +15768,115 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         <div class="input-fields">
                             <div class="row">
 
-                            <!-- <div class="col-12 sub-head">
-                                STANDARD TESTING PROCEDURE
-                            </div> -->
-                            <div class="col-12">
+                           
+                           <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"> Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="Closure Attachments">
+                                        <b>Attachment</b>
+                                    </label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
+
                                         <div class="file-attachment-list" id="attachement_aqp"></div>
 
                                         <div class="add-btn">
-                                            <label for="aqpfile" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="aqpfile" name="aqpattachement[]"
-                                                oninput="addMultipleFiles(this, 'attachement_aqp')" multiple hidden>
+                                            <label for="aqpfile" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="aqpfile"
+                                                name="aqpattachement[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateAqpAttachment(this)"
+                                                multiple
+                                                hidden>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
 
                             <script>
-                            function addMultipleFiles(input, listId) {
-                                let fileList = document.getElementById(listId);
-                                fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                for (let file of input.files) {
-                                    let fileItem = document.createElement("div");
-                                    fileItem.textContent = file.name;
-                                    fileList.appendChild(fileItem);
-                                }
-                            }
+                                    function validateAqpAttachment(input) {
+
+                                        const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if (files.length === 0) {
+                                            return;
+                                        }
+
+                                        for (const file of files) {
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if (
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ) {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Invalid File',
+                                                    text: 'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                    confirmButtonText: 'OK'
+                                                });
+
+                                                input.value = '';
+                                                return;
+                                            }
+
+                                        }
+
+                                        addAqpAttachmentFiles(input, 'attachement_aqp');
+
+                                    }
+
+                                    function addAqpAttachmentFiles(input, listId) {
+
+                                        const fileList = document.getElementById(listId);
+
+                                        for (const file of input.files) {
+
+                                            const fileContainer = document.createElement('h6');
+
+                                            fileContainer.className = 'file-container text-dark';
+                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                            fileContainer.innerHTML = `
+                                                <b>${file.name}</b>
+                                                <a href="javascript:void(0)" class="remove-new-file">
+                                                    <i class="fa-solid fa-circle-xmark"
+                                                    style="color:red;font-size:20px;"></i>
+                                                </a>
+                                            `;
+
+                                            fileContainer.querySelector('.remove-new-file')
+                                                .addEventListener('click', function () {
+                                                    fileContainer.remove();
+                                                });
+
+                                            fileList.appendChild(fileContainer);
+
+                                        }
+
+                                    }
+
                             </script>
 
                             </div>
@@ -12745,37 +15900,64 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         <div class="input-fields">
                             <div class="row">
 
-                            <!-- <div class="col-12 sub-head">
-                                STANDARD TESTING PROCEDURE
-                            </div> -->
+                           
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments">Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="File_Attachment"><b>Attachment</b></label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachement_aqr"></div>
 
                                         <div class="add-btn">
-                                            <label for="aqrfile" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="aqrfile" name="aqrattachement[]"
-                                                oninput="addMultipleFiles(this, 'attachement_aqr')" multiple hidden>
+                                            <label for="aqrfile" style="cursor:pointer;">Add</label>
+
+                                            <input
+                                                type="file"
+                                                id="aqrfile"
+                                                name="aqrattachement[]"
+                                                multiple
+                                                hidden
+                                                onchange="addMultipleFiles(this,'attachement_aqr')"
+                                            >
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <script>
-                            function addMultipleFiles(input, listId) {
-                                let fileList = document.getElementById(listId);
-                                fileList.innerHTML = ""; // Clear previous files (if needed)
+                                function addMultipleFiles(input, listId) {
 
-                                for (let file of input.files) {
-                                    let fileItem = document.createElement("div");
-                                    fileItem.textContent = file.name;
-                                    fileList.appendChild(fileItem);
+                                    const fileList = document.getElementById(listId);
+
+                                    Array.from(input.files).forEach(file => {
+
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.className = 'file-container text-dark';
+                                        fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                        fileContainer.innerHTML = `
+                                            <b>${file.name}</b>
+                                            <a href="javascript:void(0)" class="remove-new-file">
+                                                <i class="fa-solid fa-circle-xmark"
+                                                style="color:red;font-size:20px;"></i>
+                                            </a>
+                                        `;
+
+                                        fileContainer.querySelector('.remove-new-file').addEventListener('click', function () {
+                                            fileContainer.remove();
+                                        });
+
+                                        fileList.appendChild(fileContainer);
+
+                                    });
+
                                 }
-                            }
                             </script>
 
                             </div>
@@ -12799,37 +15981,121 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         <div class="input-fields">
                             <div class="row">
 
-                            <!-- <div class="col-12 sub-head">
-                                STANDARD TESTING PROCEDURE
-                            </div> -->
-                            <div class="col-12">
+                           
+                           <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"> Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="Closure Attachments"><b>Attachment</b></label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
+
                                         <div class="file-attachment-list" id="attachement_pfmf"></div>
 
                                         <div class="add-btn">
-                                            <label for="pfmffile" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="pfmffile" name="pfmfattachement[]"
-                                                oninput="addMultipleFiles(this, 'attachement_pfmf')" multiple hidden>
+                                            <label for="pfmffile" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="pfmffile"
+                                                name="pfmfattachement[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validatePFMFFiles(this)"
+                                                multiple
+                                                hidden
+                                            >
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
 
                             <script>
-                            function addMultipleFiles(input, listId) {
-                                let fileList = document.getElementById(listId);
-                                fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                for (let file of input.files) {
-                                    let fileItem = document.createElement("div");
-                                    fileItem.textContent = file.name;
-                                    fileList.appendChild(fileItem);
+                            function validatePFMFFiles(input){
+
+                                const allowedExtensions = [
+                                    'pdf',
+                                    'jpg',
+                                    'jpeg',
+                                    'png'
+                                ];
+
+                                const allowedMimeTypes = [
+                                    'application/pdf',
+                                    'image/jpeg',
+                                    'image/png'
+                                ];
+
+                                const files = Array.from(input.files);
+
+                                if(files.length === 0){
+                                    return;
                                 }
+
+                                for(const file of files){
+
+                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                    if(
+                                        !allowedExtensions.includes(ext) ||
+                                        !allowedMimeTypes.includes(file.type)
+                                    ){
+
+                                        Swal.fire({
+                                            icon:'error',
+                                            title:'Invalid File',
+                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                        });
+
+                                        input.value = '';
+                                        return;
+                                    }
+                                }
+
+                                addPFMFFiles(input,'attachement_pfmf');
                             }
+
+
+                            function addPFMFFiles(input,listId){
+
+                                const fileList = document.getElementById(listId);
+
+                                for(const file of input.files){
+
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container','text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let remove = document.createElement('a');
+                                    remove.type = 'button';
+
+                                    remove.innerHTML =
+                                        '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                    remove.onclick = function(){
+                                        fileContainer.remove();
+                                    };
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(remove);
+
+                                    fileList.appendChild(fileContainer);
+                                }
+
+                                input.value = "";
+
+                            }
+
                             </script>
 
                             </div>
@@ -12858,32 +16124,120 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             </div> -->
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"> Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="Closure Attachments"><b>Attachment</b></label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
+
                                         <div class="file-attachment-list" id="attachement_rfmf"></div>
 
                                         <div class="add-btn">
-                                            <label for="rfmffile" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="rfmffile" name="rfmfattachement[]"
-                                                oninput="addMultipleFiles(this, 'attachement_rfmf')" multiple hidden>
+                                            <label for="rfmffile" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="rfmffile"
+                                                name="rfmfattachement[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateRFMFFiles(this)"
+                                                multiple
+                                                hidden
+                                            >
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
 
                             <script>
-                            function addMultipleFiles(input, listId) {
-                                let fileList = document.getElementById(listId);
-                                fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                for (let file of input.files) {
-                                    let fileItem = document.createElement("div");
-                                    fileItem.textContent = file.name;
-                                    fileList.appendChild(fileItem);
+                            function validateRFMFFiles(input){
+
+                                const allowedExtensions = [
+                                    'pdf',
+                                    'jpg',
+                                    'jpeg',
+                                    'png'
+                                ];
+
+                                const allowedMimeTypes = [
+                                    'application/pdf',
+                                    'image/jpeg',
+                                    'image/png'
+                                ];
+
+                                const files = Array.from(input.files);
+
+                                if(files.length === 0){
+                                    return;
                                 }
+
+                                for(const file of files){
+
+                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                    if(
+                                        !allowedExtensions.includes(ext) ||
+                                        !allowedMimeTypes.includes(file.type)
+                                    ){
+
+                                        Swal.fire({
+                                            icon:'error',
+                                            title:'Invalid File',
+                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                        });
+
+                                        input.value = '';
+                                        return;
+                                    }
+                                }
+
+                                addMultipleFiles(input,'attachement_rfmf');
                             }
+
+
+                            function addMultipleFiles(input,listId){
+
+                                const fileList = document.getElementById(listId);
+
+                                for(const file of input.files){
+
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container','text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let remove = document.createElement('a');
+                                    remove.type = 'button';
+                                    remove.classList.add('remove-file');
+                                    remove.dataset.fileName = file.name;
+
+                                    remove.innerHTML =
+                                        '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                    remove.onclick = function(){
+                                        fileContainer.remove();
+                                    };
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(remove);
+
+                                    fileList.appendChild(fileContainer);
+                                }
+
+                                input.value = "";
+
+                            }
+
                             </script>
 
                             </div>
@@ -12912,32 +16266,123 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             </div> -->
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"> Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="Closure Attachments"><b>Attachment</b></label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
+
                                         <div class="file-attachment-list" id="attachement_asr"></div>
 
                                         <div class="add-btn">
-                                            <label for="asrfile" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="asrfile" name="annex_XIX_syst_retir_attachment[]"
-                                                oninput="addMultipleFiles(this, 'attachement_asr')" multiple hidden>
+                                            <label for="asrfile" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="asrfile"
+                                                name="annex_XIX_syst_retir_attachment[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateASRFiles(this)"
+                                                multiple
+                                                hidden
+                                            >
+
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
 
                             <script>
-                            function addMultipleFiles(input, listId) {
-                                let fileList = document.getElementById(listId);
-                                fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                for (let file of input.files) {
-                                    let fileItem = document.createElement("div");
-                                    fileItem.textContent = file.name;
-                                    fileList.appendChild(fileItem);
-                                }
-                            }
+                                    function validateASRFiles(input){
+
+                                        const allowedExtensions = [
+                                            'pdf',
+                                            'jpg',
+                                            'jpeg',
+                                            'png'
+                                        ];
+
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if(files.length === 0){
+                                            return;
+                                        }
+
+                                        for(const file of files){
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if(
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ){
+
+                                                Swal.fire({
+                                                    icon:'error',
+                                                    title:'Invalid File',
+                                                    text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                });
+
+                                                input.value = '';
+                                                return;
+                                            }
+
+                                        }
+
+                                        addMultipleFiles(input,'attachement_asr');
+
+                                    }
+
+
+                                    function addMultipleFiles(input,listId){
+
+                                        const fileList = document.getElementById(listId);
+
+                                        for(const file of input.files){
+
+                                            let fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container','text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                            let fileText = document.createElement('b');
+                                            fileText.textContent = file.name;
+
+                                            let remove = document.createElement('a');
+                                            remove.href = "javascript:void(0)";
+                                            remove.classList.add('remove-file');
+                                            remove.dataset.fileName = file.name;
+
+                                            remove.innerHTML =
+                                                '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                            remove.onclick = function(){
+                                                fileContainer.remove();
+                                            };
+
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(remove);
+
+                                            fileList.appendChild(fileContainer);
+                                        }
+
+                                        input.value = "";
+
+                                    }
+
                             </script>
 
                             </div>
@@ -13020,34 +16465,115 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             </div> -->
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"> Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="Closure Attachments"><b>Attachment</b></label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
+
                                         <div class="file-attachment-list" id="attachement_avsr"></div>
 
                                         <div class="add-btn">
-                                            <label for="avsrfile" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="avsrfile" name="annex_XVII_valid_summ_attachment[]"
-                                                oninput="addMultipleFiles(this, 'attachement_avsr')" multiple hidden>
+                                            <label for="avsrfile" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="avsrfile"
+                                                name="annex_XVII_valid_summ_attachment[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateAVSRFiles(this)"
+                                                multiple
+                                                hidden
+                                            >
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
 
                             <script>
-                            function addMultipleFiles(input, listId) {
-                                let fileList = document.getElementById(listId);
-                                fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                for (let file of input.files) {
-                                    let fileItem = document.createElement("div");
-                                    fileItem.textContent = file.name;
-                                    fileList.appendChild(fileItem);
+                            function validateAVSRFiles(input){
+
+                                const allowedExtensions = ['pdf','jpg','jpeg','png'];
+
+                                const allowedMimeTypes = [
+                                    'application/pdf',
+                                    'image/jpeg',
+                                    'image/png'
+                                ];
+
+                                const files = Array.from(input.files);
+
+                                if(files.length === 0){
+                                    return;
                                 }
-                            }
-                            </script>
 
+                                for(const file of files){
+
+                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                    if(
+                                        !allowedExtensions.includes(ext) ||
+                                        !allowedMimeTypes.includes(file.type)
+                                    ){
+
+                                        Swal.fire({
+                                            icon:'error',
+                                            title:'Invalid File',
+                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                        });
+
+                                        input.value = '';
+                                        return;
+                                    }
+                                }
+
+                                addMultipleFiles(input,'attachement_avsr');
+                            }
+
+
+                            function addMultipleFiles(input,listId){
+
+                                const fileList = document.getElementById(listId);
+
+                                for(const file of input.files){
+
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container','text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let remove = document.createElement('a');
+                                    remove.type = 'button';
+                                    remove.classList.add('remove-file');
+                                    remove.dataset.fileName = file.name;
+
+                                    remove.innerHTML =
+                                        '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                    remove.onclick = function(){
+                                        fileContainer.remove();
+                                    };
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(remove);
+
+                                    fileList.appendChild(fileContainer);
+                                }
+
+                                input.value = '';
+                            }
+
+                            </script>
 
 
 
@@ -13079,34 +16605,114 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             </div> -->
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"> Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="Closure Attachments"><b>Attachment</b></label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
+
                                         <div class="file-attachment-list" id="attachement_aiiopq"></div>
 
                                         <div class="add-btn">
-                                            <label for="aiiopqfile" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="aiiopqfile" name="annex_XVI_per_qualif_attachment[]"
-                                                oninput="addMultipleFiles(this, 'attachement_aiiopq')" multiple hidden>
+                                            <label for="aiiopqfile" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="aiiopqfile"
+                                                name="annex_XVI_per_qualif_attachment[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateAIIOPQFiles(this)"
+                                                multiple
+                                                hidden
+                                            >
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
 
                             <script>
-                            function addMultipleFiles(input, listId) {
-                                let fileList = document.getElementById(listId);
-                                fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                for (let file of input.files) {
-                                    let fileItem = document.createElement("div");
-                                    fileItem.textContent = file.name;
-                                    fileList.appendChild(fileItem);
+                            function validateAIIOPQFiles(input){
+
+                                const allowedExtensions = ['pdf','jpg','jpeg','png'];
+
+                                const allowedMimeTypes = [
+                                    'application/pdf',
+                                    'image/jpeg',
+                                    'image/png'
+                                ];
+
+                                const files = Array.from(input.files);
+
+                                if(files.length === 0){
+                                    return;
                                 }
-                            }
-                            </script>
 
+                                for(const file of files){
+
+                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                    if(
+                                        !allowedExtensions.includes(ext) ||
+                                        !allowedMimeTypes.includes(file.type)
+                                    ){
+
+                                        Swal.fire({
+                                            icon:'error',
+                                            title:'Invalid File',
+                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                        });
+
+                                        input.value = '';
+                                        return;
+                                    }
+                                }
+
+                                addMultipleFiles(input,'attachement_aiiopq');
+                            }
+
+
+                            function addMultipleFiles(input,listId){
+
+                                const fileList = document.getElementById(listId);
+
+                                for(const file of input.files){
+
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container','text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let remove = document.createElement('a');
+                                    remove.href = "javascript:void(0)";
+                                    remove.classList.add('remove-file');
+
+                                    remove.innerHTML =
+                                        '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                    remove.onclick = function(){
+                                        fileContainer.remove();
+                                    };
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(remove);
+
+                                    fileList.appendChild(fileContainer);
+                                }
+
+                                input.value = '';
+                            }
+
+                            </script>
 
 
 
@@ -14428,34 +18034,116 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Closure Attachments"> Attachment</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <label for="Closure Attachments"><b>Attachment</b></label>
 
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="attachement_pvp"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="pvpfile" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="pvpfile" name="pvpattachement[]"
-                                                        oninput="addMultipleFiles(this, 'attachement_pvp')" multiple hidden>
+                                                    <label for="pvpfile" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="pvpfile"
+                                                        name="pvpattachement[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validatePvpFiles(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
                                     <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                        function validatePvpFiles(input){
+
+                                            const allowedExtensions = [
+                                                'pdf',
+                                                'jpg',
+                                                'jpeg',
+                                                'png'
+                                            ];
+
+                                            const allowedMimeTypes = [
+                                                'application/pdf',
+                                                'image/jpeg',
+                                                'image/png'
+                                            ];
+
+                                            const files = Array.from(input.files);
+
+                                            if(files.length === 0){
+                                                return;
+                                            }
+
+                                            for(const file of files){
+
+                                                const ext = file.name.split('.').pop().toLowerCase();
+
+                                                if(
+                                                    !allowedExtensions.includes(ext) ||
+                                                    !allowedMimeTypes.includes(file.type)
+                                                ){
+
+                                                    Swal.fire({
+                                                        icon:'error',
+                                                        title:'Invalid File',
+                                                        text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                    });
+
+                                                    input.value = '';
+                                                    return;
+                                                }
+                                            }
+
+                                            addMultipleFiles(input,'attachement_pvp');
                                         }
-                                    }
-                                    </script>
 
+
+                                        function addMultipleFiles(input,listId){
+
+                                            const fileList = document.getElementById(listId);
+
+                                            for(const file of input.files){
+
+                                                let fileContainer = document.createElement('h6');
+                                                fileContainer.classList.add('file-container','text-dark');
+                                                fileContainer.style.backgroundColor='rgb(243,242,240)';
+
+                                                let fileText=document.createElement('b');
+                                                fileText.textContent=file.name;
+
+                                                let remove=document.createElement('a');
+                                                remove.type='button';
+                                                remove.classList.add('remove-file');
+
+                                                remove.innerHTML=
+                                                    '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                                remove.onclick=function(){
+                                                    fileContainer.remove();
+                                                };
+
+                                                fileContainer.appendChild(fileText);
+                                                fileContainer.appendChild(remove);
+
+                                                fileList.appendChild(fileContainer);
+                                            }
+                                        }
+
+                                    </script>
 
 
 
@@ -14560,32 +18248,117 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Closure Attachments"> Attachment</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <label for="Closure Attachments"><b>Attachment</b></label>
+
+                                            <div>
+                                            <small class="text-primary">
+                                                Please attach only PDF, JPG, JPEG or PNG files.
+                                            </small>
+                                        </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="attachement_AIQP"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="AIQPfile" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="AIQPfile" name="AIQPattachement[]"
-                                                        oninput="addMultipleFiles(this, 'attachement_AIQP')" multiple hidden>
+                                                    <label for="AIQPfile" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="AIQPfile"
+                                                        name="AIQPattachement[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateAIQPFiles(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
                                     <script>
-                                        function addMultipleFiles(input, listId) {
-                                            let fileList = document.getElementById(listId);
-                                            fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                            for (let file of input.files) {
-                                                let fileItem = document.createElement("div");
-                                                fileItem.textContent = file.name;
-                                                fileList.appendChild(fileItem);
+                                        function validateAIQPFiles(input){
+
+                                            const allowedExtensions = [
+                                                'pdf',
+                                                'jpg',
+                                                'jpeg',
+                                                'png'
+                                            ];
+
+                                            const allowedMimeTypes = [
+                                                'application/pdf',
+                                                'image/jpeg',
+                                                'image/png'
+                                            ];
+
+                                            const files = Array.from(input.files);
+
+                                            if(files.length === 0){
+                                                return;
                                             }
+
+                                            for(const file of files){
+
+                                                const ext = file.name.split('.').pop().toLowerCase();
+
+                                                if(
+                                                    !allowedExtensions.includes(ext) ||
+                                                    !allowedMimeTypes.includes(file.type)
+                                                ){
+
+                                                    Swal.fire({
+                                                        icon:'error',
+                                                        title:'Invalid File',
+                                                        text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                    });
+
+                                                    input.value = '';
+                                                    return;
+                                                }
+                                            }
+
+                                            addMultipleFiles(input,'attachement_AIQP');
                                         }
+
+
+                                        function addMultipleFiles(input,listId){
+
+                                            const fileList = document.getElementById(listId);
+
+                                            for(const file of input.files){
+
+                                                let fileContainer = document.createElement('h6');
+                                                fileContainer.classList.add('file-container','text-dark');
+                                                fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                                let fileText = document.createElement('b');
+                                                fileText.textContent = file.name;
+
+                                                let remove = document.createElement('a');
+                                                remove.type = 'button';
+                                                remove.classList.add('remove-file');
+
+                                                remove.innerHTML =
+                                                    '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                                remove.onclick = function(){
+                                                    fileContainer.remove();
+                                                };
+
+                                                fileContainer.appendChild(fileText);
+                                                fileContainer.appendChild(remove);
+
+                                                fileList.appendChild(fileContainer);
+                                            }
+
+                                        }
+
                                     </script>
 
                                 </div>
@@ -14608,32 +18381,116 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Closure Attachments"> Attachment</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <label for="Closure Attachments"><b>Attachment</b></label>
 
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="attachement_AOQP"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="AOQPfile" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="AOQPfile" name="AOQPattachement[]"
-                                                        oninput="addMultipleFiles(this, 'attachement_AOQP')" multiple hidden>
+                                                    <label for="AOQPfile" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="AOQPfile"
+                                                        name="AOQPattachement[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateAOQPFiles(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
                                     <script>
-                                        function addMultipleFiles(input, listId) {
-                                            let fileList = document.getElementById(listId);
-                                            fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                            for (let file of input.files) {
-                                                let fileItem = document.createElement("div");
-                                                fileItem.textContent = file.name;
-                                                fileList.appendChild(fileItem);
+                                            function validateAOQPFiles(input){
+
+                                                const allowedExtensions = [
+                                                    'pdf',
+                                                    'jpg',
+                                                    'jpeg',
+                                                    'png'
+                                                ];
+
+                                                const allowedMimeTypes = [
+                                                    'application/pdf',
+                                                    'image/jpeg',
+                                                    'image/png'
+                                                ];
+
+                                                const files = Array.from(input.files);
+
+                                                if(files.length === 0){
+                                                    return;
+                                                }
+
+                                                for(const file of files){
+
+                                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                                    if(
+                                                        !allowedExtensions.includes(ext) ||
+                                                        !allowedMimeTypes.includes(file.type)
+                                                    ){
+
+                                                        Swal.fire({
+                                                            icon:'error',
+                                                            title:'Invalid File',
+                                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                        });
+
+                                                        input.value = '';
+                                                        return;
+                                                    }
+                                                }
+
+                                                addMultipleFiles(input,'attachement_AOQP');
                                             }
-                                        }
+
+
+                                            function addMultipleFiles(input,listId){
+
+                                                const fileList = document.getElementById(listId);
+
+                                                for(const file of input.files){
+
+                                                    let fileContainer = document.createElement('h6');
+                                                    fileContainer.classList.add('file-container','text-dark');
+                                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                                    let fileText = document.createElement('b');
+                                                    fileText.textContent = file.name;
+
+                                                    let remove = document.createElement('a');
+                                                    remove.type = 'button';
+                                                    remove.classList.add('remove-file');
+
+                                                    remove.innerHTML =
+                                                        '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                                    remove.onclick = function(){
+                                                        fileContainer.remove();
+                                                    };
+
+                                                    fileContainer.appendChild(fileText);
+                                                    fileContainer.appendChild(remove);
+
+                                                    fileList.appendChild(fileContainer);
+                                                }
+
+                                            }
+
                                     </script>
 
                                 </div>
@@ -14654,34 +18511,119 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         <div class="orig-head">Annexure For Acceptance Of Performance Qualification Protocol</div>
                             <div class="input-fields">
                                 <div class="row">
-                                    <div class="col-12">
+                                  <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Closure Attachments"> Attachment</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <label for="Closure Attachments"><b>Attachment</b></label>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="attachement_APQP"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="APQPfile" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="APQPfile" name="APQPattachement[]"
-                                                        oninput="addMultipleFiles(this, 'attachement_APQP')" multiple hidden>
+                                                    <label for="APQPfile" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="APQPfile"
+                                                        name="APQPattachement[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateAPQPFiles(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
                                     <script>
-                                        function addMultipleFiles(input, listId) {
-                                            let fileList = document.getElementById(listId);
-                                            fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                            for (let file of input.files) {
-                                                let fileItem = document.createElement("div");
-                                                fileItem.textContent = file.name;
-                                                fileList.appendChild(fileItem);
+                                        function validateAPQPFiles(input){
+
+                                            const allowedExtensions = [
+                                                'pdf',
+                                                'jpg',
+                                                'jpeg',
+                                                'png'
+                                            ];
+
+                                            const allowedMimeTypes = [
+                                                'application/pdf',
+                                                'image/jpeg',
+                                                'image/png'
+                                            ];
+
+                                            const files = Array.from(input.files);
+
+                                            if(files.length === 0){
+                                                return;
                                             }
+
+                                            for(const file of files){
+
+                                                const ext = file.name.split('.').pop().toLowerCase();
+
+                                                if(
+                                                    !allowedExtensions.includes(ext) ||
+                                                    !allowedMimeTypes.includes(file.type)
+                                                ){
+
+                                                    Swal.fire({
+                                                        icon:'error',
+                                                        title:'Invalid File',
+                                                        text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                    });
+
+                                                    input.value = '';
+                                                    return;
+                                                }
+                                            }
+
+                                            addMultipleFiles(input,'attachement_APQP');
                                         }
+
+
+                                        function addMultipleFiles(input,listId){
+
+                                            const fileList = document.getElementById(listId);
+
+                                            for(const file of input.files){
+
+                                                let fileContainer = document.createElement('h6');
+                                                fileContainer.classList.add('file-container','text-dark');
+                                                fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                                let fileText = document.createElement('b');
+                                                fileText.textContent = file.name;
+
+                                                let remove = document.createElement('a');
+                                                remove.href = "javascript:void(0)";
+                                                remove.classList.add('remove-file');
+
+                                                remove.innerHTML =
+                                                    '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                                remove.onclick = function(){
+                                                    fileContainer.remove();
+                                                };
+
+                                                fileContainer.appendChild(fileText);
+                                                fileContainer.appendChild(remove);
+
+                                                fileList.appendChild(fileContainer);
+                                            }
+
+                                        }
+
                                     </script>
 
                                 </div>
