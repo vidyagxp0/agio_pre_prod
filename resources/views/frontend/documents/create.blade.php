@@ -377,7 +377,7 @@
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
-                <button class="tablinks printdoc" style="float: right;" onclick="window.print();return false;">Print</button>
+                {{-- <button class="tablinks printdoc" style="float: right;" onclick="window.print();return false;">Print</button> --}}
             </div>
 
 
