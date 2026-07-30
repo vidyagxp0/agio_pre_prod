@@ -1285,9 +1285,7 @@ foreach ($pre as $processName => $modelClass) {
             }
 
         if($lastopenState->hod_preson != $openState->hod_preson || !empty($request->comment)) {
-            $lastDataAuditTrail = ActionItemHistory::where('cc_id', $openState->id)
-                            ->where('activity_type', 'HOD Persons')
-                            ->exists();
+            $lastDataAuditTrail = ActionItemHistory::where('cc_id', $openState->id)->where('activity_type', 'HOD Persons')->exists();
             $history = new ActionItemHistory();
             $history->cc_id = $id;
             $history->activity_type = 'HOD Persons';
