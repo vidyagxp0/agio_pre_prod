@@ -1227,16 +1227,10 @@
                     </table>
                     @php
                         $procedure = $data->document_content->procedure ?? '';
-
-                        $procedure = str_replace(
-                            ['<h1', '<h2', '<h3', '</h1>', '</h2>', '</h3>'],
-                            ['<p class="proc-heading"', '<p class="proc-heading"', '<p class="proc-heading"', '</p>', '</p>', '</p>'],
-                            $procedure
-                        );
                     @endphp
 
                     <div class="quill-pdf-content">
-                        {!! $procedure !!}
+                        {!! Helpers::renderQuillPdf($procedure) !!}
                     </div>
                 </div>
                 {{-- PROCEDURE END --}}

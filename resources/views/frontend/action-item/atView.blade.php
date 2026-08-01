@@ -149,10 +149,25 @@
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         @endphp
-                        {{-- <button class="button_theme1" onclick="window.print();return false;"
-                            class="new-doc-btn">Print</button> --}}
-                        {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
-                        {{-- {{ dd($data->stage);}} --}}
+                   
+                        @php
+                            $currentUser = Auth::user();
+
+                            $assignedUser = DB::table('users')->where('id', $data->assign_to)->first();
+
+                            $isAssignedUser = $currentUser->id == $data->assign_to;
+                            $isInitiator    = $currentUser->id == $data->initiator_id;
+
+                            $isRole18 = Helpers::check_roles($data->division_id, 'Action Item', 18);
+
+                            $isSameDepartment = false;
+
+                            if ($assignedUser) {
+                                $isSameDepartment = !empty($currentUser->departmentid) && !empty($assignedUser->departmentid) && $currentUser->departmentid == $assignedUser->departmentid;
+                            }
+
+                            $canPerformAssignedActivity = $isAssignedUser || $isInitiator || $isRole18 || $isSameDepartment;
+                        @endphp
                         <a class="button_theme1 text-white" href="{{ url('rcms/action-item-audittrialshow', $data->id) }}">
                             Audit Trail </a>
                         @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Action Item', 3) || Helpers::check_roles($data->division_id, 'Action Item', 18)))
@@ -164,26 +179,27 @@
                                     data-bs-target="#cancel-modal">
                                     Cancel
                                 </button></a>
-                        @elseif($data->stage == 2 )
-                           @if (Auth::user()->id == $data->assign_to || Helpers::check_roles($data->division_id, 'Action Item', 18) || ($data->initiator_id == Auth::user()->id))
-                           <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal"
-                                    data-bs-target="#more-info-required-modal">
-                                    More Information Required
-                                </button></a>
-                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
-                                    data-bs-target="#signature-modal">
-                                    Acknowledge Complete
-                                </button></a>
-                           @endif
+                        @elseif($data->stage == 2)
+                            @if($canPerformAssignedActivity)
+                                <a href="#cancel-modal">
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                                        More Information Required
+                                    </button>
+                                </a>
+
+                                <a href="#signature-modal">
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                        Acknowledge Complete
+                                    </button>
+                                </a>
+                            @endif
                         @elseif($data->stage == 3)
-                        @if (Auth::user()->id == $data->assign_to || Helpers::check_roles($data->division_id, 'Action Item', 18) || ($data->initiator_id == Auth::user()->id))
-                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
-                                    data-bs-target="#signature-modal">
-                                    Complete
-                                </button></a>
-                            {{-- <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                                More Information Required
-                            </button></a> --}}
+                            @if($canPerformAssignedActivity)
+                                <a href="#signature-modal">
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                        Complete
+                                    </button>
+                                </a>
                             @endif
                         @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Action Item', 7) || Helpers::check_roles($data->division_id, 'Action Item', 66) || Helpers::check_roles($data->division_id, 'Action Item', 18)))
                             <a href="#last-stage-modal"> <button class="button_theme1" data-bs-toggle="modal"
@@ -194,13 +210,7 @@
                                     data-bs-target="#more-info-required-modal">
                                     More Information Required
                                 </button></a>
-                            {{-- @elseif($data->stage == 2 && (in_array(8, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Complete
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                More Information Required
-                            </button> --}}
+                      
                         @endif
                         <a class="text-white button_theme1" href="{{ url('rcms/qms-dashboard') }}"> Exit </a>
                     </div>

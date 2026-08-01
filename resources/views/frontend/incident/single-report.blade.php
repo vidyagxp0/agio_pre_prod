@@ -12,24 +12,31 @@
 
 <style>
     @page {
-         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
-     }
+        margin: 160px 35px 100px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
     body {
-        font-family: 'Roboto', sans-serif;
         margin: 0;
+        margin-top: 10px;
+        margin-bottom: -60px;
         padding: 0;
+
+        font-family: 'Roboto', sans-serif;
         font-size: 11px;
         line-height: 1.4;
         color: #000;
-        margin-top: 10px;
-        margin-bottom: -60px; 
     }
 
-    header, footer {
+    header,
+    footer {
         position: fixed;
         left: 0;
         right: 0;
-        /* padding: 20px 35px; */
+
         font-size: 12px;
         box-sizing: border-box;
     }
@@ -40,7 +47,6 @@
     }
 
     footer {
-        bottom: 0;
         bottom: -100px;
         border-top: none;
     }
@@ -49,46 +55,80 @@
         display: block;
         margin-left: auto;
     }
-    /* To remove borders from content part only */
-    .content-area table {
-        border: none !important;
-    }
 
     .inner-block {
-        /* padding: 20px 35px;  */
+        width: 100%;
         box-sizing: border-box;
     }
-    
+
+    .content-table {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
     .block {
+        width: 100%;
         margin-bottom: 25px;
+        page-break-inside: auto;
     }
 
     .block-head {
-        font-size: 13px;
-        font-weight: bold;
-        border-bottom: 2px solid #387478;
-        color: #387478;
         margin-bottom: 10px;
         padding-bottom: 5px;
+
+        border-bottom: 2px solid #387478;
+
+        color: #387478;
+        font-size: 13px;
+        font-weight: bold;
+
+        page-break-after: avoid;
     }
 
     .table_bg {
-        background-color: #387478;
+        background-color: #f2f2f2;
         color: #111;
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Normal report tables
+    |--------------------------------------------------------------------------
+    */
+
     table {
         width: 100%;
+        max-width: 100%;
+
+        margin: 0 0 12px 0;
+
         border-collapse: collapse;
-        margin-bottom: 12px;
+        border-spacing: 0;
+
+        /*
+         * Normal form tables ke liye fixed layout.
+         * Quill tables ko Style 2 me auto override kiya gaya hai.
+         */
+        table-layout: fixed;
     }
 
-    th, td {
+    th,
+    td {
         padding: 6px 10px;
-        font-size: 10.5px;
+
         border: 1px solid #ccc;
+
+        font-size: 10.5px;
+        line-height: 1.35;
+
         text-align: left;
         vertical-align: top;
+
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: normal;
+
+        box-sizing: border-box;
     }
 
     th {
@@ -96,30 +136,423 @@
         font-weight: 600;
     }
 
+    /*
+     * Normal short rows ko split hone se rok sakte hain.
+     * Long Quill content outer table row me nahi hona chahiye.
+     */
+    table:not(.quill-inner-table) > tbody > tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
     .section-gap {
         margin-top: 20px;
     }
 
-    .no-border th, .no-border td {
+    .no-border {
         border: none !important;
     }
 
-    /* .w-5 { width: 5%; } */
-    .w-5 { width: 6%; }
-    .w-8 { width: 8%; }
-    .w-10 { width: 10%; }
-    .w-20 { width: 20%; }
-    .w-30 { width: 30%; }
-    .w-50 { width: 50%; }
-    .w-70 { width: 70%; }
-    .w-80 { width: 80%; }
-    .w-100 { width: 100%; }
-    .text-center { text-align: center; }
-    .border-table {
-        overflow-x: auto;
+    .no-border th,
+    .no-border td {
+        border: none !important;
     }
-    table th, table td {
+
+    .content-area > table.no-border,
+    .content-area > table.no-border > tbody > tr > th,
+    .content-area > table.no-border > tbody > tr > td {
+        border: none !important;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Width utilities
+    |--------------------------------------------------------------------------
+    */
+
+    .w-5 {
+        width: 6%;
+    }
+
+    .w-8 {
+        width: 8%;
+    }
+
+    .w-10 {
+        width: 10%;
+    }
+
+    .w-20 {
+        width: 20%;
+    }
+
+    .w-30 {
+        width: 30%;
+    }
+
+    .w-40 {
+        width: 40%;
+    }
+
+    .w-50 {
+        width: 50%;
+    }
+
+    .w-60 {
+        width: 60%;
+    }
+
+    .w-70 {
+        width: 70%;
+    }
+
+    .w-80 {
+        width: 80%;
+    }
+
+    .w-100 {
+        width: 100%;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .border-table {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+
+        overflow: visible;
+
+        page-break-inside: auto;
+        box-sizing: border-box;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | General images
+    |--------------------------------------------------------------------------
+    */
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+<style>
+    .long-content-field {
+        display: block;
+
+        width: 100%;
+        max-width: 100%;
+
+        margin: 0 0 12px 0;
+        padding: 0;
+
+        page-break-inside: auto;
+
+        box-sizing: border-box;
+    }
+
+    .long-content-label {
+        display: block;
+
+        width: 100%;
+        max-width: 100%;
+
+        margin: 0;
+        padding: 7px 10px;
+
+        border: 1px solid #ccc;
+        background-color: #f2f2f2;
+
+        color: #000;
+        font-size: 10.5px;
+        line-height: 1.4;
+        font-weight: bold;
+
+        text-align: left;
+
+        page-break-after: avoid;
+
+        box-sizing: border-box;
+    }
+
+    .long-content-value {
+        display: block;
+
+        width: 100%;
+        max-width: 100%;
+
+        margin: 0;
+        padding: 8px;
+
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+
+        page-break-inside: auto;
+
+        box-sizing: border-box;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Main Quill content
+    |--------------------------------------------------------------------------
+    */
+
+    .quill-pdf-content {
+        display: block;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        color: #000;
+
+        font-size: 10px;
+        line-height: 1.4;
+
+        text-align: left;
+
         word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: normal;
+
+        page-break-inside: auto !important;
+
+        box-sizing: border-box;
+    }
+
+    .quill-pdf-content p {
+        width: auto !important;
+        max-width: 100% !important;
+
+        margin: 0 0 7px 0 !important;
+        padding: 0 !important;
+
+        font-size: 10px !important;
+        line-height: 1.4 !important;
+        font-weight: normal;
+
+        text-align: left !important;
+
+        page-break-inside: auto;
+    }
+
+    .quill-pdf-content .proc-heading,
+    .quill-pdf-content h1,
+    .quill-pdf-content h2,
+    .quill-pdf-content h3,
+    .quill-pdf-content h4,
+    .quill-pdf-content h5,
+    .quill-pdf-content h6 {
+        margin: 10px 0 5px 0 !important;
+        padding: 0 !important;
+
+        font-size: 10px !important;
+        line-height: 1.4 !important;
+        font-weight: bold !important;
+
+        text-align: left !important;
+
+        page-break-after: avoid;
+    }
+
+    .quill-pdf-content span,
+    .quill-pdf-content div {
+        max-width: 100% !important;
+
+        font-size: inherit;
+        line-height: inherit;
+
+        box-sizing: border-box;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Quill nested tables
+    |--------------------------------------------------------------------------
+    */
+
+    .quill-pdf-content table {
+        display: table !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        margin: 6px 0 10px 0 !important;
+
+        border-collapse: collapse !important;
+        border-spacing: 0 !important;
+
+        /*
+         * Important:
+         * Word/Quill tables ke liye fixed nahi, auto rakho.
+         */
+        table-layout: auto !important;
+
+        page-break-inside: auto !important;
+
+        box-sizing: border-box !important;
+    }
+
+    .quill-pdf-content table thead {
+        display: table-header-group;
+    }
+
+    .quill-pdf-content table tbody {
+        display: table-row-group;
+        width: 100% !important;
+    }
+
+    .quill-pdf-content table tfoot {
+        display: table-footer-group;
+    }
+
+    .quill-pdf-content table tr {
+        page-break-inside: auto !important;
+        page-break-after: auto !important;
+    }
+
+    .quill-pdf-content table,
+    .quill-pdf-content table th,
+    .quill-pdf-content table td {
+        border: 1px solid #000 !important;
+    }
+
+    .quill-pdf-content table th,
+    .quill-pdf-content table td {
+        min-width: 0 !important;
+        max-width: none !important;
+
+        padding: 4px !important;
+
+        border: 1px solid #000 !important;
+
+        font-size: 8px !important;
+        line-height: 1.25 !important;
+
+        text-align: left !important;
+        vertical-align: top !important;
+
+        white-space: normal !important;
+
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        word-break: normal !important;
+
+        height: auto !important;
+
+        page-break-inside: auto !important;
+
+        box-sizing: border-box !important;
+    }
+
+    .quill-pdf-content table th {
+        background-color: #f2f2f2 !important;
+        font-weight: bold !important;
+    }
+
+    .quill-pdf-content table tr:first-child th,
+    .quill-pdf-content table tr:first-child td {
+        font-weight: bold !important;
+    }
+
+    .quill-pdf-content table td p,
+    .quill-pdf-content table th p,
+    .quill-pdf-content table td div,
+    .quill-pdf-content table th div,
+    .quill-pdf-content table td span,
+    .quill-pdf-content table th span {
+        max-width: 100% !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        font-size: 8px !important;
+        line-height: 1.25 !important;
+
+        text-align: inherit !important;
+
+        white-space: normal !important;
+
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        word-break: normal !important;
+
+        box-sizing: border-box !important;
+    }
+
+    .quill-pdf-content table[width] {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .quill-pdf-content td[width],
+    .quill-pdf-content th[width] {
+        width: auto !important;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Quill lists
+    |--------------------------------------------------------------------------
+    */
+
+    .quill-pdf-content ul,
+    .quill-pdf-content ol {
+        margin: 4px 0 8px 0 !important;
+        padding-left: 20px !important;
+
+        page-break-inside: auto;
+    }
+
+    .quill-pdf-content li {
+        margin: 0 0 3px 0 !important;
+        padding: 0 !important;
+
+        font-size: 10px !important;
+        line-height: 1.4 !important;
+
+        page-break-inside: auto;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Quill images
+    |--------------------------------------------------------------------------
+    */
+
+    .quill-pdf-content img {
+        display: block !important;
+
+        width: auto !important;
+        max-width: 100% !important;
+        height: auto !important;
+
+        margin: 6px auto !important;
+
+        page-break-inside: avoid !important;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Links
+    |--------------------------------------------------------------------------
+    */
+
+    .quill-pdf-content a {
+        color: #000;
+        text-decoration: underline;
+
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 </style>
 
@@ -518,73 +951,37 @@
                     </div>
                 {{-- @endif --}}
 
+                <div class="long-content-field">
 
-                
-                <style>
-                table {
-                    width: 100% !important;
-                    max-width: 100% !important;
-                    border-collapse: collapse;
-                    table-layout: fixed;
-                }
+                    <div class="long-content-label">
+                        Description of Incident
+                    </div>
 
-                th, td {
-                    word-break: break-word;
-                    word-wrap: break-word;
-                    font-size: 12px;
-                }
+                    <div class="long-content-value">
 
-                tr {
-                    page-break-inside: avoid;
-                }
+                        <div class="quill-pdf-content">
+                            {!! Helpers::renderQuillPdf($data->Description_incident) !!}
+                        </div>
 
-                img {
-                    max-width: 100% !important;
-                    height: auto;
-                }
-            </style>
+                    </div>
 
+                </div>
 
-                <table style="width:100%; border-collapse: collapse; table-layout: fixed;">
-                    <tr>
-                        <th class="w-20" style="vertical-align: top;">
-                            <strong>Description of Incident</strong>
-                        </th>
-                        <td class="w-80" style="vertical-align: top; word-break: break-word;">
-                            
-                            {!! strip_tags(
-                                $data->Description_incident,
-                                '<br><table><thead><tbody><tr><th><td>
-                                <p><div><span>
-                                <b><strong><i><u>
-                                <ul><ol><li>
-                                <img><a>
-                                <h1><h2><h3><h4><h5><h6>'
-                            ) !!}
-                        </td>
-                    </tr>
-                </table>
+                <div class="long-content-field">
 
-                 <table style="width:100%; border-collapse: collapse; table-layout: fixed;">
-                    <tr>
-                        <th class="w-20" style="vertical-align: top;">
-                            <strong>Investigation</strong>
-                        </th>
-                        <td class="w-80" style="vertical-align: top; word-break: break-word;">
-                            
-                            {!! strip_tags(
-                                $data->investigation,
-                                '<br><table><thead><tbody><tr><th><td>
-                                <p><div><span>
-                                <b><strong><i><u>
-                                <ul><ol><li>
-                                <img><a>
-                                <h1><h2><h3><h4><h5><h6>'
-                            ) !!}
-                        </td>
-                    </tr>
-                </table>
+                    <div class="long-content-label">
+                        Investigation
+                    </div>
 
+                    <div class="long-content-value">
+
+                        <div class="quill-pdf-content">
+                            {!! Helpers::renderQuillPdf($data->investigation) !!}
+                        </div>
+
+                    </div>
+
+                </div>
 
                 <table>
                     <tr>

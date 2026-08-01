@@ -38,7 +38,7 @@
                         </p>
                     </label>
                     <div class="input-group mb-3">
-                        <input type="email" name="email" value="superadmin@gmail.com" class="form-control"
+                        <input type="email" name="email" value="" class="form-control"
                             value="{{ old('email') }}" placeholder="Email">
 
                         <div class="input-group-append">
@@ -55,7 +55,7 @@
                     @enderror
                     <div class="input-group mb-3">
 
-                        <input type="password" name="password" value="admin" class="form-control"
+                        <input type="password" name="password" value="" class="form-control"
                             placeholder="Password">
 
                         <div class="input-group-append">

@@ -2079,4 +2079,24 @@ class Helpers
         return self::getDivisionName($data->division_id) . '/OOT/' . date('Y', strtotime($data->created_at)) . '/' .
             str_pad($data->record, 4, '0', STR_PAD_LEFT);
     }
+
+
+    public static function renderQuillPdf($html)
+    {
+        if (empty($html)) {
+            return '';
+        }
+
+        // Headings ko same size me convert karo
+        $html = str_replace(
+            ['<h1', '<h2', '<h3', '<h4', '<h5', '<h6',
+            '</h1>', '</h2>', '</h3>', '</h4>', '</h5>', '</h6>'],
+            ['<p class="proc-heading"', '<p class="proc-heading"', '<p class="proc-heading"',
+            '<p class="proc-heading"', '<p class="proc-heading"', '<p class="proc-heading"',
+            '</p>', '</p>', '</p>', '</p>', '</p>', '</p>'],
+            $html
+        );
+
+        return $html;
+    }
 }
