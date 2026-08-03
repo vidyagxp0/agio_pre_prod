@@ -122,7 +122,7 @@
     <div id="rcms-desktop">
         <div class="process-groups">
             <div class="scope-bar">
-                <button class="print-btn btn btn-primary">Print</button>
+                <button type="button" class="print-btn btn btn-primary" onclick="openDeviationPrint()"> <i class="fa fa-print"></i> Print</button>
             </div>
             <div class="active" onclick="openTab('internal-audit', this)">Deviation Log</div>
             <div class="third-div">Third Div Content</div>
@@ -173,36 +173,7 @@
                                         <label for="date_to_deviation">Date To</label>
                                         <input type="date" class="custom-select" id="date_to_deviation">
                                     </div>
-                                    {{-- <div class="filter-item">
-                                        <label for="deviationRelate">Deviation Related to</label>
-                                        <select class="custom-select" id="deviationRelate">
-                                            <option value="">Select Option</option>
-                                            <option value="Facility">Facility</option>
-                                            <option value="Equipment/Instrument">Instrument</option>
-                                            <option value="Documentationerror">Documentation error</option>
-                                            <option value="STP/ADS_instruction">STP/ADS instruction</option>
-                                            <option value="Packaging&Labelling">Packaging & Labelling</option>
-                                            <option value="Material_System">Material System</option>
-                                            <option value="Laboratory_Instrument/System">Laboratory Instrument/System</option>
-                                            <option value="Utility_System">Utility System</option>
-                                            <option value="Computer_System">Computer System</option>
-                                            <option value="Document">Document</option>
-                                            <option value="Data integrity">Data integrity</option>
-                                            <option value="SOP Instruction">SOP Instruction</option>
-                                            <option value="BMR/ECR Instruction">BMR/ECR Instruction</option>
-                                            <option value="Water System">Water System</option>
-                                            <option value="Anyother(specify)">Any other (specify)</option>
-                                        </select>
-                                    </div>
-                                    <div class="filter-item">
-                                        <label for="datewise_deviation">Select Period</label>
-                                        <select class="custom-select" id="datewise_deviation">
-                                            <option value="">Select</option>
-                                            <option value="Yearly">Yearly</option>
-                                            <option value="Quarterly">Quarterly</option>
-                                            <option value="Monthly">Monthly</option>
-                                        </select>
-                                    </div> --}}
+                                   
                                 </div>
                             </div>
                         </div>
@@ -305,4 +276,62 @@
             $('#spinner').hide();
         }
     </script>
+    <script>
+    window.openDeviationPrint = function () {
+
+        const baseUrl = @json(route('rcms.logs.print', [
+            'slug' => 'deviation'
+        ]));
+
+        const params = new URLSearchParams();
+
+        const department =
+            document.getElementById('initiator_group');
+
+        const division =
+            document.getElementById('division_id');
+
+        const from =
+            document.getElementById('date_from_deviation');
+
+        const to =
+            document.getElementById('date_to_deviation');
+
+        if (department && department.value) {
+            params.append(
+                'department',
+                department.value
+            );
+        }
+
+        if (division && division.value) {
+            params.append(
+                'division_id',
+                division.value
+            );
+        }
+
+        if (from && from.value) {
+            params.append(
+                'date_from',
+                from.value
+            );
+        }
+
+        if (to && to.value) {
+            params.append(
+                'date_to',
+                to.value
+            );
+        }
+
+        window.open(
+            baseUrl +
+                (params.toString()
+                    ? '?' + params.toString()
+                    : ''),
+            '_blank'
+        );
+    };
+</script>
 @endsection

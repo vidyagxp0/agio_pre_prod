@@ -53,6 +53,7 @@ Route::group(['prefix' => 'rcms'], function () {
     Route::get('/qms-logs/{slug}', [LogController::class, 'index'])->name('rcms.logs.show');
     Route::get('/employee/login', [UserLoginController::class, 'employeeLoginForm'])->name('employee.login');
     Route::post('/employee/login', [UserLoginController::class, 'employeeLogin'])->name('employee.login.submit');
+    Route::get('/logs/{slug}/print',[LogController::class, 'print'])->name('rcms.logs.print');
 
 
     // Route::middleware(['rcms'])->group(

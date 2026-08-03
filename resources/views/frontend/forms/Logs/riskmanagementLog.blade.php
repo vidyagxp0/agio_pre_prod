@@ -205,7 +205,7 @@
         
     <div class="process-groups">
             <div class="scope-bar">
-                <button class="print-btn btn btn-primary">Print</button>
+                <button type="button" class="print-btn btn btn-primary" onclick="openRiskPrint()"><i class="fa fa-print"></i> Print</button>
             </div>
             <div class="active" onclick="openTab('internal-audit', this)">Risk Assessment Log</div>
             <div class="third-div">Third Div Content</div>
@@ -387,4 +387,73 @@ async function filterRecords()
 
 
     </script>
+
+    <script>
+
+window.openRiskPrint = function () {
+
+    const baseUrl = @json(route(
+        'rcms.logs.print',
+        ['slug' => 'risk-management']
+    ));
+
+    const params = new URLSearchParams();
+
+    const department =
+        document.getElementById('initiator_group');
+
+    const division =
+        document.getElementById('division_id');
+
+    const from =
+        document.getElementById('date_from_risk');
+
+    const to =
+        document.getElementById('date_to_risk');
+
+    if (department && department.value) {
+        params.append(
+            'department',
+            department.value
+        );
+    }
+
+    if (
+        division &&
+        division.value &&
+        division.value !== 'Null'
+    ) {
+        params.append(
+            'division_id',
+            division.value
+        );
+    }
+
+    if (from && from.value) {
+        params.append(
+            'date_from',
+            from.value
+        );
+    }
+
+    if (to && to.value) {
+        params.append(
+            'date_to',
+            to.value
+        );
+    }
+
+    window.open(
+        baseUrl +
+        (
+            params.toString()
+                ? '?' + params.toString()
+                : ''
+        ),
+        '_blank'
+    );
+
+};
+
+</script>
 @endsection

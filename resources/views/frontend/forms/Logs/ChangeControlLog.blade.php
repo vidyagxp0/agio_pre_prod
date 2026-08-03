@@ -235,14 +235,17 @@
                 <div class="process-table active" id="internal-audit">
                     <div class="scroll-container">
                         <div class="table-block">
-                            <!-- Search Bar -->
-                            <div style="padding: 10px; display: flex; justify-content: space-between; align-items: center; gap: 5px;">
-                             
-
-                                <div>
-                                  
-                                </div>
-                              
+                            <!-- Log Actions -->
+                            <div style="padding: 10px; display: flex; justify-content: flex-end; align-items: center; gap: 8px;">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    onclick="openLogPrint()"
+                                    title="Print Change Control Log"
+                                >
+                                    <i class="fa fa-print" aria-hidden="true"></i>
+                                    Print
+                                </button>
                             </div>
                             
 
@@ -508,9 +511,6 @@ function filterByDueDate() {
             try 
             {
                const postUrl = "{{ route('api.cccontrol.filter') }}";
-        //    const postUrl = "http://medicef.mydemosoftware.com/api/change-control".replace("http://", "https://");
-
-                // const postUrl = "/api/change-control";
                 
                 const res = await axios.post(postUrl, filterData);
 
@@ -531,29 +531,96 @@ function filterByDueDate() {
 
 </script>
 <script>
-     function printTable() {
-    const department = document.getElementById('initiator_group').value;
-    
-    const changerelateTo = document.getElementById('division_id_cc').value;
-    const Initiator = document.getElementById('initiator_id').value;
-    const dateFrom = document.getElementById('date_fromCc').value;
-    const dateTo = document.getElementById('date_toCc').value;
-    let RadioActivtiyCCC = '';
-    const selectedCategory = document.querySelector('input[name="Change_related_category"]:checked');
-    if (selectedCategory) {
-        RadioActivtiyCCC = selectedCategory.value; // Set the value here
-    }
-    let RadioActivtiyTCC = '';
-    const selectedCategorytcc = document.querySelector('input[name="Type_of_change"]:checked');
-    if (selectedCategorytcc) {
-        RadioActivtiyTCC = selectedCategorytcc.value; // Set the value here
-    }
-    const url = `/api/Change-ControlLog?department=${department}&changerelateTo=${changerelateTo}&Initiator=${Initiator}&dateFrom=${dateFrom}&dateTo=${dateTo}&RadioActivtiyTCC=${RadioActivtiyTCC}`;
-    
-    window.open(url, '_blank');
+    /**
+     * Open the common log print route with currently selected filters.
+     */
+    window.openLogPrint = function () {
+        const baseUrl = @json(
+            route('rcms.logs.print', ['slug' => 'change-control'])
+        );
 
-}
-    </script>
+        const params = new URLSearchParams();
+
+        const departmentSelect =
+            document.getElementById('initiator_group');
+
+        let departments = [];
+
+        if (
+            typeof window.jQuery !== 'undefined' &&
+            departmentSelect
+        ) {
+            const selectedByJquery =
+                window.jQuery(departmentSelect).val();
+
+            if (Array.isArray(selectedByJquery)) {
+                departments = selectedByJquery;
+            } else if (selectedByJquery) {
+                departments = [selectedByJquery];
+            }
+        }
+
+        if (
+            departments.length === 0 &&
+            departmentSelect &&
+            departmentSelect.options
+        ) {
+            departments = Array.from(
+                departmentSelect.options
+            )
+            .filter(function (option) {
+                return option.selected;
+            })
+            .map(function (option) {
+                return option.value;
+            })
+            .filter(Boolean);
+        }
+
+        departments.forEach(function (department) {
+            params.append('department[]', department);
+        });
+
+        const divisionElement =
+            document.getElementById('division_id_cc');
+
+        const dateFromElement =
+            document.getElementById('date_fromCc');
+
+        const dateToElement =
+            document.getElementById('date_toCc');
+
+        const division = divisionElement
+            ? divisionElement.value
+            : '';
+
+        const dateFrom = dateFromElement
+            ? dateFromElement.value
+            : '';
+
+        const dateTo = dateToElement
+            ? dateToElement.value
+            : '';
+
+        if (division) {
+            params.append('division_id', division);
+        }
+
+        if (dateFrom) {
+            params.append('date_from', dateFrom);
+        }
+
+        if (dateTo) {
+            params.append('date_to', dateTo);
+        }
+
+        const printUrl = params.toString()
+            ? baseUrl + '?' + params.toString()
+            : baseUrl;
+
+        window.open(printUrl, '_blank');
+    };
+</script>
     <script>
 VirtualSelect.init({
             ele: ' #initiator_group , #initiator_id , #unique_id'

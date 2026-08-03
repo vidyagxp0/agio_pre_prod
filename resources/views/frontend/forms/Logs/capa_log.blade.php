@@ -120,37 +120,6 @@
                     </div>
                        <br>
                    
-                    {{-- <div style="padding: 5px;" class="scope-bar d-flex justify-content-end py-1">
-                        <div class="dropdown">
-                            <button class="btn btn-primary" onclick="reloadPage()" style="max-width: 100%; width: auto;  font-size: 16px; text-align: center;"><b>Refresh</b>
-                            <i class="fas fa-sync-alt" ></i></button>
-
-                                <a class=" main-button" href="{{ url('rcms/qms-dashboard') }}">
-                            
-                                <button class="btn btn-primary main-button" type="button" aria-haspopup="true" aria-expanded="false" style="width: 100px;">
-                                    <i class="fas fa-sign-out-alt"></i>  <b>Exit</b>
-                                </button>
-                            </a>
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100px; padding: 5px; margin-right: 10px !important;">
-                                <i class="fas fa-download"></i><b>Download </b>
-                            </button>
-                       
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="{{ route('export_capa.csv')}}">
-                                    <i class="fas fa-file-csv"></i> CSV Export
-                                </a>
-                                <a class="dropdown-item" href="{{ route('export_capa.excel')}}">
-                                    <i class="fas fa-file-excel"></i> Excel Export
-                                </a>
-                                 <a class="dropdown-item" >
-                                    <i class="fas fa-file-word"></i> Word Download
-                                </a>                   
-                                <a class="dropdown-item" href="#" onclick="printTable()">
-                                    <i class="fas fa-print"></i> Print
-                                </a>
-                            </div>
-                        </div>
-                    </div> --}}
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
                         @php
@@ -248,24 +217,17 @@
                     <div class="scroll-container">
                         <div class="table-block">
                             <!-- Search Bar -->
-                            <div style="padding: 10px; display: flex; justify-content: space-between; align-items: center; gap: 5px;">
-                            {{-- <div>
-                                   
-                                </div>
-                                <div style="position: relative; width: 300px;">
-                                    <input 
-                                        type="text" 
-                                        id="searchBar" 
-                                        placeholder="Search..." 
-                                        onkeyup="filterTable()" 
-                                        style="padding: 10px 35px 10px 10px; width: 100%; border: 1px solid rgb(2, 112, 116); border-radius: 5px; font-size: 14px;"
-                                    >
-                                    <span 
-                                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: rgb(2, 112, 116); font-size: 16px; cursor: pointer;">
-                                    🔍
-                                    </span>
-                                </div>
-                            </div> --}}
+                            <div style="padding: 10px; display: flex; justify-content: flex-end; align-items: center; gap: 5px;">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    onclick="openCapaPrint()"
+                                    title="Print CAPA Log"
+                                >
+                                    <i class="fa fa-print" aria-hidden="true"></i>
+                                    Print
+                                </button>
+                           </div>
     
                           
                           <div class="container-fluid">
@@ -522,20 +484,114 @@ function filterByDueDate() {
 
 </script>
 <script>
-     function printTable() {
-    const department = document.getElementById('initiator_group').value;
-    const changerelateTo = document.getElementById('division_id_capa').value;
-    const Initiator = document.getElementById('initiator_id').value;
-    const dateFrom = document.getElementById('date_fromcapacapa').value;
-    const dateTo = document.getElementById('date_tocapa').value;
-   
-   
-    const url = `/api/print-report?department=${department}&changerelateTo=${changerelateTo}&Initiator=${Initiator}&dateFrom=${dateFrom}&dateTo=${dateTo}`;
-    
-    window.open(url, '_blank');
+    window.openCapaPrint = function () {
+        const baseUrl = @json(
+            route(
+                'rcms.logs.print',
+                ['slug' => 'capa']
+            )
+        );
 
-}
-    </script>
+        const params = new URLSearchParams();
+
+        const departmentElement =
+            document.getElementById('initiator_group');
+
+        const divisionElement =
+            document.getElementById('division_id_capa');
+
+        const dateFromElement =
+            document.getElementById('date_fromcapacapa');
+
+        const dateToElement =
+            document.getElementById('date_tocapa');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Department: normal select, multiple select, VirtualSelect and Select2
+        |--------------------------------------------------------------------------
+        */
+        let departments = [];
+
+        if (departmentElement) {
+            if (departmentElement.multiple) {
+                departments = Array.from(
+                    departmentElement.selectedOptions || []
+                ).map(function (option) {
+                    return option.value;
+                });
+            } else if (departmentElement.value) {
+                departments = [departmentElement.value];
+            }
+
+            /*
+             * Select2 / VirtualSelect fallback
+             */
+            if (
+                departments.length === 0 &&
+                typeof window.jQuery !== 'undefined'
+            ) {
+                const selectedValue =
+                    window.jQuery(departmentElement).val();
+
+                if (Array.isArray(selectedValue)) {
+                    departments = selectedValue;
+                } else if (selectedValue) {
+                    departments = [selectedValue];
+                }
+            }
+        }
+
+        departments.forEach(function (department) {
+            if (department) {
+                params.append(
+                    'department[]',
+                    department
+                );
+            }
+        });
+
+        if (
+            divisionElement &&
+            divisionElement.value
+        ) {
+            params.append(
+                'division_id',
+                divisionElement.value
+            );
+        }
+
+        if (
+            dateFromElement &&
+            dateFromElement.value
+        ) {
+            params.append(
+                'date_from',
+                dateFromElement.value
+            );
+        }
+
+        if (
+            dateToElement &&
+            dateToElement.value
+        ) {
+            params.append(
+                'date_to',
+                dateToElement.value
+            );
+        }
+
+        const printUrl =
+            params.toString()
+                ? baseUrl + '?' + params.toString()
+                : baseUrl;
+
+        window.open(
+            printUrl,
+            '_blank'
+        );
+    };
+</script>
     <script>
 VirtualSelect.init({
             ele: ' #initiator_group , #initiator_id'

@@ -264,7 +264,14 @@
 <div id="rcms-desktop">
     <div class="process-groups">
         <div class="scope-bar">
-            <button class="print-btn btn btn-primary">Print</button>
+            <button
+                type="button"
+                class="print-btn btn btn-primary"
+                onclick="openLabIncidentPrint()"
+            >
+                <i class="fa fa-print" aria-hidden="true"></i>
+                Print
+            </button>
         </div>
         <div class="active" onclick="openTab('internal-audit', this)">Lab Incident Log</div>
         <div class="third-div">Third Div Content</div>
@@ -443,4 +450,81 @@
         $('#spinner').hide();
     }
 </script>
+
+<script>
+    window.openLabIncidentPrint = function () {
+        const baseUrl = @json(
+            route(
+                'rcms.logs.print',
+                ['slug' => 'lab-incident']
+            )
+        );
+
+        const params = new URLSearchParams();
+
+        const departmentElement =
+            document.getElementById('initiator_group');
+
+        const divisionElement =
+            document.getElementById('division_id');
+
+        const dateFromElement =
+            document.getElementById('date_from_labinc');
+
+        const dateToElement =
+            document.getElementById('date_to_labinc');
+
+        if (
+            departmentElement &&
+            departmentElement.value
+        ) {
+            params.append(
+                'department',
+                departmentElement.value
+            );
+        }
+
+        if (
+            divisionElement &&
+            divisionElement.value &&
+            divisionElement.value !== 'Null'
+        ) {
+            params.append(
+                'division_id',
+                divisionElement.value
+            );
+        }
+
+        if (
+            dateFromElement &&
+            dateFromElement.value
+        ) {
+            params.append(
+                'date_from',
+                dateFromElement.value
+            );
+        }
+
+        if (
+            dateToElement &&
+            dateToElement.value
+        ) {
+            params.append(
+                'date_to',
+                dateToElement.value
+            );
+        }
+
+        const printUrl =
+            params.toString()
+                ? baseUrl + '?' + params.toString()
+                : baseUrl;
+
+        window.open(
+            printUrl,
+            '_blank'
+        );
+    };
+</script>
+
 @endsection
