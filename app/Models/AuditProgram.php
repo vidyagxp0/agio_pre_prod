@@ -9,5 +9,12 @@ class AuditProgram extends Model
 {
     use HasFactory;
     
+
+  
     
+
+ public function division()
+    {
+        return $this->belongsTo(QMSDivision::class,'division_id');
+    }
 }

@@ -1035,66 +1035,72 @@
                 <div class="block-head">
                     CFT Review
                 </div>
+
+            @if(isset($data1) && $data1->Production_Table_Review == 'Yes')
                <div class="block-head">Production (Tablet/Capsule/Powder)</div>
 
-                <table>
-                    <tr>
-                        <th class="w-20">Production Tablet/Capsule/Powder Review Required?</th>
-                         <td class="w-30">
-                            @if ($data1->Production_Table_Review)
-                                {{ $data1->Production_Table_Review }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                    <table>
+                            <tr>
+                                <th class="w-20">Production Tablet/Capsule/Powder Review Required?</th>
+                                <td class="w-30">
+                                    @if ($data1->Production_Table_Review)
+                                        {{ $data1->Production_Table_Review }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
 
-                        <th class="w-20">Production Tablet/Capsule/Powder Person</th>
-                         <td class="w-30">
-                            @if ($data1->Production_Table_Person)
-                                {{ $data1->Production_Table_Person }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                </table>
-                <table>    
+                                <th class="w-20">Production Tablet/Capsule/Powder Person</th>
+                                <td class="w-30">
+                                    @if ($data1->Production_Table_Person)
+                                        {{ $data1->Production_Table_Person }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
+                        <table>    
 
-                    <tr>
-                        <th class="w-20">Impact Assessment (By Production Tablet/Capsule/Powder)</th>
-                        <td class="w-80" colspan="3">
-                            @if ($data1->Production_Table_Assessment)
-                                {{ strip_tags($data1->Production_Table_Assessment) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
+                            <tr>
+                                <th class="w-20">Impact Assessment (By Production Tablet/Capsule/Powder)</th>
+                                <td class="w-80" colspan="3">
+                                    @if ($data1->Production_Table_Assessment)
+                                        {{ strip_tags($data1->Production_Table_Assessment) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
 
-                </table>
-                <table>
-                    <tr>
-                        <th class="w-20">Production Tablet/Capsule/Powder Review Completed By</th>
-                        <td class="w-30">
-                            @if ($data1->Production_Table_By)
-                                {{ $data1->Production_Table_By }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        </table>
+                        <table>
+                            <tr>
+                                <th class="w-20">Production Tablet/Capsule/Powder Review Completed By</th>
+                                <td class="w-30">
+                                    @if ($data1->Production_Table_By)
+                                        {{ $data1->Production_Table_By }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
 
-                        <th class="w-20">Production Tablet/Capsule/Powder Review Completed On</th>
-                        <td class="w-30">
-                            @if ($data1->Production_Table_On)
-                                {{ Helpers::getdateFormat($data1->Production_Table_On) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                </table>
+                                <th class="w-20">Production Tablet/Capsule/Powder Review Completed On</th>
+                                <td class="w-30">
+                                    @if ($data1->Production_Table_On)
+                                        {{ Helpers::getdateFormat($data1->Production_Table_On) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
 
-                <table>
+                    <table>
+            
+             
+
+            
                     <div class="border-table">
                         <div class="block-head">
                             Production Tablet/Capsule/Powder Attachments
@@ -1121,7 +1127,10 @@
                         </table>
                     </div>
                 </table>
+            @endif
 
+
+            @if(isset($data1) && $data1->Production_Injection_Review == 'Yes')
                 <div class="block-head">Production Injection</div>
                 <table>
                     <tr>
@@ -1204,7 +1213,9 @@
                         </table>
                     </div>
                 </table>
+            @endif
 
+            @if(isset($data1) && $data1->ResearchDevelopment_Review == 'Yes')
 
                 <div class="block-head">Research & Development</div>
                 <table>
@@ -1288,6 +1299,9 @@
                     </div>
                 </table>
 
+            @endif    
+
+            @if(isset($data1) && $data1->Human_Resource_review == 'Yes')
                 <div class="block-head">Human Resource</div>
                 <table>
                     <tr>
@@ -1370,6 +1384,9 @@
                         </table>
                     </div>
                 </table>
+            @endif
+            
+            @if(isset($data1) && $data1->CorporateQualityAssurance_Review == 'Yes')
 
                 <div class="block-head">Corporate Quality Assurance</div>
                 <table>
@@ -1453,7 +1470,9 @@
                         </table>
                     </div>
                 </table>
+            @endif
 
+            @if(isset($data1) && $data1->Store_Review == 'Yes')
                 <div class="block-head">Stores</div>
                 <table>
                     <tr>
@@ -1534,7 +1553,9 @@
                         </table>
                     </div>
                 </table>
+            @endif
 
+            @if(isset($data1) && $data1->Quality_review == 'Yes')
                 <div class="block-head">Quality Control</div>
                 <table>
                     <tr>
@@ -1615,7 +1636,9 @@
                         </table>
                     </div>
                 </table>
+            @endif
 
+            @if(isset($data1) && $data1->Quality_Assurance_Review == 'Yes')
 
                 <div class="block-head">Quality Assurance</div>
                 <table>
@@ -1697,7 +1720,9 @@
                         </table>
                     </div>
                 </table>
+            @endif
 
+             @if(isset($data1) && $data1->RegulatoryAffair_Review == 'Yes')
                 <div class="block-head">Regulatory Affair</div>
                 <table>
                     <tr>
@@ -1779,7 +1804,9 @@
                     </div>
                 </table>
 
+            @endif
 
+            @if(isset($data1) && $data1->ProductionLiquid_Review == 'Yes')
 
                 <div class="block-head">Production (Liquid/External  Preparation)</div>
                 <table>
@@ -1861,8 +1888,9 @@
                         </table>
                     </div>
                 </table>
-
-
+            @endif
+           
+            @if(isset($data1) && $data1->Microbiology_Review == 'Yes')
 
                 <div class="block-head">Microbiology</div>
                 <table>
@@ -1944,7 +1972,9 @@
                         </table>
                     </div>
                 </table>
+            @endif
 
+            @if(isset($data1) && $data1->Engineering_review == 'Yes')
                 <div class="block-head">Engineering</div>
                 <table>
                     <tr>
@@ -2025,7 +2055,9 @@
                         </table>
                     </div>
                 </table>
+            @endif
 
+            @if(isset($data1) && $data1->Environment_Health_review == 'Yes')
                 <div class="block-head">Safety</div>
                 <table>
                     <tr>
@@ -2106,8 +2138,9 @@
                         </table>
                     </div>
                 </table>
-
-
+            @endif
+            
+            @if(isset($data1) && $data1->Other1_review == 'Yes')
                 <div class="block-head">Other's 1 ( Additional Person Review From Departments If Required)</div>
                 <table>
                     <tr>
@@ -2199,7 +2232,10 @@
                         </table>
                     </div>
                 </table>
+            
+            @endif
 
+            @if(isset($data1) && $data1->Other2_review == 'Yes')
 
                 <div class="block-head">Other's 2 ( Additional Person Review From Departments If Required)</div>
                 <table>
@@ -2292,7 +2328,9 @@
                         </table>
                     </div>
                 </table>
+            @endif
 
+            @if(isset($data1) && $data1->Other3_review == 'Yes')
                 <div class="block-head">Other's 3 ( Additional Person Review From Departments If Required)</div>
                 <table>
                     <tr>
@@ -2384,7 +2422,9 @@
                         </table>
                     </div>
                 </table>
+            @endif
 
+            @if(isset($data1) && $data1->Other4_review == 'Yes')
 
                 <div class="block-head">Other's 4 ( Additional Person Review From Departments If Required)</div>
                 <table>
@@ -2477,7 +2517,9 @@
                         </table>
                     </div>
                 </table>
+            @endif
 
+            @if(isset($data1) && $data1->Other5_review == 'Yes')
 
                 <div class="block-head">Other's 5 ( Additional Person Review From Departments If Required)</div>
                 <table>
@@ -2570,6 +2612,8 @@
                         </table>
                     </div>
                 </table>
+
+            @endif    
             </div>
 
 
