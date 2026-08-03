@@ -14,7 +14,7 @@
     </td>
 
     <td>
-        {{  Helpers::getDivisionName($observation->division_code) ?? '-' }}/obs/{{ date('Y') }}/{{ str_pad($observation->record, 4, '0', STR_PAD_LEFT) }}
+        {{  Helpers::getDivisionName($observation->division_code) ?? '-' }}/OBS/{{ date('Y') }}/{{ str_pad($observation->record, 4, '0', STR_PAD_LEFT) }}
     </td>
 
     <td>

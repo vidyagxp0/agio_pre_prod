@@ -3570,6 +3570,11 @@
                         });
                     </script>
 
+
+            @php
+                $isReadOnlyattachemnt = ($document->status == 'Effective');
+            @endphp
+
                     <!-- Study Report Tab -->
                     <div id="doc-study" class="tabcontent">
                         <div class="orig-head">
@@ -3628,7 +3633,7 @@
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validateSRTFiles(this)"
                                             multiple
-                                            hidden
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                         >
                                     </div>
 
@@ -4787,7 +4792,7 @@
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validateSPTFiles(this)"
                                             multiple
-                                            hidden>
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
 
                                     </div>
 
@@ -5727,7 +5732,7 @@
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validateEHTSRFiles(this)"
                                             multiple
-                                            hidden
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                         >
 
                                     </div>
@@ -6212,6 +6217,12 @@
 
                       {{-- Finished product,  Inprocess , Cleaning Validation Specification (Commercial  registration , re-registration) tabs --}}
 
+
+          
+
+            
+
+
                 <div id="doc_FPS" class="tabcontent">
                         <div class="orig-head">Finished Product Specification
                         </div>
@@ -6608,7 +6619,7 @@
                                         <div class="add-btn">
                                             <label for="procumrepo_file_attachData" style="cursor: pointer;">Add</label>
                                             <input type="file" id="procumrepo_file_attachData" name="procumrepo_file_attach[]" 
-                                                oninput="addMultipleFiles(this, 'procumrepo_file_attachDatassp')" multiple hidden>
+                                                oninput="addMultipleFiles(this, 'procumrepo_file_attachDatassp')" multiple hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                         </div>
                                     </div>
                                 </div>
@@ -7430,7 +7441,7 @@
                                         <div class="add-btn">
                                             <label for="annex_V_user_attachmentHolTimSutRepfile_attach" style="cursor: pointer;">Add</label>
                                             <input type="file" id="annex_V_user_attachmentHolTimSutRepfile_attach" name="HolTimSutRepfile_attach[]"
-                                                oninput="addMultipleFiles(this, 'HolTimSutRepfile_attachDatassp')" multiple hidden>
+                                                oninput="addMultipleFiles(this, 'HolTimSutRepfile_attachDatassp')" multiple hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                         </div>
                                     </div>
                                 </div>
@@ -7561,7 +7572,7 @@
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validateTemMapFiles(this)"
                                             multiple
-                                            hidden
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                         >
                                     </div>
                                 </div>
@@ -7775,7 +7786,7 @@
                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                         onchange="validatePacValReportFiles(this)"
                                         multiple
-                                        hidden>
+                                        hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                 </div>
 
                             </div>
@@ -7965,7 +7976,7 @@
                                     <div class="add-btn">
                                         <label for="annex_V_user_attachmentDataformateCompresedAirAndNirogenPr" style="cursor: pointer;">Add</label>
                                         <input type="file" id="annex_V_user_attachmentDataformateCompresedAirAndNirogenPr" name="ForComANiGasProtocolfile_attach[]"
-                                            oninput="addMultipleFiles(this, 'formateCompresedAirAndNirogenProtocol')" multiple hidden>
+                                            oninput="addMultipleFiles(this, 'formateCompresedAirAndNirogenProtocol')" multiple hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                     </div>
                                 </div>
                             </div>
@@ -8094,7 +8105,7 @@
                                                         name="billMatrial[]"
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateBillMaterialFiles(this)"
-                                                        multiple
+                                                        multiple   {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                                         hidden>
                                                 </div>
 
@@ -8282,7 +8293,7 @@
 
                                                                 <input type="hidden"
                                                                     name="existing_batchManufacturingBmr[]"
-                                                                    value="{{ $file }}">
+                                                                    value="{{ $file }}" >
 
                                                             </h6>
 
@@ -8304,7 +8315,7 @@
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateBatchManufacturingBmrFiles(this)"
                                                         multiple
-                                                        hidden>
+                                                        hidden  {{ $isReadOnlyattachemnt  ? 'disabled' : '' }} >
 
                                                 </div>
 
@@ -8533,7 +8544,7 @@
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateBatchPackingRecordBprFiles(this)"
                                                         multiple
-                                                        hidden>
+                                                        hidden  {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                                 </div>
 
                                             </div>
@@ -8734,7 +8745,7 @@
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateMasterFormulaFiles(this)"
                                                         multiple
-                                                        hidden>
+                                                        hidden  {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
 
                                                 </div>
 
@@ -8954,7 +8965,7 @@
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateMasterPackingRecordFiles(this)"
                                                         multiple
-                                                        hidden>
+                                                        hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
 
                                                 </div>
 
@@ -9172,7 +9183,7 @@
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateSiteMasterFiles(this)"
                                                     multiple
-                                                    hidden>
+                                                    hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                             </div>
 
                                         </div>
@@ -9400,7 +9411,7 @@
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateAttachCompNitrogen(this)"
                                                 multiple
-                                                hidden>
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                         </div>
 
                                     </div>
@@ -9618,7 +9629,7 @@
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validatePVIRFiles(this)"
                                                     multiple
-                                                    hidden
+                                                    hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                                 >
 
                                             </div>
@@ -9824,7 +9835,7 @@
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validateAnnexAttachmentFiles(this)"
                                             multiple
-                                            hidden
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                         >
                                     </div>
 
@@ -10032,7 +10043,7 @@
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateAnnexIIRiskFiles(this)"
                                                         multiple
-                                                        hidden
+                                                        hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                                     >
                                                 </div>
 
@@ -10242,7 +10253,7 @@
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateAnnexIIIFiles(this)"
                                                     multiple
-                                                    hidden>
+                                                    hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }} >
                                             </div>
 
                                         </div>
@@ -10463,7 +10474,7 @@
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateAnnexIVFiles(this)"
                                                     multiple
-                                                    hidden>
+                                                    hidden  {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                             </div>
 
                                         </div>
@@ -10676,7 +10687,7 @@
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validateAnnexVUserFiles(this)"
                                             multiple
-                                            hidden>
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                     </div>
 
                                 </div>
@@ -10892,7 +10903,7 @@
                                                     name="annex_VI_req_attachment[]"
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateAnnexVIReqFiles(this)"
-                                                    multiple
+                                                    multiple {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                                     hidden
                                                 >
                                             </div>
@@ -11105,7 +11116,7 @@
                                             name="annex_VII_fun_attachment[]"
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validateAnnexVIIFunFiles(this)"
-                                            multiple
+                                            multiple {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                             hidden
                                         >
                                     </div>
@@ -11317,7 +11328,7 @@
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateAnnexVIIITechFiles(this)"
                                                 multiple
-                                                hidden
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                             >
                                         </div>
 
@@ -11530,7 +11541,7 @@
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateAnnexIXRiskFiles(this)"
                                                 multiple
-                                                hidden
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                             >
                                         </div>
 
@@ -11748,7 +11759,7 @@
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateAnnexXDesignFiles(this)"
                                                 multiple
-                                                hidden
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                             >
                                         </div>
 
@@ -11962,7 +11973,7 @@
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateAnnexXIConfigFiles(this)"
                                                     multiple
-                                                    hidden
+                                                    hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                                 >
                                             </div>
 
@@ -12173,7 +12184,7 @@
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateAnnexXIIProtoFiles(this)"
                                                 multiple
-                                                hidden
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                             >
                                         </div>
 
@@ -12386,7 +12397,7 @@
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validateAnnexXIIIFiles(this)"
                                             multiple
-                                            hidden
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                         >
                                     </div>
 
@@ -12599,7 +12610,7 @@
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateAnnexXIVFiles(this)"
                                                 multiple
-                                                hidden
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                             >
                                         </div>
 
@@ -12811,7 +12822,7 @@
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateAnnexXVFiles(this)"
                                                 multiple
-                                                hidden
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                             >
                                         </div>
 
@@ -13861,7 +13872,7 @@
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validateEHTSPRTFiles(this)"
                                             multiple
-                                            hidden>
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
 
                                     </div>
 
@@ -14062,7 +14073,7 @@
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validatePVRFiles(this)"
                                                 multiple
-                                                hidden
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                             >
 
                                         </div>
@@ -14261,8 +14272,8 @@
                                                 name="attach_cvpd[]"
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateAttachCvpdFiles(this)"
-                                                multiple
-                                                hidden
+                                                multiple 
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                             >
                                         </div>
 
@@ -14464,7 +14475,7 @@
                                         name="file_attach_cvrd[]"
                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                         multiple
-                                        hidden
+                                        hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                         onchange="validateFileAttachCvrd(this)"
                                     >
                                 </div>
@@ -14636,7 +14647,7 @@
                                         <div class="add-btn">
                                             <label for="file_attachDataSSP" style="cursor: pointer;">Add</label>
                                             <input type="file" id="file_attachDataSSP" name="file_attach[]" 
-                                                oninput="addMultipleFiles(this, 'Stability_study_protocolField')" multiple hidden>
+                                                oninput="addMultipleFiles(this, 'Stability_study_protocolField')" multiple hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                         </div>
                                     </div>
                                 </div>
@@ -14785,7 +14796,7 @@
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateProValProtocolView(this)"
                                                     multiple
-                                                    hidden>
+                                                    hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                             </div>
 
                                         </div>
@@ -15004,7 +15015,7 @@
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateFileAttachVmpView(this)"
                                                 multiple
-                                                hidden>
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                         </div>
 
                                     </div>
@@ -15217,7 +15228,7 @@
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateFileAttachQmFiles(this)"
                                                 multiple
-                                                hidden
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                             >
                                         </div>
 
@@ -15420,7 +15431,7 @@
                                                 name="procumrepo_file_attach[]"
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 multiple
-                                                hidden
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                                 onchange="validateProcumRepoFiles(this)"
                                             >
                                         </div>
@@ -15816,7 +15827,7 @@
                                             <div class="add-btn">
                                                 <label for="htpsfile" style="cursor: pointer;">Add</label>
                                                 <input type="file" id="htpsfile" name="htspattachement[]"
-                                                    oninput="addMultipleFiles(this, 'attachement_htsp')" multiple hidden>
+                                                    oninput="addMultipleFiles(this, 'attachement_htsp')" multiple hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                             </div>
                                         </div>
                                     </div>
@@ -15952,7 +15963,7 @@
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validateAFQPFiles(this)"
                                             multiple
-                                            hidden
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                         >
                                     </div>
 
@@ -16131,7 +16142,7 @@
                                             name="afqrattachement[]"
                                             oninput="addMultipleFiles(this,'attachement_afqr')"
                                             multiple
-                                            hidden>
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                     </div>
 
                                 </div>
@@ -16286,7 +16297,7 @@
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validateAFURSFiles(this)"
                                             multiple
-                                            hidden
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                         >
                                     </div>
 
@@ -16454,7 +16465,7 @@
                                         <div class="add-btn">
                                             <label for="aqpfile" style="cursor: pointer;">Add</label>
                                             <input type="file" id="aqpfile" name="aqpattachement[]"
-                                                oninput="addMultipleFiles(this, 'attachement_aqp')" multiple hidden>
+                                                oninput="addMultipleFiles(this, 'attachement_aqp')" multiple hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                         </div>
                                     </div>
                                 </div>
@@ -16583,7 +16594,7 @@
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     multiple
                                                     hidden
-                                                    onchange="validateAqrFiles(this)"
+                                                    onchange="validateAqrFiles(this)" {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                                 >
                                             </div>
 
@@ -16795,7 +16806,7 @@
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validatePFMFViewFiles(this)"
                                             multiple
-                                            hidden>
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                     </div>
 
                                 </div>
@@ -17013,7 +17024,7 @@
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validateRFMFFiles(this)"
                                             multiple
-                                            hidden
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                         >
 
                                     </div>
@@ -17232,7 +17243,7 @@
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validateASRFiles(this)"
                                             multiple
-                                            hidden
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                         >
 
                                     </div>
@@ -17452,7 +17463,7 @@
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateATMFiles(this)"
                                                 multiple
-                                                hidden
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                             >
 
                                         </div>
@@ -17662,7 +17673,7 @@
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateAVSRFiles(this)"
                                                 multiple
-                                                hidden
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                             >
                                         </div>
 
@@ -17870,7 +17881,7 @@
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validateAIIOPQFiles(this)"
                                             multiple
-                                            hidden
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                         >
                                     </div>
 
@@ -18076,7 +18087,7 @@
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validatePVPFiles(this)"
                                                     multiple
-                                                    hidden
+                                                    hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                                 >
                                             </div>
 
@@ -18288,7 +18299,7 @@
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateAIQPFiles(this)"
                                                     multiple
-                                                    hidden
+                                                    hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                                 >
                                             </div>
 
@@ -18498,7 +18509,7 @@
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateAOQPFiles(this)"
                                                         multiple
-                                                        hidden
+                                                        hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                                     >
                                                 </div>
 
@@ -18708,7 +18719,7 @@
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateAPQPFiles(this)"
                                                 multiple
-                                                hidden
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
                                             >
                                         </div>
 
@@ -19642,33 +19653,33 @@
                         $isReadOnly = ($document->status == 'Effective');
                     @endphp
                     <div class="input-fields">
-  @if ($document->document_content && !empty($document->document_content->annexuredata))
+                        @if ($document->document_content && !empty($document->document_content->annexuredata))
 
-        @foreach (unserialize($document->document_content->annexuredata) as $index => $data)
+                                @foreach (unserialize($document->document_content->annexuredata) as $index => $data)
 
-            {!! quillEditor(
-                "annexuredata[$index]",
-                $data,
-                '<label>Annexure A-' . ($index + 1) . '</label>',
-                $isReadOnly
-            ) !!}
+                                    {!! quillEditor(
+                                        "annexuredata[$index]",
+                                        $data,
+                                        '<label>Annexure A-' . ($index + 1) . '</label>',
+                                        $isReadOnly
+                                    ) !!}
 
-        @endforeach
+                                @endforeach
 
-    @else
+                            @else
 
-        @for ($i = 0; $i < 30; $i++)
+                                @for ($i = 0; $i < 30; $i++)
 
-            {!! quillEditor(
-                "annexuredata[$i]",
-                '',
-                '<label>Annexure A-' . ($i + 1) . '</label>',
-                $isReadOnly
-            ) !!}
+                                    {!! quillEditor(
+                                        "annexuredata[$i]",
+                                        '',
+                                        '<label>Annexure A-' . ($i + 1) . '</label>',
+                                        $isReadOnly
+                                    ) !!}
 
-        @endfor
+                                @endfor
 
-    @endif
+                            @endif
 
                     </div>
                     <div class="button-block">

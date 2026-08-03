@@ -474,9 +474,10 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
+                  
+                   <tr>
                         <th class="w-20">Initiator</th>
-                        <td class="w-30">{{ $data->originator }}</td>
+                        <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
                         <th class="w-20">Date Of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
 
@@ -678,6 +679,9 @@
                 </table>
             </div>
 
+            @php
+              $selectedApproaches = array_map('trim', explode(',', $data->root_cause_methodology ?? ''));
+            @endphp
 
                  <table>
                     <tr>
@@ -691,6 +695,7 @@
 
                         </td>
                     </tr>
+                    
                     <tr>
                         <th class="w-20">Other (Root Cause Methodology)</th>
                         <td class="w-80">
@@ -747,101 +752,102 @@
                                 }
 
                             </style>
+            @if(in_array('Failure Mode and Effect Analysis', $selectedApproaches))                
               <div class="block-head">Failure Mode And Effect Analysis</div>
-<div class="table-responsive">
-    <table class="tableFMEA">
-        <thead>
-            <tr class="table_bg" style="text-align:center;vertical-align:middle;padding:20px;">
-                <th class="thFMEA" rowspan="2">Sr.No</th>
-                <th class="thFMEA" colspan="2">Risk Identification</th>
-                <th class="thFMEA">Risk Analysis</th>
-                <th class="thFMEA" colspan="4">Risk Evaluation</th>
-                <th class="thFMEA">Risk Control</th>
-                <th class="thFMEA" colspan="6">Risk Evaluation</th>
-                <th class="thFMEA" rowspan="2">Traceability Document</th>
-            </tr>
-            <tr class="table_bg">
-                <th class="thFMEA">Activity</th>
-                <th class="thFMEA">Possible Risk/Failure (Identified Risk)</th>
-                <th class="thFMEA">Consequences of Risk/Potential Causes</th>
+                <div class="table-responsive">
+                    <table class="tableFMEA">
+                        <thead>
+                            <tr class="table_bg" style="text-align:center;vertical-align:middle;padding:20px;">
+                                <th class="thFMEA" rowspan="2">Sr.No</th>
+                                <th class="thFMEA" colspan="2">Risk Identification</th>
+                                <th class="thFMEA">Risk Analysis</th>
+                                <th class="thFMEA" colspan="4">Risk Evaluation</th>
+                                <th class="thFMEA">Risk Control</th>
+                                <th class="thFMEA" colspan="6">Risk Evaluation</th>
+                                <th class="thFMEA" rowspan="2">Traceability Document</th>
+                            </tr>
+                            <tr class="table_bg">
+                                <th class="thFMEA">Activity</th>
+                                <th class="thFMEA">Possible Risk/Failure (Identified Risk)</th>
+                                <th class="thFMEA">Consequences of Risk/Potential Causes</th>
 
-                <th class="thFMEA">Severity (S)</th>
-                <th class="thFMEA">Probability (P)</th>
-                <th class="thFMEA">Detection (D)</th>
-                <th class="thFMEA">Risk Level (RPN)</th>
+                                <th class="thFMEA">Severity (S)</th>
+                                <th class="thFMEA">Probability (P)</th>
+                                <th class="thFMEA">Detection (D)</th>
+                                <th class="thFMEA">Risk Level (RPN)</th>
 
-                <th class="thFMEA">Control Measures recommended/ Risk mitigation proposed</th>
+                                <th class="thFMEA">Control Measures recommended/ Risk mitigation proposed</th>
 
-                <th class="thFMEA">Severity (S)</th>
-                <th class="thFMEA">Probability (P)</th>
-                <th class="thFMEA">Detection (D)</th>
-                <th class="thFMEA">Risk Level (RPN)</th>
-                <th class="thFMEA">Category of Risk Level (Low, Medium and High)</th>
-                <th class="thFMEA">Risk Acceptance (Y/N)</th>
-            </tr>
-        </thead>
+                                <th class="thFMEA">Severity (S)</th>
+                                <th class="thFMEA">Probability (P)</th>
+                                <th class="thFMEA">Detection (D)</th>
+                                <th class="thFMEA">Risk Level (RPN)</th>
+                                <th class="thFMEA">Category of Risk Level (Low, Medium and High)</th>
+                                <th class="thFMEA">Risk Acceptance (Y/N)</th>
+                            </tr>
+                        </thead>
 
-        <tbody>
-            @php
-                $riskFactors = is_string($riskEffectAnalysis->risk_factor) && @unserialize($riskEffectAnalysis->risk_factor)
-                    ? unserialize($riskEffectAnalysis->risk_factor)
-                    : [];
+                        <tbody>
+                            @php
+                                $riskFactors = is_string($riskEffectAnalysis->risk_factor) && @unserialize($riskEffectAnalysis->risk_factor)
+                                    ? unserialize($riskEffectAnalysis->risk_factor)
+                                    : [];
 
-                $causes             = @unserialize($riskEffectAnalysis->problem_cause) ?: [];
-                $existingControls   = @unserialize($riskEffectAnalysis->existing_risk_control) ?: [];
-                $initialS           = @unserialize($riskEffectAnalysis->initial_severity) ?: [];
-                $initialP           = @unserialize($riskEffectAnalysis->initial_probability) ?: [];
-                $initialD           = @unserialize($riskEffectAnalysis->initial_detectability) ?: [];
-                $initialRPN         = @unserialize($riskEffectAnalysis->initial_rpn) ?: [];
-                $recommendations    = @unserialize($riskEffectAnalysis->risk_control_measure) ?: [];
-                $residualS          = @unserialize($riskEffectAnalysis->residual_severity) ?: [];
-                $residualP          = @unserialize($riskEffectAnalysis->residual_probability) ?: [];
-                $residualD          = @unserialize($riskEffectAnalysis->residual_detectability) ?: [];
-                $residualRPN        = @unserialize($riskEffectAnalysis->residual_rpn) ?: [];
-                $riskCategory       = @unserialize($riskEffectAnalysis->risk_acceptance) ?: [];
-                $riskAccepted       = @unserialize($riskEffectAnalysis->risk_acceptance2) ?: [];
-                $traceability       = @unserialize($riskEffectAnalysis->mitigation_proposal) ?: [];
-            @endphp
+                                $causes             = @unserialize($riskEffectAnalysis->problem_cause) ?: [];
+                                $existingControls   = @unserialize($riskEffectAnalysis->existing_risk_control) ?: [];
+                                $initialS           = @unserialize($riskEffectAnalysis->initial_severity) ?: [];
+                                $initialP           = @unserialize($riskEffectAnalysis->initial_probability) ?: [];
+                                $initialD           = @unserialize($riskEffectAnalysis->initial_detectability) ?: [];
+                                $initialRPN         = @unserialize($riskEffectAnalysis->initial_rpn) ?: [];
+                                $recommendations    = @unserialize($riskEffectAnalysis->risk_control_measure) ?: [];
+                                $residualS          = @unserialize($riskEffectAnalysis->residual_severity) ?: [];
+                                $residualP          = @unserialize($riskEffectAnalysis->residual_probability) ?: [];
+                                $residualD          = @unserialize($riskEffectAnalysis->residual_detectability) ?: [];
+                                $residualRPN        = @unserialize($riskEffectAnalysis->residual_rpn) ?: [];
+                                $riskCategory       = @unserialize($riskEffectAnalysis->risk_acceptance) ?: [];
+                                $riskAccepted       = @unserialize($riskEffectAnalysis->risk_acceptance2) ?: [];
+                                $traceability       = @unserialize($riskEffectAnalysis->mitigation_proposal) ?: [];
+                            @endphp
 
-            @if(count($riskFactors))
-                @foreach($riskFactors as $key => $risk)
-                    <tr>
-                        <td class="tdFMEA">{{ $key + 1 }}</td>
+                            @if(count($riskFactors))
+                                @foreach($riskFactors as $key => $risk)
+                                    <tr>
+                                        <td class="tdFMEA">{{ $key + 1 }}</td>
 
-                        <td class="tdFMEA">{{ $risk }}</td>
-                        <td class="tdFMEA">{{ $causes[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ $existingControls[$key] ?? null }}</td>
+                                        <td class="tdFMEA">{{ $risk }}</td>
+                                        <td class="tdFMEA">{{ $causes[$key] ?? null }}</td>
+                                        <td class="tdFMEA">{{ $existingControls[$key] ?? null }}</td>
 
-                        <td class="tdFMEA">{{ $initialS[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ $initialP[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ $initialD[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ $initialRPN[$key] ?? null }}</td>
+                                        <td class="tdFMEA">{{ $initialS[$key] ?? null }}</td>
+                                        <td class="tdFMEA">{{ $initialP[$key] ?? null }}</td>
+                                        <td class="tdFMEA">{{ $initialD[$key] ?? null }}</td>
+                                        <td class="tdFMEA">{{ $initialRPN[$key] ?? null }}</td>
 
-                        <td class="tdFMEA">{{ $recommendations[$key] ?? null }}</td>
+                                        <td class="tdFMEA">{{ $recommendations[$key] ?? null }}</td>
 
-                        <td class="tdFMEA">{{ $residualS[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ $residualP[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ $residualD[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ $residualRPN[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ $riskCategory[$key] ?? null }}</td>
-                        <td class="tdFMEA">{{ $riskAccepted[$key] ?? null }}</td>
+                                        <td class="tdFMEA">{{ $residualS[$key] ?? null }}</td>
+                                        <td class="tdFMEA">{{ $residualP[$key] ?? null }}</td>
+                                        <td class="tdFMEA">{{ $residualD[$key] ?? null }}</td>
+                                        <td class="tdFMEA">{{ $residualRPN[$key] ?? null }}</td>
+                                        <td class="tdFMEA">{{ $riskCategory[$key] ?? null }}</td>
+                                        <td class="tdFMEA">{{ $riskAccepted[$key] ?? null }}</td>
 
-                        <td class="tdFMEA">{{ $traceability[$key] ?? null }}</td>
-                    </tr>
-                @endforeach
-            @else
-                <tr>
-                    <td colspan="18">No data available.</td>
-                </tr>
+                                        <td class="tdFMEA">{{ $traceability[$key] ?? null }}</td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="18">No data available.</td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+
             @endif
-        </tbody>
-    </table>
-</div>
-
-
                 <!-------------------- new data -->
 
-               
+        @if(in_array('Why-Why Chart', $selectedApproaches))      
             <div class="why-why-chart-container">
                 <div class="block-head">
                     <strong>Why-Why Chart</strong>
@@ -896,7 +902,7 @@
                     </table>
                 </div>
             </diV>
-
+        @endif
                 <div class="border">
                         <!-- <label class="head-number" for="Risk Assessment Summary">Risk Assessment Summary</label>
                         <div class="div-data">

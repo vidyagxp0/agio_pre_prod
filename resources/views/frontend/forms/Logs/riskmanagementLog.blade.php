@@ -207,7 +207,7 @@
             <div class="scope-bar">
                 <button class="print-btn btn btn-primary">Print</button>
             </div>
-            <div class="active" onclick="openTab('internal-audit', this)">Risk Management Log</div>
+            <div class="active" onclick="openTab('internal-audit', this)">Risk Assessment Log</div>
             <div class="third-div">Third Div Content</div>
         </div>
          <div class="main-content">

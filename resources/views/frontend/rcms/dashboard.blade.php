@@ -270,7 +270,7 @@
                                             ['class' => \App\Models\ManagementReview::class, 'type' => 'Management-Review', 'prefix' => 'MR'],
                                             ['class' => \App\Models\LabIncident::class, 'type' => 'Lab-Incident', 'prefix' => 'LI'],
                                             ['class' => \App\Models\Auditee::class, 'type' => 'External-Audit', 'prefix' => 'EA'],
-                                            ['class' => \App\Models\AuditProgram::class, 'type' => 'Audit-Program', 'prefix' => 'AuditProgram'],
+                                            ['class' => \App\Models\AuditProgram::class, 'type' => 'Audit-Program', 'prefix' => 'AP'],
                                             ['class' => \App\Models\RootCauseAnalysis::class, 'type' => 'Root-Cause-Analysis', 'prefix' => 'RCA'],
                                             ['class' => \App\Models\Observation::class, 'type' => 'Observation', 'prefix' => 'OBS'],
                                             ['class' => \App\Models\OOS::class, 'type' => 'OOS/OOT', 'prefix' => 'OOS'],

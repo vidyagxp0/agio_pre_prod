@@ -3791,107 +3791,109 @@
                             <br>
                             <br><br><br><br><br><br><br><br><br><br><br><br>
 
+                            @php
+                                $selectedApproaches = array_map('trim', explode(',', $data->investigation_approach ?? ''));
+                            @endphp
 
-
-
+                    @if(in_array('Fishbone or Ishikawa Diagram', $selectedApproaches))
                             <div class="block-head">
-    Fishbone or Ishikawa Diagram
-</div>
+                                    Fishbone or Ishikawa Diagram
+                                </div>
 
-@if (!empty($fishboneData))
-    @php
-        $decodedData = json_decode($fishboneData->data, true);
-    @endphp
+                                @if (!empty($fishboneData))
+                                    @php
+                                        $decodedData = json_decode($fishboneData->data, true);
+                                    @endphp
 
-    @if ($decodedData && is_array($decodedData))
-    <div style="padding: 20px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9;">
+                                    @if ($decodedData && is_array($decodedData))
+                                    <div style="padding: 20px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9;">
 
-@php
-    $measurement = $decodedData['measurement'] ?? [];
-    $materials = $decodedData['materials'] ?? [];
-    $methods = $decodedData['methods'] ?? [];
-    $maxCount = max(count((array)$measurement), count((array)$materials), count((array)$methods));
+                                @php
+                                    $measurement = $decodedData['measurement'] ?? [];
+                                    $materials = $decodedData['materials'] ?? [];
+                                    $methods = $decodedData['methods'] ?? [];
+                                    $maxCount = max(count((array)$measurement), count((array)$materials), count((array)$methods));
 
-    $environment = $decodedData['environment'] ?? [];
-    $manpower = $decodedData['manpower'] ?? [];
-    $machine = $decodedData['machine'] ?? [];
-    $maxCount2 = max(count((array)$environment), count((array)$manpower), count((array)$machine));
-@endphp
+                                    $environment = $decodedData['environment'] ?? [];
+                                    $manpower = $decodedData['manpower'] ?? [];
+                                    $machine = $decodedData['machine'] ?? [];
+                                    $maxCount2 = max(count((array)$environment), count((array)$manpower), count((array)$machine));
+                                @endphp
 
-<!-- Wrapper table to align content side by side -->
-<table style="width: 100%; border-collapse: collapse;">
-    <tr valign="top">
-        <!-- First Table -->
-        <td style="width: 70%;">
-            <table style="width: 70%; border-collapse: collapse; text-align: left;">
-                <thead>
-                    <tr style="color: #007bff;">
-                        <th style="padding: 10px; border: 1px solid #ddd;">Measurement</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Materials</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Methods</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for ($i = 0; $i < $maxCount; $i++)
-                        <tr>
-                            <td style="padding: 10px; border: 1px solid #ddd;">{{ $measurement[$i] ?? 'N/A' }}</td>
-                            <td style="padding: 10px; border: 1px solid #ddd;">{{ $materials[$i] ?? 'N/A' }}</td>
-                            <td style="padding: 10px; border: 1px solid #ddd;">{{ $methods[$i] ?? 'N/A' }}</td>
-                        </tr>
-                    @endfor
-                </tbody>
-            </table>
-        </td>
-    </tr>
-</table>
+                                <!-- Wrapper table to align content side by side -->
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tr valign="top">
+                                        <!-- First Table -->
+                                        <td style="width: 70%;">
+                                            <table style="width: 70%; border-collapse: collapse; text-align: left;">
+                                                <thead>
+                                                    <tr style="color: #007bff;">
+                                                        <th style="padding: 10px; border: 1px solid #ddd;">Measurement</th>
+                                                        <th style="padding: 10px; border: 1px solid #ddd;">Materials</th>
+                                                        <th style="padding: 10px; border: 1px solid #ddd;">Methods</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for ($i = 0; $i < $maxCount; $i++)
+                                                        <tr>
+                                                            <td style="padding: 10px; border: 1px solid #ddd;">{{ $measurement[$i] ?? 'N/A' }}</td>
+                                                            <td style="padding: 10px; border: 1px solid #ddd;">{{ $materials[$i] ?? 'N/A' }}</td>
+                                                            <td style="padding: 10px; border: 1px solid #ddd;">{{ $methods[$i] ?? 'N/A' }}</td>
+                                                        </tr>
+                                                    @endfor
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
 
-<table style="width: 100%; border-collapse: collapse;">
-    <tr >
-        <td style="width: 70%;">
-            <div style="width: 100%; height: 2px; background: blue; margin: 20px 0;"></div>
-        </td>
-        <td style="width: 30%;">
-            <div style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background: #ffffff;">
-                <strong style="color: #007bff;">Problem Statement:</strong>
-                <div style="margin-top: 10px;">
-                    {{ $decodedData['fishbone_problem_statement'] ?? 'N/A' }}
-                </div>
-            </div>
-        </td>
-    </tr>
-</table>
-
-
-<!-- Second Table -->
-<table style="width: 70%; border-collapse: collapse; text-align: left;">
-    <thead>
-        <tr style="color: #007bff;">
-            <th style="padding: 10px; border: 1px solid #ddd;">Mother Environment</th>
-            <th style="padding: 10px; border: 1px solid #ddd;">Man</th>
-            <th style="padding: 10px; border: 1px solid #ddd;">Machine</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for ($i = 0; $i < $maxCount2; $i++)
-            <tr>
-                <td style="padding: 10px; border: 1px solid #ddd;">{{ $environment[$i] ?? 'N/A' }}</td>
-                <td style="padding: 10px; border: 1px solid #ddd;">{{ $manpower[$i] ?? 'N/A' }}</td>
-                <td style="padding: 10px; border: 1px solid #ddd;">{{ $machine[$i] ?? 'N/A' }}</td>
-            </tr>
-        @endfor
-    </tbody>
-</table>
-
-</div>
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tr >
+                                        <td style="width: 70%;">
+                                            <div style="width: 100%; height: 2px; background: blue; margin: 20px 0;"></div>
+                                        </td>
+                                        <td style="width: 30%;">
+                                            <div style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background: #ffffff;">
+                                                <strong style="color: #007bff;">Problem Statement:</strong>
+                                                <div style="margin-top: 10px;">
+                                                    {{ $decodedData['fishbone_problem_statement'] ?? 'N/A' }}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
 
 
-    @else
-        <p style="text-align: center; color: red;">Invalid Fishbone data format.</p>
-    @endif
-@else
-    <p style="text-align: center; color: red;">No Fishbone data available.</p>
-@endif
+                                <!-- Second Table -->
+                                <table style="width: 70%; border-collapse: collapse; text-align: left;">
+                                    <thead>
+                                        <tr style="color: #007bff;">
+                                            <th style="padding: 10px; border: 1px solid #ddd;">Mother Environment</th>
+                                            <th style="padding: 10px; border: 1px solid #ddd;">Man</th>
+                                            <th style="padding: 10px; border: 1px solid #ddd;">Machine</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for ($i = 0; $i < $maxCount2; $i++)
+                                            <tr>
+                                                <td style="padding: 10px; border: 1px solid #ddd;">{{ $environment[$i] ?? 'N/A' }}</td>
+                                                <td style="padding: 10px; border: 1px solid #ddd;">{{ $manpower[$i] ?? 'N/A' }}</td>
+                                                <td style="padding: 10px; border: 1px solid #ddd;">{{ $machine[$i] ?? 'N/A' }}</td>
+                                            </tr>
+                                        @endfor
+                                    </tbody>
+                                </table>
 
+                                </div>
+
+
+                                    @else
+                                        <p style="text-align: center; color: red;">Invalid Fishbone data format.</p>
+                                    @endif
+                                @else
+                                    <p style="text-align: center; color: red;">No Fishbone data available.</p>
+                                @endif
+                    @endif
 
                                 <br><br><br><br>
 
@@ -4129,6 +4131,7 @@
 
 
 
+                        @if(in_array('Failure Mode and Effect Analysis', $selectedApproaches))
 
                             <div class="block-head">Failure Mode And Effect Analysis</div>
                             <div class="table-responsive">
@@ -4203,7 +4206,7 @@
                             </table>
                         </div>
 
-
+                    @endif
 
 
 
@@ -4620,7 +4623,7 @@
                         </table> -->
 
 
-
+                        @if(in_array('Why-Why Chart', $selectedApproaches))
                             <div class="why-why-chart-container">
                                 <div class="block-head">
                                     <strong>Why-Why Chart</strong>
@@ -4677,6 +4680,9 @@
                                 </div>
                             </div>
 
+                        @endif   
+
+                        @if(in_array('Category Of Human Error', $selectedApproaches))
                             <div class="border-table" style="margin-bottom: 15px;">
                                 <div class="block-head" style="margin-bottom: 5px; font-weight:bold;">
                                 Category Of Human Error
@@ -4733,7 +4739,9 @@
                                     </tbody>
                                 </table>
                             </div>
-
+                        @endif    
+                        
+                        @if(in_array('Is/Is Not Analysis', $selectedApproaches))
                             <div class="border-table" style="margin-bottom: 15px;">
                                 <div class="block-head" style="margin-bottom: 5px; font-weight:bold;">
                                     Is/Is Not Analysis
@@ -4784,6 +4792,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                         @endif   
                         </div>
 
                         <div class="block-head">Root Cause</div>
@@ -5008,6 +5017,20 @@
                                             </tbody>
                                         </table>
                                     </div> --}}
+
+                                @php
+                                    $riskFactors = [];
+
+                                    if (!empty($riskEffectAnalysis->risk_factor)) {
+                                        $riskFactors = @unserialize($riskEffectAnalysis->risk_factor);
+
+                                        if (!is_array($riskFactors)) {
+                                            $riskFactors = [];
+                                        }
+                                    }
+                                @endphp
+
+                               @if(count($riskFactors) > 0)
                                     <div class="block-head">Failure Mode And Effect Analysis</div>
                                     <div class="table-responsive">
                                         <table class="tableFMEA">
@@ -5073,6 +5096,7 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                @endif    
 
                                     <table>
                                             <th class="w-20">Conclusion</th>

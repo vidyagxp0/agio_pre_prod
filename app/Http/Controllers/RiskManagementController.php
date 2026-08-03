@@ -9405,79 +9405,80 @@ class RiskManagementController extends Controller
         }
     }
 
-
-
 public static function effectiveFamilyReport($id)
 {
     $data = RiskManagement::find($id);
+
+    if (!$data) {
+        abort(404);
+    }
+
     $docdetail = Docdetail::where('cc_id', $data->id)->first();
-    $cc_cfts =  CcCft::where('cc_id', $id)->first();
-    $cftData =  CcCft::where('cc_id', $id)->first();
+    $cc_cfts = CcCft::where('cc_id', $id)->first();
+    $cftData = CcCft::where('cc_id', $id)->first();
     $review = Qareview::where('cc_id', $data->id)->first();
     $evaluation = Evaluation::where('cc_id', $data->id)->first();
     $QaApprovalComments = QaApprovalComments::where('cc_id', $id)->first();
     $closure = ChangeClosure::where('cc_id', $data->id)->first();
 
-
-    
-    if (!$data) {
-        abort(404);
-        }
-        
-        
-        // 🔹 Get CAPA children
-        $capas = Capa::where('parent_id', $id)
+    // CAPA Children
+    $capas = Capa::where('parent_id', $id)
         ->where('parent_type', 'risk-assesment')
         ->orderBy('created_at', 'asc')
         ->get();
-        
-        $capa_teamNamesString = "";
-        // 🔹 Attach grids to each CAPA (SAME AS singleReport)
-        foreach ($capas as $capa) {
-            
-            $capa->Product_Details = CapaGrid::where('capa_id', $capa->id)
-            ->where('type', "Product_Details")
+
+    $capa_teamNamesString = "";
+
+    foreach ($capas as $capa) {
+
+        $capa->Product_Details = CapaGrid::where('capa_id', $capa->id)
+            ->where('type', 'Product_Details')
             ->first();
-            
+
         $capa->Instruments_Details = CapaGrid::where('capa_id', $capa->id)
-            ->where('type', "Instruments_Details")
+            ->where('type', 'Instruments_Details')
             ->first();
 
         $capa->Material_Details = CapaGrid::where('capa_id', $capa->id)
-            ->where('type', "Material_Details")
+            ->where('type', 'Material_Details')
             ->first();
 
-        // originator
         $capa->originator = User::where('id', $capa->initiator_id)->value('name');
-
-        // team
 
         if (!empty($capa->capa_team)) {
             $ids = explode(',', $capa->capa_team);
-            $names = User::whereIn('id', $ids)->pluck('name')->toArray();
+
+            $names = User::whereIn('id', $ids)
+                ->pluck('name')
+                ->toArray();
+
             $capa->capa_teamNamesString = implode(', ', $names);
+        } else {
+            $capa->capa_teamNamesString = '';
         }
     }
 
-    // 🔹 Other existing data (same as yours)
+    // Action Items
     $actionItem = ActionItem::where('parent_id', $id)
         ->where('parent_type', 'risk-assesment')
         ->orderBy('created_at', 'asc')
         ->get();
 
+    // Change Controls
     $change = CC::where('parent_id', $id)
         ->where('parent_type', 'risk-assesment')
         ->orderBy('created_at', 'asc')
-        ->get();   
+        ->get();
 
+    // Risk Effect Analysis
     $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id', $id)
-        ->where('type', "effect_analysis")
+        ->where('type', 'effect_analysis')
         ->latest()
         ->first();
 
     $data1 = RiskManagmentCft::where('risk_id', $id)->first();
 
-    return PDF::loadview(
+    $pdf = PDF::loadView(
         'frontend.riskAssesment.family_report',
         compact(
             'data',
@@ -9495,10 +9496,35 @@ public static function effectiveFamilyReport($id)
             'riskEffectAnalysis',
             'capa_teamNamesString'
         )
-    )->setPaper('A4')
-     ->stream('EffectivenessCheck_Family_' . $id . '.pdf');
-}
+    );
 
+    $pdf->setPaper('A4');
+
+    $pdf->render();
+
+    $canvas = $pdf->getDomPDF()->getCanvas();
+
+    $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+
+        $text = "$pageNumber of $pageCount";
+
+        $font = $fontMetrics->getFont('sans-serif');
+
+        $size = 9;
+
+        $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+        $canvas->text(
+            $canvas->get_width() - $width - 110,
+            $canvas->get_height() - 763,
+            $text,
+            $font,
+            $size
+        );
+    });
+
+    return $pdf->stream('EffectivenessCheck_Family_' . $id . '.pdf');
+}
 
 
     public static function auditReport($id)

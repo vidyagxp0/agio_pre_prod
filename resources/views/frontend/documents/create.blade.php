@@ -3855,7 +3855,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateEHTSRFiles(this)"
                                                     multiple
-                                                    hidden
+                                                    hidden 
                                                 >
                                             </div>
 
@@ -4520,7 +4520,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                         onchange="validatePacValRepFiles(this)"
                                         multiple
-                                        hidden
+                                        hidden 
                                     >
                                 </div>
 
@@ -5011,7 +5011,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                             onchange="validateEHTSPRTFiles(this)"
                                             multiple
-                                            hidden
+                                            hidden 
                                         >
                                     </div>
 
@@ -5577,7 +5577,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateAttachCompNitrogenCreate(this)"
                                                         multiple
-                                                        hidden>
+                                                        hidden >
                                                 </div>
 
                                             </div>
@@ -6836,7 +6836,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validatePVRFiles(this)"
                                                     multiple
-                                                    hidden
+                                                    hidden 
                                                 >
                                             </div>
 
@@ -7584,8 +7584,8 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                     name="attach_cvpd[]"
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     multiple
-                                                    hidden
-                                                    onchange="validateCVPDFiles(this)"
+                                                    hidden 
+                                                    onchange="validateCVPDFiles(this)" 
                                                 >
                                             </div>
                                         </div>
@@ -8035,7 +8035,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                 name="file_attach_cvrd[]"
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 multiple
-                                                hidden
+                                                hidden 
                                                 onchange="validateFileAttachCvrd(this)"
                                             >
                                         </div>
@@ -8139,37 +8139,125 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 <div class="row">
 
 
-                                <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                              <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment">
+                                        <b>File Attachment</b>
+                                    </label>
 
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="file_attach"></div>
-
-                                                <div class="add-btn">
-                                                    <label for="file_attachDataSSP" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="file_attachDataSSP" name="file_attach[]"
-                                                        oninput="addMultipleFiles(this, 'file_attach')" multiple hidden>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
                                     </div>
 
+                                    <div class="file-attachment-field">
 
+                                        <div class="file-attachment-list" id="file_attach"></div>
 
-                                    <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                        <div class="add-btn">
+                                            <label for="file_attachDataSSP" style="cursor:pointer;">
+                                                Add
+                                            </label>
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
-                                        }
+                                            <input
+                                                type="file"
+                                                id="file_attachDataSSP"
+                                                name="file_attach[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateFileAttach(this)"
+                                                multiple
+                                                hidden 
+                                            >
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+
+                            function validateFileAttach(input){
+
+                                const allowedExtensions = [
+                                    'pdf',
+                                    'jpg',
+                                    'jpeg',
+                                    'png'
+                                ];
+
+                                const allowedMimeTypes = [
+                                    'application/pdf',
+                                    'image/jpeg',
+                                    'image/png'
+                                ];
+
+                                const files = Array.from(input.files);
+
+                                if(files.length === 0){
+                                    return;
+                                }
+
+                                for(const file of files){
+
+                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                    if(
+                                        !allowedExtensions.includes(ext) ||
+                                        !allowedMimeTypes.includes(file.type)
+                                    ){
+
+                                        Swal.fire({
+                                            icon:'error',
+                                            title:'Invalid File',
+                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                        });
+
+                                        input.value = '';
+                                        return;
                                     }
-                                    </script>
+                                }
+
+                                addFileAttachFiles(input,'file_attach');
+
+                            }
+
+
+                            function addFileAttachFiles(input,listId){
+
+                                const fileList = document.getElementById(listId);
+
+                                for(const file of input.files){
+
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container','text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let remove = document.createElement('a');
+                                    remove.type = 'button';
+
+                                    remove.innerHTML =
+                                        '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                    remove.onclick = function(){
+                                        fileContainer.remove();
+                                    };
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(remove);
+
+                                    fileList.appendChild(fileContainer);
+
+                                }
+
+                                input.value = "";
+
+                            }
+
+                            </script>
 
 
                             {{--
@@ -8674,7 +8762,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateFileAttachVmp(this)"
                                                     multiple
-                                                    hidden>
+                                                    hidden >
                                             </div>
 
                                         </div>
@@ -8802,7 +8890,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateFileAttachQmCreate(this)"
                                                     multiple
-                                                    hidden
+                                                    hidden 
                                                 >
                                             </div>
 
@@ -9048,8 +9136,8 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                         name="procumrepo_file_attach[]"
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         multiple
-                                                        hidden
-                                                        onchange="validateProcumRepoFiles(this)"
+                                                        hidden 
+                                                        onchange="validateProcumRepoFiles(this)"  
                                                     >
                                                 </div>
 
@@ -9881,7 +9969,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateProValProtocol(this)"
                                                     multiple
-                                                    hidden>
+                                                    hidden >
                                             </div>
 
                                         </div>
@@ -11124,31 +11212,122 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="File_Attachment"><b>Hold Time Study Report Attachment</b></label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="File_Attachment">
+                                        <b>Hold Time Study Report Attachment</b>
+                                    </label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
 
                                     <div class="file-attachment-field">
+
                                         <div class="file-attachment-list" id="HolTimSutRep_fileattachement"></div>
 
                                         <div class="add-btn">
-                                            <label for="HolTimSutRep_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="HolTimSutRep_I_gxp_attachment" name="HolTimSutRepfile_attach[]"
-                                                oninput="addMultipleFiles(this, 'HolTimSutRep_fileattachement')" multiple hidden>
+                                            <label for="HolTimSutRep_I_gxp_attachment" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="HolTimSutRep_I_gxp_attachment"
+                                                name="HolTimSutRepfile_attach[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateHolTimSutRepFiles(this)"
+                                                multiple
+                                                hidden
+                                            >
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
-                            <script>
-                            function addMultipleFiles(input, listId) {
-                                let fileList = document.getElementById(listId);
-                                fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                for (let file of input.files) {
-                                    let fileItem = document.createElement("div");
-                                    fileItem.textContent = file.name;
-                                    fileList.appendChild(fileItem);
+                            <script>
+
+                            function validateHolTimSutRepFiles(input){
+
+                                const allowedExtensions = [
+                                    'pdf',
+                                    'jpg',
+                                    'jpeg',
+                                    'png'
+                                ];
+
+                                const allowedMimeTypes = [
+                                    'application/pdf',
+                                    'image/jpeg',
+                                    'image/png'
+                                ];
+
+                                const files = Array.from(input.files);
+
+                                if(files.length === 0){
+                                    return;
                                 }
+
+                                for(const file of files){
+
+                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                    if(
+                                        !allowedExtensions.includes(ext) ||
+                                        !allowedMimeTypes.includes(file.type)
+                                    ){
+
+                                        Swal.fire({
+                                            icon:'error',
+                                            title:'Invalid File',
+                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                        });
+
+                                        input.value = '';
+                                        return;
+                                    }
+                                }
+
+                                addHolTimSutRepFiles(input,'HolTimSutRep_fileattachement');
+
                             }
+
+
+                            function addHolTimSutRepFiles(input,listId){
+
+                                const fileList = document.getElementById(listId);
+
+                                for(const file of input.files){
+
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container','text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let remove = document.createElement('a');
+                                    remove.type = 'button';
+
+                                    remove.innerHTML =
+                                        '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                    remove.onclick = function(){
+                                        fileContainer.remove();
+                                    };
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(remove);
+
+                                    fileList.appendChild(fileContainer);
+
+                                }
+
+                                input.value = "";
+
+                            }
+
                             </script>
                         </div>
                     </div>
@@ -11200,7 +11379,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateBillMaterialFiles(this)"
                                                 multiple
-                                                hidden>
+                                                hidden >
                                         </div>
 
                                     </div>
@@ -11339,7 +11518,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateMasterFormulaRecordFiles(this)"
                                                 multiple
-                                                hidden>
+                                                hidden >
                                         </div>
 
                                     </div>
@@ -11465,7 +11644,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateMasterPackingRecordFiles(this)"
                                                 multiple
-                                                hidden
+                                                hidden 
                                             >
                                         </div>
 
@@ -11590,7 +11769,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                 onchange="validateSiteMasterAttachment(this)"
                                                 multiple
-                                                hidden>
+                                                hidden >
                                         </div>
 
                                     </div>
@@ -11720,7 +11899,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateBatchManufacturingBmrFiles(this)"
                                                     multiple
-                                                    hidden>
+                                                    hidden >
                                             </div>
 
                                         </div>
@@ -11852,7 +12031,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateBatchPackingRecordFiles(this)"
                                                     multiple
-                                                    hidden>
+                                                    hidden >
                                             </div>
 
                                         </div>
@@ -13041,7 +13220,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validatePVIRFiles(this)"
                                                         multiple
-                                                        hidden
+                                                        hidden 
                                                     >
                                                 </div>
 
@@ -13172,7 +13351,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateAnnexFiles(this)"
                                                         multiple
-                                                        hidden
+                                                        hidden 
                                                     >
                                                 </div>
 
@@ -13294,7 +13473,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateAnnexIIRiskCreate(this)"
                                                         multiple
-                                                        hidden
+                                                        hidden 
                                                     >
                                                 </div>
 
@@ -13416,7 +13595,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateAnnexIIIFiles(this)"
                                                         multiple
-                                                        hidden
+                                                        hidden 
                                                     >
                                                 </div>
                                             </div>
@@ -13525,7 +13704,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateAnnexIVPlanFiles(this)"
                                                         multiple
-                                                        hidden>
+                                                        hidden >
                                                 </div>
 
                                             </div>
@@ -13656,7 +13835,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateAnnexVUserFiles(this)"
                                                         multiple
-                                                        hidden>
+                                                        hidden >
                                                 </div>
 
                                             </div>
@@ -13785,7 +13964,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateAnnexVIReqFiles(this)"
                                                         multiple
-                                                        hidden
+                                                        hidden 
                                                     >
                                                 </div>
                                             </div>
@@ -13893,7 +14072,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateAnnexVIIFunFiles(this)"
                                                     multiple
-                                                    hidden
+                                                    hidden 
                                                 >
                                             </div>
 
@@ -14035,7 +14214,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateAnnexVIIITechFiles(this)"
                                                     multiple
-                                                    hidden
+                                                    hidden 
                                                 >
                                             </div>
 
@@ -14174,7 +14353,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateAnnexIXRiskFiles(this)"
                                                         multiple
-                                                        hidden
+                                                        hidden 
                                                     >
                                                 </div>
 
@@ -14313,7 +14492,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                     onchange="validateAnnexXDesignFiles(this)"
                                                     multiple
-                                                    hidden
+                                                    hidden 
                                                 >
                                             </div>
 
@@ -14451,7 +14630,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateAnnexXIConfigFiles(this)"
                                                         multiple
-                                                        hidden
+                                                        hidden 
                                                     >
                                                 </div>
 
@@ -17112,32 +17291,122 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Closure Attachments"> Attachment</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <label for="Closure Attachments">
+                                                <b>Attachment</b>
+                                            </label>
+
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                                </small>
+                                            </div>
 
                                             <div class="file-attachment-field">
+
                                                 <div class="file-attachment-list" id="attachement_htsp"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="htpsfile" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="htpsfile" name="htspattachement[]"
-                                                        oninput="addMultipleFiles(this, 'attachement_htsp')" multiple hidden>
+                                                    <label for="htpsfile" style="cursor:pointer;">
+                                                        Add
+                                                    </label>
+
+                                                    <input
+                                                        type="file"
+                                                        id="htpsfile"
+                                                        name="htspattachement[]"
+                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                        onchange="validateHTSPFiles(this)"
+                                                        multiple
+                                                        hidden
+                                                    >
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
                                     <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                    function validateHTSPFiles(input){
+
+                                        const allowedExtensions = [
+                                            'pdf',
+                                            'jpg',
+                                            'jpeg',
+                                            'png'
+                                        ];
+
+                                        const allowedMimeTypes = [
+                                            'application/pdf',
+                                            'image/jpeg',
+                                            'image/png'
+                                        ];
+
+                                        const files = Array.from(input.files);
+
+                                        if(files.length === 0){
+                                            return;
                                         }
+
+                                        for(const file of files){
+
+                                            const ext = file.name.split('.').pop().toLowerCase();
+
+                                            if(
+                                                !allowedExtensions.includes(ext) ||
+                                                !allowedMimeTypes.includes(file.type)
+                                            ){
+
+                                                Swal.fire({
+                                                    icon:'error',
+                                                    title:'Invalid File',
+                                                    text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                });
+
+                                                input.value = '';
+                                                return;
+                                            }
+                                        }
+
+                                        addHTSPFiles(input,'attachement_htsp');
+
                                     }
+
+
+                                    function addHTSPFiles(input,listId){
+
+                                        const fileList = document.getElementById(listId);
+
+                                        for(const file of input.files){
+
+                                            let fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container','text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                            let fileText = document.createElement('b');
+                                            fileText.textContent = file.name;
+
+                                            let remove = document.createElement('a');
+                                            remove.type = 'button';
+
+                                            remove.innerHTML =
+                                                '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                            remove.onclick = function(){
+                                                fileContainer.remove();
+                                            };
+
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(remove);
+
+                                            fileList.appendChild(fileContainer);
+
+                                        }
+
+                                        input.value = "";
+
+                                    }
+
                                     </script>
 
 
@@ -18057,7 +18326,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validatePvpFiles(this)"
                                                         multiple
-                                                        hidden
+                                                        hidden 
                                                     >
                                                 </div>
 
@@ -18272,7 +18541,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateAIQPFiles(this)"
                                                         multiple
-                                                        hidden
+                                                        hidden 
                                                     >
                                                 </div>
 
@@ -18404,7 +18673,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateAOQPFiles(this)"
                                                         multiple
-                                                        hidden
+                                                        hidden 
                                                     >
                                                 </div>
 
@@ -18537,7 +18806,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                                         accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
                                                         onchange="validateAPQPFiles(this)"
                                                         multiple
-                                                        hidden
+                                                        hidden 
                                                     >
                                                 </div>
 
