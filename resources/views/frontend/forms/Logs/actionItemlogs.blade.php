@@ -22,110 +22,69 @@
     }
 </script>
 
-<!-- Styles -->
-<style>
-    header .header_rcms_bottom {
-        display: none;
-    }
-    .filter-bar {
-        background-color: #f8f9fa;
-        padding: 10px;
-        border-radius: 5px;
-    }
-    .filter-item label {
-        margin-right: 10px;
-    }
-    .table-responsive {
-        height: 100vh;
-        overflow-x: scroll;
-    }
-    table {
-        overflow: scroll;
-    }
-    .mt-1 {
-        margin-top: 1rem;
-    }
-    .mb-2 {
-        margin-bottom: 2rem;
-    }
-    .bg-white {
-        background-color: white;
-    }
-    .d-flex {
-        display: flex;
-    }
-    .flex-wrap {
-        flex-wrap: wrap;
-    }
-    .align-items-center {
-        align-items: center;
-    }
-    .flex-grow-2 {
-        flex: 2;
-    }
-    .process-groups {
-        display: flex;
-        /* align-items: center;
-        justify-content: space-between;
-        gap: 10px; */
-    }
-    .process-groups > div {
-        flex: 1;
-        text-align: center;
-        background-color: white;
-    }
-    .process-groups .scope-bar {
-        display: flex;
-        justify-content: flex-start;
-    }
-    .process-groups .scope-bar .print-btn {
-        margin-left: 5px;
-    }
-</style>
-
-<style>
+    <!-- Styles -->
+    <style>
         header .header_rcms_bottom {
             display: none;
+        }
+        .filter-bar {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .filter-item label {
+            margin-right: 10px;
+        }
+        .table-responsive {
+            height: 100vh;
+            overflow-x: scroll;
+        }
+        table {
+            overflow: scroll;
+        }
+        .mt-1 {
+            margin-top: 1rem;
+        }
+        .mb-2 {
+            margin-bottom: 2rem;
+        }
+        .bg-white {
+            background-color: white;
+        }
+        .d-flex {
+            display: flex;
+        }
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+        .align-items-center {
+            align-items: center;
+        }
+        .flex-grow-2 {
+            flex: 2;
+        }
+        .process-groups {
+            display: flex;
+            /* align-items: center;
+            justify-content: space-between;
+            gap: 10px; */
         }
         .process-groups > div {
             flex: 1;
             text-align: center;
             background-color: white;
         }
-
         .process-groups .scope-bar {
             display: flex;
             justify-content: flex-start;
         }
-
-        .mt-1 {
-            margin-top: 1rem;
+        .process-groups .scope-bar .print-btn {
+            margin-left: 5px;
         }
+    </style>
 
-        .mb-2 {
-            margin-bottom: 2rem;
-        }
-
-        .bg-white {
-            background-color: white;
-        }
-
-        .d-flex {
-            display: flex;
-        }
-
-        .flex-wrap {
-            flex-wrap: wrap;
-        }
-
-        .align-items-center {
-            align-items: center;
-        }
-
-        .flex-grow-2 {
-            flex: 2;
-        }
-
+    <style>
+      
         .filter-bar {
             width: 100%;
         }
@@ -158,29 +117,10 @@
         }
         .active{
             width: 100%;
-    text-align: center;
-    color: grey;
-
+            text-align: center;
+            color: grey;
         }
-        <style>
-
-
-.process-groups > div {
-    flex: 1;
-    text-align: center; 
-    background-color: white;/* Center align text in each div */
-}
-
-.process-groups .scope-bar {
-    display: flex;
-    justify-content: flex-start;
-}
-
-.process-groups .scope-bar .print-btn {
-    margin-left: 5px;
-    
-}
-</style>
+ 
 
     </style>
     <style>
@@ -264,7 +204,14 @@
 <div id="rcms-desktop">
     <div class="process-groups">
         <div class="scope-bar">
-            <button class="print-btn btn btn-primary">Print</button>
+            <button
+                type="button"
+                class="print-btn btn btn-primary"
+                onclick="openActionItemPrint()"
+            >
+                <i class="fa fa-print" aria-hidden="true"></i>
+                Print
+            </button>
         </div>
         <div class="active" onclick="openTab('internal-audit', this)">Action Item Log</div>
         <div class="third-div">Third Div Content</div>
@@ -461,4 +408,81 @@
         $('#spinner').hide();
     }
 </script>
+
+<script>
+    window.openActionItemPrint = function () {
+        const baseUrl = @json(
+            route(
+                'rcms.logs.print',
+                ['slug' => 'actionitem']
+            )
+        );
+
+        const params = new URLSearchParams();
+
+        const departmentElement =
+            document.getElementById('initiator_group');
+
+        const divisionElement =
+            document.getElementById('division_id');
+
+        const dateFromElement =
+            document.getElementById('date_from_actionitem');
+
+        const dateToElement =
+            document.getElementById('date_to_actionitem');
+
+        if (
+            departmentElement &&
+            departmentElement.value
+        ) {
+            params.append(
+                'department',
+                departmentElement.value
+            );
+        }
+
+        if (
+            divisionElement &&
+            divisionElement.value &&
+            divisionElement.value !== 'Null'
+        ) {
+            params.append(
+                'division_id',
+                divisionElement.value
+            );
+        }
+
+        if (
+            dateFromElement &&
+            dateFromElement.value
+        ) {
+            params.append(
+                'date_from',
+                dateFromElement.value
+            );
+        }
+
+        if (
+            dateToElement &&
+            dateToElement.value
+        ) {
+            params.append(
+                'date_to',
+                dateToElement.value
+            );
+        }
+
+        const printUrl =
+            params.toString()
+                ? baseUrl + '?' + params.toString()
+                : baseUrl;
+
+        window.open(
+            printUrl,
+            '_blank'
+        );
+    };
+</script>
+
 @endsection
