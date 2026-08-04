@@ -83,106 +83,8 @@
     }
 </style>
 
-<style>
-        header .header_rcms_bottom {
-            display: none;
-        }
-        .process-groups > div {
-            flex: 1;
-            text-align: center;
-            background-color: white;
-        }
 
-        .process-groups .scope-bar {
-            display: flex;
-            justify-content: flex-start;
-        }
-
-        .mt-1 {
-            margin-top: 1rem;
-        }
-
-        .mb-2 {
-            margin-bottom: 2rem;
-        }
-
-        .bg-white {
-            background-color: white;
-        }
-
-        .d-flex {
-            display: flex;
-        }
-
-        .flex-wrap {
-            flex-wrap: wrap;
-        }
-
-        .align-items-center {
-            align-items: center;
-        }
-
-        .flex-grow-2 {
-            flex: 2;
-        }
-
-        .filter-bar {
-            width: 100%;
-        }
-
-        .filter-item {
-            flex: 1;
-            min-width: 150px;
-            margin: 5px;
-        }
-
-        .form-control {
-            width: 100%;
-        }
-
-        @media (max-width: 768px) {
-            .filter-item {
-                flex: 1 1 100%;
-                margin: 5px 0;
-            }
-        }
-
-        .process-groups .scope-bar .print-btn {
-            margin-left: 5px;
-        }
-
-        .filter-sub {
-            display: flex;
-            gap: 16px;
-            margin-left: 13px
-        }
-        .active{
-            width: 100%;
-    text-align: center;
-    color: grey;
-
-        }
-        <style>
-
-
-.process-groups > div {
-    flex: 1;
-    text-align: center; 
-    background-color: white;/* Center align text in each div */
-}
-
-.process-groups .scope-bar {
-    display: flex;
-    justify-content: flex-start;
-}
-
-.process-groups .scope-bar .print-btn {
-    margin-left: 5px;
-    
-}
-</style>
-
-    </style>
+   
     <style>
         .filter-bar {
             background-color: #f8f9fa;
@@ -264,7 +166,16 @@
 <div id="rcms-desktop">
     <div class="process-groups">
         <div class="scope-bar">
-            <button class="print-btn btn btn-primary">Print</button>
+            <!-- <button class="print-btn btn btn-primary">Print</button> -->
+
+                <button
+                            type="button"
+                            class="print-btn btn btn-primary"
+                            onclick="openErrataPrint()"
+                        >
+                    <i class="fa fa-print"></i>
+                    Print
+                </button>  
         </div>
         <div class="active" onclick="openTab('internal-audit', this)">Out Of Calibration Log</div>
         <div class="third-div">Third Div Content</div>
@@ -436,6 +347,90 @@
         $('#spinner').hide();
     }
 </script>
+
+
+
+ <script>
+        window.openErrataPrint = function () {
+
+            const baseUrl = @json(
+                route(
+                    'rcms.logs.print',
+                    ['slug' => 'OutOfCalibration']
+                )
+            );
+
+            const params = new URLSearchParams();
+
+            const department =
+                document.getElementById('initiator_group');
+
+            const division =
+                document.getElementById('division_id');
+
+            const dateFrom =
+                document.getElementById('date_from');
+
+            const dateTo =
+                document.getElementById('date_to');
+
+            const errorType =
+                document.getElementById('errorstab');
+
+            if (department && department.value) {
+                params.append(
+                    'department',
+                    department.value
+                );
+            }
+
+            if (
+                division &&
+                division.value &&
+                division.value !== 'Null'
+            ) {
+                params.append(
+                    'division_id',
+                    division.value
+                );
+            }
+
+            if (dateFrom && dateFrom.value) {
+                params.append(
+                    'date_from',
+                    dateFrom.value
+                );
+            }
+
+            if (dateTo && dateTo.value) {
+                params.append(
+                    'date_to',
+                    dateTo.value
+                );
+            }
+
+            if (
+                errorType &&
+                errorType.value &&
+                errorType.value !== 'null'
+            ) {
+                params.append(
+                    'error_type',
+                    errorType.value
+                );
+            }
+
+            const printUrl =
+                params.toString()
+                    ? baseUrl + '?' + params.toString()
+                    : baseUrl;
+
+            window.open(
+                printUrl,
+                '_blank'
+            );
+        };
+    </script>
 @endsection
 
 

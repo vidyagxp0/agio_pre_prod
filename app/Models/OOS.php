@@ -373,4 +373,10 @@ class OOS extends Model
         return $this->hasMany(Oosgrids::class,'oos_id');
     }
 
+
+    public function division()
+    {
+        return $this->belongsTo(QMSDivision::class,'division_id');
+    }
+
 }

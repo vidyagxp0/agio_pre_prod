@@ -365,7 +365,7 @@ class LogController extends Controller
             }
 
             $records = $query
-                ->orderBy('id', 'desc')
+                ->orderBy('id', 'Asc')
                 ->get();
 
             $rows = $records
@@ -580,7 +580,7 @@ class LogController extends Controller
             }
 
             $records = $query
-                ->orderBy('id', 'desc')
+                ->orderBy('id', 'Asc')
                 ->get();
 
             $rows = $records
@@ -774,7 +774,7 @@ class LogController extends Controller
 
                 $records = $query
                     ->with('division')
-                    ->orderBy('id', 'desc')
+                    ->orderBy('id', 'Asc')
                     ->get();
 
                 $rows = $records->map(function ($record, $index) {
@@ -902,7 +902,1060 @@ class LogController extends Controller
                 ///////////////////
 
 
-            
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Root Cause Analysis
+                |--------------------------------------------------------------------------
+                */
+
+                case 'RootCauseAnalysis':
+
+                    $query = RootCauseAnalysis::query()->with('division');
+
+                    if ($request->filled('department')) {
+                        $query->where('initiator_Group', $request->department);
+                    }
+
+                    if ($request->filled('division_id')) {
+                        $query->where('division_id', $request->division_id);
+                    }
+
+                    if ($request->filled('date_from')) {
+                        $query->whereDate('created_at', '>=', $request->date_from);
+                    }
+
+                    if ($request->filled('date_to')) {
+                        $query->whereDate('created_at', '<=', $request->date_to);
+                    }
+
+                    $records = $query->orderBy('id', 'Asc')->get();
+
+                    $rows = $records->values()->map(function ($record, $index) {
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | RCA Number
+                        |--------------------------------------------------------------------------
+                        */
+
+                        $recordYear = !empty($record->intiation_date)
+                            ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
+                            : date('Y');
+
+                        $recordSequence = str_pad(
+                            $record->record ?? 0,
+                            4,
+                            '0',
+                            STR_PAD_LEFT
+                        );
+
+                        $divisionName = !empty($record->division_id)
+                            ? \Helpers::getDivisionName($record->division_id)
+                            : '-';
+
+                        $recordNumber = $divisionName . '/RCA/' . $recordYear . '/' . $recordSequence;
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Dates
+                        |--------------------------------------------------------------------------
+                        */
+
+                        $initiationDate = !empty($record->intiation_date)
+                            ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
+                            : 'NA';
+
+                        $dueDate = !empty($record->due_date)
+                            ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y')
+                            : 'NA';
+
+                        return [
+
+                            'serial' => $index + 1,
+
+                            'date_of_initiation' => $initiationDate,
+
+                            'rca_number' => $recordNumber,
+
+                            'division' => $divisionName,
+
+                            'originator' => !empty($record->initiator_id)
+                                ? \Helpers::getInitiatorName($record->initiator_id)
+                                : 'Not Available',
+
+                            'department' => $record->initiator_Group ?? '-',
+
+                            'short_description' => strip_tags(
+                                (string)($record->short_description ?? '-')
+                            ),
+
+                            'assign_to' => !empty($record->assign_to)
+                                ? \Helpers::getInitiatorName($record->assign_to)
+                                : '-',
+
+                            'qa_reviewer' => !empty($record->qa_reviewer)
+                                ? \Helpers::getInitiatorName($record->qa_reviewer)
+                                : '-',
+
+                            'due_date' => $dueDate,
+
+                            'initiated_through' => $record->initiated_through ?? '-',
+
+                            'department_name' => $record->department ?? '-',
+
+                            'status' => $record->status ?? '-',
+
+                        ];
+                    });
+
+                    return [
+
+                        'title' => 'RootCauseAnalysis',
+
+                        'headers' => [
+
+                            'serial' => 'Sr. No.',
+
+                            'date_of_initiation' => 'Date of Initiation',
+
+                            'rca_number' => 'Record Number',
+
+                            'division' => 'Site/Location Code',
+
+                            'originator' => 'Initiator',
+
+                            'department' => 'Initiator Department',
+
+                            'short_description' => 'Short Description',
+
+                            'assign_to' => 'Name of Responsible Department Head',
+
+                            'qa_reviewer' => 'QA Reviewer',
+
+                            'due_date' => 'Due Date',
+
+                            'initiated_through' => 'Initiated Through',
+
+                            'department_name' => 'Responsible Department',
+
+                            'status' => 'Status',
+
+                        ],
+
+                        'rows' => $rows,
+
+                        'filters' => [
+
+                            'Department' => $request->department ?: 'All',
+
+                            'Division' => $request->filled('division_id')
+                                ? \Helpers::getDivisionName($request->division_id)
+                                : 'All',
+
+                            'Start Date' => $request->date_from ?: 'All',
+
+                            'End Date' => $request->date_to ?: 'All',
+
+                        ],
+                    ];
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | OOS
+            |--------------------------------------------------------------------------
+            */
+
+            case 'OOS_OOT':
+
+                $query = OOS::query()->with('division');
+
+                if ($request->filled('department')) {
+                    $query->where('initiator_group', $request->department);
+                }
+
+                if ($request->filled('division_id')) {
+                    $query->where('division_id', $request->division_id);
+                }
+
+                if ($request->filled('date_from')) {
+                    $query->whereDate('created_at', '>=', $request->date_from);
+                }
+
+                if ($request->filled('date_to')) {
+                    $query->whereDate('created_at', '<=', $request->date_to);
+                }
+
+                $records = $query->orderBy('id', 'Asc')->get();
+
+                $rows = $records->values()->map(function ($record, $index) {
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | OOS Number
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $recordYear = !empty($record->created_at)
+                        ? \Carbon\Carbon::parse($record->created_at)->format('Y')
+                        : date('Y');
+
+                    $recordSequence = str_pad(
+                        $record->record_number ?? 1,
+                        4,
+                        '0',
+                        STR_PAD_LEFT
+                    );
+
+                    $divisionName = !empty($record->division_id)
+                        ? \Helpers::getDivisionName($record->division_id)
+                        : '-';
+
+                    $recordNumber = $divisionName . '/'
+                        . ($record->Form_type ?? 'OOS')
+                        . '/'
+                        . $recordYear
+                        . '/'
+                        . $recordSequence;
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Dates
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $initiationDate = !empty($record->intiation_date)
+                        ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
+                        : 'NA';
+
+                    $dueDate = !empty($record->due_date)
+                        ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y')
+                        : 'NA';
+
+                    $finalApprovalDate = !empty($record->Final_Approval_on)
+                        ? \Carbon\Carbon::parse($record->Final_Approval_on)->format('d-M-Y')
+                        : 'NA';
+
+                    return [
+
+                        'serial' => $index + 1,
+
+                        'date_of_initiation' => $initiationDate,
+
+                        'oos_number' => $recordNumber,
+
+                        'description' => strip_tags(
+                            (string)($record->description_gi ?? '-')
+                        ),
+
+                        'source_document_type' => $record->source_document_type_gi
+                            ?? 'Not Available',
+
+                        'product_material_name' => $record->product_material_name_gi
+                            ?? '-',
+
+                        'due_date' => $dueDate,
+
+                        'final_approval_date' => $finalApprovalDate,
+
+                        'status' => $record->status ?? '-',
+
+                    ];
+                });
+
+                return [
+
+                    'title' => 'OOS Log',
+
+                    'headers' => [
+
+                        'serial' => 'Sr. No.',
+
+                        'date_of_initiation' => 'Date of Initiation',
+
+                        'oos_number' => 'Record No.',
+
+                        'description' => 'Short Description',
+
+                        'source_document_type' => 'Type of Document',
+
+                        'product_material_name' => 'Product / Material Name',
+
+                        'due_date' => 'Due Date',
+
+                        'final_approval_date' => 'Closure Date',
+
+                        'status' => 'Status',
+
+                    ],
+
+                    'rows' => $rows,
+
+                    'filters' => [
+
+                        'Department' => $request->department ?: 'All',
+
+                        'Division' => $request->filled('division_id')
+                            ? \Helpers::getDivisionName($request->division_id)
+                            : 'All',
+
+                        'Start Date' => $request->date_from ?: 'All',
+
+                        'End Date' => $request->date_to ?: 'All',
+
+                    ],
+                ];
+
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Market Complaint
+            |--------------------------------------------------------------------------
+            */
+
+                case 'MarketComplaint':
+
+                    $query = MarketComplaint::query()
+                        ->with(['division', 'product_details']);
+
+                    if ($request->filled('department')) {
+                        $query->where('initiator_group', $request->department);
+                    }
+
+                    if ($request->filled('division_id')) {
+                        $query->where('division_id', $request->division_id);
+                    }
+
+                    if ($request->filled('date_from')) {
+                        $query->whereDate('created_at', '>=', $request->date_from);
+                    }
+
+                    if ($request->filled('date_to')) {
+                        $query->whereDate('created_at', '<=', $request->date_to);
+                    }
+
+                    $records = $query->orderByDesc('id')->get();
+
+                    $rows = collect();
+                    $serial = 1;
+
+                    foreach ($records as $record) {
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Record Number
+                        |--------------------------------------------------------------------------
+                        */
+
+                        $recordYear = !empty($record->intiation_date)
+                            ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
+                            : date('Y');
+
+                        $recordSequence = str_pad($record->record ?? 0, 4, '0', STR_PAD_LEFT);
+
+                        $divisionName = $record->division->name ?? '-';
+
+                        $recordNumber = $divisionName . '/MC/' . $recordYear . '/' . $recordSequence;
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Dates
+                        |--------------------------------------------------------------------------
+                        */
+
+                        $initiationDate = !empty($record->intiation_date)
+                            ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
+                            : 'NA';
+
+                        $dueDate = !empty($record->due_date_gi)
+                            ? \Carbon\Carbon::parse($record->due_date_gi)->format('d-M-Y')
+                            : 'NA';
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Product Details Grid
+                        |--------------------------------------------------------------------------
+                        */
+
+                        foreach ($record->product_details as $grid) {
+
+                            $gridData = is_array($grid->data) ? $grid->data : [];
+
+                            foreach ($gridData as $data) {
+
+                                $rows->push([
+
+                                    'serial' => $serial++,
+
+                                    'date_of_initiation' => $initiationDate,
+
+                                    'market_complaint_no' => $recordNumber,
+
+                                    'originator' => \Helpers::getInitiatorName($record->initiator_id) ?? '-',
+
+                                    'department' => $record->initiator_group ?? '-',
+
+                                    'division' => $divisionName,
+
+                                    // Uncomment if required
+                                    // 'product_name' => $data['info_product_name'] ?? '-',
+                                    // 'batch_no' => $data['info_batch_no'] ?? '-',
+                                    // 'mfg_date' => $data['info_mfg_date'] ?? '-',
+                                    // 'expiry_date' => $data['info_expiry_date'] ?? '-',
+
+                                    'complaint_category' => $record->categorization_of_complaint_gi ?? '-',
+
+                                    'due_date' => $dueDate,
+
+                                    'status' => $record->status ?? '-',
+
+                                ]);
+                            }
+                        }
+                    }
+
+                    return [
+
+                        'title' => 'Market Complaint Log',
+
+                        'headers' => [
+
+                            'serial' => 'Sr. No.',
+
+                            'date_of_initiation' => 'Date of Initiation',
+
+                            'market_complaint_no' => 'Complaint No.',
+
+                            'originator' => 'Originator',
+
+                            'department' => 'Department',
+
+                            'division' => 'Division',
+
+                            // Uncomment if required
+                            // 'product_name' => 'Product Name',
+                            // 'batch_no' => 'Batch No.',
+                            // 'mfg_date' => 'MFG Date',
+                            // 'expiry_date' => 'Expiry Date',
+
+                            'complaint_category' => 'Category of complaint',
+
+                            'due_date' => 'Due Date',
+
+                            'status' => 'Status',
+                        ],
+
+                        'rows' => $rows,
+
+                        'filters' => [
+
+                            'Department' => $request->department ?: 'All',
+
+                            'Division' => $request->filled('division_id')
+                                ? \Helpers::getDivisionName($request->division_id)
+                                : 'All',
+
+                            'Start Date' => $request->date_from ?: 'All',
+
+                            'End Date' => $request->date_to ?: 'All',
+                        ],
+                    ];
+
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Out Of Calibration
+            |--------------------------------------------------------------------------
+            */
+
+                case 'OutOfCalibration':
+
+                    $query = OutOfCalibration::query()->with(['division', 'initiator']);
+
+                    if ($request->filled('department')) {
+                        $query->where('Initiator_Group', $request->department);
+                    }
+
+                    if ($request->filled('division_id')) {
+                        $query->where('division_id', $request->division_id);
+                    }
+
+                    if ($request->filled('date_from')) {
+                        $query->whereDate('created_at', '>=', $request->date_from);
+                    }
+
+                    if ($request->filled('date_to')) {
+                        $query->whereDate('created_at', '<=', $request->date_to);
+                    }
+
+                    $records = $query->orderBy('id', 'Asc')->get();
+
+                    $rows = $records->values()->map(function ($record, $index) {
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | OOC Number
+                        |--------------------------------------------------------------------------
+                        */
+
+                        $recordYear = !empty($record->intiation_date)
+                            ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
+                            : date('Y');
+
+                        $recordSequence = str_pad(
+                            $record->record ?? 0,
+                            4,
+                            '0',
+                            STR_PAD_LEFT
+                        );
+
+                        $divisionName = !empty($record->division_id)
+                            ? \Helpers::getDivisionName($record->division_id)
+                            : '-';
+
+                        $recordNumber = $divisionName . '/OOC/' . $recordYear . '/' . $recordSequence;
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Dates
+                        |--------------------------------------------------------------------------
+                        */
+
+                        $initiationDate = !empty($record->intiation_date)
+                            ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
+                            : 'NA';
+
+                        $dueDate = !empty($record->ooc_due_date)
+                            ? \Carbon\Carbon::parse($record->ooc_due_date)->format('d-M-Y')
+                            : 'Not Applicable';
+
+                        return [
+
+                            'serial' => $index + 1,
+
+                            'date_of_initiation' => $initiationDate,
+
+                            'ooc_number' => $recordNumber,
+
+                            'division' => $divisionName,
+
+                            'description' => strip_tags(
+                                (string)($record->description_ooc ?? 'Not Available')
+                            ),
+
+                            'originator' => $record->initiator->name ?? '-',
+
+                            'department' => $record->Initiator_Group ?? '-',
+
+                            'assign_to' => !empty($record->assign_to)
+                                ? \Helpers::getInitiatorName($record->assign_to)
+                                : '-',
+
+                            'qa_assign_person' => !empty($record->qa_assign_person)
+                                ? \Helpers::getInitiatorName($record->qa_assign_person)
+                                : '-',
+
+                            'due_date' => $dueDate,
+
+                            'status' => $record->status ?? '-',
+
+                        ];
+                    });
+
+                    return [
+
+                        'title' => 'Out Of Calibration Log',
+
+                        'headers' => [
+
+                            'serial' => 'Sr. No.',
+
+                            'date_of_initiation' => 'Date of Initiation',
+
+                            'ooc_number' => 'Record Number',
+
+                            'division' => 'Site/Location Code',
+
+                            'description' => 'Short Description',
+
+                            'originator' => 'Originator',
+
+                            'department' => 'Department',
+
+                            'assign_to' => 'HOD Person',
+
+                            'qa_assign_person' => 'QA Person',
+
+                            'due_date' => 'Due Date',
+
+                            'status' => 'Status',
+
+                        ],
+
+                        'rows' => $rows,
+
+                        'filters' => [
+
+                            'Department' => $request->department ?: 'All',
+
+                            'Division' => $request->filled('division_id')
+                                ? \Helpers::getDivisionName($request->division_id)
+                                : 'All',
+
+                            'Start Date' => $request->date_from ?: 'All',
+
+                            'End Date' => $request->date_to ?: 'All',
+
+                        ],
+                    ];
+
+                /*
+                |--------------------------------------------------------------------------
+                | Observation
+                |--------------------------------------------------------------------------
+                */
+
+                    case 'Observation':
+
+                        $query = Observation::query();
+
+                        if ($request->filled('department')) {
+                            $query->where('initiator_group', $request->department);
+                        }
+
+                        if ($request->filled('division_id')) {
+                            $query->where('division_code', $request->division_id);
+                        }
+
+                        if ($request->filled('date_from')) {
+                            $query->whereDate('created_at', '>=', $request->date_from);
+                        }
+
+                        if ($request->filled('date_to')) {
+                            $query->whereDate('created_at', '<=', $request->date_to);
+                        }
+
+                        $records = $query->orderBy('id', 'Asc')->get();
+
+                        $rows = $records->values()->map(function ($record, $index) {
+
+                            /*
+                            |--------------------------------------------------------------------------
+                            | Observation Number
+                            |--------------------------------------------------------------------------
+                            */
+
+                            $recordYear = !empty($record->intiation_date)
+                                ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
+                                : date('Y');
+
+                            $recordSequence = str_pad(
+                                $record->record ?? 0,
+                                4,
+                                '0',
+                                STR_PAD_LEFT
+                            );
+
+                            $divisionName = !empty($record->division_code)
+                                ? \Helpers::getDivisionName($record->division_code)
+                                : '-';
+
+                            $recordNumber = $divisionName . '/OBS/' . $recordYear . '/' . $recordSequence;
+
+                            /*
+                            |--------------------------------------------------------------------------
+                            | Dates
+                            |--------------------------------------------------------------------------
+                            */
+
+                            $initiationDate = !empty($record->intiation_date)
+                                ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
+                                : 'NA';
+
+                            $dueDate = !empty($record->due_date)
+                                ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y')
+                                : 'NA';
+
+                            $recommendationDueDate = !empty($record->recomendation_capa_date_due)
+                                ? \Carbon\Carbon::parse($record->recomendation_capa_date_due)->format('d-M-Y')
+                                : 'NA';
+
+                            return [
+
+                                'serial' => $index + 1,
+
+                                'date_of_initiation' => $initiationDate,
+
+                                'observation_no' => $recordNumber,
+
+                                'division' => $divisionName,
+
+                                'originator' => !empty($record->initiator_id)
+                                    ? \Helpers::getInitiatorName($record->initiator_id)
+                                    : 'Not Available',
+
+                                'assign_to' => !empty($record->assign_to)
+                                    ? \Helpers::getInitiatorName($record->assign_to)
+                                    : '-',
+
+                                'due_date' => $dueDate,
+
+                                'short_description' => strip_tags(
+                                    (string)($record->short_description ?? '-')
+                                ),
+
+                                'recommendation_capa_due_date' => $recommendationDueDate,
+
+                                'status' => $record->status ?? '-',
+
+                            ];
+                        });
+
+                        return [
+
+                            'title' => 'Observation Log',
+
+                            'headers' => [
+
+                                'serial' => 'Sr. No.',
+
+                                'date_of_initiation' => 'Date of Initiation',
+
+                                'observation_no' => 'Record Number',
+
+                                'division' => 'Site/Location Code',
+
+                                'originator' => 'Initiator',
+
+                                'assign_to' => 'Auditee Department Head',
+
+                                'due_date' => 'Observation Report Due Date',
+
+                                'short_description' => 'Short Description',
+
+                                'recommendation_capa_due_date' => 'Response Due Date',
+
+                                'status' => 'Status',
+                            ],
+
+                            'rows' => $rows,
+
+                            'filters' => [
+
+                                'Department' => $request->department ?: 'All',
+
+                                'Division' => $request->filled('division_id')
+                                    ? \Helpers::getDivisionName($request->division_id)
+                                    : 'All',
+
+                                'Start Date' => $request->date_from ?: 'All',
+
+                                'End Date' => $request->date_to ?: 'All',
+                            ],
+                        ];
+                /*
+                |--------------------------------------------------------------------------
+                | Resampling
+                |--------------------------------------------------------------------------
+                */
+
+                    case 'Resampling':
+
+                        $query = Resampling::query()->with('division');
+
+                        if ($request->filled('department')) {
+                            $query->where('departments', $request->department);
+                        }
+
+                        if ($request->filled('division_id')) {
+                            $query->where('division_id', $request->division_id);
+                        }
+
+                        if ($request->filled('date_from')) {
+                            $query->whereDate('created_at', '>=', $request->date_from);
+                        }
+
+                        if ($request->filled('date_to')) {
+                            $query->whereDate('created_at', '<=', $request->date_to);
+                        }
+
+                        $records = $query->orderBy('id', 'Asc')->get();
+
+                        $rows = $records->values()->map(function ($record, $index) {
+
+                            /*
+                            |--------------------------------------------------------------------------
+                            | Resampling Number
+                            |--------------------------------------------------------------------------
+                            */
+
+                            $recordYear = !empty($record->intiation_date)
+                                ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
+                                : date('Y');
+
+                            $recordSequence = str_pad(
+                                $record->record ?? 0,
+                                4,
+                                '0',
+                                STR_PAD_LEFT
+                            );
+
+                            $divisionName = !empty($record->division_id)
+                                ? \Helpers::getDivisionName($record->division_id)
+                                : '-';
+
+                            $recordNumber = $divisionName . '/Resampling/' . $recordYear . '/' . $recordSequence;
+
+                            /*
+                            |--------------------------------------------------------------------------
+                            | Dates
+                            |--------------------------------------------------------------------------
+                            */
+
+                            $initiationDate = !empty($record->intiation_date)
+                                ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
+                                : 'NA';
+
+                            $dueDate = !empty($record->due_date)
+                                ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y')
+                                : 'NA';
+
+                            return [
+
+                                'serial' => $index + 1,
+
+                                'date_of_initiation' => $initiationDate,
+
+                                'resampling_no' => $recordNumber,
+
+                                'division' => $divisionName,
+
+                                'originator' => !empty($record->initiator_id)
+                                    ? \Helpers::getInitiatorName($record->initiator_id)
+                                    : 'Not Available',
+
+                                'assign_to' => !empty($record->assign_to)
+                                    ? \Helpers::getInitiatorName($record->assign_to)
+                                    : '-',
+
+                                'due_date' => $dueDate,
+
+                                'short_description' => strip_tags(
+                                    (string)($record->short_description ?? '-')
+                                ),
+
+                                'hod_person' => !empty($record->hod_preson)
+                                    ? \Helpers::getInitiatorName($record->hod_preson)
+                                    : '-',
+
+                                'department' => !empty($record->departments)
+                                    ? \Helpers::getFullDepartmentName($record->departments)
+                                    : '-',
+
+                                'status' => $record->status ?? '-',
+
+                            ];
+                        });
+
+                        return [
+
+                            'title' => 'Resampling Log',
+
+                            'headers' => [
+
+                                'serial' => 'Sr. No.',
+
+                                'date_of_initiation' => 'Date of Initiation',
+
+                                'resampling_no' => 'Record Number',
+
+                                'division' => 'Site/Location Code',
+
+                                'originator' => 'Initiator',
+
+                                'assign_to' => 'Assign To',
+
+                                'due_date' => 'Due Date',
+
+                                'short_description' => 'Short Description',
+
+                                'hod_person' => 'HOD Person',
+
+                                'department' => 'Responsible Department',
+
+                                'status' => 'Status',
+                            ],
+
+                            'rows' => $rows,
+
+                            'filters' => [
+
+                                'Department' => $request->department ?: 'All',
+
+                                'Division' => $request->filled('division_id')
+                                    ? \Helpers::getDivisionName($request->division_id)
+                                    : 'All',
+
+                                'Start Date' => $request->date_from ?: 'All',
+
+                                'End Date' => $request->date_to ?: 'All',
+                            ],
+                        ];
+
+            /*
+            |--------------------------------------------------------------------------
+            | Management Review
+            |--------------------------------------------------------------------------
+            */
+
+                case 'ManagementReview':
+
+                    $query = ManagementReview::query()->with('division');
+
+                    if ($request->filled('department')) {
+                        $query->where('initiator_Group', $request->department);
+                    }
+
+                    if ($request->filled('division_id')) {
+                        $query->where('division_id', $request->division_id);
+                    }
+
+                    if ($request->filled('date_from')) {
+                        $query->whereDate('created_at', '>=', $request->date_from);
+                    }
+
+                    if ($request->filled('date_to')) {
+                        $query->whereDate('created_at', '<=', $request->date_to);
+                    }
+
+                    $records = $query->orderBy('id', 'Asc')->get();
+
+                    $rows = $records->values()->map(function ($record, $index) {
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Management Review Number
+                        |--------------------------------------------------------------------------
+                        */
+
+                        $recordYear = !empty($record->intiation_date)
+                            ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
+                            : date('Y');
+
+                        $recordSequence = str_pad(
+                            $record->record ?? 0,
+                            4,
+                            '0',
+                            STR_PAD_LEFT
+                        );
+
+                        $divisionName = !empty($record->division_id)
+                            ? \Helpers::getDivisionName($record->division_id)
+                            : '-';
+
+                        $recordNumber = $divisionName . '/MR/' . $recordYear . '/' . $recordSequence;
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Dates
+                        |--------------------------------------------------------------------------
+                        */
+
+                        $initiationDate = !empty($record->intiation_date)
+                            ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
+                            : 'NA';
+
+                        $startDate = !empty($record->start_date)
+                            ? \Carbon\Carbon::parse($record->start_date)->format('d-M-Y')
+                            : 'NA';
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Initiator
+                        |--------------------------------------------------------------------------
+                        */
+
+                        $initiator = !empty($record->initiator_id)
+                            ? \Helpers::getInitiatorName($record->initiator_id)
+                            : 'Not Available';
+
+                        return [
+
+                            'serial' => $index + 1,
+
+                            'date_of_initiation' => $initiationDate,
+
+                            'management_review_no' => $recordNumber,
+
+                            'division' => $divisionName,
+
+                            'originator' => $initiator,
+
+                            'department' => $record->initiator_Group ?? '-',
+
+                            'short_description' => strip_tags(
+                                (string)($record->short_description ?? '-')
+                            ),
+
+                            'summary_recommendation' => $record->summary_recommendation ?? '-',
+
+                            'review_period_monthly' => $record->review_period_monthly ?? '-',
+
+                            'start_date' => $startDate,
+
+                            'status' => $record->status ?? '-',
+                        ];
+                    });
+
+                    return [
+
+                        'title' => 'Management Review Log',
+
+                        'headers' => [
+
+                            'serial' => 'Sr. No.',
+
+                            'date_of_initiation' => 'Date of Initiation',
+
+                            'management_review_no' => 'Record Number',
+
+                            'division' => 'Site/Location Code',
+
+                            'originator' => 'Initiator',
+
+                            'department' => 'Initiator Department',
+
+                            'short_description' => 'Short Description',
+
+                            'summary_recommendation' => 'Type',
+
+                            'review_period_monthly' => 'Review Period',
+
+                            'start_date' => 'Proposed Scheduled Start Date',
+
+                            'status' => 'Status',
+                        ],
+
+                        'rows' => $rows,
+
+                        'filters' => [
+
+                            'Department' => $request->department ?: 'All',
+
+                            'Division' => $request->filled('division_id')
+                                ? \Helpers::getDivisionName($request->division_id)
+                                : 'All',
+
+                            'Start Date' => $request->date_from ?: 'All',
+
+                            'End Date' => $request->date_to ?: 'All',
+                        ],
+                    ];
+                            
            /*
             |--------------------------------------------------------------------------
             | Audit Program
@@ -929,7 +1982,7 @@ class LogController extends Controller
                     $query->whereDate('created_at', '<=', $request->date_to);
                 }
 
-                $records = $query->orderBy('id', 'desc')->get();
+                $records = $query->orderBy('id', 'Asc')->get();
 
                 $rows = $records->values()->map(function ($record, $index) {
 
@@ -1065,174 +2118,313 @@ class LogController extends Controller
 
 
 
+            /*
+            |--------------------------------------------------------------------------
+            | Internal Audit
+            |--------------------------------------------------------------------------
+            */
+
+            case 'InternalAudit':
+
+                $query = InternalAudit::query()
+                    ->with(['division', 'initiator']);
+
+                if ($request->filled('department')) {
+                    $query->where('Initiator_Group', $request->department);
+                }
+
+                if ($request->filled('division_id')) {
+                    $query->where('division_id', $request->division_id);
+                }
+
+                if ($request->filled('date_from')) {
+                    $query->whereDate('created_at', '>=', $request->date_from);
+                }
+
+                if ($request->filled('date_to')) {
+                    $query->whereDate('created_at', '<=', $request->date_to);
+                }
+
+                $records = $query->orderBy('id', 'Asc')->get();
+
+                $rows = $records->values()->map(function ($record, $index) {
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Internal Audit Number
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $recordYear = !empty($record->created_at)
+                        ? \Carbon\Carbon::parse($record->created_at)->format('Y')
+                        : date('Y');
+
+                    $recordSequence = str_pad($record->record ?? 0, 4, '0', STR_PAD_LEFT);
+
+                    $divisionName = $record->division->name ?? '-';
+
+                    $recordNumber = $divisionName . '/IA/' . $recordYear . '/' . $recordSequence;
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Dates
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $initiationDate = !empty($record->intiation_date)
+                        ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
+                        : 'NA';
+
+                    $dueDate = !empty($record->due_date)
+                        ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y')
+                        : 'NA';
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Initiator
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $initiator = $record->initiator->name ?? '-';
+
+                    return [
+
+                        'serial' => $index + 1,
+
+                        'date_of_initiation' => $initiationDate,
+
+                        'internal_audit_no' => $recordNumber,
+
+                        'originator' => $initiator,
+
+                        'short_description' => strip_tags(
+                            (string)($record->short_description ?? '-')
+                        ),
+
+                        'audit_category' => $record->Audit_Category ?? 'NA',
+
+                        'department' => $record->Initiator_Group ?? '-',
+
+                        'division' => $divisionName,
+
+                        'due_date' => $dueDate,
+
+                        'audit_lead_more_info_reqd_on' => $record->audit_lead_more_info_reqd_on ?? 'NA',
+
+                        'status' => $record->status ?? '-',
+                    ];
+                });
+
+                return [
+
+                    'title' => 'Internal Audit Log',
+
+                    'headers' => [
+
+                        'serial' => 'Sr. No.',
+
+                        'date_of_initiation' => 'Date of Initiation',
+
+                        'internal_audit_no' => 'Record Number',
+
+                        'originator' => 'Initiator',
+
+                        'short_description' => 'Short Description',
+
+                        'audit_category' => 'Audit Category',
+
+                        'department' => 'Initiator Department',
+
+                        'division' => 'Site/Location Code',
+
+                        'due_date' => 'Due Date',
+
+                       
+                        'status' => 'Status',
+                    ],
+
+                    'rows' => $rows,
+
+                    'filters' => [
+
+                        'Department' => $request->department ?: 'All',
+
+                        'Division' => $request->filled('division_id')
+                            ? \Helpers::getDivisionName($request->division_id)
+                            : 'All',
+
+                        'Start Date' => $request->date_from ?: 'All',
+
+                        'End Date' => $request->date_to ?: 'All',
+                    ],
+                ];
 
 
 
-
-                /*
-|--------------------------------------------------------------------------
-| External Audit
-|--------------------------------------------------------------------------
-*/
-
-case 'ExternalAudit':
-
-    $query = Auditee::query()->with('division');
-
-    if ($request->filled('department')) {
-        $query->where('Initiator_Group', $request->department);
-    }
-
-    if ($request->filled('division_id')) {
-        $query->where('division_id', $request->division_id);
-    }
-
-    if ($request->filled('date_from')) {
-        $query->whereDate('created_at', '>=', $request->date_from);
-    }
-
-    if ($request->filled('date_to')) {
-        $query->whereDate('created_at', '<=', $request->date_to);
-    }
-
-    $records = $query->orderBy('id', 'desc')->get();
-
-    $rows = $records->values()->map(function ($record, $index) {
-
-        /*
+         /*
         |--------------------------------------------------------------------------
-        | External Audit Number
+        | External Audit
         |--------------------------------------------------------------------------
         */
 
-            $recordYear = !empty($record->intiation_date)
-                ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
-                : date('Y');
+        case 'ExternalAudit':
 
-            $recordSequence = str_pad($record->record ?? 0, 4, '0', STR_PAD_LEFT);
+            $query = Auditee::query()->with('division');
 
-            $divisionName = !empty($record->division_id)
-                ? \Helpers::getDivisionName($record->division_id)
-                : '-';
+            if ($request->filled('department')) {
+                $query->where('Initiator_Group', $request->department);
+            }
 
-            $recordNumber = $divisionName . '/EA/' . $recordYear . '/' . $recordSequence;
+            if ($request->filled('division_id')) {
+                $query->where('division_id', $request->division_id);
+            }
 
-            /*
-            |--------------------------------------------------------------------------
-            | Dates
-            |--------------------------------------------------------------------------
-            */
+            if ($request->filled('date_from')) {
+                $query->whereDate('created_at', '>=', $request->date_from);
+            }
 
-            $initiationDate = !empty($record->intiation_date)
-                ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
-                : 'NA';
+            if ($request->filled('date_to')) {
+                $query->whereDate('created_at', '<=', $request->date_to);
+            }
 
-            $dueDate = !empty($record->due_date)
-                ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y')
-                : 'NA';
+            $records = $query->orderBy('id', 'Asc')->get();
 
-            $startDate = !empty($record->start_date_gi)
-                ? \Carbon\Carbon::parse($record->start_date_gi)->format('d-M-Y')
-                : 'NA';
+            $rows = $records->values()->map(function ($record, $index) {
 
-            $endDate = !empty($record->end_date_gi)
-                ? \Carbon\Carbon::parse($record->end_date_gi)->format('d-M-Y')
-                : 'NA';
+                /*
+                |--------------------------------------------------------------------------
+                | External Audit Number
+                |--------------------------------------------------------------------------
+                */
 
-            /*
-            |--------------------------------------------------------------------------
-            | Initiator
-            |--------------------------------------------------------------------------
-            */
+                    $recordYear = !empty($record->intiation_date)
+                        ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
+                        : date('Y');
 
-            $initiator = !empty($record->initiator_id)
-                ? \Helpers::getInitiatorName($record->initiator_id)
-                : 'Not Available';
+                    $recordSequence = str_pad($record->record ?? 0, 4, '0', STR_PAD_LEFT);
 
-            return [
+                    $divisionName = !empty($record->division_id)
+                        ? \Helpers::getDivisionName($record->division_id)
+                        : '-';
 
-                'serial' => $index + 1,
+                    $recordNumber = $divisionName . '/EA/' . $recordYear . '/' . $recordSequence;
 
-                'date_of_initiation' => $initiationDate,
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Dates
+                    |--------------------------------------------------------------------------
+                    */
 
-                'external_audit_no' => $recordNumber,
+                    $initiationDate = !empty($record->intiation_date)
+                        ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
+                        : 'NA';
 
-                'division' => $divisionName,
+                    $dueDate = !empty($record->due_date)
+                        ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y')
+                        : 'NA';
 
-                'originator' => $initiator,
+                    $startDate = !empty($record->start_date_gi)
+                        ? \Carbon\Carbon::parse($record->start_date_gi)->format('d-M-Y')
+                        : 'NA';
 
-                'department' => $record->Initiator_Group ?? 'Not Available',
+                    $endDate = !empty($record->end_date_gi)
+                        ? \Carbon\Carbon::parse($record->end_date_gi)->format('d-M-Y')
+                        : 'NA';
 
-                'due_date' => $dueDate,
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Initiator
+                    |--------------------------------------------------------------------------
+                    */
 
-                'short_description' => strip_tags(
-                    (string)($record->short_description ?? '-')
-                ),
+                    $initiator = !empty($record->initiator_id)
+                        ? \Helpers::getInitiatorName($record->initiator_id)
+                        : 'Not Available';
 
-                'initiated_through' => $record->initiated_through ?? '-',
+                    return [
 
-                'audit_type' => $record->audit_type ?? '-',
+                        'serial' => $index + 1,
 
-                'external_agencies' => $record->external_agencies ?? '-',
+                        'date_of_initiation' => $initiationDate,
 
-                'start_date' => $startDate,
+                        'external_audit_no' => $recordNumber,
 
-                'end_date' => $endDate,
+                        'division' => $divisionName,
 
-                'status' => $record->status ?? '-',
-            ];
-        });
+                        'originator' => $initiator,
 
-        return [
+                        'department' => $record->Initiator_Group ?? 'Not Available',
 
-            'title' => 'External Audit Log',
+                        'due_date' => $dueDate,
 
-            'headers' => [
+                        'short_description' => strip_tags(
+                            (string)($record->short_description ?? '-')
+                        ),
 
-                'serial' => 'Sr. No.',
+                        'initiated_through' => $record->initiated_through ?? '-',
 
-                'date_of_initiation' => 'Date of Initiation',
+                        'audit_type' => $record->audit_type ?? '-',
 
-                'external_audit_no' => 'External Audit No.',
+                        'external_agencies' => $record->external_agencies ?? '-',
 
-                'division' => 'Division',
+                        'start_date' => $startDate,
 
-                'originator' => 'Originator',
+                        'end_date' => $endDate,
 
-                'department' => 'Department',
+                        'status' => $record->status ?? '-',
+                    ];
+                });
 
-                'due_date' => 'Due Date',
+                return [
 
-                'short_description' => 'Short Description',
+                    'title' => 'External Audit Log',
 
-                'initiated_through' => 'Initiated Through',
+                    'headers' => [
 
-                'audit_type' => 'Audit Type',
+                        'serial' => 'Sr. No.',
 
-                'external_agencies' => 'External Agencies',
+                        'date_of_initiation' => 'Date of Initiation',
 
-                'start_date' => 'Start Date',
+                        'external_audit_no' => 'External Audit No.',
 
-                'end_date' => 'End Date',
+                        'division' => 'Division',
 
-                'status' => 'Status',
-            ],
+                        'originator' => 'Originator',
 
-            'rows' => $rows,
+                        'department' => 'Department',
 
-            'filters' => [
+                        'due_date' => 'Due Date',
 
-                'Department' => $request->department ?: 'All',
+                        'short_description' => 'Short Description',
 
-                'Division' => $request->filled('division_id')
-                    ? \Helpers::getDivisionName($request->division_id)
-                    : 'All',
+                        'initiated_through' => 'Initiated Through',
 
-                'Start Date' => $request->date_from ?: 'All',
+                        'audit_type' => 'Audit Type',
 
-                'End Date' => $request->date_to ?: 'All',
-            ],
-        ];
+                        'external_agencies' => 'External Agencies',
+
+                        'start_date' => 'Start Date',
+
+                        'end_date' => 'End Date',
+
+                        'status' => 'Status',
+                    ],
+
+                    'rows' => $rows,
+
+                    'filters' => [
+
+                        'Department' => $request->department ?: 'All',
+
+                        'Division' => $request->filled('division_id')
+                            ? \Helpers::getDivisionName($request->division_id)
+                            : 'All',
+
+                        'Start Date' => $request->date_from ?: 'All',
+
+                        'End Date' => $request->date_to ?: 'All',
+                    ],
+                ];
             /*
             |--------------------------------------------------------------------------
             | Incident
@@ -1275,7 +2467,7 @@ case 'ExternalAudit':
                 }
 
                 $records = $query
-                    ->orderBy('id', 'desc')
+                    ->orderBy('id', 'Asc')
                     ->get();
 
                 $rows = $records
@@ -1475,7 +2667,7 @@ case 'ExternalAudit':
                 }
 
                 $records = $query
-                    ->orderBy('id', 'desc')
+                    ->orderBy('id', 'Asc')
                     ->get();
 
                 $rows = $records
@@ -1715,7 +2907,7 @@ case 'ExternalAudit':
                 }
 
                 $records = $query
-                    ->orderBy('id', 'desc')
+                    ->orderBy('id', 'Asc')
                     ->get();
 
                 $rows = $records
@@ -1961,7 +3153,7 @@ case 'ExternalAudit':
                 }
 
                 $records = $query
-                    ->orderBy('id', 'desc')
+                    ->orderBy('id', 'Asc')
                     ->get();
 
                 $rows = $records
@@ -2195,7 +3387,7 @@ case 'ExternalAudit':
                     'product_details',
                     'division',
                 ])
-                ->orderBy('id', 'desc')
+                ->orderBy('id', 'Asc')
                 ->get();
 
                 return $this->prepareCommonPrintData(
@@ -2245,7 +3437,7 @@ case 'ExternalAudit':
                 );
             }
 
-            $records = $query->orderBy('id', 'desc')->get();
+            $records = $query->orderBy('id', 'Asc')->get();
 
             $rows = $records->values()->map(function ($record, $index) {
 
@@ -2456,7 +3648,7 @@ case 'ExternalAudit':
                 }
 
                 $records = $query
-                    ->orderBy('id', 'desc')
+                    ->orderBy('id', 'Asc')
                     ->get();
 
                 $rows = $records
@@ -2672,7 +3864,7 @@ case 'ExternalAudit':
                 }
 
                 $records = $query
-                    ->orderBy('id', 'desc')
+                    ->orderBy('id', 'Asc')
                     ->get();
 
                 $rows = $records
@@ -2921,7 +4113,7 @@ case 'ExternalAudit':
                     'InstrumentDetails',
                     'assignedUser',
                 ])
-                ->orderBy('id', 'desc')
+                ->orderBy('id', 'Asc')
                 ->get();
 
                 return $this->prepareCommonPrintData(
@@ -3032,7 +4224,7 @@ case 'ExternalAudit':
                 }
 
                 $records = $query
-                    ->orderBy('id', 'desc')
+                    ->orderBy('id', 'Asc')
                     ->get();
 
                 $rows = $records->values()->map(function ($record, $index) {

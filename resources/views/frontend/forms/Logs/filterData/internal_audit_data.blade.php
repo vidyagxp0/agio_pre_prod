@@ -30,7 +30,7 @@
             NA
         @endif
     </td>
-    <td>{{$logs->audit_lead_more_info_reqd_on ? $logs->audit_lead_more_info_reqd_on : 'NA'}}</td>
+    {{-- <td>{{$logs->audit_lead_more_info_reqd_on ? $logs->audit_lead_more_info_reqd_on : 'NA'}}</td> --}}
     <td>{{$logs->status}}</td>        
 </tr>
 @empty

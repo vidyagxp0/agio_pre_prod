@@ -123,7 +123,16 @@
     <div id="rcms-desktop">
     <div class="process-groups">
             <div class="scope-bar">
-                <button class="print-btn btn btn-primary">Print</button>
+                <!-- <button class="print-btn btn btn-primary">Print</button> -->
+
+                <button
+                            type="button"
+                            class="print-btn btn btn-primary"
+                            onclick="openOSS_OOTPrint()"
+                        >
+                    <i class="fa fa-print"></i>
+                    Print
+                </button>  
             </div>
             <div class="active" onclick="openTab('internal-audit', this)">OOS OOT Log</div>
             <div class="third-div">Third Div Content</div>
@@ -284,5 +293,87 @@
 
             $('#spinner').hide();
         }
+    </script>
+
+     <script>
+        window.openOSS_OOTPrint = function () {
+
+            const baseUrl = @json(
+                route(
+                    'rcms.logs.print',
+                    ['slug' => 'OOS_OOT']
+                )
+            );
+
+            const params = new URLSearchParams();
+
+            const department =
+                document.getElementById('initiator_group');
+
+            const division =
+                document.getElementById('division_id');
+
+            const dateFrom =
+                document.getElementById('date_from');
+
+            const dateTo =
+                document.getElementById('date_to');
+
+            const errorType =
+                document.getElementById('errorstab');
+
+            if (department && department.value) {
+                params.append(
+                    'department',
+                    department.value
+                );
+            }
+
+            if (
+                division &&
+                division.value &&
+                division.value !== 'Null'
+            ) {
+                params.append(
+                    'division_id',
+                    division.value
+                );
+            }
+
+            if (dateFrom && dateFrom.value) {
+                params.append(
+                    'date_from',
+                    dateFrom.value
+                );
+            }
+
+            if (dateTo && dateTo.value) {
+                params.append(
+                    'date_to',
+                    dateTo.value
+                );
+            }
+
+            if (
+                errorType &&
+                errorType.value &&
+                errorType.value !== 'null'
+            ) {
+                params.append(
+                    'error_type',
+                    errorType.value
+                );
+            }
+
+            const printUrl =
+                params.toString()
+                    ? baseUrl + '?' + params.toString()
+                    : baseUrl;
+
+            window.open(
+                printUrl,
+                '_blank'
+            );
+        };
     </script>
 @endsection
