@@ -364,112 +364,42 @@ class LogController extends Controller
                 );
             }
 
-            $records = $query
-                ->orderBy('id', 'Asc')
-                ->get();
+            $records = $query->orderBy('id', 'Asc')->get();
 
-            $rows = $records
-                ->values()
-                ->map(function ($record, $index) {
+            $rows = $records->values()->map(function ($record, $index) {
 
-                    /*
-                    * Existing project helpers use karke
-                    * record number manually create kar rahe hain.
-                    */
-                    $divisionCode = !empty($record->division_id)
-                        ? \Helpers::divisionNameForQMS(
-                            $record->division_id
-                        )
-                        : '';
+                    $divisionCode = !empty($record->division_id) ? \Helpers::divisionNameForQMS($record->division_id) : '';
 
-                    $recordYear = !empty($record->created_at)
-                        ? \Carbon\Carbon::parse(
-                            $record->created_at
-                        )->format('Y')
-                        : '';
+                    $recordYear = !empty($record->created_at) ? \Carbon\Carbon::parse($record->created_at)->format('Y') : '';
 
-                    $recordSequence = str_pad(
-                        $record->record ?? $record->id,
-                        4,
-                        '0',
-                        STR_PAD_LEFT
-                    );
+                    $recordSequence = str_pad($record->record ?? $record->id, 4, '0', STR_PAD_LEFT);
 
-                    $recordNumber =
-                        $divisionCode
-                        . '/CC/'
-                        . $recordYear
-                        . '/'
-                        . $recordSequence;
+                    $recordNumber = $divisionCode . '/CC/' . $recordYear . '/' . $recordSequence;
 
-                    /*
-                    * Different production versions me field names
-                    * thode different ho sakte hain.
-                    */
-                    $description =
-                        $record->short_description
-                        ?? $record->Short_description
-                        ?? $record->description
-                        ?? 'Not Applicable';
+                    $description = $record->short_description ?? $record->Short_description ?? $record->description ?? 'Not Applicable';
 
-                    $proposedChange =
-                        $record->proposed_change
-                        ?? $record->Proposed_Change
-                        ?? $record->proposed_changes
-                        ?? 'Not Applicable';
+                    $proposedChange = $record->proposed_change ?? $record->Proposed_Change ?? $record->proposed_changes ?? 'Not Applicable';
 
-                    $natureOfChange =
-                        $record->nature_of_change
-                        ?? $record->Nature_of_Change
-                        ?? $record->nature_of_change_control
-                        ?? 'Not Applicable';
+                    $natureOfChange = $record->doc_change ?? $record->doc_change ?? $record->doc_change ?? 'Not Applicable';
 
                     return [
                         'serial' => $index + 1,
 
-                        'date_of_initiation' =>
-                            !empty($record->created_at)
-                                ? \Carbon\Carbon::parse(
-                                    $record->created_at
-                                )->format('d-M-Y')
-                                : 'Not Applicable',
+                        'date_of_initiation' => !empty($record->created_at) ? \Carbon\Carbon::parse($record->created_at)->format('d-M-Y') : 'Not Applicable',
 
-                        'record_number' =>
-                            $recordNumber,
+                        'record_number' => $recordNumber,
 
-                        'division' =>
-                            !empty($record->division_id)
-                                ? \Helpers::getDivisionName(
-                                    $record->division_id
-                                )
-                                : 'Not Applicable',
+                        'division' => !empty($record->division_id) ? \Helpers::getDivisionName($record->division_id) : 'Not Applicable',
 
-                        'department' =>
-                            $record->Initiator_Group
-                            ?? $record->initiator_group
-                            ?? 'Not Applicable',
+                        'department' => $record->Initiator_Group ?? $record->initiator_group ?? 'Not Applicable',
 
-                        'initiator' =>
-                            !empty($record->initiator_id)
-                                ? \Helpers::getInitiatorName(
-                                    $record->initiator_id
-                                )
-                                : 'Not Applicable',
+                        'initiator' => !empty($record->initiator_id) ? \Helpers::getInitiatorName($record->initiator_id) : 'Not Applicable',
 
-                        'description' =>
-                            strip_tags(
-                                (string) $description
-                            ),
+                        'description' => strip_tags((string) $description),
 
-                        'proposed_change' =>
-                            strip_tags(
-                                (string) $proposedChange
-                            ),
+                        'proposed_change' => strip_tags((string) $proposedChange),
 
-                        'nature_of_change' =>
-                            strip_tags(
-                                (string) $natureOfChange
-                            ),
+                        'nature_of_change' => strip_tags((string) $natureOfChange),
 
                         'due_date' => !empty($record->due_date) ? \Helpers::getdateFormat( $record->due_date) : 'Not Applicable',
 
@@ -514,11 +444,7 @@ class LogController extends Controller
 
             case 'capa':
 
-            $query = Capa::query()
-                ->with([
-                    'division',
-                    'initiator',
-                ]);
+            $query = Capa::query()->with(['division', 'initiator',]);
 
             /*
             |--------------------------------------------------------------------------
@@ -526,22 +452,14 @@ class LogController extends Controller
             |--------------------------------------------------------------------------
             */
 
-            $departments = $request->input(
-                'department',
-                []
-            );
+            $departments = $request->input('department', []);
 
             if (is_string($departments)) {
-                $departments = array_filter(
-                    explode(',', $departments)
-                );
+                $departments = array_filter(explode(',', $departments));
             }
 
             if (!empty($departments)) {
-                $query->whereIn(
-                    'initiator_Group',
-                    $departments
-                );
+                $query->whereIn('initiator_Group', $departments);
             }
 
             /*
@@ -551,10 +469,7 @@ class LogController extends Controller
             */
 
             if ($request->filled('division_id')) {
-                $query->where(
-                    'division_id',
-                    $request->division_id
-                );
+                $query->where('division_id', $request->division_id);
             }
 
             /*
@@ -564,171 +479,85 @@ class LogController extends Controller
             */
 
             if ($request->filled('date_from')) {
-                $query->whereDate(
-                    'created_at',
-                    '>=',
-                    $request->date_from
-                );
+                $query->whereDate('created_at', '>=', $request->date_from);
             }
 
             if ($request->filled('date_to')) {
-                $query->whereDate(
-                    'created_at',
-                    '<=',
-                    $request->date_to
-                );
+                $query->whereDate('created_at', '<=', $request->date_to);
             }
 
-            $records = $query
-                ->orderBy('id', 'Asc')
-                ->get();
+            $records = $query->orderBy('id', 'Asc')->get();
 
-            $rows = $records
-                ->values()
-                ->map(function ($record, $index) {
+            $rows = $records->values()->map(function ($record, $index) {
 
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Record number
-                    |--------------------------------------------------------------------------
-                    */
+                    $recordYear = !empty($record->created_at) ? \Carbon\Carbon::parse($record->created_at)->format('Y') : date('Y');
 
-                    $recordYear = !empty($record->created_at)
-                        ? \Carbon\Carbon::parse(
-                            $record->created_at
-                        )->format('Y')
-                        : date('Y');
+                    $divisionName = $record->division->name ?? 'Null';
 
-                    $divisionName =
-                        $record->division->name
-                        ?? 'Null';
-
-                    $recordNumber =
-                        $divisionName
-                        . '/CAPA/'
-                        . $recordYear
-                        . '/'
-                        . str_pad(
-                            $record->record ?? 0,
-                            4,
-                            '0',
-                            STR_PAD_LEFT
-                        );
+                    $recordNumber = $divisionName . '/CAPA/' . $recordYear . '/' . str_pad($record->record ?? 0, 4, '0', STR_PAD_LEFT);
 
                     return [
-                        'serial' =>
-                            $index + 1,
+                        'serial' => $index + 1,
 
-                        'date_of_initiation' =>
-                            $record->intiation_date
-                            ?? '-',
+                        'date_of_initiation' => $record->intiation_date ?? '-',
 
-                        'record_number' =>
-                            $recordNumber,
+                        'record_number' => $recordNumber,
 
-                        'short_description' =>
-                            strip_tags(
-                                (string) (
-                                    $record->short_description
-                                    ?? '-'
-                                )
-                            ),
+                        'short_description' => strip_tags((string) ($record->short_description ?? '-' )),
 
-                        'initiator' =>
-                            $record->initiator->name
-                            ?? '-',
+                        'initiator' => $record->initiator->name ?? '-',
 
-                        'department' =>
-                            $record->initiator_Group
-                            ?? '-',
+                        'department' => $record->initiator_Group ?? '-',
 
-                        'division' =>
-                            $record->division->name
-                            ?? '-',
+                        'division' => $record->division->name ?? '-',
 
-                        'capa_type' =>
-                            $record->capa_type
-                            ?? '-',
+                        'capa_type' => $record->capa_type ?? '-',
 
-                        'parent_type' =>
-                            $record->parent_type
-                            ?? '-',
+                        'parent_type' => $record->parent_type ?? '-',
 
-                        'due_date' =>
-                            !empty($record->due_date)
-                                ? \Carbon\Carbon::parse(
-                                    $record->due_date
-                                )->format('d-M-Y')
-                                : '-',
+                        'due_date' => !empty($record->due_date) ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y') : '-',
 
-                        'status' =>
-                            $record->status
-                            ?? '-',
+                        'status' => $record->status ?? '-',
                     ];
                 });
 
             return [
-                'title' =>
-                    'CAPA Log',
+                'title' =>'CAPA Log',
 
                 'headers' => [
-                    'serial' =>
-                        'Sr. No.',
+                    'serial' => 'Sr. No.',
 
-                    'date_of_initiation' =>
-                        'Date of Initiation',
+                    'date_of_initiation' => 'Date of Initiation',
 
-                    'record_number' =>
-                        'CAPA No.',
+                    'record_number' => 'CAPA No.',
 
-                    'short_description' =>
-                        'CAPA Description',
+                    'short_description' => 'CAPA Description',
 
-                    'initiator' =>
-                        'Initiator',
+                    'initiator' => 'Initiator',
 
-                    'department' =>
-                        'Department Name',
+                    'department' => 'Department Name',
 
-                    'division' =>
-                        'Division',
+                    'division' => 'Division',
 
-                    'capa_type' =>
-                        'Type of CAPA',
+                    'capa_type' => 'Type of CAPA',
 
-                    'parent_type' =>
-                        'Source Document No.',
+                    'parent_type' => 'Source Document No.',
 
-                    'due_date' =>
-                        'Due Date',
+                    'due_date' => 'Due Date',
 
-                    'status' =>
-                        'Status',
+                    'status' => 'Status',
                 ],
 
-                'rows' =>
-                    $rows,
+                'rows' => $rows,
 
                 'filters' => [
-                    'Department' =>
-                        !empty($departments)
-                            ? implode(', ', $departments)
-                            : 'All',
+                    'Department' => !empty($departments) ? implode(', ', $departments) : 'All',
 
-                    'Division' =>
-                        $request->filled('division_id')
-                            ? \Helpers::getDivisionName(
-                                $request->division_id
-                            )
-                            : 'All',
+                    'Division' => $request->filled('division_id') ? \Helpers::getDivisionName($request->division_id) : 'All',
 
-                    'Start Date' =>
-                        $request->date_from
-                        ?: 'All',
+                    'Start Date' => $request->date_from ?: 'All',
 
-                    'End Date' =>
-                        $request->date_to
-                        ?: 'All',
+                    'End Date' => $request->date_to ?: 'All',
                 ],
             ];
 
@@ -743,39 +572,22 @@ class LogController extends Controller
                 $query = Deviation::query();
 
                 if ($request->filled('department')) {
-                    $query->where(
-                        'Initiator_Group',
-                        $request->department
-                    );
+                    $query->where('Initiator_Group', $request->department);
                 }
 
                 if ($request->filled('division_id')) {
-                    $query->where(
-                        'division_id',
-                        $request->division_id
-                    );
+                    $query->where('division_id', $request->division_id);
                 }
 
                 if ($request->filled('date_from')) {
-                    $query->whereDate(
-                        'created_at',
-                        '>=',
-                        $request->date_from
-                    );
+                    $query->whereDate('created_at', '>=', $request->date_from);
                 }
 
                 if ($request->filled('date_to')) {
-                    $query->whereDate(
-                        'created_at',
-                        '<=',
-                        $request->date_to
-                    );
+                    $query->whereDate('created_at', '<=', $request->date_to);
                 }
 
-                $records = $query
-                    ->with('division')
-                    ->orderBy('id', 'Asc')
-                    ->get();
+                $records = $query->with('division')->orderBy('id', 'Asc')->get();
 
                 $rows = $records->map(function ($record, $index) {
 
@@ -898,12 +710,6 @@ class LogController extends Controller
                 ];
 
 
-
-                ///////////////////
-
-
-
-
                 /*
                 |--------------------------------------------------------------------------
                 | Root Cause Analysis
@@ -934,26 +740,11 @@ class LogController extends Controller
 
                     $rows = $records->values()->map(function ($record, $index) {
 
-                        /*
-                        |--------------------------------------------------------------------------
-                        | RCA Number
-                        |--------------------------------------------------------------------------
-                        */
+                        $recordYear = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('Y') : date('Y');
 
-                        $recordYear = !empty($record->intiation_date)
-                            ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
-                            : date('Y');
+                        $recordSequence = str_pad($record->record ?? 0, 4, '0', STR_PAD_LEFT);
 
-                        $recordSequence = str_pad(
-                            $record->record ?? 0,
-                            4,
-                            '0',
-                            STR_PAD_LEFT
-                        );
-
-                        $divisionName = !empty($record->division_id)
-                            ? \Helpers::getDivisionName($record->division_id)
-                            : '-';
+                        $divisionName = !empty($record->division_id) ? \Helpers::getDivisionName($record->division_id) : '-';
 
                         $recordNumber = $divisionName . '/RCA/' . $recordYear . '/' . $recordSequence;
 
@@ -963,13 +754,9 @@ class LogController extends Controller
                         |--------------------------------------------------------------------------
                         */
 
-                        $initiationDate = !empty($record->intiation_date)
-                            ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
-                            : 'NA';
+                        $initiationDate = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y') : 'NA';
 
-                        $dueDate = !empty($record->due_date)
-                            ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y')
-                            : 'NA';
+                        $dueDate = !empty($record->due_date) ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y') : 'NA';
 
                         return [
 
@@ -981,23 +768,15 @@ class LogController extends Controller
 
                             'division' => $divisionName,
 
-                            'originator' => !empty($record->initiator_id)
-                                ? \Helpers::getInitiatorName($record->initiator_id)
-                                : 'Not Available',
+                            'originator' => !empty($record->initiator_id) ? \Helpers::getInitiatorName($record->initiator_id) : 'Not Available',
 
                             'department' => $record->initiator_Group ?? '-',
 
-                            'short_description' => strip_tags(
-                                (string)($record->short_description ?? '-')
-                            ),
+                            'short_description' => strip_tags((string)($record->short_description ?? '-')),
 
-                            'assign_to' => !empty($record->assign_to)
-                                ? \Helpers::getInitiatorName($record->assign_to)
-                                : '-',
+                            'assign_to' => !empty($record->assign_to) ? \Helpers::getInitiatorName($record->assign_to) : '-',
 
-                            'qa_reviewer' => !empty($record->qa_reviewer)
-                                ? \Helpers::getInitiatorName($record->qa_reviewer)
-                                : '-',
+                            'qa_reviewer' => !empty($record->qa_reviewer) ? \Helpers::getInitiatorName($record->qa_reviewer) : '-',
 
                             'due_date' => $dueDate,
 
@@ -1050,9 +829,7 @@ class LogController extends Controller
 
                             'Department' => $request->department ?: 'All',
 
-                            'Division' => $request->filled('division_id')
-                                ? \Helpers::getDivisionName($request->division_id)
-                                : 'All',
+                            'Division' => $request->filled('division_id') ? \Helpers::getDivisionName($request->division_id) : 'All',
 
                             'Start Date' => $request->date_from ?: 'All',
 
@@ -1098,27 +875,13 @@ class LogController extends Controller
                     |--------------------------------------------------------------------------
                     */
 
-                    $recordYear = !empty($record->created_at)
-                        ? \Carbon\Carbon::parse($record->created_at)->format('Y')
-                        : date('Y');
+                    $recordYear = !empty($record->created_at) ? \Carbon\Carbon::parse($record->created_at)->format('Y') : date('Y');
 
-                    $recordSequence = str_pad(
-                        $record->record_number ?? 1,
-                        4,
-                        '0',
-                        STR_PAD_LEFT
-                    );
+                    $recordSequence = str_pad($record->record_number ?? 1, 4, '0', STR_PAD_LEFT );
 
-                    $divisionName = !empty($record->division_id)
-                        ? \Helpers::getDivisionName($record->division_id)
-                        : '-';
+                    $divisionName = !empty($record->division_id) ? \Helpers::getDivisionName($record->division_id) : '-';
 
-                    $recordNumber = $divisionName . '/'
-                        . ($record->Form_type ?? 'OOS')
-                        . '/'
-                        . $recordYear
-                        . '/'
-                        . $recordSequence;
+                    $recordNumber = $divisionName . '/' . ($record->Form_type ?? 'OOS') . '/' . $recordYear . '/' . $recordSequence;
 
                     /*
                     |--------------------------------------------------------------------------
@@ -1126,17 +889,11 @@ class LogController extends Controller
                     |--------------------------------------------------------------------------
                     */
 
-                    $initiationDate = !empty($record->intiation_date)
-                        ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
-                        : 'NA';
+                    $initiationDate = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y') : 'NA';
 
-                    $dueDate = !empty($record->due_date)
-                        ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y')
-                        : 'NA';
+                    $dueDate = !empty($record->due_date) ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y') : 'NA';
 
-                    $finalApprovalDate = !empty($record->Final_Approval_on)
-                        ? \Carbon\Carbon::parse($record->Final_Approval_on)->format('d-M-Y')
-                        : 'NA';
+                    $finalApprovalDate = !empty($record->Final_Approval_on) ? \Carbon\Carbon::parse($record->Final_Approval_on)->format('d-M-Y') : 'NA';
 
                     return [
 
@@ -1146,15 +903,11 @@ class LogController extends Controller
 
                         'oos_number' => $recordNumber,
 
-                        'description' => strip_tags(
-                            (string)($record->description_gi ?? '-')
-                        ),
+                        'description' => strip_tags((string)($record->description_gi ?? '-')),
 
-                        'source_document_type' => $record->source_document_type_gi
-                            ?? 'Not Available',
+                        'source_document_type' => $record->source_document_type_gi ?? 'Not Available',
 
-                        'product_material_name' => $record->product_material_name_gi
-                            ?? '-',
+                        'product_material_name' => $record->product_material_name_gi ?? '-',
 
                         'due_date' => $dueDate,
 
@@ -1197,9 +950,7 @@ class LogController extends Controller
 
                         'Department' => $request->department ?: 'All',
 
-                        'Division' => $request->filled('division_id')
-                            ? \Helpers::getDivisionName($request->division_id)
-                            : 'All',
+                        'Division' => $request->filled('division_id') ? \Helpers::getDivisionName($request->division_id) : 'All',
 
                         'Start Date' => $request->date_from ?: 'All',
 
@@ -1218,8 +969,7 @@ class LogController extends Controller
 
                 case 'MarketComplaint':
 
-                    $query = MarketComplaint::query()
-                        ->with(['division', 'product_details']);
+                    $query = MarketComplaint::query()->with(['division', 'product_details']);
 
                     if ($request->filled('department')) {
                         $query->where('initiator_group', $request->department);
@@ -1250,9 +1000,7 @@ class LogController extends Controller
                         |--------------------------------------------------------------------------
                         */
 
-                        $recordYear = !empty($record->intiation_date)
-                            ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
-                            : date('Y');
+                        $recordYear = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('Y') : date('Y');
 
                         $recordSequence = str_pad($record->record ?? 0, 4, '0', STR_PAD_LEFT);
 
@@ -1266,13 +1014,9 @@ class LogController extends Controller
                         |--------------------------------------------------------------------------
                         */
 
-                        $initiationDate = !empty($record->intiation_date)
-                            ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
-                            : 'NA';
+                        $initiationDate = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y') : 'NA';
 
-                        $dueDate = !empty($record->due_date_gi)
-                            ? \Carbon\Carbon::parse($record->due_date_gi)->format('d-M-Y')
-                            : 'NA';
+                        $dueDate = !empty($record->due_date_gi) ? \Carbon\Carbon::parse($record->due_date_gi)->format('d-M-Y') : 'NA';
 
                         /*
                         |--------------------------------------------------------------------------
@@ -1299,12 +1043,6 @@ class LogController extends Controller
                                     'department' => $record->initiator_group ?? '-',
 
                                     'division' => $divisionName,
-
-                                    // Uncomment if required
-                                    // 'product_name' => $data['info_product_name'] ?? '-',
-                                    // 'batch_no' => $data['info_batch_no'] ?? '-',
-                                    // 'mfg_date' => $data['info_mfg_date'] ?? '-',
-                                    // 'expiry_date' => $data['info_expiry_date'] ?? '-',
 
                                     'complaint_category' => $record->categorization_of_complaint_gi ?? '-',
 
@@ -1335,12 +1073,6 @@ class LogController extends Controller
 
                             'division' => 'Division',
 
-                            // Uncomment if required
-                            // 'product_name' => 'Product Name',
-                            // 'batch_no' => 'Batch No.',
-                            // 'mfg_date' => 'MFG Date',
-                            // 'expiry_date' => 'Expiry Date',
-
                             'complaint_category' => 'Category of complaint',
 
                             'due_date' => 'Due Date',
@@ -1354,9 +1086,7 @@ class LogController extends Controller
 
                             'Department' => $request->department ?: 'All',
 
-                            'Division' => $request->filled('division_id')
-                                ? \Helpers::getDivisionName($request->division_id)
-                                : 'All',
+                            'Division' => $request->filled('division_id') ? \Helpers::getDivisionName($request->division_id) : 'All',
 
                             'Start Date' => $request->date_from ?: 'All',
 
@@ -1402,20 +1132,11 @@ class LogController extends Controller
                         |--------------------------------------------------------------------------
                         */
 
-                        $recordYear = !empty($record->intiation_date)
-                            ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
-                            : date('Y');
+                        $recordYear = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('Y') : date('Y');
 
-                        $recordSequence = str_pad(
-                            $record->record ?? 0,
-                            4,
-                            '0',
-                            STR_PAD_LEFT
-                        );
+                        $recordSequence = str_pad($record->record ?? 0, 4, '0', STR_PAD_LEFT );
 
-                        $divisionName = !empty($record->division_id)
-                            ? \Helpers::getDivisionName($record->division_id)
-                            : '-';
+                        $divisionName = !empty($record->division_id) ? \Helpers::getDivisionName($record->division_id) : '-';
 
                         $recordNumber = $divisionName . '/OOC/' . $recordYear . '/' . $recordSequence;
 
@@ -1425,13 +1146,9 @@ class LogController extends Controller
                         |--------------------------------------------------------------------------
                         */
 
-                        $initiationDate = !empty($record->intiation_date)
-                            ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
-                            : 'NA';
+                        $initiationDate = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y') : 'NA';
 
-                        $dueDate = !empty($record->ooc_due_date)
-                            ? \Carbon\Carbon::parse($record->ooc_due_date)->format('d-M-Y')
-                            : 'Not Applicable';
+                        $dueDate = !empty($record->ooc_due_date) ? \Carbon\Carbon::parse($record->ooc_due_date)->format('d-M-Y') : 'Not Applicable';
 
                         return [
 
@@ -1443,21 +1160,15 @@ class LogController extends Controller
 
                             'division' => $divisionName,
 
-                            'description' => strip_tags(
-                                (string)($record->description_ooc ?? 'Not Available')
-                            ),
+                            'description' => strip_tags((string)($record->description_ooc ?? 'Not Available')),
 
                             'originator' => $record->initiator->name ?? '-',
 
                             'department' => $record->Initiator_Group ?? '-',
 
-                            'assign_to' => !empty($record->assign_to)
-                                ? \Helpers::getInitiatorName($record->assign_to)
-                                : '-',
+                            'assign_to' => !empty($record->assign_to) ? \Helpers::getInitiatorName($record->assign_to) : '-',
 
-                            'qa_assign_person' => !empty($record->qa_assign_person)
-                                ? \Helpers::getInitiatorName($record->qa_assign_person)
-                                : '-',
+                            'qa_assign_person' => !empty($record->qa_assign_person) ? \Helpers::getInitiatorName($record->qa_assign_person) : '-',
 
                             'due_date' => $dueDate,
 
@@ -1502,9 +1213,7 @@ class LogController extends Controller
 
                             'Department' => $request->department ?: 'All',
 
-                            'Division' => $request->filled('division_id')
-                                ? \Helpers::getDivisionName($request->division_id)
-                                : 'All',
+                            'Division' => $request->filled('division_id') ? \Helpers::getDivisionName($request->division_id) : 'All',
 
                             'Start Date' => $request->date_from ?: 'All',
 
@@ -1549,20 +1258,11 @@ class LogController extends Controller
                             |--------------------------------------------------------------------------
                             */
 
-                            $recordYear = !empty($record->intiation_date)
-                                ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
-                                : date('Y');
+                            $recordYear = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('Y') : date('Y');
 
-                            $recordSequence = str_pad(
-                                $record->record ?? 0,
-                                4,
-                                '0',
-                                STR_PAD_LEFT
-                            );
+                            $recordSequence = str_pad($record->record ?? 0, 4, '0', STR_PAD_LEFT);
 
-                            $divisionName = !empty($record->division_code)
-                                ? \Helpers::getDivisionName($record->division_code)
-                                : '-';
+                            $divisionName = !empty($record->division_code) ? \Helpers::getDivisionName($record->division_code) : '-';
 
                             $recordNumber = $divisionName . '/OBS/' . $recordYear . '/' . $recordSequence;
 
@@ -1572,17 +1272,11 @@ class LogController extends Controller
                             |--------------------------------------------------------------------------
                             */
 
-                            $initiationDate = !empty($record->intiation_date)
-                                ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
-                                : 'NA';
+                            $initiationDate = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y') : 'NA';
 
-                            $dueDate = !empty($record->due_date)
-                                ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y')
-                                : 'NA';
+                            $dueDate = !empty($record->due_date) ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y') : 'NA';
 
-                            $recommendationDueDate = !empty($record->recomendation_capa_date_due)
-                                ? \Carbon\Carbon::parse($record->recomendation_capa_date_due)->format('d-M-Y')
-                                : 'NA';
+                            $recommendationDueDate = !empty($record->recomendation_capa_date_due) ? \Carbon\Carbon::parse($record->recomendation_capa_date_due)->format('d-M-Y') : 'NA';
 
                             return [
 
@@ -1594,24 +1288,17 @@ class LogController extends Controller
 
                                 'division' => $divisionName,
 
-                                'originator' => !empty($record->initiator_id)
-                                    ? \Helpers::getInitiatorName($record->initiator_id)
-                                    : 'Not Available',
+                                'originator' => !empty($record->initiator_id) ? \Helpers::getInitiatorName($record->initiator_id) : 'Not Available',
 
-                                'assign_to' => !empty($record->assign_to)
-                                    ? \Helpers::getInitiatorName($record->assign_to)
-                                    : '-',
+                                'assign_to' => !empty($record->assign_to) ? \Helpers::getInitiatorName($record->assign_to) : '-',
 
                                 'due_date' => $dueDate,
 
-                                'short_description' => strip_tags(
-                                    (string)($record->short_description ?? '-')
-                                ),
+                                'short_description' => strip_tags((string)($record->short_description ?? '-')),
 
                                 'recommendation_capa_due_date' => $recommendationDueDate,
 
                                 'status' => $record->status ?? '-',
-
                             ];
                         });
 
@@ -1687,42 +1374,17 @@ class LogController extends Controller
 
                         $rows = $records->values()->map(function ($record, $index) {
 
-                            /*
-                            |--------------------------------------------------------------------------
-                            | Resampling Number
-                            |--------------------------------------------------------------------------
-                            */
+                            $recordYear = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('Y') : date('Y');
 
-                            $recordYear = !empty($record->intiation_date)
-                                ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
-                                : date('Y');
+                            $recordSequence = str_pad($record->record ?? 0, 4, '0', STR_PAD_LEFT);
 
-                            $recordSequence = str_pad(
-                                $record->record ?? 0,
-                                4,
-                                '0',
-                                STR_PAD_LEFT
-                            );
-
-                            $divisionName = !empty($record->division_id)
-                                ? \Helpers::getDivisionName($record->division_id)
-                                : '-';
+                            $divisionName = !empty($record->division_id) ? \Helpers::getDivisionName($record->division_id) : '-';
 
                             $recordNumber = $divisionName . '/Resampling/' . $recordYear . '/' . $recordSequence;
 
-                            /*
-                            |--------------------------------------------------------------------------
-                            | Dates
-                            |--------------------------------------------------------------------------
-                            */
+                            $initiationDate = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y') : 'NA';
 
-                            $initiationDate = !empty($record->intiation_date)
-                                ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
-                                : 'NA';
-
-                            $dueDate = !empty($record->due_date)
-                                ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y')
-                                : 'NA';
+                            $dueDate = !empty($record->due_date) ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y') : 'NA';
 
                             return [
 
@@ -1734,27 +1396,17 @@ class LogController extends Controller
 
                                 'division' => $divisionName,
 
-                                'originator' => !empty($record->initiator_id)
-                                    ? \Helpers::getInitiatorName($record->initiator_id)
-                                    : 'Not Available',
+                                'originator' => !empty($record->initiator_id) ? \Helpers::getInitiatorName($record->initiator_id) : 'Not Available',
 
-                                'assign_to' => !empty($record->assign_to)
-                                    ? \Helpers::getInitiatorName($record->assign_to)
-                                    : '-',
+                                'assign_to' => !empty($record->assign_to) ? \Helpers::getInitiatorName($record->assign_to) : '-',
 
                                 'due_date' => $dueDate,
 
-                                'short_description' => strip_tags(
-                                    (string)($record->short_description ?? '-')
-                                ),
+                                'short_description' => strip_tags((string)($record->short_description ?? '-')),
 
-                                'hod_person' => !empty($record->hod_preson)
-                                    ? \Helpers::getInitiatorName($record->hod_preson)
-                                    : '-',
+                                'hod_person' => !empty($record->hod_preson) ? \Helpers::getInitiatorName($record->hod_preson) : '-',
 
-                                'department' => !empty($record->departments)
-                                    ? \Helpers::getFullDepartmentName($record->departments)
-                                    : '-',
+                                'department' => !empty($record->departments) ? \Helpers::getFullDepartmentName($record->departments) : '-',
 
                                 'status' => $record->status ?? '-',
 
@@ -1796,9 +1448,7 @@ class LogController extends Controller
 
                                 'Department' => $request->department ?: 'All',
 
-                                'Division' => $request->filled('division_id')
-                                    ? \Helpers::getDivisionName($request->division_id)
-                                    : 'All',
+                                'Division' => $request->filled('division_id') ? \Helpers::getDivisionName($request->division_id) : 'All',
 
                                 'Start Date' => $request->date_from ?: 'All',
 
@@ -1842,20 +1492,11 @@ class LogController extends Controller
                         |--------------------------------------------------------------------------
                         */
 
-                        $recordYear = !empty($record->intiation_date)
-                            ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
-                            : date('Y');
+                        $recordYear = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('Y') : date('Y');
 
-                        $recordSequence = str_pad(
-                            $record->record ?? 0,
-                            4,
-                            '0',
-                            STR_PAD_LEFT
-                        );
+                        $recordSequence = str_pad($record->record ?? 0, 4, '0', STR_PAD_LEFT);
 
-                        $divisionName = !empty($record->division_id)
-                            ? \Helpers::getDivisionName($record->division_id)
-                            : '-';
+                        $divisionName = !empty($record->division_id) ? \Helpers::getDivisionName($record->division_id) : '-';
 
                         $recordNumber = $divisionName . '/MR/' . $recordYear . '/' . $recordSequence;
 
@@ -1865,13 +1506,9 @@ class LogController extends Controller
                         |--------------------------------------------------------------------------
                         */
 
-                        $initiationDate = !empty($record->intiation_date)
-                            ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
-                            : 'NA';
+                        $initiationDate = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y') : 'NA';
 
-                        $startDate = !empty($record->start_date)
-                            ? \Carbon\Carbon::parse($record->start_date)->format('d-M-Y')
-                            : 'NA';
+                        $startDate = !empty($record->start_date) ? \Carbon\Carbon::parse($record->start_date)->format('d-M-Y') : 'NA';
 
                         /*
                         |--------------------------------------------------------------------------
@@ -1879,9 +1516,7 @@ class LogController extends Controller
                         |--------------------------------------------------------------------------
                         */
 
-                        $initiator = !empty($record->initiator_id)
-                            ? \Helpers::getInitiatorName($record->initiator_id)
-                            : 'Not Available';
+                        $initiator = !empty($record->initiator_id) ? \Helpers::getInitiatorName($record->initiator_id) : 'Not Available';
 
                         return [
 
@@ -1897,9 +1532,7 @@ class LogController extends Controller
 
                             'department' => $record->initiator_Group ?? '-',
 
-                            'short_description' => strip_tags(
-                                (string)($record->short_description ?? '-')
-                            ),
+                            'short_description' => strip_tags((string)($record->short_description ?? '-')),
 
                             'summary_recommendation' => $record->summary_recommendation ?? '-',
 
@@ -1946,9 +1579,7 @@ class LogController extends Controller
 
                             'Department' => $request->department ?: 'All',
 
-                            'Division' => $request->filled('division_id')
-                                ? \Helpers::getDivisionName($request->division_id)
-                                : 'All',
+                            'Division' => $request->filled('division_id') ? \Helpers::getDivisionName($request->division_id) : 'All',
 
                             'Start Date' => $request->date_from ?: 'All',
 
@@ -1992,9 +1623,7 @@ class LogController extends Controller
                     |--------------------------------------------------------------------------
                     */
 
-                    $recordYear = !empty($record->intiation_date)
-                        ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
-                        : date('Y');
+                    $recordYear = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('Y') : date('Y');
 
                     $recordSequence = str_pad($record->record ?? 0, 4, '0', STR_PAD_LEFT);
 
@@ -2008,9 +1637,7 @@ class LogController extends Controller
                     |--------------------------------------------------------------------------
                     */
 
-                    $divisionName = !empty($record->division_id)
-                        ? \Helpers::getDivisionName($record->division_id)
-                        : '-';
+                    $divisionName = !empty($record->division_id) ? \Helpers::getDivisionName($record->division_id) : '-';
 
                     /*
                     |--------------------------------------------------------------------------
@@ -2018,9 +1645,7 @@ class LogController extends Controller
                     |--------------------------------------------------------------------------
                     */
 
-                    $initiator = !empty($record->initiator_id)
-                        ? \Helpers::getInitiatorName($record->initiator_id)
-                        : 'Not Available';
+                    $initiator = !empty($record->initiator_id) ? \Helpers::getInitiatorName($record->initiator_id) : 'Not Available';
 
                     /*
                     |--------------------------------------------------------------------------
@@ -2028,9 +1653,7 @@ class LogController extends Controller
                     |--------------------------------------------------------------------------
                     */
 
-                  $initiationDate = !empty($record->intiation_date)
-                    ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
-                    : 'NA';
+                    $initiationDate = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y') : 'NA';
 
                     return [
 
@@ -2046,9 +1669,7 @@ class LogController extends Controller
 
                         'department' => $record->Initiator_Group ?? '-',
 
-                        'short_description' => strip_tags(
-                            (string)($record->short_description ?? '-')
-                        ),
+                        'short_description' => strip_tags((string)($record->short_description ?? '-')),
 
                         'assign_to' => $record->assign_to ?? '-',
 
@@ -2103,20 +1724,13 @@ class LogController extends Controller
 
                         'Department' => $request->department ?: 'All',
 
-                        'Division' => $request->filled('division_id')
-                            ? \Helpers::getDivisionName($request->division_id)
-                            : 'All',
+                        'Division' => $request->filled('division_id') ? \Helpers::getDivisionName($request->division_id) : 'All',
 
                         'Start Date' => $request->date_from ?: 'All',
 
                         'End Date' => $request->date_to ?: 'All',
                     ],
                 ];
-
-                ////////////////////
-
-
-
 
             /*
             |--------------------------------------------------------------------------
@@ -2155,9 +1769,7 @@ class LogController extends Controller
                     |--------------------------------------------------------------------------
                     */
 
-                    $recordYear = !empty($record->created_at)
-                        ? \Carbon\Carbon::parse($record->created_at)->format('Y')
-                        : date('Y');
+                    $recordYear = !empty($record->created_at) ? \Carbon\Carbon::parse($record->created_at)->format('Y') : date('Y');
 
                     $recordSequence = str_pad($record->record ?? 0, 4, '0', STR_PAD_LEFT);
 
@@ -2171,13 +1783,9 @@ class LogController extends Controller
                     |--------------------------------------------------------------------------
                     */
 
-                    $initiationDate = !empty($record->intiation_date)
-                        ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
-                        : 'NA';
+                    $initiationDate = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y') : 'NA';
 
-                    $dueDate = !empty($record->due_date)
-                        ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y')
-                        : 'NA';
+                    $dueDate = !empty($record->due_date) ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y') : 'NA';
 
                     /*
                     |--------------------------------------------------------------------------
@@ -2249,9 +1857,7 @@ class LogController extends Controller
 
                         'Department' => $request->department ?: 'All',
 
-                        'Division' => $request->filled('division_id')
-                            ? \Helpers::getDivisionName($request->division_id)
-                            : 'All',
+                        'Division' => $request->filled('division_id') ? \Helpers::getDivisionName($request->division_id) : 'All',
 
                         'Start Date' => $request->date_from ?: 'All',
 
@@ -2297,15 +1903,11 @@ class LogController extends Controller
                 |--------------------------------------------------------------------------
                 */
 
-                    $recordYear = !empty($record->intiation_date)
-                        ? \Carbon\Carbon::parse($record->intiation_date)->format('Y')
-                        : date('Y');
+                    $recordYear = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('Y') : date('Y');
 
                     $recordSequence = str_pad($record->record ?? 0, 4, '0', STR_PAD_LEFT);
 
-                    $divisionName = !empty($record->division_id)
-                        ? \Helpers::getDivisionName($record->division_id)
-                        : '-';
+                    $divisionName = !empty($record->division_id) ? \Helpers::getDivisionName($record->division_id) : '-';
 
                     $recordNumber = $divisionName . '/EA/' . $recordYear . '/' . $recordSequence;
 
@@ -2315,21 +1917,13 @@ class LogController extends Controller
                     |--------------------------------------------------------------------------
                     */
 
-                    $initiationDate = !empty($record->intiation_date)
-                        ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y')
-                        : 'NA';
+                    $initiationDate = !empty($record->intiation_date) ? \Carbon\Carbon::parse($record->intiation_date)->format('d-M-Y') : 'NA';
 
-                    $dueDate = !empty($record->due_date)
-                        ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y')
-                        : 'NA';
+                    $dueDate = !empty($record->due_date) ? \Carbon\Carbon::parse($record->due_date)->format('d-M-Y') : 'NA';
 
-                    $startDate = !empty($record->start_date_gi)
-                        ? \Carbon\Carbon::parse($record->start_date_gi)->format('d-M-Y')
-                        : 'NA';
+                    $startDate = !empty($record->start_date_gi) ? \Carbon\Carbon::parse($record->start_date_gi)->format('d-M-Y') : 'NA';
 
-                    $endDate = !empty($record->end_date_gi)
-                        ? \Carbon\Carbon::parse($record->end_date_gi)->format('d-M-Y')
-                        : 'NA';
+                    $endDate = !empty($record->end_date_gi) ? \Carbon\Carbon::parse($record->end_date_gi)->format('d-M-Y') : 'NA';
 
                     /*
                     |--------------------------------------------------------------------------
@@ -2337,9 +1931,7 @@ class LogController extends Controller
                     |--------------------------------------------------------------------------
                     */
 
-                    $initiator = !empty($record->initiator_id)
-                        ? \Helpers::getInitiatorName($record->initiator_id)
-                        : 'Not Available';
+                    $initiator = !empty($record->initiator_id) ? \Helpers::getInitiatorName($record->initiator_id) : 'Not Available';
 
                     return [
 
@@ -2357,9 +1949,7 @@ class LogController extends Controller
 
                         'due_date' => $dueDate,
 
-                        'short_description' => strip_tags(
-                            (string)($record->short_description ?? '-')
-                        ),
+                        'short_description' => strip_tags((string)($record->short_description ?? '-')),
 
                         'initiated_through' => $record->initiated_through ?? '-',
 
@@ -2416,9 +2006,7 @@ class LogController extends Controller
 
                         'Department' => $request->department ?: 'All',
 
-                        'Division' => $request->filled('division_id')
-                            ? \Helpers::getDivisionName($request->division_id)
-                            : 'All',
+                        'Division' => $request->filled('division_id') ? \Helpers::getDivisionName($request->division_id) : 'All',
 
                         'Start Date' => $request->date_from ?: 'All',
 
@@ -2433,46 +2021,27 @@ class LogController extends Controller
 
             case 'incident':
 
-                $query = Incident::query()
-                    ->with('division');
+                $query = Incident::query()->with('division');
 
                 if ($request->filled('department')) {
-                    $query->where(
-                        'Initiator_Group',
-                        $request->department
-                    );
+                    $query->where('Initiator_Group', $request->department);
                 }
 
                 if ($request->filled('division_id')) {
-                    $query->where(
-                        'division_id',
-                        $request->division_id
-                    );
+                    $query->where('division_id', $request->division_id);
                 }
 
                 if ($request->filled('date_from')) {
-                    $query->whereDate(
-                        'created_at',
-                        '>=',
-                        $request->date_from
-                    );
+                    $query->whereDate('created_at', '>=', $request->date_from);
                 }
 
                 if ($request->filled('date_to')) {
-                    $query->whereDate(
-                        'created_at',
-                        '<=',
-                        $request->date_to
-                    );
+                    $query->whereDate('created_at', '<=', $request->date_to);
                 }
 
-                $records = $query
-                    ->orderBy('id', 'Asc')
-                    ->get();
+                $records = $query->orderBy('id', 'Asc')->get();
 
-                $rows = $records
-                    ->values()
-                    ->map(function ($record, $index) {
+                $rows = $records->values()->map(function ($record, $index) {
 
                         /*
                         |--------------------------------------------------------------------------
@@ -2480,29 +2049,13 @@ class LogController extends Controller
                         |--------------------------------------------------------------------------
                         */
 
-                        $recordYear = !empty($record->created_at)
-                            ? \Carbon\Carbon::parse(
-                                $record->created_at
-                            )->format('Y')
-                            : date('Y');
+                        $recordYear = !empty($record->created_at) ? \Carbon\Carbon::parse($record->created_at)->format('Y') : date('Y');
 
-                        $recordSequence = str_pad(
-                            $record->record ?? 0,
-                            4,
-                            '0',
-                            STR_PAD_LEFT
-                        );
+                        $recordSequence = str_pad($record->record ?? 0, 4, '0', STR_PAD_LEFT);
 
-                        $divisionName =
-                            $record->division->name
-                            ?? '-';
+                        $divisionName = $record->division->name ?? '-';
 
-                        $recordNumber =
-                            $divisionName
-                            . '/INC/'
-                            . $recordYear
-                            . '/'
-                            . $recordSequence;
+                        $recordNumber = $divisionName . '/INC/' . $recordYear . '/' . $recordSequence;
 
                         /*
                         |--------------------------------------------------------------------------
@@ -2510,46 +2063,25 @@ class LogController extends Controller
                         |--------------------------------------------------------------------------
                         */
 
-                        $initiator = !empty($record->initiator_id)
-                            ? \Helpers::getInitiatorName(
-                                $record->initiator_id
-                            )
-                            : 'Not Available';
+                        $initiator = !empty($record->initiator_id) ? \Helpers::getInitiatorName($record->initiator_id) : 'Not Available';
 
-                        $dueDate = !empty($record->due_date)
-                            ? \Helpers::getdateFormat(
-                                $record->due_date
-                            )
-                            : '-';
+                        $dueDate = !empty($record->due_date) ? \Helpers::getdateFormat($record->due_date) : '-';
 
                         return [
-                            'serial' =>
-                                $index + 1,
+                            'serial' => $index + 1,
 
-                            'date_of_initiation' =>
-                                $record->intiation_date
-                                ?? 'Not Available',
+                            'date_of_initiation' => $record->intiation_date ?? 'Not Available',
 
-                            'record_number' =>
-                                $recordNumber,
+                            'record_number' => $recordNumber,
 
-                            'originator' =>
-                                $initiator,
+                            'originator' => $initiator,
 
-                            'department' =>
-                                $record->Initiator_Group
-                                ?? 'Not Available',
+                            'department' => $record->Initiator_Group ?? 'Not Available',
 
-                            'division' =>
-                                $divisionName,
+                            'division' => $divisionName,
 
                             'short_description' =>
-                                strip_tags(
-                                    (string) (
-                                        $record->short_description
-                                        ?? 'Not Available'
-                                    )
-                                ),
+                                strip_tags((string) ($record->short_description ?? 'Not Available')),
 
                             'incident_related_to' =>
                                 $record->audit_type
@@ -2636,9 +2168,15 @@ class LogController extends Controller
 
                 $query = ChangeProposalJust::query();
 
+                /*
+                |--------------------------------------------------------------------------
+                | Filters
+                |--------------------------------------------------------------------------
+                */
+
                 if ($request->filled('department')) {
                     $query->where(
-                        'initiator_group',
+                        'department',
                         $request->department
                     );
                 }
@@ -2667,15 +2205,23 @@ class LogController extends Controller
                 }
 
                 $records = $query
-                    ->orderBy('id', 'Asc')
+                    ->orderBy('id', 'asc')
                     ->get();
 
                 $rows = $records
                     ->values()
                     ->map(function ($record, $index) {
 
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Record number
+                        |--------------------------------------------------------------------------
+                        */
+
                         $recordYear = !empty($record->created_at)
-                            ? \Carbon\Carbon::parse($record->created_at)->format('Y')
+                            ? \Carbon\Carbon::parse(
+                                $record->created_at
+                            )->format('Y')
                             : date('Y');
 
                         $recordSequence = str_pad(
@@ -2685,50 +2231,103 @@ class LogController extends Controller
                             STR_PAD_LEFT
                         );
 
-                        $divisionCode = $record->division_code ?? '-';
+                        $divisionCode =
+                            $record->division_code
+                            ?? '-';
 
-                        $recordNumber = $divisionCode . '/CPJ/' . $recordYear . '/' . $recordSequence;
+                        $recordNumber =
+                            $divisionCode
+                            . '/CPJ/'
+                            . $recordYear
+                            . '/'
+                            . $recordSequence;
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Basic fields
+                        |--------------------------------------------------------------------------
+                        */
 
                         $shortDescription =
-                            $record->short_description
+                            $record->cpdescription
+                            ?? $record->short_description
                             ?? $record->description
-                            ?? $record->cpdescription
                             ?? 'Not Applicable';
-
-                        $initiatorId =
-                            $record->initiator_id
-                            ?? null;
-
-                        $divisionId =
-                            $record->division_id
-                            ?? null;
 
                         $department =
-                            $record->initiator_group
+                            $record->department
                             ?? $record->Initiator_Group
-                            ?? $record->department
+                            ?? $record->initiator_group
                             ?? 'Not Applicable';
 
-                        $dueDate =
-                            $record->due_date
-                            ?? $record->Due_Date
+                        /*
+                        |--------------------------------------------------------------------------
+                        | QA reviewer
+                        |--------------------------------------------------------------------------
+                        |
+                        | Database me reviewer ka direct name stored hai:
+                        | qa_cqa_Review_Complete_By = "Sonali Nehare"
+                        |
+                        | Isliye getInitiatorName() call nahi karna.
+                        |
+                        */
+
+                        $qaReviewerName =
+                            $record->qa_cqa_Review_Complete_By
+                            ?? '-';
+
+                        /*
+                        * DD ke according date field me double underscore hai:
+                        * qa_cqa__Review_Complete_On
+                        */
+                        $qaReviewerDate =
+                            $record->qa_cqa__Review_Complete_On
                             ?? null;
 
-                        $qaReviewerId =
-                            $record->qa_reviewer
-                            ?? $record->qa_reviewer_id
-                            ?? $record->reviewer_id
-                            ?? null;
+                        $qaReviewer = $qaReviewerName;
+
+                        if (
+                            !empty($qaReviewerName) &&
+                            $qaReviewerName !== '-' &&
+                            !empty($qaReviewerDate)
+                        ) {
+                            try {
+                                $formattedReviewerDate =
+                                    \Carbon\Carbon::parse(
+                                        $qaReviewerDate
+                                    )->format('d-M-Y');
+
+                                $qaReviewer =
+                                    $qaReviewerName
+                                    . ' ('
+                                    . $formattedReviewerDate
+                                    . ')';
+                            } catch (\Throwable $exception) {
+                                /*
+                                * Date parse fail ho to name aur raw date show karenge.
+                                */
+                                $qaReviewer =
+                                    $qaReviewerName
+                                    . ' ('
+                                    . $qaReviewerDate
+                                    . ')';
+                            }
+                        }
 
                         return [
-                            'serial' => $index + 1,
+                            'serial' =>
+                                $index + 1,
 
+                            /*
+                            * Screen Blade intiation_date use karti hai,
+                            * created_at nahi.
+                            */
                             'date_of_initiation' =>
-                                !empty($record->created_at)
+                                !empty($record->intiation_date)
                                     ? \Carbon\Carbon::parse(
-                                        $record->created_at
+                                        $record->intiation_date
                                     )->format('d-M-Y')
-                                    : 'Not Applicable',
+                                    : 'NA',
 
                             'record_number' =>
                                 $recordNumber,
@@ -2739,42 +2338,39 @@ class LogController extends Controller
                                 ),
 
                             'initiator' =>
-                                !empty($initiatorId)
+                                !empty($record->initiator_id)
                                     ? \Helpers::getInitiatorName(
-                                        $initiatorId
+                                        $record->initiator_id
                                     )
-                                    : 'Not Applicable',
+                                    : 'Not Available',
 
+                            /*
+                            * Screen par division_code dikh raha hai.
+                            */
                             'division' =>
-                                !empty($divisionId)
-                                    ? \Helpers::getDivisionName(
-                                        $divisionId
-                                    )
-                                    : 'Not Applicable',
+                                $divisionCode,
 
                             'department' =>
                                 $department,
 
                             'due_date' =>
-                                !empty($dueDate)
+                                !empty($record->due_date)
                                     ? \Carbon\Carbon::parse(
-                                        $dueDate
+                                        $record->due_date
                                     )->format('d-M-Y')
-                                    : 'Not Applicable',
+                                    : 'NA',
 
+                            /*
+                            * IMPORTANT:
+                            * Header key bhi qa_reviewer hai,
+                            * isliye row key exactly qa_reviewer hona chahiye.
+                            */
                             'qa_reviewer' =>
-                                !empty($qaReviewerId)
-                                    ? \Helpers::getInitiatorName(
-                                        $qaReviewerId
-                                    )
-                                    : (
-                                        $record->qa_reviewer_name
-                                        ?? 'Not Applicable'
-                                    ),
+                                $qaReviewer,
 
                             'status' =>
                                 $record->status
-                                ?? 'Not Applicable',
+                                ?? '-',
                         ];
                     });
 
@@ -2814,7 +2410,8 @@ class LogController extends Controller
                             'Status',
                     ],
 
-                    'rows' => $rows,
+                    'rows' =>
+                        $rows,
 
                     'filters' => [
                         'Department' =>
@@ -2837,8 +2434,6 @@ class LogController extends Controller
                             ?: 'All',
                     ],
                 ];
-
-
             /*
             |--------------------------------------------------------------------------
             | Observation
@@ -3492,14 +3087,14 @@ class LogController extends Controller
                         ?? 'Not Applicable';
 
                     $hodPersons =
-                        $record->hod_person
-                        ?? $record->hod_persons
-                        ?? $record->hod
+                        $record->hod_preson
+                        ?? $record->hod_preson
+                        ?? $record->hod_preson
                         ?? 'Not Applicable';
 
                     $responsibleDepartment =
-                        $record->responsible_department
-                        ?? $record->Initiator_Group
+                        $record->departments
+                        ?? $record->departments
                         ?? $record->department
                         ?? 'Not Applicable';
 
