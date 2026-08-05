@@ -374,58 +374,41 @@
 
                     <tr>
 
-                       <td>
+                        <td>
                             {{ $requestDocuments->total() - (($requestDocuments->currentPage() - 1) * $requestDocuments->perPage()) - $key }}
                         </td>
 
-                        <td
-                            class="request-id"
-                            style="text-decoration: underline;">
-                            <a
-                                href="{{ route(
-                                    'document-request.show',
-                                    $requestDocument->id) }}">
+                        <td class="request-id" style="">
+                            <a href="{{ route('document-request.show', $requestDocument->id) }}">
                              {{ $requestDocument->request_id}}
                             </a>
                         </td>
 
                         <td class="document-number"> {{ $requestDocument->document_number ?? 'NA' }} 
-
                         </td>
                         <td class="request-by"> {{ $requestDocument->request_by_name ?? 'NA' }} 
-
                         </td>
                         <td class="department"> {{ $requestDocument->department ?? 'NA' }} 
-
                         </td>
                         <td class="request-to"> {{ $requestDocument->request_to_name ?? 'NA' }} 
-
-                        </td> {{-- Number of Copies --}} 
+                        </td> 
                         <td class="copies"> {{ $requestDocument->number_of_copies ?? '0' }} 
-
-                        </td> {{-- Reason --}} 
+                        </td>
                         <td class="reason request-reason-text" title="{{ $requestDocument->reason }}" > {{ $requestDocument->reason ?? 'NA' }} 
-
-                        </td> {{-- Created Date --}} 
+                        </td>
                         <td class="create-date"> {{ $requestDocument->created_at ? \Carbon\Carbon::parse( $requestDocument->created_at )->format('d-M-Y h:i A') : 'NA' }} 
-
-                        </td> {{-- Status --}} 
+                        </td>
                         <td class="status"> {{ $requestDocument->status ?? 'Opened' }} 
-
-                        </td> {{-- Action --}} 
+                        </td>
                         <td class="action"> 
                             <div class="action-dropdown"> 
                                 <div class="action-down-btn"> Action <i class="fa-solid fa-angle-down"></i> 
                                 </div> 
                                 <div class="action-block"> 
-                                    {{-- <a href="{{ route( 'document-request.show', $requestDocument->id ) }}" > View </a> --}}
-                                     {{-- @if ($requestDocument->stage == 1)  --}}
-                                     <a href="{{ route( 'document-request.show', $requestDocument->id ) }}" > Edit </a> 
-                                     {{-- @endif  --}}
+                                    <a href="{{ route( 'document-request.show', $requestDocument->id ) }}" > Edit </a> 
                                 </div> 
                             </div> 
                         </td>
-
                     </tr>
 
                 @endforeach
@@ -444,10 +427,7 @@
 
     </table>
 
-    @if (
-        isset($requestDocuments) &&
-        $requestDocuments->hasPages()
-    )
+    @if (isset($requestDocuments) && $requestDocuments->hasPages())
         <div class="mt-3">
             {!! $requestDocuments->links() !!}
         </div>
