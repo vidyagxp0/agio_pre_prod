@@ -226,61 +226,15 @@
                             <div class="filter-bar d-flex flex-wrap justify-content-between">
                                     <div class="filter-item">
                                         <label for="initiator_group">Department</label>
-                                        <select name="Initiator_Group" id="initiator_group" class="form-control">
-                                            <option value="">Select Record</option>
-                                             <option value=" Corporate Quality Assurance">
-                                                    Corporate Quality Assurance</option>
-                                                <option value="Quality Assurance">
-                                                    Quality Assurance</option>
-                                                <option value="Quality Control">
-                                                    Quality Control</option>
-                                                <option value="Quality Control (Microbiology department)">
-                                                    Quality Control (Microbiology department)
-                                                </option>
-                                                <option value="Production General">
-                                                    Production General</option>
-                                                <option value="Production Liquid Orals">
-                                                    Production Liquid Orals</option>
-                                                <option value="Production Tablet and Powder">
-                                                    Production Tablet and Powder</option>
-                                                <option value="Production External (Ointment, Gels, Creams and Liquid)">
-                                                    Production External (Ointment, Gels, Creams and Liquid)</option>
-                                                <option value="Production Capsules">
-                                                    Production Capsules</option>
-                                                <option value="Production Injectable">
-                                                    Production Injectable</option>
-                                                <option value="Engineering">
-                                                    Engineering</option>
-                                                <option value="Human Resource">
-                                                    Human Resource</option>
-                                                <option value="Store">
-                                                    Store</option>
-                                                <option value="Electronic Data Processing">
-                                                    Electronic Data Processing
-                                                </option>
-                                                <option value="Formulation Development">
-                                                    Formulation Development
-                                                </option>
-                                                <option value="Analytical research and Development Laboratory">
-                                                    Analytical research and Development Laboratory
-                                                </option>
-                                                <option value="Packaging Development">
-                                                    Packaging Development
-                                                </option>
+                                           <select name="Initiator_Group" id="initiator_group" class="form-control">
+                                                <option value="">Select Record</option>
 
-                                                <option value="Purchase Department">
-                                                    Purchase Department
-                                                </option>
-                                                <option value="Document Cell">
-                                                    Document Cell
-                                                </option>
-                                                <option value="Regulatory Affairs">
-                                                    Regulatory Affairs
-                                                </option>
-                                                <option value="Pharmacovigilance">
-                                                    Pharmacovigilance
-                                                </option>
-                                        </select>
+                                                @foreach (Helpers::getLogsDepartments() as $key => $value)
+                                                    <option value="{{ $value }}" {{ old('Initiator_Group') == $value ? 'selected' : '' }}>
+                                                        {{ $value }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                     </div>
                                     <div class="filter-item">
                                         <label for="division_id">Division</label>

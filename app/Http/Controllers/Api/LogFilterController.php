@@ -47,107 +47,111 @@ use App\Http\Controllers\Controller;
 
 class LogFilterController extends Controller
 {
-    public function capa_filter(Request $request)
-    {
-        $res = [
-            'status' => 'ok',
-            'message' => 'success',
-            'body' => []
-        ];
-
-        try {
+   
 
 
-            $query = Capa::query();
+        public function capa_filter(Request $request)
+        {
+            $res = [
+                'status' => 'ok',
+                'message' => 'success',
+                'body' => []
+            ];
 
-            if ($request->departmentCapa) {
-                $query->where('Initiator_Group', $request->departmentCapa);
+            try {
+
+                $query = Capa::query();
+
+                if (!empty($request->departmentCapa)) {
+                    $query->where('Initiator_Group', $request->departmentCapa);
+                }
+
+                if (!empty($request->division_idCapa)) {
+                    $query->where('division_id', $request->division_idCapa);
+                }
+
+                if (!empty($request->capa_types)) {
+                    $query->where('capa_type', $request->capa_types);
+                }
+
+                if (!empty($request->date_fromCapa)) {
+                    $query->whereDate('intiation_date', '>=', $request->date_fromCapa);
+                }
+
+                if (!empty($request->date_toCapa)) {
+                    $query->whereDate('intiation_date', '<=', $request->date_toCapa);
+                }
+
+                $capa = $query->get();
+
+                $htmlData = view(
+                    'frontend.forms.Logs.filterData.capa_data',
+                    compact('capa')
+                )->render();
+
+                $res['body'] = $htmlData;
+
+            } catch (\Exception $e) {
+
+                $res['status'] = 'error';
+                $res['message'] = $e->getMessage();
             }
 
-            if ($request->division_idCapa) {
-                $query->where('division_id', $request->division_idCapa);
-            }
-
-            if ($request->capa_types) {
-                $query->where('capa_type', $request->capa_types);
-            }
-
-            if ($request->date_fromCapa) {
-
-                $dateFrom = Carbon::parse($request->date_fromCapa)->startOfDay();
-
-                $query->whereDate('intiation_date', '>=', $dateFrom);
-            }
-
-            if ($request->date_toCapa) {
-
-                $dateTo = Carbon::parse($request->date_toCapa)->endOfDay();
-
-                $query->whereDate('intiation_date', '<=', $dateTo);
-            }
-
-
-            $capa = $query->get();
-
-
-            $htmlData = view('frontend.forms.Logs.filterData.capa_data', compact('capa'))->render();
-
-            $res['body'] = $htmlData;
-        } catch (\Exception $e) {
-            $res['status'] = 'error';
-            $res['message'] = $e->getMessage();
+            return response()->json($res);
         }
 
 
-        return response()->json($res);
-    }
 
-    public function changecontrol_filter(Request $request)
-    {
-        $res = [
-            'status' => 'ok',
-            'message' => 'success',
-            'body' => []
-        ];
+        public function changecontrol_filter(Request $request)
+        {
+            $res = [
+                'status' => 'ok',
+                'message' => 'success',
+                'body' => []
+            ];
 
-        try {
-            $query = CC::query();
+            try {
 
-            if ($request->department_changecontrol) {
-                $query->where('Initiator_Group', $request->department_changecontrol);
+                $query = CC::query();
+
+                if (!empty($request->department_changecontrol)) {
+                    $query->where('Initiator_Group', $request->department_changecontrol);
+                }
+
+                if (!empty($request->division_id_changecontrol)) {
+                    $query->where('division_id', $request->division_id_changecontrol);
+                }
+
+                if (!empty($request->nchange)) {
+                    $query->where('doc_change', $request->nchange);
+                }
+
+                if (!empty($request->date_from_changecontrol)) {
+                    $query->whereDate('intiation_date', '>=', $request->date_from_changecontrol);
+                }
+
+                if (!empty($request->date_to_changecontrol)) {
+                    $query->whereDate('intiation_date', '<=', $request->date_to_changecontrol);
+                }
+
+                $ccontrol = $query->get();
+
+                $htmlData = view(
+                    'frontend.forms.Logs.filterData.changecontrol_data',
+                    compact('ccontrol')
+                )->render();
+
+                $res['body'] = $htmlData;
+
+            } catch (\Exception $e) {
+
+                $res['status'] = 'error';
+                $res['message'] = $e->getMessage();
             }
 
-            if ($request->division_id_changecontrol) {
-                $query->where('division_id', $request->division_id_changecontrol);
-            }
-
-            if ($request->nchange) {
-                $query->where('doc_change', $request->nchange);
-            }
-
-            if ($request->date_from_changecontrol) {
-                $dateFrom = Carbon::parse($request->date_from_changecontrol)->startOfDay();
-                $query->whereDate('intiation_date', '>=', $dateFrom);
-            }
-
-            if ($request->date_to_changecontrol) {
-                $dateTo = Carbon::parse($request->date_to_changecontrol)->endOfDay();
-                $query->whereDate('intiation_date', '<=', $dateTo);
-            }
-
-            $ccontrol = $query->get();
-
-            $htmlData = view('frontend.forms.Logs.filterData.changecontrol_data', compact('ccontrol'))->render();
-
-            $res['body'] = $htmlData;
-        } catch (\Exception $e) {
-            $res['status'] = 'error';
-            $res['message'] = $e->getMessage();
+            return response()->json($res);
         }
-
-        return response()->json($res);
-    }
-
+    
 
 
 
@@ -588,17 +592,17 @@ class LogFilterController extends Controller
 
 
             if ($request->dateActionitemFrom) {
-                $from = Carbon::createFromFormat('Y-m-d', $request->dateActionitemFrom)
-                    ->format('d-m-Y');
-
-                $query->where('intiation_date', '>=', $from);
+                $query->whereRaw(
+                    "STR_TO_DATE(intiation_date, '%d-%b-%Y') >= ?",
+                    [$request->dateActionitemFrom]
+                );
             }
 
             if ($request->dateActionitemTo) {
-                $to = Carbon::createFromFormat('Y-m-d', $request->dateActionitemTo)
-                    ->format('d-m-Y');
-
-                $query->where('intiation_date', '<=', $to);
+                $query->whereRaw(
+                    "STR_TO_DATE(intiation_date, '%d-%b-%Y') <= ?",
+                    [$request->dateActionitemTo]
+                );
             }
 
             $actions = $query->get();
@@ -905,6 +909,9 @@ class LogFilterController extends Controller
                 $query->whereDate('intiation_date', '<=', $dateo);
             }
 
+
+           
+
             $AuditPrograms = $query->get();
 
             $htmlData = view('frontend.forms.Logs.filterData.auditPrograme_data', compact('AuditPrograms'))->render();
@@ -968,20 +975,18 @@ class LogFilterController extends Controller
             }
 
 
-
-
             if ($request->dateresamplingFrom) {
-                $from = Carbon::createFromFormat('Y-m-d', $request->dateresamplingFrom)
-                    ->format('d-m-Y');
-
-                $query->where('intiation_date', '>=', $from);
+                $query->whereRaw(
+                    "STR_TO_DATE(intiation_date, '%d-%b-%Y') >= ?",
+                    [$request->dateresamplingFrom]
+                );
             }
 
             if ($request->dateresamplingTo) {
-                $to = Carbon::createFromFormat('Y-m-d', $request->dateresamplingTo)
-                    ->format('d-m-Y');
-
-                $query->where('intiation_date', '<=', $to);
+                $query->whereRaw(
+                    "STR_TO_DATE(intiation_date, '%d-%b-%Y') <= ?",
+                    [$request->dateresamplingTo]
+                );
             }
 
             $Resamplings = $query->get();
@@ -1610,17 +1615,36 @@ class LogFilterController extends Controller
                 }
             }
 
-            if ($request->date_fromDeviation) {
-                $dateFrom = Carbon::parse($request->date_fromDeviation)->startOfDay();
-                $query->whereDate('intiation_date', '>=', $dateFrom);
-                \Log::info("Filtering from Date From: {$dateFrom}");
+            // if ($request->date_fromDeviation) {
+            //     $dateFrom = Carbon::parse($request->date_fromDeviation)->startOfDay();
+            //     $query->whereDate('intiation_date', '>=', $dateFrom);
+            //     \Log::info("Filtering from Date From: {$dateFrom}");
+            // }
+
+            // if ($request->date_toDeviation) {
+            //     $dateTo = Carbon::parse($request->date_toDeviation)->endOfDay();
+            //     $query->whereDate('intiation_date', '<=', $dateTo);
+            //     \Log::info("Filtering to Date To: {$dateTo}");
+            // }
+
+
+
+
+             if ($request->date_fromDeviation) {
+                $query->whereRaw(
+                    "STR_TO_DATE(intiation_date, '%d-%b-%Y') >= ?",
+                    [$request->date_fromDeviation]
+                );
             }
 
             if ($request->date_toDeviation) {
-                $dateTo = Carbon::parse($request->date_toDeviation)->endOfDay();
-                $query->whereDate('intiation_date', '<=', $dateTo);
-                \Log::info("Filtering to Date To: {$dateTo}");
+                $query->whereRaw(
+                    "STR_TO_DATE(intiation_date, '%d-%b-%Y') <= ?",
+                    [$request->date_toDeviation]
+                );
             }
+
+
 
             $deviation = $query->get();
 
@@ -1752,7 +1776,7 @@ class LogFilterController extends Controller
             }
 
             if ($request->datechangeProposalJustificationTo) {
-                $query->whereDate('due_date', '<=', $request->datechangeProposalJustificationTo);
+                $query->whereDate('intiation_date', '<=', $request->datechangeProposalJustificationTo);
             }
 
             $changeProposalJustification = $query->get();

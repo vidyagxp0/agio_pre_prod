@@ -5,7 +5,12 @@
 @forelse ($capa as $capalog)
 <tr>
     <td>{{$loop->index+1}}</td>
-    <td>{{ $capalog->intiation_date ?? '-' }}</td>
+    <td>
+    {{ $capalog->intiation_date
+            ? Carbon::parse($capalog->intiation_date)->format('d-M-Y')
+            : 'NA'
+        }}
+    </td>
     <td>{{ $capalog->division ? $capalog->division->name : 'Null' }}/CAPA/{{ date('Y') }}/{{ str_pad($capalog->record, 4, '0', STR_PAD_LEFT) }}</td>
     <td>{{ $capalog->short_description ?? '-' }}</td>
     <td>{{ $capalog->initiator ? $capalog->initiator->name : '-' }}</td>

@@ -1,606 +1,509 @@
 @extends('frontend.rcms.layout.main_rcms')
 @section('rcms_container')
 
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    function openTab(tabName, ele) {
+        let buttons = document.querySelector('.process-groups').children;
+        let tables = document.querySelector('.process-tables-list').children;
+        for (let element of Array.from(buttons)) {
+            element.classList.remove('active');
+        }
+        ele.classList.add('active');
+        for (let element of Array.from(tables)) {
+            element.classList.remove('active');
+            if (element.getAttribute('id') === tabName) {
+                element.classList.add('active');
+            }
+        }
+    }
+</script>
 
-    <hr>
-    <style>
+<!-- Styles -->
+<style>
+    header .header_rcms_bottom {
+        display: none;
+    }
+    .filter-bar {
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .filter-item label {
+        margin-right: 10px;
+    }
+    .table-responsive {
+        height: 100vh;
+        overflow-x: scroll;
+    }
+    table {
+        overflow: scroll;
+    }
+    .mt-1 {
+        margin-top: 1rem;
+    }
+    .mb-2 {
+        margin-bottom: 2rem;
+    }
+    .bg-white {
+        background-color: white;
+    }
+    .d-flex {
+        display: flex;
+    }
+    .flex-wrap {
+        flex-wrap: wrap;
+    }
+    .align-items-center {
+        align-items: center;
+    }
+    .flex-grow-2 {
+        flex: 2;
+    }
+    .process-groups {
+        display: flex;
+        /* align-items: center;
+        justify-content: space-between;
+        gap: 10px; */
+    }
+    .process-groups > div {
+        flex: 1;
+        text-align: center;
+        background-color: white;
+    }
+    .process-groups .scope-bar {
+        display: flex;
+        justify-content: flex-start;
+    }
+    .process-groups .scope-bar .print-btn {
+        margin-left: 5px;
+    }
+</style>
+
+<style>
         header .header_rcms_bottom {
             display: none;
-        }   
-        .vscomp-wrapper {
-            border: 1px solid #5c98e7;
-            border-radius: 2px;
-        } 
-        #division_id_capa{
-            border: 1px solid #5c98e7 !important;
-            border-radius: 2px !important; 
-        } 
-        #date_fromcapa{
-            border: 1px solid #5c98e7 !important;
-            border-radius: 2px !important;   
-        } 
-        #date_tocapa{
-            border: 1px solid #5c98e7 !important;
-            border-radius: 2px !important;    
         }
-        .btn-primary{
-            background-color: #5c98e7 !important;
-            border-color: #5c98e7 !important;
+        .process-groups > div {
+            flex: 1;
+            text-align: center;
+            background-color: white;
         }
-        .btn-primary:hover{
-            background-color: #fff !important;
-            border-color: #5c98e7 !important;
-            color: #5c98e7 !important;
+
+        .process-groups .scope-bar {
+            display: flex;
+            justify-content: flex-start;
         }
-        .main-button:hover{
-            color: #5c98e7 !important;  
+
+        .mt-1 {
+            margin-top: 1rem;
         }
-        .main-button{
-            color: #fff !important;  
+
+        .mb-2 {
+            margin-bottom: 2rem;
+        }
+
+        .bg-white {
+            background-color: white;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+
+        .align-items-center {
+            align-items: center;
+        }
+
+        .flex-grow-2 {
+            flex: 2;
+        }
+
+        .filter-bar {
+            width: 100%;
+        }
+
+        .filter-item {
+            flex: 1;
+            min-width: 150px;
+            margin: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .filter-item {
+                flex: 1 1 100%;
+                margin: 5px 0;
+            }
+        }
+
+        .process-groups .scope-bar .print-btn {
+            margin-left: 5px;
+        }
+
+        .filter-sub {
+            display: flex;
+            gap: 16px;
+            margin-left: 13px
+        }
+        .active{
+            width: 100%;
+    text-align: center;
+    color: grey;
+
+        }
+        <style>
+
+
+.process-groups > div {
+    flex: 1;
+    text-align: center; 
+    background-color: white;/* Center align text in each div */
+}
+
+.process-groups .scope-bar {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.process-groups .scope-bar .print-btn {
+    margin-left: 5px;
+    
+}
+</style>
+
+    </style>
+    <style>
+        .filter-bar {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .filter-item {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .table-responsive {
+            height: 100vh;
+            overflow-x: scroll;
+
+        }
+
+        .filter-item label {
+            margin-right: 10px;
+        }
+
+        table {
+            overflow: scroll
         }
     </style>
+    <style>
+.mt-1 {
+    margin-top: 1rem;
+}
 
+.mb-2 {
+    margin-bottom: 2rem;
+}
 
-    <div id="rcms-desktop" style = 'background: white;'>
-        
+.bg-white {
+    background-color: white;
+}
 
-        <div class="main-content">
-            <div class="container-fluid">
-                <div class="process-tables-list">
+.d-flex {
+    display: flex;
+}
 
-     
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+.flex-wrap {
+    flex-wrap: wrap;
+}
 
-       
-   
+.align-items-center {
+    align-items: center;
+}
 
+.flex-grow-2 {
+    flex: 2;
+}
 
+.filter-bar {
+    width: 100%;
+}
 
+.filter-item {
+    flex: 1;
+    min-width: 150px;
+    margin: 5px;
+}
 
-<!-- Include Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+.form-control {
+    width: 100%;
+}
 
-
-
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-              
-<div class="row justify-content-center">
-    <div 
-        class="text-center header-tab" 
-        onclick="openTab('internal-audit', this)" 
-        style="
-            padding: 12px; 
-            cursor: pointer; 
-            border: 2px solid #5c98e7; 
-            border-radius: 8px; 
-            transition: background-color 0.3s ease, transform 0.3s ease; 
-            font-size: 16px; 
-            color: #000; 
-            font-weight: bold; 
-            box-shadow: 0 4px 8px rgb(2, 112, 116);"
-    >
-        <div 
-            class="header-icon-text" 
-            style="display: inline-flex; align-items: center; gap: 8px;"
-        >
-            <h4 
-                style="
-                    display: inline-block; 
-                    margin: 0; 
-                    padding: 4px 8px; 
-                    border: 1px solid #000; 
-                    border-radius: 4px; 
-                    background-color: #fff; 
-                    color: #000;"
-            >
-                CAPA
-            </h4>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-
-<script>
-    // Function to reload the current page
-    function reloadPage() {
-      location.reload(); // This reloads the current page
+@media (max-width: 768px) {
+    .filter-item {
+        flex: 1 1 100%;
+        margin: 5px 0;
     }
-  </script>
-
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" crossorigin="anonymous"></script>
-                    </div>
-                       <br>
-                   
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-
-                        @php
-                        $department = array(
-                            'CQA' =>"Corporate Quality Assurance",
-                            'QAB' =>"Quality Assurance Biopharma",
-                            'MANU' =>"Manufacturing",
-                            'CQC' =>"Central Quality Control",
-                            'PSG' =>"Plasma Sourcing Group",
-                            'CS' =>"Central Stores",
-                            'ITG' =>"Information Technology Group",
-                            'MM' =>"Molecular Medicine",
-                            'CL' =>"Central Laboratory",
-                            'TT' =>"Tech Team",
-                            'QA' =>"Quality Assurance",
-                            'QM' =>"Quality Management",
-                            'IA' =>"IT Administration",
-                            'ACC' =>"Accounting",
-                            'LOG' =>"Logistics",
-                            'SM' =>"Senior Management",
-                            'BA'=>"Business Administration",
-                                                
-                        );
-
-                                                    @endphp
-                  <div class="container-fluid">
-    <div class="bg-white p-2 m-1">
-
-        <div class="row align-items-end">
-
-            <!-- Department Filter -->
-            <div class="col-md-3 mb-3">
-                <label for="initiator_group"><strong>Department</strong></label>
-                <select multiple name="initiator_group[]" id="initiator_group"
-                        data-search="false"
-                        data-silent-initial-value-set="true">
-                    @if (!empty($department))
-                        @foreach (collect($department)->sort() as $code => $dpt)
-                            <option value="{{ $dpt }}">{{ $dpt }}</option>
-                        @endforeach
-                    @endif
-                </select>
-            </div>
-
-            <!-- Division Filter -->
-            <div class="col-md-3 mb-3">
-                <label for="division_id_capa"><strong>Division</strong></label>
-                <select class="custom-select" id="division_id_capa">
-                    <option value="">Select Option</option>
-                    <option value="1">Corporate</option>
-                    <option value="2">Plant</option>
-                </select>
-            </div>
-
-            <!-- Start Date -->
-            <div class="col-md-3 mb-3">
-                <label for="date_fromcapacapa"><strong>Start Date</strong></label>
-                <input type="date" class="custom-select" id="date_fromcapacapa">
-            </div>
-
-            <!-- End Date -->
-            <div class="col-md-3 mb-3">
-                <label for="date_tocapa"><strong>End Date</strong></label>
-                <input type="date" class="custom-select" id="date_tocapa">
-            </div>
-
-        </div>
-
-    </div>
-</div>
-
-            
-        
-
-
-                <style>
-                th.sortable {
-                    cursor: pointer;
-                }
-                th.sortable:hover {
-                    
-                }
-                .spinner-border {
-                    display: none;
-                }
-            </style>
-
-
+}
+</style>
 
 <div id="rcms-desktop">
+    <div class="process-groups">
+        <div class="scope-bar">
+              <button
+                        type="button"
+                        class="print-btn btn btn-primary"
+                        onclick="openErrataPrint()"
+                    >
+                <i class="fa fa-print"></i>
+                Print
+             </button>  
+        </div>
+        <div class="active" onclick="openTab('internal-audit', this)">CAPA Log</div>
+        <div class="third-div">Third Div Content</div>
+    </div>
     <div class="main-content">
-        <div class="container-fluid" style="padding: 0; border:solid 1px; background-color: #fff;">
+        <div class="container-fluid">
             <div class="process-tables-list">
                 <div class="process-table active" id="internal-audit">
-                    <div class="scroll-container">
-                        <div class="table-block">
-                            <!-- Search Bar -->
-                            <div style="padding: 10px; display: flex; justify-content: flex-end; align-items: center; gap: 5px;">
-                                <button
-                                    type="button"
-                                    class="btn btn-primary"
-                                    onclick="openCapaPrint()"
-                                    title="Print CAPA Log"
-                                >
-                                    <i class="fa fa-print" aria-hidden="true"></i>
-                                    Print
-                                </button>
-                           </div>
-    
-                          
-                          <div class="container-fluid">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th style="background-color: #5c98e7" class="sortable" onclick="sortTable('id')">Sr. No.</th>
-                                            <th style="background-color: #5c98e7">Date of Initiation</th>
-                                            <th class="sortable" style="background-color: #5c98e7" onclick="sortTable('id')" style="width:10px;">Capa No.</th>
-                                            <th style="background-color: #5c98e7" class="sortable" onclick="sortTable('created_at')">CAPA Description</th>
+                    <div class="mt-1 mb-2 bg-white" style="height: auto; padding: 10px;">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-2">
+                            <div class="filter-bar d-flex flex-wrap justify-content-between">
+                                    <div class="filter-item">
+                                        <label for="initiator_group">Department</label>
+                                        <select name="Initiator_Group" id="initiator_group" class="form-control">
+                                                <option value="">Select Record</option>
 
-                                            <th class="sortable" style="background-color: #5c98e7; min-width: 120px; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="sortTable('Initiator_Group')">Initiator</th>
-                                            <th class="sortable" style="background-color: #5c98e7; min-width: 120px; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="sortTable('Initiator_Group')">Department Name</th>
-  
-                                            <th style="background-color: #5c98e7">Division</th>
-                                             <th style="background-color: #5c98e7">Type of CAPA</th>
-                                             <th style="background-color: #5c98e7">Source Document no.</th>
-                                            <th  style="background-color: #5c98e7" class="sortable" onclick="sortTable('due_date')">Due Date</th>
-                                            <th style="background-color: #5c98e7">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableData">
-                                    @include('frontend.forms.Logs.filterData.capa_data')
-                                    </tbody>
-                                </table>
-                                <!-- Loader -->
-                                <div id="loader" style="display: none; text-align: center; margin: 20px;">
-                                    <div class="spinner-border text-primary" role="status">
-                                        <span class="sr-only">Loading...</span>
+                                                @foreach (Helpers::getLogsDepartments() as $key => $value)
+                                                    <option value="{{ $value }}" {{ old('Initiator_Group') == $value ? 'selected' : '' }}>
+                                                        {{ $value }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                     </div>
+
+                                    <div class="filter-item">
+                                        <label for="division_id">Division</label>
+                                        <select class="custom-select form-control" id="division_id">
+                                            <option value="">Select Records</option>
+                                            <option value="1">Corporate</option>
+                                            <option value="2">Plant</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="filter-item">
+                                        <label for="date_from_capa">Date From</label>
+                                        <input type="date" class="custom-select form-control" id="date_from_capa">
+                                    </div>
+
+                                    <div class="filter-item">
+                                        <label for="date_to_capa">Date To</label>
+                                        <input type="date" class="custom-select form-control" id="date_to_capa">
+                                    </div>
+                                    
                                 </div>
-
-                                  <!-- No Data Message -->
-                            <div id="noDataMessage" style="display: none; text-align: center; margin: 20px; font-size: 16px; font-weight: bold; color: red;">
-                                No Data Available
                             </div>
-                                <div style="margin-top: 10px; display: flex; justify-content: center;">
-                                    <div class="spinner-border text-primary" role="status" id="spinner">
-                                        <span class="sr-only">Loading...</span>
-                                    </div>
+                        </div>
+                    </div>
+                    <div class="table-block">
+                        <div class="table-responsive" style="height: 500px">
+                            <table class="table table-bordered" style="width: 120%;">
+                                <thead>
+                                    
+
+                                     <tr>
+                                            <th rowspan="2">Sr. No.</th>
+                                            <th rowspan="2">Date of Initiation</th>
+                                            <th rowspan="2">Record No.</th>
+                                            <th  rowspan="2">CAPA Description</th>
+
+                                            <th  rowspan="2">Initiator</th>
+                                            <th  rowspan="2">Department Name</th>
+  
+                                            <th  rowspan="2">Division</th>
+                                             <th  rowspan="2">Type of CAPA</th>
+                                             <th rowspan="2" >Source Document no.</th>
+                                            <th  rowspan="2">Due Date</th>
+                                            <th  rowspan="2">Status</th>
+                                        </tr>
+                                   
+                                </thead>
+                                <tbody id="tableData">
+                                    @include('frontend.forms.Logs.filterData.capa_data')
+                                </tbody>
+                            </table>
+                            <div style="margin-top: 10px; display: flex; justify-content: center;">
+                                <div class="spinner-border text-primary" role="status" id="spinner">
+                                    <span class="sr-only">Loading...</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- Add more tabs as needed -->
             </div>
         </div>
     </div>
 </div>
 
-<style>
-.spinner-border {
-    width: 3rem;
-    height: 3rem;
-    border: 0.3em solid #ccc;
-    border-top: 0.3em solid #5c98e7;
-    border-radius: 50%;
-    animation: spinner 0.6s linear infinite;
+<script>
+    VirtualSelect.init({
+        ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training'
+    });
+
+    $('#spinner').hide();
+
+const filterData = {
+    departmentCapa: null,
+    division_idCapa: null,
+    date_fromCapa: null,
+    date_toCapa: null,
+    capa_types: null
+};
+
+$('#initiator_group').change(function () {
+    filterData.departmentCapa = $(this).val();
+    filterRecords();
+});
+
+$('#division_id').change(function () {
+    filterData.division_idCapa = $(this).val();
+    filterRecords();
+});
+
+$('#date_from_capa').change(function () {
+    filterData.date_fromCapa = $(this).val();
+    filterRecords();
+});
+
+$('#date_to_capa').change(function () {
+    filterData.date_toCapa = $(this).val();
+    filterRecords();
+});
+
+async function filterRecords() {
+
+    $('#tableData').html('');
+    $('#spinner').show();
+
+    try {
+
+        const postUrl = "{{ route('api.capa.filter') }}";
+
+        const res = await axios.post(postUrl, filterData);
+
+        if (res.data.status == 'ok') {
+            $('#tableData').html(res.data.body);
+        }
+
+    } catch (err) {
+        console.log(err.message);
+    }
+
+    $('#spinner').hide();
 }
 
-@keyframes spinner {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-</style>
-
-
-
-<script>
-    function filterTable() {
-        const input = document.getElementById('searchBar');
-        const filter = input.value.toLowerCase();
-        const table = document.querySelector('#tableData');
-        const rows = table.getElementsByTagName('tr');
-
-        for (let i = 0; i < rows.length; i++) {
-            const cells = rows[i].getElementsByTagName('td');
-            let match = false;
-
-            for (let j = 0; j < cells.length; j++) {
-                if (cells[j].innerText.toLowerCase().indexOf(filter) > -1) {
-                    match = true;
-                    break;
-                }
-            }
-
-         
-            rows[i].style.display = match ? '' : 'none';
-        }
-    }
+   
 </script>
 
-<script>
-function filterByDueDate() {
-    const filterType = document.getElementById('dateFilter').value;
-    const table = document.getElementById('tableData');
-    const rows = table.getElementsByTagName('tr');
-    const today = new Date();
-    let dataAvailable = false;
 
-    const loader = document.getElementById('loader');
-    loader.style.display = 'block';
-    document.getElementById('noDataMessage').style.display = 'none';
 
-    setTimeout(() => {
-        for (let i = 0; i < rows.length; i++) {
-            const dueDateCell = rows[i].getElementsByTagName('td')[6]; // Adjust column index if necessary
-            if (dueDateCell) {
-                const dueDate = new Date(dueDateCell.textContent.trim());
-                let showRow = false;
+ <script>
+        window.openErrataPrint = function () {
 
-                if (filterType === 'weekly') {
-                    const nextWeek = new Date(today);
-                    nextWeek.setDate(today.getDate() + 7);
-                    showRow = dueDate >= today && dueDate <= nextWeek;
-                } else if (filterType === 'monthly') {
-                    const nextMonth = new Date(today);
-                    nextMonth.setMonth(today.getMonth() + 1);
-                    showRow = dueDate >= today && dueDate <= nextMonth;
-                } else if (filterType === 'yearly') {
-                    const nextYear = new Date(today);
-                    nextYear.setFullYear(today.getFullYear() + 1);
-                    showRow = dueDate >= today && dueDate <= nextYear;
-                } else {
-                    showRow = true; 
-                }
+            const baseUrl = @json(
+                route(
+                    'rcms.logs.print',
+                    ['slug' => 'capa']
+                )
+            );
 
-                if (showRow) {
-                    rows[i].style.display = '';
-                    dataAvailable = true;
-                } else {
-                    rows[i].style.display = 'none';
-                }
-            }
-        }
-        loader.style.display = 'none';
+            const params = new URLSearchParams();
 
-        if (!dataAvailable) {
-            document.getElementById('noDataMessage').style.display = 'block';
-        } else {
-            document.getElementById('noDataMessage').style.display = 'none';
-        }
-    }, 500); // Simulate delay for loading
-}
+            const department =
+                document.getElementById('initiator_group');
 
-</script>
+            const division =
+                document.getElementById('division_id');
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js"></script>
-<script>
-    let sortState = {
-        column: '',
-        order: 'asc'
-    };
-    async function sortTable(column) {
-        sortState.order = (sortState.column === column && sortState.order === 'asc') ? 'desc' : 'asc';
-        sortState.column = column;
+            const dateFrom =
+                document.getElementById('date_from');
 
-        document.getElementById('spinner').style.display = 'inline-block';
+            const dateTo =
+                document.getElementById('date_to');
 
-        try {
-            const postUrl = "{{ route('api.capa.filter') }}";
-            const res = await axios.post(postUrl, {
-                ...filterData,
-                sort_column: sortState.column,
-                sort_order: sortState.order
-            });
+            const errorType =
+                document.getElementById('errorstab');
 
-            if (res.data.status === 'ok') {
-                document.getElementById('tableData').innerHTML = res.data.body;
-            } else {
-                console.error('Error in response:', res.data);
-            }
-        } catch (err) {
-            console.log('Error in sortTable:', err.message);
-        }
-
-        document.getElementById('spinner').style.display = 'none';
-    }
-</script>
-<script>
-    $(document).ready(function(){
-        const filterData = {
-            department_capa: [],
-            division_id_capa: null,
-            initiator_id_capa: [],
-            date_fromcapacapa: null,
-            date_tocapa: null,
-            uniqueId_capas: [],
-            period_capas: [],
-            sort_column: '',
-            sort_order: ''
-        };
-    
-        $('#initiator_group').change(function() {
-            filterData.department_capa = this.value;
-            filterRecords();
-        });
-    
-        $('#division_id_capa').change('change', function() {
-            filterData.division_id_capa = this.value;
-            filterRecords();
-        });
-
-        $('#unique_id').change(function() {
-            filterData.uniqueId_capas = this.value;
-            filterRecords();
-        });
-
-        $('#threesixfive_days_capas').change(function() {
-            filterData.period_capas = this.value;
-            filterRecords();
-        });
-    
-        document.getElementById('initiator_id').addEventListener('change', function() {
-            filterData.initiator_id_capa = this.value;
-            filterRecords();
-        });
-    
-        document.getElementById('date_fromcapacapa').addEventListener('change', function() {
-            filterData.date_fromcapacapa = this.value;
-            filterRecords();
-        });
-    
-        document.getElementById('date_tocapa').addEventListener('change', function() {
-            filterData.date_tocapa = this.value;
-            filterRecords();
-        });
-    // ===============local=============
-        async function filterRecords() {
-            document.getElementById('tableData').innerHTML = '';
-            document.getElementById('spinner').style.display = 'inline-block';
-    
-            try {
-                const postUrl = "{{ route('api.capa.filter') }}";
-                const res = await axios.post(postUrl, filterData);
-    
-                if (res.data.status === 'ok') {
-                    document.getElementById('tableData').innerHTML = res.data.body;
-                } else {
-                    console.error('Error in response:', res.data);
-                }
-            } catch (err) {
-                console.log('Error in filterRecords:', err.message);
-            }
-    
-            document.getElementById('spinner').style.display = 'none';
-        }
-    })
-
-// ============================= Live Server Working Function ==========================//
-
-</script>
-<script>
-    window.openCapaPrint = function () {
-        const baseUrl = @json(
-            route(
-                'rcms.logs.print',
-                ['slug' => 'capa']
-            )
-        );
-
-        const params = new URLSearchParams();
-
-        const departmentElement =
-            document.getElementById('initiator_group');
-
-        const divisionElement =
-            document.getElementById('division_id_capa');
-
-        const dateFromElement =
-            document.getElementById('date_fromcapacapa');
-
-        const dateToElement =
-            document.getElementById('date_tocapa');
-
-        /*
-        |--------------------------------------------------------------------------
-        | Department: normal select, multiple select, VirtualSelect and Select2
-        |--------------------------------------------------------------------------
-        */
-        let departments = [];
-
-        if (departmentElement) {
-            if (departmentElement.multiple) {
-                departments = Array.from(
-                    departmentElement.selectedOptions || []
-                ).map(function (option) {
-                    return option.value;
-                });
-            } else if (departmentElement.value) {
-                departments = [departmentElement.value];
-            }
-
-            /*
-             * Select2 / VirtualSelect fallback
-             */
-            if (
-                departments.length === 0 &&
-                typeof window.jQuery !== 'undefined'
-            ) {
-                const selectedValue =
-                    window.jQuery(departmentElement).val();
-
-                if (Array.isArray(selectedValue)) {
-                    departments = selectedValue;
-                } else if (selectedValue) {
-                    departments = [selectedValue];
-                }
-            }
-        }
-
-        departments.forEach(function (department) {
-            if (department) {
+            if (department && department.value) {
                 params.append(
-                    'department[]',
-                    department
+                    'department',
+                    department.value
                 );
             }
-        });
 
-        if (
-            divisionElement &&
-            divisionElement.value
-        ) {
-            params.append(
-                'division_id',
-                divisionElement.value
+            if (
+                division &&
+                division.value &&
+                division.value !== 'Null'
+            ) {
+                params.append(
+                    'division_id',
+                    division.value
+                );
+            }
+
+            if (dateFrom && dateFrom.value) {
+                params.append(
+                    'date_from',
+                    dateFrom.value
+                );
+            }
+
+            if (dateTo && dateTo.value) {
+                params.append(
+                    'date_to',
+                    dateTo.value
+                );
+            }
+
+            if (
+                errorType &&
+                errorType.value &&
+                errorType.value !== 'null'
+            ) {
+                params.append(
+                    'error_type',
+                    errorType.value
+                );
+            }
+
+            const printUrl =
+                params.toString()
+                    ? baseUrl + '?' + params.toString()
+                    : baseUrl;
+
+            window.open(
+                printUrl,
+                '_blank'
             );
-        }
-
-        if (
-            dateFromElement &&
-            dateFromElement.value
-        ) {
-            params.append(
-                'date_from',
-                dateFromElement.value
-            );
-        }
-
-        if (
-            dateToElement &&
-            dateToElement.value
-        ) {
-            params.append(
-                'date_to',
-                dateToElement.value
-            );
-        }
-
-        const printUrl =
-            params.toString()
-                ? baseUrl + '?' + params.toString()
-                : baseUrl;
-
-        window.open(
-            printUrl,
-            '_blank'
-        );
-    };
-</script>
-    <script>
-VirtualSelect.init({
-            ele: ' #initiator_group , #initiator_id'
-        });
-$(document).ready(function() {
-    $('#initiator_group').select2({
-        placeholder: "Select Audit Team", 
-        allowClear: true                  
-    });
-});
-</script>
+        };
+    </script>
 @endsection
+
+

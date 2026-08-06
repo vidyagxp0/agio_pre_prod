@@ -719,6 +719,52 @@ class Helpers
         return $full_department_name;
     }
 
+    /// logs department list
+
+
+    public static function getLogsDepartments()
+        {
+            return [
+                'CQA'   => 'Corporate Quality Assurance',
+                'QA'    => 'Quality Assurance',
+                'QC'    => 'Quality Control',
+                'QM'    => 'Quality Control (Microbiology department)',
+                'PG'    => 'Production General',
+                'PL'    => 'Production Liquid Orals',
+                'PT'    => 'Production Tablet and Powder',
+                'PE'    => 'Production External (Ointment, Gels, Creams, and Liquid)',
+                'PC'    => 'Production Capsules',
+                'PI'    => 'Production Injectable',
+                'EN'    => 'Engineering',
+                'HR'    => 'Human Resource',
+                'ST'    => 'Store',
+                'IT'    => 'Information Technology',
+                'FD'    => 'Formulation Development',
+                'AL'    => 'Analytical Research and Development Laboratory',
+                'PD'    => 'Packaging Development',
+                'PU'    => 'Purchase Department',
+                'DC'    => 'Document Cell',
+                'RA'    => 'Regulatory Affairs',
+                'PV'    => 'Pharmacovigilance',
+
+                // Added
+                'SA'    => 'Safety',
+                'AW'    => 'Artwork',
+                'R&D'   => 'Research & Development',
+                'MK'    => 'Marketing',
+
+                // Existing extra departments
+                'Accounts'           => 'Accounts',
+                'Finance'            => 'Finance',
+                'Company secretary'  => 'Company secretary',
+                'Exports'            => 'Exports',
+
+                'Other' => 'Other Department',
+            ];
+        }
+
+    /////////////////////////
+
     static function getDepartments()
     {
         static $departments = null;
@@ -753,6 +799,12 @@ class Helpers
 
         return $departments;
     }
+
+
+
+
+
+
 
     static function getDmsDepartments()
     {
