@@ -239,7 +239,7 @@ class LogController extends Controller
 
 
              
-            case 'inernal-audit':
+            case 'internal-audit':
                 $internal_audi = InternalAudit::get();
                 
                 return view('frontend.forms.Logs.Internal_audit_Log',compact('internal_audi'));
@@ -3970,7 +3970,7 @@ class LogController extends Controller
             |--------------------------------------------------------------------------
             */
 
-            case 'inernal-audit':
+            case 'internal-audit':
 
                 $records = InternalAudit::orderBy(
                     'id',

@@ -489,7 +489,7 @@
         'Extension',
         'External Audit',
         'Incident',
-        'Inernal Audit',
+        'internal-audit',
         'Lab Incident',
         'ManagementReview',
         'Market Complaint',

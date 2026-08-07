@@ -288,23 +288,11 @@
                                         <label for="initiator_group">Department</label>
                                         <select name="Initiator_Group" id="initiator_group" class="form-control">
                                             <option value="">Select Record</option>
-                                            <option value="CQA">Corporate Quality Assurance</option>
-                                            <option value="QAB">Quality Assurance Biopharma</option>
-                                            <option value="CQC">Central Quality Control</option>
-                                            <option value="MANU">Manufacturing</option>
-                                            <option value="PSG">Plasma Sourcing Group</option>
-                                            <option value="CS">Central Stores</option>
-                                            <option value="ITG">Information Technology Group</option>
-                                            <option value="MM">Molecular Medicine</option>
-                                            <option value="CL">Central Laboratory</option>
-                                            <option value="TT">Tech team</option>
-                                            <option value="QA">Quality Assurance</option>
-                                            <option value="QM">Quality Management</option>
-                                            <option value="IA">IT Administration</option>
-                                            <option value="ACC">Accounting</option>
-                                            <option value="LOG">Logistics</option>
-                                            <option value="SM">Senior Management</option>
-                                            <option value="BA">Business Administration</option>
+                                             @foreach (Helpers::getLogsDepartments() as $key => $value)
+                                                    <option value="{{ $value }}" {{ old('Initiator_Group') == $value ? 'selected' : '' }}>
+                                                        {{ $value }}
+                                                    </option>
+                                                @endforeach
                                         </select>
                                     </div>
                                     <div class="filter-item">
@@ -352,28 +340,21 @@
                                     <tr>
                                     <th>Sr. No.</th>
                                             <th rowspan="2">Date of Initiation</th>
-                                            <th rowspan="2">Complaint No.</th>
+                                            <th rowspan="2">Record Number</th>
                                             
                                             <th rowspan="2">Originator</th>
                                             <th rowspan="2">Department</th>
                                             <th rowspan="2">Division</th>
-                                            {{-- <th colspan="4" style="text-align: center">Product Details</th> --}}
-                                            {{-- <th rowspan="2">Nature of complaint</th> --}}
-                                            <th rowspan="2">Category of complaint</th>
+                                              <th rowspan="2">Category of complaint</th>
                                             
                                             <th rowspan="2">Due Date</th>
                                            
                                             <th rowspan="2">Status</th>
                                     </tr>
-                                    {{-- <tr>
-                                        <th>Product Name & strength</th>
-                                        <th>Batch No.</th>
-                                        <th>Mfg. Date</th>
-                                        <th>Exp. Date</th>
-                                    </tr> --}}
+                                    
                                 </thead>
                                 <tbody id="tableData">
-                                    @include('frontend.forms.Logs.filterData.marketcomplaint_data')
+                                  @include('frontend.forms.Logs.filterData.marketcomplaint_data')
                                 </tbody>
                             </table>
                             <div style="margin-top: 10px; display: flex; justify-content: center;">

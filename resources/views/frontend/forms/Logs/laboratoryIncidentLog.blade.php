@@ -288,23 +288,11 @@
                                         <label for="initiator_group">Department</label>
                                         <select name="Initiator_Group" id="initiator_group" class="form-control">
                                             <option value="">Select Record</option>
-                                            <option value="CQA">Corporate Quality Assurance</option>
-                                            <option value="QAB">Quality Assurance Biopharma</option>
-                                            <option value="CQC">Central Quality Control</option>
-                                            <option value="MANU">Manufacturing</option>
-                                            <option value="PSG">Plasma Sourcing Group</option>
-                                            <option value="CS">Central Stores</option>
-                                            <option value="ITG">Information Technology Group</option>
-                                            <option value="MM">Molecular Medicine</option>
-                                            <option value="CL">Central Laboratory</option>
-                                            <option value="TT">Tech team</option>
-                                            <option value="QA">Quality Assurance</option>
-                                            <option value="QM">Quality Management</option>
-                                            <option value="IA">IT Administration</option>
-                                            <option value="ACC">Accounting</option>
-                                            <option value="LOG">Logistics</option>
-                                            <option value="SM">Senior Management</option>
-                                            <option value="BA">Business Administration</option>
+                                            @foreach (Helpers::getLogsDepartments() as $key => $value)
+                                                <option value="{{ $key }}" {{ old('Initiator_Group') == $key ? 'selected' : '' }}>
+                                                    {{ $value }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="filter-item">

@@ -486,7 +486,7 @@ class LogFilterController extends Controller
             $query = MarketComplaint::query();
 
             if ($request->market_department) {
-                $query->where('Initiator_group_code', $request->market_department);
+                $query->where('initiator_group', $request->market_department);
             }
 
             if ($request->div_idcomplaint) {

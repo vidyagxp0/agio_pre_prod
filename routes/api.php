@@ -65,7 +65,7 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
  Route::post('/change-control', [LogFilterController::class, 'changecontrol_filter'])->name('api.cccontrol.filter');
  Route::post('/errata',[LogFilterController::class,'errata_filter'])->name('api.errata.filter');
  Route::post('/failure-investigation',[LogFilterController::class,'failureInv_filter'])->name('api.failure.filter');
- Route::post('/inernal-audit',[LogFilterController::class,'internal_audit_filter'])->name('api.internalaudit.filter');
+ Route::post('/internal-audit',[LogFilterController::class,'internal_audit_filter'])->name('api.internalaudit.filter');
  Route::post('/lab-incident',[LogFilterController::class,'labincident_filter'])->name('api.laboratoryincident.filter');
  Route::post('/marketcomplaint_data',[LogFilterController::class,'marketcomplaint_filter'])->name('api.marketcomplaint.filter');
  Route::post('/auditprogram',[LogFilterController::class,'AuditProgramFilter'])->name('api.auditprogram.filter');
