@@ -382,24 +382,8 @@
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No.:
                     
-                    <span>
-                        @if($document->revised == 'Yes')
-                            @php
-                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-                            @endphp
-
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    CVSTP/{{ str_pad($data->record_spec3, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @else
-                                    CVSTP/{{ str_pad($data->record_spec3, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @endif
-                        @else
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   CVSTP/{{ str_pad($data->record_spec3, 4, '0', STR_PAD_LEFT) }}-00
-                                @else
-                                   CVSTP/{{ str_pad($data->record_spec3, 4, '0', STR_PAD_LEFT) }}-00
-                                @endif
-                        @endif
+                        <span>
+                           {{$document->document_number ?? 'NA'}}
                         </span>
                 
                     </td>
@@ -407,7 +391,8 @@
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
                         Effective Date:
 
-                        <span>@if ($data->training_required == 'yes')
+                    <span>
+                        @if ($data->training_required == 'yes')
                             @if ($data->stage >= 11)
                                 {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                             @endif
@@ -416,7 +401,7 @@
                                 {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                             @endif
                         @endif
-                </span>
+                    </span>
                     </td>
                 </tr>
             </tbody>

@@ -648,24 +648,7 @@
                 </td>
                 <td style="width: 18%; padding: 5px; text-align: left" class="doc-num">TDS No.: 
                     <span>
-                    {{-- @if($document->revised == 'Yes')
-                        @php
-                            $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-                        @endphp
-
-                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record_spec, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @else
-                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record_spec, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @endif
-                    @else
-                        
-                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record_spec, 4, '0', STR_PAD_LEFT) }}-00
-                            @else
-                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record_spec, 4, '0', STR_PAD_LEFT) }}-00
-                            @endif
-                    @endif --}}
+    
                     {{$document->document_number ?? 'NA'}}
                     </span>
                 </td>

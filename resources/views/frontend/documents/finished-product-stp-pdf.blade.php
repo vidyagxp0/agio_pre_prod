@@ -383,7 +383,7 @@
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No.:
                         <span>
                   
-                        {{$data->document_number}}
+                        {{$document->document_number ?? 'NA'}}
                         </span>
                     </td>
                     <td class="w-50"

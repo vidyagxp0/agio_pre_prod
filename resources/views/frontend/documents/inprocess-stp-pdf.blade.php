@@ -401,7 +401,7 @@
                                    IPSTP/{{ str_pad($data->record_spec2, 4, '0', STR_PAD_LEFT) }}-00
                                 @endif
                         @endif --}}
-                        {{$data->document_number}}
+                        {{$document->document_number ?? 'NA'}}
                         </span>
                     </td>
                     <td class="w-50"

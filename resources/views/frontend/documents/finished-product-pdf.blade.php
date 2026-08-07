@@ -475,7 +475,7 @@
                                 $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
                             @endphp
              
-                          {{$data->document_number}}
+                          {{$document->document_number ?? 'NA'}}
                         </span>
                     </td>
                     <td class="w-50"

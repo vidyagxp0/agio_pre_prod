@@ -446,7 +446,7 @@
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No.:  
                         <span>
-                            @if($document->revised == 'Yes')
+                            {{-- @if($document->revised == 'Yes')
                                 @php
                                     $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
                                 @endphp
@@ -462,7 +462,8 @@
                                     @else
                                         MFP/STP/A/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
                                     @endif
-                            @endif
+                            @endif --}}
+                            {{$document->document_number ?? 'NA'}}
                        </span>
                     </td>
                     <td class="w-50"
