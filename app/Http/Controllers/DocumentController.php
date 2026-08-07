@@ -9549,16 +9549,9 @@ public function printPDF($id)
     public function printAnnexurePDF($id)
     {
     
-        $roleIds = DB::table('user_roles')
-            ->where('user_id', Auth::id())
-            ->pluck('role_id')
-            ->filter()
-            ->map(function ($roleId) {
+        $roleIds = DB::table('user_roles')->where('user_id', Auth::id())->pluck('role_id')->filter()->map(function ($roleId) {
                 return (int) $roleId;
-            })
-            ->unique()
-            ->values()
-            ->toArray();
+            })->unique()->values()->toArray();
 
         if (empty($roleIds)) {
             toastr()->error('No role is assigned to your account.');

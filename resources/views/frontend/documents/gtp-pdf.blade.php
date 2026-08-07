@@ -405,7 +405,7 @@
                                     PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
                                 @endif
                         @endif --}}
-                        {{$document->document_number}}
+                        {{$document->document_number ?? 'NA'}}
                         </span>
                     </td>
                     <td class="w-50"
