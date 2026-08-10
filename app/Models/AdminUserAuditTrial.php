@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class AdminUserAuditTrial extends Model
 {
     use HasFactory;
+
+    public function targetUser()
+    {
+        return $this->belongsTo(User::class, 'admin_id');
+    }
+  
 }
