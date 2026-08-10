@@ -975,6 +975,12 @@ class UserManagementController extends Controller
                 )->first();
 
                 if (!$division) {
+                    \Log::error('QMS Division not found', [
+                        'division_name' => $q_m_s_divisions_name,
+                        'role_id' => $roleId,
+                        'role_name' => $checkRole->name,
+                    ]);
+
                     continue;
                 }
 
@@ -986,18 +992,33 @@ class UserManagementController extends Controller
                     ->where('division_id', $division->id)
                     ->first();
 
+                if (!$process) {
+                    \Log::error('QMS Process not found', [
+                        'process_name' => $q_m_s_processes_name,
+                        'division_id' => $division->id,
+                        'division_name' => $q_m_s_divisions_name,
+                        'role_id' => $roleId,
+                        'role_name' => $checkRole->name,
+                    ]);
+
+                    continue;
+                }
+
 
                 $qmsroles = QMSRoles::where(
                     'name',
                     $q_m_s_roles_name
                 )->first();
 
-
                 if (!$qmsroles) {
+                    \Log::error('QMS Role not found', [
+                        'qms_role_name' => $q_m_s_roles_name,
+                        'role_id' => $roleId,
+                        'role_name' => $checkRole->name,
+                    ]);
+
                     continue;
                 }
-
-
                 /*
                 |--------------------------------------------------------------------------
                 | Save User Role
