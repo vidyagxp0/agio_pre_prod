@@ -219,10 +219,7 @@
             <table>
                 <tr class="table_bg">
                     <th>S.No</th>
-                    {{-- <th>Flow Changed From</th>
-                    <th>Flow Changed To</th> --}}
                     <th>Data Field</th>
-                    {{-- <th>Action Type</th> --}}
                     <th>Performer</th>
                 </tr>
 
@@ -235,7 +232,7 @@
                     <td>{{$dataDemo ? ($admin_audit->currentPage() - 1) * $admin_audit->perPage() + $audits + 1 : 'Not Applicable' }}
                     </td>
 
-                    <td>
+                    {{-- <td>
                         <div>
                             <strong> Data Field Name :</strong><a href="">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
                         </div>
@@ -257,14 +254,39 @@
                         <div style="margin-top: 5px;">
                             <strong>Change Type :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
                         </div>
-                    </td>
-                    <!-- <td>
+                    </td> --}}
+                    <td>
                         <div>
-                            <strong> Action Name
-                                :</strong>{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
-
+                            <strong>Affected User :</strong>
+                            {{ $dataDemo->targetUser?->name ?? 'Not Applicable' }}
                         </div>
-                    </td> -->
+
+                        <div style="margin-top: 5px;">
+                            <strong>Employee Code :</strong>
+                            {{ $dataDemo->targetUser?->emp_code ?? 'Not Applicable' }}
+                        </div>
+
+                        <div style="margin-top: 5px;">
+                            <strong>Data Field :</strong>
+                            {{ $dataDemo->activity_type ?? 'Not Applicable' }}
+                        </div>
+
+                        <div style="margin-top: 5px;">
+                            <strong>Change From :</strong>
+                            {{ $dataDemo->previous ?? 'Not Applicable' }}
+                        </div>
+
+                        <div style="margin-top: 5px;">
+                            <strong>Change To :</strong>
+                            {{ $dataDemo->current ?? 'Not Applicable' }}
+                        </div>
+
+                        <div style="margin-top: 5px;">
+                            <strong>Change Type :</strong>
+                            {{ $dataDemo->action_name ?? 'Not Applicable' }}
+                        </div>
+                    </td>
+    
                     <td>
                         <div><strong> Peformed By
                                 :</strong>{{ 'superadmin' ? 'superadmin' : 'Not Applicable' }}

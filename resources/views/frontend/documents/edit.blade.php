@@ -6236,7 +6236,7 @@
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
                                             $mfpstpNumber = "FPS/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
-                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $document->document_number }}" maxlength="255" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -6257,32 +6257,6 @@
                                         <input type="text" name="brand_name" value="{{ $document->brand_name }}">
                                     </div>
                                 </div>
-             
-
-                                {{-- <div class="col-12 sub-head">
-                                     Label Claim
-                                    <div class="group-input">
-                                        <label for="procedure"></label>
-                                        
-                                        <textarea name="label_claim" id="" class="summernote">{{ $document->label_claim ? $document->label_claim : '' }}</textarea>
-                                        @foreach ($history as $tempHistory)
-                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
-                                                @php
-                                                    $users_name = DB::table('users')
-                                                        ->where('id', $tempHistory->user_id)
-                                                        ->value('name');
-                                                @endphp
-                                                <p style="color: blue">Modify by {{ $users_name }} at
-                                                    {{ $tempHistory->created_at }}
-                                                </p>
-                                                <input class="input-field"
-                                                    style="background: #ffff0061;
-                                        color: black;"
-                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div> --}}
 
                                 <div class="col-12 sub-head">
                                     Label Claim
@@ -6334,31 +6308,6 @@
                                     </div>
                                 </div>
          
-
-                                {{-- <div class="col-12 sub-head">
-                                    Sample Quantity for Analysis
-                                    <div class="group-input">
-                                        <label for="procedure"></label>
-                                        <textarea name="sample_quantity" id="" class="summernote">{{ $document->sample_quantity ? $document->sample_quantity : '' }}</textarea>
-                                        @foreach ($history as $tempHistory)
-                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
-                                                @php
-                                                    $users_name = DB::table('users')
-                                                        ->where('id', $tempHistory->user_id)
-                                                        ->value('name');
-                                                @endphp
-                                                <p style="color: blue">Modify by {{ $users_name }} at
-                                                    {{ $tempHistory->created_at }}
-                                                </p>
-                                                <input class="input-field"
-                                                    style="background: #ffff0061;
-                                        color: black;"
-                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div> --}}
-
                                 <div class="col-12 sub-head">
                                     Sample Quantity for Analysis
 
@@ -6420,32 +6369,6 @@
                                         <input type="text" name="sampling_instructions" value="{{ $document->sampling_instructions }}">
                                     </div>
                                 </div>
-
-
-                                {{-- <div class="col-12 sub-head">
-                                      SPECIFICATION
-                                    <div class="group-input">
-                                        <label for="procedure"></label>
-                                        
-                                        <textarea name="fps_specificationGrid" id="" class="summernote">{{ $document->fps_specificationGrid ? $document->fps_specificationGrid : '' }}</textarea>
-                                        @foreach ($history as $tempHistory)
-                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
-                                                @php
-                                                    $users_name = DB::table('users')
-                                                        ->where('id', $tempHistory->user_id)
-                                                        ->value('name');
-                                                @endphp
-                                                <p style="color: blue">Modify by {{ $users_name }} at
-                                                    {{ $tempHistory->created_at }}
-                                                </p>
-                                                <input class="input-field"
-                                                    style="background: #ffff0061;
-                                        color: black;"
-                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div> --}}
 
                                 <div class="col-12 sub-head">
                                     SPECIFICATION
@@ -6637,10 +6560,6 @@
                     </div>
                 </div>
 
-
-
-
-
                 <!-- Cleaning Validation Specificatiom -->
 
                 <div id="doc_CVS" class="tabcontent">
@@ -6656,7 +6575,7 @@
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
                                             $mfpstpNumber = "CVS/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
-                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $document->document_number }}" maxlength="255" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -6677,31 +6596,6 @@
                                         <input type="text" name="brand_name_cvs" value="{{ $document->brand_name_cvs }}">
                                     </div>
                                 </div>
-
-
-                                {{-- <div class="col-12 sub-head">
-                                     Label Claim
-                                    <div class="group-input">
-                                        <label for="procedure"></label>
-                                        <textarea name="label_claim_cvs" id="" class="summernote">{{ $document->label_claim_cvs ? $document->label_claim_cvs : '' }}</textarea>
-                                        @foreach ($history as $tempHistory)
-                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
-                                                @php
-                                                    $users_name = DB::table('users')
-                                                        ->where('id', $tempHistory->user_id)
-                                                        ->value('name');
-                                                @endphp
-                                                <p style="color: blue">Modify by {{ $users_name }} at
-                                                    {{ $tempHistory->created_at }}
-                                                </p>
-                                                <input class="input-field"
-                                                    style="background: #ffff0061;
-                                                color: black;"
-                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div> --}}
 
                                 <div class="col-12 sub-head">
                                     Label Claim
@@ -6752,31 +6646,6 @@
                                     </div>
                                 </div>
    
-
-                                {{-- <div class="col-12 sub-head">
-                                    Sample Quantity for Analysis
-                                    <div class="group-input">
-                                        <label for="procedure"></label>
-                                        <textarea name="sample_quantity_cvs" id="" class="summernote">{{ $document->sample_quantity_cvs ? $document->sample_quantity_cvs : '' }}</textarea>
-                                        @foreach ($history as $tempHistory)
-                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
-                                                @php
-                                                    $users_name = DB::table('users')
-                                                        ->where('id', $tempHistory->user_id)
-                                                        ->value('name');
-                                                @endphp
-                                                <p style="color: blue">Modify by {{ $users_name }} at
-                                                    {{ $tempHistory->created_at }}
-                                                </p>
-                                                <input class="input-field"
-                                                    style="background: #ffff0061;
-                                        color: black;"
-                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div> --}}
-
                                 <div class="col-12 sub-head">
                                     Sample Quantity for Analysis
 
@@ -6834,31 +6703,7 @@
                                     </div>
                                 </div>
 
-
-                        {{-- <div class="col-12 sub-head">
-                             Specification
-                            <div class="group-input">
-                                <label for="procedure"></label>
-                                <textarea name="cvs_specificationGrid" id="" class="summernote">{{ $document->cvs_specificationGrid ? $document->cvs_specificationGrid : '' }}</textarea>
-                                @foreach ($history as $tempHistory)
-                                    @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
-                                        @php
-                                            $users_name = DB::table('users')
-                                                ->where('id', $tempHistory->user_id)
-                                                ->value('name');
-                                        @endphp
-                                        <p style="color: blue">Modify by {{ $users_name }} at
-                                            {{ $tempHistory->created_at }}
-                                        </p>
-                                        <input class="input-field"
-                                            style="background: #ffff0061;
-                                color: black;"
-                                            type="text" value="{{ $tempHistory->comment }}" disabled>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div> --}}
-
+    
                         <div class="col-12 sub-head">
                             Specification
 
@@ -7054,7 +6899,7 @@
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
                                             $mfpstpNumber = "IPS/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
-                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $document->document_number }}" maxlength="255" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -7077,29 +6922,6 @@
                                 </div>
     
 
-                                {{-- <div class="col-12 sub-head">
-                                     Label Claim
-                                    <div class="group-input">
-                                        <label for="procedure"></label>
-                                        <textarea name="label_claim_inps" id="" class="summernote">{{ $document->label_claim_inps ? $document->label_claim_inps : '' }}</textarea>
-                                        @foreach ($history as $tempHistory)
-                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
-                                                @php
-                                                    $users_name = DB::table('users')
-                                                        ->where('id', $tempHistory->user_id)
-                                                        ->value('name');
-                                                @endphp
-                                                <p style="color: blue">Modify by {{ $users_name }} at
-                                                    {{ $tempHistory->created_at }}
-                                                </p>
-                                                <input class="input-field"
-                                                    style="background: #ffff0061;
-                                        color: black;"
-                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div> --}}
                                 <div class="col-12 sub-head">
                                     Label Claim
 
@@ -7148,30 +6970,6 @@
                                         <input type="text" name="storage_condition_inps" value="{{ $document->storage_condition_inps }}">
                                     </div>
                                 </div>
-
-                                {{-- <div class="col-12 sub-head">
-                                    Sample Quantity for Analysis
-                                    <div class="group-input">
-                                        <label for="procedure"></label>
-                                        <textarea name="sample_quantity_inps" id="" class="summernote">{{ $document->sample_quantity_inps ? $document->sample_quantity_inps : '' }}</textarea>
-                                        @foreach ($history as $tempHistory)
-                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
-                                                @php
-                                                    $users_name = DB::table('users')
-                                                        ->where('id', $tempHistory->user_id)
-                                                        ->value('name');
-                                                @endphp
-                                                <p style="color: blue">Modify by {{ $users_name }} at
-                                                    {{ $tempHistory->created_at }}
-                                                </p>
-                                                <input class="input-field"
-                                                    style="background: #ffff0061;
-                                        color: black;"
-                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div> --}}
 
                                 <div class="col-12 sub-head">
                                     Sample Quantity for Analysis
@@ -7235,33 +7033,7 @@
                                 </div>
 
 
-
-                        {{-- <div class="col-12 sub-head">
-                            Specification
-                            <div class="group-input">
-                                <label for="procedure"></label>
-                                
-                                <textarea name="ips_specificationGrid" id="" class="summernote">{{ $document->ips_specificationGrid ? $document->ips_specificationGrid : '' }}</textarea>
-                                @foreach ($history as $tempHistory)
-                                    @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
-                                        @php
-                                            $users_name = DB::table('users')
-                                                ->where('id', $tempHistory->user_id)
-                                                ->value('name');
-                                        @endphp
-                                        <p style="color: blue">Modify by {{ $users_name }} at
-                                            {{ $tempHistory->created_at }}
-                                        </p>
-                                        <input class="input-field"
-                                            style="background: #ffff0061;
-                                color: black;"
-                                            type="text" value="{{ $tempHistory->comment }}" disabled>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div> --}}
-
-                        <div class="col-12 sub-head">
+                            <div class="col-12 sub-head">
                                 Specification
 
                                 {!! quillEditor(
@@ -7401,9 +7173,6 @@
                         </button>
                     </div>
                 </div>
-
-
-
 
 
                 {{-- hold study report tabs  --}}
@@ -8052,7 +7821,8 @@
 
                         <div id="doc-billofmaterial" class="tabcontent">
                             <div class="orig-head">
-                                Bill of Materia                    </div>
+                                Bill of Materia                    
+                            </div>
                             <div class="input-fields">
                                 <div class="row">
 
@@ -12988,7 +12758,7 @@
 
                                         @endphp
 
-                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $document->document_number }}" maxlength="255" readonly>
                                     </div>
                                 </div>
 
@@ -13154,7 +12924,7 @@
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
                                             $mfpstpNumber = "IPSTP/" . str_pad($document->record_spec2, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
-                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $document->document_number }}" maxlength="255" readonly>
                                     </div>
                                 </div>
 
@@ -13321,7 +13091,7 @@
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
                                             $mfpstpNumber = "CVSTP/" . str_pad($document->record_spec3, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
-                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $document->document_number }}" maxlength="255" readonly>
                                     </div>
                                 </div>
 
@@ -18881,7 +18651,7 @@
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
                                             $stpNumber = "RMS/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
-                                        <input type="text" id="stp" name="stp_mfps_no" value="{{ $stpNumber }}" maxlength="255" readonly>
+                                        <input type="text" id="stp" name="stp_mfps_no" value="{{ $document->document_number }}" maxlength="255" readonly>
                                     </div>
                                 </div>
 
@@ -19792,105 +19562,48 @@
                                                     $destructionDate = null;
                                                 }
 
-                                                $retrievalStatus = old(
-                                                    "distribution.$index.retrieval_status",
-                                                    $grid->retrieval_status ?? ''
-                                                );
+                                                $retrievalStatus = old("distribution.$index.retrieval_status", $grid->retrieval_status ?? '');
 
-                                                $retrievalCompleted = !empty(
-                                                    $grid->retrieval_status
-                                                );
+                                                $retrievalCompleted = !empty($grid->retrieval_status);
 
-                                                $destructionCompleted =
-                                                    !empty($grid->destructed_by)
-                                                    && !empty($grid->destruction_date)
-                                                    && !empty($grid->destruction_reason);
+                                                $destructionCompleted = !empty($grid->destructed_by) && !empty($grid->destruction_date) && !empty($grid->destruction_reason);
 
                                                 $isUsed = $retrievalStatus === 'Used';
                                                 $isRetrieved = $retrievalStatus === 'Retrieved';
 
-                                                $issuedById =
-                                                    $grid->document_printed_by
-                                                    ?? $grid->issued_by
-                                                    ?? $grid->user_id
-                                                    ?? null;
+                                                $issuedById = $grid->document_printed_by ?? $grid->issued_by ?? $grid->user_id ?? null;
 
-                                                $issuedToId =
-                                                    $grid->issuance_to
-                                                    ?? null;
+                                                $issuedToId = $grid->issuance_to ?? null;
 
-                                                $departmentValue =
-                                                    $grid->location
-                                                    ?? $grid->issued_to_department
-                                                    ?? $grid->department
-                                                    ?? 'NA';
+                                                $departmentValue = $grid->location ?? $grid->issued_to_department ?? $grid->department ?? 'NA';
 
                                                 if (is_string($departmentValue)) {
-                                                    $decodedDepartment = json_decode(
-                                                        $departmentValue,
-                                                        true
-                                                    );
+                                                    $decodedDepartment = json_decode($departmentValue, true);
 
-                                                    if (
-                                                        json_last_error() === JSON_ERROR_NONE
-                                                        && is_array($decodedDepartment)
-                                                    ) {
-                                                        $departmentValue =
-                                                            $decodedDepartment['name']
-                                                            ?? 'NA';
+                                                    if (json_last_error() === JSON_ERROR_NONE && is_array($decodedDepartment)) {
+                                                        $departmentValue = $decodedDepartment['name'] ?? 'NA';
                                                     }
                                                 }
 
-                                                $requestId =
-                                                    $grid->request_id
-                                                    ?? 'NA';
+                                                $requestId = $grid->request_id ?? 'NA';
 
-                                                $copyNumberValue =
-                                                    (int) ($grid->copy_number ?? 1);
+                                                $copyNumberValue = (int) ($grid->copy_number ?? 1);
 
-                                                $copyNumber =
-                                                    $grid->formatted_copy_number
-                                                    ?? str_pad(
-                                                        $copyNumberValue,
-                                                        3,
-                                                        '0',
-                                                        STR_PAD_LEFT
-                                                    );
+                                                $copyNumber = $grid->formatted_copy_number ?? str_pad( $copyNumberValue, 3, '0', STR_PAD_LEFT);
 
-                                                $documentNumber =
-                                                    $grid->document_number
-                                                    ?? $document->document_number
-                                                    ?? 'NA';
+                                                $documentNumber = $grid->document_number ?? $document->document_number ?? 'NA';
 
-                                                $documentTitle =
-                                                    $grid->document_title
-                                                    ?? $document->document_name
-                                                    ?? 'NA';
+                                                $documentTitle = $grid->document_title ?? $document->document_name ?? 'NA';
 
-                                                $issuedReason =
-                                                    $grid->issued_reason
-                                                    ?? $grid->print_reason
-                                                    ?? 'NA';
+                                                $issuedReason = $grid->issued_reason ?? $grid->print_reason ?? 'NA';
 
-                                                $retrievalByValue = old(
-                                                    "distribution.$index.retrieval_by",
-                                                    $grid->retrieval_by ?? 'NA'
-                                                );
+                                                $retrievalByValue = old("distribution.$index.retrieval_by", $grid->retrieval_by ?? 'NA');
 
-                                                $retrievedReasonValue = old(
-                                                    "distribution.$index.retrieved_reason",
-                                                    $grid->retrieved_reason ?? 'NA'
-                                                );
+                                                $retrievedReasonValue = old("distribution.$index.retrieved_reason", $grid->retrieved_reason ?? 'NA');
 
-                                                $destructedByValue = old(
-                                                    "distribution.$index.destructed_by",
-                                                    $grid->destructed_by ?? 'NA'
-                                                );
+                                                $destructedByValue = old("distribution.$index.destructed_by", $grid->destructed_by ?? 'NA');
 
-                                                $destructionReasonValue = old(
-                                                    "distribution.$index.destruction_reason",
-                                                    $grid->destruction_reason ?? 'NA'
-                                                );
+                                                $destructionReasonValue = old("distribution.$index.destruction_reason", $grid->destruction_reason ?? 'NA');
                                             @endphp
 
                                             <tr
