@@ -80,9 +80,7 @@ class RoleGroupSeeder extends Seeder
         ];
 
         $processes = [
-            'Change Control',
-            // 'Non Conformance',
-            'Incident',
+            'Change Control'
         ];
 
         // $incrementCount = $start_from_id;

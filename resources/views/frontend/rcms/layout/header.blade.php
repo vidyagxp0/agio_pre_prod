@@ -209,15 +209,15 @@
 
             <script>
                document.addEventListener("DOMContentLoaded", function () {
-    let links = document.querySelectorAll(".bottom-links a");
-    let currentUrl = window.location.pathname;
+                let links = document.querySelectorAll(".bottom-links a");
+                let currentUrl = window.location.pathname;
 
-    links.forEach(link => {
-        if (link.href.includes(currentUrl)) {
-            link.classList.add("active");
-        }
-    });
-});
+                    links.forEach(link => {
+                        if (link.href.includes(currentUrl)) {
+                            link.classList.add("active");
+                        }
+                    });
+                });
 
             </script>
             <div class="header-bottom">
@@ -386,7 +386,7 @@
                             style="max-width:120px;">
                     </div>
                     <div class="bar">
-                        <strong>Version : </strong> 10.0.0
+                        <strong>Version : </strong> 2.8
                     </div>
                     <div class="bar">
                         <strong>Build # : </strong> 2
@@ -533,39 +533,39 @@
 <!-- Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-<style>
-/* Gradient header */
-.bg-gradient-primary {
-    background: linear-gradient(90deg, #5c98e7, #3b73c9);
-}
+    <style>
+        /* Gradient header */
+        .bg-gradient-primary {
+            background: linear-gradient(90deg, #5c98e7, #3b73c9);
+        }
 
-/* Scrollable modal body */
-.modal-body {
-    max-height: 450px;
-    overflow-y: auto;
-}
+        /* Scrollable modal body */
+        .modal-body {
+            max-height: 450px;
+            overflow-y: auto;
+        }
 
-/* Log card style */
-.log-card {
-    transition: transform 0.2s, box-shadow 0.2s;
-    background-color: #f8f9fa;
-}
+        /* Log card style */
+        .log-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+            background-color: #f8f9fa;
+        }
 
-.log-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-}
+        .log-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
 
-/* Remove bullet style */
-.list-unstyled {
-    padding-left: 0;
-}
+        /* Remove bullet style */
+        .list-unstyled {
+            padding-left: 0;
+        }
 
-/* Link hover */
-.log-card a:hover {
-    text-decoration: underline;
-    color: #1a4db3;
-}
-</style>
+        /* Link hover */
+        .log-card a:hover {
+            text-decoration: underline;
+            color: #1a4db3;
+        }
+    </style>
 
     {{-- LOG LIST MODAL END --}}

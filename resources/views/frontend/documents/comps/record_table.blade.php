@@ -59,21 +59,37 @@
 </style>
 
 <div class="main-head">
-    <div>Records</div>
+
     <div>
-        {{ count($documents) }} Results {{ isset($count) ? ' out of Results ' . $count : 'found' }}
+        Records
     </div>
+
+
+    <div>
+
+        {{ $documents->total() }}
+
+        Results found
+
+    </div>
+
 </div>
+
+
 
 <div class="table-list">
 
-    <table class="table table-bordered document-table">
+
+    <table
+        class="table table-bordered document-table"
+    >
+
 
         <thead>
 
             <tr>
 
-                <th class="pr-id" data-bs-toggle="modal" data-bs-target="#division-modal">
+                <th class="pr-id">
                     ID
                 </th>
 
@@ -121,84 +137,263 @@
 
         </thead>
 
+
+
         <tbody id="searchTable">
 
-            @if(count($documents) > 0)
+
+            @if($documents->count() > 0)
+
 
                 @foreach($documents as $doc)
 
+
                     <tr>
 
-                        <td class="pr-id" style="text-decoration: underline;">
-                            <a href="{{ route('documents.edit',$doc->id) }}">
-                                {{ Helpers::recordFormat($doc->id) }}
+
+                        {{-- ID --}}
+
+                        <td
+                            class="pr-id"
+                            style="text-decoration: underline;"
+                        >
+
+                            <a
+                                href="{{ route(
+                                    'documents.edit',
+                                    $doc->id
+                                ) }}"
+                            >
+
+                                {{ Helpers::recordFormat(
+                                    $doc->id
+                                ) }}
+
                             </a>
+
                         </td>
 
-                        <td class="doc-no text-truncate-cell"
-                            title="{{ $doc->document_number }}">
+
+
+                        {{-- DOCUMENT NUMBER --}}
+
+                        <td
+                            class="doc-no text-truncate-cell"
+                            title="{{ $doc->document_number ?? 'NA' }}"
+                        >
+
                             {{ $doc->document_number ?? 'NA' }}
+
                         </td>
 
-                        <td class="doc-title text-truncate-cell"
-                            title="{{ $doc->document_name }}">
+
+
+                        {{-- DOCUMENT TITLE --}}
+
+                        <td
+                            class="doc-title text-truncate-cell"
+                            title="{{ $doc->document_name ?? 'NA' }}"
+                        >
+
                             {{ $doc->document_name ?? 'NA' }}
+
                         </td>
 
-                        <td class="doc-type text-truncate-cell"
-                            title="{{ Helpers::getDocumentTypes()[$doc->document_type_id] }}">
-                            {{ Helpers::getDocumentTypes()[$doc->document_type_id] ?? 'NA' }}
+
+
+                        {{-- DOCUMENT TYPE --}}
+
+                        <td
+                            class="doc-type text-truncate-cell"
+                            title="{{
+                                Helpers::getDocumentTypes()[
+                                    $doc->document_type_id
+                                ] ?? 'NA'
+                            }}"
+                        >
+
+                            {{
+                                Helpers::getDocumentTypes()[
+                                    $doc->document_type_id
+                                ] ?? 'NA'
+                            }}
+
                         </td>
 
-                        <td class="division text-truncate-cell"
-                            title="{{ Helpers::getDivisionName($doc->division_id) }}">
-                            {{ Helpers::getDivisionName($doc->division_id) ?? 'NA'  }}
+
+
+                        {{-- DIVISION --}}
+
+                        <td
+                            class="division text-truncate-cell"
+                            title="{{
+                                Helpers::getDivisionName(
+                                    $doc->division_id
+                                ) ?? 'NA'
+                            }}"
+                        >
+
+                            {{
+                                Helpers::getDivisionName(
+                                    $doc->division_id
+                                ) ?? 'NA'
+                            }}
+
                         </td>
 
-                        <td class="short-desc text-truncate-cell"
-                            title="{{ $doc->short_description }}">
-                            {{ $doc->short_description ?? 'NA'  }}
+
+
+                        {{-- SHORT DESCRIPTION --}}
+
+                        <td
+                            class="short-desc text-truncate-cell"
+                            title="{{
+                                $doc->short_description ?? 'NA'
+                            }}"
+                        >
+
+                            {{
+                                $doc->short_description ?? 'NA'
+                            }}
+
                         </td>
+
+
+
+                        {{-- CREATE DATE --}}
 
                         <td class="create-date">
-                            {{ \Carbon\Carbon::parse($doc->created_at)->format('d-M-Y h:i A') ?? 'NA' }}
+
+                            @if($doc->created_at)
+
+                                {{
+                                    \Carbon\Carbon::parse(
+                                        $doc->created_at
+                                    )->format(
+                                        'd-M-Y h:i A'
+                                    )
+                                }}
+
+                            @else
+
+                                NA
+
+                            @endif
+
                         </td>
 
-                        <td class="assign-name text-truncate-cell"
-                            title="{{ $doc->originator_name }}">
-                            {{ $doc->originator_name ?? 'NA' }}
+
+
+                        {{-- ORIGINATOR --}}
+
+                        <td
+                            class="assign-name text-truncate-cell"
+                            title="{{
+                                $doc->originator_name ?? 'NA'
+                            }}"
+                        >
+
+                            {{
+                                $doc->originator_name ?? 'NA'
+                            }}
+
                         </td>
+
+
+
+                        {{-- MODIFY DATE --}}
 
                         <td class="modify-date">
-                            {{ \Carbon\Carbon::parse($doc->updated_at)->format('d-M-Y h:i A') }}
+
+                            @if($doc->updated_at)
+
+                                {{
+                                    \Carbon\Carbon::parse(
+                                        $doc->updated_at
+                                    )->format(
+                                        'd-M-Y h:i A'
+                                    )
+                                }}
+
+                            @else
+
+                                NA
+
+                            @endif
+
                         </td>
 
+
+
+                        {{-- STATUS --}}
+
                         <td class="status">
-                            {{ Helpers::getDocStatusByStage($doc->stage,$doc->training_required) ?? 'NA'  }}
+
+                            {{
+                                Helpers::getDocStatusByStage(
+                                    $doc->stage,
+                                    $doc->training_required
+                                ) ?? 'NA'
+                            }}
+
                         </td>
+
+
+
+                        {{-- ACTION --}}
 
                         <td class="action">
 
+
                             <div class="action-dropdown">
 
+
                                 <div class="action-down-btn">
+
                                     Action
-                                    <i class="fa-solid fa-angle-down"></i>
+
+                                    <i
+                                        class="fa-solid fa-angle-down"
+                                    ></i>
+
                                 </div>
+
 
                                 <div class="action-block">
 
-                                    <a href="{{ url('doc-details',$doc->id) }}">
+
+                                    {{-- VIEW --}}
+
+                                    <a
+                                        href="{{ url(
+                                            'doc-details',
+                                            $doc->id
+                                        ) }}"
+                                    >
+
                                         View
+
                                     </a>
+
+
+
+                                    {{-- EDIT --}}
 
                                     @if($doc->status != 'Obsolete')
 
-                                        <a href="{{ route('documents.edit',$doc->id) }}">
+                                        <a
+                                            href="{{ route(
+                                                'documents.edit',
+                                                $doc->id
+                                            ) }}"
+                                        >
+
                                             Edit
+
                                         </a>
 
                                     @endif
+
 
                                 </div>
 
@@ -206,29 +401,56 @@
 
                         </td>
 
+
                     </tr>
+
 
                 @endforeach
 
+
             @else
+
 
                 <tr>
 
-                    <td colspan="11" class="text-center">
-                        <h5>Data not Found</h5>
+                    <td
+                        colspan="11"
+                        class="text-center"
+                    >
+
+                        <h5>
+                            Data not Found
+                        </h5>
+
                     </td>
 
                 </tr>
 
+
             @endif
+
 
         </tbody>
 
+
     </table>
 
-    @if(isset($count))
-        {!! $documents->links() !!}
+
+
+    {{-- =========================================================
+         DOCUMENT PAGINATION
+    ========================================================== --}}
+
+    @if($documents->hasPages())
+
+        <div class="pagination-wrapper">
+
+            {!! $documents->links() !!}
+
+        </div>
+
     @endif
+
 
 </div>
 {{-- ========================================================== --}}

@@ -5306,7 +5306,7 @@ class CCController extends Controller
 
  
         if ($lastDocument_review->qa_comments != $request->qa_review_comments && $request->qa_review_comments != null) {
-         $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
                 ->where('activity_type', 'QA/CQA Initial Review Comments')
                 ->exists();
             $history = new RcmDocHistory;
@@ -5318,9 +5318,9 @@ class CCController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            $history->origin_state = $lastDocument_review->status;
+            $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument_review->status;
+            $history->change_from = $lastDocument->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
@@ -9164,7 +9164,7 @@ class CCController extends Controller
                 toastr()->success('Sent to CFT Assessment');
                 return back();
             }
-           if ($changeControl->stage == 4) {
+            if ($changeControl->stage == 4) {
 
                  
                      // exetnsion child validation

@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('short_description_required')->nullable();
             $table->longText('nature_of_repeat')->nullable();
             $table->date('Deviation_date')->nullable();
-            $table->date('Deviation_reported_date')->nullable();
+            $table->string('Deviation_reported_date')->nullable();
             $table->string('Facility')->nullable();
             $table->string('Capachild')->nullable();
             $table->string('Rootchild')->nullable();
