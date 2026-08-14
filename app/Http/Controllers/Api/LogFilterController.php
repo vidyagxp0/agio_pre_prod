@@ -770,83 +770,109 @@ class LogFilterController extends Controller
 
 
     public function externalAuditFilter(Request $request)
-    {
-        $res = [
-            'status' => 'ok',
-            'message' => 'success',
-            'body' => []
-        ];
+{
+    $res = [
+        'status' => 'ok',
+        'message' => 'success',
+        'body' => []
+    ];
 
-        try {
+    try {
 
+        $query = Auditee::query();
 
-            $query = Auditee::query();
-
-            if ($request->externalAudit_department) {
-                $query->where('initiator_group_code', $request->externalAudit_department);
-            }
-
-
-            if ($request->div_idexternalAudit) {
-
-                $query->where('division_id', $request->div_idexternalAudit);
-            }
-            // if($request->categoryofcomplaints)
-            // {
-            //     $query->where('categorization_of_complaint_gi',$request->categoryofcomplaints);
-            // }
-
-            if ($request->period_lab) {
-                $currentDate = Carbon::now();
-                switch ($request->period_lab) {
-                    case 'Yearly':
-                        $startDate = $currentDate->startOfYear();
-                        break;
-                    case 'Quarterly':
-                        $startDate = $currentDate->firstOfQuarter();
-                        break;
-                    case 'Monthly':
-                        $startDate = $currentDate->startOfMonth();
-                        break;
-                    default:
-                        $startDate = null;
-                        break;
-                }
-                if ($startDate) {
-                    $query->whereDate('intiation_date', '>=', $startDate);
-                }
-            }
-
-            if ($request->dateExternalauditFrom) {
-
-                $datefrom = Carbon::parse($request->dateExternalauditFrom)->startOfDay();
-
-                $query->whereDate('intiation_date', '>=', $datefrom);
-            }
-
-            if ($request->dateExternalauditTo) {
-
-                $dateo = Carbon::parse($request->dateExternalauditTo)->endOfDay();
-
-                $query->whereDate('intiation_date', '<=', $dateo);
-            }
-
-            $external_audits = $query->get();
-
-            $htmlData = view('frontend.forms.Logs.filterData.external_audit_data', compact('external_audits'))->render();
-
-
-            $res['body'] = $htmlData;
-        } catch (\Exception $e) {
-            $res['status'] = 'error';
-            $res['message'] = $e->getMessage();
+        // Department
+        if ($request->filled('externalAudit_department')) {
+            $query->where(
+                'initiator_group_code',
+                $request->externalAudit_department
+            );
         }
 
+        // Division
+        if ($request->filled('div_idexternalAudit')) {
+            $query->where(
+                'division_id',
+                $request->div_idexternalAudit
+            );
+        }
 
-        return response()->json($res);
+        // Period
+        if ($request->filled('period_lab')) {
+
+            $currentDate = Carbon::now();
+
+            switch ($request->period_lab) {
+
+                case 'Yearly':
+                    $startDate = $currentDate->copy()->startOfYear();
+                    break;
+
+                case 'Quarterly':
+                    $startDate = $currentDate->copy()->firstOfQuarter();
+                    break;
+
+                case 'Monthly':
+                    $startDate = $currentDate->copy()->startOfMonth();
+                    break;
+
+                default:
+                    $startDate = null;
+                    break;
+            }
+
+            if ($startDate) {
+
+                $query->whereRaw(
+                    "STR_TO_DATE(intiation_date, '%d-%m-%Y') >= ?",
+                    [$startDate->format('Y-m-d')]
+                );
+            }
+        }
+
+        // From Date
+        if ($request->filled('dateExternalauditFrom')) {
+
+            $dateFrom = Carbon::parse(
+                $request->dateExternalauditFrom
+            )->format('Y-m-d');
+
+            $query->whereRaw(
+                "STR_TO_DATE(intiation_date, '%d-%m-%Y') >= ?",
+                [$dateFrom]
+            );
+        }
+
+        // To Date
+        if ($request->filled('dateExternalauditTo')) {
+
+            $dateTo = Carbon::parse(
+                $request->dateExternalauditTo
+            )->format('Y-m-d');
+
+            $query->whereRaw(
+                "STR_TO_DATE(intiation_date, '%d-%m-%Y') <= ?",
+                [$dateTo]
+            );
+        }
+
+        $external_audits = $query->get();
+
+        $htmlData = view(
+            'frontend.forms.Logs.filterData.external_audit_data',
+            compact('external_audits')
+        )->render();
+
+        $res['body'] = $htmlData;
+
+    } catch (\Exception $e) {
+
+        $res['status'] = 'error';
+        $res['message'] = $e->getMessage();
     }
 
-
+    return response()->json($res);
+}
 
 
     public function AuditProgramFilter(Request $request)
@@ -1700,14 +1726,20 @@ class LogFilterController extends Controller
                 }
             }
 
-            if ($request->date_fromIncident) {
-                $dateFrom = Carbon::parse($request->date_fromIncident)->startOfDay();
-                $query->whereDate('intiation_date', '>=', $dateFrom);
+         
+
+             if ($request->date_fromIncident) {
+                $query->whereRaw(
+                    "STR_TO_DATE(intiation_date, '%d-%b-%Y') >= ?",
+                    [$request->date_fromIncident]
+                );
             }
 
             if ($request->date_toIncident) {
-                $dateTo = Carbon::parse($request->date_toIncident)->endOfDay();
-                $query->whereDate('intiation_date', '<=', $dateTo);
+                $query->whereRaw(
+                    "STR_TO_DATE(intiation_date, '%d-%b-%Y') <= ?",
+                    [$request->date_toIncident]
+                );
             }
 
             $Inc = $query->get();

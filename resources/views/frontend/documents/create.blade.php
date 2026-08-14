@@ -693,6 +693,77 @@
                                         // Get selected value
                                         const selectedType = selectElement.value;
 
+
+                            const requiredAttachments = {
+                                BOM: 'billMatrial_I_gxp_attachment',
+                                BMR: 'batchManufacturingBmr_I_gxp_attachment',
+                                BPR: 'batchPackingRecordBpr_I_gxp_attachment',
+                                TEMPMAPPING: 'TemMapProCumRep_fileattachement',
+                                PROVALIDRE: 'file_attach_pvrData',
+                                PROVALIINTERRE: 'pvir_attachment',
+                                EQUIPMENTHOLDREPORT: 'attachment_ehtsrData',
+                                EQUIPMENTHOLDPROTOCOL: 'attachment_ehtsprtData',
+                                STUDYPROTOCOL: 'attachment_sptData',
+                                ANNEQUALPROTO: 'afqpfile',
+                                ANNEQUALREPORT: 'afqrfile',
+                                STUDY: 'attachment_srtData',
+                                AAEUSERREQUESPECI: 'afursfile',
+                                CLEAVALIPROTODOC :'annex_I_gxp_attachment',
+                                CLEAVALIREPORTDOC:'file_attach_cvrdData',
+                                QUALIPROCUMREP:'procumrepo_file_attachData',
+                                AREAQUALIFICATIONREPORT:'aqrfile',
+                                PROVALIPROTOCOL:'ProValProtocol_I_gxp_attachment',
+                                REQULIFICATIONPROTOCOL:'aqpfile',
+                                REPORTFORMEDIAFILL:'rfmffile',
+                                PROTOCOLFORMEDIAFILL: 'pfmffile',
+                                ANNACINQULIPROTOCOL:'AIQPfile',
+                                ANNACOPERQULIPROTOCOL:'AOQPfile',
+                                ANNACPERMQULIPROTOCOL:'APQPfile',
+                                PACKVALIREPORT:'PacValRepfile_attachData',
+                                PACKVALIPROTOCOL:'pvpfile',
+                                HOLDTIMESTUDYREPORT:'HolTimSutRep_I_gxp_attachment',
+                                HOLDTIMESTUDYPROTOCOL:'htpsfile',
+                                FOCONITOGENREPORT:'attach_comp_nitrogendata',
+                                FOCONITOGENPROTOCOL:'annex_I_gxp_attachmentformateComp',
+                                STABILITYPROTOCOL:'file_attachDataSSP',
+                                ANNIGxPASSES:'annex_I_gxp_attachment',
+                                ANNIGxPASSES:'annex_I_gxp_attachment',
+                                ANNIIRiskASSES:'annex_II_risk_attachment',
+                                ANNIIIERESASSES:'annex_III_eres_attachment',
+                                ANNIVPlanASSES:'annex_IV_plan_attachment',
+                                ANNVUserReqSpe:'annex_V_user_attachment',
+                                ANNVIFunReqSpe:'annex_VI_req_attachment',
+                                ANNVIIFunSpe:'annex_VII_fun_attachment',
+                                ANNVIIITechSpe:'annex_VIII_tech_attachment',
+                                ANNIXFunRiskASSES:'annex_IX_risk_attachment',
+                                ANNXDesignSpe:'annex_X_design_attachment',
+                                ANNXIConfiSpe:'annex_XI_confi_attachment',
+                                ANNXIIQualiProto:'annex_XII_qua_proto_attachment',
+                                ANNXIIIUnitInTest:'annex_XIII_unit_integ_attachment',
+                                ANNXIVDataMigPro:'annex_XIV_data_migra_attachment',
+                                ANNXVPerfQualif:'annex_XV_data_qualif_attachment',
+                                ANNEXUREXVIIITRACEABILITYMATRIX:'atmfile',
+                                ANNEXUREXVIINSTALLATION:'aiiopqfile', 
+                                ANNEXUREXIXSYSTEMRETIREMENT:'asrfile',
+                                MAForRec:'MasterFormulaRecordBMR_I_gxp_attachment',
+                                MAPacRec:'MasterPackingRecord_I_gxp_attachment',
+                                SMF:'SiteMasterFileatt_I_gxp_attachment',
+                                VMP:'file_attach_vmpData',
+                                QM:'file_attach_qmData',
+                                ANNEXUREXVIIVALIDATION:'avsrfile',
+                            
+                            
+
+                            };
+
+                            Object.entries(requiredAttachments).forEach(([type, inputId]) => {
+                                const input = document.getElementById(inputId);
+
+                                if (!input) return;
+
+                                input.toggleAttribute('required', selectedType === type);
+                            });
+
                                         // Get all hidden tabs
                                         const tabs = document.querySelectorAll('.hidden-tabs');
 
@@ -2405,7 +2476,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                            <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment">
-                                        <b>Temperature Mapping Protocol Cum Report Attachment</b>
+                                        <b>Temperature Mapping Protocol Cum Report Attachment <span class="text-danger">*</span></b>
                                     </label>
 
                                     <div>
@@ -2857,7 +2928,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         --}}
                            <div class="col-12">
                                 <div class="group-input">
-                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                     <div>
                                         <small class="text-primary">
@@ -2983,316 +3054,316 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         <div class="orig-head">
                             Study Protocol
                         </div>
-                        {{--
-                        <div class="input-fields">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="purpose">Objective</label>
-                                        <textarea name="stprotocol_purpose"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="scope">Scope</label>
-                                        <textarea name="stprotocol_scope"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="group-input">
-
-                                        <label for="stresponsibility" id="stresponsibility">
-                                            Responsibilities<button type="button" id="stresponsibilitybtnadd"
-                                                name="button">+</button>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                        </label>
-
-                                        <div id="stresponsibilitydiv">
-                                            <div class="singleStResponsibilityBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="stresponsibility[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark substResponsibilityAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
+                                    {{--
+                                    <div class="input-fields">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="purpose">Objective</label>
+                                                    <textarea name="stprotocol_purpose"></textarea>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="group-input">
-
-                                        <label for="stdefination" id="stdefination">
-                                            Defination<button type="button" id="stdefinationbtnadd"
-                                                name="button">+</button>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                        </label>
-
-                                        <div id="stdefinationdiv">
-                                            <div class="singlestdefinationBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="stdefination[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark substdefinationAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="scope">Scope</label>
+                                                    <textarea name="stprotocol_scope"></textarea>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                    </div>
-                                </div>
+                                            <div class="col-md-12">
+                                                <div class="group-input">
 
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="streferences" id="streferences">
-                                            References(if any)<button type="button" id="streferencesbtadd">+</button>
-                                        </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <div id="streferencesdiv">
-                                            <div class="singlestreferencesBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="streferences[]" class="myclassname"></textarea>
+                                                    <label for="stresponsibility" id="stresponsibility">
+                                                        Responsibilities<button type="button" id="stresponsibilitybtnadd"
+                                                            name="button">+</button>
+                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                                does not require completion</small></div>
+                                                    </label>
+
+                                                    <div id="stresponsibilitydiv">
+                                                        <div class="singleStResponsibilityBlock">
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <textarea name="stresponsibility[]" class="myclassname"></textarea>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-dark substResponsibilityAdd">+</button>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark substreferencesAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
+
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="stbackground" id="stbackground">
-                                            Background/History(if any)<button type="button" id="stbackgroundbtnadd"
-                                                name="button">+</button>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                        </label>
+                                            <div class="col-md-12">
+                                                <div class="group-input">
 
+                                                    <label for="stdefination" id="stdefination">
+                                                        Defination<button type="button" id="stdefinationbtnadd"
+                                                            name="button">+</button>
+                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                                does not require completion</small></div>
+                                                    </label>
 
-                                        <div id="stbackgrounddiv">
-                                            <div class="singlestbackgroundBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="stbackground[]" class="myclassname"></textarea>
+                                                    <div id="stdefinationdiv">
+                                                        <div class="singlestdefinationBlock">
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <textarea name="stdefination[]" class="myclassname"></textarea>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-dark substdefinationAdd">+</button>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark substbackgroundAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
+
                                                 </div>
                                             </div>
-                                        </div>
 
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="stassessment" id="stassessment">
-                                            Assessment/Evaluation<button type="button" id="stassessmentbtnadd"
-                                                name="button">+</button>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                        </label>
-
-
-
-                                        <div id="stassessmentdiv">
-
-                                            <div class="singlestassessmentBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="stassessment[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark substassessmentAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="streferences" id="streferences">
+                                                        References(if any)<button type="button" id="streferencesbtadd">+</button>
+                                                    </label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                            not require completion</small></div>
+                                                    <div id="streferencesdiv">
+                                                        <div class="singlestreferencesBlock">
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <textarea name="streferences[]" class="myclassname"></textarea>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-dark substreferencesAdd">+</button>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                        </div>
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="stbackground" id="stbackground">
+                                                        Background/History(if any)<button type="button" id="stbackgroundbtnadd"
+                                                            name="button">+</button>
+                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                                does not require completion</small></div>
+                                                    </label>
 
-                                    </div>
-                                </div>
 
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="ststrategy" id="ststrategy">
-                                            Strategy Methodology<button type="button" id="ststrategybtadd"
-                                                name="button">+</button>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                        </label>
-
-                                        <div id="ststrategyBlock">
-                                            <div class="singleststrategyBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="ststrategy[]" class="myclassname"></textarea>
+                                                    <div id="stbackgrounddiv">
+                                                        <div class="singlestbackgroundBlock">
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <textarea name="stbackground[]" class="myclassname"></textarea>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-dark substbackgroundAdd">+</button>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button type="button" class="btn btn-dark subststrategyAdd" >+</button>
 
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                    </div>
-                                </div>
 
 
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="stassessment" id="stassessment">
+                                                        Assessment/Evaluation<button type="button" id="stassessmentbtnadd"
+                                                            name="button">+</button>
+                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                                does not require completion</small></div>
+                                                    </label>
 
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="stsummary" id="stsummary">
-                                            Summary & Findings<button type="button" id="stsummarybtadd"
-                                                name="button">+</button>
-                                        </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
 
-                                        <div id="stsummarydiv">
-                                            <div class="singlestsummaryBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="stsummary[]" class=""></textarea>
+
+                                                    <div id="stassessmentdiv">
+
+                                                        <div class="singlestassessmentBlock">
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <textarea name="stassessment[]" class="myclassname"></textarea>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-dark substassessmentAdd">+</button>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark substsummaryAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
+
                                                 </div>
                                             </div>
-                                        </div>
 
-                                    </div>
-                                </div>
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="ststrategy" id="ststrategy">
+                                                        Strategy Methodology<button type="button" id="ststrategybtadd"
+                                                            name="button">+</button>
+                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                                does not require completion</small></div>
+                                                    </label>
 
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="stconclusion" id="stconclusion">
-                                           Conclusion<button type="button" id="stconclusionbtadd">+</button>
-                                        </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
+                                                    <div id="ststrategyBlock">
+                                                        <div class="singleststrategyBlock">
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <textarea name="ststrategy[]" class="myclassname"></textarea>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button type="button" class="btn btn-dark subststrategyAdd" >+</button>
 
-                                        <div id="stconclusiondiv">
-                                            <div class="singlestconclusionBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="stconclusion[]" class="myclassname"></textarea>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark substconclusionAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
+
                                                 </div>
                                             </div>
-                                        </div>
-
-                                    </div>
-                                </div>
 
 
 
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="stannexure" id="stannexure">
-                                            Annexure<button type="button" id="stannexurebtadd">+</button>
-                                        </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="stsummary" id="stsummary">
+                                                        Summary & Findings<button type="button" id="stsummarybtadd"
+                                                            name="button">+</button>
+                                                    </label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                            not require completion</small></div>
 
-                                        <div id="stannexurediv">
-                                            <div class="singlestannexureBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="stannexure[]" class="myclassname"></textarea>
+                                                    <div id="stsummarydiv">
+                                                        <div class="singlestsummaryBlock">
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <textarea name="stsummary[]" class=""></textarea>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-dark substsummaryAdd">+</button>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark substannexureAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
+
                                                 </div>
                                             </div>
-                                        </div>
 
-                                    </div>
-                                </div>
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="stconclusion" id="stconclusion">
+                                                    Conclusion<button type="button" id="stconclusionbtadd">+</button>
+                                                    </label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                            not require completion</small></div>
 
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="Doc_No" id="Doc_No">
-                                            Reference Document Number (if any)<button type="button" id="Referencedocunumadd">+</button>
-                                        </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
+                                                    <div id="stconclusiondiv">
+                                                        <div class="singlestconclusionBlock">
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <textarea name="stconclusion[]" class="myclassname"></textarea>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-dark substconclusionAdd">+</button>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                        <div id="Referencedocunumdiv">
-                                            <div class="singleReferencedocunumBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="Referencedocunum[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark substReferencedocunumAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
                                                 </div>
                                             </div>
+
+
+
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="stannexure" id="stannexure">
+                                                        Annexure<button type="button" id="stannexurebtadd">+</button>
+                                                    </label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                            not require completion</small></div>
+
+                                                    <div id="stannexurediv">
+                                                        <div class="singlestannexureBlock">
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <textarea name="stannexure[]" class="myclassname"></textarea>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-dark substannexureAdd">+</button>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="Doc_No" id="Doc_No">
+                                                        Reference Document Number (if any)<button type="button" id="Referencedocunumadd">+</button>
+                                                    </label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                            not require completion</small></div>
+
+                                                    <div id="Referencedocunumdiv">
+                                                        <div class="singleReferencedocunumBlock">
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <textarea name="Referencedocunum[]" class="myclassname"></textarea>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-dark substReferencedocunumAdd">+</button>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
                                         </div>
-
                                     </div>
-                                </div>
 
-                            </div>
-                        </div>
-
-                        --}}
+                                    --}}
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                             <div>
                                                 <small class="text-primary">
@@ -3830,7 +3901,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                  <div class="col-12">
                                     <div class="group-input">
                                         <label for="File_Attachment">
-                                            <b>File Attachment</b>
+                                            <b>File Attachment<span class="text-danger">*</span></b>
                                         </label>
 
                                         <div>
@@ -4495,7 +4566,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                     <div class="col-12">
                         <div class="group-input">
                             <label for="File_Attachment">
-                                <b>Packing Validation Report Attachment</b>
+                                <b>Packing Validation Report Attachment<span class="text-danger">*</span></b>
                             </label>
 
                             <div>
@@ -4986,7 +5057,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="File_Attachment">
-                                    <b>File Attachment</b>
+                                    <b>File Attachment<span class="text-danger">*</span></b>
                                 </label>
 
                                 <div>
@@ -5552,7 +5623,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment">
-                                                <b>File Attachment</b>
+                                                <b>File Attachment <span class="text-danger">*</span></b>
                                             </label>
 
                                             <div>
@@ -6039,7 +6110,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="File_Attachment"><b>Format For Compressed Air And Nitrogen Gas System Protocol File Attachment</b></label>
+                                    <label for="File_Attachment"><b>Format For Compressed Air And Nitrogen Gas System Protocol File Attachment<span class='text-danger'>*</span></b></label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
 
                                     <div class="file-attachment-field">
@@ -6811,7 +6882,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="File_Attachment">
-                                            <b>File Attachment</b>
+                                            <b>File Attachment <span class="text-danger">*</span></b>
                                         </label>
 
                                         <div>
@@ -7562,7 +7633,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                <div class="col-12">
                                     <div class="group-input">
-                                        <label for="File_Attachment"><b>File Attachment</b></label>
+                                        <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                         <div>
                                             <small class="text-primary">
@@ -8013,7 +8084,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                     <div>
                                         <small class="text-primary">
@@ -8142,7 +8213,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                               <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment">
-                                        <b>File Attachment</b>
+                                        <b>File Attachment<span class='text-danger'>*</span></b>
                                     </label>
 
                                     <div>
@@ -8737,7 +8808,9 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                   <div class="col-12">
                                     <div class="group-input">
                                         <label for="File_Attachment">
-                                            <b>File Attachment</b>
+                                            <b>File Attachment
+                                                <span class="text-danger">*</span>
+                                            </b>
                                         </label>
 
                                         <div>
@@ -8866,7 +8939,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                <div class="col-12">
                                     <div class="group-input">
-                                        <label><b>File Attachment</b></label>
+                                        <label><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                         <div>
                                             <small class="text-primary">
@@ -9113,7 +9186,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                             <div>
                                                 <small class="text-primary">
@@ -9944,7 +10017,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="File_Attachment">
-                                            <b>Process Validation Protocol File Attachment</b>
+                                            <b>Process Validation Protocol File Attachment<span class="text-danger">*</span></b>
                                         </label>
 
                                         <div>
@@ -11213,7 +11286,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment">
-                                        <b>Hold Time Study Report Attachment</b>
+                                        <b>Hold Time Study Report Attachment<span class='text-danger'>*</span></b>
                                     </label>
 
                                     <div>
@@ -11355,7 +11428,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="File_Attachment"><b>Bill of Material File Attachment</b></label>
+                                    <label for="File_Attachment"><b>Bill of Material File Attachment <span class="text-danger">*</span></b></label>
 
                                     <div>
                                         <small class="text-primary">
@@ -11493,7 +11566,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment">
-                                        <b>Master Formula Record File Attachment</b>
+                                        <b>Master Formula Record File Attachment <span class="text-danger">*</span></b>
                                     </label>
 
                                     <div>
@@ -11619,7 +11692,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment">
-                                        <b>Master Packing Record File Attachment</b>
+                                        <b>Master Packing Record File Attachment<span class="text-danger">*</span></b>
                                     </label>
 
                                     <div>
@@ -11744,7 +11817,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                            <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment">
-                                        <b>Site Master Attachment</b>
+                                        <b>Site Master Attachment<span class="text-danger">*</span></b>
                                     </label>
 
                                     <div>
@@ -11874,7 +11947,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="File_Attachment">
-                                            <b>Batch Manufacturing Record (BMR) File Attachment</b>
+                                            <b>Batch Manufacturing Record (BMR) File Attachment <span class="text-danger">*</span></b>
                                         </label>
 
                                         <div>
@@ -12006,7 +12079,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="File_Attachment">
-                                            <b>Batch Packing Record (BPR) File Attachment</b>
+                                            <b>Batch Packing Record (BPR) File Attachment <span class="text-danger">*</span></b>
                                         </label>
 
                                         <div>
@@ -13195,7 +13268,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment">
-                                                <b>File Attachment</b>
+                                                <b>File Attachment<span class="text-danger">*</span></b>
                                             </label>
 
                                             <div>
@@ -13321,13 +13394,13 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                <!-- Annexure I-Gxp Assessment start  -->
                 <div id="doc_Annexure_I" class="tabcontent">
                     <div class="orig-head">
-                        Annexure I-Gxp Assessment
+                        Annexure I-Gxp Assessment 
                         </div>
                         <div class="input-fields">
                             <div class="row">
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label><b>File Attachment</b></label>
+                                            <label><b>File Attachment<span class='text-danger'>*</span></b></label>
 
                                             <div>
                                                 <small class="text-primary">
@@ -13571,7 +13644,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment">
-                                                <b>File Attachment</b>
+                                                <b>File Attachment<span class="text-danger">*</span></b>
                                             </label>
 
                                             <div>
@@ -13680,7 +13753,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                    <div class="col-12">
                                         <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                             <div>
                                                 <small class="text-primary">
@@ -13811,7 +13884,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             <div class="row">
                                    <div class="col-12">
                                         <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                             <div>
                                                 <small class="text-primary">
@@ -14048,7 +14121,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="File_Attachment"><b>File Attachment</b></label>
+                                        <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                         <div>
                                             <small class="text-primary">
@@ -14190,7 +14263,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                  <div class="col-12">
                                     <div class="group-input">
-                                        <label for="File_Attachment"><b>File Attachment</b></label>
+                                        <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></b></label>
 
                                         <div>
                                             <small class="text-primary">
@@ -14329,7 +14402,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             <div class="row">
                                    <div class="col-12">
                                         <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                             <div>
                                                 <small class="text-primary">
@@ -14468,7 +14541,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             <div class="row">
                                   <div class="col-12">
                                     <div class="group-input">
-                                        <label for="File_Attachment"><b>File Attachment</b></label>
+                                        <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                         <div>
                                             <small class="text-primary">
@@ -14606,7 +14679,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                    <div class="col-12">
                                         <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                             <div>
                                                 <small class="text-primary">
@@ -14741,7 +14814,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                   <div class="col-12">
                                     <div class="group-input">
-                                        <label for="File_Attachment"><b>File Attachment</b></label>
+                                        <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                         <div>
                                             <small class="text-primary">
@@ -14877,7 +14950,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                             <div>
                                                 <small class="text-primary">
@@ -15013,7 +15086,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                    <div class="col-12">
                                         <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <label for="File_Attachment"><b>File Attachment <span class="text-danger">*</span></b></label>
 
                                             <div>
                                                 <small class="text-primary">
@@ -15147,7 +15220,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                
                                    <div class="col-12">
                                         <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                             <div>
                                                 <small class="text-primary">
@@ -15563,7 +15636,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             </div> -->
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"><b>Attachment</b></label>
+                                    <label for="Closure Attachments"><b>Attachment<span class="text-danger">*</span></b></label>
 
                                     <div>
                                         <small class="text-primary">
@@ -15699,7 +15772,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                        
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"><b>Attachment</b></label>
+                                    <label for="Closure Attachments"><b>Attachment<span class="text-danger">*</span></b></label>
 
                                     <div>
                                         <small class="text-primary">
@@ -15819,7 +15892,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             <div class="row">
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"><b>Attachment</b></label>
+                                    <label for="Closure Attachments"><b>Attachment<span class="text-danger">*</span></b></label>
 
                                     <div>
                                         <small class="text-primary">
@@ -15951,7 +16024,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                            <div class="col-12">
                                 <div class="group-input">
                                     <label for="Closure Attachments">
-                                        <b>Attachment</b>
+                                        <b>Attachment <span class="text-danger">*</span></b>
                                     </label>
 
                                     <div>
@@ -16082,7 +16155,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                            
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="File_Attachment"><b>Attachment</b></label>
+                                    <label for="File_Attachment"><b>Attachment<span class="text-danger">*</span></b></label>
 
                                     <div>
                                         <small class="text-primary">
@@ -16163,7 +16236,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                            
                            <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"><b>Attachment</b></label>
+                                    <label for="Closure Attachments"><b>Attachment<span class="text-danger">*</span></b></label>
 
                                     <div>
                                         <small class="text-primary">
@@ -16303,7 +16376,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             </div> -->
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"><b>Attachment</b></label>
+                                    <label for="Closure Attachments"><b>Attachment<span class="text-danger">*</span></b></label>
 
                                     <div>
                                         <small class="text-primary">
@@ -16445,7 +16518,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             </div> -->
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"><b>Attachment</b></label>
+                                    <label for="Closure Attachments"><b>Attachment<span class="text-danger">*</span></b></label>
 
                                     <div>
                                         <small class="text-primary">
@@ -16590,7 +16663,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             </div> -->
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"> Attachment</label>
+                                    <label for="Closure Attachments"> Attachment<span class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
 
                                     <div class="file-attachment-field">
@@ -16644,7 +16717,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             </div> -->
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"><b>Attachment</b></label>
+                                    <label for="Closure Attachments"><b>Attachment<span class="text-danger">*</span></b></label>
 
                                     <div>
                                         <small class="text-primary">
@@ -16784,7 +16857,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             </div> -->
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Closure Attachments"><b>Attachment</b></label>
+                                    <label for="Closure Attachments"><b>Attachment<span class="text-danger">*</span></b></label>
 
                                     <div>
                                         <small class="text-primary">
@@ -17292,7 +17365,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Closure Attachments">
-                                                <b>Attachment</b>
+                                                <b>Attachmentcs<span class="text-danger">*</span></b>
                                             </label>
 
                                             <div>
@@ -18303,7 +18376,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Closure Attachments"><b>Attachment</b></label>
+                                            <label for="Closure Attachments"><b>Attachment<span class="text-danger">*</span></b></label>
 
                                             <div>
                                                 <small class="text-primary">
@@ -18517,7 +18590,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Closure Attachments"><b>Attachment</b></label>
+                                            <label for="Closure Attachments"><b>Attachment<span class="text-danger">*</span></b></label>
 
                                             <div>
                                             <small class="text-primary">
@@ -18650,7 +18723,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Closure Attachments"><b>Attachment</b></label>
+                                            <label for="Closure Attachments"><b>Attachment<span class="text-danger">*</span></b></label>
 
                                             <div>
                                                 <small class="text-primary">
@@ -18782,7 +18855,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 <div class="row">
                                   <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Closure Attachments"><b>Attachment</b></label>
+                                            <label for="Closure Attachments"><b>Attachment<span class="text-danger">*</span></b></label>
 
                                             <div>
                                                 <small class="text-primary">
