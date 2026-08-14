@@ -155,7 +155,7 @@
                             <option value="" disabled selected>Select SOP Number</option>
                             @foreach ($documentAll as $dat)
                             <option value="{{ $dat->id }}">
-                                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                {{ $dat->document_number ? $dat->document_number : 'NA' }}
                             </option>
                             @endforeach
                         </select>
