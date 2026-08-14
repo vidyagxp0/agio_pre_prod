@@ -1,5 +1,15 @@
 @extends('frontend.layout.main')
 @section('container')
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="csrf-token"
+          content="{{ csrf_token() }}">
+
+    <title>Documents</title>
+
+</head>
 {{-- ======================================
                     DASHBOARD
     ======================================= --}}
@@ -19,97 +29,270 @@
                                     <i class="fa-solid fa-plus"></i> Document Issuance Request
                                 </a>
                             </div>
-
-
                         </div>
                         <div class="inner-block table-block">
-                            <div style="display:flex; justify-content:space-around;" class=" main-filter">
+
+                            {{-- =========================================================
+                                FILTERS
+                            ========================================================== --}}
+
+                            <div
+                                style="display:flex; justify-content:space-around;"
+                                class="main-filter"
+                            >
+
+
+                                {{-- =====================================================
+                                    STATUS
+                                ====================================================== --}}
 
                                 <div class="filter-block">
+
                                     <div class="drop-filter-block">
+
                                         <div class="icon">
+
                                             <i class="fa-solid fa-gauge-high"></i>
+
                                         </div>
+
                                         <div class="right">
-                                            <label for="status">Status</label>
-                                            <select name="status" class="filterSelect">
-                                                <option value="">All</option>
+
+                                            <label for="status">
+                                                Status
+                                            </label>
+
+
+                                            <select
+                                                name="status"
+                                                class="filterSelect"
+                                            >
+
+                                                <option value="">
+                                                    All
+                                                </option>
+
+
                                                 @php
-                                                $uniqueStatus = $documentStatus->pluck('status')->unique();
+
+                                                    $uniqueStatus = $documentStatus
+                                                        ->pluck('status')
+                                                        ->filter()
+                                                        ->unique();
+
                                                 @endphp
+
+
                                                 @foreach ($uniqueStatus as $status)
-                                                <option value="{{ $status }}">{{ $status }}</option>
+
+                                                    <option value="{{ $status }}">
+
+                                                        {{ $status }}
+
+                                                    </option>
+
                                                 @endforeach
 
                                             </select>
+
                                         </div>
+
                                     </div>
-                           
+
                                 </div>
 
+
+
+                                {{-- =====================================================
+                                    DOCUMENT TYPE
+                                ====================================================== --}}
+
                                 <div class="filter-block">
+
                                     <div class="drop-filter-block">
+
                                         <div class="icon">
+
                                             <i class="fa-solid fa-file"></i>
+
                                         </div>
+
+
                                         <div class="right">
-                                            <label for="document_type_id">Document Type</label>
-                                            <select name="document_type_id" class="filterSelect">
-                                                <option value="">All</option>
-                                                @foreach ( Helpers::getDocumentTypes() as $code => $name)
-                                                <option value="{{ $code }}"> {{ $name }}
+
+                                            <label for="document_type_id">
+                                                Document Type
+                                            </label>
+
+
+                                            <select
+                                                name="document_type_id"
+                                                class="filterSelect"
+                                            >
+
+                                                <option value="">
+                                                    All
                                                 </option>
+
+
+                                                @foreach (
+                                                    Helpers::getDocumentTypes()
+                                                    as $code => $name
+                                                )
+
+                                                    <option value="{{ $code }}">
+
+                                                        {{ $name }}
+
+                                                    </option>
+
                                                 @endforeach
+
                                             </select>
+
                                         </div>
+
                                     </div>
+
                                 </div>
 
 
+
+                                {{-- =====================================================
+                                    DIVISION
+                                ====================================================== --}}
+
                                 <div class="filter-block">
+
                                     <div class="drop-filter-block">
+
                                         <div class="icon">
+
                                             <i class="fa-solid fa-sitemap"></i>
+
                                         </div>
+
+
                                         <div class="right">
-                                            <label for="division_id">Division</label>
-                                            <select name="division_id" class="filterSelect">
-                                                <option value="">All</option>
-                                                @foreach ($divisions as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}
+
+                                            <label for="division_id">
+                                                Division
+                                            </label>
+
+
+                                            <select
+                                                name="division_id"
+                                                class="filterSelect"
+                                            >
+
+                                                <option value="">
+                                                    All
                                                 </option>
+
+
+                                                @foreach ($divisions as $data)
+
+                                                    <option value="{{ $data->id }}">
+
+                                                        {{ $data->name }}
+
+                                                    </option>
+
                                                 @endforeach
+
                                             </select>
+
                                         </div>
+
                                     </div>
+
                                 </div>
+
+
+
+                                {{-- =====================================================
+                                    ORIGINATOR
+                                ====================================================== --}}
 
                                 <div class="filter-block">
+
                                     <div class="drop-filter-block">
+
                                         <div class="icon">
+
                                             <i class="fa-solid fa-user"></i>
+
                                         </div>
+
+
                                         <div class="right">
-                                            <label for="originator_id">Originator</label>
-                                            <select name="originator_id" class="filterSelect">
-                                                <option value="">All</option>
-                                                @foreach ($originator as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}
+
+                                            <label for="originator_id">
+                                                Originator
+                                            </label>
+
+
+                                            <select
+                                                name="originator_id"
+                                                class="filterSelect"
+                                            >
+
+                                                <option value="">
+                                                    All
                                                 </option>
+
+
+                                                @foreach ($originator as $data)
+
+                                                    <option value="{{ $data->id }}">
+
+                                                        {{ $data->name }}
+
+                                                    </option>
+
                                                 @endforeach
+
                                             </select>
+
                                         </div>
+
                                     </div>
+
                                 </div>
+
                             </div>
 
 
-                            <div class="loadingRecords">
-                                <p>Fetching records...</p>
+
+                            {{-- =========================================================
+                                LOADING
+                            ========================================================== --}}
+
+                            <div
+                                class="loadingRecords"
+                                style="display:none;"
+                            >
+
+                                <p>
+                                    Fetching records...
+                                </p>
+
                             </div>
+
+
+
+                            {{-- =========================================================
+                                DOCUMENT TABLE
+                            ========================================================== --}}
+
                             <div class="record-body">
-                                @include('frontend.documents.comps.record_table')
+
+                                @include(
+                                    'frontend.documents.comps.record_table'
+                                )
+
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -223,7 +406,7 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
+{{-- <script>
     $(document).ready(function() {
         let postUrl = "{{ route('record.filter') }}";
         $('.loadingRecords').hide();
@@ -249,6 +432,168 @@
             }
         })
     })
+</script> --}}
+
+<script>
+
+    $(document).ready(function () {
+
+        /*
+        |--------------------------------------------------------------------------
+        | FILTER URL
+        |--------------------------------------------------------------------------
+        */
+
+        let postUrl = "{{ route('record.filter') }}";
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | CSRF
+        |--------------------------------------------------------------------------
+        */
+
+        let csrfToken = document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute('content');
+
+
+        axios.defaults.headers.common['X-CSRF-TOKEN'] =
+            csrfToken;
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | UPDATE DOCUMENT RECORDS
+        |--------------------------------------------------------------------------
+        */
+
+        async function updateRecords() {
+
+            $('.loadingRecords').show();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | GET FILTER VALUES
+            |--------------------------------------------------------------------------
+            */
+
+            let data = {
+
+                status:
+                    $('select[name="status"]').val(),
+
+                document_type_id:
+                    $('select[name="document_type_id"]').val(),
+
+                division_id:
+                    $('select[name="division_id"]').val(),
+
+                originator_id:
+                    $('select[name="originator_id"]').val()
+
+            };
+
+
+            console.log(
+                'Filter Data:',
+                data
+            );
+
+
+            try {
+
+                /*
+                |--------------------------------------------------------------------------
+                | SEND REQUEST
+                |--------------------------------------------------------------------------
+                */
+
+                const response = await axios.post(
+                    postUrl,
+                    data
+                );
+
+
+                console.log(
+                    'Filter Response:',
+                    response.data
+                );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | UPDATE ONLY DOCUMENT TABLE
+                |--------------------------------------------------------------------------
+                */
+
+                if (response.data.html) {
+
+                    $('.record-body').html(
+                        response.data.html
+                    );
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    'Filter Error:',
+                    error
+                );
+
+
+                if (error.response) {
+
+                    console.error(
+                        'Status:',
+                        error.response.status
+                    );
+
+
+                    console.error(
+                        'Server Response:',
+                        error.response.data
+                    );
+
+
+                    alert(
+                        error.response.data.message
+                        ||
+                        'Something went wrong while filtering records.'
+                    );
+
+                }
+
+            } finally {
+
+                $('.loadingRecords').hide();
+
+            }
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | FILTER CHANGE
+        |--------------------------------------------------------------------------
+        */
+
+        $(document).on(
+            'change',
+            '.filterSelect',
+            function () {
+
+                updateRecords();
+
+            }
+        );
+
+    });
+
 </script>
 
 @endsection

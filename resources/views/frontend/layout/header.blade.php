@@ -258,7 +258,7 @@
                         <img src="	https://agio_pre_prod.test/user/images/agio.jpg" alt="..." class="w-100 h-100">
                     </div>
                     <div class="bar">
-                        <strong>Version : </strong> 10.0.0
+                        <strong>Version : </strong> 2.8
                     </div>
                     <div class="bar">
                         <strong>Build # : </strong> 2
