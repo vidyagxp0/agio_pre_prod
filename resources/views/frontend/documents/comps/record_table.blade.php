@@ -155,19 +155,11 @@
 
                         <td
                             class="pr-id"
-                            style="text-decoration: underline;"
-                        >
+                            style="text-decoration: underline;">
 
-                            <a
-                                href="{{ route(
-                                    'documents.edit',
-                                    $doc->id
-                                ) }}"
-                            >
+                            <a href="{{ route('documents.edit', $doc->id ) }}" >
 
-                                {{ Helpers::recordFormat(
-                                    $doc->id
-                                ) }}
+                                {{ Helpers::recordFormat($doc->id ) }}
 
                             </a>
 
@@ -177,10 +169,7 @@
 
                         {{-- DOCUMENT NUMBER --}}
 
-                        <td
-                            class="doc-no text-truncate-cell"
-                            title="{{ $doc->document_number ?? 'NA' }}"
-                        >
+                        <td class="doc-no text-truncate-cell" title="{{ $doc->document_number ?? 'NA' }}">
 
                             {{ $doc->document_number ?? 'NA' }}
 
@@ -190,10 +179,7 @@
 
                         {{-- DOCUMENT TITLE --}}
 
-                        <td
-                            class="doc-title text-truncate-cell"
-                            title="{{ $doc->document_name ?? 'NA' }}"
-                        >
+                        <td class="doc-title text-truncate-cell" title="{{ $doc->document_name ?? 'NA' }}" >
 
                             {{ $doc->document_name ?? 'NA' }}
 
@@ -203,20 +189,9 @@
 
                         {{-- DOCUMENT TYPE --}}
 
-                        <td
-                            class="doc-type text-truncate-cell"
-                            title="{{
-                                Helpers::getDocumentTypes()[
-                                    $doc->document_type_id
-                                ] ?? 'NA'
-                            }}"
-                        >
+                        <td class="doc-type text-truncate-cell" title="{{ Helpers::getDocumentTypes()[$doc->document_type_id ] ?? 'NA' }}">
 
-                            {{
-                                Helpers::getDocumentTypes()[
-                                    $doc->document_type_id
-                                ] ?? 'NA'
-                            }}
+                            {{ Helpers::getDocumentTypes()[ $doc->document_type_id ] ?? 'NA' }}
 
                         </td>
 
@@ -224,20 +199,9 @@
 
                         {{-- DIVISION --}}
 
-                        <td
-                            class="division text-truncate-cell"
-                            title="{{
-                                Helpers::getDivisionName(
-                                    $doc->division_id
-                                ) ?? 'NA'
-                            }}"
-                        >
+                        <td class="division text-truncate-cell" title="{{Helpers::getDivisionName($doc->division_id ) ?? 'NA' }}">
 
-                            {{
-                                Helpers::getDivisionName(
-                                    $doc->division_id
-                                ) ?? 'NA'
-                            }}
+                            {{Helpers::getDivisionName($doc->division_id) ?? 'NA' }}
 
                         </td>
 
@@ -245,12 +209,11 @@
 
                         {{-- SHORT DESCRIPTION --}}
 
-                        <td
-                            class="short-desc text-truncate-cell"
+                        <td style="display: ; width: 350px;,white-space: ; overflow:hidden !important; text-overflow: ellipsis"
+                            class="short-desc"
                             title="{{
                                 $doc->short_description ?? 'NA'
-                            }}"
-                        >
+                            }}">
 
                             {{
                                 $doc->short_description ?? 'NA'
@@ -266,13 +229,7 @@
 
                             @if($doc->created_at)
 
-                                {{
-                                    \Carbon\Carbon::parse(
-                                        $doc->created_at
-                                    )->format(
-                                        'd-M-Y h:i A'
-                                    )
-                                }}
+                                {{\Carbon\Carbon::parse($doc->created_at)->format('d-M-Y h:i A')}}
 
                             @else
 
@@ -286,12 +243,7 @@
 
                         {{-- ORIGINATOR --}}
 
-                        <td
-                            class="assign-name text-truncate-cell"
-                            title="{{
-                                $doc->originator_name ?? 'NA'
-                            }}"
-                        >
+                        <td class="assign-name text-truncate-cell" title="{{ $doc->originator_name ?? 'NA' }}" >
 
                             {{
                                 $doc->originator_name ?? 'NA'
@@ -307,13 +259,7 @@
 
                             @if($doc->updated_at)
 
-                                {{
-                                    \Carbon\Carbon::parse(
-                                        $doc->updated_at
-                                    )->format(
-                                        'd-M-Y h:i A'
-                                    )
-                                }}
+                                {{ \Carbon\Carbon::parse($doc->updated_at )->format( 'd-M-Y h:i A') }}
 
                             @else
 
@@ -329,12 +275,7 @@
 
                         <td class="status">
 
-                            {{
-                                Helpers::getDocStatusByStage(
-                                    $doc->stage,
-                                    $doc->training_required
-                                ) ?? 'NA'
-                            }}
+                            {{Helpers::getDocStatusByStage($doc->stage, $doc->training_required) ?? 'NA' }}
 
                         </td>
 
@@ -352,9 +293,7 @@
 
                                     Action
 
-                                    <i
-                                        class="fa-solid fa-angle-down"
-                                    ></i>
+                                    <i class="fa-solid fa-angle-down" ></i>
 
                                 </div>
 
@@ -364,12 +303,7 @@
 
                                     {{-- VIEW --}}
 
-                                    <a
-                                        href="{{ url(
-                                            'doc-details',
-                                            $doc->id
-                                        ) }}"
-                                    >
+                                    <a href="{{ url('doc-details', $doc->id) }}">
 
                                         View
 
@@ -381,12 +315,7 @@
 
                                     @if($doc->status != 'Obsolete')
 
-                                        <a
-                                            href="{{ route(
-                                                'documents.edit',
-                                                $doc->id
-                                            ) }}"
-                                        >
+                                        <a href="{{ route('documents.edit', $doc->id) }}">
 
                                             Edit
 
@@ -413,10 +342,7 @@
 
                 <tr>
 
-                    <td
-                        colspan="11"
-                        class="text-center"
-                    >
+                    <td colspan="11" class="text-center" >
 
                         <h5>
                             Data not Found
@@ -521,7 +447,7 @@
     }
 </style>
 
-<div class="" style="    background: #4274da;
+<div class="" style=" background: #4274da;
     text-align: left;
     padding: 5px 10px;
     color: white;

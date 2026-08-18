@@ -354,14 +354,7 @@
                                 </div>
                                 <div class="selection-table">
                                     <table class="table table-bordered">
-                                        {{--  <thead>
-                                            <tr>
-                                                <th>&nbsp;</th>
-                                                <th>Document Number</th>
-                                                <th>Document Title</th>
-                                                <th>Originator</th>
-                                            </tr>
-                                        </thead>  --}}
+                                       
                                         <tbody >
                                             <h6 style="color: red">Sorry !! You can not change the Document group of training plan.</h6>
 
@@ -421,64 +414,6 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- <div class="inner-block add-question" id="question-select">
-                    <div class="main-head">
-                        Select Questions for Trainees
-                    </div>
-                    <div class="inner-block-content">
-                        <div class="question-container">
-                            <div class="left-block">
-                                <div class="head">Select Questions</div>
-                                <div class="table-max">
-                                    <table class="table table-bordered left-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Question</th>
-                                                <th>Type</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="training-question">
-                                            <tr data-item="item1">
-                                                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est nesciunt at
-                                                    cupiditate.</td>
-                                                <td>Single Select Questions</td>
-                                            </tr>
-                                            <tr data-item="item2">
-                                                <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae dolor
-                                                    reiciendis
-                                                    ullam.</td>
-                                                <td>Multi Selection Questions</td>
-                                            </tr>
-                                            <tr data-item="item3">
-                                                <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae dolor
-                                                    reiciendis
-                                                    ullam.</td>
-                                                <td>Exact Answer Questions</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="right-block">
-                                <div class="head">Selected Questions</div>
-                                <div class="table-max">
-                                    <table class="table table-bordered right-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Question</th>
-                                                <th>Type</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="training-ques-selected">
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
 
                 <div class="foot-btns">
                     <a href="{{ route('TMS.index') }}"><button>Cancel</button></a>

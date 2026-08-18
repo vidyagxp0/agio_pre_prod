@@ -1711,11 +1711,16 @@
                                                         </select>
                                                     @else
                                                         <select name="severity_level2_display" disabled>
-                                                            <option value="">-- Select --</option>
-                                                            <option value="minor" {{ $data->severity_level2 == 'minor' ? 'selected' : '' }}>Minor</option>
-                                                            <option value="major" {{ $data->severity_level2 == 'major' ? 'selected' : '' }}>Major</option>
-                                                            <option value="critical" {{ $data->severity_level2 == 'critical' ? 'selected' : '' }}>Critical</option>
+                                                            @if(empty($data->severity_level2))
+                                                                <option value="" selected>NA</option>
+                                                            @else
+                                                                <option value="">-- Select --</option>
+                                                                <option value="minor" {{ $data->severity_level2 == 'minor' ? 'selected' : '' }}>Minor</option>
+                                                                <option value="major" {{ $data->severity_level2 == 'major' ? 'selected' : '' }}>Major</option>
+                                                                <option value="critical" {{ $data->severity_level2 == 'critical' ? 'selected' : '' }}>Critical</option>
+                                                            @endif
                                                         </select>
+
                                                         <input type="hidden" name="severity_level2" value="{{ $data->severity_level2 }}">
                                                     @endif
                                                 </div>

@@ -332,10 +332,7 @@ toastr()->error($error);
                             Selecting Document's
                         </div>
                         <div class="inner-block-content">
-                            {{-- <div class="search-bar">
-                                <input type="text" name="search" placeholder="Search Document's">
-                                <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
-                            </div> --}}
+                        
                             <div class="search-bar">
                                 <input type="text" id="searchInput" name="search" placeholder="Search Document's">
                                 <button id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -355,7 +352,6 @@ toastr()->error($error);
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         @foreach ($due as $temp)
                                         @if ($temp->root_document)
                                         @if ($temp->root_document->stage >= 6 && $temp->trainer == auth()->id() && $temp->root_document->status == 'Under-Training' && $temp->status == 'Past-due')
@@ -369,10 +365,11 @@ toastr()->error($error);
                                             ->where('name', $temp->document_type_name)
                                             ->value('typecode');
                                             @endphp
-                                            <td>{{ $temp->division_name }}/@if($temp->document_type_name){{ $temp1 }} /@endif{{$temp->year}}/
-                                                {{str_pad($temp->root_document->id, 4, '0', STR_PAD_LEFT)}}/R{{ $temp->major}}.{{$temp->minor}}</td>
+                                            {{-- <td>{{ $temp->division_name }}/@if($temp->document_type_name){{ $temp1 }} /@endif{{$temp->year}}/
+                                                {{str_pad($temp->root_document->id, 4, '0', STR_PAD_LEFT)}}/R{{ $temp->major}}.{{$temp->minor}}</td> --}}
+                                                <td>{{$temp->root_document->document_number ? $temp->root_document->document_number : 'NA'}}</td>
                                             <td>
-                                                {{ $temp->root_document ? $temp->root_document->document_name : '' }}
+                                                {{ $temp->root_document ? $temp->root_document->document_name : 'NA' }}
                                             </td>
                                             <td>{{ $temp->training->due_dateDoc }}</td>
                                             <td>{{ $temp->training->status }}</td>
