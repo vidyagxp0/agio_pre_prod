@@ -255,79 +255,98 @@
             text-align: left;
         }
 
+      
         .section-heading {
-            padding: 7px 10px;
-            border: 1px solid #000;
-            border-bottom: none;
-            background: #eeeeee;
-            font-size: 13px;
+            font-size: 16px;
             font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .action-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            font-size: 8px;
         }
 
         .action-table th,
         .action-table td {
-            border: 1px solid #000;
-            padding: 7px 6px;
+            border: 1px solid #333;
+            padding: 5px 4px;
             vertical-align: top;
             word-wrap: break-word;
             overflow-wrap: break-word;
-            white-space: normal;
-        }
-
-        .action-table thead {
-            display: table-header-group;
-        }
-
-        .action-table tr {
-            page-break-inside: avoid;
         }
 
         .action-table th {
-            height: 42px;
+            background: #e5e5e5;
+            font-weight: bold;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        .action-table .center {
             text-align: center;
             vertical-align: middle;
-            background: #f7f7f7;
-            font-weight: bold;
         }
 
-        .action-table td {
-            min-height: 55px;
-        }
-
+        /* Sr. No. */
         .sr-column {
-            width: 8%;
+            width: 4%;
             text-align: center;
         }
 
+        /* Action Item No. */
+        .action-no-column {
+            width: 9%;
+        }
+
+        /* Proposed Action / Task */
         .task-column {
-            width: 43%;
+            width: 19%;
         }
 
+        /* Assigned To */
         .assigned-column {
-            width: 20%;
-            text-align: center;
+            width: 8%;
         }
 
+        /* Due Date */
         .due-date-column {
-            width: 14%;
-            text-align: center;
+            width: 7%;
         }
 
+        /* Acknowledged By */
         .acknowledge-column {
-            width: 15%;
-            text-align: center;
+            width: 8%;
         }
 
-        .center {
-            text-align: center;
+        /* Action Taken / Completion Details */
+        .completion-details-column {
+            width: 19%;
+        }
+
+        /* Completed By */
+        .completed-by-column {
+            width: 8%;
+        }
+
+        /* Completion Date */
+        .completion-date-column {
+            width: 8%;
+        }
+
+        /* Final Status */
+        .status-column {
+            width: 7%;
         }
 
         .no-record {
-            height: 70px;
             text-align: center;
-            vertical-align: middle !important;
+            padding: 10px;
             font-weight: bold;
         }
+
 
         .generated-date {
             margin-top: 10px;
@@ -370,47 +389,9 @@
 
     <div class="inner-block">
         <div class="content-table">
-        {{-- <table class="record-table">
-            <tr>
-                <th>Change Control No.</th>
-                <td>
-                    {{ $data->record_number
-                        ?? $data->record
-                        ?? $data->id }}
-                </td>
-
-                <th>Originator</th>
-                <td>
-                    {{ $data->originator ?? 'N/A' }}
-                </td>
-            </tr>
-
-            <tr>
-                <th>Short Description</th>
-                <td colspan="3">
-                    {!! $data->short_description
-                        ?? $data->description
-                        ?? 'N/A' !!}
-                </td>
-            </tr>
-
-            <tr>
-                <th>Status</th>
-                <td>
-                    {{ $data->status ?? 'N/A' }}
-                </td>
-
-                <th>Created Date</th>
-                <td>
-                    {{ !empty($data->created_at)
-                        ? \Carbon\Carbon::parse($data->created_at)->format('d-M-Y')
-                        : 'N/A' }}
-                </td>
-            </tr>
-        </table> --}}
 
         <div class="section-heading">
-            Proposed Action Item
+            Proposed Action Item Summary
         </div>
 
         <table class="action-table">
@@ -418,6 +399,10 @@
                 <tr>
                     <th class="sr-column">
                         Sr.<br>No.
+                    </th>
+
+                    <th class="action-no-column">
+                        Action Item<br>No.
                     </th>
 
                     <th class="task-column">
@@ -433,43 +418,107 @@
                     </th>
 
                     <th class="acknowledge-column">
-                        Acknowledge By
+                        Acknowledged<br>By
+                    </th>
+
+                    <th class="completion-details-column">
+                        Action Taken / Completion<br>Details
+                    </th>
+
+                    <th class="completed-by-column">
+                        Completed<br>By
+                    </th>
+
+                    <th class="completion-date-column">
+                        Completion<br>Date
+                    </th>
+
+                    <th class="status-column">
+                        Final<br>Status
                     </th>
                 </tr>
             </thead>
 
             <tbody>
+
                 @forelse ($actionItems as $key => $actionItem)
+
                     <tr>
+
                         <td class="sr-column center">
                             {{ $key + 1 }}
                         </td>
 
+
+                        {{-- Action Item No. --}}
+                        <td class="action-no-column">
+                            {{ $actionItem->action_item_no ?? 'N/A' }}
+                        </td>
+
+
+                        {{-- Proposed Action / Task --}}
                         <td class="task-column">
                             {!! $actionItem->task_description ?? 'N/A' !!}
                         </td>
 
+
+                        {{-- Assigned To --}}
                         <td class="assigned-column">
                             {{ $actionItem->assigned_to_name ?? 'N/A' }}
                         </td>
 
+
+                        {{-- Due Date --}}
                         <td class="due-date-column center">
                             {{ $actionItem->formatted_due_date ?? 'N/A' }}
                         </td>
 
+
+                        {{-- Acknowledged By --}}
                         <td class="acknowledge-column">
-                            {{ $actionItem->acknowledgement_by ?? 'N/A' }}
+                            {{ $actionItem->acknowledge_by_name ?? 'N/A' }}
                         </td>
+
+
+                        {{-- Action Taken / Completion Details --}}
+                        <td class="completion-details-column">
+                            {!! $actionItem->completion_details ?? 'N/A' !!}
+                        </td>
+
+
+                        {{-- Completed By --}}
+                        <td class="completed-by-column">
+                            {{ $actionItem->completed_by_name ?? 'N/A' }}
+                        </td>
+
+
+                        {{-- Completion Date --}}
+                        <td class="completion-date-column center">
+                            {{ $actionItem->formatted_completion_date ?? 'N/A' }}
+                        </td>
+
+
+                        {{-- Final Status --}}
+                        <td class="status-column">
+                            {{ $actionItem->final_status ?? 'N/A' }}
+                        </td>
+
                     </tr>
+
                 @empty
+
                     <tr>
-                        <td colspan="5" class="no-record">
+                        <td colspan="10" class="no-record">
                             No Action Item has been created from this Change Control.
                         </td>
                     </tr>
+
                 @endforelse
+
             </tbody>
+
         </table>
+
 
         </div>
     </div>

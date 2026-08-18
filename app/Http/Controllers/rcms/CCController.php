@@ -14734,90 +14734,6 @@ class CCController extends Controller
         return view('frontend.rcms.CC.audit-trial-inner', compact('detail', 'doc', 'detail_data'));
     }
 
-    // old summary code 
-    // public function summery_pdf($id)
-    // {
-    //     $data = CC::find($id);
-    //     if (!empty($data)) {
-    //         $data->originator = User::where('id', $data->initiator_id)->value('name');
-    //     } else {
-    //         $datas = ActionItem::find($id);
-
-    //         if (empty($datas)) {
-    //             $datas = Extension::find($id);
-    //             $data = CC::find($datas->cc_id);
-    //             $data->originator = User::where('id', $data->initiator_id)->value('name');
-    //             $data->created_at = $datas->created_at;
-    //         } else {
-    //             $data = CC::find($datas->cc_id);
-    //             $data->originator = User::where('id', $data->initiator_id)->value('name');
-    //             $data->created_at = $datas->created_at;
-    //         }
-    //     }
-
-    //     // pdf related work
-    //     $pdf = App::make('dompdf.wrapper');
-    //     $time = Carbon::now();
-    //     $pdf = PDF::loadview('frontend.change-control.summary_pdf', compact('data', 'time'))
-    //         ->setOptions([
-    //             'defaultFont' => 'sans-serif',
-    //             'isHtml5ParserEnabled' => true,
-    //             'isRemoteEnabled' => true,
-    //             'isPhpEnabled' => true,
-    //         ]);
-    //     $pdf->setPaper('A4');
-    //     $pdf->render();
-    //     $canvas = $pdf->getDomPDF()->getCanvas();
-    //     $height = $canvas->get_height();
-    //     $width = $canvas->get_width();
-
-    //     $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-
-    //     $canvas->page_text(
-    //         $width / 3,
-    //         $height / 2,
-    //         $data->status,
-    //         null,
-    //         60,
-    //         [0, 0, 0],
-    //         2,
-    //         6,
-    //         -20
-    //     );
-
-    //     if ($data->documents) {
-
-    //         $pdfArray = explode(',', $data->documents);
-    //         foreach ($pdfArray as $pdfFile) {
-    //             $existingPdfPath = public_path('upload/PDF/' . $pdfFile);
-    //             $permissions = 0644; // Example permission value, change it according to your needs
-    //             if (file_exists($existingPdfPath)) {
-    //                 // Create a new Dompdf instance
-    //                 $options = new Options();
-    //                 $options->set('chroot', public_path());
-    //                 $options->set('isPhpEnabled', true);
-    //                 $options->set('isRemoteEnabled', true);
-    //                 $options->set('isHtml5ParserEnabled', true);
-    //                 $options->set('allowedFileExtensions', ['pdf']); // Allow PDF file extension
-
-    //                 $dompdf = new Dompdf($options);
-
-    //                 chmod($existingPdfPath, $permissions);
-
-    //                 // Load the existing PDF file
-    //                 $dompdf->loadHtmlFile($existingPdfPath);
-
-    //                 // Render the PDF
-    //                 $dompdf->render();
-
-    //                 // Output the PDF to the browser
-    //                 $dompdf->stream();
-    //             }
-    //         }
-    //     }
-
-    //     return $pdf->stream('SOP' . $id . '.pdf');
-    // }
 
     public function summery_pdf($id)
     {
@@ -14839,98 +14755,198 @@ class CCController extends Controller
 
         $actionItems->transform(function ($actionItem) {
 
-            $actionItem->task_description =
-                $actionItem->description
-                ?? $actionItem->action_item
-                ?? $actionItem->proposed_action
-                ?? $actionItem->description
-                ?? $actionItem->task
+            /*
+            |--------------------------------------------------------------------------
+            | Action Item No.
+            |--------------------------------------------------------------------------
+            |--------------------------------------------------------------------------
+            */
+            $actionItem->action_item_no =
+                $actionItem->related_records
+                ?? $actionItem->record_number
+                ?? $actionItem->record
                 ?? 'N/A';
 
-            $assignedUserId =
-                $actionItem->assign_to
-                ?? $actionItem->assigned_to
-                ?? $actionItem->assignee_id
-                ?? $actionItem->responsible_person
-                ?? null;
+            /*
+            |--------------------------------------------------------------------------
+            | Proposed Action / Task
+            |--------------------------------------------------------------------------
+            */
+            $actionItem->task_description =
+                $actionItem->description
+                ?? $actionItem->short_description
+                ?? 'N/A';
+
+            /*
+            |--------------------------------------------------------------------------
+            | Assigned To
+            |--------------------------------------------------------------------------
+            */
+            $assignedUserId = $actionItem->assign_to ?? null;
 
             if ($assignedUserId) {
+
                 $assignedUserIds = is_array($assignedUserId)
                     ? $assignedUserId
                     : array_filter(explode(',', $assignedUserId));
 
-                $actionItem->assigned_to_name = User::whereIn('id', $assignedUserIds)
-                    ->pluck('name')
-                    ->implode(', ');
+                $actionItem->assigned_to_name = User::whereIn(
+                    'id',
+                    $assignedUserIds
+                )->pluck('name')->implode(', ');
+
+                if (empty($actionItem->assigned_to_name)) {
+                    $actionItem->assigned_to_name = 'N/A';
+                }
+
             } else {
+
                 $actionItem->assigned_to_name = 'N/A';
             }
 
-            $dueDate =
-                $actionItem->due_date
-                ?? $actionItem->target_completion_date
-                ?? $actionItem->completion_date
-                ?? $actionItem->target_date
-                ?? null;
+            /*
+            |--------------------------------------------------------------------------
+            | Due Date
+            |--------------------------------------------------------------------------
+            */
+            $dueDate = $actionItem->due_date ?? null;
 
-            $actionItem->formatted_due_date = $dueDate
-                ? Carbon::parse($dueDate)->format('d-M-Y')
-                : 'N/A';
+            if ($dueDate) {
 
+                try {
 
-            $acknowledgeUserId =
-                $actionItem->acknowledge_by
-                ?? $actionItem->acknowledged_by
-                ?? $actionItem->ack_by
-                ?? null;
+                    $actionItem->formatted_due_date =
+                        Carbon::parse($dueDate)->format('d-M-Y');
 
-            if (!$acknowledgeUserId && Schema::hasTable('stage_manages')) {
+                } catch (\Exception $e) {
 
-                $query = DB::table('stage_manages');
-
-                if (Schema::hasColumn('stage_manages', 'record_id')) {
-                    $query->where('record_id', $actionItem->id);
-                } elseif (Schema::hasColumn('stage_manages', 'action_item_id')) {
-                    $query->where('action_item_id', $actionItem->id);
+                    $actionItem->formatted_due_date = $dueDate;
                 }
 
-                if (Schema::hasColumn('stage_manages', 'record_type')) {
-                    $query->whereIn('record_type', [
-                        'Action Item',
-                        'ActionItem',
-                        'Action_Item',
-                        'AI'
-                    ]);
-                }
+            } else {
 
-                if (Schema::hasColumn('stage_manages', 'activity_type')) {
-                    $query->where('activity_type', 'like', '%Acknowledg%');
-                } elseif (Schema::hasColumn('stage_manages', 'action')) {
-                    $query->where('action', 'like', '%Acknowledg%');
-                } elseif (Schema::hasColumn('stage_manages', 'activity')) {
-                    $query->where('activity', 'like', '%Acknowledg%');
-                }
-
-                if (Schema::hasColumn('stage_manages', 'created_at')) {
-                    $query->orderByDesc('created_at');
-                } else {
-                    $query->orderByDesc('id');
-                }
-
-                $acknowledgeActivity = $query->first();
-
-                if ($acknowledgeActivity) {
-                    $acknowledgeUserId =
-                        $acknowledgeActivity->user_id
-                        ?? $acknowledgeActivity->created_by
-                        ?? $acknowledgeActivity->updated_by
-                        ?? null;
-                }
+                $actionItem->formatted_due_date = 'N/A';
             }
 
-            $actionItem->acknowledge_by_name = $acknowledgeUserId
-                ? User::where('id', $acknowledgeUserId)->value('name')
-                : 'N/A';
+
+            /*
+            |--------------------------------------------------------------------------
+            | Acknowledged By
+            |--------------------------------------------------------------------------
+            | Your actual DB column:
+            | acknowledgement_by
+            |--------------------------------------------------------------------------
+            */
+            $acknowledgeUserId =
+                $actionItem->acknowledgement_by ?? null;
+
+            if ($acknowledgeUserId) {
+
+                /*
+                * If DB contains user ID
+                */
+                if (is_numeric($acknowledgeUserId)) {
+
+                    $actionItem->acknowledge_by_name =
+                        User::where('id', $acknowledgeUserId)
+                            ->value('name')
+                        ?? 'N/A';
+
+                } else {
+
+                    /*
+                    * If DB already contains user's name
+                    */
+                    $actionItem->acknowledge_by_name =
+                        $acknowledgeUserId;
+                }
+
+            } else {
+
+                $actionItem->acknowledge_by_name = 'N/A';
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Action Taken / Completion Details
+            |--------------------------------------------------------------------------
+            */
+            $actionItem->completion_details =
+                $actionItem->work_completion_comment
+                ?? $actionItem->completed_comment
+                ?? $actionItem->action_taken
+                ?? $actionItem->comments
+                ?? 'N/A';
+
+            /*
+            |--------------------------------------------------------------------------
+            | Completed By
+            |--------------------------------------------------------------------------
+            */
+            $completedByUserId =
+                $actionItem->work_completion_by
+                ?? $actionItem->completed_by
+                ?? null;
+
+            if ($completedByUserId) {
+
+                if (is_numeric($completedByUserId)) {
+
+                    $actionItem->completed_by_name =
+                        User::where('id', $completedByUserId)
+                            ->value('name')
+                        ?? 'N/A';
+
+                } else {
+
+                    $actionItem->completed_by_name =
+                        $completedByUserId;
+                }
+
+            } else {
+
+                $actionItem->completed_by_name = 'N/A';
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Completion Date
+            |--------------------------------------------------------------------------
+            */
+            $completionDate =
+                $actionItem->work_completion_on
+                ?? $actionItem->completed_on
+                ?? null;
+
+            if ($completionDate) {
+
+                try {
+
+                    $actionItem->formatted_completion_date =
+                        Carbon::parse($completionDate)->format('d-M-Y');
+
+                } catch (\Exception $e) {
+
+                    $actionItem->formatted_completion_date =
+                        $completionDate;
+                }
+
+            } else {
+
+                $actionItem->formatted_completion_date = 'N/A';
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Final Status
+            |--------------------------------------------------------------------------
+            */
+            $actionItem->final_status =
+                $actionItem->status
+                ?? 'N/A';
+
 
             return $actionItem;
         });
