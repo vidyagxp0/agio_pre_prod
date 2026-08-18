@@ -13522,7 +13522,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             <div class="row">
                                    <div class="col-12">
                                         <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <label for="File_Attachment"><b>File Attachment<span class="text-danger">*</span></b></label>
 
                                             <div>
                                                 <small class="text-primary">
@@ -14013,7 +14013,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment">
-                                                <b>File Attachment</b>
+                                                <b>File Attachment<span class="text-danger">*</span></b>
                                             </label>
 
                                             <div>

@@ -147,6 +147,25 @@
 
     <!-- /* Change Control View Data Fields */ -->
 
+       @php
+                            $currentUser = Auth::user();
+
+                            $assignedUser = DB::table('users')->where('id', $data->initiator_id)->first();
+
+                             $isInitiator    = $currentUser->id == $data->initiator_id;
+
+                            $isRole18 = Helpers::check_roles($data->division_id, 'Change Control', 18);
+
+                            $isSameDepartment = false;
+
+                            if ($assignedUser) {
+                                $isSameDepartment = !empty($currentUser->departmentid) && !empty($assignedUser->departmentid) && $currentUser->departmentid == $assignedUser->departmentid;
+                            }
+
+                            $canPerformInitiatorActivity =  $isInitiator || $isRole18 || $isSameDepartment;
+                        @endphp
+
+
     <div id="change-control-view">
         <div class="container-fluid">
 
@@ -209,7 +228,7 @@
                            $lockdatafileds5 = !($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)));
                            $lockdatafileds6 = !($data->stage == 6 && (Helpers::check_roles($data->division_id, 'Change Control', 50)));
                            $lockdatafileds7 = !($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Change Control', 39) || Helpers::check_roles($data->division_id, 'Change Control', 43) || Helpers::check_roles($data->division_id, 'Change Control', 42) || Helpers::check_roles($data->division_id, 'Change Control', 9) || Helpers::check_roles($data->division_id, 'Change Control', 65)));
-                           $lockdatafileds9 = !($data->stage == 9 && (Helpers::check_roles($data->division_id, 'Change Control', 3)|| Helpers::check_roles($data->division_id, 'Change Control', 18)));
+                           $lockdatafileds9 = !($data->stage == 9 && (Helpers::check_roles($data->division_id, 'Change Control', 3)|| $canPerformInitiatorActivity || Helpers::check_roles($data->division_id, 'Change Control', 18)));
                            $lockdatafileds10 = !($data->stage == 10 && (Helpers::check_roles($data->division_id, 'Change Control', 4)|| Helpers::check_roles($data->division_id, 'Change Control', 18)));
                            $lockdatafileds11 = !($data->stage == 11 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)));
                            $lockdatafileds12 = !($data->stage == 12 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 42) || Helpers::check_roles($data->division_id, 'Change Control', 9) || Helpers::check_roles($data->division_id, 'Change Control', 43) || Helpers::check_roles($data->division_id, 'Change Control', 65)|| Helpers::check_roles($data->division_id, 'Change Control', 18)));
@@ -217,6 +236,7 @@
 
                     @endphp
 
+                   
 
 
 
@@ -342,18 +362,20 @@
                                 Rejected
                             </button>
 
-                            @elseif($data->stage == 9 && (Helpers::check_roles($data->division_id, 'Change Control', 3)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
-                                Initiator Updated Completed
-                            </button>
-                            {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More Info Required
-                            </button>  --}}
+                            @elseif($data->stage == 9)
+                                @if($canPerformInitiatorActivity)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
+                                        Initiator Updated Completed
+                                    </button>
+                                    {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                        More Info Required
+                                    </button>  --}}
 
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-stage_8">
-                                Child
-                            </button>
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-stage_8">
+                                        Child
+                                    </button>
 
+                                @endif
                      @elseif($data->stage == 10 && (Helpers::check_roles($data->division_id, 'Change Control', 4)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
 
 
