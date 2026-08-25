@@ -220,6 +220,35 @@
     .pdf-text {
         white-space: pre-line;
     }
+
+    .action-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        font-size: 8px;
+    }
+
+    .action-table th,
+    .action-table td {
+        border: 1px solid #333;
+        padding: 5px 4px;
+        vertical-align: top;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .action-table th {
+        background: #e5e5e5;
+        font-weight: bold;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    .action-table .center {
+        text-align: center;
+        vertical-align: middle;
+    }
+
 </style>
 <body>
 
@@ -3645,7 +3674,7 @@
 
 
 
-{{--  
+        {{--  
             <div class="block">
                 <div class="block-head">
                     QA Approval Comments
@@ -4033,7 +4062,7 @@
                 </table>   
                 <table>
 
-  @php
+                    @php
                         $commnetData = DB::table('change_control_comments')->where('cc_id', $data->id)->first();
                     @endphp
 
@@ -4134,6 +4163,63 @@
         </div>
     </div>
     </div>
+
+    @if(!empty($actionItemSummary) && $actionItemSummary->count() > 0)
+
+    <center>
+        <h3>Proposed Action Item Summary</h3>
+    </center>
+
+    <div class="inner-block">
+        <div class="content-table">
+
+            <div class="section-heading">
+                Proposed Action Item Summary
+            </div>
+
+            <table class="action-table">
+                <thead>
+                    <tr>
+                        <th class="sr-column">Sr.<br>No.</th>
+                        <th class="action-no-column">Action Item<br>No.</th>
+                        <th class="task-column">Proposed Action / Task</th>
+                        <th class="assigned-column">Assigned To</th>
+                        <th class="due-date-column">Due Date</th>
+                        <th class="acknowledge-column">Acknowledged<br>By</th>
+                        <th class="completion-details-column">Action Taken / Completion<br>Details</th>
+                        <th class="completed-by-column">Completed<br>By</th>
+                        <th class="completion-date-column">Completion<br>Date</th>
+                        <th class="status-column">Final<br>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($actionItemSummary as $key => $actionItem)
+                        <tr>
+                            <td class="sr-column center">{{ $key + 1 }}</td>
+                            <td class="action-no-column">{{ $actionItem->action_item_no ?? 'N/A' }}</td>
+                            <td class="task-column">{!! $actionItem->task_description ?? 'N/A' !!}</td>
+                            <td class="assigned-column">{{ $actionItem->assigned_to_name ?? 'N/A' }}</td>
+                            <td class="due-date-column center">{{ $actionItem->formatted_due_date ?? 'N/A' }}</td>
+                            <td class="acknowledge-column">{{ $actionItem->acknowledge_by_name ?? 'N/A' }}</td>
+                            <td class="completion-details-column">{!! $actionItem->completion_details ?? 'N/A' !!}</td>
+                            <td class="completed-by-column">{{ $actionItem->completed_by_name ?? 'N/A' }}</td>
+                            <td class="completion-date-column center">{{ $actionItem->formatted_completion_date ?? 'N/A' }}</td>
+                            <td class="status-column">{{ $actionItem->final_status ?? 'N/A' }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="10" class="no-record">
+                                No Action Item has been created from this Change Control.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    @endif
 
 
     @if(!empty($Extension) && $Extension->count() > 0)

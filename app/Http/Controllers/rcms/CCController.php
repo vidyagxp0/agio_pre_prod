@@ -15263,6 +15263,112 @@ class CCController extends Controller
 
             $ActionItem = ActionItem::where('parent_id', $parentId)->where('parent_type', 'CC')->get();
 
+            $actionItemSummary = ActionItem::where('parent_id', $parentId)
+                ->where('parent_type', 'CC')
+                ->orderBy('id', 'asc')
+                ->get();
+
+            $actionItemSummary->transform(function ($actionItem) {
+
+                // Action Item No.
+                $actionItem->action_item_no =
+                    $actionItem->related_records
+                    ?? $actionItem->record_number
+                    ?? $actionItem->record
+                    ?? 'N/A';
+
+                // Proposed Action / Task
+                $actionItem->task_description =
+                    $actionItem->description
+                    ?? $actionItem->short_description
+                    ?? 'N/A';
+
+                // Assigned To
+                $assignedUserId = $actionItem->assign_to ?? null;
+
+                if ($assignedUserId) {
+                    $assignedUserIds = is_array($assignedUserId)
+                        ? $assignedUserId
+                        : array_filter(explode(',', $assignedUserId));
+
+                    $actionItem->assigned_to_name = User::whereIn('id', $assignedUserIds)
+                        ->pluck('name')->implode(', ');
+
+                    if (empty($actionItem->assigned_to_name)) {
+                        $actionItem->assigned_to_name = 'N/A';
+                    }
+                } else {
+                    $actionItem->assigned_to_name = 'N/A';
+                }
+
+                // Due Date
+                $dueDate = $actionItem->due_date ?? null;
+
+                if ($dueDate) {
+                    try {
+                        $actionItem->formatted_due_date = Carbon::parse($dueDate)->format('d-M-Y');
+                    } catch (\Exception $e) {
+                        $actionItem->formatted_due_date = $dueDate;
+                    }
+                } else {
+                    $actionItem->formatted_due_date = 'N/A';
+                }
+
+                // Acknowledged By
+                $acknowledgeUserId = $actionItem->acknowledgement_by ?? null;
+
+                if ($acknowledgeUserId) {
+                    if (is_numeric($acknowledgeUserId)) {
+                        $actionItem->acknowledge_by_name =
+                            User::where('id', $acknowledgeUserId)->value('name') ?? 'N/A';
+                    } else {
+                        $actionItem->acknowledge_by_name = $acknowledgeUserId;
+                    }
+                } else {
+                    $actionItem->acknowledge_by_name = 'N/A';
+                }
+
+                // Action Taken / Completion Details
+                $actionItem->completion_details =
+                    $actionItem->work_completion_comment
+                    ?? $actionItem->completed_comment
+                    ?? $actionItem->action_taken
+                    ?? $actionItem->comments
+                    ?? 'N/A';
+
+                // Completed By
+                $completedByUserId = $actionItem->work_completion_by ?? $actionItem->completed_by ?? null;
+
+                if ($completedByUserId) {
+                    if (is_numeric($completedByUserId)) {
+                        $actionItem->completed_by_name =
+                            User::where('id', $completedByUserId)->value('name') ?? 'N/A';
+                    } else {
+                        $actionItem->completed_by_name = $completedByUserId;
+                    }
+                } else {
+                    $actionItem->completed_by_name = 'N/A';
+                }
+
+                // Completion Date
+                $completionDate = $actionItem->work_completion_on ?? $actionItem->completed_on ?? null;
+
+                if ($completionDate) {
+                    try {
+                        $actionItem->formatted_completion_date = Carbon::parse($completionDate)->format('d-M-Y');
+                    } catch (\Exception $e) {
+                        $actionItem->formatted_completion_date = $completionDate;
+                    }
+                } else {
+                    $actionItem->formatted_completion_date = 'N/A';
+                }
+
+                // Final Status
+                $actionItem->final_status = $actionItem->status ?? 'N/A';
+
+                return $actionItem;
+            });
+
             
          $effectivenessCheck   = EffectivenessCheck::where('parent_id', $parentId)->where('parent_type', 'CC')->get();
             $capa_teamNamesString = null;
@@ -15322,7 +15428,7 @@ class CCController extends Controller
                 'effectivenessCheck',
                 'capa_Data',
                 'capa_teamNamesString',
-                'cpjDetails',
+                'cpjDetails','actionItemSummary',
             ))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
