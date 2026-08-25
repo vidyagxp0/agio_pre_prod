@@ -179,7 +179,7 @@
 
                         {{-- DOCUMENT TITLE --}}
 
-                        <td class="doc-title text-truncate-cell" title="{{ $doc->document_name ?? 'NA' }}" >
+                        <td class="doc-title" style="display: ; width: 350px;,white-space: ; overflow:hidden !important; text-overflow: ellipsis"  title="{{ $doc->document_name ?? 'NA' }}" >
 
                             {{ $doc->document_name ?? 'NA' }}
 
