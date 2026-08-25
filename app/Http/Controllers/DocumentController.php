@@ -6825,7 +6825,8 @@ class DocumentController extends Controller
 
             // Check revision
         if ($document->revised == 'Yes') {
-            $latestRevision = Document::where('revised_doc', $document->id)->max('minor');
+            $latestRevision = Document::where('revised_doc', $document->id)
+                                    ->max('minor');
             $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
             $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
         } else {
@@ -6840,7 +6841,10 @@ class DocumentController extends Controller
             return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
         }
 
-        $documents = Document::where('department_id', $departmentId)->where('sop_type_short', $sopTypeShort)->orderBy('id')->get();
+        $documents = Document::where('department_id', $departmentId)
+            ->where('sop_type_short', $sopTypeShort)
+            ->orderBy('id')
+            ->get();
 
         $counter = 0;
         foreach ($documents as $doc) {
@@ -6882,6 +6886,8 @@ class DocumentController extends Controller
         $data['year'] = Carbon::parse($data->created_at)->format('Y');
         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
 
+
+      
 
         $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
         $PackingDataGrid = ($PackingGridData && isset($PackingGridData->data) && is_string($PackingGridData->data))
@@ -6995,6 +7001,65 @@ class DocumentController extends Controller
             return redirect()->back()->withErrors(['error' => 'Document type ID is missing']);
         }
 
+
+        ///
+
+        $documentContent = DocumentContent::where('document_id', $id)->first();
+            $data['document_content'] = $documentContent;
+
+            $annexures = [];
+            // if (!empty($documentContent->annexuredata)) {
+            //     $annexures = unserialize($documentContent->annexuredata);
+            // }
+        ////////////
+            if ($documentContent && !empty($documentContent->annexuredata)) {
+            $annexures = unserialize($documentContent->annexuredata);
+        }
+
+            // ==========================================
+            // CHECK / GENERATE ANNEXURE NUMBERS
+            // ==========================================
+
+            $checkAnnexures = [];
+
+            foreach ($annexures as $index => $annexure) {
+
+                if (empty(trim(strip_tags($annexure)))) {
+                    continue;
+                }
+
+                $annexureNo = $index + 1;
+
+                // Example: SOP/PG/004-00
+                $mainDocumentNumber = $document->document_number;
+
+                $parts = explode('/', $mainDocumentNumber);
+
+                $departmentCode = $parts[1] ?? '';
+
+                // 004-00
+                $numberRevision = explode('-', $parts[2] ?? '');
+
+                $documentSequence = $numberRevision[0] ?? '';
+                $revision = $numberRevision[1] ?? '00';
+
+                // PG/004/F1-00
+                $annexureDocumentNumber =
+                    $departmentCode . '/' .
+                    $documentSequence . '/F' .
+                    $annexureNo . '-' .
+                    $revision;
+
+                // Index ke according store karo
+                $checkAnnexures[$index] = [
+                    'main_document_number' => $mainDocumentNumber,
+                    'annexure_no' => $annexureNo,
+                    'annexure_document_number' => $annexureDocumentNumber,
+                ];
+            }
+
+            /////////
+
         $viewName = match ($data->document_type_id) {
             'SOP' => 'frontend.documents.pdfpage',
             'BOM' => 'frontend.documents.bom-pdf',
@@ -7023,12 +7088,14 @@ class DocumentController extends Controller
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
 
+        ///
+
         try {
             $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','documentContent','RevisionGridData','GtpGridData','PackingDataGrid','RevisionGridfpstpData',
             'RevisionGridCvsData','RevisionGridInpsData','RevisionGridinpstpData',
             'RevisionGridcvstpData','RevisionGridrawmsData','RevisionGridpiasData','RevisionGridrawmstpData',
             'RevisionGridpamsData','RevisionGridmfpsData','RevisionGridmfpstpData','SummaryDataGrid','sampleReconcilationDataGrid',
-            'SpecificationDataGrid','SpecificationGrid','ProductSpecificationData','MaterialSpecificationData','finishedProductSpecificationData','RevisionProductSpecificationData'))
+            'SpecificationDataGrid','SpecificationGrid','ProductSpecificationData','MaterialSpecificationData','finishedProductSpecificationData','RevisionProductSpecificationData','annexureDocumentNumber'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -7062,6 +7129,9 @@ class DocumentController extends Controller
             -25
         );
 
+       
+       
+      
 
         if ($data->documents) {
 
@@ -7988,65 +8058,144 @@ class DocumentController extends Controller
 
     public function annexureviewPdf($id)
     {
-        $document = Document::find($id);
+    
+            $document = Document::find($id);
 
-        if (!$document) {
-            return redirect()->back()->withErrors(['error' => 'Document not found']);
-        }
-
-        $data = $document;
-
-        $departmentId = $document->department_id;
-
-        if (!$departmentId) {
-            return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
-        }
-
-        $department = Department::find($departmentId);
-        $data->department = $department;
-        $data['department_name'] = $department ? $department->name : '';
-
-        if ($document->revised == 'Yes') {
-            $latestRevision = Document::where('revised_doc', $document->id)->max('minor');
-            $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
-            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
-        } else {
-            $revisionNumber = '00';
-        }
-
-        $currentId = Document::where('department_id', $departmentId)
-            ->orderBy('id')
-            ->pluck('id')
-            ->search($id);
-        $currentId = $currentId !== false ? $currentId + 1 : null;
-
-        $originatorUser = User::find($document->originator_id);
-        $data['originator'] = $originatorUser->name ?? null;
-        $data['originator_email'] = $originatorUser->email ?? null;
-
-        $docType = DocumentType::find($document->document_type_id);
-        $data['document_type_name'] = $docType->name ?? null;
-        $data['document_type_code'] = $docType->typecode ?? null;
-
-        $data['document_division'] = Division::where('id', $data->division_id)->value('name');
-        $data['year'] = Carbon::parse($data->created_at)->format('Y');
-
-        $documentContent = DocumentContent::where('document_id', $id)->first();
-        $data['document_content'] = $documentContent;
-
-        $annexures = [];
-        if (!empty($documentContent->annexuredata)) {
-            $annexures = unserialize($documentContent->annexuredata);
-        }
-
-        $time = Carbon::now();
-        $tempFiles = [];
-
-        foreach ($annexures as $index => $annexure) {
-
-            if (empty(trim(strip_tags($annexure)))) {
-                continue;
+            if (!$document) {
+                return redirect()->back()->withErrors(['error' => 'Document not found']);
             }
+
+            $data = $document;
+
+            $departmentId = $document->department_id;
+
+            if (!$departmentId) {
+                return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
+            }
+
+            $department = Department::find($departmentId);
+            $data->department = $department;
+            $data['department_name'] = $department ? $department->name : '';
+
+            if ($document->revised == 'Yes') {
+                $latestRevision = Document::where('revised_doc', $document->id)->max('minor');
+                $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
+                $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+            } else {
+                $revisionNumber = '00';
+            }
+
+            $currentId = Document::where('department_id', $departmentId)
+                ->orderBy('id')
+                ->pluck('id')
+                ->search($id);
+            $currentId = $currentId !== false ? $currentId + 1 : null;
+
+            $originatorUser = User::find($document->originator_id);
+            $data['originator'] = $originatorUser->name ?? null;
+            $data['originator_email'] = $originatorUser->email ?? null;
+
+            $docType = DocumentType::find($document->document_type_id);
+            $data['document_type_name'] = $docType->name ?? null;
+            $data['document_type_code'] = $docType->typecode ?? null;
+
+            $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+            $data['year'] = Carbon::parse($data->created_at)->format('Y');
+
+            $documentContent = DocumentContent::where('document_id', $id)->first();
+            $data['document_content'] = $documentContent;
+
+            $annexures = [];
+            if (!empty($documentContent->annexuredata)) {
+                $annexures = unserialize($documentContent->annexuredata);
+            }
+
+
+            ////
+
+            // ==========================================
+            // GET ANNEXURES
+            // ==========================================
+
+            $annexures = [];
+
+            if ($documentContent && !empty($documentContent->annexuredata)) {
+
+                $annexures = unserialize($documentContent->annexuredata);
+            }
+
+
+        // ==========================================
+        // CHECK ANNEXURE NUMBERS - DD
+        // ==========================================
+
+                $checkAnnexures = [];
+
+                foreach ($annexures as $index => $annexure) {
+
+                    if (empty(trim(strip_tags($annexure)))) {
+                        continue;
+                    }
+
+                    $annexureNo = $index + 1;
+
+                    // Example:
+                    // SOP/PG/004-00
+                    $mainDocumentNumber = $document->document_number;
+
+                    $parts = explode('/', $mainDocumentNumber);
+
+                    // PG
+                    $departmentCode = $parts[1] ?? '';
+
+                    // 004-00
+                    $numberRevision = explode('-', $parts[2] ?? '');
+
+                    // 004
+                    $documentSequence = $numberRevision[0] ?? '';
+
+                    // 00
+                    $revision = $numberRevision[1] ?? '00';
+
+
+                    // Final:
+                    // PG/004/F1-00
+                    $annexureDocumentNumber =
+                        $departmentCode . '/' .
+                        $documentSequence . '/F' .
+                        $annexureNo . '-' .
+                        $revision;
+
+
+                    $checkAnnexures[] = [
+                        'main_document_number'     => $mainDocumentNumber,
+                        'annexure_no'              => $annexureNo,
+                        'department_code'          => $departmentCode,
+                        'document_sequence'        => $documentSequence,
+                        'revision'                 => $revision,
+                        'annexure_document_number' => $annexureDocumentNumber,
+                    ];
+                }
+
+
+                // dd(array_column($checkAnnexures, 'annexure_document_number'));
+
+                ////
+
+                $time = Carbon::now();
+                $tempFiles = [];
+
+                foreach ($annexures as $index => $annexure) {
+
+                    if (empty(trim(strip_tags($annexure)))) {
+                        continue;
+                    }
+
+                
+                $annexureDocumentNumber = $checkAnnexures[$index]['annexure_document_number'] ?? '';
+
+
+            ////
 
             $annexurePdf = PDF::loadView(
                 'frontend.documents.annexure-pdf',
@@ -8056,6 +8205,7 @@ class DocumentController extends Controller
                     'document'         => $document,
                     'annexure'         => $annexure,
                     'annexureNo'       => $index + 1,
+                    'annexureDocumentNumber'  => $annexureDocumentNumber,
                     'currentId'        => $currentId,
                     'revisionNumber'   => $revisionNumber,
                 ]
@@ -8113,27 +8263,27 @@ class DocumentController extends Controller
             );
 
             // ---------- PAGE NUMBER (dark, fully visible, annexure-wise: 1-3, 2-3...) ----------
-            $pageFont = $dompdf->getFontMetrics()->get_font('sans-serif', 'bold');
-            $pageFontSize = 14;
-            $pageText = "{PAGE_NUM} - {PAGE_COUNT}";
+        // ---------- PAGE NUMBER ----------
+                $pageFont = $dompdf->getFontMetrics()->get_font('sans-serif', 'bold');
+                $pageFontSize = 12;
 
-            // approx width nikal ke right-align karo (exact placeholder replace hone ke baad
-            // width thoda vary kar sakta hai, isliye thoda margin rakha hai)
-                    $pageTextWidth = $dompdf->getFontMetrics()->getTextWidth(
+                $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+
+                    $font = $fontMetrics->get_font('sans-serif', 'bold');
+                    $fontSize = 12;
+
+                    // 01 - 02 format
+                    $pageText = sprintf('%02d - %02d', $pageNumber, $pageCount);
+
+                    $canvas->text(
+                        500, // Page No. ke aage position - isko adjust kar sakte ho
+                        765, // Footer ki height ke according
                         $pageText,
-                        $pageFont,
-                        $pageFontSize
+                        $font,
+                        $fontSize,
+                        [0, 0, 0]
                     );
-
-                    $canvas->page_text(
-                $width - 130,          // right side
-                $height - 60,         // page bottom ke bilkul paas
-                "{PAGE_NUM} - {PAGE_COUNT}",
-                $pageFont,
-                $pageFontSize,
-                [0, 0, 0]
-            );
-
+                });
             $filePath = tempnam(sys_get_temp_dir(), 'annex_') . '.pdf';
             file_put_contents($filePath, $annexurePdf->output());
 
