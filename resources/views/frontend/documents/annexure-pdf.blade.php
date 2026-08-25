@@ -606,13 +606,17 @@
                             @endforeach
                         @endif
                     </th>
-                    <td style="padding: 20px; border: 1px solid #ddd;">  </td>
+                   <td style="padding: 20px; border: 1px solid #ddd;">
+                        Page No.
+                    </td>
                              
                 </tr>
                
             </tbody>
 
+          
         </table>
+          <span>Format No.:  {{ $annexureDocumentNumber }}</span>
     </footer>
     
   <div class="content">

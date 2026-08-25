@@ -849,8 +849,9 @@
                     </td>
                 </tr> 
             </tbody>
+            
         </table>
-        <span>Format No.: CQA/001/F2-00</span>
+        <span>Format No.: {{ $annexureDocumentNumber }}</span>
     </footer>
 
 
@@ -2052,20 +2053,36 @@
 
 
     <script type="text/php">
-        if ( isset($pdf) ) {
-            $pdf->page_script('
-                if ($PAGE_COUNT > 1) {
-                    $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
-                    $size = 12;
-                    $pageText =  $PAGE_NUM . " of " . $PAGE_COUNT;
-                    $y = 115;
-                    $x = 490;
-                    $pdf->text($x, $y, $pageText, $font, $size);
-                }
-            ');
-        }
+            if (isset($pdf)) {
+                $pdf->page_script('
+                    if ($PAGE_COUNT > 1) {
+
+                        $font = $fontMetrics->get_font(
+                            "Arial, Helvetica, sans-serif",
+                            "normal"
+                        );
+
+                        $size = 12;
+
+                        $pageNumber = str_pad($PAGE_NUM, 2, "0", STR_PAD_LEFT);
+                        $totalPages = str_pad($PAGE_COUNT, 2, "0", STR_PAD_LEFT);
+
+                        $pageText = $pageNumber . " of " . $totalPages;
+
+                        $y = 115;
+                        $x = 490;
+
+                        $pdf->text(
+                            $x,
+                            $y,
+                            $pageText,
+                            $font,
+                            $size
+                        );
+                    }
+                ');
+            }
     </script>
-    
 </body>
 
 </html>

@@ -305,83 +305,27 @@ class DocumentController extends Controller
     {
         $res = [];
 
-        /*
-        |--------------------------------------------------------------------------
-        | DOCUMENT FILTER QUERY
-        |--------------------------------------------------------------------------
-        */
-
         $query = Document::query();
 
-
-        // Status Filter
-        if ($request->filled('status')) {
-
-            $query->where(
-                'status',
-                $request->status
-            );
-
+        if ($request->status && !empty($request->status)) {
+            $query->where('status', $request->status);
         }
 
-
-        // Document Type Filter
-        if ($request->filled('document_type_id')) {
-
-            $query->where(
-                'document_type_id',
-                $request->document_type_id
-            );
-
+        if ($request->document_type_id && !empty($request->document_type_id)) {
+            $query->where('document_type_id', $request->document_type_id);
         }
 
-
-        // Division Filter
-        if ($request->filled('division_id')) {
-
-            $query->where(
-                'division_id',
-                $request->division_id
-            );
-
+        if ($request->documentTypes && !empty($request->division_id)) {
+            $query->where('division_id', $request->division_id);
         }
 
-
-        // Originator Filter
-        if ($request->filled('originator_id')) {
-
-            $query->where(
-                'originator_id',
-                $request->originator_id
-            );
-
+        if ($request->originator_id && !empty($request->originator_id)) {
+            $query->where('originator_id', $request->originator_id);
         }
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | IMPORTANT
-        | Execute Document Query
-        |--------------------------------------------------------------------------
-        */
-
-        $documents = $query
-            ->orderByDesc('id')
-            ->paginate(10, ['*'], 'document_page')
-            ->withQueryString();
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | DOCUMENT REQUESTS
-        | This is NOT filtered by above filters
-        |--------------------------------------------------------------------------
-        */
 
         $requestDocuments = DocumentRequest::orderByDesc('id')
             ->paginate(10, ['*'], 'request_page')
             ->withQueryString();
-
 
         foreach ($requestDocuments as $requestDocument) {
 
@@ -390,35 +334,21 @@ class DocumentController extends Controller
                 $requestDocument->document_id
             )->value('document_number');
 
-
             $requestDocument->request_by_name = User::where(
                 'id',
                 $requestDocument->request_by
             )->value('name');
 
-
             $requestDocument->request_to_name = User::where(
                 'id',
                 $requestDocument->request_to
             )->value('name');
-
         }
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | RENDER DOCUMENT TABLE
-        |--------------------------------------------------------------------------
-        */
 
         $html = view(
             'frontend.documents.comps.record_table',
-            compact(
-                'documents',
-                'requestDocuments'
-            )
+            compact('documents', 'requestDocuments')
         )->render();
-
 
         $res['html'] = $html;
 
@@ -760,11 +690,12 @@ class DocumentController extends Controller
             | Generate Document Number
             |--------------------------------------------------------------------------
             */
-
             $document->document_number = $this->generateDocumentNumber($request->department_id, $request->document_type_id, $request->sop_type, $request->sop_type_short, $request->revised ?? 'No', $request->revised_doc);
 
-            $document->base_document_number = $this->extractBaseDocumentNumber($document->document_number);
+            
 
+            // dd($document->document_number);
+        
             $document->supersedes_no = null;
             $document->notify_to = json_encode($request->notify_to);
 
@@ -4465,21 +4396,69 @@ class DocumentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->save();
             }
+            // if ($lastDocument->reviewers != $document->reviewers || !empty($request->reviewers_comment)) {
+            //     $history = new DocumentHistory;
+            //     $history->document_id = $id;
+            //     $history->activity_type = 'Reviewers';
+            //     $temp = explode(',', $lastDocument->reviewers);
+            //     $revew = [];
+            //     for ($i = 0; $i < count($temp); $i++) {
+            //         $dataRe = User::where('id', $temp[$i])->value('name');
+            //         array_push($revew, $dataRe);
+            //     }
+            //     $temped = explode(',', $document->reviewers);
+            //     $revewnew = [];
+            //     for ($i = 0; $i < count($temp); $i++) {
+            //         $dataRenew = User::where('id', $temped[$i])->value('name');
+            //         array_push($revewnew, $dataRenew);
+            //     }
+
+            //     $history->previous = implode(',', $revew);
+            //     $history->current = implode(',', $revewnew);
+            //     $history->comment = $request->reviewers_comment;
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $lastDocument->status;
+            //     $history->save();
+            // }
+
+
             if ($lastDocument->reviewers != $document->reviewers || !empty($request->reviewers_comment)) {
+
                 $history = new DocumentHistory;
                 $history->document_id = $id;
                 $history->activity_type = 'Reviewers';
-                $temp = explode(',', $lastDocument->reviewers);
+
+                // Previous reviewers
+                $temp = explode(',', $lastDocument->reviewers ?? '');
                 $revew = [];
+
                 for ($i = 0; $i < count($temp); $i++) {
-                    $dataRe = User::where('id', $temp[$i])->value('name');
-                    array_push($revew, $dataRe);
+
+                    if (!empty(trim($temp[$i]))) {
+                        $dataRe = User::where('id', trim($temp[$i]))->value('name');
+
+                        if ($dataRe) {
+                            array_push($revew, $dataRe);
+                        }
+                    }
                 }
-                $temped = explode(',', $document->reviewers);
+
+                // Current reviewers
+                $temped = explode(',', $document->reviewers ?? '');
                 $revewnew = [];
-                for ($i = 0; $i < count($temp); $i++) {
-                    $dataRenew = User::where('id', $temped[$i])->value('name');
-                    array_push($revewnew, $dataRenew);
+
+                // IMPORTANT: count($temped), not count($temp)
+                for ($i = 0; $i < count($temped); $i++) {
+
+                    if (!empty(trim($temped[$i]))) {
+                        $dataRenew = User::where('id', trim($temped[$i]))->value('name');
+
+                        if ($dataRenew) {
+                            array_push($revewnew, $dataRenew);
+                        }
+                    }
                 }
 
                 $history->previous = implode(',', $revew);
@@ -4489,23 +4468,71 @@ class DocumentController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
+
                 $history->save();
             }
+            // if ($lastDocument->approvers != $document->approvers || !empty($request->approvers_comment)) {
+            //     $history = new DocumentHistory;
+            //     $history->document_id = $id;
+            //     $history->activity_type = 'Approvers';
+            //     $temp = explode(',', $lastDocument->approvers);
+            //     $revew = [];
+            //     for ($i = 0; $i < count($temp); $i++) {
+            //         $dataRe = User::where('id', $temp[$i])->value('name');
+            //         array_push($revew, $dataRe);
+            //     }
+            //     $temped = explode(',', $document->approvers);
+            //     $revewnew = [];
+            //     for ($i = 0; $i < count($temp); $i++) {
+            //         $dataRenew = User::where('id', $temped[$i])->value('name');
+            //         array_push($revewnew, $dataRenew);
+            //     }
+
+            //     $history->previous = implode(',', $revew);
+            //     $history->current = implode(',', $revewnew);
+            //     $history->comment = $request->approvers_comment;
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $lastDocument->status;
+            //     $history->save();
+            // }
+
             if ($lastDocument->approvers != $document->approvers || !empty($request->approvers_comment)) {
+
                 $history = new DocumentHistory;
                 $history->document_id = $id;
                 $history->activity_type = 'Approvers';
-                $temp = explode(',', $lastDocument->approvers);
+
+                // Previous Approvers
+                $temp = explode(',', $lastDocument->approvers ?? '');
                 $revew = [];
+
                 for ($i = 0; $i < count($temp); $i++) {
-                    $dataRe = User::where('id', $temp[$i])->value('name');
-                    array_push($revew, $dataRe);
+
+                    if (!empty(trim($temp[$i]))) {
+                        $dataRe = User::where('id', trim($temp[$i]))->value('name');
+
+                        if ($dataRe) {
+                            array_push($revew, $dataRe);
+                        }
+                    }
                 }
-                $temped = explode(',', $document->approvers);
+
+                // Current Approvers
+                $temped = explode(',', $document->approvers ?? '');
                 $revewnew = [];
-                for ($i = 0; $i < count($temp); $i++) {
-                    $dataRenew = User::where('id', $temped[$i])->value('name');
-                    array_push($revewnew, $dataRenew);
+
+                // IMPORTANT: count($temped)
+                for ($i = 0; $i < count($temped); $i++) {
+
+                    if (!empty(trim($temped[$i]))) {
+                        $dataRenew = User::where('id', trim($temped[$i]))->value('name');
+
+                        if ($dataRenew) {
+                            array_push($revewnew, $dataRenew);
+                        }
+                    }
                 }
 
                 $history->previous = implode(',', $revew);
@@ -4515,6 +4542,7 @@ class DocumentController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
+
                 $history->save();
             }
             if ($lastDocument->reviewers_group != $document->reviewers_group || !empty($request->reviewers_group_comment)) {
@@ -7380,6 +7408,7 @@ class DocumentController extends Controller
     public function viewPdf($id)
     {
       
+//    dd('bhnj');
         $depaArr = ['ACC' => 'Accounting', 'ACC3' => 'Accounting',];
         $data = Document::find($id);
         //$data->department = Department::find($data->department_id);
@@ -7564,6 +7593,65 @@ class DocumentController extends Controller
             return redirect()->back()->withErrors(['error' => 'Document type ID is missing']);
         }
 
+
+        ///
+
+ $documentContent = DocumentContent::where('document_id', $id)->first();
+    $data['document_content'] = $documentContent;
+
+    $annexures = [];
+    // if (!empty($documentContent->annexuredata)) {
+    //     $annexures = unserialize($documentContent->annexuredata);
+    // }
+////////////
+    if ($documentContent && !empty($documentContent->annexuredata)) {
+    $annexures = unserialize($documentContent->annexuredata);
+}
+
+// ==========================================
+// CHECK / GENERATE ANNEXURE NUMBERS
+// ==========================================
+
+$checkAnnexures = [];
+
+foreach ($annexures as $index => $annexure) {
+
+    if (empty(trim(strip_tags($annexure)))) {
+        continue;
+    }
+
+    $annexureNo = $index + 1;
+
+    // Example: SOP/PG/004-00
+    $mainDocumentNumber = $document->document_number;
+
+    $parts = explode('/', $mainDocumentNumber);
+
+    $departmentCode = $parts[1] ?? '';
+
+    // 004-00
+    $numberRevision = explode('-', $parts[2] ?? '');
+
+    $documentSequence = $numberRevision[0] ?? '';
+    $revision = $numberRevision[1] ?? '00';
+
+    // PG/004/F1-00
+    $annexureDocumentNumber =
+        $departmentCode . '/' .
+        $documentSequence . '/F' .
+        $annexureNo . '-' .
+        $revision;
+
+    // Index ke according store karo
+    $checkAnnexures[$index] = [
+        'main_document_number' => $mainDocumentNumber,
+        'annexure_no' => $annexureNo,
+        'annexure_document_number' => $annexureDocumentNumber,
+    ];
+}
+
+/////////
+
         $viewName = match ($data->document_type_id) {
             'SOP' => 'frontend.documents.pdfpage',
             'BOM' => 'frontend.documents.bom-pdf',
@@ -7592,12 +7680,14 @@ class DocumentController extends Controller
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
 
+        ///
+
         try {
             $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','documentContent','RevisionGridData','GtpGridData','PackingDataGrid','RevisionGridfpstpData',
             'RevisionGridCvsData','RevisionGridInpsData','RevisionGridinpstpData',
             'RevisionGridcvstpData','RevisionGridrawmsData','RevisionGridpiasData','RevisionGridrawmstpData',
             'RevisionGridpamsData','RevisionGridmfpsData','RevisionGridmfpstpData','SummaryDataGrid','sampleReconcilationDataGrid',
-            'SpecificationDataGrid','SpecificationGrid','ProductSpecificationData','MaterialSpecificationData','finishedProductSpecificationData','RevisionProductSpecificationData'))
+            'SpecificationDataGrid','SpecificationGrid','ProductSpecificationData','MaterialSpecificationData','finishedProductSpecificationData','RevisionProductSpecificationData','annexureDocumentNumber'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -7631,6 +7721,9 @@ class DocumentController extends Controller
             -25
         );
 
+       
+       
+      
 
         if ($data->documents) {
 
@@ -8561,165 +8654,273 @@ class DocumentController extends Controller
     }
 
 
-    public function annexureviewPdf($id)
-    {
-        $document = Document::find($id);
+  public function annexureviewPdf($id)
+{
+ 
+    $document = Document::find($id);
 
-        if (!$document) {
-            return redirect()->back()->withErrors(['error' => 'Document not found']);
+    if (!$document) {
+        return redirect()->back()->withErrors(['error' => 'Document not found']);
+    }
+
+    $data = $document;
+
+    $departmentId = $document->department_id;
+
+    if (!$departmentId) {
+        return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
+    }
+
+    $department = Department::find($departmentId);
+    $data->department = $department;
+    $data['department_name'] = $department ? $department->name : '';
+
+    if ($document->revised == 'Yes') {
+        $latestRevision = Document::where('revised_doc', $document->id)->max('minor');
+        $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
+        $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+    } else {
+        $revisionNumber = '00';
+    }
+
+    $currentId = Document::where('department_id', $departmentId)
+        ->orderBy('id')
+        ->pluck('id')
+        ->search($id);
+    $currentId = $currentId !== false ? $currentId + 1 : null;
+
+    $originatorUser = User::find($document->originator_id);
+    $data['originator'] = $originatorUser->name ?? null;
+    $data['originator_email'] = $originatorUser->email ?? null;
+
+    $docType = DocumentType::find($document->document_type_id);
+    $data['document_type_name'] = $docType->name ?? null;
+    $data['document_type_code'] = $docType->typecode ?? null;
+
+    $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+    $data['year'] = Carbon::parse($data->created_at)->format('Y');
+
+    $documentContent = DocumentContent::where('document_id', $id)->first();
+    $data['document_content'] = $documentContent;
+
+    $annexures = [];
+    if (!empty($documentContent->annexuredata)) {
+        $annexures = unserialize($documentContent->annexuredata);
+    }
+
+
+    ////
+
+      // ==========================================
+    // GET ANNEXURES
+    // ==========================================
+
+    $annexures = [];
+
+    if ($documentContent && !empty($documentContent->annexuredata)) {
+
+        $annexures = unserialize($documentContent->annexuredata);
+    }
+
+
+    // ==========================================
+    // CHECK ANNEXURE NUMBERS - DD
+    // ==========================================
+
+    $checkAnnexures = [];
+
+    foreach ($annexures as $index => $annexure) {
+
+        if (empty(trim(strip_tags($annexure)))) {
+            continue;
         }
 
-        $data = $document;
+        $annexureNo = $index + 1;
 
-        $departmentId = $document->department_id;
+        // Example:
+        // SOP/PG/004-00
+        $mainDocumentNumber = $document->document_number;
 
-        if (!$departmentId) {
-            return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
+        $parts = explode('/', $mainDocumentNumber);
+
+        // PG
+        $departmentCode = $parts[1] ?? '';
+
+        // 004-00
+        $numberRevision = explode('-', $parts[2] ?? '');
+
+        // 004
+        $documentSequence = $numberRevision[0] ?? '';
+
+        // 00
+        $revision = $numberRevision[1] ?? '00';
+
+
+        // Final:
+        // PG/004/F1-00
+        $annexureDocumentNumber =
+            $departmentCode . '/' .
+            $documentSequence . '/F' .
+            $annexureNo . '-' .
+            $revision;
+
+
+        $checkAnnexures[] = [
+            'main_document_number'     => $mainDocumentNumber,
+            'annexure_no'              => $annexureNo,
+            'department_code'          => $departmentCode,
+            'document_sequence'        => $documentSequence,
+            'revision'                 => $revision,
+            'annexure_document_number' => $annexureDocumentNumber,
+        ];
+    }
+
+
+    // dd(array_column($checkAnnexures, 'annexure_document_number'));
+
+    ////
+
+    $time = Carbon::now();
+    $tempFiles = [];
+
+    foreach ($annexures as $index => $annexure) {
+
+        if (empty(trim(strip_tags($annexure)))) {
+            continue;
         }
 
-        $department = Department::find($departmentId);
-        $data->department = $department;
-        $data['department_name'] = $department ? $department->name : '';
+       
+    $annexureDocumentNumber = $checkAnnexures[$index]['annexure_document_number'] ?? '';
 
-        if ($document->revised == 'Yes') {
-            $latestRevision = Document::where('revised_doc', $document->id)->max('minor');
-            $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
-            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
-        } else {
-            $revisionNumber = '00';
+
+////
+
+        $annexurePdf = PDF::loadView(
+            'frontend.documents.annexure-pdf',
+            [
+                'data'             => $data,
+                'time'             => $time,
+                'document'         => $document,
+                'annexure'         => $annexure,
+                'annexureNo'       => $index + 1,
+                'annexureDocumentNumber'  => $annexureDocumentNumber,
+                'currentId'        => $currentId,
+                'revisionNumber'   => $revisionNumber,
+            ]
+        );
+
+        $annexurePdf->setPaper('A4');
+
+        $annexurePdf->setOptions([
+            'defaultFont'          => 'sans-serif',
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled'      => false,
+            'isPhpEnabled'         => false, // security ke liye off hi rakho
+        ]);
+
+        $annexurePdf->render();
+
+        $dompdf = $annexurePdf->getDomPDF();
+        $canvas = $dompdf->getCanvas();
+        $canvas->set_default_view('FitB');
+
+        $width  = $canvas->get_width();
+        $height = $canvas->get_height();
+
+        // ---------- WATERMARK (light gray, diagonal) ----------
+        $watermarkText = strtoupper(
+            Helpers::getDocStatusByStage(
+                $data->stage,
+                $data->training_required
+            )
+        );
+
+        $watermarkFont = $dompdf->getFontMetrics()->get_font('sans-serif', 'bold');
+        $watermarkSize = 25;
+
+        $watermarkTextWidth = $dompdf->getFontMetrics()->getTextWidth(
+            $watermarkText,
+            $watermarkFont,
+            $watermarkSize
+        );
+
+        // Light gray color (RGB 0-1 range) — koi global opacity trick nahi,
+        // isliye page ke baaki content (page number included) fully visible rahega
+        $lightGray = [0.82, 0.82, 0.82];
+
+        $canvas->page_text(
+            ($width - $watermarkTextWidth) / 2,
+            ($height / 2) + 50,
+            $watermarkText,
+            $watermarkFont,
+            $watermarkSize,
+            $lightGray,   // color
+            0.0,          // word_space
+            6,            // char_space (letters ke beech spacing — diagonal look ke liye)
+            -25           // angle (diagonal watermark)
+        );
+
+        // ---------- PAGE NUMBER (dark, fully visible, annexure-wise: 1-3, 2-3...) ----------
+       // ---------- PAGE NUMBER ----------
+            $pageFont = $dompdf->getFontMetrics()->get_font('sans-serif', 'bold');
+            $pageFontSize = 12;
+
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+
+                $font = $fontMetrics->get_font('sans-serif', 'bold');
+                $fontSize = 12;
+
+                // 01 - 02 format
+                $pageText = sprintf('%02d - %02d', $pageNumber, $pageCount);
+
+                $canvas->text(
+                    500, // Page No. ke aage position - isko adjust kar sakte ho
+                    765, // Footer ki height ke according
+                    $pageText,
+                    $font,
+                    $fontSize,
+                    [0, 0, 0]
+                );
+            });
+        $filePath = tempnam(sys_get_temp_dir(), 'annex_') . '.pdf';
+        file_put_contents($filePath, $annexurePdf->output());
+
+        $tempFiles[] = $filePath;
+    }
+
+    $mergedPdf = new \setasign\Fpdi\Fpdi();
+
+    foreach ($tempFiles as $file) {
+
+        $pageCount = $mergedPdf->setSourceFile($file);
+
+        for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+
+            $template = $mergedPdf->importPage($pageNo);
+            $size = $mergedPdf->getTemplateSize($template);
+
+            $mergedPdf->AddPage(
+                $size['orientation'],
+                [$size['width'], $size['height']]
+            );
+
+            $mergedPdf->useTemplate($template);
         }
+    }
 
-        $currentId = Document::where('department_id', $departmentId)
-            ->orderBy('id')
-            ->pluck('id')
-            ->search($id);
-        $currentId = $currentId !== false ? $currentId + 1 : null;
+    if ($data->documents) {
 
-        $originatorUser = User::find($document->originator_id);
-        $data['originator'] = $originatorUser->name ?? null;
-        $data['originator_email'] = $originatorUser->email ?? null;
+        $pdfArray = explode(',', $data->documents);
 
-        $docType = DocumentType::find($document->document_type_id);
-        $data['document_type_name'] = $docType->name ?? null;
-        $data['document_type_code'] = $docType->typecode ?? null;
+        foreach ($pdfArray as $pdfFile) {
 
-        $data['document_division'] = Division::where('id', $data->division_id)->value('name');
-        $data['year'] = Carbon::parse($data->created_at)->format('Y');
+            $existingPdfPath = public_path('upload/PDF/' . trim($pdfFile));
 
-        $documentContent = DocumentContent::where('document_id', $id)->first();
-        $data['document_content'] = $documentContent;
-
-        $annexures = [];
-        if (!empty($documentContent->annexuredata)) {
-            $annexures = unserialize($documentContent->annexuredata);
-        }
-
-        $time = Carbon::now();
-        $tempFiles = [];
-
-        foreach ($annexures as $index => $annexure) {
-
-            if (empty(trim(strip_tags($annexure)))) {
+            if (!file_exists($existingPdfPath)) {
                 continue;
             }
 
-            $annexurePdf = PDF::loadView(
-                'frontend.documents.annexure-pdf',
-                [
-                    'data'             => $data,
-                    'time'             => $time,
-                    'document'         => $document,
-                    'annexure'         => $annexure,
-                    'annexureNo'       => $index + 1,
-                    'currentId'        => $currentId,
-                    'revisionNumber'   => $revisionNumber,
-                ]
-            );
-
-            $annexurePdf->setPaper('A4');
-
-            $annexurePdf->setOptions([
-                'defaultFont'          => 'sans-serif',
-                'isHtml5ParserEnabled' => true,
-                'isRemoteEnabled'      => false,
-                'isPhpEnabled'         => false, // security ke liye off hi rakho
-            ]);
-
-            $annexurePdf->render();
-
-            $dompdf = $annexurePdf->getDomPDF();
-            $canvas = $dompdf->getCanvas();
-            $canvas->set_default_view('FitB');
-
-            $width  = $canvas->get_width();
-            $height = $canvas->get_height();
-
-            // ---------- WATERMARK (light gray, diagonal) ----------
-            $watermarkText = strtoupper(
-                Helpers::getDocStatusByStage(
-                    $data->stage,
-                    $data->training_required
-                )
-            );
-
-            $watermarkFont = $dompdf->getFontMetrics()->get_font('sans-serif', 'bold');
-            $watermarkSize = 25;
-
-            $watermarkTextWidth = $dompdf->getFontMetrics()->getTextWidth(
-                $watermarkText,
-                $watermarkFont,
-                $watermarkSize
-            );
-
-            // Light gray color (RGB 0-1 range) — koi global opacity trick nahi,
-            // isliye page ke baaki content (page number included) fully visible rahega
-            $lightGray = [0.82, 0.82, 0.82];
-
-            $canvas->page_text(
-                ($width - $watermarkTextWidth) / 2,
-                ($height / 2) + 50,
-                $watermarkText,
-                $watermarkFont,
-                $watermarkSize,
-                $lightGray,   // color
-                0.0,          // word_space
-                6,            // char_space (letters ke beech spacing — diagonal look ke liye)
-                -25           // angle (diagonal watermark)
-            );
-
-            // ---------- PAGE NUMBER (dark, fully visible, annexure-wise: 1-3, 2-3...) ----------
-            $pageFont = $dompdf->getFontMetrics()->get_font('sans-serif', 'bold');
-            $pageFontSize = 14;
-            $pageText = "{PAGE_NUM} - {PAGE_COUNT}";
-
-            // approx width nikal ke right-align karo (exact placeholder replace hone ke baad
-            // width thoda vary kar sakta hai, isliye thoda margin rakha hai)
-                    $pageTextWidth = $dompdf->getFontMetrics()->getTextWidth(
-                        $pageText,
-                        $pageFont,
-                        $pageFontSize
-                    );
-
-                    $canvas->page_text(
-                $width - 130,          // right side
-                $height - 60,         // page bottom ke bilkul paas
-                "{PAGE_NUM} - {PAGE_COUNT}",
-                $pageFont,
-                $pageFontSize,
-                [0, 0, 0]
-            );
-
-            $filePath = tempnam(sys_get_temp_dir(), 'annex_') . '.pdf';
-            file_put_contents($filePath, $annexurePdf->output());
-
-            $tempFiles[] = $filePath;
-        }
-
-        $mergedPdf = new \setasign\Fpdi\Fpdi();
-
-        foreach ($tempFiles as $file) {
-
-            $pageCount = $mergedPdf->setSourceFile($file);
+            $pageCount = $mergedPdf->setSourceFile($existingPdfPath);
 
             for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
 
@@ -8734,197 +8935,863 @@ class DocumentController extends Controller
                 $mergedPdf->useTemplate($template);
             }
         }
-
-        if ($data->documents) {
-
-            $pdfArray = explode(',', $data->documents);
-
-            foreach ($pdfArray as $pdfFile) {
-
-                $existingPdfPath = public_path('upload/PDF/' . trim($pdfFile));
-
-                if (!file_exists($existingPdfPath)) {
-                    continue;
-                }
-
-                $pageCount = $mergedPdf->setSourceFile($existingPdfPath);
-
-                for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
-
-                    $template = $mergedPdf->importPage($pageNo);
-                    $size = $mergedPdf->getTemplateSize($template);
-
-                    $mergedPdf->AddPage(
-                        $size['orientation'],
-                        [$size['width'], $size['height']]
-                    );
-
-                    $mergedPdf->useTemplate($template);
-                }
-            }
-        }
-
-        $pdfContent = $mergedPdf->Output('S');
-
-        foreach ($tempFiles as $file) {
-            if (file_exists($file)) {
-                unlink($file);
-            }
-        }
-
-        return response($pdfContent)
-            ->header('Content-Type', 'application/pdf')
-            ->header(
-                'Content-Disposition',
-                'inline; filename="Annexures.pdf"'
-            );
     }
-   
-    public function printPDF($id)
+
+    $pdfContent = $mergedPdf->Output('S');
+
+    foreach ($tempFiles as $file) {
+        if (file_exists($file)) {
+            unlink($file);
+        }
+    }
+
+    return response($pdfContent)
+        ->header('Content-Type', 'application/pdf')
+        ->header(
+            'Content-Disposition',
+            'inline; filename="Annexures.pdf"'
+        );
+}
+
+
+    // public function printPDF($id){
+
+    //     $issue_copies = (int) request('issued_copies');
+    //     $print_reason = request('print_reason');
+    //     $document_print_by = request('user_id');
+    //     $IssueDate = request('issued_date');
+    //     $IssuanceTo = request('issuance_to');
+    //     $IssuedCopies = (int) request('issued_copies');
+    //     $stampImpression = request('department');
+
+    //     $issuedByName = User::where('id', $document_print_by)
+    //     ->value('name');
+       
+    //     if ($issue_copies < 1) {
+    //         return redirect()->back()->withErrors([
+    //             'issued_copies' => 'Number of issued copies must be at least 1.'
+    //         ])->withInput();
+    //     }
+
+    //     $roleIds = DB::table('user_roles')
+    //         ->where('user_id', Auth::id())
+    //         ->pluck('role_id')
+    //         ->filter()
+    //         ->map(function ($roleId) {
+    //             return (int) $roleId;
+    //         })
+    //         ->unique()
+    //         ->values()
+    //         ->toArray();
+
+    //     if (empty($roleIds)) {
+    //         toastr()->error('No role is assigned to your account.');
+    //         return redirect()->back()->withInput();
+    //     }
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Find Print Control
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $controls = PrintControl::whereIn('role_id', $roleIds)
+    //         ->orderByDesc('id')
+    //         ->first();
+       
+    //     if (!$controls) {
+    //         toastr()->error(
+    //             'There is no print control configured for your assigned roles.'
+    //         );
+
+    //         return redirect()->back()->withInput();
+    //     }
+
+    //     $department = Department::find(Auth::user()->departmentid);
+    //     $document = Document::find($id);
+
+    //     if ($document->revised == 'Yes') {
+    //         $latestRevision = Document::where('revised_doc', $document->id)
+    //                                 ->max('minor');
+    //         $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
+    //         $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+    //     } else {
+    //         $revisionNumber = '00';
+    //     }
+
+    //     // Filter documents by department_id and sop_type_short
+    //     $departmentId = $document->department_id;
+    //     $sopTypeShort = $document->sop_type_short;
+
+    //     if (!$departmentId) {
+    //         return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
+    //     }
+
+    //     $documents = Document::where('department_id', $departmentId)
+    //         ->where('sop_type_short', $sopTypeShort)
+    //         ->orderBy('id')
+    //         ->get();
+
+    //     $counter = 0;
+    //     foreach ($documents as $doc) {
+    //         $counter++;
+    //         $doc->currentId = $counter;
+
+    //         if ($doc->id == $id) {
+    //             $currentId = $doc->currentId;
+    //         }
+    //     }
+
+
+    //     // 🔹 SOP Number Generate
+    //     if ($document->revised == 'Yes') {
+    //         $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+    //     } else {
+    //         $revisionNumber = '00';
+    //     }
+
+    //     if (in_array($document->sop_type_short, ['EOP', 'IOP'])) {
+    //         $sopNumber = "{$document->department_id}/{$document->sop_type_short}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
+    //     } else {
+    //         $sopNumber = "{$document->sop_type_short}/{$document->department_id}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
+    //     }
+
+
+    //     if ($controls) {
+    //         set_time_limit(30);
+    //         $document = Document::find($id);
+    //         $data = Document::find($id);
+    //         $data->department = Department::find($data->department_id);
+    //         $data['originator'] = User::where('id', $data->originator_id)->value('name');
+    //         $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
+    //         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
+    //         $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
+    //         $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
+    //         $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+
+    //         $data['year'] = Carbon::parse($data->created_at)->format('Y');
+    //         // $document = Document::where('id', $id)->get();
+    //         // $pdf = PDF::loadView('frontend.documents.pdfpage', compact('data'))->setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+    //         $documentContent = DocumentContent::where('document_id', $id)->first();
+    //         $annexures = [];
+    //         if (!empty($documentContent->annexuredata)) {
+    //             $annexures = unserialize($documentContent->annexuredata);
+    //         }
+
+    //     if (empty($data->document_type_id)) {
+    //         return redirect()->back()->withErrors(['error' => 'Document type ID is missing']);
+    //     }
+
+    //         $viewName = match ($data->document_type_id) {
+    //             'SOP' => 'frontend.documents.pdfpage',
+    //             'BOM' => 'frontend.documents.bom-pdf',
+    //             'FPS' => 'frontend.documents.finished-product-pdf',
+    //             'INPS' => 'frontend.documents.inprocess_s-pdf',
+    //             'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
+    //             'RAWMS' => 'frontend.documents.raw_ms-pdf',
+    //             'PAMS' => 'frontend.documents.package_ms-pdf',
+    //             'PIAS' => 'frontend.documents.product_item-pdf',
+    //             'MFPS' => 'frontend.documents.mfps-pdf',
+    //             'MFPSTP' => 'frontend.documents.mfpstp-pdf',
+    //             'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
+    //             'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+    //             'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
+    //             'RMSTP' => 'frontend.documents.raw_mstp-pdf',
+    //             'BMR' => 'frontend.documents.bmr-pdf',
+    //             'BPR' => 'frontend.documents.bpr-pdf',
+    //             'SPEC' => 'frontend.documents.spec-pdf',
+    //             'STP' => 'frontend.documents.stp-pdf',
+    //             'TDS' => 'frontend.documents.tds-pdf',
+    //             'GTP' => 'frontend.documents.gtp-pdf',
+    //             default => 'frontend.documents.pdfpage',
+    //         };
+
+    //         $pdf = App::make('dompdf.wrapper');
+    //         $time = Carbon::now();
+
+    //         $pdf = PDF::loadView($viewName, compact('data','time','document','annexures','currentId','documents','sopNumber','IssuedCopies','IssueDate','stampImpression','issuedByName'))
+    //         ->setOptions(['defaultFont' => 'sans-serif', 'isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'isPhpEnabled' => true,]);
+
+    //         $pdf->setPaper('A4');
+
+    //         $pdf->render();
+    //         $canvas = $pdf->getDomPDF()->getCanvas();
+    //         $height = $canvas->get_height();
+    //         $width = $canvas->get_width();
+
+    //         $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
+
+
+    //         $watermarkText = strtoupper($data->status);
+    //         $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
+    //         $fontSize = 25;
+    //         $textWidth = $pdf->getDomPDF()->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
+            
+    //         $canvas->page_text(
+    //             ($width - $textWidth) / 2,
+    //             ($height / 2) + 50,
+    //             $watermarkText,  
+    //             $font,  
+    //             $fontSize,  
+    //             [0, 0, 0],  
+    //             0.9,  
+    //             6,
+    //             -20  
+    //         );
+
+
+
+    //         if ($controls->daily != 0) {
+    //             $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->where('date', Carbon::now()->format('d-m-Y'))->count();
+    //             if ($user + 1 <= $controls->daily) {
+    //                 //Downlad History
+    //                 $download = new PrintHistory;
+    
+    //                 $download->document_id = $id;
+    //                 $download->user_id = Auth::user()->id;
+    //                 $download->role_id = Auth::user()->role;
+    //                 $download->date = Carbon::now()->format('d-m-Y');
+
+    //                 $download->issue_copies = $issue_copies;
+    //                 $download->print_reason = $print_reason;
+    //                 $download->document_printed_copies = $IssuedCopies;
+    //                 // $download->issuance_date = $IssueDate;
+    //                 $download->issuance_to = $IssuanceTo;
+    //                 $download->issued_copies = $IssuedCopies;
+    //                 $download->department = $stampImpression;
+        
+    //                 $download->save();
+
+    //                 // download PDF file with download method
+
+    //                 return $pdf->stream('SOP-' . $id . '.pdf', ['Attachment' => false]);
+    //             } else {
+    //                 toastr()->error('You breach your daily print limit.');
+
+    //                 return back();
+    //             }
+    //         } elseif ($controls->weekly != 0) {
+    //             $weekDate = Carbon::now()->subDays(7)->format('d-m-Y');
+    //             $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+    //             if ($user + 1 <= $controls->weekly) {
+    //                 //Downlad History
+    //                 $download = new PrintHistory;
+    //                 $download->document_id = $id;
+    //                 $download->user_id = Auth::user()->id;
+    //                 $download->role_id = Auth::user()->role;
+    //                 $download->date = Carbon::now()->format('d-m-Y');
+
+    //                 $download->issue_copies = $issue_copies;
+    //                 $download->print_reason = $print_reason;
+    //                 $download->document_number = $documentNo;
+    //                 $download->document_printed_copies = $NoofCopies;
+    //                 // $download->document_printed_by = Auth::user()->name;
+    //                 // $download->issuance_date = $IssueDate;
+    //                 $download->issuance_to = $IssuanceTo;
+    //                 $download->issued_copies = $IssuedCopies;
+    //                 $download->issued_reason = $reasonIssue;
+    //                 $download->department = $stampImpression;
+
+    //                 $download->save();
+
+    //                 // download PDF file with download method
+    //                 return $pdf->stream('SOP-' . $id . '.pdf', ['Attachment' => false]);
+    //             } else {
+    //                 toastr()->error('You breach your weekly print limit.');
+
+    //                 return back();
+    //             }
+    //         } elseif ($controls->monthly != 0) {
+    //             $weekDate = Carbon::now()->subDays(30)->format('d-m-Y');
+    //             $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+    //             if ($user + 1 <= $controls->monthly) {
+    //                 //Downlad History
+    //                 $download = new PrintHistory;
+    //                 $download->document_id = $id;
+    //                 $download->user_id = Auth::user()->id;
+    //                 $download->role_id = Auth::user()->role;
+    //                 $download->date = Carbon::now()->format('d-m-Y');
+
+    //                 $download->issue_copies = $issue_copies;
+    //                 $download->print_reason = $print_reason;
+    //                 $download->document_number = $documentNo;
+    //                 $download->document_printed_copies = $NoofCopies;
+
+    //                 // $download->document_printed_by = Auth::user()->name;
+    //                 // $download->issuance_date = $IssueDate;
+
+    //                 $download->issuance_to = $IssuanceTo;
+    //                 $download->issued_copies = $IssuedCopies;
+    //                 $download->issued_reason = $reasonIssue;
+    //                 $download->department = $stampImpression;
+
+    //                 $download->save();
+
+    //                 // download PDF file with download method
+
+    //                 return $pdf->stream('SOP-' . $id . '.pdf', ['Attachment' => false]);
+    //             } else {
+    //                 toastr()->error('You breach your monthly print limit.');
+
+    //                 return back();
+    //             }
+    //         } elseif ($controls->quatarly != 0) {
+    //             $weekDate = Carbon::now()->subDays(90)->format('d-m-Y');
+    //             $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+    //             if ($user + 1 <= $controls->quatarly) {
+    //                 //Downlad History
+    //                 $download = new PrintHistory;
+    //                 $download->document_id = $id;
+    //                 $download->user_id = Auth::user()->id;
+    //                 $download->role_id = Auth::user()->role;
+    //                 $download->date = Carbon::now()->format('d-m-Y');
+
+    //                 $download->issue_copies = $issue_copies;
+    //                 $download->print_reason = $print_reason;
+    //                 $download->document_number = $documentNo;
+    //                 $download->document_printed_copies = $NoofCopies;
+    //                 $download->issuance_to = $IssuanceTo;
+    //                 $download->issued_copies = $IssuedCopies;
+    //                 $download->issued_reason = $reasonIssue;
+    //                 $download->department = $stampImpression;
+
+    //                 $download->save();
+
+    //                 // download PDF file with download method
+
+    //                 return $pdf->stream('SOP-' . $id . '.pdf', ['Attachment' => false]);
+    //             } else {
+    //                 toastr()->error('You breach your quaterly print limit.');
+
+    //                 return back();
+    //             }
+    //         } elseif ($controls->yearly != 0) {
+    //             $weekDate = Carbon::now()->subDays(365)->format('d-m-Y');
+    //             $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
+    //             if ($user + 1 <= $controls->yearly) {
+    //                 //Downlad History
+    //                 $download = new PrintHistory;
+    //                 $download->document_id = $id;
+    //                 $download->user_id = Auth::user()->id;
+    //                 $download->role_id = Auth::user()->role;
+    //                 $download->date = Carbon::now()->format('d-m-Y');
+
+    //                 $download->issue_copies = $issue_copies;
+    //                 $download->print_reason = $print_reason;
+    //                 $download->document_number = $documentNo;
+    //                 $download->document_printed_copies = $NoofCopies;
+    //                 $download->issuance_to = $IssuanceTo;
+    //                 $download->issued_copies = $IssuedCopies;
+    //                 $download->issued_reason = $reasonIssue;
+    //                 $download->department = $stampImpression;
+         
+    //                 $download->save();
+
+    //                 // download PDF file with download method
+
+    //                 return $pdf->stream('SOP-' . $id . '.pdf', ['Attachment' => false]);
+    //             } else {
+    //                 toastr()->error('You breach your yearly print limit.');
+
+    //                 return back();
+    //             }
+    //         } else {
+    //             toastr()->error('There is no controls provide for your role.');
+
+    //             return back();
+    //         }
+    //     } else {
+    //         toastr()->error('There is no controls provide for your role.');
+
+    //         return back();
+    //     }
+    // }
+
+public function printPDF($id)
+{
+    $request = request();
+
+    /*
+    |--------------------------------------------------------------------------
+    | Manual validation
+    |--------------------------------------------------------------------------
+    */
+
+    if (!$request->document_request_id) {
+        toastr()->error('Please select Request ID.');
+        return redirect()->back();
+    }
+
+    if (!$request->issued_date) {
+        toastr()->error('Issued Date is required.');
+        return redirect()->back();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Find document
+    |--------------------------------------------------------------------------
+    */
+
+    $document = Document::find($id);
+
+    if (!$document) {
+        toastr()->error('Document not found.');
+        return redirect()->back();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fetch actual closed request
+    |--------------------------------------------------------------------------
+    */
+
+    $documentRequest = DocumentRequest::where(
+            'id',
+            $request->document_request_id
+        )
+        ->where('document_id', $document->id)
+        ->where('status', 'QA Approval')
+        ->first();
+
+    if (!$documentRequest) {
+        toastr()->error(
+            'Selected request is invalid, not completed or does not belong to this document.'
+        );
+
+        return redirect()->back();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Prevent same request from being printed twice
+    |--------------------------------------------------------------------------
+    */
+
+    $alreadyPrinted = PrintHistory::where(
+            'document_request_id',
+            $documentRequest->id
+        )
+        ->exists();
+
+    if ($alreadyPrinted) {
+        toastr()->error(
+            'This Request ID has already been used for printing.'
+        );
+
+        return redirect()->back();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Request and issuance details
+    |--------------------------------------------------------------------------
+    */
+
+    $formattedRequestId =
+        $documentRequest->request_id
+        ?? (
+            'Request-' .
+            str_pad(
+                $documentRequest->record,
+                3,
+                '0',
+                STR_PAD_LEFT
+            )
+        );
+
+    $issuedCopies =
+        (int) $documentRequest->number_of_copies;
+
+    $printReason =
+        $documentRequest->reason;
+
+    $issuedDate =
+        $request->issued_date;
+
+    $issuedById =
+        Auth::id();
+
+    $issuedByName =
+        Auth::user()->name;
+
+    $issuanceTo =
+        $documentRequest->request_to;
+
+    $issuedToUser =
+        User::find($issuanceTo);
+
+    if (!$issuedToUser) {
+        toastr()->error(
+            'Request To user is not available.'
+        );
+
+        return redirect()->back();
+    }
+
+    $issuedToName =
+        $issuedToUser->name;
+
+    $issuedToDepartment =
+        Department::where(
+            'id',
+            $issuedToUser->departmentid
+        )->value('name');
+
+    if ($issuedCopies < 1) {
+        toastr()->error(
+            'Number of issued copies must be at least 1.'
+        );
+
+        return redirect()->back();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Authenticated user roles
+    |--------------------------------------------------------------------------
+    */
+
+    $roleIds = DB::table('user_roles')
+        ->where('user_id', Auth::id())
+        ->pluck('role_id')
+        ->filter()
+        ->map(function ($roleId) {
+            return (int) $roleId;
+        })
+        ->unique()
+        ->values()
+        ->toArray();
+
+    if (empty($roleIds)) {
+        toastr()->error(
+            'No role is assigned to your account.'
+        );
+
+        return redirect()->back();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Print control
+    |--------------------------------------------------------------------------
+    */
+
+    $controls = PrintControl::whereIn(
+            'role_id',
+            $roleIds
+        )
+        ->orderByDesc('id')
+        ->first();
+
+    if (!$controls) {
+        toastr()->error(
+            'There is no print control configured for your assigned roles.'
+        );
+
+        return redirect()->back();
+    }
+
+    $limitResult =
+        $this->checkDocumentPrintLimit(
+            $controls,
+            Auth::id(),
+            $document->id
+        );
+
+    if (!$limitResult['allowed']) {
+        toastr()->error(
+            $limitResult['message']
+        );
+
+        return redirect()->back();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Department documents and serial
+    |--------------------------------------------------------------------------
+    */
+
+    $departmentId = $document->department_id;
+
+    $sopTypeShort = $document->sop_type_short;
+
+    if (!$departmentId) {
+        toastr()->error(
+            'Department ID is not associated with this document.'
+        );
+
+        return redirect()->back();
+    }
+
+    $documents = Document::where('department_id', $departmentId)
+        ->when(!empty($sopTypeShort),
+            function ($query) use ($sopTypeShort) {
+                $query->where(
+                    'sop_type_short',
+                    $sopTypeShort
+                );
+            }
+        )
+        ->orderBy('id')
+        ->get();
+
+    $currentId = 1;
+
+    foreach ($documents as $key => $doc) {
+        if ((int) $doc->id === (int) $document->id) {
+            $currentId = $key + 1;
+            break;
+        }
+    }
+
+    $sopNumber = $document->document_number;
+
+    /*
+    |--------------------------------------------------------------------------
+    | Prepare document data
+    |--------------------------------------------------------------------------
+    */
+
+    set_time_limit(180);
+
+    $data = Document::find($id);
+
+    $data->department = Department::find($data->department_id);
+
+    $data['originator'] = User::where('id', $data->originator_id)->value('name');
+
+    $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
+
+    $documentContent = DocumentContent::where('document_id', $id)->first();
+
+    $data['document_content'] = $documentContent;
+
+    $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
+
+    $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
+
+    $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+
+    $data['year'] = Carbon::parse($data->created_at)->format('Y');
+
+    $time = Carbon::now();
+
+    /*
+    |--------------------------------------------------------------------------
+    | Annexure data
+    |--------------------------------------------------------------------------
+    */
+
+    $annexures = [];
+
+    if ($documentContent && !empty($documentContent->annexuredata)) {
+        $unserializedAnnexures =
+            @unserialize(
+                $documentContent->annexuredata
+            );
+
+        if (is_array($unserializedAnnexures)) {
+            $annexures =
+                $unserializedAnnexures;
+        }
+    }
+
+    if (empty($data->document_type_id)) {
+        toastr()->error(
+            'Document type ID is missing.'
+        );
+
+        return redirect()->back();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Select Blade view
+    |--------------------------------------------------------------------------
+    */
+
+    $viewName = match ($data->document_type_id) {
+        'SOP' => 'frontend.documents.pdfpage',
+        'BOM' => 'frontend.documents.bom-pdf',
+        'FPS' => 'frontend.documents.finished-product-pdf',
+        'INPS' => 'frontend.documents.inprocess_s-pdf',
+        'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
+        'RAWMS' => 'frontend.documents.raw_ms-pdf',
+        'PAMS' => 'frontend.documents.package_ms-pdf',
+        'PIAS' => 'frontend.documents.product_item-pdf',
+        'MFPS' => 'frontend.documents.mfps-pdf',
+        'MFPSTP' => 'frontend.documents.mfpstp-pdf',
+        'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
+        'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+        'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
+        'RMSTP' => 'frontend.documents.raw_mstp-pdf',
+        'BMR' => 'frontend.documents.bmr-pdf',
+        'BPR' => 'frontend.documents.bpr-pdf',
+        'SPEC' => 'frontend.documents.spec-pdf',
+        'STP' => 'frontend.documents.stp-pdf',
+        'TDS' => 'frontend.documents.tds-pdf',
+        'GTP' => 'frontend.documents.gtp-pdf',
+        default => 'frontend.documents.pdfpage',
+    };
+
+    /*
+    | These document types contain real HTML content in Blade.
+    | Non-SOP types containing iframe/upload attachments use actual files.
+    |--------------------------------------------------------------------------
+    */
+
+    $bladeGeneratedTypes = ['SOP','FPS','INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP',];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Get actual attachments for non-SOP
+    |--------------------------------------------------------------------------
+    */
+
+    $sourceAttachmentPaths = [];
+
+    if (!in_array($document->document_type_id, $bladeGeneratedTypes, true)) {
+        $sourceAttachmentPaths =
+            $this->getNonSopDocumentPdfPaths(
+                $document,
+                $documentContent
+            );
+
+        if (empty($sourceAttachmentPaths)) {
+            toastr()->error(
+                'No printable PDF or image attachment was found for this document.'
+            );
+
+            return redirect()->back();
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Save print history only after source is confirmed
+    |--------------------------------------------------------------------------
+    */
+
+    $printHistory =
+        new PrintHistory();
+
+    $printHistory->document_id =
+        $document->id;
+
+    $printHistory->document_request_id =
+        $documentRequest->id;
+
+    $printHistory->request_id =
+        $formattedRequestId;
+
+    $printHistory->document_number =
+        $document->document_number;
+
+    $printHistory->user_id =
+        $issuedById;
+
+    $printHistory->issued_by =
+        $issuedById;
+
+    $printHistory->issued_by_name =
+        $issuedByName;
+
+    $printHistory->role_id =
+        Auth::user()->role;
+
+    $printHistory->date =
+        Carbon::now()->format('d-m-Y');
+
+    $printHistory->issued_date =
+        Carbon::parse(
+            $issuedDate
+        )->format('Y-m-d');
+
+    $printHistory->issue_copies =
+        $issuedCopies;
+
+    $printHistory->issued_copies =
+        $issuedCopies;
+
+    $printHistory->total_issued_copies =
+        $issuedCopies;
+
+    $printHistory->document_printed_copies =
+        $issuedCopies;
+
+    $printHistory->copy_number_range =
+        str_pad(1, 3, '0', STR_PAD_LEFT)
+        . '-'
+        . str_pad(
+            $issuedCopies,
+            3,
+            '0',
+            STR_PAD_LEFT
+        );
+
+    $printHistory->print_reason =
+        $printReason;
+
+    $printHistory->issued_reason =
+        $printReason;
+
+    $printHistory->issuance_to =
+        $issuanceTo;
+
+    $printHistory->issued_to_name =
+        $issuedToName;
+
+    $printHistory->department =
+        $issuedToDepartment;
+
+    $printHistory->issued_to_department =
+        $issuedToDepartment;
+
+    $printHistory->save();
+
+    /*
+    |--------------------------------------------------------------------------
+    | Stream printable issued copies
+    |--------------------------------------------------------------------------
+    */
+
+    return $this->streamIssuedDocumentCopies(
+        $viewName,
+        [
+            'data' => $data,
+            'time' => $time,
+            'document' => $document,
+            'annexures' => $annexures,
+            'currentId' => $currentId,
+            'documents' => $documents,
+            'sopNumber' => $sopNumber,
+
+            'requestId' => $formattedRequestId,
+            'issuedByName' => $issuedByName,
+            'issuedById' => $issuedById,
+            'issuedDate' => $issuedDate,
+            'issuedToName' => $issuedToName,
+            'issuedToDepartment' => $issuedToDepartment,
+            'printReason' => $printReason,
+            'totalIssuedCopies' => $issuedCopies,
+
+            'IssuedCopies' => $issuedCopies,
+            'IssueDate' => $issuedDate,
+            'stampImpression' => $issuedToDepartment,
+        ],
+        $issuedCopies,
+        $document,
+        $sourceAttachmentPaths
+    );
+}
+
+
+
+    public function printAnnexurePDF($id)
     {
-        $request = request();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Manual validation
-        |--------------------------------------------------------------------------
-        */
-
-        if (!$request->document_request_id) {
-            toastr()->error('Please select Request ID.');
-            return redirect()->back();
-        }
-
-        if (!$request->issued_date) {
-            toastr()->error('Issued Date is required.');
-            return redirect()->back();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Find document
-        |--------------------------------------------------------------------------
-        */
-
-        $document = Document::find($id);
-
-        if (!$document) {
-            toastr()->error('Document not found.');
-            return redirect()->back();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Fetch actual closed request
-        |--------------------------------------------------------------------------
-        */
-
-        $documentRequest = DocumentRequest::where(
-                'id',
-                $request->document_request_id
-            )
-            ->where('document_id', $document->id)
-            ->where('status', 'QA Approval')
-            ->first();
-
-        if (!$documentRequest) {
-            toastr()->error(
-                'Selected request is invalid, not completed or does not belong to this document.'
-            );
-
-            return redirect()->back();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Prevent same request from being printed twice
-        |--------------------------------------------------------------------------
-        */
-
-        $alreadyPrinted = PrintHistory::where(
-                'document_request_id',
-                $documentRequest->id
-            )
-            ->exists();
-
-        if ($alreadyPrinted) {
-            toastr()->error(
-                'This Request ID has already been used for printing.'
-            );
-
-            return redirect()->back();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Request and issuance details
-        |--------------------------------------------------------------------------
-        */
-
-        $formattedRequestId =
-            $documentRequest->request_id
-            ?? (
-                'Request-' .
-                str_pad(
-                    $documentRequest->record,
-                    3,
-                    '0',
-                    STR_PAD_LEFT
-                )
-            );
-
-        $issuedCopies =
-            (int) $documentRequest->number_of_copies;
-
-        $printReason =
-            $documentRequest->reason;
-
-        $issuedDate =
-            $request->issued_date;
-
-        $issuedById =
-            Auth::id();
-
-        $issuedByName =
-            Auth::user()->name;
-
-        $issuanceTo =
-            $documentRequest->request_to;
-
-        $issuedToUser =
-            User::find($issuanceTo);
-
-        if (!$issuedToUser) {
-            toastr()->error(
-                'Request To user is not available.'
-            );
-
-            return redirect()->back();
-        }
-
-        $issuedToName =
-            $issuedToUser->name;
-
-        $issuedToDepartment =
-            Department::where(
-                'id',
-                $issuedToUser->departmentid
-            )->value('name');
-
-        if ($issuedCopies < 1) {
-            toastr()->error(
-                'Number of issued copies must be at least 1.'
-            );
-
-            return redirect()->back();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Authenticated user roles
-        |--------------------------------------------------------------------------
-        */
-
+    
         $roleIds = DB::table('user_roles')
             ->where('user_id', Auth::id())
             ->pluck('role_id')
@@ -8935,337 +9802,6 @@ class DocumentController extends Controller
             ->unique()
             ->values()
             ->toArray();
-
-        if (empty($roleIds)) {
-            toastr()->error(
-                'No role is assigned to your account.'
-            );
-
-            return redirect()->back();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Print control
-        |--------------------------------------------------------------------------
-        */
-
-        $controls = PrintControl::whereIn(
-                'role_id',
-                $roleIds
-            )
-            ->orderByDesc('id')
-            ->first();
-
-        if (!$controls) {
-            toastr()->error(
-                'There is no print control configured for your assigned roles.'
-            );
-
-            return redirect()->back();
-        }
-
-        $limitResult =
-            $this->checkDocumentPrintLimit(
-                $controls,
-                Auth::id(),
-                $document->id
-            );
-
-        if (!$limitResult['allowed']) {
-            toastr()->error(
-                $limitResult['message']
-            );
-
-            return redirect()->back();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Department documents and serial
-        |--------------------------------------------------------------------------
-        */
-
-        $departmentId = $document->department_id;
-
-        $sopTypeShort = $document->sop_type_short;
-
-        if (!$departmentId) {
-            toastr()->error(
-                'Department ID is not associated with this document.'
-            );
-
-            return redirect()->back();
-        }
-
-        $documents = Document::where('department_id', $departmentId)
-            ->when(!empty($sopTypeShort),
-                function ($query) use ($sopTypeShort) {
-                    $query->where(
-                        'sop_type_short',
-                        $sopTypeShort
-                    );
-                }
-            )
-            ->orderBy('id')
-            ->get();
-
-        $currentId = 1;
-
-        foreach ($documents as $key => $doc) {
-            if ((int) $doc->id === (int) $document->id) {
-                $currentId = $key + 1;
-                break;
-            }
-        }
-
-        $sopNumber = $document->document_number;
-
-        /*
-        |--------------------------------------------------------------------------
-        | Prepare document data
-        |--------------------------------------------------------------------------
-        */
-
-        set_time_limit(180);
-
-        $data = Document::find($id);
-
-        $data->department = Department::find($data->department_id);
-
-        $data['originator'] = User::where('id', $data->originator_id)->value('name');
-
-        $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
-
-        $documentContent = DocumentContent::where('document_id', $id)->first();
-
-        $data['document_content'] = $documentContent;
-
-        $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
-
-        $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
-
-        $data['document_division'] = Division::where('id', $data->division_id)->value('name');
-
-        $data['year'] = Carbon::parse($data->created_at)->format('Y');
-
-        $time = Carbon::now();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Annexure data
-        |--------------------------------------------------------------------------
-        */
-
-        $annexures = [];
-
-        if ($documentContent && !empty($documentContent->annexuredata)) {
-            $unserializedAnnexures =
-                @unserialize(
-                    $documentContent->annexuredata
-                );
-
-            if (is_array($unserializedAnnexures)) {
-                $annexures =
-                    $unserializedAnnexures;
-            }
-        }
-
-        if (empty($data->document_type_id)) {
-            toastr()->error(
-                'Document type ID is missing.'
-            );
-
-            return redirect()->back();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Select Blade view
-        |--------------------------------------------------------------------------
-        */
-
-        $viewName = match ($data->document_type_id) {
-            'SOP' => 'frontend.documents.pdfpage',
-            'BOM' => 'frontend.documents.bom-pdf',
-            'FPS' => 'frontend.documents.finished-product-pdf',
-            'INPS' => 'frontend.documents.inprocess_s-pdf',
-            'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-            'RAWMS' => 'frontend.documents.raw_ms-pdf',
-            'PAMS' => 'frontend.documents.package_ms-pdf',
-            'PIAS' => 'frontend.documents.product_item-pdf',
-            'MFPS' => 'frontend.documents.mfps-pdf',
-            'MFPSTP' => 'frontend.documents.mfpstp-pdf',
-            'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
-            'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
-            'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
-            'RMSTP' => 'frontend.documents.raw_mstp-pdf',
-            'BMR' => 'frontend.documents.bmr-pdf',
-            'BPR' => 'frontend.documents.bpr-pdf',
-            'SPEC' => 'frontend.documents.spec-pdf',
-            'STP' => 'frontend.documents.stp-pdf',
-            'TDS' => 'frontend.documents.tds-pdf',
-            'GTP' => 'frontend.documents.gtp-pdf',
-            default => 'frontend.documents.pdfpage',
-        };
-
-        /*
-        | These document types contain real HTML content in Blade.
-        | Non-SOP types containing iframe/upload attachments use actual files.
-        |--------------------------------------------------------------------------
-        */
-
-        $bladeGeneratedTypes = ['SOP','FPS','INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP',];
-
-        /*
-        |--------------------------------------------------------------------------
-        | Get actual attachments for non-SOP
-        |--------------------------------------------------------------------------
-        */
-
-        $sourceAttachmentPaths = [];
-
-        if (!in_array($document->document_type_id, $bladeGeneratedTypes, true)) {
-            $sourceAttachmentPaths =
-                $this->getNonSopDocumentPdfPaths(
-                    $document,
-                    $documentContent
-                );
-
-            if (empty($sourceAttachmentPaths)) {
-                toastr()->error(
-                    'No printable PDF or image attachment was found for this document.'
-                );
-
-                return redirect()->back();
-            }
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Save print history only after source is confirmed
-        |--------------------------------------------------------------------------
-        */
-
-        $printHistory =
-            new PrintHistory();
-
-        $printHistory->document_id =
-            $document->id;
-
-        $printHistory->document_request_id =
-            $documentRequest->id;
-
-        $printHistory->request_id =
-            $formattedRequestId;
-
-        $printHistory->document_number =
-            $document->document_number;
-
-        $printHistory->user_id =
-            $issuedById;
-
-        $printHistory->issued_by =
-            $issuedById;
-
-        $printHistory->issued_by_name =
-            $issuedByName;
-
-        $printHistory->role_id =
-            Auth::user()->role;
-
-        $printHistory->date =
-            Carbon::now()->format('d-m-Y');
-
-        $printHistory->issued_date =
-            Carbon::parse(
-                $issuedDate
-            )->format('Y-m-d');
-
-        $printHistory->issue_copies =
-            $issuedCopies;
-
-        $printHistory->issued_copies =
-            $issuedCopies;
-
-        $printHistory->total_issued_copies =
-            $issuedCopies;
-
-        $printHistory->document_printed_copies =
-            $issuedCopies;
-
-        $printHistory->copy_number_range =
-            str_pad(1, 3, '0', STR_PAD_LEFT)
-            . '-'
-            . str_pad(
-                $issuedCopies,
-                3,
-                '0',
-                STR_PAD_LEFT
-            );
-
-        $printHistory->print_reason =
-            $printReason;
-
-        $printHistory->issued_reason =
-            $printReason;
-
-        $printHistory->issuance_to =
-            $issuanceTo;
-
-        $printHistory->issued_to_name =
-            $issuedToName;
-
-        $printHistory->department =
-            $issuedToDepartment;
-
-        $printHistory->issued_to_department =
-            $issuedToDepartment;
-
-        $printHistory->save();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Stream printable issued copies
-        |--------------------------------------------------------------------------
-        */
-
-        return $this->streamIssuedDocumentCopies(
-            $viewName,
-            [
-                'data' => $data,
-                'time' => $time,
-                'document' => $document,
-                'annexures' => $annexures,
-                'currentId' => $currentId,
-                'documents' => $documents,
-                'sopNumber' => $sopNumber,
-
-                'requestId' => $formattedRequestId,
-                'issuedByName' => $issuedByName,
-                'issuedById' => $issuedById,
-                'issuedDate' => $issuedDate,
-                'issuedToName' => $issuedToName,
-                'issuedToDepartment' => $issuedToDepartment,
-                'printReason' => $printReason,
-                'totalIssuedCopies' => $issuedCopies,
-
-                'IssuedCopies' => $issuedCopies,
-                'IssueDate' => $issuedDate,
-                'stampImpression' => $issuedToDepartment,
-            ],
-            $issuedCopies,
-            $document,
-            $sourceAttachmentPaths
-        );
-    }
-
-    public function printAnnexurePDF($id)
-    {
-    
-        $roleIds = DB::table('user_roles')->where('user_id', Auth::id())->pluck('role_id')->filter()->map(function ($roleId) {
-                return (int) $roleId;
-            })->unique()->values()->toArray();
 
         if (empty($roleIds)) {
             toastr()->error('No role is assigned to your account.');
