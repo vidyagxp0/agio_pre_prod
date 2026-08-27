@@ -560,6 +560,7 @@
                         <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
                             style="max-height: 55px; max-width: 40px;">
                     </td>
+                    
                     <td class="title w-60"
                         style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
                         <p style="margin: 0; text-align: center;">{{ config('site.pdf_title') }}</p>
@@ -618,25 +619,39 @@
         </table>
           <span>Format No.:  {{ $annexureDocumentNumber }}</span>
     </footer>
-    
-  <div class="content">
-    <section>
-        <div class="procedure-block">
-            <div class="w-100">
-                <div class="w-100" id="table1">
+    <div class="content">
+        <section>
+            <div class="procedure-block">
+                <div class="w-100">
+                    <div class="w-100" id="table1">
 
-                    <h3 style="text-align:center;margin-bottom:20px;">
-                        ANNEXURE {{ $annexureNo }}
-                    </h3>
+                        @if(!empty($noDataFound) && $noDataFound)
 
-                    <div class="annexure-quill-content">
-                        {!! $annexure !!}
+                            <div style="
+                                text-align: center;
+                                margin-top: 300px;
+                                font-size: 22px;
+                                font-weight: bold;
+                            ">
+                                NO DATA FOUND
+                            </div>
+
+                        @else
+
+                            <h3 style="text-align:center;margin-bottom:20px;">
+                                ANNEXURE {{ $annexureNo }}
+                            </h3>
+
+                            <div class="annexure-quill-content">
+                                {!! $annexure !!}
+                            </div>
+
+                        @endif
+
                     </div>
-
                 </div>
             </div>
-        </div>
-    </section>
-</div>
+        </section>
+    </div>
 </body>
 </html>

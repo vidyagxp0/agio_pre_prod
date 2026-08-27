@@ -851,7 +851,9 @@
             </tbody>
             
         </table>
-        <span>Format No.: {{ $annexureDocumentNumber }}</span>
+       <span>
+            Format No.: {{ $annexureDocumentNumbers[0] ?? 'N/A' }}
+        </span>
     </footer>
 
 
