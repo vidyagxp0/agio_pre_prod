@@ -2816,7 +2816,7 @@ class IncidentController extends Controller
                 if ($request->hasFile('QA_attachments')) {
                     foreach ($request->file('QA_attachments') as $file) {
                         // $name = $request->name . 'QA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $name = $request->name . "QA_attachments" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . "attachments" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move(public_path('upload/'), $name);
                         $newFiles[] = $name;
                     }

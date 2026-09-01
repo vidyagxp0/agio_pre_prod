@@ -8759,12 +8759,12 @@
 
 
                             @php
-                            $istab7 =  (Helpers::check_roles($data->division_id, 'Deviation', 3))
+                            $istab7 =  Helpers::check_roles($data->division_id, 'Deviation', 3) && $data->Investigation_required == 'Yes'
                             @endphp
                         <!-- investigation -->
                         <div id="CCForm9" class="inner-block cctabcontent">
                             <div class="inner-block-content">
-                                <div class="row">
+                                <div class="row">   
 
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">

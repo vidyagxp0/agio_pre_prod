@@ -3126,7 +3126,7 @@ class DeviationController extends Controller
                 if ($request->hasFile('pending_attachment')) {
                     foreach ($request->file('pending_attachment') as $file) {
                     //  $name = $request->name . 'pending_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $name = $request->name . 'pending_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 
                         $file->move(public_path('upload/'), $name);
                         $newFiles[] = $name;
