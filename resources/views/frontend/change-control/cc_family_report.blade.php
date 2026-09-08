@@ -4196,7 +4196,8 @@
                     @forelse ($actionItemSummary as $key => $actionItem)
                         <tr>
                             <td class="sr-column center">{{ $key + 1 }}</td>
-                            <td class="action-no-column">{{ $actionItem->action_item_no ?? 'N/A' }}</td>
+                            <td class="action-no-column">   {{ Helpers::divisionNameForQMS($actionItem->division_id) }}/AI/{{ Helpers::year($actionItem->created_at) }}/{{ str_pad($actionItem->record, 4, '0', STR_PAD_LEFT) }}</td>
+                           
                             <td class="task-column">{!! $actionItem->task_description ?? 'N/A' !!}</td>
                             <td class="assigned-column">{{ $actionItem->assigned_to_name ?? 'N/A' }}</td>
                             <td class="due-date-column center">{{ $actionItem->formatted_due_date ?? 'N/A' }}</td>

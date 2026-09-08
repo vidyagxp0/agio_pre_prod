@@ -452,7 +452,7 @@
 
                         {{-- Action Item No. --}}
                         <td class="action-no-column">
-                            {{ $actionItem->action_item_no ?? 'N/A' }}
+                              {{ Helpers::divisionNameForQMS($actionItem->division_id) }}/AI/{{ Helpers::year($actionItem->created_at) }}/{{ str_pad($actionItem->record, 4, '0', STR_PAD_LEFT) ?? 'N/A' }}
                         </td>
 
 
