@@ -8051,419 +8051,268 @@ foreach ($annexures as $index => $annexure) {
         return view($viewName, compact('data', 'attachments'));
     }
 
-  public function annexureviewPdf($id)
-{
-    try {
+    public function annexureviewPdf($id)
+    {
+        try {
 
-        // ==========================================
-        // GET DOCUMENT
-        // ==========================================
+            // ==========================================
+            // GET DOCUMENT
+            // ==========================================
 
-        $document = Document::find($id);
+            $document = Document::find($id);
 
-        if (!$document) {
-            return redirect()->back()->withErrors([
-                'error' => 'Document not found'
-            ]);
-        }
-
-
-        // ==========================================
-        // DOCUMENT DATA
-        // ==========================================
-
-        $data = $document;
-
-        $departmentId = $document->department_id;
-
-        if (!$departmentId) {
-            return redirect()->back()->withErrors([
-                'error' => 'Department ID not associated with this document'
-            ]);
-        }
-
-
-        // ==========================================
-        // GET DEPARTMENT
-        // ==========================================
-
-        $department = Department::find($departmentId);
-
-        $data->department = $department;
-        $data['department_name'] = $department ? $department->name : '';
-
-
-        // ==========================================
-        // REVISION NUMBER
-        // ==========================================
-
-        if ($document->revised == 'Yes') {
-
-            $latestRevision = Document::where(
-                'revised_doc',
-                $document->id
-            )->max('minor');
-
-            $revisionNumber = $latestRevision
-                ? (int) $latestRevision + 1
-                : 1;
-
-            $revisionNumber = str_pad(
-                $revisionNumber,
-                2,
-                '0',
-                STR_PAD_LEFT
-            );
-
-        } else {
-
-            $revisionNumber = '00';
-        }
-
-
-        // ==========================================
-        // CURRENT DOCUMENT ID
-        // ==========================================
-
-        $currentId = Document::where('department_id', $departmentId)
-            ->orderBy('id')
-            ->pluck('id')
-            ->search($id);
-
-        $currentId = $currentId !== false
-            ? $currentId + 1
-            : null;
-
-
-        // ==========================================
-        // ORIGINATOR
-        // ==========================================
-
-        $originatorUser = User::find($document->originator_id);
-
-        $data['originator'] = $originatorUser->name ?? null;
-        $data['originator_email'] = $originatorUser->email ?? null;
-
-
-        // ==========================================
-        // DOCUMENT TYPE
-        // ==========================================
-
-        $docType = DocumentType::find(
-            $document->document_type_id
-        );
-
-        $data['document_type_name'] = $docType->name ?? null;
-        $data['document_type_code'] = $docType->typecode ?? null;
-
-
-        // ==========================================
-        // DIVISION & YEAR
-        // ==========================================
-
-        $data['document_division'] = Division::where(
-            'id',
-            $data->division_id
-        )->value('name');
-
-        $data['year'] = Carbon::parse(
-            $data->created_at
-        )->format('Y');
-
-
-        // ==========================================
-        // GET DOCUMENT CONTENT
-        // ==========================================
-
-        $documentContent = DocumentContent::where(
-            'document_id',
-            $id
-        )->first();
-
-        $data['document_content'] = $documentContent;
-
-
-        // ==========================================
-        // GET ANNEXURES
-        // ==========================================
-
-        $annexures = [];
-
-        if (
-            $documentContent &&
-            !empty($documentContent->annexuredata)
-        ) {
-
-            $unserializedAnnexures = @unserialize(
-                $documentContent->annexuredata
-            );
-
-            // Ensure array hai
-            if (is_array($unserializedAnnexures)) {
-                $annexures = $unserializedAnnexures;
+            if (!$document) {
+                return redirect()->back()->withErrors([
+                    'error' => 'Document not found'
+                ]);
             }
-        }
-
-
-        // ==========================================
-        // REMOVE EMPTY ANNEXURES
-        // ==========================================
-
-        $validAnnexures = [];
-
-        foreach ($annexures as $annexure) {
-
-            // HTML remove karke actual text check karo
-            $plainText = trim(
-                strip_tags(
-                    html_entity_decode(
-                        $annexure,
-                        ENT_QUOTES | ENT_HTML5,
-                        'UTF-8'
-                    )
-                )
-            );
-
-            // Agar actual data nahi hai to skip
-            if ($plainText === '') {
-                continue;
-            }
-
-            $validAnnexures[] = $annexure;
-        }
-
-
-        // ==========================================
-        // DOCUMENT NUMBER DETAILS
-        // Example:
-        // SOP/PG/004-00
-        // ==========================================
-
-        $mainDocumentNumber = $document->document_number ?? '';
-
-        $parts = explode(
-            '/',
-            $mainDocumentNumber
-        );
-
-        // PG
-        $departmentCode = $parts[1] ?? '';
-
-        // 004-00
-        $numberRevision = explode(
-            '-',
-            $parts[2] ?? ''
-        );
-
-        // 004
-        $documentSequence = $numberRevision[0] ?? '';
-
-        // 00
-        $revision = $numberRevision[1] ?? '00';
-
-
-        // ==========================================
-        // BUILD VALID ANNEXURE DATA
-        // ==========================================
-
-        $checkAnnexures = [];
-
-        foreach ($validAnnexures as $key => $annexure) {
-
-            // Continuous Number:
-            // F1, F2, F3...
-            $annexureNo = $key + 1;
-
-
-            // Example:
-            // PG/004/F1-00
-            $annexureDocumentNumber =
-                $departmentCode . '/' .
-                $documentSequence . '/F' .
-                $annexureNo . '-' .
-                $revision;
-
-
-            $checkAnnexures[] = [
-                'annexure_no' => $annexureNo,
-
-                'annexure_document_number' =>
-                    $annexureDocumentNumber,
-
-                'content' => $annexure,
-            ];
-        }
-
-
-        // ==========================================
-        // TIME & TEMP FILES
-        // ==========================================
-
-        $time = Carbon::now();
-
-        $tempFiles = [];
-
-
-        // ==========================================
-        // CASE 1:
-        // NO ANNEXURE DATA
-        //
-        // Blank PDF nahi banega.
-        // Ek PDF page me NO DATA FOUND show hoga.
-        // ==========================================
-
-        if (empty($checkAnnexures)) {
-
-            $annexurePdf = PDF::loadView(
-                'frontend.documents.annexure-pdf',
-                [
-                    'data' => $data,
-                    'time' => $time,
-                    'document' => $document,
-
-                    'annexure' => null,
-                    'annexureNo' => null,
-                    'annexureDocumentNumber' => null,
-
-                    'currentId' => $currentId,
-                    'revisionNumber' => $revisionNumber,
-
-                    'noDataFound' => true,
-                ]
-            );
-
-
-            $annexurePdf->setPaper('A4');
-
-
-            $annexurePdf->setOptions([
-                'defaultFont' => 'sans-serif',
-                'isHtml5ParserEnabled' => true,
-                'isRemoteEnabled' => true,
-                'isPhpEnabled' => false,
-            ]);
-
-
-            $annexurePdf->render();
 
 
             // ==========================================
-            // WATERMARK
-            // =======================isRemoteEnabled===================
+            // DOCUMENT DATA
+            // ==========================================
 
-            $dompdf = $annexurePdf->getDomPDF();
-            $canvas = $dompdf->getCanvas();
+            $data = $document;
 
-            $canvas->set_default_view('FitB');
+            $departmentId = $document->department_id;
 
-            $width = $canvas->get_width();
-            $height = $canvas->get_height();
-
-
-            $watermarkText = strtoupper(
-                Helpers::getDocStatusByStage(
-                    $data->stage,
-                    $data->training_required
-                )
-            );
+            if (!$departmentId) {
+                return redirect()->back()->withErrors([
+                    'error' => 'Department ID not associated with this document'
+                ]);
+            }
 
 
-            $watermarkFont = $dompdf
-                ->getFontMetrics()
-                ->get_font('sans-serif', 'bold');
+            // ==========================================
+            // GET DEPARTMENT
+            // ==========================================
 
-            $watermarkSize = 25;
+            $department = Department::find($departmentId);
+
+            $data->department = $department;
+            $data['department_name'] = $department ? $department->name : '';
 
 
-            $watermarkTextWidth = $dompdf
-                ->getFontMetrics()
-                ->getTextWidth(
-                    $watermarkText,
-                    $watermarkFont,
-                    $watermarkSize
+            // ==========================================
+            // REVISION NUMBER
+            // ==========================================
+
+            if ($document->revised == 'Yes') {
+
+                $latestRevision = Document::where(
+                    'revised_doc',
+                    $document->id
+                )->max('minor');
+
+                $revisionNumber = $latestRevision
+                    ? (int) $latestRevision + 1
+                    : 1;
+
+                $revisionNumber = str_pad(
+                    $revisionNumber,
+                    2,
+                    '0',
+                    STR_PAD_LEFT
                 );
 
+            } else {
 
-            $lightGray = [0.82, 0.82, 0.82];
+                $revisionNumber = '00';
+            }
 
 
-            $canvas->page_text(
-                ($width - $watermarkTextWidth) / 2,
-                ($height / 2) + 50,
-                $watermarkText,
-                $watermarkFont,
-                $watermarkSize,
-                $lightGray,
-                0.0,
-                6,
-                -25
+            // ==========================================
+            // CURRENT DOCUMENT ID
+            // ==========================================
+
+            $currentId = Document::where('department_id', $departmentId)
+                ->orderBy('id')
+                ->pluck('id')
+                ->search($id);
+
+            $currentId = $currentId !== false
+                ? $currentId + 1
+                : null;
+
+
+            // ==========================================
+            // ORIGINATOR
+            // ==========================================
+
+            $originatorUser = User::find($document->originator_id);
+
+            $data['originator'] = $originatorUser->name ?? null;
+            $data['originator_email'] = $originatorUser->email ?? null;
+
+
+            // ==========================================
+            // DOCUMENT TYPE
+            // ==========================================
+
+            $docType = DocumentType::find(
+                $document->document_type_id
             );
 
+            $data['document_type_name'] = $docType->name ?? null;
+            $data['document_type_code'] = $docType->typecode ?? null;
+
 
             // ==========================================
-            // PAGE NUMBER
+            // DIVISION & YEAR
             // ==========================================
 
-            $canvas->page_script(
-                function (
-                    $pageNumber,
-                    $pageCount,
-                    $canvas,
-                    $fontMetrics
-                ) {
+            $data['document_division'] = Division::where(
+                'id',
+                $data->division_id
+            )->value('name');
 
-                    $font = $fontMetrics->get_font(
-                        'sans-serif',
-                        'bold'
-                    );
-
-                    $fontSize = 12;
-
-                    $pageText = sprintf(
-                        '%02d - %02d',
-                        $pageNumber,
-                        $pageCount
-                    );
+            $data['year'] = Carbon::parse(
+                $data->created_at
+            )->format('Y');
 
 
-                    $canvas->text(
-                        500,
-                        765,
-                        $pageText,
-                        $font,
-                        $fontSize,
-                        [0, 0, 0]
-                    );
+            // ==========================================
+            // GET DOCUMENT CONTENT
+            // ==========================================
+
+            $documentContent = DocumentContent::where(
+                'document_id',
+                $id
+            )->first();
+
+            $data['document_content'] = $documentContent;
+
+
+            // ==========================================
+            // GET ANNEXURES
+            // ==========================================
+
+            $annexures = [];
+
+            if (
+                $documentContent &&
+                !empty($documentContent->annexuredata)
+            ) {
+
+                $unserializedAnnexures = @unserialize(
+                    $documentContent->annexuredata
+                );
+
+                // Ensure array hai
+                if (is_array($unserializedAnnexures)) {
+                    $annexures = $unserializedAnnexures;
                 }
+            }
+
+
+            // ==========================================
+            // REMOVE EMPTY ANNEXURES
+            // ==========================================
+
+            $validAnnexures = [];
+
+            foreach ($annexures as $annexure) {
+
+                // HTML remove karke actual text check karo
+                $plainText = trim(
+                    strip_tags(
+                        html_entity_decode(
+                            $annexure,
+                            ENT_QUOTES | ENT_HTML5,
+                            'UTF-8'
+                        )
+                    )
+                );
+
+                // Agar actual data nahi hai to skip
+                if ($plainText === '') {
+                    continue;
+                }
+
+                $validAnnexures[] = $annexure;
+            }
+
+
+            // ==========================================
+            // DOCUMENT NUMBER DETAILS
+            // Example:
+            // SOP/PG/004-00
+            // ==========================================
+
+            $mainDocumentNumber = $document->document_number ?? '';
+
+            $parts = explode(
+                '/',
+                $mainDocumentNumber
             );
 
+            // PG
+            $departmentCode = $parts[1] ?? '';
 
-            // ==========================================
-            // SAVE TEMP PDF
-            // ==========================================
-
-            $filePath = tempnam(
-                sys_get_temp_dir(),
-                'annex_'
-            ) . '.pdf';
-
-            file_put_contents(
-                $filePath,
-                $annexurePdf->output()
+            // 004-00
+            $numberRevision = explode(
+                '-',
+                $parts[2] ?? ''
             );
 
-            $tempFiles[] = $filePath;
+            // 004
+            $documentSequence = $numberRevision[0] ?? '';
 
+            // 00
+            $revision = $numberRevision[1] ?? '00';
 
-        } else {
 
             // ==========================================
-            // CASE 2:
-            // VALID ANNEXURES FOUND
-            // Generate only valid annexure PDFs
+            // BUILD VALID ANNEXURE DATA
             // ==========================================
 
-            foreach ($checkAnnexures as $annexureData) {
+            $checkAnnexures = [];
+
+            foreach ($validAnnexures as $key => $annexure) {
+
+                // Continuous Number:
+                // F1, F2, F3...
+                $annexureNo = $key + 1;
+
+
+                // Example:
+                // PG/004/F1-00
+                $annexureDocumentNumber =
+                    $departmentCode . '/' .
+                    $documentSequence . '/F' .
+                    $annexureNo . '-' .
+                    $revision;
+
+
+                $checkAnnexures[] = [
+                    'annexure_no' => $annexureNo,
+
+                    'annexure_document_number' =>
+                        $annexureDocumentNumber,
+
+                    'content' => $annexure,
+                ];
+            }
+
+
+            // ==========================================
+            // TIME & TEMP FILES
+            // ==========================================
+
+            $time = Carbon::now();
+
+            $tempFiles = [];
+
+
+            // ==========================================
+            // CASE 1:
+            // NO ANNEXURE DATA
+            //
+            // Blank PDF nahi banega.
+            // Ek PDF page me NO DATA FOUND show hoga.
+            // ==========================================
+
+            if (empty($checkAnnexures)) {
 
                 $annexurePdf = PDF::loadView(
                     'frontend.documents.annexure-pdf',
@@ -8472,23 +8321,14 @@ foreach ($annexures as $index => $annexure) {
                         'time' => $time,
                         'document' => $document,
 
-                        'annexure' =>
-                            $annexureData['content'],
-
-                        'annexureNo' =>
-                            $annexureData['annexure_no'],
-
-                        'annexureDocumentNumber' =>
-                            $annexureData[
-                                'annexure_document_number'
-                            ],
+                        'annexure' => null,
+                        'annexureNo' => null,
+                        'annexureDocumentNumber' => null,
 
                         'currentId' => $currentId,
+                        'revisionNumber' => $revisionNumber,
 
-                        'revisionNumber' =>
-                            $revisionNumber,
-
-                        'noDataFound' => false,
+                        'noDataFound' => true,
                     ]
                 );
 
@@ -8508,8 +8348,8 @@ foreach ($annexures as $index => $annexure) {
 
 
                 // ==========================================
-                // GET DOMPDF CANVAS
-                // ==========================================
+                // WATERMARK
+                // =======================isRemoteEnabled===================
 
                 $dompdf = $annexurePdf->getDomPDF();
                 $canvas = $dompdf->getCanvas();
@@ -8519,10 +8359,6 @@ foreach ($annexures as $index => $annexure) {
                 $width = $canvas->get_width();
                 $height = $canvas->get_height();
 
-
-                // ==========================================
-                // WATERMARK
-                // ==========================================
 
                 $watermarkText = strtoupper(
                     Helpers::getDocStatusByStage(
@@ -8583,7 +8419,6 @@ foreach ($annexures as $index => $annexure) {
 
                         $fontSize = 12;
 
-
                         $pageText = sprintf(
                             '%02d - %02d',
                             $pageNumber,
@@ -8604,7 +8439,7 @@ foreach ($annexures as $index => $annexure) {
 
 
                 // ==========================================
-                // SAVE TEMP ANNEXURE PDF
+                // SAVE TEMP PDF
                 // ==========================================
 
                 $filePath = tempnam(
@@ -8612,185 +8447,350 @@ foreach ($annexures as $index => $annexure) {
                     'annex_'
                 ) . '.pdf';
 
-
                 file_put_contents(
                     $filePath,
                     $annexurePdf->output()
                 );
 
-
                 $tempFiles[] = $filePath;
-            }
-        }
 
 
-        // ==========================================
-        // MERGE ALL GENERATED ANNEXURE PDFs
-        // ==========================================
+            } else {
 
-        $mergedPdf = new \setasign\Fpdi\Fpdi();
+                // ==========================================
+                // CASE 2:
+                // VALID ANNEXURES FOUND
+                // Generate only valid annexure PDFs
+                // ==========================================
 
+                foreach ($checkAnnexures as $annexureData) {
 
-        foreach ($tempFiles as $file) {
+                    $annexurePdf = PDF::loadView(
+                        'frontend.documents.annexure-pdf',
+                        [
+                            'data' => $data,
+                            'time' => $time,
+                            'document' => $document,
 
-            $pageCount = $mergedPdf->setSourceFile(
-                $file
-            );
+                            'annexure' =>
+                                $annexureData['content'],
 
+                            'annexureNo' =>
+                                $annexureData['annexure_no'],
 
-            for (
-                $pageNo = 1;
-                $pageNo <= $pageCount;
-                $pageNo++
-            ) {
+                            'annexureDocumentNumber' =>
+                                $annexureData[
+                                    'annexure_document_number'
+                                ],
 
-                $template = $mergedPdf->importPage(
-                    $pageNo
-                );
+                            'currentId' => $currentId,
 
-                $size = $mergedPdf->getTemplateSize(
-                    $template
-                );
+                            'revisionNumber' =>
+                                $revisionNumber,
 
-
-                $mergedPdf->AddPage(
-                    $size['orientation'],
-                    [
-                        $size['width'],
-                        $size['height']
-                    ]
-                );
-
-
-                $mergedPdf->useTemplate(
-                    $template
-                );
-            }
-        }
-
-
-        // ==========================================
-        // APPEND EXISTING ATTACHED PDFs
-        // ==========================================
-
-        if (!empty($data->documents)) {
-
-            $pdfArray = explode(
-                ',',
-                $data->documents
-            );
-
-
-            foreach ($pdfArray as $pdfFile) {
-
-                $existingPdfPath = public_path(
-                    'upload/PDF/' . trim($pdfFile)
-                );
-
-
-                if (!file_exists($existingPdfPath)) {
-                    continue;
-                }
-
-
-                try {
-
-                    $pageCount = $mergedPdf->setSourceFile(
-                        $existingPdfPath
+                            'noDataFound' => false,
+                        ]
                     );
 
 
-                    for (
-                        $pageNo = 1;
-                        $pageNo <= $pageCount;
-                        $pageNo++
-                    ) {
+                    $annexurePdf->setPaper('A4');
 
-                        $template = $mergedPdf->importPage(
-                            $pageNo
+
+                    $annexurePdf->setOptions([
+                        'defaultFont' => 'sans-serif',
+                        'isHtml5ParserEnabled' => true,
+                        'isRemoteEnabled' => true,
+                        'isPhpEnabled' => false,
+                    ]);
+
+
+                    $annexurePdf->render();
+
+
+                    // ==========================================
+                    // GET DOMPDF CANVAS
+                    // ==========================================
+
+                    $dompdf = $annexurePdf->getDomPDF();
+                    $canvas = $dompdf->getCanvas();
+
+                    $canvas->set_default_view('FitB');
+
+                    $width = $canvas->get_width();
+                    $height = $canvas->get_height();
+
+
+                    // ==========================================
+                    // WATERMARK
+                    // ==========================================
+
+                    $watermarkText = strtoupper(
+                        Helpers::getDocStatusByStage(
+                            $data->stage,
+                            $data->training_required
+                        )
+                    );
+
+
+                    $watermarkFont = $dompdf
+                        ->getFontMetrics()
+                        ->get_font('sans-serif', 'bold');
+
+                    $watermarkSize = 25;
+
+
+                    $watermarkTextWidth = $dompdf
+                        ->getFontMetrics()
+                        ->getTextWidth(
+                            $watermarkText,
+                            $watermarkFont,
+                            $watermarkSize
                         );
 
-                        $size = $mergedPdf->getTemplateSize(
-                            $template
-                        );
+
+                    $lightGray = [0.82, 0.82, 0.82];
 
 
-                        $mergedPdf->AddPage(
-                            $size['orientation'],
-                            [
-                                $size['width'],
-                                $size['height']
-                            ]
-                        );
+                    $canvas->page_text(
+                        ($width - $watermarkTextWidth) / 2,
+                        ($height / 2) + 50,
+                        $watermarkText,
+                        $watermarkFont,
+                        $watermarkSize,
+                        $lightGray,
+                        0.0,
+                        6,
+                        -25
+                    );
 
 
-                        $mergedPdf->useTemplate(
-                            $template
-                        );
-                    }
+                    // ==========================================
+                    // PAGE NUMBER
+                    // ==========================================
 
-                } catch (\Exception $e) {
+                    $canvas->page_script(
+                        function (
+                            $pageNumber,
+                            $pageCount,
+                            $canvas,
+                            $fontMetrics
+                        ) {
 
-                    // Invalid / unsupported PDF ho to skip
-                    continue;
+                            $font = $fontMetrics->get_font(
+                                'sans-serif',
+                                'bold'
+                            );
+
+                            $fontSize = 12;
+
+
+                            $pageText = sprintf(
+                                '%02d - %02d',
+                                $pageNumber,
+                                $pageCount
+                            );
+
+
+                            $canvas->text(
+                                500,
+                                765,
+                                $pageText,
+                                $font,
+                                $fontSize,
+                                [0, 0, 0]
+                            );
+                        }
+                    );
+
+
+                    // ==========================================
+                    // SAVE TEMP ANNEXURE PDF
+                    // ==========================================
+
+                    $filePath = tempnam(
+                        sys_get_temp_dir(),
+                        'annex_'
+                    ) . '.pdf';
+
+
+                    file_put_contents(
+                        $filePath,
+                        $annexurePdf->output()
+                    );
+
+
+                    $tempFiles[] = $filePath;
                 }
             }
-        }
 
 
-        // ==========================================
-        // OUTPUT PDF
-        // ==========================================
+            // ==========================================
+            // MERGE ALL GENERATED ANNEXURE PDFs
+            // ==========================================
 
-        $pdfContent = $mergedPdf->Output('S');
+            $mergedPdf = new \setasign\Fpdi\Fpdi();
 
 
-        // ==========================================
-        // DELETE TEMP FILES
-        // ==========================================
+            foreach ($tempFiles as $file) {
 
-        foreach ($tempFiles as $file) {
+                $pageCount = $mergedPdf->setSourceFile(
+                    $file
+                );
 
-            if (file_exists($file)) {
-                unlink($file);
+
+                for (
+                    $pageNo = 1;
+                    $pageNo <= $pageCount;
+                    $pageNo++
+                ) {
+
+                    $template = $mergedPdf->importPage(
+                        $pageNo
+                    );
+
+                    $size = $mergedPdf->getTemplateSize(
+                        $template
+                    );
+
+
+                    $mergedPdf->AddPage(
+                        $size['orientation'],
+                        [
+                            $size['width'],
+                            $size['height']
+                        ]
+                    );
+
+
+                    $mergedPdf->useTemplate(
+                        $template
+                    );
+                }
             }
-        }
 
 
-        // ==========================================
-        // RETURN PDF
-        // ==========================================
+            // ==========================================
+            // APPEND EXISTING ATTACHED PDFs
+            // ==========================================
 
-        return response($pdfContent)
-            ->header('Content-Type', 'application/pdf')
-            ->header(
-                'Content-Disposition',
-                'inline; filename="Annexures.pdf"'
+            if (!empty($data->documents)) {
+
+                $pdfArray = explode(
+                    ',',
+                    $data->documents
+                );
+
+
+                foreach ($pdfArray as $pdfFile) {
+
+                    $existingPdfPath = public_path(
+                        'upload/PDF/' . trim($pdfFile)
+                    );
+
+
+                    if (!file_exists($existingPdfPath)) {
+                        continue;
+                    }
+
+
+                    try {
+
+                        $pageCount = $mergedPdf->setSourceFile(
+                            $existingPdfPath
+                        );
+
+
+                        for (
+                            $pageNo = 1;
+                            $pageNo <= $pageCount;
+                            $pageNo++
+                        ) {
+
+                            $template = $mergedPdf->importPage(
+                                $pageNo
+                            );
+
+                            $size = $mergedPdf->getTemplateSize(
+                                $template
+                            );
+
+
+                            $mergedPdf->AddPage(
+                                $size['orientation'],
+                                [
+                                    $size['width'],
+                                    $size['height']
+                                ]
+                            );
+
+
+                            $mergedPdf->useTemplate(
+                                $template
+                            );
+                        }
+
+                    } catch (\Exception $e) {
+
+                        // Invalid / unsupported PDF ho to skip
+                        continue;
+                    }
+                }
+            }
+
+
+            // ==========================================
+            // OUTPUT PDF
+            // ==========================================
+
+            $pdfContent = $mergedPdf->Output('S');
+
+
+            // ==========================================
+            // DELETE TEMP FILES
+            // ==========================================
+
+            foreach ($tempFiles as $file) {
+
+                if (file_exists($file)) {
+                    unlink($file);
+                }
+            }
+
+
+            // ==========================================
+            // RETURN PDF
+            // ==========================================
+
+            return response($pdfContent)
+                ->header('Content-Type', 'application/pdf')
+                ->header(
+                    'Content-Disposition',
+                    'inline; filename="Annexures.pdf"'
+                );
+
+        } catch (\Exception $e) {
+
+            // ==========================================
+            // CLEAN ERROR RESPONSE
+            // ==========================================
+
+            \Log::error(
+                'Annexure PDF Error: ' . $e->getMessage(),
+                [
+                    'document_id' => $id,
+                    'line' => $e->getLine(),
+                    'file' => $e->getFile(),
+                ]
             );
 
-    } catch (\Exception $e) {
-
-        // ==========================================
-        // CLEAN ERROR RESPONSE
-        // ==========================================
-
-        \Log::error(
-            'Annexure PDF Error: ' . $e->getMessage(),
-            [
-                'document_id' => $id,
-                'line' => $e->getLine(),
-                'file' => $e->getFile(),
-            ]
-        );
-
-        return redirect()
-            ->back()
-            ->withErrors([
-                'error' =>
-                    'Unable to generate Annexure PDF. Please try again.'
-            ]);
+            return redirect()
+                ->back()
+                ->withErrors([
+                    'error' =>
+                        'Unable to generate Annexure PDF. Please try again.'
+                ]);
+        }
     }
-}
    
     public function printPDF($id)
     {
@@ -8844,6 +8844,35 @@ foreach ($annexures as $index => $annexure) {
 
             return redirect()->back();
         }
+
+        // ================= NEW: Page No. conditional validation =================
+        $pageNo = null;
+
+        $printSopType = $documentRequest->print_sop_type;
+
+        if ($printSopType === 'single_page_print') {
+
+            if (!$request->page_no) {
+                toastr()->error('Please enter Page No.');
+                return redirect()->back();
+            }
+
+            $pageNo = (int) $request->page_no;
+
+            if ($pageNo < 1) {
+                toastr()->error('Page No. must be at least 1.');
+                return redirect()->back();
+            }
+        }
+        // ===========================================================================
+
+        /*
+        |--------------------------------------------------------------------------
+        | Prevent same request from being printed twice
+        |--------------------------------------------------------------------------
+        */
+
+        $alreadyPrinted = PrintHistory::where('document_request_id', $documentRequest->id)->exists();
 
         /*
         |--------------------------------------------------------------------------
@@ -9193,7 +9222,8 @@ foreach ($annexures as $index => $annexure) {
             ],
             $issuedCopies,
             $document,
-            $sourceAttachmentPaths
+            $sourceAttachmentPaths,
+            $pageNo
         );
     }
 
@@ -10198,7 +10228,7 @@ foreach ($annexures as $index => $annexure) {
         ];
     }
 
-    private function streamIssuedDocumentCopies($viewName, array $viewData, int $totalCopies, $document, array $sourceAttachmentPaths = []) {
+    private function streamIssuedDocumentCopies($viewName, array $viewData, int $totalCopies, $document, array $sourceAttachmentPaths = [], ?int $pageNo = null) {
         $temporaryFiles = [];
 
         try {
@@ -10548,37 +10578,65 @@ foreach ($annexures as $index => $annexure) {
                 );
             }
 
+            // ================= NEW: Build global page map =================
+            $pageMap = [];
+
+            foreach ($validSourcePdfPaths as $sourcePdfPath) {
+
+                $probeFpdi = new \setasign\Fpdi\Fpdi();
+
+                $pageCount = $probeFpdi->setSourceFile($sourcePdfPath);
+
+                for ($localPage = 1; $localPage <= $pageCount; $localPage++) {
+                    $pageMap[] = [
+                        'path' => $sourcePdfPath,
+                        'page' => $localPage,
+                    ];
+                }
+            }
+
+            $totalSourcePages = count($pageMap);
+
+            if ($totalSourcePages < 1) {
+                throw new \RuntimeException(
+                    'Source document has no printable pages.'
+                );
+            }
+
+            $selectedPages = $pageMap;
+
+            if ($pageNo !== null) {
+
+                if ($pageNo < 1 || $pageNo > $totalSourcePages) {
+                    throw new \RuntimeException(
+                        'Invalid Page No. This document has only ' . $totalSourcePages . ' page(s).'
+                    );
+                }
+
+                $selectedPages = [ $pageMap[$pageNo - 1] ];
+            }
+            // ===================================================================
+
             /*
             |--------------------------------------------------------------------------
             | Issuance information
             |--------------------------------------------------------------------------
             */
 
-            $requestId =
-                $viewData['requestId']
-                ?? 'N/A';
+            $requestId = $viewData['requestId'] ?? 'N/A';
 
-            $issuedByName =
-                $viewData['issuedByName']
-                ?? 'N/A';
+            $issuedByName = $viewData['issuedByName'] ?? 'N/A';
 
-            $issuedDate =
-                $viewData['issuedDate']
-                ?? null;
+            $issuedDate = $viewData['issuedDate'] ?? null;
 
             if (!empty($issuedDate)) {
                 try {
-                    $formattedIssuedDate =
-                        Carbon::parse(
-                            $issuedDate
-                        )->format('d-M-Y');
+                    $formattedIssuedDate = Carbon::parse($issuedDate)->format('d-M-Y');
                 } catch (\Throwable $e) {
-                    $formattedIssuedDate =
-                        (string) $issuedDate;
+                    $formattedIssuedDate = (string) $issuedDate;
                 }
             } else {
-                $formattedIssuedDate =
-                    'N/A';
+                $formattedIssuedDate = 'N/A';
             }
 
             /*
@@ -10587,8 +10645,7 @@ foreach ($annexures as $index => $annexure) {
             |--------------------------------------------------------------------------
             */
 
-            $finalPdf =
-                new \setasign\Fpdi\Fpdi();
+            $finalPdf = new \setasign\Fpdi\Fpdi();
 
             $finalPdf->SetAutoPageBreak(false);
 
@@ -10598,269 +10655,124 @@ foreach ($annexures as $index => $annexure) {
             |--------------------------------------------------------------------------
             */
 
-            for (
-                $copyNumber = 1;
-                $copyNumber <= $totalCopies;
-                $copyNumber++
-            ) {
-                $formattedCopyNumber =
-                    str_pad(
-                        $copyNumber,
-                        3,
-                        '0',
-                        STR_PAD_LEFT
-                    );
+            $lastLoadedSourcePath = null;
+
+            for ($copyNumber = 1; $copyNumber <= $totalCopies; $copyNumber++) {
+                $formattedCopyNumber = str_pad($copyNumber, 3, '0', STR_PAD_LEFT);
 
                 /*
                 |--------------------------------------------------------------------------
-                | Merge all attachments in original order
+                | Merge selected pages (single page or full document)
                 |--------------------------------------------------------------------------
                 */
 
-                foreach (
-                    $validSourcePdfPaths
-                    as $sourcePdfPath
-                ) {
-                    $sourcePageCount =
-                        $finalPdf->setSourceFile(
-                            $sourcePdfPath
-                        );
+                foreach ($selectedPages as $pageEntry) {
 
-                    if ($sourcePageCount < 1) {
-                        continue;
+                    $sourcePdfPath = $pageEntry['path'];
+
+                    $sourcePageNumber = $pageEntry['page'];
+
+                    if ($lastLoadedSourcePath !== $sourcePdfPath) {
+                        $finalPdf->setSourceFile($sourcePdfPath);
+                        $lastLoadedSourcePath = $sourcePdfPath;
                     }
 
-                    for (
-                        $sourcePageNumber = 1;
-                        $sourcePageNumber <= $sourcePageCount;
-                        $sourcePageNumber++
-                    ) {
-                        $templateId =
-                            $finalPdf->importPage(
-                                $sourcePageNumber
-                            );
+                    $templateId = $finalPdf->importPage($sourcePageNumber);
 
-                        $pageSize =
-                            $finalPdf->getTemplateSize(
-                                $templateId
-                            );
+                    $pageSize = $finalPdf->getTemplateSize($templateId);
 
-                        $pageWidth =
-                            $pageSize['width'];
+                    $pageWidth = $pageSize['width'];
 
-                        $pageHeight =
-                            $pageSize['height'];
+                    $pageHeight = $pageSize['height'];
 
-                        $orientation =
-                            $pageWidth > $pageHeight
-                                ? 'L'
-                                : 'P';
+                    $orientation = $pageWidth > $pageHeight ? 'L' : 'P';
 
-                        $finalPdf->AddPage(
-                            $orientation,
-                            [
-                                $pageWidth,
-                                $pageHeight,
-                            ]
-                        );
-
-                        $finalPdf->useTemplate(
-                            $templateId,
-                            0,
-                            0,
+                    $finalPdf->AddPage($orientation,
+                        [
                             $pageWidth,
-                            $pageHeight
-                        );
+                            $pageHeight,
+                        ]
+                    );
 
-                        $finalPdf->SetTextColor(
-                            0,
-                            0,
-                            0
-                        );
+                    $finalPdf->useTemplate($templateId, 0, 0, $pageWidth, $pageHeight);
 
-                        $finalPdf->SetDrawColor(
-                            80,
-                            80,
-                            80
-                        );
+                    $finalPdf->SetTextColor(0, 0, 0);
 
-                        $finalPdf->SetLineWidth(
-                            0.15
-                        );
+                    $finalPdf->SetDrawColor(80, 80, 80);
 
-                        /*
-                        |--------------------------------------------------------------------------
-                        | Top issuance row
-                        |--------------------------------------------------------------------------
-                        */
+                    $finalPdf->SetLineWidth(0.15);
 
-                        $leftMargin = 7;
-                        $topY = 3.2;
-                        $topLineY = 9;
-                        $topTextHeight = 4;
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Top issuance row
+                    |--------------------------------------------------------------------------
+                    */
 
-                        $masterCopyReservedWidth = 47;
+                    $leftMargin = 7;
+                    $topY = 3.2;
+                    $topLineY = 9;
+                    $topTextHeight = 4;
 
-                        $usableTopWidth =
-                            $pageWidth
-                            - $leftMargin
-                            - $masterCopyReservedWidth;
+                    $masterCopyReservedWidth = 47;
 
-                        $dateWidth =
-                            $usableTopWidth
-                            * 0.35;
+                    $usableTopWidth = $pageWidth - $leftMargin - $masterCopyReservedWidth;
 
-                        $requestWidth =
-                            $usableTopWidth
-                            * 0.45;
+                    $dateWidth = $usableTopWidth * 0.35;
 
-                        $copyWidth =
-                            $usableTopWidth
-                            * 0.20;
+                    $requestWidth = $usableTopWidth * 0.45;
 
-                        $finalPdf->SetFont(
-                            'Arial',
-                            'B',
-                            7
-                        );
+                    $copyWidth = $usableTopWidth * 0.20;
 
-                        $finalPdf->SetXY(
-                            $leftMargin,
-                            $topY
-                        );
+                    $finalPdf->SetFont('Arial', 'B', 7);
 
-                        $finalPdf->Cell(
-                            $dateWidth,
-                            $topTextHeight,
-                            'Date: '
-                            . $this->sanitizePdfText(
-                                $formattedIssuedDate
-                            ),
-                            0,
-                            0,
-                            'L'
-                        );
+                    $finalPdf->SetXY($leftMargin, $topY);
 
-                        $finalPdf->SetXY(
-                            $leftMargin
-                            + $dateWidth,
-                            $topY
-                        );
+                    $finalPdf->Cell($dateWidth, $topTextHeight, 'Date: ' . $this->sanitizePdfText($formattedIssuedDate), 0, 0, 'L');
 
-                        $finalPdf->Cell(
-                            $requestWidth,
-                            $topTextHeight,
-                            'Request No: '
-                            . $this->sanitizePdfText(
-                                $requestId
-                            ),
-                            0,
-                            0,
-                            'C'
-                        );
+                    $finalPdf->SetXY($leftMargin + $dateWidth, $topY);
 
-                        $finalPdf->SetXY(
-                            $leftMargin
-                            + $dateWidth
-                            + $requestWidth,
-                            $topY
-                        );
+                    $finalPdf->Cell($requestWidth, $topTextHeight, 'Request No: ' . $this->sanitizePdfText($requestId), 0, 0, 'C');
 
-                        $finalPdf->Cell(
-                            $copyWidth,
-                            $topTextHeight,
-                            'Copy No.: '
-                            . $formattedCopyNumber,
-                            0,
-                            0,
-                            'R'
-                        );
+                    $finalPdf->SetXY($leftMargin + $dateWidth + $requestWidth, $topY);
 
-                        $firstSeparatorX =
-                            $leftMargin
-                            + $dateWidth;
+                    $finalPdf->Cell($copyWidth, $topTextHeight, 'Copy No.: ' . $formattedCopyNumber, 0, 0, 'R');
 
-                        $secondSeparatorX =
-                            $leftMargin
-                            + $dateWidth
-                            + $requestWidth;
+                    $firstSeparatorX = $leftMargin + $dateWidth;
 
-                        $finalPdf->Line(
-                            $firstSeparatorX,
-                            3,
-                            $firstSeparatorX,
-                            $topLineY
-                        );
+                    $secondSeparatorX = $leftMargin + $dateWidth + $requestWidth;
 
-                        $finalPdf->Line(
-                            $secondSeparatorX,
-                            3,
-                            $secondSeparatorX,
-                            $topLineY
-                        );
+                    $finalPdf->Line($firstSeparatorX, 3, $firstSeparatorX, $topLineY);
 
-                        /*
-                        |--------------------------------------------------------------------------
-                        | Bottom print information
-                        |--------------------------------------------------------------------------
-                        */
+                    $finalPdf->Line($secondSeparatorX, 3, $secondSeparatorX, $topLineY);
 
-                        $bottomLineY =
-                            $pageHeight - 8;
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Bottom print information
+                    |--------------------------------------------------------------------------
+                    */
 
-                        $bottomTextY =
-                            $pageHeight - 4;
+                    $bottomLineY = $pageHeight - 8;
 
-                        $bottomLeftMargin = 7;
-                        $bottomRightMargin = 7;
+                    $bottomTextY = $pageHeight - 4;
 
-                        $finalPdf->Line(
-                            $bottomLeftMargin,
-                            $bottomLineY,
-                            $pageWidth
-                            - $bottomRightMargin,
-                            $bottomLineY
-                        );
+                    $bottomLeftMargin = 7;
+                    $bottomRightMargin = 7;
 
-                        $finalPdf->SetFont(
-                            'Arial',
-                            'B',
-                            7
-                        );
+                    $finalPdf->Line($bottomLeftMargin, $bottomLineY, $pageWidth - $bottomRightMargin, $bottomLineY);
 
-                        $disclaimerText =
-                            'Document printed from master electronically & signature is not required.';
+                    $finalPdf->SetFont('Arial', 'B', 7);
 
-                        $finalPdf->Text(
-                            $bottomLeftMargin,
-                            $bottomTextY,
-                            $this->sanitizePdfText(
-                                $disclaimerText
-                            )
-                        );
+                    $disclaimerText = 'Document printed from master electronically & signature is not required.';
 
-                        $issuedByText =
-                            'Issued By: '
-                            . $this->sanitizePdfText(
-                                $issuedByName
-                            );
+                    $finalPdf->Text($bottomLeftMargin, $bottomTextY, $this->sanitizePdfText($disclaimerText));
 
-                        $issuedByTextWidth =
-                            $finalPdf->GetStringWidth(
-                                $issuedByText
-                            );
+                    $issuedByText = 'Issued By: ' . $this->sanitizePdfText($issuedByName);
 
-                        $issuedByX =
-                            $pageWidth
-                            - $bottomRightMargin
-                            - $issuedByTextWidth;
+                    $issuedByTextWidth = $finalPdf->GetStringWidth($issuedByText);
 
-                        $finalPdf->Text(
-                            $issuedByX,
-                            $bottomTextY,
-                            $issuedByText
-                        );
-                    }
+                    $issuedByX = $pageWidth - $bottomRightMargin - $issuedByTextWidth;
+
+                    $finalPdf->Text($issuedByX, $bottomTextY, $issuedByText);
                 }
             }
 
@@ -10970,34 +10882,16 @@ foreach ($annexures as $index => $annexure) {
             \Log::error(
                 'Document print PDF generation failed',
                 [
-                    'document_id' =>
-                        $document->id
-                        ?? null,
-
-                    'document_number' =>
-                        $document->document_number
-                        ?? null,
-
-                    'source_attachment_paths' =>
-                        $sourceAttachmentPaths,
-
-                    'total_copies' =>
-                        $totalCopies,
-
-                    'view_name' =>
-                        $viewName,
-
-                    'error_message' =>
-                        $e->getMessage(),
-
-                    'error_file' =>
-                        $e->getFile(),
-
-                    'error_line' =>
-                        $e->getLine(),
-
-                    'error_trace' =>
-                        $e->getTraceAsString(),
+                    'document_id' => $document->id ?? null,
+                    'document_number' => $document->document_number ?? null,
+                    'source_attachment_paths' => $sourceAttachmentPaths,
+                    'total_copies' => $totalCopies,
+                    'page_no' => $pageNo,   // <-- NEW (optional)
+                    'view_name' => $viewName,
+                    'error_message' => $e->getMessage(),
+                    'error_file' => $e->getFile(),
+                    'error_line' => $e->getLine(),
+                    'error_trace' => $e->getTraceAsString(),
                 ]
             );
 
@@ -11600,15 +11494,34 @@ foreach ($annexures as $index => $annexure) {
             return redirect()->back();
         }
 
-        $documentRequest = DocumentRequest::where(
-                'id', $request->document_request_id
-            )->where('document_id', $document->id)->where('status', 'QA Approval')->first();
+        $documentRequest = DocumentRequest::where('id', $request->document_request_id)->where('document_id', $document->id)->where('status', 'QA Approval')->first();
 
         if (!$documentRequest) {
             toastr()->error('Selected request is invalid, closed or does not belong to this document.');
 
             return redirect()->back();
         }
+
+        // ================= NEW: Page No. conditional validation =================
+        $pageNo = null;
+
+        $printSopType = $documentRequest->print_sop_type;
+
+        if ($printSopType === 'single_page_print') {
+
+            if (!$request->page_no) {
+                toastr()->error('Please enter Page No.');
+                return redirect()->back();
+            }
+
+            $pageNo = (int) $request->page_no;
+
+            if ($pageNo < 1) {
+                toastr()->error('Page No. must be at least 1.');
+                return redirect()->back();
+            }
+        }
+        // ===========================================================================
 
         $alreadyUsedInDownload = DownloadHistory::where('document_request_id', $documentRequest->id)->exists();
 
@@ -11803,11 +11716,12 @@ foreach ($annexures as $index => $annexure) {
             ],
             $issuedCopies,
             $document,
-            $sourcePdfPaths
+            $sourcePdfPaths,
+            $pageNo
         );
     }
 
-    private function downloadIssuedDocumentCopies($viewName, array $viewData, int $totalCopies, $document, array $sourcePdfPaths = []) {
+    private function downloadIssuedDocumentCopies($viewName, array $viewData, int $totalCopies, $document, array $sourcePdfPaths = [], ?int $pageNo = null) {
         $temporaryFiles = [];
 
         try {
@@ -11999,6 +11913,45 @@ foreach ($annexures as $index => $annexure) {
                 $validSourcePdfPaths[] = $generatedSourcePath;
             }
 
+            // ================= NEW: Build global page map =================
+            $pageMap = [];
+
+            foreach ($validSourcePdfPaths as $sourcePdfPath) {
+
+                $probeFpdi = new \setasign\Fpdi\Fpdi();
+
+                $pageCount = $probeFpdi->setSourceFile($sourcePdfPath);
+
+                for ($localPage = 1; $localPage <= $pageCount; $localPage++) {
+                    $pageMap[] = [
+                        'path' => $sourcePdfPath,
+                        'page' => $localPage,
+                    ];
+                }
+            }
+
+            $totalSourcePages = count($pageMap);
+
+            if ($totalSourcePages < 1) {
+                throw new \RuntimeException(
+                    'Source document has no printable pages.'
+                );
+            }
+
+            $selectedPages = $pageMap;
+
+            if ($pageNo !== null) {
+
+                if ($pageNo < 1 || $pageNo > $totalSourcePages) {
+                    throw new \RuntimeException(
+                        'Invalid Page No. This document has only ' . $totalSourcePages . ' page(s).'
+                    );
+                }
+
+                $selectedPages = [ $pageMap[$pageNo - 1] ];
+            }
+            // ===================================================================
+
             $requestId = $viewData['requestId'] ?? 'N/A';
 
             $issuedByName = $viewData['issuedByName'] ?? 'N/A';
@@ -12021,117 +11974,234 @@ foreach ($annexures as $index => $annexure) {
 
             $finalPdf->SetAutoPageBreak(false);
 
+            // for ($copyNumber = 1; $copyNumber <= $totalCopies; $copyNumber++) {
+            //     $formattedCopyNumber = str_pad($copyNumber, 3, '0', STR_PAD_LEFT);
+
+            //     foreach ($validSourcePdfPaths as $sourcePdfPath) {
+            //         $sourcePageCount = $finalPdf->setSourceFile($sourcePdfPath);
+
+            //         if ($sourcePageCount < 1) {
+            //             continue;
+            //         }
+
+            //         for ($sourcePageNumber = 1; $sourcePageNumber <= $sourcePageCount; $sourcePageNumber++) {
+            //             $templateId = $finalPdf->importPage( $sourcePageNumber
+            //                 );
+
+            //             $pageSize = $finalPdf->getTemplateSize($templateId);
+
+            //             $pageWidth = $pageSize['width'];
+
+            //             $pageHeight = $pageSize['height'];
+
+            //             $orientation = $pageWidth > $pageHeight ? 'L' : 'P';
+
+            //             $finalPdf->AddPage($orientation,
+            //                 [
+            //                     $pageWidth, $pageHeight,
+            //                 ]
+            //             );
+
+            //             $finalPdf->useTemplate($templateId, 0, 0, $pageWidth, $pageHeight);
+
+            //             $finalPdf->SetTextColor(0, 0, 0);
+
+            //             $finalPdf->SetDrawColor(80, 80, 80);
+
+            //             $finalPdf->SetLineWidth(0.15);
+
+            //             $leftMargin = 7;
+            //             $topY = 3.5;
+            //             $topTextHeight = 4;
+
+            //             $masterCopyReservedWidth = 46;
+
+            //             $usableTopWidth = $pageWidth - $leftMargin - $masterCopyReservedWidth;
+
+            //             $dateWidth = $usableTopWidth * 0.35;
+
+            //             $requestWidth = $usableTopWidth * 0.45;
+
+            //             $copyWidth = $usableTopWidth * 0.20;
+
+            //             $finalPdf->SetFont( 'Arial', 'B', 7);
+
+            //             $finalPdf->SetXY($leftMargin, $topY);
+
+            //             $finalPdf->Cell($dateWidth, $topTextHeight, 'Date: ' . $this->sanitizePdfText($formattedIssuedDate), 0, 0, 'L');
+
+            //             $finalPdf->SetXY(
+            //                 $leftMargin + $dateWidth, $topY
+            //             );
+
+            //             $finalPdf->Cell($requestWidth, $topTextHeight, 'Request No: ' . $this->sanitizePdfText($requestId), 0, 0, 'C');
+
+            //             $finalPdf->SetXY($leftMargin + $dateWidth + $requestWidth, $topY);
+
+            //             $finalPdf->Cell($copyWidth, $topTextHeight, 'Copy No.: ' . $formattedCopyNumber, 0, 0, 'R');
+
+            //             $firstSeparatorX = $leftMargin + $dateWidth;
+
+            //             $secondSeparatorX = $leftMargin + $dateWidth + $requestWidth;
+
+            //             $finalPdf->Line( $firstSeparatorX, 3, $firstSeparatorX, 9);
+
+            //             $finalPdf->Line($secondSeparatorX, 3, $secondSeparatorX, 9);
+
+            //             $bottomLineY = $pageHeight - 8;
+
+            //             $bottomTextY = $pageHeight - 4;
+
+            //             $bottomLeftMargin = 7;
+            //             $bottomRightMargin = 7;
+
+            //             $finalPdf->Line(
+            //                 $bottomLeftMargin,
+            //                 $bottomLineY,
+            //                 $pageWidth
+            //                 - $bottomRightMargin,
+            //                 $bottomLineY
+            //             );
+
+            //             $finalPdf->SetFont(
+            //                 'Arial',
+            //                 'B',
+            //                 7
+            //             );
+
+            //             $disclaimerText = 'Document printed from master electronically & signature is not required.';
+
+            //             $finalPdf->Text(
+            //                 $bottomLeftMargin,
+            //                 $bottomTextY,
+            //                 $this->sanitizePdfText($disclaimerText)
+            //             );
+
+            //             $issuedByText = 'Issued By: ' . $this->sanitizePdfText($issuedByName);
+
+            //             $issuedByTextWidth = $finalPdf->GetStringWidth($issuedByText);
+
+            //             $issuedByX = $pageWidth - $bottomRightMargin - $issuedByTextWidth;
+
+            //             $finalPdf->Text($issuedByX, $bottomTextY, $issuedByText);
+            //         }
+            //     }
+            // }
+
+            $lastLoadedSourcePath = null;
+
             for ($copyNumber = 1; $copyNumber <= $totalCopies; $copyNumber++) {
                 $formattedCopyNumber = str_pad($copyNumber, 3, '0', STR_PAD_LEFT);
 
-                foreach ($validSourcePdfPaths as $sourcePdfPath) {
-                    $sourcePageCount = $finalPdf->setSourceFile($sourcePdfPath);
+                foreach ($selectedPages as $pageEntry) {
 
-                    if ($sourcePageCount < 1) {
-                        continue;
+                    $sourcePdfPath = $pageEntry['path'];
+
+                    $sourcePageNumber = $pageEntry['page'];
+
+                    if ($lastLoadedSourcePath !== $sourcePdfPath) {
+                        $finalPdf->setSourceFile($sourcePdfPath);
+                        $lastLoadedSourcePath = $sourcePdfPath;
                     }
 
-                    for ($sourcePageNumber = 1; $sourcePageNumber <= $sourcePageCount; $sourcePageNumber++) {
-                        $templateId = $finalPdf->importPage( $sourcePageNumber
-                            );
+                    $templateId = $finalPdf->importPage($sourcePageNumber);
 
-                        $pageSize = $finalPdf->getTemplateSize($templateId);
+                    $pageSize = $finalPdf->getTemplateSize($templateId);
 
-                        $pageWidth = $pageSize['width'];
+                    $pageWidth = $pageSize['width'];
 
-                        $pageHeight = $pageSize['height'];
+                    $pageHeight = $pageSize['height'];
 
-                        $orientation = $pageWidth > $pageHeight ? 'L' : 'P';
+                    $orientation = $pageWidth > $pageHeight ? 'L' : 'P';
 
-                        $finalPdf->AddPage($orientation,
-                            [
-                                $pageWidth, $pageHeight,
-                            ]
-                        );
+                    $finalPdf->AddPage($orientation,
+                        [
+                            $pageWidth, $pageHeight,
+                        ]
+                    );
 
-                        $finalPdf->useTemplate($templateId, 0, 0, $pageWidth, $pageHeight);
+                    $finalPdf->useTemplate($templateId, 0, 0, $pageWidth, $pageHeight);
 
-                        $finalPdf->SetTextColor(0, 0, 0);
+                    $finalPdf->SetTextColor(0, 0, 0);
 
-                        $finalPdf->SetDrawColor(80, 80, 80);
+                    $finalPdf->SetDrawColor(80, 80, 80);
 
-                        $finalPdf->SetLineWidth(0.15);
+                    $finalPdf->SetLineWidth(0.15);
 
-                        $leftMargin = 7;
-                        $topY = 3.5;
-                        $topTextHeight = 4;
+                    $leftMargin = 7;
+                    $topY = 3.5;
+                    $topTextHeight = 4;
 
-                        $masterCopyReservedWidth = 46;
+                    $masterCopyReservedWidth = 46;
 
-                        $usableTopWidth = $pageWidth - $leftMargin - $masterCopyReservedWidth;
+                    $usableTopWidth = $pageWidth - $leftMargin - $masterCopyReservedWidth;
 
-                        $dateWidth = $usableTopWidth * 0.35;
+                    $dateWidth = $usableTopWidth * 0.35;
 
-                        $requestWidth = $usableTopWidth * 0.45;
+                    $requestWidth = $usableTopWidth * 0.45;
 
-                        $copyWidth = $usableTopWidth * 0.20;
+                    $copyWidth = $usableTopWidth * 0.20;
 
-                        $finalPdf->SetFont( 'Arial', 'B', 7);
+                    $finalPdf->SetFont( 'Arial', 'B', 7);
 
-                        $finalPdf->SetXY($leftMargin, $topY);
+                    $finalPdf->SetXY($leftMargin, $topY);
 
-                        $finalPdf->Cell($dateWidth, $topTextHeight, 'Date: ' . $this->sanitizePdfText($formattedIssuedDate), 0, 0, 'L');
+                    $finalPdf->Cell($dateWidth, $topTextHeight, 'Date: ' . $this->sanitizePdfText($formattedIssuedDate), 0, 0, 'L');
 
-                        $finalPdf->SetXY(
-                            $leftMargin + $dateWidth, $topY
-                        );
+                    $finalPdf->SetXY(
+                        $leftMargin + $dateWidth, $topY
+                    );
 
-                        $finalPdf->Cell($requestWidth, $topTextHeight, 'Request No: ' . $this->sanitizePdfText($requestId), 0, 0, 'C');
+                    $finalPdf->Cell($requestWidth, $topTextHeight, 'Request No: ' . $this->sanitizePdfText($requestId), 0, 0, 'C');
 
-                        $finalPdf->SetXY($leftMargin + $dateWidth + $requestWidth, $topY);
+                    $finalPdf->SetXY($leftMargin + $dateWidth + $requestWidth, $topY);
 
-                        $finalPdf->Cell($copyWidth, $topTextHeight, 'Copy No.: ' . $formattedCopyNumber, 0, 0, 'R');
+                    $finalPdf->Cell($copyWidth, $topTextHeight, 'Copy No.: ' . $formattedCopyNumber, 0, 0, 'R');
 
-                        $firstSeparatorX = $leftMargin + $dateWidth;
+                    $firstSeparatorX = $leftMargin + $dateWidth;
 
-                        $secondSeparatorX = $leftMargin + $dateWidth + $requestWidth;
+                    $secondSeparatorX = $leftMargin + $dateWidth + $requestWidth;
 
-                        $finalPdf->Line( $firstSeparatorX, 3, $firstSeparatorX, 9);
+                    $finalPdf->Line( $firstSeparatorX, 3, $firstSeparatorX, 9);
 
-                        $finalPdf->Line($secondSeparatorX, 3, $secondSeparatorX, 9);
+                    $finalPdf->Line($secondSeparatorX, 3, $secondSeparatorX, 9);
 
-                        $bottomLineY = $pageHeight - 8;
+                    $bottomLineY = $pageHeight - 8;
 
-                        $bottomTextY = $pageHeight - 4;
+                    $bottomTextY = $pageHeight - 4;
 
-                        $bottomLeftMargin = 7;
-                        $bottomRightMargin = 7;
+                    $bottomLeftMargin = 7;
+                    $bottomRightMargin = 7;
 
-                        $finalPdf->Line(
-                            $bottomLeftMargin,
-                            $bottomLineY,
-                            $pageWidth
-                            - $bottomRightMargin,
-                            $bottomLineY
-                        );
+                    $finalPdf->Line(
+                        $bottomLeftMargin,
+                        $bottomLineY,
+                        $pageWidth
+                        - $bottomRightMargin,
+                        $bottomLineY
+                    );
 
-                        $finalPdf->SetFont(
-                            'Arial',
-                            'B',
-                            7
-                        );
+                    $finalPdf->SetFont(
+                        'Arial',
+                        'B',
+                        7
+                    );
 
-                        $disclaimerText = 'Document printed from master electronically & signature is not required.';
+                    $disclaimerText = 'Document printed from master electronically & signature is not required.';
 
-                        $finalPdf->Text(
-                            $bottomLeftMargin,
-                            $bottomTextY,
-                            $this->sanitizePdfText($disclaimerText)
-                        );
+                    $finalPdf->Text(
+                        $bottomLeftMargin,
+                        $bottomTextY,
+                        $this->sanitizePdfText($disclaimerText)
+                    );
 
-                        $issuedByText = 'Issued By: ' . $this->sanitizePdfText($issuedByName);
+                    $issuedByText = 'Issued By: ' . $this->sanitizePdfText($issuedByName);
 
-                        $issuedByTextWidth = $finalPdf->GetStringWidth($issuedByText);
+                    $issuedByTextWidth = $finalPdf->GetStringWidth($issuedByText);
 
-                        $issuedByX = $pageWidth - $bottomRightMargin - $issuedByTextWidth;
+                    $issuedByX = $pageWidth - $bottomRightMargin - $issuedByTextWidth;
 
-                        $finalPdf->Text($issuedByX, $bottomTextY, $issuedByText);
-                    }
+                    $finalPdf->Text($issuedByX, $bottomTextY, $issuedByText);
                 }
             }
 
@@ -12187,19 +12257,13 @@ foreach ($annexures as $index => $annexure) {
                 'Issued PDF generation failed',
                 [
                     'document_id' => $document->id ?? null,
-
                     'document_number' => $document->document_number ?? null,
-
                     'source_pdf_paths' => $sourcePdfPaths,
-
                     'total_copies' => $totalCopies,
-
+                    'page_no' => $pageNo,   // <-- NEW (optional)
                     'error_message' => $e->getMessage(),
-
                     'error_file' => $e->getFile(),
-
                     'error_line' => $e->getLine(),
-
                     'error_trace' => $e->getTraceAsString(),
                 ]
             );
