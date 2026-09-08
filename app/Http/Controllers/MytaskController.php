@@ -775,6 +775,15 @@ class MytaskController extends Controller
                     $records = $processModel::whereIn('stage', $accessibleStages)->get();
 
                     foreach ($records as $record) {
+
+
+                    // Agar record already closed ho chuka hai, to task list me bilkul mat dikhao
+                        $rawStatus = strtolower(trim((string) ($record->status ?? '')));
+
+                        if (str_contains($rawStatus, 'closed')) {
+                            continue; // skip this record entirely
+                        }
+
                         // Find the current stage status
                         $currentStage = collect($stages[$processKey])->firstWhere('id', $record->stage);
                         $status = $currentStage ? $currentStage['status'] : 'Unknown';
@@ -790,6 +799,8 @@ class MytaskController extends Controller
                             'short_description' => $record->short_description,
                             'record_format' => $record->record,
                             'route_name' => $routes[$processKey] ?? '',
+                             'form_type' => $record->Form_type ?? null,   // 👈 ADD THIS (sirf OOS model me hoga, baaki me null rahega, no issue)
+                             'created_at' => $record->created_at,  
                         ];
                     }
                 }

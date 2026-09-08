@@ -72,6 +72,34 @@ body {
     background: #1e40af;
 }
 </style>
+@php
+   $processCodes = [
+        'Action Item' => 'AI',
+        'Audit Program' => 'AP',
+        'CAPA' => 'CAPA',
+        'Change Control' => 'CC',
+        'Deviation' => 'DEV',
+        'Effectiveness Check' => 'EC',
+        'Errata' => 'ERRATA',
+        'External Audit' => 'EA',
+        'Incident' => 'INC',
+        'Internal Audit' => 'IA',
+        'Lab Incident' => 'LI',
+        'Management Review' => 'MR',
+        'Market Complaint' => 'MC',
+        'Observation' => 'OBS',
+        'OOC' => 'OOC',
+        'Risk Assessment' => 'RA',
+        'Root Cause Analysis' => 'RCA',
+        'Change Proposal And Justification' => 'CPJ',
+        'Extension' => 'Ext',
+        'Resampling' => 'Resampling',
+        'Non Conformance' => 'NC',
+        'Failure Investigation' => 'FI',
+    ];
+@endphp
+
+
 
 <div class="container-fluid">
 
@@ -83,15 +111,18 @@ body {
         <div class="custom-scroll">
             <table class="table table-bordered custom-table">
                 <thead>
-                    <tr>
-                        <th style="width: 8%">ID</th>
-                        <th style="width: 8%">Site</th>
-                        <th style="width: 8%">Process</th>
-                        <th style="width: 8%">Initiator</th>
-                        <th style="width: 40%">Short Description</th>
-                        <th style="width: 15%">Status</th>
-                    </tr>
+                     <tr>
+        <th style="width: 8%">ID</th>
+        <th style="width: 12%">Record No.</th>
+        <th style="width: 8%">Site</th>
+        <th style="width: 8%">Process</th>
+        <th style="width: 8%">Initiator</th>
+        <th style="width: 32%">Short Description</th>
+        <th style="width: 15%">Status</th>
+    </tr>
                 </thead>
+
+                
 
                 <tbody id="qmsTableBody">
                     @php
@@ -115,6 +146,29 @@ body {
                             {{ str_pad($key + 1, 4, '0', STR_PAD_LEFT) }}
                             </a>    
                         </strong></td>
+                       <td>
+    @php
+        $divisionName = Helpers::getDivisionName($task['division_id']) ?: 'Corporate';
+
+        // OOS/OOT ka prefix Form_type se dynamic aata hai (jaise OOS_Chemical, OOS_Micro, OOT)
+        if ($task['process'] == 'OOS/OOT') {
+            $processCode = $task['form_type'] ?? 'OOS';
+        } else {
+            $processCode = $processCodes[$task['process']] ?? 'XX';
+        }
+
+        $year         = isset($task['created_at'])
+                            ? \Carbon\Carbon::parse($task['created_at'])->format('Y')
+                            : now()->year;
+        $recordNo     = str_pad($task['record_id'] ?? 0, 4, '0', STR_PAD_LEFT);
+        $recordNumber = "{$divisionName}/{$processCode}/{$year}/{$recordNo}";
+    @endphp
+    <a href="{{ route($task['route_name'], $task['record_id']) }}"
+       target="_blank"
+       style="color:#2563eb; font-weight:600; text-decoration:none;">
+        {{ $recordNumber }}
+    </a>
+</td>
                         <td>{{ Helpers::getDivisionName($task['division_id']) }}</td>
                         <td>{{ $task['process'] }}</td>
                         <td>{{ Helpers::getInitiatorName($task['initiator_id']) }}</td>
