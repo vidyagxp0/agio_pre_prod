@@ -413,6 +413,24 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="request_to">
+                                            Print Type
+                                            <span class="text-danger">*</span>
+                                        </label>
+
+                                        <select name="print_sop_type" id="">
+                                            <option value="">
+                                                -- Select Print Type --
+                                            </option>
+                                            <option value="single_page_print" @if ( $data->print_sop_type == 'single_page_print') selected @endif>Single Page Print</option>
+                                            <option value="full_sop_print" @if ($data->print_sop_type == 'full_sop_print') selected @endif>Full SOP Print</option>
+                                        </select>
+                          
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="number_of_copies">
                                             Number of Copies
                                             <span class="text-danger">*</span>
@@ -428,7 +446,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="reason">
                                             Reason

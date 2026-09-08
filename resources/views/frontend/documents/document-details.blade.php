@@ -1961,7 +1961,9 @@
 
                                         data-number-of-copies="{{ $printRequest->number_of_copies ?? '' }}"
 
-                                        data-reason="{{$printRequest->reason ?? '' }}">
+                                        data-reason="{{$printRequest->reason ?? '' }}"
+
+                                        data-print-sop-type="{{ $printRequest->print_sop_type ?? '' }}">
                                         {{ $printRequestId }}
                                     </option>
 
@@ -2029,6 +2031,32 @@
                                 </div>
 
                             </div>
+
+                        </div>
+
+                        {{-- ================================================= --}}
+                        {{-- Page No. --}}
+                        {{-- ================================================= --}}
+
+                        <div class="group-input mb-3" id="print_page_no_wrapper" style="display: none;">
+
+                            <label for="print_page_no">
+                                Page No.
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="print_page_no"
+                                name="page_no"
+                                min="1"
+                                class="form-control w-100"
+                                placeholder="Enter page number to print"
+                            >
+
+                            <small class="text-muted">
+                                Only this page will be printed for all copies.
+                            </small>
 
                         </div>
 
@@ -2125,75 +2153,73 @@
     <script>
         function fillPrintRequestDetails(selectElement) {
 
-            const selectedOption =
-                selectElement.options[
-                    selectElement.selectedIndex
-                ];
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
 
-            const requestRecord =
-                selectedOption.dataset.requestRecord || '';
+            const requestRecord = selectedOption.dataset.requestRecord || '';
 
-            const requestTo =
-                selectedOption.dataset.requestTo || '';
+            const requestTo = selectedOption.dataset.requestTo || '';
 
-            const requestToName =
-                selectedOption.dataset.requestToName || '';
+            const requestToName = selectedOption.dataset.requestToName || '';
 
-            const department =
-                selectedOption.dataset.department || '';
+            const department = selectedOption.dataset.department || '';
 
-            const numberOfCopies =
-                selectedOption.dataset.numberOfCopies || '';
+            const numberOfCopies = selectedOption.dataset.numberOfCopies || '';
 
-            const reason =
-                selectedOption.dataset.reason || '';
+            const reason = selectedOption.dataset.reason || '';
+
+            const printSopType = selectedOption.dataset.printSopType || '';
 
 
-            document
-                .getElementById('print_request_record')
-                .value = requestRecord;
+            document.getElementById('print_request_record').value = requestRecord;
 
-            document
-                .getElementById('print_issued_copies')
-                .value = numberOfCopies;
+            document.getElementById('print_issued_copies').value = numberOfCopies;
 
-            document
-                .getElementById('print_reason_print')
-                .value = reason;
+            document.getElementById('print_reason_print').value = reason;
 
-            document
-                .getElementById('print_issuance_to')
-                .value = requestTo;
+            document.getElementById('print_issuance_to').value = requestTo;
 
-            document
-                .getElementById('print_issuance_to_name')
-                .value = requestToName;
+            document.getElementById('print_issuance_to_name').value = requestToName;
 
-            document
-                .getElementById('print_department')
-                .value = department;
+            document.getElementById('print_department').value = department;
 
-            document
-                .getElementById('print_department_name')
-                .value = department;
+            document.getElementById('print_department_name').value = department;
+
+            /*
+            |--------------------------------------------------------------------------
+            | NEW: Page No. field toggle based on print_sop_type
+            |--------------------------------------------------------------------------
+            */
+
+            const pageNoWrapper = document.getElementById('print_page_no_wrapper');
+
+            const pageNoInput = document.getElementById('print_page_no');
+
+            if (printSopType === 'single_page_print') {
+
+                pageNoWrapper.style.display = '';
+
+                pageNoInput.setAttribute('required', 'required');
+
+            } else {
+
+                pageNoWrapper.style.display = 'none';
+
+                pageNoInput.removeAttribute('required');
+
+                pageNoInput.value = '';
+            }
         }
 
 
         function openPrintIssuedDatePicker() {
 
-            const dateInput =
-                document.getElementById(
-                    'print_issued_date'
-                );
+            const dateInput = document.getElementById('print_issued_date');
 
             if (!dateInput) {
                 return;
             }
 
-            if (
-                typeof dateInput.showPicker ===
-                'function'
-            ) {
+            if (typeof dateInput.showPicker === 'function') {
                 dateInput.showPicker();
             } else {
                 dateInput.click();
@@ -2201,13 +2227,9 @@
         }
 
 
-        function handlePrintDateInput(
-            dateInput,
-            displayId
-        ) {
+        function handlePrintDateInput(dateInput, displayId) {
 
-            const displayInput =
-                document.getElementById(displayId);
+            const displayInput = document.getElementById(displayId);
 
             if (!displayInput) {
                 return;
@@ -2330,9 +2352,27 @@
 
                             event.preventDefault();
 
-                            alert(
-                                'Issued To user is not available.'
-                            );
+                            alert('Issued To user is not available.');
+
+                            return;
+                        }
+
+                        const printPageNoInput = document.getElementById('print_page_no');
+
+                        const isPrintPageNoVisible = document.getElementById('print_page_no_wrapper').style.display !== 'none';
+
+                        if (isPrintPageNoVisible) {
+
+                            const pageNo = printPageNoInput.value;
+
+                            if (!pageNo || parseInt(pageNo, 10) < 1) {
+
+                                event.preventDefault();
+
+                                alert('Please enter a valid Page No.');
+
+                                return;
+                            }
                         }
                     }
                 );
@@ -2479,7 +2519,9 @@
 
                                         data-number-of-copies="{{ $documentRequest->number_of_copies ?? '' }}"
 
-                                        data-reason="{{ $documentRequest->reason ?? '' }}">
+                                        data-reason="{{ $documentRequest->reason ?? '' }}"
+
+                                        data-print-sop-type="{{ $documentRequest->print_sop_type ?? '' }}">
                                         {{
                                             str_pad( $documentRequest->request_id, 3, '0', STR_PAD_LEFT)
                                         }}
@@ -2614,6 +2656,32 @@
                                 readonly
                                 required
                             >
+
+                        </div>
+
+                        {{-- ================================================= --}}
+                        {{-- Page No. --}}
+                        {{-- ================================================= --}}
+
+                        <div class="group-input mb-3" id="page_no_wrapper" style="display: none;">
+
+                            <label for="page_no">
+                                Page No.
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="page_no"
+                                name="page_no"
+                                min="1"
+                                class="form-control w-100"
+                                placeholder="Enter page number to print"
+                            >
+
+                            <small class="text-muted">
+                                Only this page will be printed for all copies.
+                            </small>
 
                         </div>
 
@@ -2758,6 +2826,9 @@
             const reason =
                 option.dataset.reason || '';
 
+            const printSopType =
+                option.dataset.printSopType || '';    
+
 
             /*
             |--------------------------------------------------------------------------
@@ -2820,7 +2891,34 @@
             document
                 .getElementById('department')
                 .value = department;
-        }
+
+                    /*
+            |--------------------------------------------------------------------------
+            | NEW: Page No. field toggle based on print_sop_type
+            |--------------------------------------------------------------------------
+            */
+
+            const pageNoWrapper =
+                document.getElementById('page_no_wrapper');
+
+            const pageNoInput =
+                document.getElementById('page_no');
+
+            if (printSopType === 'single_page_print') {
+
+                pageNoWrapper.style.display = '';
+
+                pageNoInput.setAttribute('required', 'required');
+
+            } else {
+
+                pageNoWrapper.style.display = 'none';
+
+                pageNoInput.removeAttribute('required');
+
+                pageNoInput.value = '';
+            }
+        } 
 
 
         /**
@@ -2913,41 +3011,42 @@
                     function (event) {
 
                         const requestId =
-                            document
-                                .getElementById(
-                                    'document_request_id'
-                                )
-                                .value;
+                            document.getElementById('document_request_id').value;
 
                         const issuedDate =
-                            document
-                                .getElementById(
-                                    'issued_date'
-                                )
-                                .value;
+                            document.getElementById('issued_date').value;
 
                         const issuedCopies =
-                            document
-                                .getElementById(
-                                    'issued_copies'
-                                )
-                                .value;
+                            document.getElementById('issued_copies').value;
 
-                        const issuanceTo =
-                            document
-                                .getElementById(
-                                    'issuance_to'
-                                )
-                                .value;
+                        const issuanceTo = document.getElementById('issuance_to').value;
+
+                        const pageNoInput = document.getElementById('page_no');
+
+                        const isPageNoVisible = document.getElementById('page_no_wrapper').style.display !== 'none';
+
+                        if (isPageNoVisible) {
+
+                            const pageNo = pageNoInput.value;
+
+                            if (!pageNo || parseInt(pageNo, 10) < 1) {
+
+                                event.preventDefault();
+
+                                alert(
+                                    'Please enter a valid Page No.'
+                                );
+
+                                return;
+                            }
+                        }     
 
 
                         if (!requestId) {
 
                             event.preventDefault();
 
-                            alert(
-                                'Please select Request ID.'
-                            );
+                            alert('Please select Request ID.');
 
                             return;
                         }
@@ -2957,9 +3056,7 @@
 
                             event.preventDefault();
 
-                            alert(
-                                'Please select Issued Date.'
-                            );
+                            alert('Please select Issued Date.');
 
                             return;
                         }
@@ -3029,14 +3126,7 @@
             width: 60%;
         }
     </style>
-    {{-- <script>
-        window.addEventListener('DOMContentLoaded', function() {
-            var pdfObject = document.querySelector('iframe#theFrame"]');
-            var pdfDocument = pdfObject.contentDocument;
-            var firstPage = pdfDocument.querySelector('.page:first-of-type');
-            firstPage.style.display = 'none';
-        });
-    </script> --}}
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 

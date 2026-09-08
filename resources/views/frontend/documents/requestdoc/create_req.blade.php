@@ -131,6 +131,22 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="request_to">
+                                            Print Type
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <select name="print_sop_type" id="" required>
+                                            <option value="">
+                                                -- Select Print Type --
+                                            </option>
+                                            <option value="single_page_print">Single Page Print</option>
+                                            <option value="full_sop_print">Full SOP Print</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="number_of_copies">
                                             Number of Copies
                                             <span class="text-danger">*</span>
@@ -140,7 +156,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="reason">
                                             Reason

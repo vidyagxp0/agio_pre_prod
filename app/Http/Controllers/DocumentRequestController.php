@@ -64,6 +64,7 @@ class DocumentRequestController extends Controller
         $data->initiation_date = $initiationDate->format('Y-m-d');
         $data->document_id = $request->document_id;
         $data->request_to = $request->request_to;
+        $data->print_sop_type = $request->print_sop_type;
         $data->number_of_copies = $request->number_of_copies;
         $data->reason = $request->reason;
         $data->comment = $request->comment;
@@ -151,6 +152,7 @@ foreach ($fields as $field => $value) {
 
         $data->document_id = $request->document_id;
         $data->request_to = $request->request_to;
+        $data->print_sop_type = $request->print_sop_type;
         $data->number_of_copies = $request->number_of_copies;
         $data->reason = $request->reason;
 
