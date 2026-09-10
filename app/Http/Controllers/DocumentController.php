@@ -8831,13 +8831,7 @@ foreach ($annexures as $index => $annexure) {
         |--------------------------------------------------------------------------
         */
 
-        $documentRequest = DocumentRequest::where(
-                'id',
-                $request->document_request_id
-            )
-            ->where('document_id', $document->id)
-            ->where('status', 'QA Approval')
-            ->first();
+        $documentRequest = DocumentRequest::where('id', $request->document_request_id)->where('document_id', $document->id)->where('status', 'QA Approval')->first();
 
         if (!$documentRequest) {
             toastr()->error('Selected request is invalid, not completed or does not belong to this document.');
@@ -8864,15 +8858,6 @@ foreach ($annexures as $index => $annexure) {
                 return redirect()->back();
             }
         }
-        // ===========================================================================
-
-        /*
-        |--------------------------------------------------------------------------
-        | Prevent same request from being printed twice
-        |--------------------------------------------------------------------------
-        */
-
-        $alreadyPrinted = PrintHistory::where('document_request_id', $documentRequest->id)->exists();
 
         /*
         |--------------------------------------------------------------------------
