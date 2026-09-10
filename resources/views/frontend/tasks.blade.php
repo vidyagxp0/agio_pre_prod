@@ -127,6 +127,7 @@ body {
                 <tbody id="qmsTableBody">
                     @php
                         $allTasks = collect($allTasks)->sortByDesc('created_at')->values();
+                         $totalTasks = $allTasks->count();
                     @endphp
                     @foreach($allTasks as $key => $task)
                     @php
@@ -139,36 +140,36 @@ body {
                     @endphp
 
                     <tr>
-                        <td><strong>
-                            <a href="{{ route($task['route_name'], $task['record_id']) }}" 
+                       <td><strong>
+                            <a href="{{ route($task['route_name'] ?? '#', $task['record_id'] ?? 0) }}" 
                             target="_blank"
                             class="btn btn-open">
-                            {{ str_pad($key + 1, 4, '0', STR_PAD_LEFT) }}
+                            {{ str_pad($totalTasks - $key, 4, '0', STR_PAD_LEFT) }}
                             </a>    
                         </strong></td>
                        <td>
-    @php
-        $divisionName = Helpers::getDivisionName($task['division_id']) ?: 'Corporate';
+                            @php
+                                $divisionName = Helpers::getDivisionName($task['division_id']) ?: 'Corporate';
 
-        // OOS/OOT ka prefix Form_type se dynamic aata hai (jaise OOS_Chemical, OOS_Micro, OOT)
-        if ($task['process'] == 'OOS/OOT') {
-            $processCode = $task['form_type'] ?? 'OOS';
-        } else {
-            $processCode = $processCodes[$task['process']] ?? 'XX';
-        }
+                                // OOS/OOT ka prefix Form_type se dynamic aata hai (jaise OOS_Chemical, OOS_Micro, OOT)
+                                if ($task['process'] == 'OOS/OOT') {
+                                    $processCode = $task['form_type'] ?? 'OOS';
+                                } else {
+                                    $processCode = $processCodes[$task['process']] ?? 'XX';
+                                }
 
-        $year         = isset($task['created_at'])
-                            ? \Carbon\Carbon::parse($task['created_at'])->format('Y')
-                            : now()->year;
-        $recordNo     = str_pad($task['record_id'] ?? 0, 4, '0', STR_PAD_LEFT);
-        $recordNumber = "{$divisionName}/{$processCode}/{$year}/{$recordNo}";
-    @endphp
-    <a href="{{ route($task['route_name'], $task['record_id']) }}"
-       target="_blank"
-       style="color:#2563eb; font-weight:600; text-decoration:none;">
-        {{ $recordNumber }}
-    </a>
-</td>
+                                $year         = isset($task['created_at'])
+                                                    ? \Carbon\Carbon::parse($task['created_at'])->format('Y')
+                                                    : now()->year;
+                                $recordNo     = str_pad($task['record_id'] ?? 0, 4, '0', STR_PAD_LEFT);
+                                $recordNumber = "{$divisionName}/{$processCode}/{$year}/{$recordNo}";
+                            @endphp
+                            <a href="{{ route($task['route_name'], $task['record_id']) }}"
+                            target="_blank"
+                            style="color:#2563eb; font-weight:600; text-decoration:none;">
+                                {{ $recordNumber }}
+                            </a>
+                        </td>
                         <td>{{ Helpers::getDivisionName($task['division_id']) }}</td>
                         <td>{{ $task['process'] }}</td>
                         <td>{{ Helpers::getInitiatorName($task['initiator_id']) }}</td>

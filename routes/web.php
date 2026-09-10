@@ -724,8 +724,9 @@ Route::get('/errata/{id}',[Erratacontroller::class,'audit_trail_filter'])->name(
 // Route::view('extension_view', 'frontend.extension.extension_view');
 Route::get('extension-new', [ExtensionNewController::class, 'index']);
 Route::post('extension_new', [ExtensionNewController::class, 'store'])->name('extension_new.store');
-Route::get('extension_newshow/{id}', [ExtensionNewController::class, 'show']);
-
+// Route::get('extension_newshow/{id}', [ExtensionNewController::class, 'show']);
+Route::get('extension_newshow/{id}', [ExtensionNewController::class, 'show'])
+    ->name('extension_newshow');
 Route::put('extension_new/{id}', [ExtensionNewController::class, 'update'])->name('extension_new.update');
 Route::post('extension_send_stage/{id}', [ExtensionNewController::class, 'sendstage'])->name('extension_send_stage');
 Route::post('extension_reviewed_stage/{id}', [ExtensionNewController::class, 'sendcqaapprovalstage'])->name('extension_reviewed_stage');
