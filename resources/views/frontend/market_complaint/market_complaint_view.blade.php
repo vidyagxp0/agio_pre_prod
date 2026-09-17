@@ -11101,4 +11101,60 @@ $(document).ready(function() {
         }
     </style> --}}
 
+
+    
+<script>
+    $(document).ready(function () {
+
+        // Review dropdown -> Person dropdown (aur Department field agar ho)
+        var reviewPersonPairs = [
+            ['Production_Table_Review', 'Production_Table_Person'],
+            ['Production_Injection_Review', 'Production_Injection_Person'],
+            ['ResearchDevelopment_Review', 'ResearchDevelopment_person'],
+            ['Human_Resource_review', 'Human_Resource_person'],
+            ['CorporateQualityAssurance_Review', 'CorporateQualityAssurance_person'],
+            ['Store_Review', 'Store_person'],
+            ['Quality_review', 'Quality_Control_Person'],
+            ['Quality_Assurance_Review', 'QualityAssurance_person'],
+            ['RegulatoryAffair_Review', 'RegulatoryAffair_person'],
+            ['ProductionLiquid_Review', 'ProductionLiquid_person'],
+            ['Microbiology_Review', 'Microbiology_person'],
+            ['Engineering_review', 'Engineering_person'],
+            ['Environment_Health_review', 'Environment_Health_Safety_person'],
+            ['Other1_review', 'Other1_person', 'Other1_Department_person'],
+            ['Other2_review', 'Other2_person', 'Other2_Department_person'],
+            ['Other3_review', 'Other3_person', 'Other3_Department_person'],
+            ['Other4_review', 'Other4_person', 'Other4_Department_person'],
+            ['Other5_review', 'Other5_person', 'Other5_Department_person'],
+        ];
+
+        reviewPersonPairs.forEach(function (pair) {
+            var reviewName = pair[0];
+            var personName = pair[1];
+            var deptName   = pair[2]; // optional (sirf Others 1-5 ke liye)
+
+            $('[name="' + reviewName + '"]').on('change', function () {
+                var val = $(this).val();
+
+                if (val !== 'Yes') {
+                    // Person select ko blank kar do
+                    $('select[name="' + personName + '"]').val('').trigger('change');
+
+                    // Agar select disabled hoke hidden input bana hua hai, usko bhi clear karo
+                    $('input[name="' + personName + '"]').val('');
+
+                    // Others 1-5 ka department field bhi clear karo
+                    if (deptName) {
+                        $('[name="' + deptName + '"]').val('');
+                    }
+                }
+            });
+        });
+
+    });
+</script>
+
+
+    <!-- Correct Order -->
+
 @endsection
