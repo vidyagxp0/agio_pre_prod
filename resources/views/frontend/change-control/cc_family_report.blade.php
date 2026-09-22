@@ -231,8 +231,9 @@
     .action-table th,
     .action-table td {
         border: 1px solid #333;
-        padding: 5px 4px;
+        padding: 6px;
         vertical-align: top;
+        font-size: 12px;
         word-wrap: break-word;
         overflow-wrap: break-word;
     }
@@ -247,6 +248,51 @@
     .action-table .center {
         text-align: center;
         vertical-align: middle;
+    }
+    .action-table .sr-column {
+        width: 5%;
+        text-align: center;
+    }
+
+    /* Action Item No */
+    .action-table .action-no-column {
+        width: 12%;
+    }
+
+    /* Proposed Action / Task - width jyada */
+    .action-table .task-column {
+        width: 28%;
+    }
+
+    /* Assigned To */
+    .action-table .assigned-column {
+        width: 12%;
+    }
+
+    /* Due Date */
+    .action-table .due-date-column {
+        width: 11%;
+        text-align: center;
+        vertical-align: top !important;
+        padding-top: 8px;
+    }
+
+    /* Completed By */
+    .action-table .completed-by-column {
+        width: 12%;
+    }
+
+    /* Completion Date */
+    .action-table .completion-date-column {
+        width: 11%;
+        text-align: center;
+        vertical-align: top !important;
+        padding-top: 8px;
+    }
+
+    /* Final Status */
+    .action-table .status-column {
+        width: 9%;
     }
 
 </style>
@@ -4167,15 +4213,11 @@
     @if(!empty($actionItemSummary) && $actionItemSummary->count() > 0)
 
     <center>
-        <h3>Proposed Action Item Summary</h3>
+        <h3>Action Item Summary</h3>
     </center>
 
     <div class="inner-block">
         <div class="content-table">
-
-            <div class="section-heading">
-                Proposed Action Item Summary
-            </div>
 
             <table class="action-table">
                 <thead>
@@ -4185,8 +4227,6 @@
                         <th class="task-column">Proposed Action / Task</th>
                         <th class="assigned-column">Assigned To</th>
                         <th class="due-date-column">Due Date</th>
-                        <th class="acknowledge-column">Acknowledged<br>By</th>
-                        <th class="completion-details-column">Action Taken / Completion<br>Details</th>
                         <th class="completed-by-column">Completed<br>By</th>
                         <th class="completion-date-column">Completion<br>Date</th>
                         <th class="status-column">Final<br>Status</th>
@@ -4197,19 +4237,16 @@
                         <tr>
                             <td class="sr-column center">{{ $key + 1 }}</td>
                             <td class="action-no-column">   {{ Helpers::divisionNameForQMS($actionItem->division_id) }}/AI/{{ Helpers::year($actionItem->created_at) }}/{{ str_pad($actionItem->record, 4, '0', STR_PAD_LEFT) }}</td>
-                           
                             <td class="task-column">{!! $actionItem->task_description ?? 'N/A' !!}</td>
                             <td class="assigned-column">{{ $actionItem->assigned_to_name ?? 'N/A' }}</td>
                             <td class="due-date-column center">{{ $actionItem->formatted_due_date ?? 'N/A' }}</td>
-                            <td class="acknowledge-column">{{ $actionItem->acknowledge_by_name ?? 'N/A' }}</td>
-                            <td class="completion-details-column">{!! $actionItem->completion_details ?? 'N/A' !!}</td>
                             <td class="completed-by-column">{{ $actionItem->completed_by_name ?? 'N/A' }}</td>
                             <td class="completion-date-column center">{{ $actionItem->formatted_completion_date ?? 'N/A' }}</td>
                             <td class="status-column">{{ $actionItem->final_status ?? 'N/A' }}</td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="10" class="no-record">
+                            <td colspan="8" class="no-record">
                                 No Action Item has been created from this Change Control.
                             </td>
                         </tr>

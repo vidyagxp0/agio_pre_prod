@@ -97,13 +97,24 @@ class DashboardController extends Controller
                 return;
             }
 
-            foreach ($records as $query) {
+           foreach ($records as $query) {
 
+                // 🔴 Normalize status: lowercase, dash unify, extra-space unify
                 $status = strtolower(trim($query->status ?? ''));
+                $status = str_replace(['–', '—'], '-', $status);   // en-dash/em-dash -> normal hyphen
                 $status = preg_replace('/\s+/', ' ', $status);
 
-                if (in_array($status, $excludedStatus, true)) {
-                    continue;
+                // 🔴 Skip if status is any closed-done / closed-cancel(led) / closed-reject(ed) variant
+                if (
+                    str_contains($status, 'closed') &&
+                    (
+                        str_contains($status, 'done') ||
+                        str_contains($status, 'cancel') ||   // covers cancel + cancelled
+                        str_contains($status, 'reject') || 
+                         str_contains($status, 'effective')    // covers reject + rejected
+                    )
+                ) {
+                    continue; // skip this record entirely
                 }
 
                 $val = $query->$dueDateCol;
@@ -120,11 +131,11 @@ class DashboardController extends Controller
 
                 // ✅ Color logic
                 if ($daysLeft >= 15) {
-                    $backgroundColor = 'green';      // 15 days or more remaining
+                    $backgroundColor = 'green';
                 } elseif ($daysLeft >= 7) {
-                    $backgroundColor = 'orange';     // 7 to 14 days remaining
+                    $backgroundColor = 'orange';
                 } else {
-                    $backgroundColor = 'red';        // less than 7 days remaining / overdue
+                    $backgroundColor = 'red';
                 }
 
                 $recordNo = $query->record ?? ($query->record_number ?? ($query->record_no ?? 0));

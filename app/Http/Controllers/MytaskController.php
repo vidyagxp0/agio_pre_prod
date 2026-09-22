@@ -34,7 +34,7 @@ use App\Models\Resampling;
 use App\Models\RiskManagement;
 use App\Models\RootCauseAnalysis;
 use App\Models\ChangeProposalJust;
-
+use App\Models\extension_new;
 use App\Models\UserRole;
 use App\Models\Grouppermission;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -517,7 +517,7 @@ class MytaskController extends Controller
             'Deviation' => ['model' => Deviation::class, 'name' => 'Deviation'],
             'EffectivenessCheck' => ['model' => EffectivenessCheck::class, 'name' => 'Effectiveness Check'],
             'Errata' => ['model' => Errata::class, 'name' => 'Errata'],
-            'Extension' => ['model' => Extension::class, 'name' => 'Extension'],
+            'Extension' => ['model' => extension_new::class, 'name' => 'Extension'],
             'ExternalAudit' => ['model' => Auditee::class, 'name' => 'External Audit'],
             'Incident' => ['model' => Incident::class, 'name' => 'Incident'],
             'InternalAudit' => ['model' => InternalAudit::class, 'name' => 'Internal Audit'],
@@ -784,25 +784,37 @@ class MytaskController extends Controller
                             continue; // skip this record entirely
                         }
 
-                        // Find the current stage status
-                        $currentStage = collect($stages[$processKey])->firstWhere('id', $record->stage);
-                        $status = $currentStage ? $currentStage['status'] : 'Unknown';
+                      $currentStage = collect($stages[$processKey])->firstWhere('id', $record->stage);
+    $status = $currentStage ? $currentStage['status'] : 'Unknown';
 
-                        $allTasks[] = [
-                            'process' => $processName,
-                            'process_key' => $processKey,
-                            'record_id' => $record->id,
-                            'initiator_id' => $record->initiator_id,
-                            'division_id' => $record->division_id,
-                            'record_number' => $record->record_number,
-                            'status' => $status,
-                            'short_description' => $record->short_description,
-                            'record_format' => $record->record,
-                            'route_name' => $routes[$processKey] ?? '',
-                             'form_type' => $record->Form_type ?? null,   // 👈 ADD THIS (sirf OOS model me hoga, baaki me null rahega, no issue)
-                             'created_at' => $record->created_at,  
-                        ];
-                    }
+            // Extension (extension_new) ke column names different hain
+        if ($processKey == 'Extension') {
+            $divisionId  = $record->site_location_code ?? null;
+            $initiatorId = $record->initiator ?? null;
+            $recordValue = $record->record_number ?? null;   // Extension ke liye record_number
+        } else {
+            $divisionId  = $record->division_id ?? null;
+            $initiatorId = $record->initiator_id ?? null;
+            $recordValue = $record->record ?? null;           // baaki sab ke liye record
+        }
+
+
+    $allTasks[] = [
+        'process' => $processName,
+        'process_key' => $processKey,
+          'record_id' => $record->id,                                   // ✅ ADD BACK — route ke liye zaroori
+          'record' => $record->record ?? $record->record_number ?? null, //
+        'initiator_id' => $initiatorId,
+        'division_id' => $divisionId,
+        'record_number' => $record->record_number,
+        'status' => $status,
+        'short_description' => $record->short_description,
+        'record_format' => $record->record,
+        'route_name' => $routes[$processKey] ?? '',
+        'form_type' => $record->Form_type ?? null,
+        'created_at' => $record->created_at,
+    ];
+}
                 }
             }
         }

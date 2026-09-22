@@ -71,12 +71,26 @@ class EffectivenessCheckController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $lasteffectivness = EffectivenessCheck::orderBy('record', 'desc')->first();
-        $record = $lasteffectivness ? ((int)$lasteffectivness->record + 1) : 1;
+        // $lasteffectivness = EffectivenessCheck::orderBy('record', 'desc')->first();
+        // $record = $lasteffectivness ? ((int)$lasteffectivness->record + 1) : 1;
 
-        $lasteffectivness = EffectivenessCheck::orderBy('record_number', 'desc')->first();
-        $record_number = $lasteffectivness ? ((int)$lasteffectivness->record_number + 1) : 1;
+        // $lasteffectivness = EffectivenessCheck::orderBy('record_number', 'desc')->first();
+        // $record_number = $lasteffectivness ? ((int)$lasteffectivness->record_number + 1) : 1;
        
+
+        $lasteffectivness = EffectivenessCheck::orderByRaw('CAST(record AS UNSIGNED) DESC')->first();
+
+        $record = $lasteffectivness
+            ? ((int) $lasteffectivness->record + 1)
+            : 1;
+
+
+        $lasteffectivnessNumber = EffectivenessCheck::orderByRaw('CAST(record_number AS UNSIGNED) DESC')->first();
+
+        $record_number = $lasteffectivnessNumber
+            ? ((int) $lasteffectivnessNumber->record_number + 1)
+            : 1;
+
 
         $openState = new EffectivenessCheck();
         // $openState->form_type = "effectiveness-check";
