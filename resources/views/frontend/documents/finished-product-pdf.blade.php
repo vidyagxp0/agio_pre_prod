@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        /* FIX: removed invalid "font-weight: <weight>;" placeholder that was in the original file.
+           That was breaking the "*" rule silently and letting pasted/Quill inline styles win. */
         * {
             font-family: "Open Sans", "Roboto", "Noto Sans KR", "Poppins", sans-serif;
             font-optical-sizing: auto;
-            font-weight: <weight>;
+            font-weight: 400;
             font-style: normal;
             font-variation-settings: "wdth" 100;
         }
@@ -21,11 +23,6 @@
             text-align: justify;
             text-justify: inter-word;
         }
-
-        /* table {
-            width: 100%;
-            table-layout: fixed;
-        } */
 
         td,
         th {
@@ -116,7 +113,6 @@
 
         @page {
             size: A4;
-            /* margin: 20mm; */
         }
 
         header {
@@ -125,15 +121,14 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            height: 60px; /* Set a specific height for the header */
-
+            height: 60px;
         }
 
         body {
             margin-top: 180px;
             margin-bottom: 140px;
             padding-top: 95px;
-            padding-bottom: 40px; 
+            padding-bottom: 40px;
         }
 
         footer {
@@ -142,7 +137,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            height: 170px; /* Set a specific height for the footer */
+            height: 170px;
         }
 
         .table-responsive {
@@ -171,11 +166,6 @@
             page-break-inside: auto;
             page-break-before: auto;
         }
-
-        /* .MsoNormalTable, .table {
-            table-layout: fixed;
-            width: 650px !important;
-        } */
 
         p, b, div, h1, h2, h3, h4, h5, h6, ol, ul, li, span {
             page-break-after: auto;
@@ -214,8 +204,6 @@
             margin: 0px 0 0;
         }
 
-
-
         .page-break-before {
             page-break-before: always;
         }
@@ -247,20 +235,33 @@
             word-wrap: break-word;
             padding: 10px;
         }
+
+        /* -----------------------------------------------------------
+           FIX: keep small info-blocks together so a row/label doesn't
+           get orphaned/split across a page break (the "label kahi
+           chala jata hai" problem).
+           ----------------------------------------------------------- */
+        .keep-together {
+            page-break-inside: avoid;
+        }
     </style>
 
     <style>
-        
+
+        /* FIX: was hard-coded to a fixed 690px width, which could
+           overflow the printable page width depending on content and
+           push/shift text out of place. Made it fluid instead. */
         #isPasted {
-            width: 690px !important;
+            width: 100% !important;
+            max-width: 100%;
             border-collapse: collapse;
             table-layout: fixed;
         }
 
         #isPasted td:first-child,
         #isPasted th:first-child {
-            white-space: nowrap; 
-            width: 1%;
+            white-space: normal;
+            width: auto;
             vertical-align: top;
         }
 
@@ -268,7 +269,6 @@
         #isPasted th:last-child {
             width: auto;
             vertical-align: top;
-
         }
 
         #isPasted th,
@@ -276,7 +276,7 @@
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
-            max-width: 650px;
+            max-width: 100%;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
@@ -285,54 +285,51 @@
             text-align: justify;
             text-justify: inter-word;
             margin: 0;
-            max-width: 650px;
+            max-width: 100%;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
         #isPasted td > p span {
             display: inline-block;
-            /* width: 500px; */
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
         #isPasted img {
-            max-width: 500px !important;
-            height: 100%;
+            max-width: 100% !important;
+            height: auto;
             display: block;
             margin: 5px auto;
         }
 
         #isPasted td img {
-            max-width: 400px !important;
-            height: 300px;
+            max-width: 100% !important;
+            height: auto;
             margin: 5px auto;
         }
 
         .table-containers {
-            width: 690px;
-            overflow-x: fixed;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
-    
         #isPasted table {
             width: 100% !important;
             border-collapse: collapse;
             table-layout: fixed;
         }
 
-
         #isPasted table th,
         #isPasted table td {
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
-            max-width: 650px;
+            max-width: 100%;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
-
 
         #isPasted table img {
             max-width: 100% !important;
@@ -343,8 +340,12 @@
 
         .quill-pdf-content{
             width:100%;
+            max-width:100%;
             font-size:12px;
             line-height:1.4;
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
         }
 
         .quill-pdf-content p{
@@ -353,6 +354,8 @@
 
         .quill-pdf-content table{
             width:100%;
+            max-width: 100%;
+            table-layout: fixed;
             border-collapse:collapse;
             margin-top:10px;
             margin-bottom:10px;
@@ -368,6 +371,8 @@
         .quill-pdf-content th{
             padding:5px;
             vertical-align:top;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .quill-pdf-content img{
@@ -384,6 +389,36 @@
         .quill-pdf-content b{
             font-weight:bold;
         }
+
+        /* -----------------------------------------------------------
+           FIX (the main bug): content pasted from the Quill editor
+           (label_claim, sample_quantity, fps_specificationGrid) can
+           carry its own inline font-family / font-size / color on
+           spans. Since the global "*" rule above has no !important,
+           those inline styles were winning and showing a random
+           font/size/text style that didn't match the rest of the
+           document. Force every element inside the injected content
+           back to the document's own font, size and color.
+           ----------------------------------------------------------- */
+        .quill-pdf-content,
+        .quill-pdf-content * {
+            font-family: "Open Sans", "Roboto", "Noto Sans KR", "Poppins", sans-serif !important;
+            font-size: 12px !important;
+            color: #000 !important;
+            background-color: transparent !important;
+            line-height: 1.4 !important;
+        }
+
+        .quill-pdf-content strong,
+        .quill-pdf-content b {
+            font-weight: bold !important;
+        }
+
+        .quill-pdf-content em,
+        .quill-pdf-content i {
+            font-style: italic !important;
+        }
+
         .header-wrapper{
             position: fixed;
             top: 0;
@@ -411,7 +446,7 @@
 
             background: #fff;
         }
-        
+
     </style>
 
 </head>
@@ -446,7 +481,7 @@
             <tbody>
                 <tr>
                     <td style="font-weight: bold;">
-                        FINISHED PRODUCT SPECIFICATION 
+                        FINISHED PRODUCT SPECIFICATION
                     </td>
                 </tr>
             </tbody>
@@ -469,12 +504,12 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.:
-                    
+
                         <span>
                             @php
                                 $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
                             @endphp
-             
+
                           {{$document->document_number ?? 'NA'}}
                         </span>
                     </td>
@@ -500,7 +535,7 @@
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No.:
                     <span>
-                   
+
                    @php
                        $temp = DB::table('document_types')
                            ->where('name', $document->document_type_name)
@@ -514,7 +549,7 @@
                     @endif
 
                    </span>
-                
+
                     </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
@@ -577,14 +612,15 @@
                         @endphp
                         <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Sign</th>
                         <td style="padding: 5px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
-                        <td style="padding: 5px; border: 1px solid #ddd;">  
+                        <td style="padding: 5px; border: 1px solid #ddd;">
                         @if ($inreviews->isEmpty())
                             <div>Yet Not Performed</div>
                         @else
                             @foreach ($inreviews as $temp)
                                 <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
                             @endforeach
-                        @endif          
+                        @endif
+                        </td>
                         @php
                             $inreview = DB::table('stage_manages')
                                 ->join('users', 'stage_manages.user_id', '=', 'users.id')
@@ -595,14 +631,15 @@
                                 ->get();
 
                         @endphp
-                        <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">  
+                        <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
                         @if ($inreview->isEmpty())
                             <div>Yet Not Performed</div>
                         @else
                             @foreach ($inreview as $temp)
                                 <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
                             @endforeach
-                        @endif                    
+                        @endif
+                        </td>
                     </tr>
                     <tr style="border-bottom: 1px solid #ddd;">
                         <td style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Date</td>
@@ -616,7 +653,7 @@
                             @foreach ($inreviews as $temp)
                             <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
                             @endforeach
-                        @endif 
+                        @endif
                         </td>
 
                         <td style="padding: 5px; border: 1px solid #ddd;">
@@ -626,13 +663,13 @@
                             @foreach ($inreview as $temp)
                             <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
                             @endforeach
-                        @endif                    
+                        @endif
                         </td>
-                    </tr> 
+                    </tr>
                 </tbody>
             </table>
             <span>
-                Format No.: QA/097/F2-01                               
+                Format No.: QA/097/F2-01
             </span>
     </footer>
 
@@ -651,7 +688,7 @@
                 </table>
                 <br>
 
-                <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 12px; page-break-inside: avoid;">
+                <table class="keep-together" style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 12px;">
                     <tbody>
                         <tr>
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Generic Name</td>
@@ -661,9 +698,9 @@
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Brand Name</td>
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->brand_name}}</td>
                         </tr>
-                    </tbody>    
-                </table>    
- 
+                    </tbody>
+                </table>
+
                 <div class="other-container ">
                     <table>
                         <thead>
@@ -689,8 +726,8 @@
                     </div>
                 </div>
 
-                <table>        
-                    <tbody>    
+                <table class="keep-together">
+                    <tbody>
                         <tr>
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Product Code</td>
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->product_code}}</td>
@@ -700,7 +737,7 @@
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->fsstorage_condition}}</td>
                         </tr>
                     </tbody>
-                </table>        
+                </table>
 
                 <div class="other-container ">
                     <table>
@@ -727,8 +764,8 @@
                     </div>
                 </div>
 
-                <table>        
-                    <tbody>    
+                <table class="keep-together">
+                    <tbody>
                         <tr>
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity</td>
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->reserve_sample}}</td>
@@ -803,7 +840,7 @@
                         <tr>
                             <td style="border: 1px solid black; width: 20%;">{{ $item['rev_no'] ?? '' }}</td>
                             <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_no'] ?? '' }}</td>
-                            <td style="border: 1px solid black; width: 20%;">                                                    
+                            <td style="border: 1px solid black; width: 20%;">
                                 @if ($data->training_required == 'yes' && $data->stage >= 11)
                                     {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                                 @elseif ($data->training_required != 'yes' && $data->stage > 10)

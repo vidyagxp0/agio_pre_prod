@@ -9340,7 +9340,7 @@ class RiskManagementController extends Controller
     public function riskAuditTrial($id)
     {
         //$audit = RiskAuditTrail::where('risk_id', $id)->orderByDESC('id')->get()->unique('activity_type');
-        $audit = RiskAuditTrail::where('risk_id', $id)->orderByDesc('id')->paginate(5);
+        $audit = RiskAuditTrail::where('risk_id', $id)->orderByDesc('id')->paginate(10);
         $today = Carbon::now()->format('d-m-y');
         $document = RiskManagement::where('id', $id)->first();
         $document->originator = User::where('id', $document->initiator_id)->value('name');

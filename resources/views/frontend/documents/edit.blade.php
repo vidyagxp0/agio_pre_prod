@@ -3571,9 +3571,9 @@
                     </script>
 
 
-            @php
-                $isReadOnlyattachemnt = ($document->status == 'Effective');
-            @endphp
+                    @php
+                        $isReadOnlyattachemnt = ($document->status == 'Effective' && $document->revised != 'Yes');
+                    @endphp
 
                     <!-- Study Report Tab -->
                     <div id="doc-study" class="tabcontent">
@@ -19337,16 +19337,13 @@
                                                     <tr>
                                                         <td>{{ $serialNumber++ }}</td>
                                                         <td>
-                                                            <input type="text" name="revision_pias_data[{{ $index }}][rev_pias_no]" 
-                                                                value="{{ $piashistory['rev_pias_no'] ?? '' }}" readonly>
+                                                            <input type="text" name="revision_pias_data[{{ $index }}][rev_pias_no]" value="{{ $piashistory['rev_pias_no'] ?? '' }}" readonly>
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="revision_pias_data[{{ $index }}][change_ctrl_pias_no]" 
-                                                                value="{{ $piashistory['change_ctrl_pias_no'] ?? '' }}">
+                                                            <input type="text" name="revision_pias_data[{{ $index }}][change_ctrl_pias_no]" value="{{ $piashistory['change_ctrl_pias_no'] ?? '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="date" name="revision_pias_data[{{ $index }}][eff_date_pias]" 
-                                                                value="{{ $piashistory['eff_date_pias'] ?? '' }}" readonly>
+                                                            <input type="date" name="revision_pias_data[{{ $index }}][eff_date_pias]"  value="{{ $piashistory['eff_date_pias'] ?? '' }}" readonly>
                                                         </td>
                                                         <td>
                                                             <textarea name="revision_pias_data[{{ $index }}][rev_reason_pias]">{{ $piashistory['rev_reason_pias'] ?? '' }}</textarea>
@@ -19395,8 +19392,6 @@
                                         }
                                     });
                                 </script>
-
-
 
 
                         <div class="button-block">
@@ -19476,10 +19471,7 @@
 
                             <div class="table-responsive">
 
-                                <table
-                                    class="table table-bordered"
-                                    id="distribution-retrieval-grid"
-                                >
+                                <table class="table table-bordered" id="distribution-retrieval-grid">
                                     <thead>
                                         <tr>
                                             <th rowspan="2">Sr. No.</th>
@@ -19606,233 +19598,109 @@
                                                 $destructionReasonValue = old("distribution.$index.destruction_reason", $grid->destruction_reason ?? 'NA');
                                             @endphp
 
-                                            <tr
-                                                id="distribution_row_{{ $index }}"
-                                                data-row-index="{{ $index }}"
-                                                data-retrieval-completed="{{ $retrievalCompleted ? 1 : 0 }}"
-                                                data-destruction-completed="{{ $destructionCompleted ? 1 : 0 }}">
+                                            <tr id="distribution_row_{{ $index }}" data-row-index="{{ $index }}" data-retrieval-completed="{{ $retrievalCompleted ? 1 : 0 }}" data-destruction-completed="{{ $destructionCompleted ? 1 : 0 }}">
 
                                                 {{-- Sr. No. and hidden identities --}}
                                                 <td class="text-center">
 
                                                     {{ $index + 1 }}
 
-                                                    <input
-                                                        type="hidden"
-                                                        name="distribution[{{ $index }}][history_type]"
-                                                        value="{{ $grid->history_type }}">
+                                                    <input type="hidden" name="distribution[{{ $index }}][history_type]" value="{{ $grid->history_type }}">
 
-                                                    <input
-                                                        type="hidden"
-                                                        name="distribution[{{ $index }}][history_id]"
-                                                        value="{{ $grid->history_id }}">
+                                                    <input type="hidden" name="distribution[{{ $index }}][history_id]" value="{{ $grid->history_id }}">
 
-                                                    <input
-                                                        type="hidden"
-                                                        name="distribution[{{ $index }}][document_id]"
-                                                        value="{{ $document->id }}">
+                                                    <input type="hidden" name="distribution[{{ $index }}][document_id]" value="{{ $document->id }}">
 
-                                                    <input
-                                                        type="hidden"
-                                                        name="distribution[{{ $index }}][copy_number]"
-                                                        value="{{ $copyNumberValue }}">
+                                                    <input type="hidden" name="distribution[{{ $index }}][copy_number]" value="{{ $copyNumberValue }}">
 
-                                                    <input
-                                                        type="hidden"
-                                                        name="distribution[{{ $index }}][request_id]"
-                                                        value="{{ $requestId }}">
-
+                                                    <input type="hidden" name="distribution[{{ $index }}][request_id]" value="{{ $requestId }}">
                                                 </td>
 
                                                 {{-- Document Title --}}
                                                 <td>
-                                                    <textarea
-                                                        name="distribution[{{ $index }}][document_title]"
-                                                        class="grid-readonly-field"
-                                                        readonly
-                                                    >{{ $documentTitle }}</textarea>
+                                                    <textarea name="distribution[{{ $index }}][document_title]" class="grid-readonly-field" readonly >{{ $documentTitle }}</textarea>
                                                 </td>
 
                                                 {{-- Document Number --}}
                                                 <td>
-                                                    <textarea
-                                                        name="distribution[{{ $index }}][document_number]"
-                                                        class="grid-readonly-field"
-                                                        readonly
-                                                    >{{ $documentNumber }}</textarea>
+                                                    <textarea name="distribution[{{ $index }}][document_number]" class="grid-readonly-field" readonly >{{ $documentNumber }}</textarea>
                                                 </td>
 
                                                 {{-- Request ID --}}
                                                 <td>
-                                                    <input
-                                                        type="text"
-                                                        value="{{ $requestId }}"
-                                                        class="grid-readonly-field"
-                                                        readonly>
+                                                    <input type="text" value="{{ $requestId }}" class="grid-readonly-field" readonly>
                                                 </td>
 
                                                 {{-- Copy Number --}}
                                                 <td>
-                                                    <input
-                                                        type="text"
-                                                        value="{{ $copyNumber }}"
-                                                        class="grid-readonly-field text-center"
-                                                        readonly>
+                                                    <input type="text" value="{{ $copyNumber }}" class="grid-readonly-field text-center" readonly>
                                                 </td>
 
                                                 {{-- Issued By --}}
                                                 <td>
-                                                    <input
-                                                        type="text"
-                                                        value="{{ !empty($issuedById)
-                                                            ? Helpers::getInitiatorName($issuedById)
-                                                            : ($grid->issued_by_name ?? '') }}"
-                                                        class="grid-readonly-field"
-                                                        readonly>
+                                                    <input type="text" value="{{ !empty($issuedById) ? Helpers::getInitiatorName($issuedById) : ($grid->issued_by_name ?? '') }}" class="grid-readonly-field" readonly>
 
-                                                    <input
-                                                        type="hidden"
-                                                        name="distribution[{{ $index }}][issued_by]"
-                                                        value="{{ $issuedById }}">
+                                                    <input type="hidden" name="distribution[{{ $index }}][issued_by]" value="{{ $issuedById }}">
                                                 </td>
 
                                                 {{-- Issued Date --}}
                                                 <td>
-                                                    <input
-                                                        type="text"
-                                                        value="{{ $issuedDate
-                                                            ? $issuedDate->format('d-M-Y')
-                                                            : 'NA' }}"
-                                                        class="grid-readonly-field"
-                                                        readonly
-                                                    >
+                                                    <input type="text" value="{{ $issuedDate ? $issuedDate->format('d-M-Y') : 'NA' }}" class="grid-readonly-field" readonly >
 
-                                                    <input
-                                                        type="hidden"
-                                                        name="distribution[{{ $index }}][issued_date]"
-                                                        value="{{ $issuedDate
-                                                            ? $issuedDate->format('Y-m-d')
-                                                            : 'NA' }}"
-                                                    >
+                                                    <input type="hidden" name="distribution[{{ $index }}][issued_date]" value="{{ $issuedDate ? $issuedDate->format('Y-m-d') : 'NA' }}">
                                                 </td>
 
                                                 {{-- Every row represents one physical issued copy --}}
                                                 <td>
-                                                    <input
-                                                        type="number"
-                                                        name="distribution[{{ $index }}][issued_copies]"
-                                                        value="1"
-                                                        min="1"
-                                                        max="1"
-                                                        class="grid-readonly-field text-center"
-                                                        readonly
-                                                    >
+                                                    <input type="number" name="distribution[{{ $index }}][issued_copies]" value="1" min="1" max="1" class="grid-readonly-field text-center" readonly>
                                                 </td>
 
                                                 {{-- Issued To --}}
                                                 <td>
-                                                    <input
-                                                        type="text"
-                                                        value="{{ !empty($issuedToId)
-                                                            ? Helpers::getInitiatorName($issuedToId)
-                                                            : ($grid->issued_to_name ?? 'NA') }}"
-                                                        class="grid-readonly-field"
-                                                        readonly
-                                                    >
+                                                    <input type="text" value="{{ !empty($issuedToId) ? Helpers::getInitiatorName($issuedToId) : ($grid->issued_to_name ?? 'NA') }}" class="grid-readonly-field" readonly>
 
-                                                    <input
-                                                        type="hidden"
-                                                        name="distribution[{{ $index }}][issued_to]"
-                                                        value="{{ $issuedToId }}"
-                                                    >
+                                                    <input type="hidden" name="distribution[{{ $index }}][issued_to]" value="{{ $issuedToId }}">
                                                 </td>
 
                                                 {{-- Department --}}
                                                 <td>
-                                                    <input
-                                                        type="text"
-                                                        value="{{ $departmentValue }}"
-                                                        class="grid-readonly-field"
-                                                        readonly
-                                                    >
+                                                    <input type="text" value="{{ $departmentValue }}" class="grid-readonly-field" readonly>
 
-                                                    <input
-                                                        type="hidden"
-                                                        name="distribution[{{ $index }}][location]"
-                                                        value="{{ $departmentValue }}"
-                                                    >
+                                                    <input type="hidden" name="distribution[{{ $index }}][location]" value="{{ $departmentValue }}">
                                                 </td>
 
                                                 {{-- Issued Reason --}}
                                                 <td>
-                                                    <textarea
-                                                        name="distribution[{{ $index }}][issued_reason]"
-                                                        class="grid-readonly-field"
-                                                        readonly
-                                                    >{{ $issuedReason }}</textarea>
+                                                    <textarea name="distribution[{{ $index }}][issued_reason]" class="grid-readonly-field" readonly>{{ $issuedReason }}</textarea>
                                                 </td>
 
                                                 {{-- Retrieval / Used Status --}}
                                                 <td>
-                                                    <select
-                                                        id="retrieval_status_{{ $index }}"
-                                                        name="distribution[{{ $index }}][retrieval_status]"
-                                                        class="form-control retrieval-status-field {{
-                                                            $retrievalCompleted
-                                                                ? 'grid-readonly-field'
-                                                                : 'grid-editable-field'
-                                                        }}"
-                                                        onchange="handleCopyStatus({{ $index }})"
-                                                        {{ $retrievalCompleted ? 'disabled' : '' }}
-                                                    >
+                                                    <select id="retrieval_status_{{ $index }}" name="distribution[{{ $index }}][retrieval_status]" class="form-control retrieval-status-field {{$retrievalCompleted ? 'grid-readonly-field' : 'grid-editable-field'}}" onchange="handleCopyStatus({{ $index }})" {{ $retrievalCompleted ? 'disabled' : '' }}>
                                                         <option value="">
                                                             -- Select --
                                                         </option>
 
-                                                        <option
-                                                            value="Retrieved"
-                                                            {{ $retrievalStatus === 'Retrieved'
-                                                                ? 'selected'
-                                                                : '' }}
-                                                        >
+                                                        <option value="Retrieved" {{ $retrievalStatus === 'Retrieved' ? 'selected' : '' }}>
                                                             Retrieved
                                                         </option>
 
-                                                        <option
-                                                            value="Used"
-                                                            {{ $retrievalStatus === 'Used'
-                                                                ? 'selected'
-                                                                : '' }}
-                                                        >
+                                                        <option value="Used" {{ $retrievalStatus === 'Used' ? 'selected' : '' }}>
                                                             Used
                                                         </option>
                                                     </select>
 
                                                     @if ($retrievalCompleted)
-                                                        <input
-                                                            type="hidden"
-                                                            name="distribution[{{ $index }}][retrieval_status]"
-                                                            value="{{ $retrievalStatus }}"
-                                                        >
+                                                        <input type="hidden" name="distribution[{{ $index }}][retrieval_status]" value="{{ $retrievalStatus }}">
                                                     @endif
                                                 </td>
 
                                                 {{-- Retrieved / Used By --}}
                                                 <td>
-                                                    <select
-                                                        id="retrieval_by_{{ $index }}"
-                                                        name="distribution[{{ $index }}][retrieval_by]"
-                                                        class="form-control retrieval-detail-field {{
-                                                            $retrievalCompleted
-                                                                ? 'grid-readonly-field'
-                                                                : 'grid-editable-field'
-                                                        }}"
-                                                        {{ $retrievalCompleted ? 'disabled' : '' }}
-                                                    >
+                                                    <select id="retrieval_by_{{ $index }}" name="distribution[{{ $index }}][retrieval_by]" class="form-control retrieval-detail-field {{$retrievalCompleted ? 'grid-readonly-field' : 'grid-editable-field'}}" {{ $retrievalCompleted ? 'disabled' : '' }}>
                                                         <option value="">
                                                             -- Select --
                                                         </option>
-
                                                         @foreach ($users as $user)
                                                             <option
                                                                 value="{{ $user->id }}"
@@ -20690,7 +20558,6 @@
                                         ->where('stage', 'Review-Submit')
                                         ->where('deleted_at', null)
                                         ->get();
-
                                 @endphp
 
                                 @foreach ($inreview as $temp)
@@ -20740,7 +20607,6 @@
                                 @foreach ($inreview as $temp)
                                     <div class="name">{{ $temp->user_name }}</div>
                                 @endforeach
-
                             </div>
                         </div>
                         <div class="col-md-4">

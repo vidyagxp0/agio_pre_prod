@@ -1696,44 +1696,81 @@
                                 <div id="CCForm15" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="row">
+                                        @if(!empty($data->initiation_date) && \Carbon\Carbon::parse($data->initiation_date)->gte(\Carbon\Carbon::create(2026, 8, 4)))
                                             <div class="col-lg-12">
                                                 <div class="group-input">
-                                                    <label for="severity-level">Categorization of CAPA
-                                                        @if($data->stage == 4) <span class="text-danger">*</span>@endif
+                                                    <label for="severity-level">
+                                                        Categorization of CAPA
+                                                        @if($data->stage == 4)
+                                                            <span class="text-danger">*</span>
+                                                        @endif
                                                     </label>
 
                                                     @if(!$lockdatafileds4)
+
                                                         <select name="severity_level2" required>
                                                             <option value="">-- Select --</option>
-                                                            <option value="minor" {{ $data->severity_level2 == 'minor' ? 'selected' : '' }}>Minor</option>
-                                                            <option value="major" {{ $data->severity_level2 == 'major' ? 'selected' : '' }}>Major</option>
-                                                            <option value="critical" {{ $data->severity_level2 == 'critical' ? 'selected' : '' }}>Critical</option>
+
+                                                            <option value="minor"
+                                                                {{ $data->severity_level2 == 'minor' ? 'selected' : '' }}>
+                                                                Minor
+                                                            </option>
+
+                                                            <option value="major"
+                                                                {{ $data->severity_level2 == 'major' ? 'selected' : '' }}>
+                                                                Major
+                                                            </option>
+
+                                                            <option value="critical"
+                                                                {{ $data->severity_level2 == 'critical' ? 'selected' : '' }}>
+                                                                Critical
+                                                            </option>
                                                         </select>
+
                                                     @else
+
                                                         <select name="severity_level2_display" disabled>
                                                             @if(empty($data->severity_level2))
+
                                                                 <option value="" selected>NA</option>
+
                                                             @else
+
                                                                 <option value="">-- Select --</option>
-                                                                <option value="minor" {{ $data->severity_level2 == 'minor' ? 'selected' : '' }}>Minor</option>
-                                                                <option value="major" {{ $data->severity_level2 == 'major' ? 'selected' : '' }}>Major</option>
-                                                                <option value="critical" {{ $data->severity_level2 == 'critical' ? 'selected' : '' }}>Critical</option>
+
+                                                                <option value="minor"
+                                                                    {{ $data->severity_level2 == 'minor' ? 'selected' : '' }}>
+                                                                    Minor
+                                                                </option>
+
+                                                                <option value="major"
+                                                                    {{ $data->severity_level2 == 'major' ? 'selected' : '' }}>
+                                                                    Major
+                                                                </option>
+
+                                                                <option value="critical"
+                                                                    {{ $data->severity_level2 == 'critical' ? 'selected' : '' }}>
+                                                                    Critical
+                                                                </option>
+
                                                             @endif
                                                         </select>
 
-                                                        <input type="hidden" name="severity_level2" value="{{ $data->severity_level2 }}">
+                                                        <input type="hidden"
+                                                            name="severity_level2"
+                                                            value="{{ $data->severity_level2 }}">
+
                                                     @endif
                                                 </div>
                                             </div>
-                                            <div class="col-12">
-                                                <div class="group-input">
+                                        @endif
 
-                                                    <label for="Comments"> QA/CQA Approval Comment @if($data->stage == 4)<span class="text-danger">*</span>@endif </label>
-                                                    <textarea name="qah_cq_comments"  @if ($lockdatafileds4)
-                                                                                        style="pointer-events: none; background-color: #e9ecef;"
-                                                                                    @endif   >{{ $data->qah_cq_comments }}</textarea>
-                                                </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Comments"> QA/CQA Approval Comment @if($data->stage == 4)<span class="text-danger">*</span>@endif </label>
+                                                <textarea name="qah_cq_comments"  @if ($lockdatafileds4) style="pointer-events: none; background-color: #e9ecef;" @endif   >{{ $data->qah_cq_comments }}</textarea>
                                             </div>
+                                        </div>
             
                                         <div class="col-12">
                                             <div class="group-input">

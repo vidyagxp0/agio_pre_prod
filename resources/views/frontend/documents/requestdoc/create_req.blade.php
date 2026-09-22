@@ -153,8 +153,25 @@
                                         </label>
 
                                         <input type="number" name="number_of_copies" id="number_of_copies" value="{{ old('number_of_copies') }}" min="1" required>
+
+                                        <script>
+                                            document.getElementById('number_of_copies').addEventListener('wheel', function () {
+                                                this.blur();
+                                            });
+                                        </script>                                    
                                     </div>
                                 </div>
+                                <style>
+                                    #number_of_copies::-webkit-inner-spin-button,
+                                    #number_of_copies::-webkit-outer-spin-button {
+                                        -webkit-appearance: none;
+                                        margin: 0;
+                                    }
+
+                                    #number_of_copies {
+                                        -moz-appearance: textfield;
+                                    }
+                                </style>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">

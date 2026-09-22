@@ -201,12 +201,7 @@
 
 
                     </tr>
-                    <!-- <tr>
-                        <th class="w-20">Record Number</th>
-                        <td class="w-30">{{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/CAPA/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} </td>
-                        <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">@if($data->division_id){{ Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
-                    </tr> -->
+               
                     <tr>
                         <th class="w-20">Initiator Department</th>
 
@@ -222,12 +217,7 @@
                     </table>
                     <table>
 
-                     {{-- <h5>
-                        Short Description
-                     </h5>
-                    <div  style="font-size: 14px;">
-                        @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
-                    </div> --}}
+                  
                      <tr>
                             <th class="w-20">Short Description</th>
 
@@ -236,8 +226,6 @@
 
                      <tr>
 
-                        <!-- <th class="w-20">Due Date</th>
-                        <td class="w-30"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td> -->
                        <th class="w-20">Initiated Through</th>
                         <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
                     </tr>
@@ -250,22 +238,14 @@
 
                     <table>
 
-                        <!-- <th class="w-20">Repeat</th>
-                        <td class="w-80">@if($data->repeat){{ $data->repeat }}@else Not Applicable @endif</td>
-                        <th class="w-20">Repeat Nature</th>
-                        <td class="w-80">@if($data->repeat_nature){{ $data->repeat_nature }}@else Not Applicable @endif</td> -->
-
                         <tr>
-
-                    <!-- <th class="w-20">Due Date</th>
-                    <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td> -->
-                   <th class="w-20">Repeat</th>
-                    <td class="w-80">@if($data->repeat ){{ $data->repeat }}@else Not Applicable @endif</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Repeat Nature</th>
-                    <td class="w-80">@if($data->repeat_nature){{ $data->repeat_nature }}@else Not Applicable @endif</td>
-                </tr>
+                            <th class="w-20">Repeat</th>
+                            <td class="w-80">@if($data->repeat ){{ $data->repeat }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Repeat Nature</th>
+                            <td class="w-80">@if($data->repeat_nature){{ $data->repeat_nature }}@else Not Applicable @endif</td>
+                        </tr>
 
 
                 </table>
@@ -315,117 +295,9 @@
                         <th class="w-20"> Containment Comments </th>
                         <td class="w-80">@if($data->containment_comments){{ $data->containment_comments }}@else Not Applicable @endif </td>
                     </tr>
-                      {{-- <tr>
-                            <th class="w-20">Short Description</th>
-
-                            <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
-
-                      </tr>  --}}
-                      <!-- <table>
-                     <tr> -->
-                        {{-- <th class="w-20">Short Description</th>
-                        <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td> --}}
-                        <!-- <th class="w-20">Severity Level</th>
-                        <td class="w-80">{{ $data->severity_level_form }}</td> -->
-                        <!-- <th class="w-20">Assigned To</th>
-                            <td class="w-80">@if($data->assign_to){{ ($data->assign_to) }} @else Not Applicable @endif</td> -->
-                    <!-- </tr>
-     -->
-                    <!-- <tr>
-
-                        <!-- <th class="w-20">Due Date</th>
-                        <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td> -->
-                       <!-- <th class="w-20">Initiated Through</th>
-                        <td class="w-80">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
-                        <th class="w-20">Others</th>
-                        <td class="w-80">@if($data->initiated_through_req){{ $data->initiated_through_req }}@else Not Applicable @endif</td>
-                    </tr> --> -->
-                <!-- </table> -->
-                <!-- <table>
-
-                    <tr>
-                        <th class="w-20">Others</th>
-                        <td class="w-80">@if($data->initiated_through_req){{ $data->initiated_through_req }}@else Not Applicable @endif</td>
-                    </tr>
-                </table> -->
-                <!-- <table>
-                <tr>
-                        <th class="w-20">Repeat</th>
-                        <td class="w-80">@if($data->repeat){{ $data->repeat }}@else Not Applicable @endif</td>
-
-                    <tr>
-                        <th class="w-20">Repeat Nature</th>
-                        <td class="w-80">@if($data->repeat_nature){{ $data->repeat_nature }}@else Not Applicable @endif</td>
-                    </tr>
+         
                 </table>
-                <table> -->
-                        <!-- <tr>
-                        <th class="w-20">Repeat</th>
-                        <td class="w-80">@if($data->repeat){{ $data->repeat }}@else Not Applicable @endif</td>
-
-                    </tr> -->
-                </table>
-                <!-- <table>
-                    <tr>
-                        <th class="w-20">Problem Description</th>
-                        <td class="w-80">@if($data->problem_description){{ $data->problem_description }}@else Not Applicable @endif</td>
-
-                    </tr>
-                </table> -->
-
-                <!-- <table>
-                    <tr>
-                        <th class="w-20"> Initial Observation</th>
-                        <td class="w-80">
-                        @if($data->initial_observation){{ $data->initial_observation}}@else Not Applicable @endif </td>
-                    </tr>
-                </table> -->
-                <!-- <table>
-                    <tr>
-                        <th class="w-20">Interim Containnment</th>
-                        <td class="w-80">@if($data->interim_containnment){{ $data->interim_containnment }}@else Not Applicable @endif</td>
-                        <th class="w-20"> Containment Comments </th>
-                        <td class="w-80">@if($data->containment_comments){{ $data->containment_comments }}@else Not Applicable @endif </td>
-                    </tr>
-                </table> -->
-                <!-- <table>
-                    <tr>
-
-                        <th class="w-20"> Containment Comments </th>
-                        <td class="w-80">@if($data->containment_comments){{ $data->containment_comments }}@else Not Applicable @endif </td>
-                    </tr>
-                </table> -->
-                {{-- <table>
-                    <tr>
-                        <th class="w-20">  CAPA QA Comments  </th>
-                        <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif </td>
-                    </tr>
-                </table> --}}
-                <!-- <table>
-                    <tr>
-                        <th class="w-20">  Investigation  </th>
-                        <td class="w-80">@if($data->investigation){{ $data->investigation }}@else Not Applicable @endif </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <th class="w-20">  Root Cause Analysis  </th>
-                        <td class="w-80">@if($data->rcadetails){{ $data->rcadetails }}@else Not Applicable @endif </td>
-                    </tr>
-
-
-                </table>
-
-                <table> -->
-                    {{-- <tr>
-                        <th class="w-20">Containment Comments</th>
-                        <td class="w-80">@if($data->containment_comments){{ $data->containment_comments }}@else Not Applicable @endif</td>
-
-                    </tr> --}}
-                    {{-- <tr>
-                        <th class="w-20">CAPA QA Comments</th>
-                        <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif</td>
-                    </tr> --}}
+       
                 <div class="block-head">
                     CAPA Attachments
                     </div>
@@ -487,14 +359,7 @@
                                 <th class="w-20">Product Remark</th>
                                 <th class="w-20">Product Batch Status</th>
                             </tr>
-                                {{-- @if($data->root_cause_initial_attachment)
-                                @foreach(json_decode($data->root_cause_initial_attachment) as $key => $file)
-                                    <tr>
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                    </tr>
-                                @endforeach
-                                @else --}}
+                            
                                 @if($data->Material_Details->material_name)
                                 @foreach (unserialize($data->Material_Details->material_name) as $key => $dataDemo)
                                 <tr>
@@ -599,15 +464,7 @@
                             </tr>
                             @endif
                             </table>
-                             <!-- <tr>
-
-                                <th class="20">Preventive Action</th>
-                                <td class="80">@if($data->preventive_action){{ $data->preventive_action }}@else Not Applicable @endif</td>
-                             </tr>
-                            </table>
-                        </div>
-
-                    </tr> -->
+                        
                     <div class="block-head">
                            File Attachment
                         </div>
@@ -884,9 +741,6 @@
                    </table>
                    </div>
 
-
-
-
                     <div class="block">
                     <div class="block-head">
                        CAPA Closure
@@ -913,186 +767,151 @@
 
 
 
-                            <div class="block-head">
-                                QA/CQA Head Closure Review Attachment
-                            </div>
-                            <div class="border-table">
-                                <table>
-                                    <tr class="table_bg">
-                                        <th class="w-20">Sr.No</th>
-                                        <th class="w-60">Attachment </th>
+                    <div class="block-head">
+                        QA/CQA Head Closure Review Attachment
+                    </div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">Sr.No</th>
+                                <th class="w-60">Attachment </th>
+                            </tr>
+                                @if($data->closure_attachment)
+                                @foreach(json_decode($data->closure_attachment) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
-                                        @if($data->closure_attachment)
-                                        @foreach(json_decode($data->closure_attachment) as $key => $file)
-                                            <tr>
-                                                <td class="w-20">{{ $key + 1 }}</td>
-                                                <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                            </tr>
-                                        @endforeach
-                                        @else
-                                        <tr>
-                                            <td class="w-20">1</td>
-                                            <td class="w-80">Not Applicable</td>
-                                        </tr>
-                                    @endif
+                                @endforeach
+                                @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-80">Not Applicable</td>
+                                </tr>
+                            @endif
 
-                                </table>
-                            </div>
-                            {{-- <div class="block-head">
-                                Extension Justification
-                             </div>
+                        </table>
+                    </div>
 
-                            <table>
-                                <tr>
-                                    <th class="w-20">Due Date Extension Justification</th>
-                                        <td class="w-80">
-                                            {{ $data->due_date_extension }}</td>
-                                </tr>
-                            </table> --}}
-
-                        <div class="block">
-                            <div class="block-head">
-                                Activity Log
-                            </div>
-                            <table>
-                                {{-- Propose Plan --}}
-                                <tr>
-                                    <th class="w-20">Propose Plan By</th>
-                                    <td class="w-30">@if($data->plan_proposed_by){{ $data->plan_proposed_by }}@else Not Applicable @endif</td>
-                                    <th class="w-20">Propose Plan On</th>
-                                    <td class="w-30">@if($data->plan_proposed_on){{ $data->plan_proposed_on }}@else Not Applicable @endif</td>
-                                </tr>
-                                <tr>
-                                    <th>Propose Plan Comment</th>
-                                    <td colspan="3">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
-                                </tr>
-
-                                {{-- Cancel --}}
-                                <tr>
-                                    <th>Cancel By</th>
-                                    <td>@if($data->cancelled_by){{ $data->cancelled_by }}@else Not Applicable @endif</td>
-                                    <th>Cancel On</th>
-                                    <td>@if($data->cancelled_on){{ $data->cancelled_on }}@else Not Applicable @endif</td>
-                                </tr>
-                                <tr>
-                                    <th>Cancel Comment</th>
-                                    <td colspan="3">@if($data->cancelled_on_comment){{ $data->cancelled_on_comment }}@else Not Applicable @endif</td>
-                                </tr>
-
-                                {{-- HOD Review --}}
-                                <tr>
-                                    <th>HOD Review Complete By</th>
-                                    <td>@if($data->hod_review_completed_by){{ $data->hod_review_completed_by }}@else Not Applicable @endif</td>
-                                    <th>HOD Review Complete On</th>
-                                    <td>@if($data->hod_review_completed_on){{ $data->hod_review_completed_on }}@else Not Applicable @endif</td>
-                                </tr>
-                                <tr>
-                                    <th>HOD Review Complete Comment</th>
-                                    <td colspan="3">@if($data->hod_comment){{ $data->hod_comment }}@else Not Applicable @endif</td>
-                                </tr>
-
-                                {{-- QA/CQA Review --}}
-                                <tr>
-                                    <th>QA/CQA Review Complete By</th>
-                                    <td>@if($data->qa_review_completed_by){{ $data->qa_review_completed_by }}@else Not Applicable @endif</td>
-                                    <th>QA/CQA Review Complete On</th>
-                                    <td>@if($data->qa_review_completed_on){{ $data->qa_review_completed_on }}@else Not Applicable @endif</td>
-                                </tr>
-                                <tr>
-                                    <th>QA/CQA Review Complete Comment</th>
-                                    <td colspan="3">@if($data->qa_comment){{ $data->qa_comment }}@else Not Applicable @endif</td>
-                                </tr>
-
-                                {{-- Approved --}}
-                                <tr>
-                                    <th>Approved By</th>
-                                    <td>@if($data->approved_by){{ $data->approved_by }}@else Not Applicable @endif</td>
-                                    <th>Approved On</th>
-                                    <td>@if($data->approved_on){{ $data->approved_on }}@else Not Applicable @endif</td>
-                                </tr>
-                                <tr>
-                                    <th>Approved Comment</th>
-                                    <td colspan="3">@if($data->approved_comment){{ $data->approved_comment }}@else Not Applicable @endif</td>
-                                </tr>
-
-                                {{-- Completed --}}
-                                <tr>
-                                    <th>Completed By</th>
-                                    <td>@if($data->completed_by){{ $data->completed_by }}@else Not Applicable @endif</td>
-                                    <th>Completed On</th>
-                                    <td>@if($data->completed_on){{ $data->completed_on }}@else Not Applicable @endif</td>
-                                </tr>
-                                <tr>
-                                    <th>Complete Comment</th>
-                                    <td colspan="3">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
-                                </tr>
-
-                                {{-- HOD Final Review --}}
-                                <tr>
-                                    <th>HOD Final Review Complete By</th>
-                                    <td>@if($data->hod_final_review_completed_by){{ $data->hod_final_review_completed_by }}@else Not Applicable @endif</td>
-                                    <th>HOD Final Review Complete On</th>
-                                    <td>@if($data->hod_final_review_completed_on){{ $data->hod_final_review_completed_on }}@else Not Applicable @endif</td>
-                                </tr>
-                                <tr>
-                                    <th>HOD Final Review Complete Comment</th>
-                                    <td colspan="3">@if($data->final_comment){{ $data->final_comment }}@else Not Applicable @endif</td>
-                                </tr>
-
-                                {{-- QA/CQA Closure Review --}}
-                                <tr>
-                                    <th>QA/CQA Closure Review Complete By</th>
-                                    <td>@if($data->qa_closure_review_completed_by){{ $data->qa_closure_review_completed_by }}@else Not Applicable @endif</td>
-                                    <th>QA/CQA Closure Review Complete On</th>
-                                    <td>@if($data->qa_closure_review_completed_on){{ $data->qa_closure_review_completed_on }}@else Not Applicable @endif</td>
-                                </tr>
-                                <tr>
-                                    <th>QA/CQA Closure Review Complete Comment</th>
-                                    <td colspan="3">@if($data->qa_closure_comment){{ $data->qa_closure_comment }}@else Not Applicable @endif</td>
-                                </tr>
-
-                                {{-- QAH/CQA Head Approval --}}
-                                <tr>
-                                    <th>QAH/CQA Head Approval Complete By</th>
-                                    <td>@if($data->qah_approval_completed_by){{ $data->qah_approval_completed_by }}@else Not Applicable @endif</td>
-                                    <th>QAH/CQA Head Approval Complete On</th>
-                                    <td>@if($data->qah_approval_completed_on){{ $data->qah_approval_completed_on }}@else Not Applicable @endif</td>
-                                </tr>
-                                <tr>
-                                    <th>QAH/CQA Head Approval Complete Comment</th>
-                                    <td colspan="3">@if($data->qah_comment){{ $data->qah_comment }}@else Not Applicable @endif</td>
-                                </tr>
-                            </table>
+                    <div class="block">
+                        <div class="block-head">
+                            Activity Log
                         </div>
+                        <table>
+                            {{-- Propose Plan --}}
+                            <tr>
+                                <th class="w-20">Propose Plan By</th>
+                                <td class="w-30">@if($data->plan_proposed_by){{ $data->plan_proposed_by }}@else Not Applicable @endif</td>
+                                <th class="w-20">Propose Plan On</th>
+                                <td class="w-30">@if($data->plan_proposed_on){{ $data->plan_proposed_on }}@else Not Applicable @endif</td>
+                            </tr>
+                            <tr>
+                                <th>Propose Plan Comment</th>
+                                <td colspan="3">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
+                            </tr>
 
+                            {{-- Cancel --}}
+                            <tr>
+                                <th>Cancel By</th>
+                                <td>@if($data->cancelled_by){{ $data->cancelled_by }}@else Not Applicable @endif</td>
+                                <th>Cancel On</th>
+                                <td>@if($data->cancelled_on){{ $data->cancelled_on }}@else Not Applicable @endif</td>
+                            </tr>
+                            <tr>
+                                <th>Cancel Comment</th>
+                                <td colspan="3">@if($data->cancelled_on_comment){{ $data->cancelled_on_comment }}@else Not Applicable @endif</td>
+                            </tr>
+
+                            {{-- HOD Review --}}
+                            <tr>
+                                <th>HOD Review Complete By</th>
+                                <td>@if($data->hod_review_completed_by){{ $data->hod_review_completed_by }}@else Not Applicable @endif</td>
+                                <th>HOD Review Complete On</th>
+                                <td>@if($data->hod_review_completed_on){{ $data->hod_review_completed_on }}@else Not Applicable @endif</td>
+                            </tr>
+                            <tr>
+                                <th>HOD Review Complete Comment</th>
+                                <td colspan="3">@if($data->hod_comment){{ $data->hod_comment }}@else Not Applicable @endif</td>
+                            </tr>
+
+                            {{-- QA/CQA Review --}}
+                            <tr>
+                                <th>QA/CQA Review Complete By</th>
+                                <td>@if($data->qa_review_completed_by){{ $data->qa_review_completed_by }}@else Not Applicable @endif</td>
+                                <th>QA/CQA Review Complete On</th>
+                                <td>@if($data->qa_review_completed_on){{ $data->qa_review_completed_on }}@else Not Applicable @endif</td>
+                            </tr>
+                            <tr>
+                                <th>QA/CQA Review Complete Comment</th>
+                                <td colspan="3">@if($data->qa_comment){{ $data->qa_comment }}@else Not Applicable @endif</td>
+                            </tr>
+
+                            {{-- Approved --}}
+                            <tr>
+                                <th>Approved By</th>
+                                <td>@if($data->approved_by){{ $data->approved_by }}@else Not Applicable @endif</td>
+                                <th>Approved On</th>
+                                <td>@if($data->approved_on){{ $data->approved_on }}@else Not Applicable @endif</td>
+                            </tr>
+                            <tr>
+                                <th>Approved Comment</th>
+                                <td colspan="3">@if($data->approved_comment){{ $data->approved_comment }}@else Not Applicable @endif</td>
+                            </tr>
+
+                            {{-- Completed --}}
+                            <tr>
+                                <th>Completed By</th>
+                                <td>@if($data->completed_by){{ $data->completed_by }}@else Not Applicable @endif</td>
+                                <th>Completed On</th>
+                                <td>@if($data->completed_on){{ $data->completed_on }}@else Not Applicable @endif</td>
+                            </tr>
+                            <tr>
+                                <th>Complete Comment</th>
+                                <td colspan="3">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
+                            </tr>
+
+                            {{-- HOD Final Review --}}
+                            <tr>
+                                <th>HOD Final Review Complete By</th>
+                                <td>@if($data->hod_final_review_completed_by){{ $data->hod_final_review_completed_by }}@else Not Applicable @endif</td>
+                                <th>HOD Final Review Complete On</th>
+                                <td>@if($data->hod_final_review_completed_on){{ $data->hod_final_review_completed_on }}@else Not Applicable @endif</td>
+                            </tr>
+                            <tr>
+                                <th>HOD Final Review Complete Comment</th>
+                                <td colspan="3">@if($data->final_comment){{ $data->final_comment }}@else Not Applicable @endif</td>
+                            </tr>
+
+                            {{-- QA/CQA Closure Review --}}
+                            <tr>
+                                <th>QA/CQA Closure Review Complete By</th>
+                                <td>@if($data->qa_closure_review_completed_by){{ $data->qa_closure_review_completed_by }}@else Not Applicable @endif</td>
+                                <th>QA/CQA Closure Review Complete On</th>
+                                <td>@if($data->qa_closure_review_completed_on){{ $data->qa_closure_review_completed_on }}@else Not Applicable @endif</td>
+                            </tr>
+                            <tr>
+                                <th>QA/CQA Closure Review Complete Comment</th>
+                                <td colspan="3">@if($data->qa_closure_comment){{ $data->qa_closure_comment }}@else Not Applicable @endif</td>
+                            </tr>
+
+                            {{-- QAH/CQA Head Approval --}}
+                            <tr>
+                                <th>QAH/CQA Head Approval Complete By</th>
+                                <td>@if($data->qah_approval_completed_by){{ $data->qah_approval_completed_by }}@else Not Applicable @endif</td>
+                                <th>QAH/CQA Head Approval Complete On</th>
+                                <td>@if($data->qah_approval_completed_on){{ $data->qah_approval_completed_on }}@else Not Applicable @endif</td>
+                            </tr>
+                            <tr>
+                                <th>QAH/CQA Head Approval Complete Comment</th>
+                                <td colspan="3">@if($data->qah_comment){{ $data->qah_comment }}@else Not Applicable @endif</td>
+                            </tr>
+                        </table>
                     </div>
-                    </div>
 
-
-
-
-
-
-
+                </div>
+            </div>
         </div>
     </div>
-
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
-            </tr>
-        </table>
-    </footer>
-
 </body>
 
 </html>

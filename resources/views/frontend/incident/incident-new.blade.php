@@ -1557,12 +1557,11 @@
                                             <div>
                                                 <label>Yield Impact:</label>
                                             </div>
-                                           <div class="checkbox-group">
-                                            <label><input type="checkbox" name="yield_impact" value="YES" onclick="selectOne(this)"> Yes</label>
-                                            <label><input type="checkbox" name="yield_impact" value="NO" onclick="selectOne(this)"> No</label>
-                                            <label><input type="checkbox" name="yield_impact" value="NA" onclick="selectOne(this)"> N/A</label>
-                                        </div>
-
+                                            <div class="checkbox-group">
+                                                <label><input type="checkbox" name="yield_impact" value="YES" onclick="selectOne(this)"> Yes</label>
+                                                <label><input type="checkbox" name="yield_impact" value="NO" onclick="selectOne(this)"> No</label>
+                                                <label><input type="checkbox" name="yield_impact" value="NA" onclick="selectOne(this)"> N/A</label>
+                                            </div>
                                         </div>
                                         <br>
 
@@ -1572,11 +1571,11 @@
                                             <div>
                                                 <label>GMP Impact:</label>
                                             </div>
-                                        <div class="checkbox-group">
-                                            <label><input type="checkbox" name="gmp_impact" value="YES" onclick="selectOne(this)" disabled> Yes</label>
-                                            <label><input type="checkbox" name="gmp_impact" value="NO" onclick="selectOne(this)" disabled> No</label>
-                                            <label><input type="checkbox" name="gmp_impact" value="NA" onclick="selectOne(this)" disabled> N/A</label>
-                                        </div>
+                                            <div class="checkbox-group">
+                                                <label><input type="checkbox" name="gmp_impact" value="YES" onclick="selectOne(this)" disabled> Yes</label>
+                                                <label><input type="checkbox" name="gmp_impact" value="NO" onclick="selectOne(this)" disabled> No</label>
+                                                <label><input type="checkbox" name="gmp_impact" value="NA" onclick="selectOne(this)" disabled> N/A</label>
+                                            </div>
 
                                         </div>
                                         <br>
@@ -1584,12 +1583,12 @@
                                             <div>
                                                 <label>Additional Testing Required:</label>
                                             </div>
-                                        <!-- Additional Testing Required -->
-                                        <div class="checkbox-group">
-                                            <label><input type="checkbox" name="additionl_testing_required" value="YES" onclick="selectOne(this)" disabled> Yes</label>
-                                            <label><input type="checkbox" name="additionl_testing_required" value="NO" onclick="selectOne(this)" disabled> No</label>
-                                            <label><input type="checkbox" name="additionl_testing_required" value="NA" onclick="selectOne(this)" disabled> N/A</label>
-                                        </div>
+                                            <!-- Additional Testing Required -->
+                                            <div class="checkbox-group">
+                                                <label><input type="checkbox" name="additionl_testing_required" value="YES" onclick="selectOne(this)" disabled> Yes</label>
+                                                <label><input type="checkbox" name="additionl_testing_required" value="NO" onclick="selectOne(this)" disabled> No</label>
+                                                <label><input type="checkbox" name="additionl_testing_required" value="NA" onclick="selectOne(this)" disabled> N/A</label>
+                                            </div>
                                         </div>
                                         <br>
 

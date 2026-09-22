@@ -62,7 +62,17 @@ class DueDateReminder extends Command
             }
 
             // $records = $model::whereNotNull('due_date')->get();
-            $records = $model::query()->whereNotNull('due_date')->get();
+            try {
+                $records = $model::query()->whereNotNull('due_date')->get();
+            } catch (\Exception $e) {
+                Log::error('PROCESS_QUERY_FAILED', [
+                    'process' => $processName,
+                    'model'   => $model,
+                    'error'   => $e->getMessage(),
+                ]);
+                // Skip only this process, don't let it kill the reminders for every other process
+                continue;
+            }
 
             foreach ($records as $record) {
 
@@ -276,7 +286,7 @@ class DueDateReminder extends Command
             'CAPA' => '/capashow/',
             'Deviation' => '/rcms/devshow/',
             'Change Proposal And Justification' => '/rcms/changeProposal/',
-            'Effectiveness-Check' => '/rcms/effectiveness/',
+            'Effectiveness Check' => '/rcms/effectiveness/',
             'Extension' => '/extension_newshow/',
         ];
 

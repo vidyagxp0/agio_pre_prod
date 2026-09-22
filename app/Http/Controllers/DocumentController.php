@@ -3102,13 +3102,7 @@ class DocumentController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $printHistory = PrintHistory::where(
-            'document_id',
-            $id
-        )
-        ->orderBy('created_at', 'asc')
-        ->get()
-        ->map(function ($row) {
+        $printHistory = PrintHistory::where('document_id', $id)->orderBy('created_at', 'asc')->get()->map(function ($row) {
 
             $row->history_type = 'print';
             $row->history_id = $row->id;
@@ -3116,13 +3110,7 @@ class DocumentController extends Controller
             return $row;
         });
 
-        $downloadHistory = DownloadHistory::where(
-            'document_id',
-            $id
-        )
-        ->orderBy('created_at', 'asc')
-        ->get()
-        ->map(function ($row) {
+        $downloadHistory = DownloadHistory::where('document_id', $id)->orderBy('created_at', 'asc')->get()->map(function ($row) {
 
             $row->history_type = 'download';
             $row->history_id = $row->id;
@@ -3137,17 +3125,9 @@ class DocumentController extends Controller
         */
 
         $savedDistributionRecords = DocumentGridData::where(
-            'document_id',
-            $id
-        )
-        ->get()
-        ->keyBy(function ($row) {
-
-            return $row->history_type
-                . '_'
-                . $row->history_id
-                . '_'
-                . (int) $row->copy_number;
+            'document_id', $id
+        )->get()->keyBy(function ($row) {
+            return $row->history_type . '_' . $row->history_id . '_' . (int) $row->copy_number;
         });
 
         /*
@@ -3160,22 +3140,6 @@ class DocumentController extends Controller
             ->concat($downloadHistory)
             ->sortBy('created_at')
             ->values();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Expand every issuance into individual copy rows
-        |--------------------------------------------------------------------------
-        |
-        | Example:
-        |
-        | History issued_copies = 3
-        |
-        | Generated rows:
-        | copy_number = 1
-        | copy_number = 2
-        | copy_number = 3
-        |--------------------------------------------------------------------------
-        */
 
         $PH = collect();
 
@@ -3490,7 +3454,7 @@ class DocumentController extends Controller
         $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
 
         $sampleReconcilation = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "sampleReconcilation")->first();
-        // dd($sampleReconcilation);
+        
         if ($sampleReconcilation && !empty($sampleReconcilation->data)) {
             $sampleReconcilation->data = json_decode($sampleReconcilation->data, true);
         }
@@ -6899,27 +6863,53 @@ class DocumentController extends Controller
             ? json_decode($GtpData->data, true)
             : ($GtpData && is_array($GtpData->data) ? $GtpData->data : []);
 
-        $RevisionData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
-        $RevisionGridData = ($RevisionData && isset($RevisionData->data) && is_string($RevisionData->data))
-            ? json_decode($RevisionData->data, true)
-            : ($RevisionData && is_array($RevisionData->data) ? $RevisionData->data : []);
+        $RevisionData = DocumentGrid::where('document_type_id', $id)->where('identifier', 'revision_history')->first();
+
+        $RevisionGridData = ($RevisionData && isset($RevisionData->data) && is_string($RevisionData->data)) ? json_decode($RevisionData->data, true)
+            : (($RevisionData && isset($RevisionData->data) && is_array($RevisionData->data))
+                ? $RevisionData->data
+                : []);
 
 
-        $RevisionInpsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_inps_data")->first();
-        $RevisionGridInpsData = isset($RevisionInpsData->data) && is_string($RevisionInpsData->data)
-                ? json_decode($RevisionInpsData->data, true) :(is_array($RevisionInpsData->data) ? $RevisionInpsData->data:[]);
+        $RevisionInpsData = DocumentGrid::where('document_type_id', $id)
+            ->where('identifier', 'revision_inps_data')
+            ->first();
 
-        $RevisionCvsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_cvs_data")->first();
-        $RevisionGridCvsData = isset($RevisionCvsData->data) && is_string($RevisionCvsData->data)
-                ? json_decode($RevisionCvsData->data, true) :(is_array($RevisionCvsData->data) ? $RevisionCvsData->data:[]);
+        $RevisionGridInpsData = ($RevisionInpsData && isset($RevisionInpsData->data) && is_string($RevisionInpsData->data))
+            ? json_decode($RevisionInpsData->data, true)
+            : (($RevisionInpsData && isset($RevisionInpsData->data) && is_array($RevisionInpsData->data))
+                ? $RevisionInpsData->data
+                : []);
 
-        $RevisionfpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_fpstp_data")->first();
-        $RevisionGridfpstpData = isset($RevisionfpstpData->data) && is_string($RevisionfpstpData->data)
-                ? json_decode($RevisionfpstpData->data, true) :(is_array($RevisionfpstpData->data) ? $RevisionfpstpData->data:[]);
 
-        $RevisioninpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_inpstp_data")->first();
-        $RevisionGridinpstpData = isset($RevisioninpstpData->data) && is_string($RevisioninpstpData->data)
-                ? json_decode($RevisioninpstpData->data, true) :(is_array($RevisioninpstpData->data) ? $RevisioninpstpData->data:[]);
+        $RevisionCvsData = DocumentGrid::where('document_type_id', $id)
+            ->where('identifier', 'revision_cvs_data')
+            ->first();
+
+        $RevisionGridCvsData = ($RevisionCvsData && isset($RevisionCvsData->data) && is_string($RevisionCvsData->data))
+            ? json_decode($RevisionCvsData->data, true)
+            : (($RevisionCvsData && isset($RevisionCvsData->data) && is_array($RevisionCvsData->data))
+                ? $RevisionCvsData->data
+                : []);
+
+
+        $RevisionfpstpData = DocumentGrid::where('document_type_id', $id)
+            ->where('identifier', 'revision_fpstp_data')
+            ->first();
+
+        $RevisionGridfpstpData = ($RevisionfpstpData && isset($RevisionfpstpData->data) && is_string($RevisionfpstpData->data))
+            ? json_decode($RevisionfpstpData->data, true)
+            : (($RevisionfpstpData && isset($RevisionfpstpData->data) && is_array($RevisionfpstpData->data))
+                ? $RevisionfpstpData->data
+                : []);
+
+
+        $RevisioninpstpData = DocumentGrid::where('document_type_id', $id)
+            ->where('identifier', 'revision_inpstp_data')
+            ->first();
+
+        $RevisionGridinpstpData = ($RevisioninpstpData && isset($RevisioninpstpData->data) && is_string($RevisioninpstpData->data))
+            ? json_decode($RevisioninpstpData->data, true) : (($RevisioninpstpData && isset($RevisioninpstpData->data) && is_array($RevisioninpstpData->data)) ? $RevisioninpstpData->data : []);
 
         $RevisioncvstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_cvstp_data")->first();
         $RevisionGridcvstpData = isset($RevisioncvstpData->data) && is_string($RevisioncvstpData->data)
