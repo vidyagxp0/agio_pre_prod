@@ -1256,8 +1256,10 @@
                                             <div class="group-input">
                                                 <label for="QA Review & Closure" >HOD Remark @if($data->stage == 2)<span class="text-danger">*</span>@endif</label>
                                                 <textarea name="hod_remarks"  @if ($lockdatafileds2)
-                                                                                    style="pointer-events: none; background-color: #e9ecef;"
-                                                                                @endif >{{ $data->hod_remarks}}</textarea>
+
+                                                 {{ $data->stage == 2 && $lockdatafileds2 ? '' : 'readonly' }}
+                                                            
+                                                    @endif >{{ $data->hod_remarks}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1359,7 +1361,8 @@
                                             <div class="group-input">
                                                 <label for="Comments"> QA/CQA Review Comment  @if($data->stage == 3)<span class="text-danger">*</span>@endif</label>
                                                 <textarea name="capa_qa_comments"  @if ($lockdatafileds3)
-                                                                                    style="pointer-events: none; background-color: #e9ecef;"
+                                                                                    {{ $data->stage == 3 && $lockdatafileds3 ? '' : 'readonly' }}
+                                                            
                                                                                 @endif>{{ $data->capa_qa_comments }}</textarea>
                                             </div>
                                         </div>
@@ -1533,7 +1536,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Comments"> HOD Final Review Comments @if($data->stage == 6)<span class="text-danger">*</span>@endif</label>
-                                                <textarea name="hod_final_review"@if ($lockdatafileds6) style="pointer-events: none; background-color: #e9ecef;" @endif >{{ $data->hod_final_review }}</textarea>
+                                                <textarea name="hod_final_review"@if ($lockdatafileds6)  {{ $data->stage == 6 && $lockdatafileds6 ? '' : 'readonly' }} @endif >{{ $data->hod_final_review }}</textarea>
                                             </div>
                                         </div>
             
@@ -1590,7 +1593,7 @@
                                                 <div class="group-input">
                                                     <label for="Comments"> Initiator CAPA Update Comment @if($data->stage == 5)<span class="text-danger">*</span>@endif</label>
                                                     <textarea name="initiator_comment" @if ($lockdatafileds5)
-                                                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                                                         {{ $data->stage == 5 && $lockdatafileds5 ? '' : 'readonly' }}
                                                                                     @endif>{{ $data->initiator_comment }}</textarea>
                                                 </div>
                                             </div>
@@ -1768,7 +1771,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Comments"> QA/CQA Approval Comment @if($data->stage == 4)<span class="text-danger">*</span>@endif </label>
-                                                <textarea name="qah_cq_comments"  @if ($lockdatafileds4) style="pointer-events: none; background-color: #e9ecef;" @endif   >{{ $data->qah_cq_comments }}</textarea>
+                                                <textarea name="qah_cq_comments"  @if ($lockdatafileds4)  {{ $data->stage == 4 && $lockdatafileds4 ? '' : 'readonly' }} @endif   >{{ $data->qah_cq_comments }}</textarea>
                                             </div>
                                         </div>
             
