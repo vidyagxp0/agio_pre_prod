@@ -92,6 +92,8 @@
                                             Print
                                         </button>
                                     @endif
+
+                                    
                                     {{-- @if (Helpers::checkControlAccess()) --}}
                                         @if(in_array($document->document_type_id, ['SOP']))
                                         <button onclick="location.href='{{ url('documents/printAnnexurePDF', $document->id) }}';"
