@@ -7647,40 +7647,36 @@ class DocumentController extends Controller
     {
         $documentId = $request->query('document_id');
 
-        // Get the current document
         $currentDocument = Document::find($documentId);
         if (!$currentDocument) {
             return response()->json(['error' => 'Document not found'], 404);
         }
 
-        // Get past revisions from Document table
         $revisionHistory = Document::where('record', $currentDocument->record)
             ->where('revised_doc', '<=', $currentDocument->revised_doc)
             ->orderBy('revised_doc', 'asc')
             ->get();
 
-        // 🛠 Fetch related data from DocumentGrid table
         $RevisionGridfpstpData = DocumentGrid::where('document_type_id', $documentId)
             ->where('identifier', "revision_fpstp_data")
             ->first();
 
-        // Decode JSON data (Fix undefined $GtpData)
+        // ✅ Fix: array hai to seedha use karo, string hai tabhi decode karo
         $GtpData = [];
         if ($RevisionGridfpstpData && !empty($RevisionGridfpstpData->data)) {
-            $GtpData = json_decode($RevisionGridfpstpData->data, true) ?? [];
+            $GtpData = is_array($RevisionGridfpstpData->data)
+                ? $RevisionGridfpstpData->data
+                : (json_decode($RevisionGridfpstpData->data, true) ?? []);
         }
 
-        // Prepare history data
         $historyData = [];
-
         foreach ($revisionHistory as $index => $doc) {
-            // Stage-based effective date logic
             $shouldShowEffectiveDate = ($doc->stage >= 11);
 
-            // Ensure corresponding index exists in $GtpData
             $cc_no = $GtpData[$index]['change_ctrl_fpstp_no'] ?? 'No Data';
-
-            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['rev_reason_fpstp'] ?? 'No Data');
+            $reason_of_revision = !empty($doc->reason)
+                ? $doc->reason
+                : ($GtpData[$index]['rev_reason_fpstp'] ?? 'No Data');
 
             $historyData[] = [
                 'rev_fpstp_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
