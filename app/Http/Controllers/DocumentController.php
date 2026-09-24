@@ -7000,49 +7000,49 @@ class DocumentController extends Controller
            ///
            $checkAnnexures = [];
 
-foreach ($annexures as $index => $annexure) {
+            foreach ($annexures as $index => $annexure) {
 
-    $annexureText = trim(
-        str_replace('&nbsp;', '', strip_tags($annexure ?? ''))
-    );
+                $annexureText = trim(
+                    str_replace('&nbsp;', '', strip_tags($annexure ?? ''))
+                );
 
-    // Empty annexure ko skip MAT karo agar Data Not Found dikhana hai
-    // Agar continue karoge to us annexure ka number hi nahi banega
+                // Empty annexure ko skip MAT karo agar Data Not Found dikhana hai
+                // Agar continue karoge to us annexure ka number hi nahi banega
 
-    $annexureNo = $index + 1;
+                $annexureNo = $index + 1;
 
-    $mainDocumentNumber = $document->document_number;
+                $mainDocumentNumber = $document->document_number;
 
-    $parts = explode('/', $mainDocumentNumber);
+                $parts = explode('/', $mainDocumentNumber);
 
-    $departmentCode = $parts[1] ?? '';
+                $departmentCode = $parts[1] ?? '';
 
-    $numberRevision = explode('-', $parts[2] ?? '');
+                $numberRevision = explode('-', $parts[2] ?? '');
 
-    $documentSequence = $numberRevision[0] ?? '';
-    $revision = $numberRevision[1] ?? '00';
+                $documentSequence = $numberRevision[0] ?? '';
+                $revision = $numberRevision[1] ?? '00';
 
-    $annexureDocumentNumber =
-        $departmentCode . '/' .
-        $documentSequence . '/F' .
-        $annexureNo . '-' .
-        $revision;
+                $annexureDocumentNumber =
+                    $departmentCode . '/' .
+                    $documentSequence . '/F' .
+                    $annexureNo . '-' .
+                    $revision;
 
-    $checkAnnexures[$index] = [
-        'main_document_number' => $mainDocumentNumber,
-        'annexure_no' => $annexureNo,
-        'annexure_document_number' => $annexureDocumentNumber,
-        'content' => $annexure,
-        'is_empty' => empty($annexureText),
-    ];
+                $checkAnnexures[$index] = [
+                    'main_document_number' => $mainDocumentNumber,
+                    'annexure_no' => $annexureNo,
+                    'annexure_document_number' => $annexureDocumentNumber,
+                    'content' => $annexure,
+                    'is_empty' => empty($annexureText),
+                ];
 
-    //  dd(array_column($checkAnnexures, 'annexure_document_number'));
-     $annexureDocumentNumbers = array_column($checkAnnexures,'annexure_document_number');
+                //  dd(array_column($checkAnnexures, 'annexure_document_number'));
+                $annexureDocumentNumbers = array_column($checkAnnexures,'annexure_document_number');
 
 
 
-   
-}
+            
+            }
             /////////
 
         $viewName = match ($data->document_type_id) {
@@ -7159,23 +7159,23 @@ foreach ($annexures as $index => $annexure) {
     public function getRevisionHistory(Request $request)
     {
         $documentId = $request->query('document_id');
-    
+
         $currentDocument = Document::find($documentId);
         if (!$currentDocument) {
             return response()->json(['error' => 'Document not found'], 404);
         }
-    
+
         // Get past revisions from Document table
         $revisionHistory = Document::where('record', $currentDocument->record)
             ->where('revised_doc', '<=', $currentDocument->revised_doc)
             ->orderBy('revised_doc', 'asc')
             ->get();
-    
-        // 🛠 Get cc_no & reason_of_revision from DocumentGrid table
+
+        // 🛠 Get cc_no from DocumentGrid table (reason ab Document table se aayega)
         $RevisionHistoryData = DocumentGrid::where('document_type_id', $documentId)
             ->where('identifier', "revision_history")
             ->first();
-    
+
         // Convert JSON data if exists
         $GtpData = [];
         if (!empty($RevisionHistoryData) && isset($RevisionHistoryData->data)) {
@@ -7183,16 +7183,16 @@ foreach ($annexures as $index => $annexure) {
                 ? json_decode($RevisionHistoryData->data, true) 
                 : (is_array($RevisionHistoryData->data) ? $RevisionHistoryData->data : []);
         }
-    
+
         $historyData = [];
         foreach ($revisionHistory as $index => $doc) {
             // Stage-based effective date logic
             $shouldShowEffectiveDate = ($doc->stage >= 11);
-            
-            // 🛠 Fetch cc_no & reason_of_revision from $GtpData array
+
+            // 🛠 cc_no still grid se, reason ab modal wale Document->reason se
             $cc_no = $GtpData[$index]['cc_no'] ?? 'No Data';
-            $reason_of_revision = $GtpData[$index]['reason_of_revision'] ?? 'No Data';
-    
+            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['reason_of_revision'] ?? 'No Data');
+
             $historyData[] = [
                 'revision_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
                 'effective_date' => $shouldShowEffectiveDate ? $doc->effective_date : null,
@@ -7200,7 +7200,7 @@ foreach ($annexures as $index => $annexure) {
                 'reason_of_revision' => $reason_of_revision
             ];
         }
-    
+
         return response()->json(['revision_history' => $historyData]);
     }
 
@@ -7240,8 +7240,7 @@ foreach ($annexures as $index => $annexure) {
     
             // 🛠 Fetch cc_no & reason_of_revision from $GtpData array (if exists)
             $cc_no = $GtpData[$index]['change_ctrl_no'] ?? 'No Data';
-            $reason_of_revision = $GtpData[$index]['rev_reason'] ?? 'No Data';
-    
+            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['rev_reason'] ?? 'No Data');
             $historyData[] = [
                 'rev_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
                 'eff_date' => $shouldShowEffectiveDate ? $doc->effective_date : null,
@@ -7290,8 +7289,8 @@ foreach ($annexures as $index => $annexure) {
             
             // Fetch cc_no & reason_of_revision from $GtpData array
             $cc_no = $GtpData[$index]['change_ctrl_inps_no'] ?? 'No Data';
-            $reason_of_revision = $GtpData[$index]['rev_reason_inps'] ?? 'No Data';
-    
+            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['rev_reason_inps'] ?? 'No Data');
+
             $historyData[] = [
                 'rev_inps_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
                 'eff_date_inps' => $shouldShowEffectiveDate ? $doc->effective_date : null,
@@ -7340,8 +7339,8 @@ foreach ($annexures as $index => $annexure) {
             
             // Fetch cc_no & reason_of_revision from $GtpData array
             $cc_no = $GtpData[$index]['change_ctrl_cvs_no'] ?? 'No Data';
-            $reason_of_revision = $GtpData[$index]['rev_reason_cvs'] ?? 'No Data';
-    
+            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['rev_reason_cvs'] ?? 'No Data');
+
             $historyData[] = [
                 'rev_cvs_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
                 'eff_date_cvs' => $shouldShowEffectiveDate ? $doc->effective_date : null,
@@ -7389,8 +7388,8 @@ foreach ($annexures as $index => $annexure) {
             
             // Fetch cc_no & reason_of_revision from $GtpData array
             $cc_no = $TDSData[$index]['changContNo_tds'] ?? 'No Data';
-            $reason_of_revision = $TDSData[$index]['reasonRevi_tds'] ?? 'No Data';
-    
+            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($TDSData[$index]['reasonRevi_tds'] ?? 'No Data');
+
             $tdshistoryData[] = [
                 'revision_no_tds' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
                 'effectiveDate_tds' => $shouldShowEffectiveDate ? $doc->effective_date : null,
@@ -7439,8 +7438,8 @@ foreach ($annexures as $index => $annexure) {
             
             // Fetch cc_no & reason_of_revision from $GtpData array
             $cc_no = $GtpData[$index]['changContNo_gtp'] ?? 'No Data';
-            $reason_of_revision = $GtpData[$index]['reasonRevi_gtp'] ?? 'No Data';
-    
+            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['reasonRevi_gtp'] ?? 'No Data');
+
             $gtphistoryData[] = [
                 'revision_no_gtp' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
                 'effectiveDate_gtp' => $shouldShowEffectiveDate ? $doc->effective_date : null,
@@ -7487,8 +7486,8 @@ foreach ($annexures as $index => $annexure) {
             
             // Fetch cc_no & reason_of_revision from $GtpData array
             $cc_no = $GtpData[$index]['change_ctrl_mfps_no'] ?? 'No Data';
-            $reason_of_revision = $GtpData[$index]['rev_reason_mfps'] ?? 'No Data';
-    
+            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['rev_reason_mfps'] ?? 'No Data');
+
             $mfphistoryData[] = [
                 'revision_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
                 'effective_date' => $shouldShowEffectiveDate ? $doc->effective_date : null,
@@ -7535,8 +7534,8 @@ foreach ($annexures as $index => $annexure) {
             
             // 🛠 Fetch cc_no & reason_of_revision from $GtpData array
             $cc_no = $GtpData[$index]['change_ctrl_mfpstp_no'] ?? 'No Data';
-            $reason_of_revision = $GtpData[$index]['rev_reason_mfpstp'] ?? 'No Data';
-    
+            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['rev_reason_mfpstp'] ?? 'No Data');
+
             $mfpstphistoryData[] = [
                 'revision_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
                 'effective_date' => $shouldShowEffectiveDate ? $doc->effective_date : null,
@@ -7583,8 +7582,8 @@ foreach ($annexures as $index => $annexure) {
             
             // Fetch cc_no & reason_of_revision from $GtpData array
             $cc_no = $GtpData[$index]['change_ctrl_rawms_no'] ?? 'No Data';
-            $reason_of_revision = $GtpData[$index]['rev_reason_rawms'] ?? 'No Data';
-    
+            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['rev_reason_rawms'] ?? 'No Data');
+
             $rwmshistoryData[] = [
                 'revision_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
                 'effective_date' => $shouldShowEffectiveDate ? $doc->effective_date : null,
@@ -7631,8 +7630,8 @@ foreach ($annexures as $index => $annexure) {
             
             //  Fetch cc_no & reason_of_revision from $GtpData array
             $cc_no = $GtpData[$index]['change_ctrl_rawmstp_no'] ?? 'No Data';
-            $reason_of_revision = $GtpData[$index]['rev_reason_rawmstp'] ?? 'No Data';
-    
+            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['rev_reason_rawmstp'] ?? 'No Data');
+
             $rwmstphistoryData[] = [
                 'revision_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
                 'effective_date' => $shouldShowEffectiveDate ? $doc->effective_date : null,
@@ -7673,13 +7672,15 @@ foreach ($annexures as $index => $annexure) {
 
         // Prepare history data
         $historyData = [];
+
         foreach ($revisionHistory as $index => $doc) {
             // Stage-based effective date logic
             $shouldShowEffectiveDate = ($doc->stage >= 11);
-            
+
             // Ensure corresponding index exists in $GtpData
             $cc_no = $GtpData[$index]['change_ctrl_fpstp_no'] ?? 'No Data';
-            $reason_of_revision = $GtpData[$index]['rev_reason_fpstp'] ?? 'No Data';
+
+            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['rev_reason_fpstp'] ?? 'No Data');
 
             $historyData[] = [
                 'rev_fpstp_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
@@ -7723,7 +7724,7 @@ foreach ($annexures as $index => $annexure) {
             
             // 🛠 Fetch cc_no & reason_of_revision from $GtpData array
             $cc_no = $GtpData[$index]['change_ctrl_inpstp_no'] ?? 'No Data';
-            $reason_of_revision = $GtpData[$index]['rev_reason_inpstp'] ?? 'No Data';
+            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['rev_reason_inpstp'] ?? 'No Data');
     
             $historyData[] = [
                 'rev_inpstp_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
@@ -7767,7 +7768,7 @@ foreach ($annexures as $index => $annexure) {
             $shouldShowEffectiveDate = ($doc->stage >= 11);
             
             $cc_no = $GtpData[$index]['change_ctrl_cvstp_no'] ?? 'No Data';
-            $reason_of_revision = $GtpData[$index]['rev_reason_cvstp'] ?? 'No Data';
+            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['rev_reason_cvstp'] ?? 'No Data');
     
             $historyData[] = [
                 'rev_cvstp_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
@@ -7814,7 +7815,7 @@ foreach ($annexures as $index => $annexure) {
             
             // 🛠 Fetch cc_no & reason_of_revision from $GtpData array
             $cc_no = $GtpData[$index]['change_ctrl_pams_no'] ?? 'No Data';
-            $reason_of_revision = $GtpData[$index]['rev_reason_pams'] ?? 'No Data';
+            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['rev_reason_pams'] ?? 'No Data');
     
             $historyData[] = [
                 'rev_pams_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
@@ -7864,7 +7865,7 @@ foreach ($annexures as $index => $annexure) {
             
             // 🛠 Fetch cc_no & reason_of_revision from $GtpData array
             $cc_no = $GtpData[$index]['change_ctrl_pias_no'] ?? 'No Data';
-            $reason_of_revision = $GtpData[$index]['rev_reason_pias'] ?? 'No Data';
+            $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['rev_reason_pias'] ?? 'No Data');
     
             $historyData[] = [
                 'rev_pias_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
@@ -8048,7 +8049,6 @@ foreach ($annexures as $index => $annexure) {
             // ==========================================
             // GET DOCUMENT
             // ==========================================
-
             $document = Document::find($id);
 
             if (!$document) {
@@ -8057,11 +8057,9 @@ foreach ($annexures as $index => $annexure) {
                 ]);
             }
 
-
             // ==========================================
             // DOCUMENT DATA
             // ==========================================
-
             $data = $document;
 
             $departmentId = $document->department_id;
@@ -8076,37 +8074,23 @@ foreach ($annexures as $index => $annexure) {
             // ==========================================
             // GET DEPARTMENT
             // ==========================================
-
             $department = Department::find($departmentId);
 
             $data->department = $department;
             $data['department_name'] = $department ? $department->name : '';
 
-
             // ==========================================
             // REVISION NUMBER
             // ==========================================
-
             if ($document->revised == 'Yes') {
 
-                $latestRevision = Document::where(
-                    'revised_doc',
-                    $document->id
-                )->max('minor');
+                $latestRevision = Document::where('revised_doc', $document->id)->max('minor');
 
-                $revisionNumber = $latestRevision
-                    ? (int) $latestRevision + 1
-                    : 1;
+                $revisionNumber = $latestRevision ? (int) $latestRevision + 1 : 1;
 
-                $revisionNumber = str_pad(
-                    $revisionNumber,
-                    2,
-                    '0',
-                    STR_PAD_LEFT
-                );
+                $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
 
             } else {
-
                 $revisionNumber = '00';
             }
 
@@ -8114,21 +8098,13 @@ foreach ($annexures as $index => $annexure) {
             // ==========================================
             // CURRENT DOCUMENT ID
             // ==========================================
+            $currentId = Document::where('department_id', $departmentId)->orderBy('id')->pluck('id')->search($id);
 
-            $currentId = Document::where('department_id', $departmentId)
-                ->orderBy('id')
-                ->pluck('id')
-                ->search($id);
-
-            $currentId = $currentId !== false
-                ? $currentId + 1
-                : null;
-
+            $currentId = $currentId !== false ? $currentId + 1 : null;
 
             // ==========================================
             // ORIGINATOR
             // ==========================================
-
             $originatorUser = User::find($document->originator_id);
 
             $data['originator'] = $originatorUser->name ?? null;
@@ -8138,10 +8114,7 @@ foreach ($annexures as $index => $annexure) {
             // ==========================================
             // DOCUMENT TYPE
             // ==========================================
-
-            $docType = DocumentType::find(
-                $document->document_type_id
-            );
+            $docType = DocumentType::find($document->document_type_id);
 
             $data['document_type_name'] = $docType->name ?? null;
             $data['document_type_code'] = $docType->typecode ?? null;
@@ -8150,28 +8123,17 @@ foreach ($annexures as $index => $annexure) {
             // ==========================================
             // DIVISION & YEAR
             // ==========================================
+            $data['document_division'] = Division::where('id', $data->division_id)->value('name');
 
-            $data['document_division'] = Division::where(
-                'id',
-                $data->division_id
-            )->value('name');
-
-            $data['year'] = Carbon::parse(
-                $data->created_at
-            )->format('Y');
+            $data['year'] = Carbon::parse($data->created_at)->format('Y');
 
 
             // ==========================================
             // GET DOCUMENT CONTENT
             // ==========================================
-
-            $documentContent = DocumentContent::where(
-                'document_id',
-                $id
-            )->first();
+            $documentContent = DocumentContent::where('document_id', $id)->first();
 
             $data['document_content'] = $documentContent;
-
 
             // ==========================================
             // GET ANNEXURES
@@ -8194,7 +8156,6 @@ foreach ($annexures as $index => $annexure) {
                 }
             }
 
-
             // ==========================================
             // REMOVE EMPTY ANNEXURES
             // ==========================================
@@ -8203,18 +8164,11 @@ foreach ($annexures as $index => $annexure) {
 
             foreach ($annexures as $annexure) {
 
-                // HTML remove karke actual text check karo
                 $plainText = trim(
-                    strip_tags(
-                        html_entity_decode(
-                            $annexure,
-                            ENT_QUOTES | ENT_HTML5,
-                            'UTF-8'
-                        )
+                    strip_tags(html_entity_decode($annexure, ENT_QUOTES | ENT_HTML5, 'UTF-8')
                     )
                 );
 
-                // Agar actual data nahi hai to skip
                 if ($plainText === '') {
                     continue;
                 }
@@ -8225,25 +8179,15 @@ foreach ($annexures as $index => $annexure) {
 
             // ==========================================
             // DOCUMENT NUMBER DETAILS
-            // Example:
-            // SOP/PG/004-00
             // ==========================================
 
             $mainDocumentNumber = $document->document_number ?? '';
 
-            $parts = explode(
-                '/',
-                $mainDocumentNumber
-            );
-
-            // PG
+            $parts = explode('/', $mainDocumentNumber);
             $departmentCode = $parts[1] ?? '';
 
             // 004-00
-            $numberRevision = explode(
-                '-',
-                $parts[2] ?? ''
-            );
+            $numberRevision = explode('-', $parts[2] ?? '');
 
             // 004
             $documentSequence = $numberRevision[0] ?? '';
@@ -8261,29 +8205,18 @@ foreach ($annexures as $index => $annexure) {
             foreach ($validAnnexures as $key => $annexure) {
 
                 // Continuous Number:
-                // F1, F2, F3...
                 $annexureNo = $key + 1;
 
-
-                // Example:
-                // PG/004/F1-00
-                $annexureDocumentNumber =
-                    $departmentCode . '/' .
-                    $documentSequence . '/F' .
-                    $annexureNo . '-' .
-                    $revision;
-
+                $annexureDocumentNumber = $departmentCode . '/' . $documentSequence . '/F' . $annexureNo . '-' . $revision;
 
                 $checkAnnexures[] = [
                     'annexure_no' => $annexureNo,
 
-                    'annexure_document_number' =>
-                        $annexureDocumentNumber,
+                    'annexure_document_number' => $annexureDocumentNumber,
 
                     'content' => $annexure,
                 ];
             }
-
 
             // ==========================================
             // TIME & TEMP FILES
@@ -8293,15 +8226,9 @@ foreach ($annexures as $index => $annexure) {
 
             $tempFiles = [];
 
-
             // ==========================================
             // CASE 1:
-            // NO ANNEXURE DATA
-            //
-            // Blank PDF nahi banega.
-            // Ek PDF page me NO DATA FOUND show hoga.
             // ==========================================
-
             if (empty($checkAnnexures)) {
 
                 $annexurePdf = PDF::loadView(
@@ -8786,12 +8713,6 @@ foreach ($annexures as $index => $annexure) {
     {
         $request = request();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Manual validation
-        |--------------------------------------------------------------------------
-        */
-
         if (!$request->document_request_id) {
             toastr()->error('Please select Request ID.');
             return redirect()->back();
@@ -8814,12 +8735,6 @@ foreach ($annexures as $index => $annexure) {
             toastr()->error('Document not found.');
             return redirect()->back();
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Fetch actual closed request
-        |--------------------------------------------------------------------------
-        */
 
         $documentRequest = DocumentRequest::where('id', $request->document_request_id)->where('document_id', $document->id)->where('status', 'QA Approval')->first();
 
@@ -8849,12 +8764,6 @@ foreach ($annexures as $index => $annexure) {
             }
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Prevent same request from being printed twice
-        |--------------------------------------------------------------------------
-        */
-
         $alreadyPrinted = PrintHistory::where('document_request_id', $documentRequest->id)->exists();
 
         if ($alreadyPrinted) {
@@ -8862,12 +8771,6 @@ foreach ($annexures as $index => $annexure) {
 
             return redirect()->back();
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Request and issuance details
-        |--------------------------------------------------------------------------
-        */
 
         $formattedRequestId = $documentRequest->request_id ?? ('Request-' . str_pad($documentRequest->record, 3, '0', STR_PAD_LEFT ));
 
@@ -8901,53 +8804,26 @@ foreach ($annexures as $index => $annexure) {
             return redirect()->back();
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Authenticated user roles
-        |--------------------------------------------------------------------------
-        */
-
-        $roleIds = DB::table('user_roles')
-            ->where('user_id', Auth::id())
-            ->pluck('role_id')
-            ->filter()
-            ->map(function ($roleId) {
+        $roleIds = DB::table('user_roles')->where('user_id', Auth::id())->pluck('role_id')->filter()->map(function ($roleId) {
                 return (int) $roleId;
             })->unique()->values()->toArray();
 
         if (empty($roleIds)) {
             toastr()->error('No role is assigned to your account.');
-
             return redirect()->back();
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Print control
-        |--------------------------------------------------------------------------
-        */
 
         $controls = PrintControl::whereIn('role_id', $roleIds)->orderByDesc('id')->first();
 
         if (!$controls) {
-            toastr()->error(
-                'There is no print control configured for your assigned roles.'
-            );
-
+            toastr()->error('There is no print control configured for your assigned roles.');
             return redirect()->back();
         }
 
-        $limitResult =
-            $this->checkDocumentPrintLimit(
-                $controls,
-                Auth::id(),
-                $document->id
-            );
+        $limitResult = $this->checkDocumentPrintLimit($controls, Auth::id(), $document->id);
 
         if (!$limitResult['allowed']) {
-            toastr()->error(
-                $limitResult['message']
-            );
+            toastr()->error($limitResult['message']);
 
             return redirect()->back();
         }
@@ -8963,24 +8839,16 @@ foreach ($annexures as $index => $annexure) {
         $sopTypeShort = $document->sop_type_short;
 
         if (!$departmentId) {
-            toastr()->error(
-                'Department ID is not associated with this document.'
-            );
+            toastr()->error('Department ID is not associated with this document.');
 
             return redirect()->back();
         }
 
-        $documents = Document::where('department_id', $departmentId)
-            ->when(!empty($sopTypeShort),
+        $documents = Document::where('department_id', $departmentId)->when(!empty($sopTypeShort),
                 function ($query) use ($sopTypeShort) {
-                    $query->where(
-                        'sop_type_short',
-                        $sopTypeShort
-                    );
+                    $query->where('sop_type_short', $sopTypeShort);
                 }
-            )
-            ->orderBy('id')
-            ->get();
+            )->orderBy('id')->get();
 
         $currentId = 1;
 
@@ -8992,12 +8860,6 @@ foreach ($annexures as $index => $annexure) {
         }
 
         $sopNumber = $document->document_number;
-
-        /*
-        |--------------------------------------------------------------------------
-        | Prepare document data
-        |--------------------------------------------------------------------------
-        */
 
         set_time_limit(180);
 
@@ -9023,39 +8885,21 @@ foreach ($annexures as $index => $annexure) {
 
         $time = Carbon::now();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Annexure data
-        |--------------------------------------------------------------------------
-        */
-
         $annexures = [];
 
         if ($documentContent && !empty($documentContent->annexuredata)) {
-            $unserializedAnnexures =
-                @unserialize(
-                    $documentContent->annexuredata
-                );
+            $unserializedAnnexures = @unserialize($documentContent->annexuredata);
 
             if (is_array($unserializedAnnexures)) {
-                $annexures =
-                    $unserializedAnnexures;
+                $annexures = $unserializedAnnexures;
             }
         }
 
         if (empty($data->document_type_id)) {
-            toastr()->error(
-                'Document type ID is missing.'
-            );
+            toastr()->error('Document type ID is missing.');
 
             return redirect()->back();
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Select Blade view
-        |--------------------------------------------------------------------------
-        */
 
         $viewName = match ($data->document_type_id) {
             'SOP' => 'frontend.documents.pdfpage',
@@ -9081,43 +8925,19 @@ foreach ($annexures as $index => $annexure) {
             default => 'frontend.documents.pdfpage',
         };
 
-        /*
-        | These document types contain real HTML content in Blade.
-        | Non-SOP types containing iframe/upload attachments use actual files.
-        |--------------------------------------------------------------------------
-        */
-
         $bladeGeneratedTypes = ['SOP','FPS','INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP',];
-
-        /*
-        |--------------------------------------------------------------------------
-        | Get actual attachments for non-SOP
-        |--------------------------------------------------------------------------
-        */
 
         $sourceAttachmentPaths = [];
 
         if (!in_array($document->document_type_id, $bladeGeneratedTypes, true)) {
-            $sourceAttachmentPaths =
-                $this->getNonSopDocumentPdfPaths(
-                    $document,
-                    $documentContent
-                );
+            $sourceAttachmentPaths = $this->getNonSopDocumentPdfPaths($document, $documentContent);
 
             if (empty($sourceAttachmentPaths)) {
-                toastr()->error(
-                    'No printable PDF or image attachment was found for this document.'
-                );
+                toastr()->error('No printable PDF or image attachment was found for this document.');
 
                 return redirect()->back();
             }
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Save print history only after source is confirmed
-        |--------------------------------------------------------------------------
-        */
 
         $printHistory = new PrintHistory();
 
@@ -9165,12 +8985,6 @@ foreach ($annexures as $index => $annexure) {
 
         $printHistory->save();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Stream printable issued copies
-        |--------------------------------------------------------------------------
-        */
-
         return $this->streamIssuedDocumentCopies(
             $viewName,
             [
@@ -9214,15 +9028,7 @@ foreach ($annexures as $index => $annexure) {
             return redirect()->back()->withInput();
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Find Print Control
-        |--------------------------------------------------------------------------
-        */
-
-        $controls = PrintControl::whereIn('role_id', $roleIds)
-            ->orderByDesc('id')
-            ->first();
+        $controls = PrintControl::whereIn('role_id', $roleIds)->orderByDesc('id')->first();
        
         if (!$controls) {
             toastr()->error(
@@ -9237,8 +9043,7 @@ foreach ($annexures as $index => $annexure) {
         $document = Document::find($id);
 
         if ($document->revised == 'Yes') {
-            $latestRevision = Document::where('revised_doc', $document->id)
-                                       ->max('minor');
+            $latestRevision = Document::where('revised_doc', $document->id)->max('minor');
             $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
             $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
         } else {
@@ -9265,7 +9070,6 @@ foreach ($annexures as $index => $annexure) {
             }
         }
 
-
         if ($controls) {
             set_time_limit(30);
             $document = Document::find($id);
@@ -9286,8 +9090,6 @@ foreach ($annexures as $index => $annexure) {
             if (!empty($documentContent->annexuredata)) {
                 $annexures = unserialize($documentContent->annexuredata);
             }
-
-
 
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
@@ -9498,26 +9300,17 @@ foreach ($annexures as $index => $annexure) {
 
       
         $revisionDocuments = Document::where(function ($query) use ($baseDocumentNumber, $document) {
-                $query->where('base_document_number', $baseDocumentNumber)
-                    ->orWhere('record', $document->record);
+                $query->where('base_document_number', $baseDocumentNumber)->orWhere('record', $document->record);
             })->get(['id', 'document_number', 'revised_doc',]);
 
-        $highestRevisionNumber = $this->extractDocumentRevisionNumber(
-            $document->document_number
-        );
+        $highestRevisionNumber = $this->extractDocumentRevisionNumber($document->document_number);
 
         foreach ($revisionDocuments as $revisionDocument) {
-            $documentNumberRevision = $this->extractDocumentRevisionNumber(
-                $revisionDocument->document_number
-            );
+            $documentNumberRevision = $this->extractDocumentRevisionNumber($revisionDocument->document_number);
 
             $savedRevisionNumber = (int) ($revisionDocument->revised_doc ?? 0);
 
-            $highestRevisionNumber = max(
-                $highestRevisionNumber,
-                $documentNumberRevision,
-                $savedRevisionNumber
-            );
+            $highestRevisionNumber = max($highestRevisionNumber, $documentNumberRevision, $savedRevisionNumber);
         }
 
         $nextRevision = $highestRevisionNumber + 1;
@@ -9541,41 +9334,23 @@ foreach ($annexures as $index => $annexure) {
 
         $document->save();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Create new revised document
-        |--------------------------------------------------------------------------
-        */
-
         $newdoc = $document->replicate();
 
-        $newdoc->document_number = $this->generateRevisedDocumentNumber(
-            $baseDocumentNumber,
-            $nextRevision
-        );
+        $newdoc->document_number = $this->generateRevisedDocumentNumber($baseDocumentNumber, $nextRevision);
 
         $newdoc->base_document_number = $baseDocumentNumber;
-
 
         $newdoc->supersedes_no = $document->document_number;
 
         $newdoc->revised = 'Yes';
         $newdoc->revised_doc = $nextRevision;
 
-        /*
-        | New record abhi revise nahi hua hai.
-        | Future me ise revise kiya jayega.
-        */
         $newdoc->revision = 'No';
         $newdoc->revision_policy = null;
 
         $newdoc->major = $requestedMajor;
         $newdoc->minor = $requestedMinor;
 
-        /*
-        | Old request fields preserve kiye hain.
-        | Field na aaye to null ho sakta hai.
-        */
         $newdoc->reason = $request->reason;
         $newdoc->trainer = $request->trainer;
         $newdoc->comments = $request->comment;
@@ -9583,26 +9358,17 @@ foreach ($annexures as $index => $annexure) {
         $stageOneDocuments = ['SOP','FPS','INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP'];
 
         if (in_array($newdoc->document_type_id, $stageOneDocuments)) {
-
             // Normal revision flow
             $newdoc->status = Stage::where('id', 1)->value('name');
             $newdoc->stage = 1;
 
         } else {
-
             // Non-stageOne document direct Effective hoga
             $newdoc->status = Stage::where('id', 11)->value('name');
             $newdoc->stage = 11;
         }
 
         $newdoc->save();
-
-        /*
-        |--------------------------------------------------------------------------
-        | If revised document is directly Effective,
-        | make the old document Obsolete
-        |--------------------------------------------------------------------------
-        */
 
         if ($newdoc->revised === 'Yes' &&
             $newdoc->stage == 11 &&
@@ -9621,12 +9387,6 @@ foreach ($annexures as $index => $annexure) {
             }
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Replicate complete DocumentContent
-        |--------------------------------------------------------------------------
-        */
-
         $documentContents = DocumentContent::where('document_id', $document->id)->get();
 
         foreach ($documentContents as $documentContent) {
@@ -9635,14 +9395,6 @@ foreach ($annexures as $index => $annexure) {
             $newDocumentContent->save();
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Replicate complete Annexure data
-        |--------------------------------------------------------------------------
-        |
-        |
-        */
-
         $annexures = Annexure::where('document_id', $document->id)->get();
 
         foreach ($annexures as $annexure) {
@@ -9650,12 +9402,6 @@ foreach ($annexures as $index => $annexure) {
             $newAnnexure->document_id = $newdoc->id;
             $newAnnexure->save();
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Replicate training data
-        |--------------------------------------------------------------------------
-        */
 
         if (strtolower((string) $document->training_required) === 'yes') {
             $documentTrainings = DocumentTraining::where('document_id', $document->id)->get();
@@ -9667,12 +9413,6 @@ foreach ($annexures as $index => $annexure) {
             }
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Replicate complete distribution grid
-        |--------------------------------------------------------------------------
-        */
-
         $distributionGrids = DocumentGridData::where('document_id', $document->id)->get();
 
         foreach ($distributionGrids as $distributionGrid) {
@@ -9680,13 +9420,6 @@ foreach ($annexures as $index => $annexure) {
             $newDistributionGrid->document_id = $newdoc->id;
             $newDistributionGrid->save();
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Replicate all DocumentGrid data
-        |--------------------------------------------------------------------------
-        |
-        */
 
         $documentGrids = DocumentGrid::where('document_type_id', $document->id)->get();
 
@@ -9696,13 +9429,6 @@ foreach ($annexures as $index => $annexure) {
             $newDocumentGrid->save();
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Replicate all TDS grids
-        |--------------------------------------------------------------------------
-        |
-        */
-
         $tdsDocumentGrids = TDSDocumentGrid::where('tds_id', $document->id)->get();
 
         foreach ($tdsDocumentGrids as $tdsDocumentGrid) {
@@ -9710,12 +9436,6 @@ foreach ($annexures as $index => $annexure) {
             $newTdsDocumentGrid->tds_id = $newdoc->id;
             $newTdsDocumentGrid->save();
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Important
-        |--------------------------------------------------------------------------
-        */
 
         // DocumentService::update_document_numbers();
 
@@ -9943,18 +9663,7 @@ foreach ($annexures as $index => $annexure) {
 
                 $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
-                $canvas->page_text(
-                    $width / 2.9,
-                    $height / 2,
-                    $data->status,
-                    null,
-                    25,
-                    [0, 0, 0],
-                    12,
-                    6,
-                    -20
-                    
-                );
+                $canvas->page_text($width / 2.9, $height / 2, $data->status, null, 25, [0, 0, 0], 12, 6, -20);
 
                 return $pdf->stream('SOP'.$documentId.'.pdf');
 
@@ -9971,15 +9680,13 @@ foreach ($annexures as $index => $annexure) {
     private function generateDocumentNumber($departmentId, $documentTypeId, $sopType, $sopTypeShort, $revised = 'No', $revisedDoc = null, $excludeDocumentId = null ) {
         $sopTypeShort = strtoupper(trim($sopTypeShort ?? ''));
 
-        $query = Document::where('department_id', $departmentId)
-            ->where('document_type_id', $documentTypeId);
+        $query = Document::where('department_id', $departmentId)->where('document_type_id', $documentTypeId);
 
         if (!empty($sopType)) {
             $query->where('sop_type', $sopType);
         } else {
             $query->where(function ($subQuery) {
-                $subQuery->whereNull('sop_type')
-                    ->orWhere('sop_type', '');
+                $subQuery->whereNull('sop_type')->orWhere('sop_type', '');
             });
         }
 
@@ -9987,8 +9694,7 @@ foreach ($annexures as $index => $annexure) {
             $query->where('sop_type_short', $sopTypeShort);
         } else {
             $query->where(function ($subQuery) {
-                $subQuery->whereNull('sop_type_short')
-                    ->orWhere('sop_type_short', '');
+                $subQuery->whereNull('sop_type_short')->orWhere('sop_type_short', '');
             });
         }
 
@@ -10000,9 +9706,7 @@ foreach ($annexures as $index => $annexure) {
 
         $formattedId = str_pad($currentId, 3, '0', STR_PAD_LEFT );
 
-        $revisionNumber = $revised === 'Yes'
-            ? str_pad($revisedDoc ?? 0, 2, '0', STR_PAD_LEFT)
-            : '00';
+        $revisionNumber = $revised === 'Yes' ? str_pad($revisedDoc ?? 0, 2, '0', STR_PAD_LEFT) : '00';
 
 
         if ($sopTypeShort === 'SOP') {
@@ -10016,9 +9720,7 @@ foreach ($annexures as $index => $annexure) {
     }
 
     private function checkDocumentDownloadLimit($controls, $userId, $documentId) {
-        $query = DownloadHistory::where('user_id', $userId)->where(
-            'document_id', $documentId
-        );
+        $query = DownloadHistory::where('user_id', $userId)->where('document_id', $documentId);
 
         if ((int) $controls->daily !== 0) {
 
@@ -10036,8 +9738,7 @@ foreach ($annexures as $index => $annexure) {
 
         if ((int) $controls->weekly !== 0) {
 
-            $count = (clone $query)->where('created_at', '>=',
-                    Carbon::now()->subDays(7))->count();
+            $count = (clone $query)->where('created_at', '>=', Carbon::now()->subDays(7))->count();
 
             if ($count + 1 > (int) $controls->weekly) {
                 return ['allowed' => false, 'message' => 'You breached your weekly download limit.',
@@ -10112,15 +9813,11 @@ foreach ($annexures as $index => $annexure) {
     private function loadFpdiDependencies(): void
     {
         if (!class_exists('FPDF')) {
-            require_once base_path(
-                'vendor/setasign/fpdf/fpdf.php'
-            );
+            require_once base_path('vendor/setasign/fpdf/fpdf.php');
         }
 
         if (!class_exists(\setasign\Fpdi\Fpdi::class)) {
-            throw new \RuntimeException(
-                'FPDI class could not be loaded.'
-            );
+            throw new \RuntimeException('FPDI class could not be loaded.');
         }
     }
 
@@ -10214,15 +9911,10 @@ foreach ($annexures as $index => $annexure) {
             }
 
             if (!class_exists('FPDF')) {
-                $fpdfPath = base_path(
-                        'vendor/setasign/fpdf/fpdf.php'
-                    );
+                $fpdfPath = base_path('vendor/setasign/fpdf/fpdf.php');
 
                 if (!file_exists($fpdfPath)) {
-                    throw new \RuntimeException(
-                        'FPDF file not found at: '
-                        . $fpdfPath
-                    );
+                    throw new \RuntimeException('FPDF file not found at: ' . $fpdfPath);
                 }
 
                 require_once $fpdfPath;
@@ -10234,27 +9926,17 @@ foreach ($annexures as $index => $annexure) {
                 );
             }
 
-
             $temporaryDirectory = storage_path(
                     'app/document-print-copies'
                 );
 
             if (!is_dir($temporaryDirectory)) {
-                $directoryCreated = mkdir($temporaryDirectory, 0775,
-                        true);
+                $directoryCreated = mkdir($temporaryDirectory, 0775, true);
 
                 if (!$directoryCreated && !is_dir($temporaryDirectory)) {
-                    throw new \RuntimeException(
-                        'Unable to create temporary PDF directory.'
-                    );
+                    throw new \RuntimeException('Unable to create temporary PDF directory.');
                 }
             }
-
-            /*
-            |--------------------------------------------------------------------------
-            | Prepare PDF sources
-            |--------------------------------------------------------------------------
-            */
 
             $validSourcePdfPaths = [];
 
@@ -10263,19 +9945,9 @@ foreach ($annexures as $index => $annexure) {
                     continue;
                 }
 
-                $extension =
-                    strtolower(
-                        pathinfo(
-                            $sourceAttachmentPath,
-                            PATHINFO_EXTENSION
-                        )
+                $extension = strtolower(
+                        pathinfo($sourceAttachmentPath, PATHINFO_EXTENSION)
                     );
-
-                /*
-                |--------------------------------------------------------------------------
-                | Direct PDF attachment
-                |--------------------------------------------------------------------------
-                */
 
                 if ($extension === 'pdf') {
                     $realPath = realpath($sourceAttachmentPath) ?: $sourceAttachmentPath;
@@ -10289,15 +9961,7 @@ foreach ($annexures as $index => $annexure) {
                     continue;
                 }
 
-                /*
-                |--------------------------------------------------------------------------
-                | Image attachment to temporary PDF
-                |--------------------------------------------------------------------------
-                */
-
-                if (!in_array($extension, ['jpg', 'jpeg', 'png'],
-                        true
-                    )) {
+                if (!in_array($extension, ['jpg', 'jpeg', 'png'], true)) {
                     continue;
                 }
 
@@ -10325,99 +9989,45 @@ foreach ($annexures as $index => $annexure) {
 
                 $pageHeight = $orientation === 'L' ? 210 : 297;
 
-                /*
-                |--------------------------------------------------------------------------
-                | Space reserved for top and bottom issuance information
-                |--------------------------------------------------------------------------
-                */
-
                 $leftMargin = 8;
                 $rightMargin = 8;
                 $topMargin = 12;
                 $bottomMargin = 12;
 
-                $availableWidth =
-                    $pageWidth
-                    - $leftMargin
-                    - $rightMargin;
+                $availableWidth = $pageWidth - $leftMargin - $rightMargin;
 
-                $availableHeight =
-                    $pageHeight
-                    - $topMargin
-                    - $bottomMargin;
+                $availableHeight = $pageHeight - $topMargin - $bottomMargin;
 
-                $imageRatio =
-                    $imageWidthPixel
-                    / $imageHeightPixel;
+                $imageRatio = $imageWidthPixel / $imageHeightPixel;
 
-                $availableRatio =
-                    $availableWidth
-                    / $availableHeight;
+                $availableRatio = $availableWidth / $availableHeight;
 
                 if ($imageRatio > $availableRatio) {
-                    $renderWidth =
-                        $availableWidth;
+                    $renderWidth = $availableWidth;
 
-                    $renderHeight =
-                        $renderWidth
-                        / $imageRatio;
+                    $renderHeight = $renderWidth / $imageRatio;
                 } else {
-                    $renderHeight =
-                        $availableHeight;
-
-                    $renderWidth =
-                        $renderHeight
-                        * $imageRatio;
+                    $renderHeight = $availableHeight;
+                    $renderWidth = $renderHeight * $imageRatio;
                 }
 
-                $imageX =
-                    ($pageWidth - $renderWidth)
-                    / 2;
+                $imageX = ($pageWidth - $renderWidth) / 2;
 
-                $imageY =
-                    $topMargin
-                    + (
-                        ($availableHeight - $renderHeight)
-                        / 2
-                    );
+                $imageY = $topMargin + (($availableHeight - $renderHeight) / 2);
 
                 $imagePdf->SetAutoPageBreak(false);
 
-                $imagePdf->AddPage(
-                    $orientation,
-                    [
-                        $pageWidth,
-                        $pageHeight,
-                    ]
-                );
+                $imagePdf->AddPage($orientation, [$pageWidth, $pageHeight,]);
 
-                $imagePdf->Image(
-                    $sourceAttachmentPath,
-                    $imageX,
-                    $imageY,
-                    $renderWidth,
-                    $renderHeight
-                );
+                $imagePdf->Image($sourceAttachmentPath, $imageX, $imageY, $renderWidth, $renderHeight);
 
-                $imagePdf->Output(
-                    'F',
-                    $imagePdfPath
-                );
+                $imagePdf->Output('F', $imagePdfPath);
 
                 if (file_exists($imagePdfPath)) {
-                    $temporaryFiles[] =
-                        $imagePdfPath;
-
-                    $validSourcePdfPaths[] =
-                        $imagePdfPath;
+                    $temporaryFiles[] = $imagePdfPath;
+                    $validSourcePdfPaths[] = $imagePdfPath;
                 }
             }
-
-            /*
-            |--------------------------------------------------------------------------
-            | No attachment supplied: render Blade
-            |--------------------------------------------------------------------------
-            */
 
             if (empty($validSourcePdfPaths)) {
                 $sourcePdf =
@@ -10548,9 +10158,7 @@ foreach ($annexures as $index => $annexure) {
             }
 
             if (empty($validSourcePdfPaths)) {
-                throw new \RuntimeException(
-                    'No printable PDF source could be prepared.'
-                );
+                throw new \RuntimeException('No printable PDF source could be prepared.');
             }
 
             // ================= NEW: Build global page map =================
@@ -10559,23 +10167,17 @@ foreach ($annexures as $index => $annexure) {
             foreach ($validSourcePdfPaths as $sourcePdfPath) {
 
                 $probeFpdi = new \setasign\Fpdi\Fpdi();
-
                 $pageCount = $probeFpdi->setSourceFile($sourcePdfPath);
 
                 for ($localPage = 1; $localPage <= $pageCount; $localPage++) {
-                    $pageMap[] = [
-                        'path' => $sourcePdfPath,
-                        'page' => $localPage,
-                    ];
+                    $pageMap[] = ['path' => $sourcePdfPath, 'page' => $localPage,];
                 }
             }
 
             $totalSourcePages = count($pageMap);
 
             if ($totalSourcePages < 1) {
-                throw new \RuntimeException(
-                    'Source document has no printable pages.'
-                );
+                throw new \RuntimeException('Source document has no printable pages.');
             }
 
             $selectedPages = $pageMap;
@@ -10583,15 +10185,11 @@ foreach ($annexures as $index => $annexure) {
             if ($pageNo !== null) {
 
                 if ($pageNo < 1 || $pageNo > $totalSourcePages) {
-                    throw new \RuntimeException(
-                        'Invalid Page No. This document has only ' . $totalSourcePages . ' page(s).'
-                    );
+                    throw new \RuntimeException('Invalid Page No. This document has only ' . $totalSourcePages . ' page(s).');
                 }
 
                 $selectedPages = [ $pageMap[$pageNo - 1] ];
             }
-            // ===================================================================
-
             /*
             |--------------------------------------------------------------------------
             | Issuance information
@@ -10662,13 +10260,7 @@ foreach ($annexures as $index => $annexure) {
 
                     $orientation = $pageWidth > $pageHeight ? 'L' : 'P';
 
-                    $finalPdf->AddPage($orientation,
-                        [
-                            $pageWidth,
-                            $pageHeight,
-                        ]
-                    );
-
+                    $finalPdf->AddPage($orientation, [$pageWidth, $pageHeight]);
                     $finalPdf->useTemplate($templateId, 0, 0, $pageWidth, $pageHeight);
 
                     $finalPdf->SetTextColor(0, 0, 0);
@@ -10676,12 +10268,6 @@ foreach ($annexures as $index => $annexure) {
                     $finalPdf->SetDrawColor(80, 80, 80);
 
                     $finalPdf->SetLineWidth(0.15);
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Top issuance row
-                    |--------------------------------------------------------------------------
-                    */
 
                     $leftMargin = 7;
                     $topY = 3.2;

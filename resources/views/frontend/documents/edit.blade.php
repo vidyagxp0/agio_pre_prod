@@ -2191,103 +2191,101 @@
                     <div class="input-fields">
                         <div class="row">
                           
+                            <div class="col-md-12">
+                                <div class="group-input">
+                                    <label for="purpose">Objective</label>
 
-                        <div class="col-md-12">
-    <div class="group-input">
-        <label for="purpose">Objective</label>
+                                    <textarea name="purpose"
+                                        @if($document->status == 'Effective')
+                                            readonly
+                                        @else
+                                            {!! Helpers::isRevised($document->stage) !!}
+                                        @endif>{{ trim($document->document_content->purpose ?? '') }}</textarea>
 
-        <textarea name="purpose"
-            @if($document->status == 'Effective')
-                readonly
-            @else
-                {!! Helpers::isRevised($document->stage) !!}
-            @endif>{{ trim($document->document_content->purpose ?? '') }}</textarea>
+                                    @foreach ($history as $tempHistory)
+                                        @if ($tempHistory->activity_type == 'Purpose' && !empty($tempHistory->comment))
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
 
-        @foreach ($history as $tempHistory)
-            @if ($tempHistory->activity_type == 'Purpose' && !empty($tempHistory->comment))
-                @php
-                    $users_name = DB::table('users')
-                        ->where('id', $tempHistory->user_id)
-                        ->value('name');
-                @endphp
+                                            <p style="color: blue">
+                                                Modify by {{ $users_name }} at {{ $tempHistory->created_at }}
+                                            </p>
 
-                <p style="color: blue">
-                    Modify by {{ $users_name }} at {{ $tempHistory->created_at }}
-                </p>
+                                            <input
+                                                class="input-field"
+                                                style="background:#ffff0061;color:black;"
+                                                type="text"
+                                                value="{{ $tempHistory->comment }}"
+                                                disabled
+                                            >
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
 
-                <input
-                    class="input-field"
-                    style="background:#ffff0061;color:black;"
-                    type="text"
-                    value="{{ $tempHistory->comment }}"
-                    disabled
-                >
-            @endif
-        @endforeach
-    </div>
-</div>
+                            @if (Auth::user()->role != 3 && $document->stage < 8 && $document->status != 'Effective')
+                                {{-- Add Comment --}}
+                                <div class="comment">
+                                    <div>
+                                        <p class="timestamp" style="color: blue">
+                                            Modify by {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}
+                                        </p>
+                                        <input class="input-field" type="text" name="purpose_comment">
+                                    </div>
+                                    <div class="button">Add Comment</div>
+                                </div>
+                            @endif
+                            <div class="col-md-12">
+                                <div class="group-input">
+                                    <label for="scope">Scope</label>
 
-@if (Auth::user()->role != 3 && $document->stage < 8 && $document->status != 'Effective')
-    {{-- Add Comment --}}
-    <div class="comment">
-        <div>
-            <p class="timestamp" style="color: blue">
-                Modify by {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}
-            </p>
-            <input class="input-field" type="text" name="purpose_comment">
-        </div>
-        <div class="button">Add Comment</div>
-    </div>
-@endif
-<div class="col-md-12">
-    <div class="group-input">
-        <label for="scope">Scope</label>
+                                    <textarea
+                                        name="scope"
+                                        @if($document->status == 'Effective')
+                                            readonly
+                                        @else
+                                            {!! Helpers::isRevised($document->stage) !!}
+                                        @endif>{{ trim($document->document_content->scope ?? '') }}</textarea>
 
-        <textarea
-            name="scope"
-            @if($document->status == 'Effective')
-                readonly
-            @else
-                {!! Helpers::isRevised($document->stage) !!}
-            @endif>{{ trim($document->document_content->scope ?? '') }}</textarea>
+                                    @foreach ($history as $tempHistory)
+                                        @if ($tempHistory->activity_type == 'Scope' && !empty($tempHistory->comment))
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
 
-        @foreach ($history as $tempHistory)
-            @if ($tempHistory->activity_type == 'Scope' && !empty($tempHistory->comment))
-                @php
-                    $users_name = DB::table('users')
-                        ->where('id', $tempHistory->user_id)
-                        ->value('name');
-                @endphp
+                                            <p style="color: blue">
+                                                Modify by {{ $users_name }} at {{ $tempHistory->created_at }}
+                                            </p>
 
-                <p style="color: blue">
-                    Modify by {{ $users_name }} at {{ $tempHistory->created_at }}
-                </p>
+                                            <input
+                                                class="input-field"
+                                                style="background:#ffff0061; color:black;"
+                                                type="text"
+                                                value="{{ $tempHistory->comment }}"
+                                                disabled
+                                            >
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
 
-                <input
-                    class="input-field"
-                    style="background:#ffff0061; color:black;"
-                    type="text"
-                    value="{{ $tempHistory->comment }}"
-                    disabled
-                >
-            @endif
-        @endforeach
-    </div>
-</div>
-
-@if (Auth::user()->role != 3 && $document->stage < 8 && $document->status != 'Effective')
-    {{-- Add Comment --}}
-    <div class="comment">
-        <div>
-            <p class="timestamp" style="color: blue">
-                Modify by {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}
-            </p>
-            <input class="input-field" type="text" name="scope_comment">
-        </div>
-        <div class="button">Add Comment</div>
-    </div>
-@endif
-
+                            @if (Auth::user()->role != 3 && $document->stage < 8 && $document->status != 'Effective')
+                                {{-- Add Comment --}}
+                                <div class="comment">
+                                    <div>
+                                        <p class="timestamp" style="color: blue">
+                                            Modify by {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}
+                                        </p>
+                                        <input class="input-field" type="text" name="scope_comment">
+                                    </div>
+                                    <div class="button">Add Comment</div>
+                                </div>
+                            @endif
 
                             <div class="col-md-12">
                                 <div class="group-input">
@@ -2786,8 +2784,6 @@
                                     <div class="button">Add Comment</div>
                                 </div>
                             @endif
-
-
                             
                             <div class="col-md-12">
                                 {!! quillEditor(
@@ -2828,7 +2824,6 @@
                                     @endif
                                 @endforeach
                             </div>
-
 
                             <div class="col-md-12">
                                 <div class="group-input">
@@ -2923,8 +2918,6 @@
                                 </div>
                             @endif
 
-
-
                             <div class="col-md-12">
                                 <div class="group-input">
 
@@ -3007,7 +3000,6 @@
                                 </div>
                             </div>
 
-
                             @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
                                     class="comment">
                                     <div>
@@ -3021,8 +3013,6 @@
                                 </div>
                             @endif
                         </div>
-
-
                     </div>
 
                     <div class="input-fields">
@@ -3099,96 +3089,94 @@
                         </div>
                     </div>
 
+                        <div class="group-input">
+                            <label for="revision-history">Revision History</label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="Details-table-revision">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr. No.</th>
+                                            <th>Revision No.</th>
+                                            <th>Change Control No.</th>
+                                            <th>Effective Date</th>
+                                            <th>Reason of Revision</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="revision-history-body">
+                                        @php
+                                            $serialNumber = 1;
+                                            $GtpData = [];
 
-
-                            <div class="group-input">
-                                <label for="revision-history">Revision History</label>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="Details-table-revision">
-                                        <thead>
-                                            <tr>
-                                                <th>Sr. No.</th>
-                                                <th>Revision No.</th>
-                                                <th>Change Control No.</th>
-                                                <th>Effective Date</th>
-                                                <th>Reason of Revision</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="revision-history-body">
-                                            @php
-                                                $serialNumber = 1;
-                                                $GtpData = [];
-
-                                                if (!empty($RevisionHistoryData) && isset($RevisionHistoryData->data)) {
-                                                    $GtpData = is_string($RevisionHistoryData->data) 
-                                                        ? json_decode($RevisionHistoryData->data, true) 
-                                                        : (is_array($RevisionHistoryData->data) ? $RevisionHistoryData->data : []);
-                                                }
-                                            @endphp
-
-                                            @foreach ($GtpData as $index => $rehistory)
-                                                <tr>
-                                                    <td>{{ $serialNumber++ }}</td>
-                                                    <td>
-                                                        <input type="text" name="revision_history[{{ $index }}][revision_number]" 
-                                                            value="{{ $rehistory['revision_no'] ?? '' }}" readonly>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="revision_history[{{ $index }}][cc_no]" 
-                                                            value="{{ $rehistory['cc_no'] ?? '' }}">
-                                                    </td>
-                                                    <td>
-                                                        <input type="date" name="revision_history[{{ $index }}][revised_effective_date]" 
-                                                            value="{{ $rehistory['effective_date'] ?? '' }}" readonly>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="revision_history[{{ $index }}][reason_of_revision]" 
-                                                            value="{{ $rehistory['reason_of_revision'] ?? '' }}">
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <script>
-                                $(document).ready(function () {
-                                    fetchRevisionHistory();
-
-                                    function fetchRevisionHistory() {
-                                        var documentId = {{ $document->id }};
-
-                                        $.ajax({
-                                            url: '/get-revision-history',
-                                            method: 'GET',
-                                            data: { document_id: documentId },
-                                            success: function (response) {
-                                                if (response.revision_history) {
-                                                    var tbody = $('#revision-history-body');
-                                                    tbody.empty();
-                                                    
-                                                    response.revision_history.forEach(function (history, index) {
-                                                                            
-                                                        var row = `
-                                                            <tr>
-                                                                <td>${index + 1}</td>
-                                                                <td><input type="text" name="revision_history[${index}][revision_number]" 
-                                                                        value="${history.revision_no || ''}" readonly></td>
-                                                                <td><input type="text" name="revision_history[${index}][cc_no]" value="${history.cc_no}"></td>
-                                                                <td><input type="date" name="revision_history[${index}][revised_effective_date]" 
-                                                                        value="${history.effective_date || ''}" readonly></td>
-                                                                <td><input type="text" name="revision_history[${index}][reason_of_revision]" value="${history.reason_of_revision}"></td>
-                                                            </tr>`;
-                                                        
-                                                        tbody.append(row);
-                                                    });
-                                                }
+                                            if (!empty($RevisionHistoryData) && isset($RevisionHistoryData->data)) {
+                                                $GtpData = is_string($RevisionHistoryData->data) 
+                                                    ? json_decode($RevisionHistoryData->data, true) 
+                                                    : (is_array($RevisionHistoryData->data) ? $RevisionHistoryData->data : []);
                                             }
-                                        });
-                                    }
-                                });
-                            </script>
+                                        @endphp
+
+                                        @foreach ($GtpData as $index => $rehistory)
+                                            <tr>
+                                                <td>{{ $serialNumber++ }}</td>
+                                                <td>
+                                                    <input type="text" name="revision_history[{{ $index }}][revision_number]" 
+                                                        value="{{ $rehistory['revision_no'] ?? '' }}" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="revision_history[{{ $index }}][cc_no]" 
+                                                        value="{{ $rehistory['cc_no'] ?? '' }}">
+                                                </td>
+                                                <td>
+                                                    <input type="date" name="revision_history[{{ $index }}][revised_effective_date]" 
+                                                        value="{{ $rehistory['effective_date'] ?? '' }}" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="revision_history[{{ $index }}][reason_of_revision]" 
+                                                        value="{{ $rehistory['reason_of_revision'] ?? '' }}">
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <script>
+                            $(document).ready(function () {
+                                fetchRevisionHistory();
+
+                                function fetchRevisionHistory() {
+                                    var documentId = {{ $document->id }};
+
+                                    $.ajax({
+                                        url: '/get-revision-history',
+                                        method: 'GET',
+                                        data: { document_id: documentId },
+                                        success: function (response) {
+                                            if (response.revision_history) {
+                                                var tbody = $('#revision-history-body');
+                                                tbody.empty();
+                                                
+                                                response.revision_history.forEach(function (history, index) {
+                                                                        
+                                                    var row = `
+                                                        <tr>
+                                                            <td>${index + 1}</td>
+                                                            <td><input type="text" name="revision_history[${index}][revision_number]" 
+                                                                    value="${history.revision_no || ''}" readonly></td>
+                                                            <td><input type="text" name="revision_history[${index}][cc_no]" value="${history.cc_no}"></td>
+                                                            <td><input type="date" name="revision_history[${index}][revised_effective_date]" 
+                                                                    value="${history.effective_date || ''}" readonly></td>
+                                                            <td><input type="text" name="revision_history[${index}][reason_of_revision]" value="${history.reason_of_revision}"></td>
+                                                        </tr>`;
+                                                    
+                                                    tbody.append(row);
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        </script>
 
 
                     <div class="button-block">
@@ -12563,19 +12551,12 @@
 
                                                         <a type="button"
                                                         class="remove-file"
-                                                        data-file-name="{{ $file }}">
-                                                            <i class="fa-solid fa-circle-xmark"
+                                                        data-file-name="{{ $file }}"> <i class="fa-solid fa-circle-xmark"
                                                             style="color:red;font-size:20px;"></i>
                                                         </a>
-
-                                                        <input type="hidden"
-                                                            name="existing_annefile_attach15[]"
-                                                            value="{{ $file }}">
-
+                                                        <input type="hidden" name="existing_annefile_attach15[]" value="{{ $file }}">
                                                     </h6>
-
                                                 @endforeach
-
                                             @endif
 
                                         </div>
@@ -12585,146 +12566,117 @@
                                                 Add
                                             </label>
 
-                                            <input
-                                                type="file"
-                                                id="annex_XV_data_qualif_attachment"
-                                                name="annex_XV_data_qualif_attachment[]"
-                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
-                                                onchange="validateAnnexXVFiles(this)"
-                                                multiple
-                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
-                                            >
+                                            <input type="file" id="annex_XV_data_qualif_attachment" name="annex_XV_data_qualif_attachment[]" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" onchange="validateAnnexXVFiles(this)" multiple hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                         </div>
 
                                     </div>
                                     </div>
                                 </div>
 
-                            <input
-                                type="hidden"
-                                id="deleted_anne_attach15"
-                                name="deleted_anne_attach15"
-                                value=""
-                            >
+                                <input type="hidden" id="deleted_anne_attach15" name="deleted_anne_attach15" value="">
 
-                            <script>
+                                <script>
 
-                                    document.addEventListener('DOMContentLoaded', function () {
+                                        document.addEventListener('DOMContentLoaded', function () {
 
-                                        document.querySelectorAll('.remove-file').forEach(function(button){
+                                            document.querySelectorAll('.remove-file').forEach(function(button){
 
-                                            button.addEventListener('click', function(){
+                                                button.addEventListener('click', function(){
 
-                                                const fileName = this.dataset.fileName;
-                                                const fileContainer = this.closest('.file-container');
+                                                    const fileName = this.dataset.fileName;
+                                                    const fileContainer = this.closest('.file-container');
 
-                                                if(!fileContainer) return;
+                                                    if(!fileContainer) return;
 
-                                                fileContainer.style.display = 'none';
+                                                    fileContainer.style.display = 'none';
 
-                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
 
-                                                if(hiddenInput){
-                                                    hiddenInput.remove();
-                                                }
+                                                    if(hiddenInput){
+                                                        hiddenInput.remove();
+                                                    }
 
-                                                const deletedInput = document.getElementById('deleted_anne_attach15');
+                                                    const deletedInput = document.getElementById('deleted_anne_attach15');
 
-                                                let deletedFiles = deletedInput.value
-                                                    ? deletedInput.value.split(',')
-                                                    : [];
+                                                    let deletedFiles = deletedInput.value ? deletedInput.value.split(',') : [];
 
-                                                if(!deletedFiles.includes(fileName)){
-                                                    deletedFiles.push(fileName);
-                                                }
+                                                    if(!deletedFiles.includes(fileName)){
+                                                        deletedFiles.push(fileName);
+                                                    }
 
-                                                deletedInput.value = deletedFiles.join(',');
+                                                    deletedInput.value = deletedFiles.join(',');
+                                                });
+
                                             });
 
                                         });
 
-                                    });
 
+                                        function validateAnnexXVFiles(input){
 
-                                    function validateAnnexXVFiles(input){
+                                            const allowedExtensions = ['pdf','jpg','jpeg','png'];
 
-                                        const allowedExtensions = [
-                                            'pdf',
-                                            'jpg',
-                                            'jpeg',
-                                            'png'
-                                        ];
+                                            const allowedMimeTypes = ['application/pdf','image/jpeg','image/png'];
 
-                                        const allowedMimeTypes = [
-                                            'application/pdf',
-                                            'image/jpeg',
-                                            'image/png'
-                                        ];
+                                            const files = Array.from(input.files);
 
-                                        const files = Array.from(input.files);
+                                            if(files.length === 0){
+                                                return;
+                                            }
 
-                                        if(files.length === 0){
-                                            return;
+                                            for(const file of files){
+
+                                                const ext = file.name.split('.').pop().toLowerCase();
+
+                                                if(!allowedExtensions.includes(ext) || !allowedMimeTypes.includes(file.type)){
+
+                                                    Swal.fire({
+                                                        icon:'error',
+                                                        title:'Invalid File',
+                                                        text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                    });
+
+                                                    input.value = '';
+                                                    return;
+                                                }
+                                            }
+
+                                            addMultipleFiles(input,'annex_XV_dataQualif_fileattachement');
                                         }
 
-                                        for(const file of files){
 
-                                            const ext = file.name.split('.').pop().toLowerCase();
+                                        function addMultipleFiles(input,listId){
 
-                                            if(
-                                                !allowedExtensions.includes(ext) ||
-                                                !allowedMimeTypes.includes(file.type)
-                                            ){
+                                            const fileList = document.getElementById(listId);
 
-                                                Swal.fire({
-                                                    icon:'error',
-                                                    title:'Invalid File',
-                                                    text:'Only PDF, JPG, JPEG and PNG files are allowed.'
-                                                });
+                                            for(const file of input.files){
 
-                                                input.value = '';
-                                                return;
+                                                let fileContainer = document.createElement('h6');
+                                                fileContainer.classList.add('file-container','text-dark');
+                                                fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                                let fileText = document.createElement('b');
+                                                fileText.textContent = file.name;
+
+                                                let remove = document.createElement('a');
+                                                remove.type = 'button';
+                                                remove.classList.add('remove-file');
+                                                remove.dataset.fileName = file.name;
+
+                                                remove.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                                remove.onclick = function(){
+                                                    fileContainer.remove();
+                                                };
+
+                                                fileContainer.appendChild(fileText);
+                                                fileContainer.appendChild(remove);
+
+                                                fileList.appendChild(fileContainer);
                                             }
                                         }
 
-                                        addMultipleFiles(input,'annex_XV_dataQualif_fileattachement');
-                                    }
-
-
-                                    function addMultipleFiles(input,listId){
-
-                                        const fileList = document.getElementById(listId);
-
-                                        for(const file of input.files){
-
-                                            let fileContainer = document.createElement('h6');
-                                            fileContainer.classList.add('file-container','text-dark');
-                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
-
-                                            let fileText = document.createElement('b');
-                                            fileText.textContent = file.name;
-
-                                            let remove = document.createElement('a');
-                                            remove.type = 'button';
-                                            remove.classList.add('remove-file');
-                                            remove.dataset.fileName = file.name;
-
-                                            remove.innerHTML =
-                                                '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
-
-                                            remove.onclick = function(){
-                                                fileContainer.remove();
-                                            };
-
-                                            fileContainer.appendChild(fileText);
-                                            fileContainer.appendChild(remove);
-
-                                            fileList.appendChild(fileContainer);
-                                        }
-                                    }
-
-                            </script>
-
+                                </script>
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -12772,16 +12724,12 @@
 
                                     <div class="col-12 sub-head">
                                            STANDARD TESTING PROCEDURE
-                                        {!! quillEditor(
-                                            'fpstp_testfield',
-                                            $document->document_content ? $document->document_content->fpstp_testfield : '',
+                                        {!! quillEditor('fpstp_testfield', $document->document_content ? $document->document_content->fpstp_testfield : '',
                                             '
                                             <div><small class="text-primary">
                                                 Please insert "NA" in the data field if it does not require completion
                                             </small></div>
-                                            ',
-                                            false
-                                        ) !!}
+                                            ', false) !!}
 
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
