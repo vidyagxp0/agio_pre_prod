@@ -4589,6 +4589,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $capa->closure_qa_more_info_required_on = Carbon::now()->format('d-M-Y');
             $capa->closure_qa_comment = $request->comment;
 
+           
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'Not Applicable';
@@ -4605,7 +4606,7 @@ $capa->closure_attachment = json_encode(array_values($files));
             $history->change_from = $lastDocument->status;
             $history->stage = 'HOD Final Review';
             $history->action_name = 'Update';
-          
+            $history->save();
 
             $list = Helpers::getHodUserList($capa->division_id);
                 foreach ($list as $u) {

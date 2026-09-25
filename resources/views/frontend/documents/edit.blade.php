@@ -12754,94 +12754,170 @@
                                         @endforeach
                                     </div>
 
-                                    <div class="group-input">
-                                        <label for="revision-history">Revision History</label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="Details-table-revision">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Sr. No.</th>
-                                                        <th>Revision No.</th>
-                                                        <th>Change Control No.</th>
-                                                        <th>Effective Date</th>
-                                                        <th>Reason of Revision</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="revision-history-fpstp">
-                                                    @php
-                                                        $serialNumber = 1;
-                                                        $GtpData = [];
-                                                        if (!empty($RevisionGridfpstpData) && isset($RevisionGridfpstpData->data)) {
-                                                            $GtpData = is_string($RevisionGridfpstpData->data) 
-                                                                ? json_decode($RevisionGridfpstpData->data, true) 
-                                                                : (is_array($RevisionGridfpstpData->data) ? $RevisionGridfpstpData->data : []);
-                                                        }
-                                                
-                                                    @endphp
+                                   <div class="group-input">
+    <label for="revision-history">Revision History</label>
 
-                                                    @foreach ($GtpData as $index => $gtp_data)
-                                                        <tr>
-                                                            <td>{{ $serialNumber++ }}</td>
-                                                            <td>
-                                                                <input type="text" name="revision_fpstp_data[{{ $index }}][rev_fpstp_no]" 
-                                                                    value="{{ $gtp_data['rev_fpstp_no'] ?? '' }}" readonly>
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" name="revision_fpstp_data[{{ $index }}][change_ctrl_fpstp_no]" 
-                                                                    value="{{ $gtp_data['change_ctrl_fpstp_no'] ?? '' }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="date" name="revision_fpstp_data[{{ $index }}][eff_date_fpstp]" 
-                                                                    value="{{ $gtp_data['eff_date_fpstp'] ?? '' }}" readonly>
-                                                            </td>
-                                                            <td>
-                                                                <textarea type="text" name="revision_fpstp_data[{{ $index }}][rev_reason_fpstp]" 
-                                                                    value="">{{ $gtp_data['rev_reason_fpstp'] ?? '' }}</textarea>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="Details-table-revision">
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Revision No.</th>
+                    <th>Change Control No.</th>
+                    <th>Effective Date</th>
+                    <th>Reason of Revision</th>
+                </tr>
+            </thead>
 
-                                    <script>
-                                        $(document).ready(function () {
-                                            fetchFpstpRevisionHistory();
+            <tbody id="revision-history-fpstp">
 
-                                            function fetchFpstpRevisionHistory() {
-                                                var documentId = {{ $document->id }};
+                @php
+                    $serialNumber = 1;
+                    $GtpData = [];
 
-                                                $.ajax({
-                                                    url: '/get-revision-history-fpstp',
-                                                    method: 'GET',
-                                                    data: { document_id: documentId },
-                                                    success: function (response) {
-                                                        if (response.revision_fpstp_data) {
-                                                            var tbody = $('#revision-history-fpstp');
-                                                            tbody.empty(); // Clear existing rows
-                                                            
-                                                            response.revision_fpstp_data.forEach(function (fpstphistory, index) {
-                                                                                    
-                                                                var row = `
-                                                                    <tr>
-                                                                        <td>${index + 1}</td>
-                                                                        <td><input type="text" name="revision_fpstp_data[${index}][rev_fpstp_no]" 
-                                                                                value="${fpstphistory.rev_fpstp_no || ''}" readonly></td>
-                                                                        <td><input type="text" name="revision_fpstp_data[${index}][change_ctrl_fpstp_no]" value="${fpstphistory.change_ctrl_fpstp_no}"></td>
-                                                                        <td><input type="date" name="revision_fpstp_data[${index}][eff_date_fpstp]" 
-                                                                                value="${fpstphistory.eff_date_fpstp || ''}" readonly></td>
-                                                                        <td><textarea type="text" name="revision_fpstp_data[${index}][rev_reason_fpstp]" value="">${fpstphistory.rev_reason_fpstp}</textarea></td>
-                                                                    </tr>`;
-                                                                
-                                                                tbody.append(row);
-                                                            });
-                                                        }
-                                                    }
-                                                });
-                                            }
-                                        });
-                                    </script>
+                    if (!empty($RevisionGridfpstpData) && isset($RevisionGridfpstpData->data)) {
+
+                        $GtpData = is_string($RevisionGridfpstpData->data)
+                            ? json_decode($RevisionGridfpstpData->data, true)
+                            : (is_array($RevisionGridfpstpData->data)
+                                ? $RevisionGridfpstpData->data
+                                : []);
+                    }
+                @endphp
+
+                @foreach ($GtpData as $index => $gtp_data)
+
+                    <tr>
+                        <td>
+                            {{ $serialNumber++ }}
+                        </td>
+
+                        <td>
+                            <input
+                                type="text"
+                                name="revision_fpstp_data[{{ $index }}][rev_fpstp_no]"
+                                value="{{ $gtp_data['rev_fpstp_no'] ?? '' }}"
+                                readonly>
+                        </td>
+
+                        <td>
+                            <input
+                                type="text"
+                                name="revision_fpstp_data[{{ $index }}][change_ctrl_fpstp_no]"
+                                value="{{ $gtp_data['change_ctrl_fpstp_no'] ?? '' }}">
+                        </td>
+
+                        <td>
+                            <input
+                                type="date"
+                                name="revision_fpstp_data[{{ $index }}][eff_date_fpstp]"
+                                value="{{ $gtp_data['eff_date_fpstp'] ?? '' }}"
+                                readonly>
+                        </td>
+
+                        <td>
+                            <textarea
+                                name="revision_fpstp_data[{{ $index }}][rev_reason_fpstp]"
+                            >{{ $gtp_data['rev_reason_fpstp'] ?? '' }}</textarea>
+                        </td>
+                    </tr>
+
+                @endforeach
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+$(document).ready(function () {
+
+    fetchFpstpRevisionHistory();
+
+    function fetchFpstpRevisionHistory() {
+
+        var documentId = {{ $document->id }};
+
+        $.ajax({
+            url: '/get-revision-history-fpstp',
+            method: 'GET',
+
+            data: {
+                document_id: documentId
+            },
+
+            success: function (response) {
+
+                console.log('FPSTP Revision Response:', response);
+
+                if (
+                    response.revision_fpstp_data &&
+                    Array.isArray(response.revision_fpstp_data)
+                ) {
+
+                    var tbody = $('#revision-history-fpstp');
+
+                    tbody.empty();
+
+                    response.revision_fpstp_data.forEach(function (fpstphistory, index) {
+
+                        var row = `
+                            <tr>
+
+                                <td>
+                                    ${index + 1}
+                                </td>
+
+                                <td>
+                                    <input
+                                        type="text"
+                                        name="revision_fpstp_data[${index}][rev_fpstp_no]"
+                                        value="${fpstphistory.rev_fpstp_no || ''}"
+                                        readonly>
+                                </td>
+
+                                <td>
+                                    <input
+                                        type="text"
+                                        name="revision_fpstp_data[${index}][change_ctrl_fpstp_no]"
+                                        value="${fpstphistory.change_ctrl_fpstp_no || ''}">
+                                </td>
+
+                                <td>
+                                    <input
+                                        type="date"
+                                        name="revision_fpstp_data[${index}][eff_date_fpstp]"
+                                        value="${fpstphistory.eff_date_fpstp || ''}"
+                                        readonly>
+                                </td>
+
+                                <td>
+                                    <textarea
+                                        name="revision_fpstp_data[${index}][rev_reason_fpstp]"
+                                    >${fpstphistory.rev_reason_fpstp || ''}</textarea>
+                                </td>
+
+                            </tr>
+                        `;
+
+                        tbody.append(row);
+                    });
+                }
+            },
+
+            error: function (xhr, status, error) {
+
+                console.log('FPSTP Revision History Error:', error);
+                console.log(xhr.responseText);
+
+            }
+        });
+
+    }
+
+});
+</script>
                                     
                                 </div>
                             </div>
