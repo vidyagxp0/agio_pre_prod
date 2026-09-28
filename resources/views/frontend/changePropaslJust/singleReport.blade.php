@@ -11,8 +11,9 @@
 
 <style>
     @page {
-         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
-     }
+        margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+    }
+
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
@@ -21,16 +22,17 @@
         line-height: 1.4;
         color: #000;
         margin-top: 10px;
-        margin-bottom: -60px; 
+        /* margin-bottom negative hata diya: ye content ko footer me kheench raha tha */
     }
 
     header, footer {
         position: fixed;
         left: 0;
         right: 0;
-        /* padding: 20px 35px; */
         font-size: 12px;
         box-sizing: border-box;
+        background: #fff;
+        z-index: 1000;
     }
 
     header {
@@ -39,7 +41,6 @@
     }
 
     footer {
-        bottom: 0;
         bottom: -100px;
         border-top: none;
     }
@@ -48,16 +49,15 @@
         display: block;
         margin-left: auto;
     }
-    /* To remove borders from content part only */
+
     .content-area table {
         border: none !important;
     }
 
     .inner-block {
-        /* padding: 20px 35px;  */
         box-sizing: border-box;
     }
-    
+
     .block {
         margin-bottom: 25px;
     }
@@ -103,29 +103,38 @@
         border: none !important;
     }
 
-    /* .w-5 { width: 5%; } */
     .w-5 { width: 6%; }
     .w-8 { width: 8%; }
     .w-10 { width: 10%; }
     .w-20 { width: 20%; }
     .w-30 { width: 30%; }
+    .w-40 { width: 40%; }
     .w-50 { width: 50%; }
     .w-70 { width: 70%; }
     .w-80 { width: 80%; }
     .w-100 { width: 100%; }
     .text-center { text-align: center; }
+
     .border-table {
         overflow-x: auto;
     }
+
     table th, table td {
         word-wrap: break-word;
     }
 </style>
+
 <style>
+    /* Change Proposal Grid (table) */
     table.change-grid {
         width: 100%;
         border-collapse: collapse;
         table-layout: fixed;
+        margin-bottom: 0;
+    }
+
+    .change-grid thead {
+        display: table-header-group; /* har page par heading repeat */
     }
 
     .change-grid th,
@@ -137,7 +146,7 @@
         text-align: left;
         word-break: break-word;
         overflow-wrap: break-word;
-        line-height: 1;
+        line-height: 1.4;
     }
 
     .change-grid th {
@@ -145,39 +154,29 @@
         font-weight: bold;
     }
 
-    .sr-no {
-        width: 8%;
+    .change-grid tr {
+        page-break-inside: avoid; /* chhoti row beech me na tute */
     }
 
-    .current-practice {
-        width: 31%;
-    }
-
-    .proposed-change {
-        width: 31%;
-    }
-
-    .justification {
-        width: 30%;
-    }
-
-    .pdf-text {
-        white-space: pre-line;
-    }
+    .sr-no { width: 8%; }
+    .current-practice { width: 31%; }
+    .proposed-change { width: 31%; }
+    .justification { width: 30%; }
 </style>
+
 <body>
     <header>
         <table>
             <tr>
                 <td class="w-70" style="text-align: center; vertical-align: middle;">
                     <div style="font-size: 18px; font-weight: 800; display: inline-block;">
-                   Change Proposal And Justification Report
+                        Change Proposal And Justification Report
                     </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
                         <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
-                        style="max-height: 55px; max-width: 40px;">
+                            style="max-height: 55px; max-width: 40px;">
                     </div>
                 </td>
             </tr>
@@ -192,15 +191,15 @@
             </tr>
         </table>
     </header>
+
     <footer>
         <table>
             <tr>
                 <td class="w-50"><strong>Printed On:</strong> {{ date('d-M-Y') }}</td>
-                <td class="w-50"><strong>Printed By:</strong> {{Auth::user()->name }}</td>
+                <td class="w-50"><strong>Printed By:</strong> {{ Auth::user()->name }}</td>
             </tr>
         </table>
     </footer>
-
 
     <div class="inner-block">
         <div class="content-table">
@@ -234,8 +233,7 @@
                         </td>
                     </tr>
 
-                    <tr>  
-
+                    <tr>
                         <th class="w-20">Date of Initiation</th>
                         <td class="w-30" colspan="3">
                             {{ Helpers::getdateFormat($data->created_at) }}
@@ -262,102 +260,122 @@
                 </table>
             </div>
 
+            {{-- ================= CHANGE PROPOSAL GRID ================= --}}
+            @php
+                // Lamba text ko chhote hisso me todta hai (word ke boundary par),
+                // taaki row page se badi na ho aur footer me na ghuse.
+                $splitText = function ($text, $limit = 650) {
+                    $text = trim((string) $text);
+                    if ($text === '') {
+                        return [''];
+                    }
+                    $chunks = [];
+                    while (mb_strlen($text) > $limit) {
+                        $part = mb_substr($text, 0, $limit);
+                        $cut = mb_strrpos($part, ' ');
+                        if ($cut === false || $cut < $limit * 0.5) {
+                            $cut = $limit;
+                        }
+                        $chunks[] = mb_substr($text, 0, $cut);
+                        $text = ltrim(mb_substr($text, $cut));
+                    }
+                    $chunks[] = $text;
+                    return $chunks;
+                };
+            @endphp
+
             <div class="block">
-                        <div class="block-head">
-                            Change Proposal And Justification Details Grid
-                        </div>
-                        <div class="border-table">
-                            <table class="change-grid">
-                                <thead>
+                <div class="block-head">
+                    Change Proposal And Justification Details Grid
+                </div>
+
+                <table class="change-grid">
+                    <thead>
+                        <tr>
+                            <th class="sr-no">Sr. No.</th>
+                            <th class="current-practice">Current Practice</th>
+                            <th class="proposed-change">Proposed Change</th>
+                            <th class="justification">Justification / reason for change</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (!empty($changeProposalGrid) && is_array($changeProposalGrid->data))
+                            @foreach ($changeProposalGrid->data as $detail)
+                                @php
+                                    $c1 = $splitText($detail['existing_system'] ?? '');
+                                    $c2 = $splitText($detail['proposed_change'] ?? '');
+                                    $c3 = $splitText($detail['justification'] ?? '');
+                                    $rows = max(count($c1), count($c2), count($c3));
+                                @endphp
+
+                                @for ($i = 0; $i < $rows; $i++)
+                                    @php
+                                        $b = ($i > 0 ? 'border-top:none;' : '') . ($i < $rows - 1 ? 'border-bottom:none;' : '');
+                                    @endphp
                                     <tr>
-                                        <th class="sr-no">Sr. No.</th>
-                                        <th class="current-practice">Current Practice</th>
-                                        <th class="proposed-change">Proposed Change</th>
-                                        <th class="justification">Justification / reason for change</th>
+                                        <td style="{{ $b }}">{{ $i === 0 ? $loop->iteration : '' }}</td>
+                                        <td style="{{ $b }}">{!! nl2br(e($c1[$i] ?? '')) !!}</td>
+                                        <td style="{{ $b }}">{!! nl2br(e($c2[$i] ?? '')) !!}</td>
+                                        <td style="{{ $b }}">{!! nl2br(e($c3[$i] ?? '')) !!}</td>
                                     </tr>
-                                </thead>
+                                @endfor
+                            @endforeach
+                        @else
+                            <tr>
+                                <td>1</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
 
-                                <tbody>
-                                    @php $productsdetails = 1; @endphp
-
-                                    @if (!empty($changeProposalGrid) && is_array($changeProposalGrid->data))
-                                        @foreach ($changeProposalGrid->data as $detail)
-                                            <tr>
-                                                <td>{{ $productsdetails++ }}</td>
-
-                                                <td class="pdf-text">
-                                                    {!! nl2br(e($detail['existing_system'] ?? '')) !!}
-                                                </td>
-
-                                                <td class="pdf-text">
-                                                    {!! nl2br(e($detail['proposed_change'] ?? '')) !!}
-                                                </td>
-
-                                                <td class="pdf-text">
-                                                    {!! nl2br(e($detail['justification'] ?? '')) !!}
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Not Applicable</td>
-                                            <td>Not Applicable</td>
-                                            <td>Not Applicable</td>
-                                        </tr>
-                                    @endif
-                                </tbody>
-                            </table>
-                            </div>
-                        </div>
-
-                        {{-- Impact Assesment --}}
-
-                        @php
-                            $checklist = $checklistData->data ?? [];
-                        @endphp
-        <div class="block">
+            {{-- ================= IMPACT ASSESSMENT ================= --}}
+            @php
+                $checklist = $checklistData->data ?? [];
+            @endphp
+            <div class="block">
                 <div class="block-head">
                     Impact Assesment
                 </div>
-                    <table class="table table-bordered">
-                        <thead>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="5%">Sr.No.</th>
+                            <th width="55%">Particular</th>
+                            <th width="40%" style="text-align: center;">Yes/No</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach ($checklist as $key => $item)
                             <tr>
-                                <th width="5%">Sr.No.</th>
-                                <th width="55%">Particular</th>
-                          <th width="40%" style="text-align: center;">Yes/No</th>
+                                <td class="text-center">
+                                    {{ $loop->iteration }}
+                                </td>
+
+                                <td>
+                                    {{ $item['question'] ?? '' }}
+                                </td>
+
+                                <td class="text-center">
+                                    {{-- If manual input exists (Any Other) --}}
+                                    @if (isset($item['manual_response']))
+                                        {{ $item['manual_response'] }}
+                                    @else
+                                        {{ $item['response'] ?? '' }}
+                                    @endif
+                                </td>
                             </tr>
-                        </thead>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
-                        <tbody>
-                            @foreach ($checklist as $key => $item)
-
-                                <tr>
-                                    <td class="text-center">
-                                        {{ $loop->iteration }}
-                                    </td>
-
-                                    <td>
-                                        {{ $item['question'] ?? '' }}
-                                    </td>
-
-                                    <td class="text-center">
-                                        {{-- If manual input exists (Any Other) --}}
-                                        @if(isset($item['manual_response']))
-                                            {{ $item['manual_response'] }}
-                                        @else
-                                            {{ $item['response'] ?? '' }}
-                                        @endif
-                                    </td>
-
-                                </tr>
-
-                            @endforeach
-                        </tbody>
-                    </table>
-        </div>
-
-            {{-- ================= INITIATOR ATTACHMENT ================= --}} 
+            {{-- ================= INITIATOR ATTACHMENT ================= --}}
             <div class="block">
                 <div class="block-head">Initiator Attachment</div>
                 <div class="border-table">
@@ -497,6 +515,7 @@
                 </div>
             </div>
 
+            {{-- ================= ACTIVITY LOG ================= --}}
             <div class="block">
                 <div class="block-head">Activity Log</div>
                 <table>
@@ -516,7 +535,7 @@
                         <th class="w-20">Cancel Comment</th>
                         <td class="w-30">@if ($data->reject_comment) {{ $data->reject_comment }} @else Not Applicable @endif</td>
                     </tr>
-                    
+
                     <tr>
                         <th class="w-20">HOD/Designee Review By</th>
                         <td class="w-30">@if ($data->HOD_Review_Complete_By) {{ $data->HOD_Review_Complete_By }} @else Not Applicable @endif</td>
@@ -526,7 +545,7 @@
                         <td class="w-30">@if ($data->HOD_Review_Comments) {{ $data->HOD_Review_Comments }} @else Not Applicable @endif</td>
                     </tr>
 
-                     <tr>
+                    <tr>
                         <th class="w-20">Cancel By</th>
                         <td class="w-30">@if ($data->hod_cancelled_by) {{ $data->hod_cancelled_by }} @else Not Applicable @endif</td>
                         <th class="w-20">Cancel On</th>
@@ -534,7 +553,6 @@
                         <th class="w-20">Cancel Comment</th>
                         <td class="w-30">@if ($data->hod_cancel_comment) {{ $data->hod_cancel_comment }} @else Not Applicable @endif</td>
                     </tr>
-                    
 
                     <tr>
                         <th class="w-20">QA/CQA Review Complete By</th>
@@ -544,7 +562,7 @@
                         <th class="w-20">QA/CQA Review Complete Comment</th>
                         <td class="w-30">@if ($data->qa_cqa__Review_Comments) {{ $data->qa_cqa__Review_Comments }} @else Not Applicable @endif</td>
                     </tr>
-                
+
                     <tr>
                         <th class="w-20">QA/CQA Head/Designee Approval Complete By</th>
                         <td class="w-30">@if ($data->qa_cqa_head_Review_Complete_By) {{ $data->qa_cqa_head_Review_Complete_By }} @else Not Applicable @endif</td>
