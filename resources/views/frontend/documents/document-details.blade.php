@@ -48,12 +48,6 @@
                                         </button>
                                         {{-- <button>Cancel</button> --}}
                                     @endif
-                                    {{-- @if (Helpers::checkControlAccess())
-                                        <button
-                                            onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
-                                        </button>
-                                    @endif --}}
-
                                     @php
                                         $effectiveTypes = [
                                             'SOP','FPS','INPS','CVS','RAWMS','PAMS','PIAS',
@@ -61,13 +55,8 @@
                                             'RMSTP','SPEC','STP','TDS','GTP'
                                         ];
                                     @endphp
-
                                  
-                                     @if (
-                                        (in_array($document->document_type_id, $effectiveTypes) && $document->status == 'Effective')
-                                        ||
-                                        !in_array($document->document_type_id, $effectiveTypes)
-                                    )
+                                    @if ((in_array($document->document_type_id, $effectiveTypes) && $document->status == 'Effective') || !in_array($document->document_type_id, $effectiveTypes))
                                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print-modal1">
                                         Download
                                     </button>
@@ -465,10 +454,17 @@
                             <div class="main-title">Preview</div>
 
                             @if(in_array($document->document_type_id, ['SOP']))
+                                {{-- Main PDF: always show --}}
                                 <iframe id="theFrame" width="100%" height="800"
-                                    src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0"></iframe>
-                                <iframe id="theFrame" width="100%" height="800"
-                                    src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0"></iframe>
+                                    src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0">
+                                </iframe>
+
+                                {{-- Annexure PDF: hide for Under-Training and Training-Complete --}}
+                                @if(!in_array($document->status, ['Under-Training', 'Training-Complete']))
+                                    <iframe id="theFrame" width="100%" height="800"
+                                        src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0">
+                                    </iframe>
+                                @endif
                             
                             @elseif(in_array($document->document_type_id, ['FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
                                 <iframe id="theFrame" width="100%" height="800"
@@ -870,7 +866,7 @@
                                             <td>HOD Review complete <i class="fa-solid fa-circle-check text-success"></i>
                                             </td>
                                         @elseif($user->statusReject)
-                                            <td>Rejected <i class="fa-solid fa-circle-xmark text-danger"></i></td>
+                                            <td>More Info Required<i class="fa-solid fa-circle-xmark text-danger"></i></td>
                                         @else
                                             <td>HOD Review Pending</td>
                                         @endif
@@ -1160,11 +1156,11 @@
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->department }}</td>
                                             @if ($user->status)
-                                                <td>Reviewed <i class="fa-solid fa-circle-check text-success"></i></td>
+                                                <td>Checked <i class="fa-solid fa-circle-check text-success"></i></td>
                                             @elseif($user->statusReject)
-                                                <td>Rejected <i class="fa-solid fa-circle-xmark text-danger"></i></td>
+                                                <td>Under Checking<i class=""></i></td>
                                             @else
-                                                <td>Review Pending</td>
+                                                <td>Under Checking</td>
                                             @endif
                                             <td><a
                                                     href="{{ url('audit-individual/') }}/{{ $document->id }}/{{ $user->id }}"><button
@@ -1298,15 +1294,15 @@
 
                                                                     @endphp
                                                                     @if ($userdata->approval)
-                                                                        <li><small>Reviewed <i
+                                                                        <li><small>Checked <i
                                                                                     class="fa-solid fa-circle-check text-success"></i></small>
                                                                         </li>
                                                                     @elseif($userdata->reject)
-                                                                        <li><small>Rejected <i
+                                                                        <li><small>Draft <i
                                                                                     class="fa-solid fa-circle-xmark text-danger"></i></small>
                                                                         </li>
                                                                     @else
-                                                    <td>Review Pending</td>
+                                                    <td>Checking Pending</td>
                                                     <td><a
                                                             href="{{ url('audit-individual/') }}/{{ $document->id }}/{{ $user->id }}"><button
                                                                 type="button">Audit</button></a></td>
@@ -1423,7 +1419,7 @@
                                         @if ($user->status)
                                             <td>Approved <i class="fa-solid fa-circle-check text-success"></i></td>
                                         @elseif($user->reject)
-                                            <td>Rejected <i class="fa-solid fa-circle-xmark text-danger"></i></td>
+                                            <td>Approval Pending<i class=""></i></td>
                                         @else
                                             <td>Approval Pending</td>
                                         @endif
@@ -1555,7 +1551,7 @@
                                                                             class="fa-solid fa-circle-check text-success"></i></small>
                                                                 </li>
                                                             @elseif($userdata->reject)
-                                                                <li><small>Rejected <i
+                                                                <li><small>Draft <i
                                                                             class="fa-solid fa-circle-xmark text-danger"></i></small>
                                                                 </li>
                                                             @else

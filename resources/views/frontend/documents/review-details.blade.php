@@ -69,11 +69,7 @@
 
                                     @endif
                                     @if(Helpers::checkControlAccess())
-                                    {{-- <button onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
-                                    </button>
-                                    <button onclick="location.href='{{ url('documents/printPDF', $document->id) }}';"
-                                            target="__blank">Print
-                                    </button> --}}
+                              
                                     @endif
                                 </div>
                             </div>
@@ -315,72 +311,72 @@
                     @endif
 
                     @if ($document->stage == 10)              
-    <div class="col-8">
-        <div class="inner-block tracker">
-            <div class="d-flex justify-content-between align-items-center reviewer">
-                <div class="main-title">
-                    Record Workflow
-                </div>
+                        <div class="col-8">
+                            <div class="inner-block tracker">
+                                <div class="d-flex justify-content-between align-items-center reviewer">
+                                    <div class="main-title">
+                                        Record Workflow
+                                    </div>
 
-                <div class="buttons">
-                    @if ($stageEffective && empty($stageEffective_submit))
-                        @if ($stageEffective->stage != 'Effective')
-                            <button data-bs-toggle="modal" data-bs-target="#review-cancel">
-                                More Info Required&nbsp;<i class="fa-regular fa-paper-plane"></i>
-                            </button>
-                        @endif
-                    @endif
-                    
-                    <button data-bs-toggle="modal" data-bs-target="#review-sign">
-                        Effective&nbsp;<i class="fa-regular fa-paper-plane"></i>
-                    </button>
-                    <button data-bs-toggle="modal" data-bs-target="#review-cancel">
-                        More Info Required&nbsp;<i class="fa-regular fa-circle-xmark"></i>
-                    </button>
-                </div>
-            </div>
+                                    <div class="buttons">
+                                        @if ($stageEffective && empty($stageEffective_submit))
+                                            @if ($stageEffective->stage != 'Effective')
+                                                <button data-bs-toggle="modal" data-bs-target="#review-cancel">
+                                                    More Info Required&nbsp;<i class="fa-regular fa-paper-plane"></i>
+                                                </button>
+                                            @endif
+                                        @endif
+                                        
+                                        <button data-bs-toggle="modal" data-bs-target="#review-sign">
+                                            Effective&nbsp;<i class="fa-regular fa-paper-plane"></i>
+                                        </button>
+                                        <button data-bs-toggle="modal" data-bs-target="#review-cancel">
+                                            More Info Required&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                        </button>
+                                    </div>
+                                </div>
 
-            <div class="status">
-                <div class="head">Current Status</div>
-                <div class="progress-bars">
-                    @if ($document->stage >= 10)
-                        <div class="active">Draft</div>
-                    @else
-                        @if ($stageEffective)
-                            @if ($stageEffective->stage == 'In-Effective')
-                                <div class="active">Draft</div>
-                            @else
-                                <div>Draft</div>
-                            @endif
-                        @else
-                            <div>Draft</div>
-                        @endif
-                    @endif
+                                <div class="status">
+                                    <div class="head">Current Status</div>
+                                    <div class="progress-bars">
+                                        @if ($document->stage >= 10)
+                                            <div class="active">Draft</div>
+                                        @else
+                                            @if ($stageEffective)
+                                                @if ($stageEffective->stage == 'In-Effective')
+                                                    <div class="active">Draft</div>
+                                                @else
+                                                    <div>Draft</div>
+                                                @endif
+                                            @else
+                                                <div>Draft</div>
+                                            @endif
+                                        @endif
 
-                    @if ($stageEffective)
-                        @if ($stageEffective->stage == 'In-Effective')
-                            <div class="active">Effective</div> <!-- Fixed here -->
-                        @else
-                            <div>Effective</div>
-                        @endif
-                    @else
-                        <div>Effective</div>
-                    @endif
+                                        @if ($stageEffective)
+                                            @if ($stageEffective->stage == 'In-Effective')
+                                                <div class="active">Effective</div> <!-- Fixed here -->
+                                            @else
+                                                <div>Effective</div>
+                                            @endif
+                                        @else
+                                            <div>Effective</div>
+                                        @endif
 
-                    @if ($stageEffective_submit)
-                        @if ($stageEffective_submit->stage == 'Effective-Submit')
-                            {{-- <div class="active">Submitted</div> --}}
-                        @else
-                            {{-- <div>Submitted</div> --}}
-                        @endif
-                    @else
-                        {{-- <div>Submitted</div> --}}
+                                        @if ($stageEffective_submit)
+                                            @if ($stageEffective_submit->stage == 'Effective-Submit')
+                                                {{-- <div class="active">Submitted</div> --}}
+                                            @else
+                                                {{-- <div>Submitted</div> --}}
+                                            @endif
+                                        @else
+                                            {{-- <div>Submitted</div> --}}
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endif
-                </div>
-            </div>
-        </div>
-    </div>
-@endif
 
 
 
@@ -449,8 +445,12 @@
                             @if(in_array($document->document_type_id, ['SOP']))
                                 <iframe id="theFrame" width="100%" height="800"
                                     src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0"></iframe>
-                                <iframe id="theFrame" width="100%" height="800"
-                                    src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0"></iframe>
+                                {{-- Annexure PDF: hide for Under-Training and Training-Complete --}}
+                                @if(!in_array($document->status, ['Under-Training', 'Training-Complete']))
+                                    <iframe id="theFrame" width="100%" height="800"
+                                        src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0">
+                                    </iframe>
+                                @endif    
                             
                             @elseif(in_array($document->document_type_id, ['FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
                                 <iframe id="theFrame" width="100%" height="800"
@@ -927,11 +927,11 @@
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->department }}</td>
                                             @if ($user->status)
-                                                <td>Reviewed <i class="fa-solid fa-circle-check text-success"></i></td>
+                                                <td>Checked <i class="fa-solid fa-circle-check text-success"></i></td>
                                             @elseif($user->reject)
-                                                <td>Rejected <i class="fa-solid fa-circle-xmark text-danger"></i></td>
+                                                <td>Under Checking <i class=""></i></td>
                                             @else
-                                                <td>Review Pending</td>
+                                                <td>Under Checking</td>
                                             @endif
                                             <td><a
                                                 href="{{ url('audit-individual/') }}/{{ $document->id }}/{{ $user->id }}"><button
@@ -1157,7 +1157,7 @@
                                             @elseif(@$user->status->stage=='Review-submit' || @$user->status->stage=='Effective' ||  @$user->status->stage=='Effective-Submit')
                                                <td>Effective <i class="fa-solid fa-circle-check text-success"></i></td>    
                                             @elseif($user->reject)
-                                                <td>Rejected <i class="fa-solid fa-circle-xmark text-danger"></i></td>
+                                                <td>Approval Pending<i class="fa-solid fa-circle-xmark text-danger"></i></td>
                                             @else
                                                 <td>Approval Pending</td>
                                             @endif

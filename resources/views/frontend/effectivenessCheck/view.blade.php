@@ -87,6 +87,22 @@
                                 ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+
+                            // ===== Assigned activity permission logic =====
+                            $currentUser  = Auth::user();
+                            $assignedUser = DB::table('users')->where('id', $data->assign_to)->first();
+
+                            $isAssignedUser = $currentUser->id == $data->assign_to;
+                            $isRole18       = Helpers::check_roles($data->division_id, 'Effectiveness Check', 18);
+
+                            $isSameDepartment = false;
+                            if ($assignedUser) {
+                                $isSameDepartment = !empty($currentUser->departmentid)
+                                    && !empty($assignedUser->departmentid)
+                                    && $currentUser->departmentid == $assignedUser->departmentid;
+                            }
+
+                            $canPerformAssignedActivity = $isAssignedUser || $isRole18 || $isSameDepartment;
                         @endphp
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
@@ -101,7 +117,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#closed-modal">
                                 Cancel
                             </button>                   
-                        @elseif($data->stage == 2 && (($data->assign_to == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 18)))
+                        @elseif($data->stage == 2 && ($canPerformAssignedActivity || Helpers::check_roles($data->division_id, 'Effectiveness Check', 18)))
 
                         {{--@elseif($data->stage == 2 && Helpers::check_roles($extensionNew->site_location_code, 'Effectiveness Check', 3))--}}
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -119,7 +135,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
-                        @elseif($data->stage == 3 && (($data->assign_to == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 18)))
+                        @elseif($data->stage == 3 && ($canPerformAssignedActivity || Helpers::check_roles($data->division_id, 'Effectiveness Check', 18)))
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                            Effective
                                        </button>
@@ -700,7 +716,7 @@
                     </div>
                 </div>
                 @php
-                    $istab2 = $data->stage == 2 && (($data->assign_to == Auth::user()->id)|| Helpers::check_roles($data->division_id, 'Effectiveness Check', 3) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 18));
+                    $istab2 = $data->stage == 2 && ($canPerformAssignedActivity || Helpers::check_roles($data->division_id, 'Effectiveness Check', 3) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 18));
                 @endphp    
                 <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -843,20 +859,13 @@
                     </div>
                 </div>
                 @php
-                    $istab3 = $data->stage == 3 && (($data->assign_to == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 18));
+                    $istab3 = $data->stage == 3 && ($canPerformAssignedActivity || Helpers::check_roles($data->division_id, 'Effectiveness Check', 18));
                 @endphp
                 <div id="CCForm3" class="inner-block cctabcontent">
                     {{-- @if ($data->stage == 2) style="display: block;" @else style="display: none;" @endif --}}
                     <div class="inner-block-content">
                         <div class="row">
-                            <!-- Effectiveness check Results -->
-
-                            <!-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Short Description">Short Description</label>
-                                                <textarea name="short_description">{{ $data->short_description }}</textarea>
-                                            </div>
-                                        </div> -->
+                    
                             <div class="col-12 sub-head">
                                 Effectiveness Check Results
                             </div>

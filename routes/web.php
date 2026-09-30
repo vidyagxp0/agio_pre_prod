@@ -160,6 +160,7 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('document/view-attachments/{id}', [DocumentController::class, 'viewAttachments'])->name('view.attachments');
     Route::post('documentReviewComment/{id}', [DocumentController::class, 'documentReviewComment'])->name('documentReviewComment');
    
+    Route::get('document-request-list', [DocumentRequestController::class, 'index'])->name('document-request.index');
     Route::get('document-request', [DocumentRequestController::class, 'create'])->name('document-request.create');
     Route::post('document-request/store',[DocumentRequestController::class, 'store'])->name('document-request.store');
     Route::get('document-request/edit/{id}',[DocumentRequestController::class, 'show'])->name('document-request.show');

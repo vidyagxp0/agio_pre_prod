@@ -250,6 +250,11 @@
                                     <a href="{{ route('documents.index') }}">Documents</a>
                                 </div>
                             @endif
+                            @if (Helpers::checkRoles(3))
+                                <div>
+                                    <a href="{{ route('documents.index') }}">Documents Issuance Requests</a>
+                                </div>
+                            @endif
                             @if (Auth::user() || Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(4))
                                 <div>
                                     <a href="{{ url('mytaskdata') }}">My Tasks</a>

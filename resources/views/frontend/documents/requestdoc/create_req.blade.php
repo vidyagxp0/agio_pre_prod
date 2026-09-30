@@ -107,6 +107,26 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="instrument_id">
+                                            Instrument/Equipment ID
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" name="instrument_id" id="instrument_id" required>                                  
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="instrument_id">
+                                            Area Location
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" name="area_location" id="area_location" required>                                  
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="request_to">
                                             Request To
                                             <span class="text-danger">*</span>

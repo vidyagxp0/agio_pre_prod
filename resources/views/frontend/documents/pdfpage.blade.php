@@ -656,7 +656,7 @@
                     </tr>
                 </tbody>
             </table>
-        <table style="width:100%; border-collapse:collapse; border-left:1px solid; border-right:1px solid #000; border-bottom:1px solid #000;" class="border border-top-none">
+            <table style="width:100%; border-collapse:collapse; border-left:1px solid; border-right:1px solid #000; border-bottom:1px solid #000;" class="border border-top-none">
                 <!-- Department Row -->
                 <tr>
                     <td class="w-20" style="border:1px solid; font-weight:bold; text-align:left; padding:6px; ">
@@ -852,7 +852,7 @@
             
         </table>
        <span>
-            Format No.: {{ $annexureDocumentNumbers[0] ?? 'N/A' }}
+            Format No.: CQA/001/F2-00
         </span>
     </footer>
 
@@ -1519,23 +1519,7 @@
                                     <tr>
                                         <th class="w-30 text-left vertical-baseline">Document Number</th>
                                         <td class="w-70 text-left">
-
-                                            {{-- @if($document->revised == 'Yes')
-                                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                                        {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                                    @else
-                                                        {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                                    @endif
-                                            @else
-                                                
-                                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                                        {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                                                    @else
-                                                        {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                                                    @endif
-                                            @endif --}}
                                             {{$document->document_number}}
-
                                         </td>
                                     </tr>
                                     <tr>
@@ -1550,12 +1534,7 @@
                                             {{ $data->short_description }}
                                         </td>
                                     </tr>
-                                    {{-- <tr>
-                                        <th class="w-30 text-left vertical-baseline">Description</th>
-                                        <td class="w-70 text-left">
-                                            {{ $data->description }}
-                                        </td>
-                                    </tr> --}}
+                                 
                                     @php
                                         $last = DB::table('document_histories')
                                             ->where('document_id', $data->id)
@@ -1835,11 +1814,11 @@
                                                 <td class="text-left w-25">{{ $user->name }}</td>
                                                 <td class="text-left w-25">{{ $dept }}</td>
                                                 @if ($date)
-                                                    <td class="text-left w-25">Review Completed</td>
+                                                    <td class="text-left w-25">Checked</td>
                                                 @elseif(!empty($reject))
-                                                    <td class="text-left w-25">Review Rejected </td>
+                                                    <td class="text-left w-25">Draft </td>
                                                 @else
-                                                    <td class="text-left w-25">Review Pending</td>
+                                                    <td class="text-left w-25">Under Checking</td>
                                                 @endif
 
                                                 <td class="text-left w-25">{{ $user->email }}</td>
@@ -1894,11 +1873,11 @@
                                                         <td class="text-left w-25">{{ $user->name }}</td>
                                                         <td class="text-left w-25">{{ $dept }}</td>
                                                         @if ($date)
-                                                            <td class="text-left w-25">Review Completed</td>
+                                                            <td class="text-left w-25">Checked</td>
                                                         @elseif(!empty($reject))
-                                                            <td class="text-left w-25">Review Rejected </td>
+                                                            <td class="text-left w-25">Draft </td>
                                                         @else
-                                                            <td class="text-left w-25">Review Pending</td>
+                                                            <td class="text-left w-25">Under Checking</td>
                                                         @endif
 
                                                         <td class="text-left w-25">{{ $user->email }}</td>
@@ -1907,9 +1886,7 @@
                                             @endif
                                         @endfor
 
-
                                     @endif
-
                                 </tbody>
                             </table>
                         </div>
@@ -1972,7 +1949,7 @@
                                                 @if ($date)
                                                     <td class="text-left w-25">Approval Completed</td>
                                                 @elseif(!empty($reject))
-                                                    <td>Approval Rejected</td>
+                                                    <td>Draft</td>
                                                 @else
                                                     <td class="text-left w-25">Approval Pending</td>
                                                 @endif
@@ -2029,7 +2006,7 @@
                                                         @if ($date)
                                                             <td class="text-left w-25">Approval Completed</td>
                                                         @elseif(!empty($reject))
-                                                            <td class="text-left w-25">Approval Rejected </td>
+                                                            <td class="text-left w-25">Draft</td>
                                                         @else
                                                             <td class="text-left w-25">Approval Pending</td>
                                                         @endif

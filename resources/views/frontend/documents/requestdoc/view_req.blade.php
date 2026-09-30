@@ -380,6 +380,26 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="instrument_id">
+                                            Instrument ID
+                                            <span class="text-danger">*</span>
+                                        </label>
+
+                                        <input type="text" name="instrument_id" id="instrument_id" value="{{ $data->instrument_id }}" {{ $data->stage == 1 && $istab1 ? 'required' : 'readonly' }}>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="area_location">
+                                            Area Location
+                                            <span class="text-danger">*</span>
+                                        </label>
+
+                                        <input type="text" name="area_location" id="area_location" value="{{ $data->area_location }}" {{ $data->stage == 1 && $istab1 ? 'required' : 'readonly' }}>
+                                    </div>
+                                </div>            
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -388,19 +408,13 @@
                                             <span class="text-danger">*</span>
                                         </label>
 
-                                        <select
-                                            name="request_to"
-                                            id="request_to" {{ $data->stage == 1 && $istab1 ? 'required' : 'disabled' }}
-                                        >
+                                        <select name="request_to" id="request_to" {{ $data->stage == 1 && $istab1 ? 'required' : 'disabled' }}>
                                             <option value="">
                                                 -- Select User --
                                             </option>
 
                                             @foreach ($users as $user)
-                                                <option
-                                                    value="{{ $user->id }}"
-                                                    {{ $data->request_to == $user->id ? 'selected' : '' }}
-                                                >
+                                                <option value="{{ $user->id }}" {{ $data->request_to == $user->id ? 'selected' : '' }}>
                                                     {{ $user->name }}
                                                 </option>
                                             @endforeach

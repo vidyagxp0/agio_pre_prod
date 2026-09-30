@@ -64,15 +64,15 @@ class StageSeeder extends Seeder
         $stage->save();
 
         $stage = new Stage();
-        $stage->name = "Cancel-by-Reviewer";
+        $stage->name = "More Info-by-Reviewer";
         $stage->save();
 
         $stage = new Stage();
-        $stage->name = "Cancel-by-Approver";
+        $stage->name = "More Info-by-Approver";
         $stage->save();
 
         $stage = new Stage();
-        $stage->name = "Cancel-by-InEffective";
+        $stage->name = "More Info-by-InEffective";
         $stage->save();
 
 

@@ -266,28 +266,6 @@ class DocumentController extends Controller
             ->orderBy('name')
             ->get();
 
-        $requestDocuments = DocumentRequest::orderByDesc('id')
-            ->paginate(10, ['*'], 'request_page')
-            ->withQueryString();
-
-        foreach ($requestDocuments as $requestDocument) {
-
-            $requestDocument->document_number = Document::where(
-                'id',
-                $requestDocument->document_id
-            )->value('document_number');
-
-            $requestDocument->request_by_name = User::where(
-                'id',
-                $requestDocument->request_by
-            )->value('name');
-
-            $requestDocument->request_to_name = User::where(
-                'id',
-                $requestDocument->request_to
-            )->value('name');
-        } 
-
         return view(
             'frontend.documents.index',
             compact(
@@ -296,7 +274,7 @@ class DocumentController extends Controller
                 'divisions',
                 'originator',
                 'documentTypes',
-                'documentStatus','requestDocuments'
+                'documentStatus',
             )
         );
     }
@@ -8434,7 +8412,7 @@ class DocumentController extends Controller
                         $fontSize = 12;
 
                         $pageText = sprintf(
-                            '%02d - %02d',
+                            '%02d of %02d',
                             $pageNumber,
                             $pageCount
                         );

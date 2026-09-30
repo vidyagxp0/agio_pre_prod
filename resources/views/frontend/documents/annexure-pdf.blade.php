@@ -547,30 +547,67 @@
             box-sizing: border-box;
         }
         
+        .header-wrapper{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .master-copy{
+            position: absolute;
+            top: -35px;
+            right: 10px;
+
+            border: 2px solid #00bcd4;
+            color: #00bcd4;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            padding: 4px 12px;
+
+            transform: rotate(-4deg);
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            background: #fff;
+        }
     </style>
     
 
 </head>
 <body>
-    <header class="">
-        <table class="border" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td class="logo w-20">
-                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
-                            style="max-height: 55px; max-width: 40px;">
-                    </td>
-                    
-                    <td class="title w-60"
-                        style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
-                        <p style="margin: 0; text-align: center;">{{ config('site.pdf_title') }}</p>
-                        <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </header>
+    <div class="header-wrapper">
 
+        @if ($document->status == 'Effective' || $document->status == 'Obsolete')
+
+            {{-- Existing normal SOP master-copy logic --}}
+            <div class="master-copy">
+                MASTER COPY
+            </div>
+
+        @endif
+        <header class="">
+            <table class="border" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td class="logo w-20">
+                            <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                                style="max-height: 55px; max-width: 40px;">
+                        </td>
+                        
+                        <td class="title w-60"
+                            style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
+                            <p style="margin: 0; text-align: center;">{{ config('site.pdf_title') }}</p>
+                            <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </header>
+    </div>
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
             <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">
@@ -588,13 +625,7 @@
                           
                     @endphp
                     <td style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Approved By:Head QA/CQA
-                        <!-- @if ($inreviews->isEmpty())
-                            <div>Yet Not Performed</div>
-                        @else
-                            @foreach ($inreviews as $temp)
-                                <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
-                            @endforeach
-                        @endif  -->
+                  
                     </td>
                     <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">
                         @if ($inreviews->isEmpty())

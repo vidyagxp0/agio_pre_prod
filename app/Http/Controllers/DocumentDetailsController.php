@@ -189,7 +189,7 @@ class DocumentDetailsController extends Controller
 
             $history = new DocumentHistory();
             $history->document_id = $request->document_id;
-            $history->activity_type = 'Review Submit';
+            $history->activity_type = 'Checked';
             $history->previous = '';
             $history->current = '';
             $history->comment = $request->comment;
@@ -244,18 +244,10 @@ class DocumentDetailsController extends Controller
           }
 
           if ($request->stage_id == 'Cancel-by-Approver') {
-            StageManage::where('document_id', $request->document_id)
-              ->where('stage', 'Reviewed')
-              ->delete();
-
-              StageManage::where('document_id', $request->document_id)
-              ->where('stage', 'Review-Submit')
-              ->delete();
+            StageManage::where('document_id', $request->document_id)->whereIn('stage', ['Draft','Reviewed','Review-Submit','In-Approval','Approved','Approval-Submit',])->delete();
           }
 
         }
-
-
 
         if (Helpers::checkRoles(2) && in_array(Auth::user()->id, explode(",", $document->reviewers)) && ($document->stage == 4 || $document->stage == 5 || $document->stage == 10)) {
           if ($request->stage_id == "Cancel-by-Reviewer") {
@@ -270,7 +262,7 @@ class DocumentDetailsController extends Controller
             // $document->status = "HOD Review Complete";
             $history = new DocumentHistory();
             $history->document_id = $request->document_id;
-            $history->activity_type = 'Cancel-by-Reviewer';
+            $history->activity_type = 'More Info-by-Reviewer';
             $history->previous = '';
             $history->current = '';
             $history->comment = $request->comment;
@@ -333,11 +325,6 @@ class DocumentDetailsController extends Controller
               // 
             }
           }
-          
-          
-          
-          
-          
           
           else {
             try {
@@ -457,16 +444,16 @@ class DocumentDetailsController extends Controller
 
         if (Helpers::checkRoles(1) && in_array(Auth::user()->id, explode(",", $document->approvers)) && ($document->stage == 6 || $document->stage == 7)) {
           if ($request->stage_id == "Cancel-by-Approver") {
-            $document->status = "Reviewed";
-            $document->stage = 5;
+            $document->status = "Draft";
+            $document->stage = 1;
             $history = new DocumentHistory();
             $history->document_id = $request->document_id;
-            $history->activity_type = 'Cancel-by-Approver';
+            $history->activity_type = 'More Info-by-Approver';
             $history->previous = '';
             $history->current = '';
             $history->comment = $request->comment;
             $history->action_name = 'Submit';
-            $history->change_from = 'Reviewed';
+            $history->change_from = 'Draft';
             $history->change_to = 'In-Review';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -479,7 +466,7 @@ class DocumentDetailsController extends Controller
                 ['document' => $document],
                 function ($message) use ($originator) {
                   $message->to($originator->email)
-                    ->subject('Rejected by' . Auth::user()->name . '(Approver)');
+                    ->subject('More Info by' . Auth::user()->name . '(Approver)');
                 }
               );
             } catch (\Exception $e) {

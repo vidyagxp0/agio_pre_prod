@@ -23,6 +23,31 @@ use Helpers;
 
 class DocumentRequestController extends Controller
 {
+
+    public function index(Request $request)
+    {
+        $requestDocuments = DocumentRequest::orderByDesc('id')->get();
+
+        foreach ($requestDocuments as $requestDocument) {
+            $requestDocument->document_number = Document::where(
+                'id',
+                $requestDocument->document_id
+            )->value('document_number');
+
+            $requestDocument->request_by_name = User::where(
+                'id',
+                $requestDocument->request_by
+            )->value('name');
+
+            $requestDocument->request_to_name = User::where(
+                'id',
+                $requestDocument->request_to
+            )->value('name');
+        }
+
+        return view('frontend.documents.requestdoc.index', compact('requestDocuments'));
+    }
+    
     public function create()
     {
         $documents = Document::select('id', 'document_number')
@@ -68,54 +93,58 @@ class DocumentRequestController extends Controller
         $data->number_of_copies = $request->number_of_copies;
         $data->reason = $request->reason;
         $data->comment = $request->comment;
+        $data->instrument_id = $request->instrument_id;
+        $data->area_location = $request->area_location;
         $data->status = 'Opened';
         $data->form_type = 'Document Issuance Request';
         
         $data->stage = 1;
 
 
-       $data->save();
+        $data->save();
 
          //////// Audit Trail///////////////
 
-$fields = [
+        $fields = [
 
-    'Request ID'       => $data->request_id,
-    'Request By'       => Helpers::getInitiatorName($data->request_by),
-    'Department'       => $data->department,
-    // 'Division'         => Helpers::getDivisionName($data->division_id),
-    'Initiation Date'  => Helpers::getDateFormat($data->initiation_date),
-    'Document'      => Document::where('id', $data->document_id)->value('document_name'),
-    'Request To'       => Helpers::getInitiatorName($data->request_to),
-    'Number Of Copies' => $data->number_of_copies,
-    'Reason'           => $data->reason,
-    'Comment'          => $data->comment,
+            'Request ID'       => $data->request_id,
+            'Request By'       => Helpers::getInitiatorName($data->request_by),
+            'Department'       => $data->department,
+            // 'Division'         => Helpers::getDivisionName($data->division_id),
+            'Initiation Date'  => Helpers::getDateFormat($data->initiation_date),
+            'Document'         => Document::where('id', $data->document_id)->value('document_name'),
+            'Request To'       => Helpers::getInitiatorName($data->request_to),
+            'Number Of Copies' => $data->number_of_copies,
+            'Reason'           => $data->reason,
+            'Comment'          => $data->comment,
+            'Instrument ID'    => $data->instrument_id, 
+            'Area Location'    => $data->area_location,
 
-];
+        ];
 
-foreach ($fields as $field => $value) {
+        foreach ($fields as $field => $value) {
 
-    $audit = new DocumentRequestAuditTrial();
+            $audit = new DocumentRequestAuditTrial();
 
-    $audit->document_request_id = $data->id;
-    $audit->activity_type = $field;
-    $audit->previous = "Null";
-    $audit->current = $value;
-    $audit->comment = "Not Applicable";
+            $audit->document_request_id = $data->id;
+            $audit->activity_type = $field;
+            $audit->previous = "Null";
+            $audit->current = $value;
+            $audit->comment = "Not Applicable";
 
-    $audit->user_id = Auth::id();
-    $audit->user_name = Auth::user()->name;
-    $audit->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $audit->user_id = Auth::id();
+            $audit->user_name = Auth::user()->name;
+            $audit->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 
-    $audit->origin_state = "Create";
-    $audit->change_to = "Created";
-    $audit->change_from = "Initiation";
-    $audit->action_name = "Create";
-    $audit->action = "Create";
-    $audit->stage = "Create";
+            $audit->origin_state = "Create";
+            $audit->change_to = "Created";
+            $audit->change_from = "Initiation";
+            $audit->action_name = "Create";
+            $audit->action = "Create";
+            $audit->stage = "Create";
 
-    $audit->save();
-}
+            $audit->save();
+        }
 
 
         toastr()->success('Document Request created successfully');
@@ -157,6 +186,8 @@ foreach ($fields as $field => $value) {
         $data->reason = $request->reason;
 
         $data->comment = $request->comment;
+        $data->instrument_id = $request->instrument_id;
+        $data->area_location = $request->area_location;
 
 
 
@@ -186,6 +217,45 @@ foreach ($fields as $field => $value) {
             $history->save();
         }
 
+        if( $lastopenState->instrument_id != $data->instrument_id || !empty($request->instrument_id_comment)) {
+
+            $history = new DocumentRequestAuditTrial();
+
+            $history->document_request_id = $id;
+            $history->activity_type = 'Instrument ID';
+            $history->previous = $lastopenState->instrument_id;
+            $history->current = $data->instrument_id;
+            $history->comment = $request->instrument_id_comment;
+            $history->user_id = Auth::id();
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = is_null($lastopenState->instrument_id) ? "New" : "Update";
+
+            $history->save();
+        }
+        if( $lastopenState->area_location != $data->area_location || !empty($request->area_location_comment)) {
+
+            $history = new DocumentRequestAuditTrial();
+
+            $history->document_request_id = $id;
+            $history->activity_type = 'Area Location';
+            $history->previous = $lastopenState->area_location;
+            $history->current = $data->area_location;
+            $history->comment = $request->area_location_comment;
+            $history->user_id = Auth::id();
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = is_null($lastopenState->area_location) ? "New" : "Update";
+
+            $history->save();
+        }
+
         // Request To
         if ($lastopenState->request_to != $data->request_to || !empty($request->request_to_comment)) {
             $history = new DocumentRequestAuditTrial();
@@ -201,6 +271,26 @@ foreach ($fields as $field => $value) {
             $history->change_to = "Not Applicable";
             $history->change_from = $lastopenState->status;
             $history->action_name = is_null($lastopenState->request_to) ? "New" : "Update";
+            $history->save();
+        }
+
+        if( $lastopenState->print_sop_type != $data->print_sop_type || !empty($request->print_sop_type_comment)) {
+
+            $history = new DocumentRequestAuditTrial();
+
+            $history->document_request_id = $id;
+            $history->activity_type = 'Print SOP Type';
+            $history->previous = $lastopenState->print_sop_type;
+            $history->current = $data->print_sop_type;
+            $history->comment = $request->print_sop_type_comment;
+            $history->user_id = Auth::id();
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastopenState->status;
+            $history->action_name = is_null($lastopenState->print_sop_type) ? "New" : "Update";
+
             $history->save();
         }
 
@@ -459,7 +549,6 @@ foreach ($fields as $field => $value) {
         }
 
     }
-
 
        public function docReq_stageBack(Request $request, $id)
     {
