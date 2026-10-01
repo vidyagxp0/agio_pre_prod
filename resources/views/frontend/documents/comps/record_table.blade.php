@@ -67,7 +67,7 @@
 
     <div>
 
-        {{ $documents->total() }}
+        {{ $documents->count() }}
 
         Results found
 
@@ -368,13 +368,9 @@
     ========================================================== --}}
 
     {{-- @if($documents->hasPages())
-
         <div class="pagination-wrapper">
-
             {!! $documents->links() !!}
-
         </div>
-
     @endif --}}
 
 </div>

@@ -623,12 +623,9 @@
     <div class="header-wrapper">
 
         @if ($document->status == 'Effective' || $document->status == 'Obsolete')
-
-            {{-- Existing normal SOP master-copy logic --}}
             <div class="master-copy">
                 MASTER COPY
             </div>
-
         @endif
         <header class="">
             <table class="border" style="width: 100%;">

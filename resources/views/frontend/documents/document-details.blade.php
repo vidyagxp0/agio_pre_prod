@@ -2125,8 +2125,22 @@
 
                         </div>
 
-                    </div>
+                        <div class="form-group mb-3">
+                            <label for="copy_type">
+                                Copy Type <span class="text-danger">*</span>
+                            </label>
 
+                            <select name="copy_type" id="copy_type" class="form-control" required>
+                                <option value="">Select Copy Type</option>
+                                <option value="Controlled Copy">Controlled Copy</option>
+                                <option value="Display Copy">Display Copy</option>
+                                <option value="Uncontrolled Copy">Uncontrolled Copy</option>
+                                <option value="Reference Copy">Reference Copy</option>
+                                <option value="Obsoleted Copy">Obsoleted Copy</option>
+                                <option value="Issued Copy">Issued Copy</option>
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="modal-footer">
 
@@ -2760,6 +2774,28 @@
                                 id="department"
                                 name="department"
                             >
+
+                        </div>
+
+                        {{-- ================================================= --}}
+                        {{-- Copy Type --}}
+                        {{-- ================================================= --}}
+
+                        <div class="group-input mb-3">
+                            <label for="download_copy_type">
+                                Copy Type
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <select name="copy_type" id="download_copy_type" class="form-control w-100" required>
+                                <option value="">-- Select Copy Type --</option>
+                                <option value="Controlled Copy">Controlled Copy</option>
+                                <option value="Display Copy">Display Copy</option>
+                                <option value="Uncontrolled Copy">Uncontrolled Copy</option>
+                                <option value="Reference Copy">Reference Copy</option>
+                                <option value="Obsoleted Copy">Obsoleted Copy</option>
+                                <option value="Issued Copy">Issued Copy</option>
+                            </select>
 
                         </div>
 

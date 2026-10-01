@@ -49,6 +49,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\DocumentRequestAuditTrial;
 use Mpdf\Mpdf;
 use PDF;
 use setasign\Fpdi\Fpdi;
@@ -211,8 +212,7 @@ class DocumentController extends Controller
 
         $documents = $query
             ->orderByDesc('documents.id')
-            ->paginate(10)
-            ->withQueryString();
+            ->get();
 
         /*
         |--------------------------------------------------------------------------
@@ -3330,11 +3330,7 @@ class DocumentController extends Controller
         $trainingDoc = DocumentTraining::where('document_id', $id)->first();
         $history = DocumentHistory::where('document_id', $id)->get();
         $documentsubTypes = DocumentSubtype::all();
-        // dd($document_distribution_grid);
-        // $history = [];
-        // foreach($historydata as $temp){
-        //     array_push($history,$temp);
-        // }
+    
         $keywords = Keyword::where('document_id', $id)->get();
         $annexure = Annexure::where('document_id', $id)->first();
 
@@ -6971,8 +6967,6 @@ class DocumentController extends Controller
         }
 
 
-        ///
-
         $documentContent = DocumentContent::where('document_id', $id)->first();
             $data['document_content'] = $documentContent;
 
@@ -7622,79 +7616,79 @@ class DocumentController extends Controller
         return response()->json(['revision_rawmstp_data' => $rwmstphistoryData]);
     }
 
-   public function getFPStpRevisionHistory(Request $request)
-{
-    $documentId = $request->query('document_id');
+    public function getFPStpRevisionHistory(Request $request)
+    {
+        $documentId = $request->query('document_id');
 
-    // Current document
-    $currentDocument = Document::find($documentId);
+        // Current document
+        $currentDocument = Document::find($documentId);
 
-    if (!$currentDocument) {
-        return response()->json([
-            'error' => 'Document not found'
-        ], 404);
-    }
-
-    // Get previous/current revisions
-    $revisionHistory = Document::where('record', $currentDocument->record)
-        ->where('revised_doc', '<=', $currentDocument->revised_doc)
-        ->orderBy('revised_doc', 'asc')
-        ->get();
-
-    // Get FPSTP revision grid data
-    $RevisionGridfpstpData = DocumentGrid::where('document_type_id', $documentId)
-        ->where('identifier', 'revision_fpstp_data')
-        ->first();
-
-    // Decode grid data
-    $GtpData = [];
-
-    if ($RevisionGridfpstpData && !empty($RevisionGridfpstpData->data)) {
-
-        $GtpData = is_string($RevisionGridfpstpData->data)
-            ? json_decode($RevisionGridfpstpData->data, true)
-            : $RevisionGridfpstpData->data;
-
-        if (!is_array($GtpData)) {
-            $GtpData = [];
+        if (!$currentDocument) {
+            return response()->json([
+                'error' => 'Document not found'
+            ], 404);
         }
+
+        // Get previous/current revisions
+        $revisionHistory = Document::where('record', $currentDocument->record)
+            ->where('revised_doc', '<=', $currentDocument->revised_doc)
+            ->orderBy('revised_doc', 'asc')
+            ->get();
+
+        // Get FPSTP revision grid data
+        $RevisionGridfpstpData = DocumentGrid::where('document_type_id', $documentId)
+            ->where('identifier', 'revision_fpstp_data')
+            ->first();
+
+        // Decode grid data
+        $GtpData = [];
+
+        if ($RevisionGridfpstpData && !empty($RevisionGridfpstpData->data)) {
+
+            $GtpData = is_string($RevisionGridfpstpData->data)
+                ? json_decode($RevisionGridfpstpData->data, true)
+                : $RevisionGridfpstpData->data;
+
+            if (!is_array($GtpData)) {
+                $GtpData = [];
+            }
+        }
+
+        // Prepare response
+        $historyData = [];
+
+        foreach ($revisionHistory as $index => $doc) {
+
+            $shouldShowEffectiveDate = ((int) $doc->stage >= 11);
+
+            $cc_no = $GtpData[$index]['change_ctrl_fpstp_no'] ?? '';
+
+            $reason_of_revision = !empty($doc->reason)
+                ? $doc->reason
+                : ($GtpData[$index]['rev_reason_fpstp'] ?? '');
+
+            $historyData[] = [
+                'rev_fpstp_no' => str_pad(
+                    $doc->revised_doc,
+                    2,
+                    '0',
+                    STR_PAD_LEFT
+                ),
+
+                'eff_date_fpstp' => $shouldShowEffectiveDate
+                    ? $doc->effective_date
+                    : '',
+
+                'change_ctrl_fpstp_no' => $cc_no,
+
+                'rev_reason_fpstp' => $reason_of_revision
+            ];
+        }
+
+        return response()->json([
+            'revision_fpstp_data' => $historyData
+        ]);
     }
-
-    // Prepare response
-    $historyData = [];
-
-    foreach ($revisionHistory as $index => $doc) {
-
-        $shouldShowEffectiveDate = ((int) $doc->stage >= 11);
-
-        $cc_no = $GtpData[$index]['change_ctrl_fpstp_no'] ?? '';
-
-        $reason_of_revision = !empty($doc->reason)
-            ? $doc->reason
-            : ($GtpData[$index]['rev_reason_fpstp'] ?? '');
-
-        $historyData[] = [
-            'rev_fpstp_no' => str_pad(
-                $doc->revised_doc,
-                2,
-                '0',
-                STR_PAD_LEFT
-            ),
-
-            'eff_date_fpstp' => $shouldShowEffectiveDate
-                ? $doc->effective_date
-                : '',
-
-            'change_ctrl_fpstp_no' => $cc_no,
-
-            'rev_reason_fpstp' => $reason_of_revision
-        ];
-    }
-
-    return response()->json([
-        'revision_fpstp_data' => $historyData
-    ]);
-}
 
    
     public function getINPStpRevisionHistory(Request $request)
@@ -7773,9 +7767,6 @@ class DocumentController extends Controller
             'revision_inpstp_data' => $historyData
         ]);
     }
-
-
-
 
     public function getCVStpRevisionHistory(Request $request)
     {
@@ -8237,20 +8228,17 @@ class DocumentController extends Controller
 
             $validAnnexures = [];
 
-            foreach ($annexures as $annexure) {
+            foreach ($annexures as $index => $annexure) {
 
-                $plainText = trim(
-                    strip_tags(html_entity_decode($annexure, ENT_QUOTES | ENT_HTML5, 'UTF-8')
-                    )
-                );
-
-                if ($plainText === '') {
+                if ($this->annexureIsEmpty($annexure)) {
                     continue;
                 }
 
-                $validAnnexures[] = $annexure;
+                $validAnnexures[] = [
+                    'index'   => $index,       // original slot (0-29)
+                    'content' => $annexure,
+                ];
             }
-
 
             // ==========================================
             // DOCUMENT NUMBER DETAILS
@@ -8275,24 +8263,25 @@ class DocumentController extends Controller
             // BUILD VALID ANNEXURE DATA
             // ==========================================
 
+            $annexureRevisions = $this->getAnnexureRevisionMap($document);
+
             $checkAnnexures = [];
 
-            foreach ($validAnnexures as $key => $annexure) {
+            foreach ($validAnnexures as $key => $item) {
 
-                // Continuous Number:
-                $annexureNo = $key + 1;
+                $annexureNo = $key + 1;   // F1, F2... continuous
 
-                $annexureDocumentNumber = $departmentCode . '/' . $documentSequence . '/F' . $annexureNo . '-' . $revision;
+                $annexureRevision = str_pad(
+                    $annexureRevisions[$item['index']] ?? 0, 2, '0', STR_PAD_LEFT);
+
+                $annexureDocumentNumber = $departmentCode . '/' . $documentSequence . '/F' . $annexureNo . '-' . $annexureRevision;
 
                 $checkAnnexures[] = [
-                    'annexure_no' => $annexureNo,
-
+                    'annexure_no'              => $annexureNo,
                     'annexure_document_number' => $annexureDocumentNumber,
-
-                    'content' => $annexure,
+                    'content'                  => $item['content'],
                 ];
             }
-
             // ==========================================
             // TIME & TEMP FILES
             // ==========================================
@@ -8798,6 +8787,27 @@ class DocumentController extends Controller
             return redirect()->back();
         }
 
+        if (!$request->copy_type) {
+            toastr()->error('Copy Type is required.');
+            return redirect()->back();
+        }
+
+        $allowedCopyTypes = [
+            'Controlled Copy',
+            'Display Copy',
+            'Uncontrolled Copy',
+            'Reference Copy',
+            'Obsoleted Copy',
+            'Issued Copy',
+        ];
+
+        if (!in_array($request->copy_type, $allowedCopyTypes, true)) {
+            toastr()->error('Invalid Copy Type selected.');
+            return redirect()->back();
+        }
+
+        $copyType = $request->copy_type;
+
         /*
         |--------------------------------------------------------------------------
         | Find document
@@ -9057,8 +9067,10 @@ class DocumentController extends Controller
         $printHistory->department = $issuedToDepartment;
 
         $printHistory->issued_to_department = $issuedToDepartment;
-
+        $printHistory->copy_type = $copyType;
         $printHistory->save();
+
+        $this->closeDocumentRequestAfterIssue($documentRequest, 'Print');
 
         return $this->streamIssuedDocumentCopies(
             $viewName,
@@ -9083,6 +9095,10 @@ class DocumentController extends Controller
                 'IssuedCopies' => $issuedCopies,
                 'IssueDate' => $issuedDate,
                 'stampImpression' => $issuedToDepartment,
+
+                'copyType' => $copyType,
+                'printDate' => Carbon::now()->format('d-m-Y'),
+                'formatNo' => 'CQA/001/F2-00',
             ],
             $issuedCopies,
             $document,
@@ -10148,16 +10164,8 @@ class DocumentController extends Controller
                 $width =
                     $canvas->get_width();
 
-                $watermarkText =
-                    strtoupper(
-                        trim(
-                            (string) (
-                                $document->status
-                                ?? ''
-                            )
-                        )
-                    );
-
+                $watermarkText = strtoupper(trim((string) ($viewData['copyType'] ?? '')));    
+                    
                 if (!empty($watermarkText)) {
                     $canvas->page_script(
                         '$pdf->set_opacity(0.2,"Multiply");'
@@ -10279,7 +10287,7 @@ class DocumentController extends Controller
 
             if (!empty($issuedDate)) {
                 try {
-                    $formattedIssuedDate = Carbon::parse($issuedDate)->format('d-M-Y');
+                    $formattedIssuedDate = Carbon::parse($issuedDate)->format('d-m-y');
                 } catch (\Throwable $e) {
                     $formattedIssuedDate = (string) $issuedDate;
                 }
@@ -11113,6 +11121,10 @@ class DocumentController extends Controller
     {
         $request = request();
 
+        // ============================================================
+        // BASIC VALIDATION
+        // ============================================================
+
         if (!$request->document_request_id) {
             toastr()->error('Please select Request ID.');
             return redirect()->back();
@@ -11123,6 +11135,36 @@ class DocumentController extends Controller
             return redirect()->back();
         }
 
+        // ============================================================
+        // COPY TYPE VALIDATION
+        // ============================================================
+
+        if (!$request->copy_type) {
+            toastr()->error('Copy Type is required.');
+            return redirect()->back();
+        }
+
+        $allowedCopyTypes = [
+            'Controlled Copy',
+            'Display Copy',
+            'Uncontrolled Copy',
+            'Reference Copy',
+            'Obsoleted Copy',
+            'Issued Copy',
+        ];
+
+        if (!in_array($request->copy_type, $allowedCopyTypes, true)) {
+            toastr()->error('Invalid Copy Type selected.');
+            return redirect()->back();
+        }
+
+        // Selected Copy Type for PRINT PDF only
+        $copyType = $request->copy_type;
+
+        // ============================================================
+        // DOCUMENT
+        // ============================================================
+
         $document = Document::find($id);
 
         if (!$document) {
@@ -11130,15 +11172,27 @@ class DocumentController extends Controller
             return redirect()->back();
         }
 
-        $documentRequest = DocumentRequest::where('id', $request->document_request_id)->where('document_id', $document->id)->where('status', 'QA Approval')->first();
+        // ============================================================
+        // DOCUMENT REQUEST
+        // ============================================================
+
+        $documentRequest = DocumentRequest::where('id', $request->document_request_id)
+            ->where('document_id', $document->id)
+            ->where('status', 'QA Approval')
+            ->first();
 
         if (!$documentRequest) {
-            toastr()->error('Selected request is invalid, closed or does not belong to this document.');
+            toastr()->error(
+                'Selected request is invalid, closed or does not belong to this document.'
+            );
 
             return redirect()->back();
         }
 
-        // ================= NEW: Page No. conditional validation =================
+        // ============================================================
+        // PAGE NUMBER VALIDATION
+        // ============================================================
+
         $pageNo = null;
 
         $printSopType = $documentRequest->print_sop_type;
@@ -11157,18 +11211,32 @@ class DocumentController extends Controller
                 return redirect()->back();
             }
         }
-        // ===========================================================================
 
-        $alreadyUsedInDownload = DownloadHistory::where('document_request_id', $documentRequest->id)->exists();
+        // ============================================================
+        // REQUEST ALREADY USED CHECK
+        // ============================================================
 
-        $alreadyUsedInPrint = PrintHistory::where('document_request_id',$documentRequest->id)->exists();
+        $alreadyUsedInDownload = DownloadHistory::where(
+            'document_request_id',
+            $documentRequest->id
+        )->exists();
+
+        $alreadyUsedInPrint = PrintHistory::where(
+            'document_request_id',
+            $documentRequest->id
+        )->exists();
 
         if ($alreadyUsedInDownload || $alreadyUsedInPrint) {
             toastr()->error('This Request ID has already been used.');
             return redirect()->back();
         }
 
-        $formattedRequestId = $documentRequest->request_id ?? ('Request-' . str_pad($documentRequest->record, 3, '0', STR_PAD_LEFT));
+        // ============================================================
+        // REQUEST DETAILS
+        // ============================================================
+
+        $formattedRequestId = $documentRequest->request_id
+            ?? ('Request-' . str_pad($documentRequest->record, 3, '0', STR_PAD_LEFT));
 
         $issuedCopies = (int) $documentRequest->number_of_copies;
 
@@ -11191,31 +11259,66 @@ class DocumentController extends Controller
 
         $issuedToName = $issuedToUser->name;
 
-        $issuedToDepartment =
-            Department::where('id', $issuedToUser->departmentid)->value('name');
+        $issuedToDepartment = Department::where(
+            'id',
+            $issuedToUser->departmentid
+        )->value('name');
 
         if ($issuedCopies < 1) {
             toastr()->error('Number of issued copies must be at least 1.');
             return redirect()->back();
         }
 
-        $roleIds = DB::table('user_roles')->where('user_id', Auth::id())->pluck('role_id')->filter()->map(function ($roleId) {
+        // ============================================================
+        // PRINT DATE
+        // ONLY FOR PRINT PDF
+        // ============================================================
+
+        $printDate = Carbon::now()->format('d-m-Y');
+
+        // Static Format No.
+        // ONLY FOR PRINT PDF
+        $formatNo = 'CQA/001/F2-00';
+
+        // ============================================================
+        // ROLE
+        // ============================================================
+
+        $roleIds = DB::table('user_roles')
+            ->where('user_id', Auth::id())
+            ->pluck('role_id')
+            ->filter()
+            ->map(function ($roleId) {
                 return (int) $roleId;
-            })->unique()->values()->toArray();
+            })
+            ->unique()
+            ->values()
+            ->toArray();
 
         if (empty($roleIds)) {
             toastr()->error('No role is assigned to your account.');
-
             return redirect()->back();
         }
 
-        $controls = PrintControl::whereIn('role_id', $roleIds)->orderByDesc('id')->first();
+        // ============================================================
+        // PRINT CONTROL
+        // ============================================================
+
+        $controls = PrintControl::whereIn('role_id', $roleIds)
+            ->orderByDesc('id')
+            ->first();
 
         if (!$controls) {
-            toastr()->error('There is no print control configured for your assigned roles.');
+            toastr()->error(
+                'There is no print control configured for your assigned roles.'
+            );
 
             return redirect()->back();
         }
+
+        // ============================================================
+        // DEPARTMENT
+        // ============================================================
 
         $departmentId = $document->department_id;
 
@@ -11227,16 +11330,23 @@ class DocumentController extends Controller
             return redirect()->back();
         }
 
-        $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
+        $documents = Document::where('department_id', $departmentId)
+            ->orderBy('id')
+            ->get();
 
         $currentId = 1;
 
         foreach ($documents as $key => $doc) {
+
             if ((int) $doc->id === (int) $document->id) {
                 $currentId = $key + 1;
                 break;
             }
         }
+
+        // ============================================================
+        // PDF DATA
+        // ============================================================
 
         set_time_limit(180);
 
@@ -11245,47 +11355,115 @@ class DocumentController extends Controller
         $data->department = Department::find($data->department_id);
 
         $data['originator'] = User::where(
-                'id',$data->originator_id)->value('name');
+            'id',
+            $data->originator_id
+        )->value('name');
 
-        $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
+        $data['originator_email'] = User::where(
+            'id',
+            $data->originator_id
+        )->value('email');
 
-        $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
+        $data['document_type_name'] = DocumentType::where(
+            'id',
+            $data->document_type_id
+        )->value('name');
 
-        $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
+        $data['document_type_code'] = DocumentType::where(
+            'id',
+            $data->document_type_id
+        )->value('typecode');
 
-        $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+        $data['document_division'] = Division::where(
+            'id',
+            $data->division_id
+        )->value('name');
 
-        $documentContent = DocumentContent::where('document_id', $id)->first();
+        $documentContent = DocumentContent::where(
+            'document_id',
+            $id
+        )->first();
 
         $data['document_content'] = $documentContent;
 
-        $data['year'] = Carbon::parse($data->created_at)->format('Y');
+        $data['year'] = Carbon::parse(
+            $data->created_at
+        )->format('Y');
 
         $time = Carbon::now();
 
-        $viewName = $this->getDocumentPdfViewName($data->document_type_id);
+        // ============================================================
+        // PDF VIEW
+        // ============================================================
 
-        $limitResult = $this->checkDocumentDownloadLimit($controls, Auth::id(), $document->id);
+        $viewName = $this->getDocumentPdfViewName(
+            $data->document_type_id
+        );
+
+        // ============================================================
+        // DOWNLOAD LIMIT
+        // ============================================================
+
+        $limitResult = $this->checkDocumentDownloadLimit(
+            $controls,
+            Auth::id(),
+            $document->id
+        );
 
         if (!$limitResult['allowed']) {
             toastr()->error($limitResult['message']);
-
             return redirect()->back();
         }
 
-        $bladeGeneratedTypes = ['SOP', 'FPS', 'INPS', 'CVS', 'RAWMS', 'PAMS', 'PIAS', 'MFPS', 'MFPSTP', 'FPSTP', 'INPSTP', 'CVSTP', 'RMSTP', 'SPEC', 'STP', 'TDS', 'GTP',];
+        // ============================================================
+        // BLADE GENERATED DOCUMENT TYPES
+        // ============================================================
+
+        $bladeGeneratedTypes = [
+            'SOP',
+            'FPS',
+            'INPS',
+            'CVS',
+            'RAWMS',
+            'PAMS',
+            'PIAS',
+            'MFPS',
+            'MFPSTP',
+            'FPSTP',
+            'INPSTP',
+            'CVSTP',
+            'RMSTP',
+            'SPEC',
+            'STP',
+            'TDS',
+            'GTP',
+        ];
 
         $sourcePdfPaths = [];
 
-        if (!in_array($document->document_type_id, $bladeGeneratedTypes,
-                true)) {
-            $sourcePdfPaths = $this->getNonSopDocumentPdfPaths($document, $documentContent);
+        if (!in_array(
+            $document->document_type_id,
+            $bladeGeneratedTypes,
+            true
+        )) {
+
+            $sourcePdfPaths = $this->getNonSopDocumentPdfPaths(
+                $document,
+                $documentContent
+            );
 
             if (empty($sourcePdfPaths)) {
-                toastr()->error('No printable PDF or image attachment was found for this document.');
+                toastr()->error(
+                    'No printable PDF or image attachment was found for this document.'
+                );
+
                 return redirect()->back();
             }
         }
+
+        // ============================================================
+        // DOWNLOAD HISTORY
+        // ============================================================
 
         $download = new DownloadHistory();
 
@@ -11305,7 +11483,9 @@ class DocumentController extends Controller
 
         $download->date = Carbon::now()->format('d-m-Y');
 
-        $download->issued_date = Carbon::parse($issuedDate)->format('Y-m-d');
+        $download->issued_date = Carbon::parse(
+            $issuedDate
+        )->format('Y-m-d');
 
         $download->issue_copies = $issuedCopies;
 
@@ -11313,7 +11493,10 @@ class DocumentController extends Controller
 
         $download->total_issued_copies = $issuedCopies;
 
-        $download->copy_number_range = str_pad(1, 3, '0', STR_PAD_LEFT) . '-' . str_pad($issuedCopies, 3, '0', STR_PAD_LEFT);
+        $download->copy_number_range =
+            str_pad(1, 3, '0', STR_PAD_LEFT)
+            . '-'
+            . str_pad($issuedCopies, 3, '0', STR_PAD_LEFT);
 
         $download->print_reason = $printReason;
 
@@ -11331,24 +11514,53 @@ class DocumentController extends Controller
 
         $download->issued_reason = $printReason;
 
-        $download->save();
+        // NEW
+        $download->copy_type = $copyType;
 
-        return $this->downloadIssuedDocumentCopies($viewName,
+        $download->save();
+        $this->closeDocumentRequestAfterIssue($documentRequest, 'Download');
+        // ============================================================
+        // GENERATE PRINT PDF
+        // ============================================================
+
+        return $this->downloadIssuedDocumentCopies(
+            $viewName,
             [
                 'data' => $data,
+
                 'time' => $time,
+
                 'document' => $document,
+
                 'documents' => $documents,
+
                 'currentId' => $currentId,
 
                 'requestId' => $formattedRequestId,
+
                 'issuedByName' => $issuedByName,
+
                 'issuedById' => $issuedById,
+
                 'issuedDate' => $issuedDate,
+
                 'issuedToName' => $issuedToName,
+
                 'issuedToDepartment' => $issuedToDepartment,
+
                 'printReason' => $printReason,
+
                 'totalIssuedCopies' => $issuedCopies,
+
+                // ====================================================
+                // NEW PRINT ONLY VALUES
+                // ====================================================
+
+                'copyType' => $copyType,
+
+                'printDate' => $printDate,
+
+                'formatNo' => $formatNo,
             ],
             $issuedCopies,
             $document,
@@ -11510,8 +11722,8 @@ class DocumentController extends Controller
                 $width = $canvas->get_width();
 
                 $watermarkText = strtoupper(
-                        trim((string) ($document->status ?? ''))
-                    );
+                    trim((string) ($viewData['copyType'] ?? ''))
+                );
 
                 if (!empty($watermarkText)) {
 
@@ -11521,7 +11733,7 @@ class DocumentController extends Controller
 
                     $fontSize = 25;
 
-                    $textWidth = $domPdf->getFontMetrics()->getTextWidth($watermarkText,$font,$fontSize);
+                    $textWidth = $domPdf->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
 
                     $canvas->page_text(($width - $textWidth) / 2, ($height / 2) + 50, $watermarkText, $font, $fontSize, [0, 0, 0], 0.9, 6, -20);
                 }
@@ -11596,7 +11808,7 @@ class DocumentController extends Controller
 
             if (!empty($issuedDate)) {
                 try {
-                    $formattedIssuedDate = Carbon::parse($issuedDate)->format('d-M-Y');
+                    $formattedIssuedDate = Carbon::parse($issuedDate)->format('d-m-Y');
 
                 } catch (\Throwable $e) {
                     $formattedIssuedDate = (string) $issuedDate;
@@ -11609,120 +11821,6 @@ class DocumentController extends Controller
             $finalPdf = new \setasign\Fpdi\Fpdi();
 
             $finalPdf->SetAutoPageBreak(false);
-
-            // for ($copyNumber = 1; $copyNumber <= $totalCopies; $copyNumber++) {
-            //     $formattedCopyNumber = str_pad($copyNumber, 3, '0', STR_PAD_LEFT);
-
-            //     foreach ($validSourcePdfPaths as $sourcePdfPath) {
-            //         $sourcePageCount = $finalPdf->setSourceFile($sourcePdfPath);
-
-            //         if ($sourcePageCount < 1) {
-            //             continue;
-            //         }
-
-            //         for ($sourcePageNumber = 1; $sourcePageNumber <= $sourcePageCount; $sourcePageNumber++) {
-            //             $templateId = $finalPdf->importPage( $sourcePageNumber
-            //                 );
-
-            //             $pageSize = $finalPdf->getTemplateSize($templateId);
-
-            //             $pageWidth = $pageSize['width'];
-
-            //             $pageHeight = $pageSize['height'];
-
-            //             $orientation = $pageWidth > $pageHeight ? 'L' : 'P';
-
-            //             $finalPdf->AddPage($orientation,
-            //                 [
-            //                     $pageWidth, $pageHeight,
-            //                 ]
-            //             );
-
-            //             $finalPdf->useTemplate($templateId, 0, 0, $pageWidth, $pageHeight);
-
-            //             $finalPdf->SetTextColor(0, 0, 0);
-
-            //             $finalPdf->SetDrawColor(80, 80, 80);
-
-            //             $finalPdf->SetLineWidth(0.15);
-
-            //             $leftMargin = 7;
-            //             $topY = 3.5;
-            //             $topTextHeight = 4;
-
-            //             $masterCopyReservedWidth = 46;
-
-            //             $usableTopWidth = $pageWidth - $leftMargin - $masterCopyReservedWidth;
-
-            //             $dateWidth = $usableTopWidth * 0.35;
-
-            //             $requestWidth = $usableTopWidth * 0.45;
-
-            //             $copyWidth = $usableTopWidth * 0.20;
-
-            //             $finalPdf->SetFont( 'Arial', 'B', 7);
-
-            //             $finalPdf->SetXY($leftMargin, $topY);
-
-            //             $finalPdf->Cell($dateWidth, $topTextHeight, 'Date: ' . $this->sanitizePdfText($formattedIssuedDate), 0, 0, 'L');
-
-            //             $finalPdf->SetXY(
-            //                 $leftMargin + $dateWidth, $topY
-            //             );
-
-            //             $finalPdf->Cell($requestWidth, $topTextHeight, 'Request No: ' . $this->sanitizePdfText($requestId), 0, 0, 'C');
-
-            //             $finalPdf->SetXY($leftMargin + $dateWidth + $requestWidth, $topY);
-
-            //             $finalPdf->Cell($copyWidth, $topTextHeight, 'Copy No.: ' . $formattedCopyNumber, 0, 0, 'R');
-
-            //             $firstSeparatorX = $leftMargin + $dateWidth;
-
-            //             $secondSeparatorX = $leftMargin + $dateWidth + $requestWidth;
-
-            //             $finalPdf->Line( $firstSeparatorX, 3, $firstSeparatorX, 9);
-
-            //             $finalPdf->Line($secondSeparatorX, 3, $secondSeparatorX, 9);
-
-            //             $bottomLineY = $pageHeight - 8;
-
-            //             $bottomTextY = $pageHeight - 4;
-
-            //             $bottomLeftMargin = 7;
-            //             $bottomRightMargin = 7;
-
-            //             $finalPdf->Line(
-            //                 $bottomLeftMargin,
-            //                 $bottomLineY,
-            //                 $pageWidth
-            //                 - $bottomRightMargin,
-            //                 $bottomLineY
-            //             );
-
-            //             $finalPdf->SetFont(
-            //                 'Arial',
-            //                 'B',
-            //                 7
-            //             );
-
-            //             $disclaimerText = 'Document printed from master electronically & signature is not required.';
-
-            //             $finalPdf->Text(
-            //                 $bottomLeftMargin,
-            //                 $bottomTextY,
-            //                 $this->sanitizePdfText($disclaimerText)
-            //             );
-
-            //             $issuedByText = 'Issued By: ' . $this->sanitizePdfText($issuedByName);
-
-            //             $issuedByTextWidth = $finalPdf->GetStringWidth($issuedByText);
-
-            //             $issuedByX = $pageWidth - $bottomRightMargin - $issuedByTextWidth;
-
-            //             $finalPdf->Text($issuedByX, $bottomTextY, $issuedByText);
-            //         }
-            //     }
-            // }
 
             $lastLoadedSourcePath = null;
 
@@ -11946,6 +12044,144 @@ class DocumentController extends Controller
             $identifier;
 
         $newGrid->save();
+    }
+
+    private function closeDocumentRequestAfterIssue(DocumentRequest $documentRequest, string $actionLabel)
+    {
+        try {
+            // Sirf QA Approval (stage 2) wali request hi close hogi
+            if ((string) $documentRequest->stage !== '2') {
+                return;
+            }
+
+            $previousStatus      = $documentRequest->status;
+            $previousCompletedBy = $documentRequest->completed_by;
+            $previousCompletedOn = $documentRequest->completed_on;
+
+            $comment = 'Document ' . strtolower($actionLabel) . ' completed. Request closed automatically.';
+
+            $documentRequest->stage            = '3';
+            $documentRequest->status           = 'Closed - Done';
+            $documentRequest->completed_by     = Auth::user()->name;
+            $documentRequest->completed_on     = Carbon::now()->format('d-M-Y');
+            $documentRequest->complete_comment = $comment;
+            $documentRequest->save();
+
+            $history = new DocumentRequestAuditTrial();
+            $history->document_request_id = $documentRequest->id;
+            $history->activity_type       = 'Approved By, Approved On';
+            $history->previous            = empty($previousCompletedBy)
+                ? 'Null'
+                : $previousCompletedBy . ' , ' . $previousCompletedOn;
+            $history->current             = $documentRequest->completed_by . ' , ' . $documentRequest->completed_on;
+            $history->comment             = $comment;
+            $history->action              = 'Approved';
+            $history->user_id             = Auth::id();
+            $history->user_name           = Auth::user()->name;
+            $history->user_role           = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state        = $previousStatus;
+            $history->change_from         = $previousStatus;
+            $history->change_to           = 'Closed - Done';
+            $history->stage               = 'Closed - Done';
+            $history->action_name         = empty($previousCompletedBy) ? 'New' : 'Update';
+            $history->save();
+
+        } catch (\Throwable $e) {
+            \Log::error('Auto close document request failed', [
+                'document_request_id' => $documentRequest->id ?? null,
+                'error'               => $e->getMessage(),
+            ]);
+        }
+    }
+
+    private function annexureIsEmpty($html): bool
+    {
+        return trim(strip_tags(
+            html_entity_decode((string) $html, ENT_QUOTES | ENT_HTML5, 'UTF-8')
+        )) === '';
+    }
+
+    private function normalizeAnnexureContent($html): string
+    {
+        $html = html_entity_decode((string) $html, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $html = preg_replace('/\s+/', ' ', $html);
+        $html = preg_replace('/>\s+</', '><', $html);
+
+        return trim($html);
+    }
+
+    /**
+     * Return: [annexure original index => annexure revision count]
+     * Example: [0 => 0, 1 => 2]  =>  F1-00, F2-02
+     */
+    private function getAnnexureRevisionMap($document): array
+    {
+        $number = (string) $document->document_number;   // SOP/QA/004-01
+
+        if (!preg_match('/^(.*)-(\d+)$/', $number, $m)) {
+            return [];
+        }
+
+        $base       = $m[1];          // SOP/QA/004
+        $currentRev = (int) $m[2];    // 1
+
+        // Same document ke saare revisions (00, 01, 02 ...) current tak
+        $chain = Document::where('document_number', 'like', $base . '-%')
+            ->get()
+            ->map(function ($doc) use ($base) {
+                if (preg_match(
+                    '/^' . preg_quote($base, '/') . '-(\d+)$/',
+                    (string) $doc->document_number,
+                    $mm
+                )) {
+                    $doc->rev_no = (int) $mm[1];
+                    return $doc;
+                }
+                return null;
+            })
+            ->filter(function ($doc) use ($currentRev) {
+                return $doc && $doc->rev_no <= $currentRev;
+            })
+            ->sortBy('rev_no');
+
+        $previous  = [];
+        $revisions = [];
+
+        foreach ($chain as $doc) {
+
+            $content = DocumentContent::where('document_id', $doc->id)->first();
+
+            if (!$content || empty($content->annexuredata)) {
+                continue;
+            }
+
+            $items = @unserialize($content->annexuredata);
+
+            if (!is_array($items)) {
+                continue;
+            }
+
+            foreach ($items as $index => $html) {
+
+                if ($this->annexureIsEmpty($html)) {
+                    continue;
+                }
+
+                $normalized = $this->normalizeAnnexureContent($html);
+
+                if (!array_key_exists($index, $previous)) {
+                    // Annexure pehli baar mila -> uska revision 00
+                    $revisions[$index] = $revisions[$index] ?? 0;
+                } elseif ($previous[$index] !== $normalized) {
+                    // Pichle revision se content badla -> +1
+                    $revisions[$index] = ($revisions[$index] ?? 0) + 1;
+                }
+
+                $previous[$index] = $normalized;
+            }
+        }
+
+        return $revisions;
     }
 
 }
