@@ -7,179 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vidyagxp - Software</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <!-- <style>
-        
-        @page {
-            margin: 160px 35px 100px; /* top header, side margin, bottom footer */
-        }
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            font-size: 11px;
-            line-height: 1.4;
-            color: #000;
-            margin-top: 10px;
-            margin-bottom: -60px; 
-        }
 
-        header, footer {
-            position: fixed;
-            left: 0;
-            right: 0;
-            /* padding: 20px 35px; */
-            font-size: 12px;
-            box-sizing: border-box;
-        }
-
-        header {
-            top: -140px;
-            border-bottom: none;
-        }
-
-        footer {
-            bottom: 0;
-            bottom: -100px;
-            border-top: none;
-        }
-
-        .logo img {
-            display: block;
-            margin-left: auto;
-        }
-        /* To remove borders from content part only */
-        .content-area table {
-            border: none !important;
-        }
-
-        .inner-block {
-            /* padding: 20px 35px;  */
-            box-sizing: border-box;
-        }
-        
-        .block {
-            margin-bottom: 25px;
-        }
-
-        .block-head {
-            font-size: 13px;
-            font-weight: bold;
-            border-bottom: 2px solid #387478;
-            color: #387478;
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-        }
-
-        .table_bg {
-            background-color: #387478;
-            color: #111;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse
-            margin-bottom: 12px;
-        }
-
-        th, td {
-            padding: 6px 10px;
-            font-size: 10.5px;
-            border: 1px solid #ccc;
-            text-align: left;
-            vertical-align: top;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            font-weight: 600;
-        }
-
-        .section-gap {
-            margin-top: 20px;
-        }
-
-        .no-border th, .no-border td {
-            border: none !important;
-        }
-
-        /* .w-5 { width: 5%; } */
-        .w-5 { width: 6%; }
-        .w-8 { width: 8%; }
-        .w-10 { width: 10%; }
-        .w-20 { width: 20%; }
-        .w-30 { width: 30%; }
-        .w-50 { width: 50%; }
-        .w-70 { width: 70%; }
-        .w-80 { width: 80%; }
-        .w-100 { width: 100%; }
-        .text-center { text-align: center; }
-        .border-table {
-            overflow-x: auto;
-        }
-        table th, table td {
-            word-wrap: break-word;
-        }
-
-
-            .head-number {
-                font-weight: bold;
-                font-size: 13px;
-                padding-left: 10px;
-            }
-
-            .div-data {
-                font-size: 13px;
-                padding-left: 10px;
-                margin-bottom: 10px;
-            }
-
-            .why-why-chart-container {
-                width: 100%;
-                padding: 10px;
-                background: #fff;
-                border-radius: 5px;
-            }
-
-            .block-head {
-                font-size: 18px;
-                font-weight: bold;
-                margin-bottom: 10px;
-            }
-
-            .table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-
-            .table th, .table td {
-                padding: 10px;
-                border: 1px solid #ddd;
-            }
-
-            .problem-statement th {
-                background: #f4bb22;
-                width: 150px;
-            }
-
-            .why-label {
-                color: #393cd4;
-                width: 150px;
-            }
-
-            .answer-label {
-                color: #393cd4;
-                width: 150px;
-            }
-
-            .root-cause th {
-                background: #0080006b;
-                width: 150px;
-            }
-
-            .text-muted {
-                color: gray;
-            }
-    </style> -->
 
     <style>
         
@@ -623,14 +451,57 @@
                      <tr>
                         <th class="w-20">Brief Description / Procedure</th>
                         <td class="w-80 investigation-summary">
-                            
-                    <div class="div-data">
-                    @if ($data->Brief_description)
-                        {!! $data->Brief_description !!}
-                    @else
-                        Not Applicable
-                    @endif
-                </div>
+                            @php
+                                function cleanRichText($html) {
+                                    if (empty($html)) {
+                                        return null;
+                                    }
+
+                                    // Step 1: har tag ke aas-paas space daal do (koi bhi tag ho - span, strong, b, div, etc.)
+                                    // taaki tag hatne ke baad bhi words chipke na rahein
+                                    $html = preg_replace('/</', ' <', $html);
+                                    $html = preg_replace('/>/', '> ', $html);
+
+                                    // Step 2: line breaks / paragraph / list endings ko newline banao
+                                    $html = preg_replace('/<br\s*\/?>/i', "\n", $html);
+                                    $html = preg_replace('/<\/p>/i', "\n", $html);
+                                    $html = preg_replace('/<\/li>/i', "\n", $html);
+                                    $html = preg_replace('/<li[^>]*>/i', '- ', $html);
+
+                                    // Step 3: sirf bold/italic preserve karo, baaki sab tags hata do
+                                    $html = strip_tags($html, '<strong><b><em><i>');
+
+                                    // Step 4: &nbsp; aur extra spaces clean karo
+                                    $html = str_ireplace('&nbsp;', ' ', $html);
+                                    $html = preg_replace('/[ \t]+/', ' ', $html);
+
+                                    // Step 5: stray bullet/symbol/private-use-area unicode characters hata ke '-' bana do
+                                    // (Geometric Shapes, Misc Symbols, Dingbats, Private Use Area)
+                                    $html = preg_replace('/[\x{25A0}-\x{25FF}\x{2600}-\x{27BF}\x{2B00}-\x{2BFF}\x{E000}-\x{F8FF}]/u', '-', $html);
+
+                                    // Step 6: multiple blank lines collapse
+                                    $html = preg_replace("/\n{2,}/", "\n", trim($html));
+
+                                    $lines = array_filter(array_map('trim', explode("\n", $html)), function ($line) {
+                                        return $line !== '';
+                                    });
+
+                                    if (empty($lines)) {
+                                        return null;
+                                    }
+
+                                    return '<p>' . implode('</p><p>', array_values($lines)) . '</p>';
+                                }
+
+                                $briefDescription = cleanRichText($data->Brief_description);
+                            @endphp
+                        <div class="div-data investigation-summary">
+                            @if ($briefDescription)
+                                {!! $briefDescription !!}
+                            @else
+                                Not Applicable
+                            @endif
+                        </div>
 
                         </td>
 
