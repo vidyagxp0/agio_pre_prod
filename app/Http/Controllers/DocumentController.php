@@ -8566,7 +8566,7 @@ class DocumentController extends Controller
 
 
                             $pageText = sprintf(
-                                '%02d - %02d',
+                                '%02d of %02d',
                                 $pageNumber,
                                 $pageCount
                             );
@@ -12104,10 +12104,39 @@ class DocumentController extends Controller
     private function normalizeAnnexureContent($html): string
     {
         $html = html_entity_decode((string) $html, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-        $html = preg_replace('/\s+/', ' ', $html);
-        $html = preg_replace('/>\s+</', '><', $html);
 
-        return trim($html);
+        // Image: sirf src ka hash compare hoga (alt, class, size ignore)
+        $html = preg_replace_callback(
+            '/<img\b[^>]*\bsrc\s*=\s*["\']([^"\']*)["\'][^>]*>/i',
+            function ($m) {
+                return ' [[IMG:' . md5($m[1]) . ']] ';
+            },
+            $html
+        );
+
+        // Table cell aur row ki boundary bachao, taaki cell/row ka badlav pakda jaye
+        $html = preg_replace('#</(td|th)\s*>#i', ' [[TD]] ', $html);
+        $html = preg_replace('#</(tr|p|div|li|h[1-6]|ul|ol|table)\s*>#i', ' [[BR]] ', $html);
+        $html = preg_replace('#<br\s*/?>#i', ' [[BR]] ', $html);
+
+        // Saare tags hatao (class, style, data-row, id sab chale jayenge)
+        $text = strip_tags($html);
+
+        // Non-breaking space aur invisible characters ko normal space banao
+        $text = str_replace(["\xC2\xA0", "\xE2\x80\x8B", "\xEF\xBB\xBF"], ' ', $text);
+
+        // Extra whitespace saaf
+        $text = preg_replace('/\s+/u', ' ', $text);
+
+        // Khali line / khali cell ka noise hatao
+        $text = preg_replace('/(?:\s*\[\[BR\]\]\s*){2,}/', ' [[BR]] ', $text);
+        $text = preg_replace('/(?:\s*\[\[TD\]\]\s*){2,}/', ' [[TD]] ', $text);
+
+        // Shuru aur end ke separators hatao
+        $text = preg_replace('/^(?:\s*\[\[(?:BR|TD)\]\]\s*)+/', '', $text);
+        $text = preg_replace('/(?:\s*\[\[(?:BR|TD)\]\]\s*)+$/', '', $text);
+
+        return trim($text);
     }
 
     /**
