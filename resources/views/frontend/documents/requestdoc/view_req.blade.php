@@ -139,7 +139,7 @@
                             </button>
                      
                         @endif
-                        <a class="text-white" href="{{ url('documents') }}"><button class="button_theme1"> Exit
+                        <a class="text-white" href="{{ url('document-request-list') }}"><button class="button_theme1"> Exit
                             </button> </a>
                     </div>
                 </div>
@@ -479,7 +479,7 @@
 
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
-                                <button type="button"> <a href="{{ url('documents') }}"
+                                <button type="button"> <a href="{{ url('document-request-list') }}"
                                         class="text-white">Exit </a> </button>
                             </div>
                         </div>
@@ -501,7 +501,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
-                            <button type="button"> <a href="{{ url('documents') }}" class="text-white">
+                            <button type="button"> <a href="{{ url('document-request-list') }}" class="text-white">
                                     Exit </a> </button>
                         </div>
                     </div>
@@ -594,7 +594,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
 
                             <button type="button">
-                                <a href="{{ url('documents') }}" class="text-white">
+                                <a href="{{ url('document-request-list') }}" class="text-white">
                                     Exit </a> </button>
                         </div>
                     </div>

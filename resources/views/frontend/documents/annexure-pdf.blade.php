@@ -575,8 +575,6 @@
             background: #fff;
         }
     </style>
-    
-
 </head>
 <body>
     <div class="header-wrapper">
@@ -610,7 +608,7 @@
     </div>
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
-            <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">
+        <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">
 
             <tbody>
                 <tr style="border-bottom: 1px solid #ddd;">
@@ -646,7 +644,6 @@
                
             </tbody>
 
-          
         </table>
           <span>Format No.:  {{ $annexureDocumentNumber }}</span>
     </footer>

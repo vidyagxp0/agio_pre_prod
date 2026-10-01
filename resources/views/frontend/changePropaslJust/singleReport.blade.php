@@ -262,8 +262,6 @@
 
             {{-- ================= CHANGE PROPOSAL GRID ================= --}}
             @php
-                // maxLines  = ek row me max kitni visual lines (page se chhota rakho)
-                // charsPerLine = column me ek line me approx kitne characters aate hain
                 $splitText = function ($text, $maxLines = 22, $charsPerLine = 34) {
                     $text = str_replace(["\r\n", "\r"], "\n", trim((string) $text));
                     $text = preg_replace("/\n{3,}/", "\n\n", $text); // extra blank lines collapse

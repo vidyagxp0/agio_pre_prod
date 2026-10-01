@@ -149,7 +149,7 @@ class DocumentRequestController extends Controller
 
         toastr()->success('Document Request created successfully');
 
-        return redirect('/documents');
+        return redirect('/document-request-list');
     }
     
     public function show($id)
@@ -176,7 +176,7 @@ class DocumentRequestController extends Controller
 
         if (!$data) {
             toastr()->error('Document Request not found');
-            return redirect('/documents');
+            return redirect('/document-request-list');
         }
 
         $data->document_id = $request->document_id;
@@ -394,15 +394,6 @@ class DocumentRequestController extends Controller
                 $data->submitted_on = Carbon::now()->format('d-M-Y');
                 $data->submitted_comment = $request->comment;
 
-
-                    
-
-
-
-
-
-                ///
-
                 $history = new DocumentRequestAuditTrial();
                 $history->document_request_id = $id;
                 $history->activity_type = 'Request Sent By, Request Sent On';
@@ -462,9 +453,8 @@ class DocumentRequestController extends Controller
 
 
             if ($data->stage == 2) {
-                
 
-             if (empty($data->comment))
+                if (empty($data->comment))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
@@ -550,7 +540,7 @@ class DocumentRequestController extends Controller
 
     }
 
-       public function docReq_stageBack(Request $request, $id)
+    public function docReq_stageBack(Request $request, $id)
     {
 
         if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
@@ -705,10 +695,10 @@ class DocumentRequestController extends Controller
         }    
     }  
 
-      public function DocumentRequestAuditTrail($id)
+    public function DocumentRequestAuditTrail($id)
     {
        
-    $audit = DocumentRequestAuditTrial::where('document_request_id', $id)->orderByDesc('id')->paginate(5);
+        $audit = DocumentRequestAuditTrial::where('document_request_id', $id)->orderByDesc('id')->paginate(5);
         //  dd($audit);
         $today = Carbon::now()->format('d-m-y');
         $document = DocumentRequest::where('id', $id)->first();
@@ -718,6 +708,5 @@ class DocumentRequestController extends Controller
         // dd($document);
         return view('frontend.documents.requestdoc.auditTrial', compact('audit', 'document', 'today', 'users'));
     }
-
 
 }
