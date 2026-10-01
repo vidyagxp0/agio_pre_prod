@@ -7863,7 +7863,7 @@ class RiskManagementController extends Controller
                     $incompleteFields = [];
 
                     if ($userAssignments->Production_Table_Person == $userId && empty($userAssignments->Production_Table_Assessment)) {
-                        $incompleteFields[] = 'Production Table Assessment';
+                        $incompleteFields[] = 'Production Tablet Assessment';
                     }
                     
                     if ($userAssignments->Production_Injection_Person == $userId && empty($userAssignments->Production_Injection_Assessment)) {
@@ -8297,7 +8297,7 @@ class RiskManagementController extends Controller
                             $updateCFT->Production_Table_On = Carbon::now()->format('Y-m-d');
                             $history = new RiskAuditTrail();
                             $history->risk_id = $id;
-                           $history->activity_type = 'Production Table Completed By, Production Table Completed On';
+                           $history->activity_type = 'Production Tablet Completed By, Production Tablet Completed On';
                     if(is_null($lastDocument->Production_Table_By) || $lastDocument->Production_Table_On == ''){
                         $history->previous = "";
                     }else{

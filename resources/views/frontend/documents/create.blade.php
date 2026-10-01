@@ -283,11 +283,11 @@
                 <button class="tablinks hidden-tabs" data-id="SOP" onclick="openData(event, 'doc-content')">Document Content</button>
                 <!-- Tabs that should be hidden initially -->
                 <button class="tablinks hidden-tabs" data-id="FPS" onclick="openData(event, 'doc_FPS')">Finished Product Specification</button>
-                <button class="tablinks hidden-tabs" data-id="INPS" onclick="openData(event, 'doc_INPS')">Inprocess Specification</button>
+                <button class="tablinks hidden-tabs" data-id="IPS" onclick="openData(event, 'doc_IPS')">Inprocess Specification</button>
                 <button class="tablinks hidden-tabs" data-id="CVS" onclick="openData(event, 'doc_CVS')">Cleaning Validation Specification</button>
 
                 <button class="tablinks hidden-tabs" data-id="FPSTP" onclick="openData(event, 'doc-fpstp')">Finished Product Standard Testing Procedure</button>
-                <button class="tablinks hidden-tabs" data-id="INPSTP" onclick="openData(event, 'doc-istp')">Inprocess Standard Testing Procedure</button>
+                <button class="tablinks hidden-tabs" data-id="IPSTP" onclick="openData(event, 'doc-istp')">Inprocess Standard Testing Procedure</button>
                 <button class="tablinks hidden-tabs" data-id="CVSTP" onclick="openData(event, 'doc-cvstp')">Cleaning Validation Standard Testing Procedure</button>
 
                 <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-tempmapping')">Temperature Mapping Report</button>
@@ -302,10 +302,10 @@
                 <button class="tablinks hidden-tabs" data-id="PACKVALIREPORT" onclick="openData(event, 'doc-PacValRep')">Packing Validation Report</button>
                 <button class="tablinks hidden-tabs" data-id="FOCONITOGENPROTOCOL" onclick="openData(event, 'doc-FoCoANGsP')">Format For Compressed Air And Nitrogen Gas System Protocol</button>
 
-                <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">Raw Material Specification</button>
+                <button class="tablinks hidden-tabs" data-id="RMS" onclick="openData(event, 'doc-rms')">Raw Material Specification</button>
 
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">Raw Material Standard Testing Procedure</button>
-                <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">Packing Material Specification</button>
+                <button class="tablinks hidden-tabs" data-id="PMS" onclick="openData(event, 'doc_pms')">Packing Material Specification</button>
                 <button class="tablinks hidden-tabs" data-id="PROVALIPROTOCOL" onclick="openData(event, 'doc_prvp')">Process Validation Protocol</button>
 
                 <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">Product / Item Information-Addendum Specification</button>
@@ -826,15 +826,15 @@ const otherInformationSection = document.getElementById('otherInformationSection
 const showReviewerApproverDocs = [
     'SOP',
     'FPS',
-    'INPS',
+    'IPS',
     'CVS',
-    'RAWMS',
-    'PAMS',
+    'RMS',
+    'PMS',
     'PIAS',
     'MFPS',
     'MFPSTP',
     'FPSTP',
-    'INPSTP',
+    'IPSTP',
     'CVSTP',
     'RMSTP',
     'SPEC',
@@ -9067,7 +9067,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             </div>
 
                                 @php
-                                    $documents_gtp = DB::table('documents')->whereIn('document_type_id', ['FPS', 'INPS', 'CVS','RAWMS'])->get();
+                                    $documents_gtp = DB::table('documents')->whereIn('document_type_id', ['FPS', 'IPS', 'CVS','RMS'])->get();
                                 @endphp
                                 {{-- <div class="col-md-6">
                                     <div class="group-input">
@@ -10139,7 +10139,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
 
                 <!------------------------ Packing Material Specification - tab ------------------------------------>
-                <div id="doc_pams" class="tabcontent">
+                <div id="doc_pms" class="tabcontent">
                     <div class="orig-head">
                         PACKING MATERIAL SPECIFICATION
                         </div>
@@ -10608,7 +10608,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 </div>
 
                                 @php
-                                    $documents = DB::table('documents')->whereIn('document_type_id', ['FPS', 'INPS', 'CVS','RAWMS'])->get();
+                                    $documents = DB::table('documents')->whereIn('document_type_id', ['FPS', 'IPS', 'CVS','RMS'])->get();
                                 @endphp
 
 
@@ -12707,7 +12707,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
 
                <!-- Inprocess Validation Specification -->
-                <div id="doc_INPS" class="tabcontent">
+                <div id="doc_IPS" class="tabcontent">
                         <div class="orig-head">INPROCESS VALIDATION SPECIFICATION
                         </div>
                         <div class="input-fields">
@@ -18986,7 +18986,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
 
                     {{-- Raw Material Specifications Tabs --}}
-                    <div id="doc-rawms" class="tabcontent">
+                    <div id="doc-rms" class="tabcontent">
                         <div class="orig-head">
                            Raw Material Specifications</div>
                         <div class="input-fields">

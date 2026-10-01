@@ -639,23 +639,94 @@
             </tbody>
         </table>
 
-        <table class="border border-top-none" border="1" style="border-collapse: collapse; width: 100%; text-align: left;">
-            <tbody>
-              <tr>
-                <td style="width: 42%; padding: 5px; text-align: left" class="doc-num">
-                    PRODUCT/MATERIAL NAME  :   <span>{{$data->product_material_name}}</span><br><br>
-                    Reference Standard/GTP No. :  <span>{{$data->Reference_Standard}}</span>
-                </td>
-                <td style="width: 18%; padding: 5px; text-align: left" class="doc-num">TDS No.: 
-                    <span>
-    
-                    {{$document->document_number ?? 'NA'}}
-                    </span>
-                </td>
-             </tr>
+        <table class="border border-top-none"
+    style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+    <tbody>
+        <tr>
+            <td style="
+                width: 70%;
+                padding: 6px 8px;
+                text-align: left;
+                vertical-align: top;
+                border: 1px solid black;
+            ">
 
-            </tbody>
-        </table>
+                <!-- Material Name -->
+                <div style="
+                    display: table;
+                    width: 100%;
+                    table-layout: fixed;
+                    margin-bottom: 4px;
+                ">
+                    <div style="
+                        display: table-cell;
+                        width: 42%;
+                        text-align: left;
+                        vertical-align: top;
+                        font-weight: bold;
+                        padding: 0;
+                    ">
+                        MATERIAL NAME
+                    </div>
+
+                    <div style="
+                        display: table-cell;
+                        width: 58%;
+                        text-align: left;
+                        vertical-align: top;
+                        padding: 0;
+                    ">
+                        : {{ $data->product_material_name }}
+                    </div>
+                </div>
+
+                <!-- Reference Standard / GTP No. -->
+                <div style="
+                    display: table;
+                    width: 100%;
+                    table-layout: fixed;
+                ">
+                    <div style="
+                        display: table-cell;
+                        width: 42%;
+                        text-align: left;
+                        vertical-align: top;
+                        font-weight: bold;
+                        padding: 0;
+                    ">
+                        Reference Standard/GTP No.
+                    </div>
+
+                    <div style="
+                        display: table-cell;
+                        width: 58%;
+                        text-align: left;
+                        vertical-align: top;
+                        padding: 0;
+                    ">
+                        : {{ $data->Reference_Standard }}
+                    </div>
+                </div>
+
+            </td>
+
+            <!-- TDS No. -->
+            <td style="
+                width: 30%;
+                padding: 6px 8px;
+                text-align: left;
+                vertical-align: top;
+                border: 1px solid black;
+                font-weight: bold;
+            ">
+                TDS No. :
+                <span style="font-weight: normal;">
+                    {{ $document->document_number ?? 'NA' }}
+                </span>
+            </td>
+        </tr>
+    </tbody>
+</table>
     </header>
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">

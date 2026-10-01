@@ -660,7 +660,7 @@ class DocumentController extends Controller
             $document->document_subtype_id = $request->document_subtype_id;
             $document->document_language_id = $request->document_language_id;
             $document->effective_date = $request->effective_date;
-            $stageOneDocuments = ['SOP','FPS','INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP'];
+            $stageOneDocuments = ['SOP','FPS','IPS','CVS','RMS','PMS','PIAS','MFPS','MFPSTP','FPSTP','IPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP'];
 
             if (in_array($document->document_type_id, $stageOneDocuments)) {
                 $document->status = Stage::where('id', 1)->value('name');
@@ -7024,19 +7024,23 @@ class DocumentController extends Controller
             }
             /////////
 
+
+
+            ////////
+
         $viewName = match ($data->document_type_id) {
             'SOP' => 'frontend.documents.pdfpage',
             'BOM' => 'frontend.documents.bom-pdf',
             'FPS' => 'frontend.documents.finished-product-pdf',
-            'INPS' => 'frontend.documents.inprocess_s-pdf',
+            'IPS' => 'frontend.documents.inprocess_s-pdf',
             'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-            'RAWMS' => 'frontend.documents.raw_ms-pdf',
-            'PAMS' => 'frontend.documents.package_ms-pdf',
+            'RMS' => 'frontend.documents.raw_ms-pdf',
+            'PMS' => 'frontend.documents.package_ms-pdf',
             'PIAS' => 'frontend.documents.product_item-pdf',
             'MFPS' => 'frontend.documents.mfps-pdf',
             'MFPSTP' => 'frontend.documents.mfpstp-pdf',
             'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
-            'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+            'IPSTP' => 'frontend.documents.inprocess-stp-pdf',
             'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
             'RMSTP' => 'frontend.documents.raw_mstp-pdf',
             'BMR' => 'frontend.documents.bmr-pdf',
@@ -7854,44 +7858,46 @@ class DocumentController extends Controller
         ]);
     }
 
+    
 
     
     public function getPAMSRevisionHistory(Request $request)
     {
         $documentId = $request->query('document_id');
-    
+
         // Get the current document
         $currentDocument = Document::find($documentId);
         if (!$currentDocument) {
             return response()->json(['error' => 'Document not found'], 404);
         }
-    
+
         // Get past revisions from Document table
         $revisionHistory = Document::where('record', $currentDocument->record)
             ->where('revised_doc', '<=', $currentDocument->revised_doc)
             ->orderBy('revised_doc', 'asc')
             ->get();
-    
-        // 🛠 Get cc_no & reason_of_revision from DocumentGrid table
+
+        // 🛠️ Get cc_no & reason_of_revision from DocumentGrid table
         $RevisionGridpamsData = DocumentGrid::where('document_type_id', $documentId)
             ->where('identifier', "revision_pams_data")
             ->first();
-        
+
         $GtpData = [];
         if ($RevisionGridpamsData && !empty($RevisionGridpamsData->data)) {
-            $GtpData = json_decode($RevisionGridpamsData->data, true) ?? [];
-        }    
-    
-    
+            $GtpData = is_array($RevisionGridpamsData->data)
+                ? $RevisionGridpamsData->data
+                : (json_decode($RevisionGridpamsData->data, true) ?? []);
+        }
+
         $historyData = [];
         foreach ($revisionHistory as $index => $doc) {
             // Stage-based effective date logic
             $shouldShowEffectiveDate = ($doc->stage >= 11);
-            
-            // 🛠 Fetch cc_no & reason_of_revision from $GtpData array
+
+            // 🛠️ Fetch cc_no & reason_of_revision from $GtpData array
             $cc_no = $GtpData[$index]['change_ctrl_pams_no'] ?? 'No Data';
             $reason_of_revision = !empty($doc->reason) ? $doc->reason : ($GtpData[$index]['rev_reason_pams'] ?? 'No Data');
-    
+
             $historyData[] = [
                 'rev_pams_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
                 'eff_date_pams' => $shouldShowEffectiveDate ? $doc->effective_date : null,
@@ -7899,7 +7905,7 @@ class DocumentController extends Controller
                 'rev_reason_pams' => $reason_of_revision
             ];
         }
-    
+
         return response()->json(['revision_pams_data' => $historyData]);
     }
 
@@ -7955,7 +7961,7 @@ class DocumentController extends Controller
 
     public function getRecordsByType(Request $request)
     {
-        $allowedTypes = ['FPS', 'INPS', 'CVS', 'RAWMS'];
+        $allowedTypes = ['FPS', 'IPS', 'CVS', 'RMS'];
         
         $records = Document::whereIn('document_type_id', $allowedTypes)->get();
     
@@ -8980,15 +8986,15 @@ class DocumentController extends Controller
             'SOP' => 'frontend.documents.pdfpage',
             'BOM' => 'frontend.documents.bom-pdf',
             'FPS' => 'frontend.documents.finished-product-pdf',
-            'INPS' => 'frontend.documents.inprocess_s-pdf',
+            'IPS' => 'frontend.documents.inprocess_s-pdf',
             'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-            'RAWMS' => 'frontend.documents.raw_ms-pdf',
-            'PAMS' => 'frontend.documents.package_ms-pdf',
+            'RMS' => 'frontend.documents.raw_ms-pdf',
+            'PMS' => 'frontend.documents.package_ms-pdf',
             'PIAS' => 'frontend.documents.product_item-pdf',
             'MFPS' => 'frontend.documents.mfps-pdf',
             'MFPSTP' => 'frontend.documents.mfpstp-pdf',
             'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
-            'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+            'IPSTP' => 'frontend.documents.inprocess-stp-pdf',
             'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
             'RMSTP' => 'frontend.documents.raw_mstp-pdf',
             'BMR' => 'frontend.documents.bmr-pdf',
@@ -9000,7 +9006,7 @@ class DocumentController extends Controller
             default => 'frontend.documents.pdfpage',
         };
 
-        $bladeGeneratedTypes = ['SOP','FPS','INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP',];
+        $bladeGeneratedTypes = ['SOP','FPS','IPS','CVS','RAWMS','PMS','PIAS','MFPS','MFPSTP','FPSTP','IPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP',];
 
         $sourceAttachmentPaths = [];
 
@@ -9430,7 +9436,7 @@ class DocumentController extends Controller
         $newdoc->trainer = $request->trainer;
         $newdoc->comments = $request->comment;
 
-        $stageOneDocuments = ['SOP','FPS','INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP'];
+        $stageOneDocuments = ['SOP','FPS','IPS','CVS','RAWMS','PMS','PIAS','MFPS','MFPSTP','FPSTP','IPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP'];
 
         if (in_array($newdoc->document_type_id, $stageOneDocuments)) {
             // Normal revision flow
@@ -9752,48 +9758,107 @@ class DocumentController extends Controller
 
     }
 
-    private function generateDocumentNumber($departmentId, $documentTypeId, $sopType, $sopTypeShort, $revised = 'No', $revisedDoc = null, $excludeDocumentId = null ) {
-        $sopTypeShort = strtoupper(trim($sopTypeShort ?? ''));
+    // private function generateDocumentNumber($departmentId, $documentTypeId, $sopType, $sopTypeShort, $revised = 'No', $revisedDoc = null, $excludeDocumentId = null ) {
+    //     $sopTypeShort = strtoupper(trim($sopTypeShort ?? ''));
 
-        $query = Document::where('department_id', $departmentId)->where('document_type_id', $documentTypeId);
+    //     $query = Document::where('department_id', $departmentId)->where('document_type_id', $documentTypeId);
 
-        if (!empty($sopType)) {
-            $query->where('sop_type', $sopType);
-        } else {
-            $query->where(function ($subQuery) {
-                $subQuery->whereNull('sop_type')->orWhere('sop_type', '');
-            });
-        }
+    //     if (!empty($sopType)) {
+    //         $query->where('sop_type', $sopType);
+    //     } else {
+    //         $query->where(function ($subQuery) {
+    //             $subQuery->whereNull('sop_type')->orWhere('sop_type', '');
+    //         });
+    //     }
 
-        if (!empty($sopTypeShort)) {
-            $query->where('sop_type_short', $sopTypeShort);
-        } else {
-            $query->where(function ($subQuery) {
-                $subQuery->whereNull('sop_type_short')->orWhere('sop_type_short', '');
-            });
-        }
+    //     if (!empty($sopTypeShort)) {
+    //         $query->where('sop_type_short', $sopTypeShort);
+    //     } else {
+    //         $query->where(function ($subQuery) {
+    //             $subQuery->whereNull('sop_type_short')->orWhere('sop_type_short', '');
+    //         });
+    //     }
 
-        if (!empty($excludeDocumentId)) {
-            $query->where('id', '!=', $excludeDocumentId);
-        }
+    //     if (!empty($excludeDocumentId)) {
+    //         $query->where('id', '!=', $excludeDocumentId);
+    //     }
 
-        $currentId = $query->count() + 1;
+    //     $currentId = $query->count() + 1;
 
-        $formattedId = str_pad($currentId, 3, '0', STR_PAD_LEFT );
+    //     $formattedId = str_pad($currentId, 4, '0', STR_PAD_LEFT );
 
-        $revisionNumber = $revised === 'Yes' ? str_pad($revisedDoc ?? 0, 2, '0', STR_PAD_LEFT) : '00';
+    //     $revisionNumber = $revised === 'Yes' ? str_pad($revisedDoc ?? 0, 2, '0', STR_PAD_LEFT) : '00';
 
 
-        if ($sopTypeShort === 'SOP') {
-            return "{$sopTypeShort}/{$departmentId}/{$formattedId}-{$revisionNumber}";
+    //     if ($sopTypeShort === 'SOP') {
+    //         return "{$sopTypeShort}/{$departmentId}/{$formattedId}-{$revisionNumber}";
 
-        } elseif (in_array($sopTypeShort, ['EOP', 'IOP'])) {
-            return "{$departmentId}/{$sopTypeShort}/{$formattedId}-{$revisionNumber}";
-        } else {
-            return "{$documentTypeId}/{$departmentId}/{$formattedId}-{$revisionNumber}";
+    //     } elseif (in_array($sopTypeShort, ['EOP', 'IOP'])) {
+    //         return "{$departmentId}/{$sopTypeShort}/{$formattedId}-{$revisionNumber}";
+    //     } else {
+    //         return "{$documentTypeId}/{$formattedId}-{$revisionNumber}";
+    //     }
+    // }
+
+  private function generateDocumentNumber(
+    $departmentId,
+    $documentTypeId,
+    $sopType,
+    $sopTypeShort,
+    $revised = 'No',
+    $revisedDoc = null,
+    $excludeDocumentId = null,
+    $originalDocumentNumber = null   // revise ke time purana document number pass karo
+) {
+    $sopTypeShort   = strtoupper(trim($sopTypeShort ?? ''));
+    $revisionNumber = $revised === 'Yes'
+        ? str_pad((int) ($revisedDoc ?? 0), 2, '0', STR_PAD_LEFT)
+        : '00';
+
+    // ---------- REVISE: base number wahi rahega, sirf -XX change hoga ----------
+    if ($revised === 'Yes' && !empty($originalDocumentNumber)) {
+        // e.g. INPSTP/0002-00  => base: INPSTP/0002
+        //      SOP/5/003-00    => base: SOP/5/003
+        if (preg_match('/^(.+)-(\d+)$/', $originalDocumentNumber, $m)) {
+            return "{$m[1]}-{$revisionNumber}";
         }
     }
 
+    // ---------- NEW DOCUMENT ----------
+    if ($sopTypeShort === 'SOP') {
+        $prefix = "SOP/{$departmentId}/";
+        $pad    = 3;
+    } elseif (in_array($sopTypeShort, ['EOP', 'IOP'])) {
+        $prefix = "{$departmentId}/{$sopTypeShort}/";
+        $pad    = 3;
+    } else {
+        // DocumentType ka short code lo (INPSTP, RMS ...)
+        $docType = DocumentType::find($documentTypeId);
+        $code    = strtoupper(trim($docType->short_name ?? $documentTypeId)); // column ka naam apne hisab se badlo
+        $prefix  = "{$code}/";
+        $pad     = 4;
+    }
+
+    // Is prefix ke sabhi existing numbers nikalo
+    $query = Document::where('document_number', 'like', $prefix . '%');
+
+    if (!empty($excludeDocumentId)) {
+        $query->where('id', '!=', $excludeDocumentId);
+    }
+
+    $maxSequence = 0;
+    foreach ($query->pluck('document_number') as $number) {
+        // prefix hatao, phir "0002-01" se 0002 nikalo
+        $rest = substr($number, strlen($prefix));
+        if (preg_match('/^(\d+)-\d+$/', $rest, $m)) {
+            $maxSequence = max($maxSequence, (int) $m[1]);
+        }
+    }
+
+    $formattedId = str_pad($maxSequence + 1, $pad, '0', STR_PAD_LEFT);
+
+    return "{$prefix}{$formattedId}-{$revisionNumber}";
+}
     private function checkDocumentDownloadLimit($controls, $userId, $documentId) {
         $query = DownloadHistory::where('user_id', $userId)->where('document_id', $documentId);
 
@@ -10587,15 +10652,15 @@ class DocumentController extends Controller
             'BPR' => 'frontend.documents.bpr-pdf',
 
             'FPS' => 'frontend.documents.finished-product-pdf',
-            'INPS' => 'frontend.documents.inprocess_s-pdf',
+            'IPS' => 'frontend.documents.inprocess_s-pdf',
             'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-            'RAWMS' => 'frontend.documents.raw_ms-pdf',
-            'PAMS' => 'frontend.documents.package_ms-pdf',
+            'RMS' => 'frontend.documents.raw_ms-pdf',
+            'PMS' => 'frontend.documents.package_ms-pdf',
             'PIAS' => 'frontend.documents.product_item-pdf',
             'MFPS' => 'frontend.documents.mfps-pdf',
             'MFPSTP' => 'frontend.documents.mfpstp-pdf',
             'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
-            'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+            'IPSTP' => 'frontend.documents.inprocess-stp-pdf',
             'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
             'RMSTP' => 'frontend.documents.raw_mstp-pdf',
             'SPEC' => 'frontend.documents.spec-pdf',
@@ -11273,7 +11338,7 @@ class DocumentController extends Controller
             return redirect()->back();
         }
 
-        $bladeGeneratedTypes = ['SOP', 'FPS', 'INPS', 'CVS', 'RAWMS', 'PAMS', 'PIAS', 'MFPS', 'MFPSTP', 'FPSTP', 'INPSTP', 'CVSTP', 'RMSTP', 'SPEC', 'STP', 'TDS', 'GTP',];
+        $bladeGeneratedTypes = ['SOP', 'FPS', 'IPS', 'CVS', 'RMS', 'PMS', 'PIAS', 'MFPS', 'MFPSTP', 'FPSTP', 'IPSTP', 'CVSTP', 'RMSTP', 'SPEC', 'STP', 'TDS', 'GTP',];
 
         $sourcePdfPaths = [];
 

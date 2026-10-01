@@ -50,8 +50,8 @@
                                     @endif
                                     @php
                                         $effectiveTypes = [
-                                            'SOP','FPS','INPS','CVS','RAWMS','PAMS','PIAS',
-                                            'MFPS','MFPSTP','FPSTP','INPSTP','CVSTP',
+                                            'SOP','FPS','IPS','CVS','RMS','PMS','PIAS',
+                                            'MFPS','MFPSTP','FPSTP','IPSTP','CVSTP',
                                             'RMSTP','SPEC','STP','TDS','GTP'
                                         ];
                                     @endphp
@@ -63,7 +63,7 @@
                                     
                                     @endif
                                     {{-- @if (Helpers::checkControlAccess())
-                                        @if(in_array($document->document_type_id, ['BMR', 'BOM', 'BPR','SOP', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
+                                        @if(in_array($document->document_type_id, ['BMR', 'BOM', 'BPR','SOP', 'FPS', 'IPS','CVS','RMS','PMS','PIAS','MFPS','MFPSTP','FPSTP','IPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
                                         <button onclick="location.href='{{ url('documents/printPDF', $document->id) }}';"
                                             target="__blank">
                                             Print
@@ -145,7 +145,7 @@
                             </div>
                         </div>
                     </div>
-                    @if(in_array($document->document_type_id, ['SOP','FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
+                    @if(in_array($document->document_type_id, ['SOP','FPS', 'IPS','CVS','RMS','PMS','PIAS','MFPS','MFPSTP','FPSTP','IPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
                     <div class="col-8">
                         <div class="inner-block tracker">
                             <div class="d-flex justify-content-between align-items-center">
@@ -466,7 +466,7 @@
                                     </iframe>
                                 @endif
                             
-                            @elseif(in_array($document->document_type_id, ['FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
+                            @elseif(in_array($document->document_type_id, ['FPS', 'IPS','CVS','RMS','PMS','PIAS','MFPS','MFPSTP','FPSTP','IPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
                                 <iframe id="theFrame" width="100%" height="800"
                                 src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0"></iframe>
                                 
@@ -479,7 +479,7 @@
                                         frameborder="0">
                                     </iframe>
                                
-                                @if(in_array($document->document_type_id, ['SOP','FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
+                                @if(in_array($document->document_type_id, ['SOP','FPS', 'IPS','CVS','RMS','PMS','PIAS','MFPS','MFPSTP','FPSTP','IPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
                 
 
                                     <table class="border" style="width: 100%; border-collapse: collapse; text-align: left; margin: 20px auto; font-size: 16px;">
@@ -564,7 +564,7 @@
 
                         </div>
                     </div>
-                    {{-- @if(in_array($document->document_type_id, ['SOP','BOM', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','BMR','BPR','SPEC','STP','TDS','GTP'])) --}}
+                    {{-- @if(in_array($document->document_type_id, ['SOP','BOM', 'FPS', 'IPS','CVS','RMS','PMS','PIAS','MFPS','MFPSTP','FPSTP','IPSTP','CVSTP','RMSTP','BMR','BPR','SPEC','STP','TDS','GTP'])) --}}
 
                 @if(in_array($document->document_type_id, ['SOP']))
                     <div class="col-12" style="display:none;">
@@ -640,7 +640,7 @@
 
                         </div>
                     </div>
-                    @elseif(in_array($document->document_type_id, ['SOP','FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
+                    @elseif(in_array($document->document_type_id, ['SOP','FPS', 'IPS','CVS','RMS','PMS','PIAS','MFPS','MFPSTP','FPSTP','IPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
                    
                     <div class="col-12">
                         <div class="inner-block doc-overview">

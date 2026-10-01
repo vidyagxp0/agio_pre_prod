@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        /* FIX: removed invalid "font-weight: <weight>;" placeholder that was in the original file.
-           That was breaking the "*" rule silently and letting pasted/Quill inline styles win. */
         * {
             font-family: "Open Sans", "Roboto", "Noto Sans KR", "Poppins", sans-serif;
             font-optical-sizing: auto;
@@ -51,9 +49,7 @@
         .w-95 { width: 95%; }
         .w-100 { width: 100%; }
 
-        .border {
-            border: 1px solid black;
-        }
+        .border { border: 1px solid black; }
 
         .border-top { border-top: 1px solid black; }
         .border-bottom { border-bottom: 1px solid black; }
@@ -111,33 +107,50 @@
             margin-bottom: 15px;
         }
 
+        /* ===========================================================
+           MAIN FIX: page margins.
+           dompdf me body margin-top sirf 1st page par lagta hai.
+           Isliye header ki jagah @page margin se reserve karte hain,
+           jo HAR page par apply hota hai.
+
+           margin-top    = header ki total height + chhota gap
+           margin-bottom = footer ki total height + chhota gap
+           Agar header/content ke beech gap kam/zyada lage to sirf
+           margin-top (aur header/wrapper ka top) adjust karo.
+           =========================================================== */
         @page {
             size: A4;
+            margin: 215pt 35pt 150pt 35pt;
+        }
+
+        /* Fixed header: top negative hota hai taaki wo page ke margin
+           area (upar) me baithe, content area me nahi.
+           195pt (margin) - 35pt (page ke top se header ki jagah) = 160pt */
+        .header-wrapper {
+            position: fixed;
+            top: -180pt;
+            left: 0;
+            right: 0;
         }
 
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
+            position: static;   /* wrapper ke andar normal flow me */
             width: 100%;
-            z-index: 1000;
-            height: 60px;
+        }
+
+        /* Fixed footer: 150pt (margin) - 34pt (page ke bottom se gap) = 116pt */
+        footer {
+            position: fixed;
+            bottom: -116pt;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 120pt;
         }
 
         body {
-            margin-top: 180px;
-            margin-bottom: 140px;
-            padding-top: 95px;
-            padding-bottom: 40px;
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            height: 170px;
+            margin: 0;
+            padding: 0;
         }
 
         .table-responsive {
@@ -236,21 +249,12 @@
             padding: 10px;
         }
 
-        /* -----------------------------------------------------------
-           FIX: keep small info-blocks together so a row/label doesn't
-           get orphaned/split across a page break (the "label kahi
-           chala jata hai" problem).
-           ----------------------------------------------------------- */
         .keep-together {
             page-break-inside: avoid;
         }
     </style>
 
     <style>
-
-        /* FIX: was hard-coded to a fixed 690px width, which could
-           overflow the printable page width depending on content and
-           push/shift text out of place. Made it fluid instead. */
         #isPasted {
             width: 100% !important;
             max-width: 100%;
@@ -338,68 +342,59 @@
             margin: 5px auto;
         }
 
-        .quill-pdf-content{
-            width:100%;
-            max-width:100%;
-            font-size:12px;
-            line-height:1.4;
+        .quill-pdf-content {
+            width: 100%;
+            max-width: 100%;
+            font-size: 12px;
+            line-height: 1.4;
             box-sizing: border-box;
             overflow-wrap: break-word;
             word-wrap: break-word;
         }
 
-        .quill-pdf-content p{
-            margin:5px 0;
+        .quill-pdf-content p {
+            margin: 5px 0;
         }
 
-        .quill-pdf-content table{
-            width:100%;
+        .quill-pdf-content table {
+            width: 100%;
             max-width: 100%;
             table-layout: fixed;
-            border-collapse:collapse;
-            margin-top:10px;
-            margin-bottom:10px;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
         .quill-pdf-content table,
         .quill-pdf-content th,
-        .quill-pdf-content td{
-            border:1px solid #000;
+        .quill-pdf-content td {
+            border: 1px solid #000;
         }
 
         .quill-pdf-content td,
-        .quill-pdf-content th{
-            padding:5px;
-            vertical-align:top;
+        .quill-pdf-content th {
+            padding: 5px;
+            vertical-align: top;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
-        .quill-pdf-content img{
-            max-width:100%;
-            height:auto;
+        .quill-pdf-content img {
+            max-width: 100%;
+            height: auto;
         }
 
         .quill-pdf-content ul,
-        .quill-pdf-content ol{
-            padding-left:20px;
+        .quill-pdf-content ol {
+            padding-left: 20px;
         }
 
         .quill-pdf-content strong,
-        .quill-pdf-content b{
-            font-weight:bold;
+        .quill-pdf-content b {
+            font-weight: bold;
         }
 
-        /* -----------------------------------------------------------
-           FIX (the main bug): content pasted from the Quill editor
-           (label_claim, sample_quantity, fps_specificationGrid) can
-           carry its own inline font-family / font-size / color on
-           spans. Since the global "*" rule above has no !important,
-           those inline styles were winning and showing a random
-           font/size/text style that didn't match the rest of the
-           document. Force every element inside the injected content
-           back to the document's own font, size and color.
-           ----------------------------------------------------------- */
+        /* Quill se aaye inline font/size/color ko document ke style par force karo */
         .quill-pdf-content,
         .quill-pdf-content * {
             font-family: "Open Sans", "Roboto", "Noto Sans KR", "Poppins", sans-serif !important;
@@ -419,14 +414,7 @@
             font-style: italic !important;
         }
 
-        .header-wrapper{
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-        }
-
-        .master-copy{
+        .master-copy {
             position: absolute;
             top: -35px;
             right: 10px;
@@ -446,350 +434,468 @@
 
             background: #fff;
         }
-
     </style>
 
+    <style>
+     .first-page-stp {
+    width: 100%;
+    margin: -20pt 0 10px 0;   /* sirf yahin negative margin */
+    padding: 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.first-page-stp table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin: 0;
+}
+
+.first-page-stp td {
+    padding: 5px;
+    border: 1px solid #000;
+    text-align: left;
+    font-weight: bold;
+    /* font-size hata diya: header ke Supersedes No. wala default size lega */
+}
+
+.first-page-content {
+    width: 100%;
+    margin-top: 0;            /* -20pt hata diya */
+}
+    </style>
 </head>
 <body>
     <div class="header-wrapper">
 
         @if ($document->status == 'Effective' || $document->status == 'Obsolete')
-
             {{-- Existing normal SOP master-copy logic --}}
             <div class="master-copy">
                 MASTER COPY
             </div>
-
         @endif
-    <header class="">
-        <table class="border" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td class="logo w-15">
-                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
-                            style="max-height: 55px; max-width: 40px;">
-                    </td>
-                    <td class="title w-50"
-                        style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
-                        <p style="margin: 0; text-align: center; font-weight: bold;">{{ config('site.pdf_title') }}</p>
-                        <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td style="font-weight: bold;">
-                        FINISHED PRODUCT SPECIFICATION
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td>
-                        @if(!empty($data->fsproduct_name))
-                          {{ $data->fsproduct_name }}
-                        @else
-                          -
-                        @endif
-                    </td>
-                </tr>
-            </tbody>
-        </table>
 
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.:
-
-                        <span>
-                            @php
-                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-                            @endphp
-
-                          {{$document->document_number ?? 'NA'}}
-                        </span>
-                    </td>
-                    <td class="w-50"
-                        style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
-                        Effective Date:
-                        <span>@if ($data->training_required == 'yes')
-                            @if ($data->stage >= 11)
-                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                            @endif
-                        @else
-                            @if ($data->stage > 10)
-                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                            @endif
-                        @endif
-                        </span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No.:
-                    <span>
-
-                   @php
-                       $temp = DB::table('document_types')
-                           ->where('name', $document->document_type_name)
-                           ->value('typecode');
-                   @endphp
-
-                    @if($document->revised == 'Yes' && $document->revised_doc)
-                        {{ $document->supersedes_no ?? 'Nil' }}
-                    @else
-                        Nil
-                    @endif
-
-                   </span>
-
-                    </td>
-                    <td class="w-50"
-                        style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
-                        Page No.:
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No:
-                      <span>
-                        @if($document->revised == 'Yes')
-                            @php
-                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-                            @endphp
-
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    FPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                                @else
-                                    FPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                                @endif
-                        @else
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   FPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                                @else
-                                   FPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                                @endif
-                        @endif
-                        </span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </header>
-    </div>
-
-
-    <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
-            <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">
-                <thead>
-                    <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;"></th>
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Prepared By</th>
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Checked By</th>
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Approved By</th>
-                    </tr>
-                </thead>
+        <header>
+            <table class="border" style="width: 100%;">
                 <tbody>
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        @php
-                            $inreviews = DB::table('stage_manages')
-                                ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                                ->select('stage_manages.*', 'users.name as user_name')
-                                ->where('document_id', $document->id)
-                                ->where('stage', 'Review-Submit')
-                                ->where('deleted_at', null)
-                                ->get();
-                        @endphp
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Sign</th>
-                        <td style="padding: 5px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
-                        <td style="padding: 5px; border: 1px solid #ddd;">
-                        @if ($inreviews->isEmpty())
-                            <div>Yet Not Performed</div>
-                        @else
-                            @foreach ($inreviews as $temp)
-                                <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
-                            @endforeach
-                        @endif
+                    <tr>
+                        <td class="logo w-15">
+                            <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                                style="max-height: 55px; max-width: 40px;">
                         </td>
-                        @php
-                            $inreview = DB::table('stage_manages')
-                                ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                                ->select('stage_manages.*', 'users.name as user_name')
-                                ->where('document_id', $document->id)
-                                ->where('stage', 'Approval-Submit')
-                                ->where('deleted_at', null)
-                                ->get();
-
-                        @endphp
-                        <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
-                        @if ($inreview->isEmpty())
-                            <div>Yet Not Performed</div>
-                        @else
-                            @foreach ($inreview as $temp)
-                                <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
-                            @endforeach
-                        @endif
-                        </td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        <td style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Date</td>
-                        <td style="padding: 5px; border: 1px solid #ddd;">
-                        {{ $formattedDate = \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
-                        </td>
-                        <td style="padding: 5px; border: 1px solid #ddd;">
-                        @if ($inreviews->isEmpty())
-                            <div>Yet Not Performed</div>
-                        @else
-                            @foreach ($inreviews as $temp)
-                            <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
-                            @endforeach
-                        @endif
-                        </td>
-
-                        <td style="padding: 5px; border: 1px solid #ddd;">
-                        @if ($inreview->isEmpty())
-                            <div>Yet Not Performed</div>
-                        @else
-                            @foreach ($inreview as $temp)
-                            <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
-                            @endforeach
-                        @endif
+                        <td class="title w-50"
+                            style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
+                            <p style="margin: 0; text-align: center; font-weight: bold;">{{ config('site.pdf_title') }}</p>
+                            <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <span>
-                Format No.: QA/097/F2-01
-            </span>
+            <table class="border border-top-none" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="font-weight: bold;">
+                            FINISHED PRODUCT SPECIFICATION
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="border border-top-none" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td>
+                            @if(!empty($data->fsproduct_name))
+                              {{ $data->fsproduct_name }}
+                            @else
+                              -
+                            @endif
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="border border-top-none" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.:
+
+                            <span>
+                                @php
+                                    $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+                                @endphp
+
+                              {{$document->document_number ?? 'NA'}}
+                            </span>
+                        </td>
+                        <td class="w-50"
+                            style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
+                            Effective Date:
+                            <span>@if ($data->training_required == 'yes')
+                                @if ($data->stage >= 11)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @endif
+                            @else
+                                @if ($data->stage > 10)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @endif
+                            @endif
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="border border-top-none" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No.:
+                        <span>
+
+                       @php
+                           $temp = DB::table('document_types')
+                               ->where('name', $document->document_type_name)
+                               ->value('typecode');
+                       @endphp
+
+                        @if($document->revised == 'Yes' && $document->revised_doc)
+                            {{ $document->supersedes_no ?? 'Nil' }}
+                        @else
+                            Nil
+                        @endif
+
+                       </span>
+
+                        </td>
+                        <td class="w-50"
+                            style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
+                            Page No.:
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </header>
+    </div>
+
+
+    <footer class="footer" style="font-family: Arial, sans-serif; font-size: 14px;">
+        <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
+                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;"></th>
+                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Prepared By</th>
+                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Checked By</th>
+                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Approved By</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    @php
+                        $inreviews = DB::table('stage_manages')
+                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                            ->select('stage_manages.*', 'users.name as user_name')
+                            ->where('document_id', $document->id)
+                            ->where('stage', 'Review-Submit')
+                            ->where('deleted_at', null)
+                            ->get();
+                    @endphp
+                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Sign</th>
+                    <td style="padding: 5px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
+                    <td style="padding: 5px; border: 1px solid #ddd;">
+                    @if ($inreviews->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreviews as $temp)
+                            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif
+                    </td>
+                    @php
+                        $inreview = DB::table('stage_manages')
+                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                            ->select('stage_manages.*', 'users.name as user_name')
+                            ->where('document_id', $document->id)
+                            ->where('stage', 'Approval-Submit')
+                            ->where('deleted_at', null)
+                            ->get();
+                    @endphp
+                    <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
+                    @if ($inreview->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreview as $temp)
+                            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif
+                    </td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Date</td>
+                    <td style="padding: 5px; border: 1px solid #ddd;">
+                    {{ $formattedDate = \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
+                    </td>
+                    <td style="padding: 5px; border: 1px solid #ddd;">
+                    @if ($inreviews->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreviews as $temp)
+                        <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif
+                    </td>
+
+                    <td style="padding: 5px; border: 1px solid #ddd;">
+                    @if ($inreview->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreview as $temp)
+                        <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <span>
+            Format No.: QA/097/F2-01
+        </span>
     </footer>
 
- <div style="margin-top: 25px;">
-    <section class="main-section" id="pdf-page">
-        <section style="page-break-after: never;">
-            <div class="other-container">
+    <div class="first-page-content">
+        <section class="main-section" id="pdf-page">
+
+            {{-- ==========================================
+                 STP NO. - FIRST PAGE ONLY
+                 (content ke start me hai, isliye page 2+ par repeat nahi hoga)
+                 ========================================== --}}
+            <div class="first-page-stp">
                 <table>
-                    <thead>
-                        <tr>
-                            <th class="text-center">
-                                <div style="font-weight: bold;">GENERAL INFORMATION</div>
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
-                <br>
-
-                <table class="keep-together" style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 12px;">
                     <tbody>
                         <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Generic Name</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{$data->generic_name}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Brand Name</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->brand_name}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Label Claim</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="quill-pdf-content">
-                                            {!! $data->label_claim !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <table class="keep-together">
-                    <tbody>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Product Code</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->product_code}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Storage Condition</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->fsstorage_condition}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Sample Quantity for Analysis</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="quill-pdf-content">
-                                            {!! $data->sample_quantity !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <table class="keep-together">
-                    <tbody>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->reserve_sample}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Custom Sample</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->custom_sample}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Reference</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->reference}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling Instructions Warning and Precautions</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->sampling_instructions}}</td>
+                            <td class="doc-num">
+                                STP No.:
+                                <span>FPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}</span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </section>
-    </section>
-</div>
 
-    <div class="other-container ">
+
+            {{-- ==========================================
+                 FIRST PAGE CONTENT
+                 ========================================== --}}
+            <section class="first-page-section">
+
+                <div class="other-container">
+
+                    {{-- GENERAL INFORMATION --}}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    <div style="font-weight: bold;">
+                                        GENERAL INFORMATION
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                    <br>
+
+
+                    {{-- GENERIC NAME / BRAND NAME --}}
+                    <table class="keep-together"
+                           style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 12px;">
+                        <tbody>
+
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black; font-weight: bold;">
+                                    Generic Name
+                                </td>
+
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black;">
+                                    {{ $data->generic_name }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black; font-weight: bold;">
+                                    Brand Name
+                                </td>
+
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black;">
+                                    {{ $data->brand_name }}
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
+                    {{-- LABEL CLAIM --}}
+                    <div class="other-container">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        <div class="bold">
+                                            Label Claim
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <div class="custom-procedure-block">
+                            <div class="custom-container">
+                                <div class="custom-table-wrapper">
+                                    <div class="custom-procedure-content">
+                                        <div class="custom-content-wrapper">
+                                            <div class="quill-pdf-content">
+                                                {!! $data->label_claim !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    {{-- PRODUCT CODE / STORAGE CONDITION --}}
+                    <table class="keep-together">
+                        <tbody>
+
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black; font-weight: bold;">
+                                    Product Code
+                                </td>
+
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black;">
+                                    {{ $data->product_code }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black; font-weight: bold;">
+                                    Storage Condition
+                                </td>
+
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black;">
+                                    {{ $data->fsstorage_condition }}
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
+                    {{-- SAMPLE QUANTITY FOR ANALYSIS --}}
+                    <div class="other-container">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        <div class="bold">
+                                            Sample Quantity for Analysis
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <div class="custom-procedure-block">
+                            <div class="custom-container">
+                                <div class="custom-table-wrapper">
+                                    <div class="custom-procedure-content">
+                                        <div class="custom-content-wrapper">
+                                            <div class="quill-pdf-content">
+                                                {!! $data->sample_quantity !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    {{-- SAMPLE DETAILS --}}
+                    <table class="keep-together">
+                        <tbody>
+
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black; font-weight: bold;">
+                                    Reserve Sample Quantity
+                                </td>
+
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black;">
+                                    {{ $data->reserve_sample }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black; font-weight: bold;">
+                                    Custom Sample
+                                </td>
+
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black;">
+                                    {{ $data->custom_sample }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black; font-weight: bold;">
+                                    Reference
+                                </td>
+
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black;">
+                                    {{ $data->reference }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black; font-weight: bold;">
+                                    Sampling Instructions Warning and Precautions
+                                </td>
+
+                                <td style="width: 50%; padding: 3px; text-align: left;
+                                           border: 1px solid black;">
+                                    {{ $data->sampling_instructions }}
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </section>
+
+        </section>
+    </div>
+
+    <div class="other-container">
         <table>
             <thead>
                 <tr>
@@ -836,27 +942,27 @@
         <tbody>
 
             @if (!empty($RevisionProductSpecificationData))
-                    @foreach ($RevisionProductSpecificationData as $key => $item)
-                        <tr>
-                            <td style="border: 1px solid black; width: 20%;">{{ $item['rev_no'] ?? '' }}</td>
-                            <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_no'] ?? '' }}</td>
-                            <td style="border: 1px solid black; width: 20%;">
-                                @if ($data->training_required == 'yes' && $data->stage >= 11)
-                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                                @elseif ($data->training_required != 'yes' && $data->stage > 10)
-                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                                @else
-                                    {{ !empty($item['eff_date']) ? \Carbon\Carbon::parse($item['eff_date'])->format('d-M-Y') : '' }}
-                                @endif
-                            </td>
-                            <td style="border: 1px solid black; width: 60%;">{{ $item['rev_reason'] ?? '' }}</td>
-                        </tr>
-                    @endforeach
-                @else
+                @foreach ($RevisionProductSpecificationData as $key => $item)
                     <tr>
-                        <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
+                        <td style="border: 1px solid black; width: 20%;">{{ $item['rev_no'] ?? '' }}</td>
+                        <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_no'] ?? '' }}</td>
+                        <td style="border: 1px solid black; width: 20%;">
+                            @if ($data->training_required == 'yes' && $data->stage >= 11)
+                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                            @elseif ($data->training_required != 'yes' && $data->stage > 10)
+                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                            @else
+                                {{ !empty($item['eff_date']) ? \Carbon\Carbon::parse($item['eff_date'])->format('d-M-Y') : '' }}
+                            @endif
+                        </td>
+                        <td style="border: 1px solid black; width: 60%;">{{ $item['rev_reason'] ?? '' }}</td>
                     </tr>
-                @endif
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
+                </tr>
+            @endif
         </tbody>
     </table>
 
@@ -866,8 +972,8 @@
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
                 $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 170;
-                $x = 380;
+                $y = 175;
+                $x = 365;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
         }

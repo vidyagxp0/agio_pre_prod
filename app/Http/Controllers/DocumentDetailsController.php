@@ -764,7 +764,7 @@ class DocumentDetailsController extends Controller
               $assignedReviewers = explode(",", $document->reviewers);
               $reviewerComments = $document->reviewer_comments ? json_decode($document->reviewer_comments, true) : [];
           
-              $skipValidationTypes = ['SOP', 'BOM', 'FPS', 'INPS', 'CVS', 'RAWMS', 'PAMS', 'PIAS', 'MFPS', 'MFPSTP', 'FPSTP', 'INPSTP', 'CVSTP', 'RMSTP', 'BMR', 'BPR', 'SPEC', 'STP', 'TDS', 'GTP'];
+              $skipValidationTypes = ['SOP', 'BOM', 'FPS', 'IPS', 'CVS', 'RMS', 'PMS', 'PIAS', 'MFPS', 'MFPSTP', 'FPSTP', 'IPSTP', 'CVSTP', 'RMSTP', 'BMR', 'BPR', 'SPEC', 'STP', 'TDS', 'GTP'];
           
               if (!in_array($document->document_type_id, $skipValidationTypes)) {
                   // Check if all assigned reviewers have provided comments
