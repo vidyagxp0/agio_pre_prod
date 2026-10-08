@@ -259,294 +259,265 @@
     
 
     <style>
-        
         /* =====================================================
-        ANNEXURE CONTENT
-        Supports text, headings, lists, tables and images
+        ANNEXURE CONTENT - FROALA / PDF
         ===================================================== */
 
-        .annexure-wrapper {
+        .annexure-content {
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
-        }
-
-        .annexure-main-title {
-            font-size: 14px !important;
-            line-height: 1.4 !important;
-            text-align: center !important;
-            font-weight: bold !important;
-            text-transform: uppercase;
-            margin: 0 0 15px 0 !important;
-            padding: 0 !important;
-        }
-
-        .annexure-item {
-            width: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
-            margin-bottom: 15px;
-        }
-
-        .annexure-title {
-            font-size: 13px !important;
-            line-height: 1.4 !important;
-            font-weight: bold !important;
-            text-align: left !important;
-            margin: 0 0 10px 0 !important;
-            padding: 0 !important;
-        }
-
-        .annexure-quill-content {
-            width: 100% !important;
-            max-width: 100% !important;
-            box-sizing: border-box;
-            font-size: 12px !important;
-            line-height: 1.5 !important;
-            text-align: justify;
+            font-size: 12px;
+            line-height: 1.5;
+            text-align: left;
             word-wrap: break-word;
             overflow-wrap: break-word;
             white-space: normal;
         }
 
-        /* Normal paragraphs */
-        .annexure-quill-content p {
+        /* Paragraph */
+        .annexure-content p {
             font-size: 12px !important;
             line-height: 1.5 !important;
-            font-weight: normal;
-            margin: 3px 0 6px 0 !important;
+            margin: 4px 0 7px 0 !important;
             padding: 0 !important;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
-        /* Quill headings */
-        .annexure-quill-content h1,
-        .annexure-quill-content h2,
-        .annexure-quill-content h3,
-        .annexure-quill-content h4,
-        .annexure-quill-content h5,
-        .annexure-quill-content h6 {
-            font-size: 12px !important;
-            line-height: 1.5 !important;
-            font-weight: bold !important;
-            margin: 8px 0 4px 0 !important;
-            padding: 0 !important;
-            page-break-after: avoid;
-        }
-
-        /* Inline content */
-        .annexure-quill-content span,
-        .annexure-quill-content div,
-        .annexure-quill-content label {
-            font-size: 12px;
-            line-height: 1.5;
+        /* Div / Span */
+        .annexure-content div,
+        .annexure-content span {
             max-width: 100%;
             box-sizing: border-box;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
-        /* Bold and italic */
-        .annexure-quill-content strong,
-        .annexure-quill-content b {
+        /* Headings */
+        .annexure-content h1,
+        .annexure-content h2,
+        .annexure-content h3,
+        .annexure-content h4,
+        .annexure-content h5,
+        .annexure-content h6 {
+            line-height: 1.4 !important;
+            font-weight: bold !important;
+            margin: 8px 0 !important;
+            padding: 0 !important;
+            page-break-after: avoid;
+        }
+
+        /* Bold */
+        .annexure-content strong,
+        .annexure-content b {
             font-weight: bold !important;
         }
 
-        .annexure-quill-content em,
-        .annexure-quill-content i {
+        /* Italic */
+        .annexure-content em,
+        .annexure-content i {
             font-style: italic !important;
         }
 
-        .annexure-quill-content u {
+        /* Underline */
+        .annexure-content u {
             text-decoration: underline !important;
         }
 
-        /* Lists */
-        .annexure-quill-content ul,
-        .annexure-quill-content ol {
-            font-size: 12px !important;
-            line-height: 1.5 !important;
-            margin: 4px 0 8px 0 !important;
+        /* =====================================================
+        LISTS
+        ===================================================== */
+
+        .annexure-content ul,
+        .annexure-content ol {
+            margin: 5px 0 8px 0 !important;
             padding-left: 25px !important;
         }
 
-        .annexure-quill-content li {
-            font-size: 12px !important;
-            line-height: 1.5 !important;
+        .annexure-content li {
             margin: 2px 0 !important;
-            padding: 0 !important;
+            line-height: 1.5 !important;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
         /* =====================================================
-        TABLE HANDLING
+        TABLE
         ===================================================== */
 
-        .annexure-quill-content table,
-        .annexure-quill-content .table,
-        .annexure-quill-content .MsoNormalTable {
+        .annexure-content table {
             width: 100% !important;
             max-width: 100% !important;
             border-collapse: collapse !important;
             table-layout: fixed !important;
+            margin: 8px 0 12px 0 !important;
             box-sizing: border-box;
-            margin: 6px 0 10px 0 !important;
-            page-break-inside: auto;
         }
 
-        .annexure-quill-content thead {
-            display: table-header-group;
-        }
-
-        .annexure-quill-content tfoot {
-            display: table-footer-group;
-        }
-
-        .annexure-quill-content tr {
-            page-break-inside: avoid;
-            page-break-after: auto;
-        }
-
-        .annexure-quill-content table,
-        .annexure-quill-content th,
-        .annexure-quill-content td {
+        .annexure-content table,
+        .annexure-content th,
+        .annexure-content td {
             border: 1px solid #000 !important;
         }
 
-        .annexure-quill-content th,
-        .annexure-quill-content td {
+        .annexure-content th,
+        .annexure-content td {
             font-size: 10px !important;
             line-height: 1.35 !important;
             padding: 5px !important;
-            text-align: left;
+            text-align: left !important;
             vertical-align: top !important;
-            word-break: break-word;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+            word-break: break-word !important;
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
             white-space: normal !important;
             box-sizing: border-box;
         }
 
-        .annexure-quill-content th {
-            font-weight: bold !important;
-            text-align: center;
-        }
-
-        /* Remove unwanted pasted Word dimensions */
-        .annexure-quill-content table[width],
-        .annexure-quill-content td[width],
-        .annexure-quill-content th[width] {
-            width: auto !important;
-        }
-
-        /* Paragraphs inside table cells */
-        .annexure-quill-content td p,
-        .annexure-quill-content th p {
+        /* Table paragraph */
+        .annexure-content td p,
+        .annexure-content th p {
             font-size: 10px !important;
             line-height: 1.35 !important;
             margin: 0 !important;
             padding: 0 !important;
         }
 
+        /* Table row */
+        .annexure-content tr {
+            page-break-inside: avoid;
+        }
+
+        /* Table header */
+        .annexure-content th {
+            font-weight: bold !important;
+            text-align: center !important;
+        }
+
         /* =====================================================
-        IMAGE HANDLING
+        IMAGES
         ===================================================== */
 
-        .annexure-quill-content img {
+        .annexure-content img {
             display: block;
             width: auto !important;
             max-width: 100% !important;
             height: auto !important;
-            max-height: 600px;
-            object-fit: contain;
             margin: 6px auto !important;
             page-break-inside: avoid;
         }
 
-        /* Images inside table cells */
-        .annexure-quill-content td img,
-        .annexure-quill-content th img {
+        .annexure-content td img,
+        .annexure-content th img {
             display: block;
             width: auto !important;
             max-width: 100% !important;
             height: auto !important;
-            max-height: 300px;
-            object-fit: contain;
             margin: 4px auto !important;
         }
 
         /* =====================================================
-        QUILL ALIGNMENT CLASSES
+        FROALA ALIGNMENT
         ===================================================== */
 
-        .annexure-quill-content .ql-align-center {
-            text-align: center !important;
-        }
-
-        .annexure-quill-content .ql-align-right {
-            text-align: right !important;
-        }
-
-        .annexure-quill-content .ql-align-justify {
-            text-align: justify !important;
-        }
-
-        .annexure-quill-content .ql-align-left {
+        .annexure-content .fr-text-left {
             text-align: left !important;
         }
 
-        /* Quill indentation */
-        .annexure-quill-content .ql-indent-1 {
-            margin-left: 20px !important;
+        .annexure-content .fr-text-center {
+            text-align: center !important;
         }
 
-        .annexure-quill-content .ql-indent-2 {
-            margin-left: 40px !important;
+        .annexure-content .fr-text-right {
+            text-align: right !important;
         }
 
-        .annexure-quill-content .ql-indent-3 {
-            margin-left: 60px !important;
+        .annexure-content .fr-text-justify {
+            text-align: justify !important;
         }
 
-        .annexure-quill-content .ql-indent-4 {
-            margin-left: 80px !important;
+        /* Inline alignment from Froala */
+        .annexure-content [style*="text-align: center"],
+        .annexure-content [style*="text-align:center"] {
+            text-align: center !important;
         }
 
-        /* Links */
-        .annexure-quill-content a {
+        .annexure-content [style*="text-align: right"],
+        .annexure-content [style*="text-align:right"] {
+            text-align: right !important;
+        }
+
+        .annexure-content [style*="text-align: left"],
+        .annexure-content [style*="text-align:left"] {
+            text-align: left !important;
+        }
+
+        .annexure-content [style*="text-align: justify"],
+        .annexure-content [style*="text-align:justify"] {
+            text-align: justify !important;
+        }
+
+        /* =====================================================
+        LINKS
+        ===================================================== */
+
+        .annexure-content a {
             color: #000 !important;
             text-decoration: underline;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
-        /* Blockquote */
-        .annexure-quill-content blockquote {
-            font-size: 12px !important;
-            line-height: 1.5 !important;
+        /* =====================================================
+        BLOCKQUOTE
+        ===================================================== */
+
+        .annexure-content blockquote {
             margin: 8px 0 8px 15px !important;
             padding-left: 10px !important;
-            border-left: 3px solid #777;
+            border-left: 3px solid #777 !important;
         }
 
-        /* Code blocks */
-        .annexure-quill-content pre,
-        .annexure-quill-content code {
+        /* =====================================================
+        PRE / CODE
+        ===================================================== */
+
+        .annexure-content pre,
+        .annexure-content code {
             font-family: "DejaVu Sans Mono", monospace !important;
             font-size: 10px !important;
             white-space: pre-wrap !important;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
         }
 
-        /* Prevent pasted content from overflowing */
-        .annexure-quill-content * {
+        /* =====================================================
+        GENERAL
+        ===================================================== */
+
+        .annexure-content * {
             max-width: 100%;
             box-sizing: border-box;
         }
-        
+
+        .annexure-content table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+        }
+
+        .annexure-content td,
+        .annexure-content th {
+            padding: 5px !important;
+        }
+
+        .annexure-content table td,
+        .annexure-content table th {
+            border: 1px solid #000 !important;
+            padding: 5px !important;
+            vertical-align: top !important;
+        }
+
         .header-wrapper{
             position: fixed;
             top: 0;
@@ -670,7 +641,7 @@
                                 ANNEXURE {{ $annexureNo }}
                             </h3>
 
-                            <div class="annexure-quill-content">
+                            <div class="annexure-content">
                                 {!! $annexure !!}
                             </div>
 

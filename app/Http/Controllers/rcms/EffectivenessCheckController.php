@@ -3895,7 +3895,7 @@ public static function effectiveFamilyReport($id)
             $record_number = $record;
             $parent_division_id = EffectivenessCheck::where('id',$id)->value('division_id');
             $data = EffectivenessCheck::find($id);
-            $extension_record = Helpers::getDivisionName($data->division_id) . '/' . 'CAPA' . '/' . date('Y') . '/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+            $extension_record = Helpers::getDivisionName($data->division_id) . '/' . 'EC' . '/' . date('Y') . '/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $count = Helpers::getChildData($id, $parent_type);
             $countData = $count + 1;
             $relatedRecords = Helpers::getAllRelatedRecords();

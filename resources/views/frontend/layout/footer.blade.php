@@ -7382,7 +7382,69 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         countCharacters();
     }
   </script>
+    <script src="https://cdn.jsdelivr.net/npm/froala-editor@4.6.2/js/froala_editor.pkgd.min.js"></script>
 
+    <style>
+        /* Editor mein bhi PDF jaisa dikhe */
+        .fr-view { font-size: 12px; line-height: 1.5; }
+        .fr-view table { width: 100%; table-layout: fixed; border-collapse: collapse; }
+        .fr-view table td, .fr-view table th {
+            border: 1px solid #000; padding: 4px 6px; font-size: 11px; vertical-align: top;
+            word-wrap: break-word;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var allowedStyles = [
+                'color', 'background', 'background-color', 'font-weight', 'font-style',
+                'text-decoration', 'text-align', 'vertical-align', 'list-style-type', 'width'
+            ];
+
+            document.querySelectorAll('.froala-editor').forEach(function (element) {
+
+                new FroalaEditor(element, {
+                    key: "wFE7nD5F4B3J4A11A8C7fLUQZf1ASFb1EFRNh1Hb1BCCQDUHnA8B6E5C5B1D3C3A1C8A6==",
+                    heightMin: 300,
+
+                    pastePlain: false,
+                    wordPasteModal: false,
+                    wordPasteKeepFormatting: true,
+
+                    pasteDeniedTags: ['style', 'script', 'meta', 'link'],
+                    pasteDeniedAttrs: ['class', 'id', 'lang', 'height', 'width', 'valign', 'cellspacing', 'cellpadding'],
+
+                    htmlAllowedStyleProps: allowedStyles,
+                    pasteAllowedStyleProps: allowedStyles,
+                    wordAllowedStyleProps: allowedStyles,
+
+                    events: {
+                        'paste.afterCleanup': function (html) {
+                            return html
+                                .replace(/font-family:[^;"]+;?/gi, '')
+                                .replace(/font-size:[^;"]+;?/gi, '')
+                                .replace(/line-height:[^;"]+;?/gi, '')
+                                .replace(/mso-[^:;"]+:[^;"]+;?/gi, '')
+                                .replace(/<\/?o:p[^>]*>/gi, '');
+                        }
+                    },
+
+                    toolbarButtons: [
+                        'bold', 'italic', 'underline', 'strikeThrough',
+                        'textColor', 'align', 'formatOL', 'formatUL', 'outdent', 'indent',
+                        'insertLink', 'insertTable', 'quote', 'undo', 'redo', 'clearFormatting'
+                    ],
+
+                    tableEditButtons: [
+                        'tableHeader', 'tableRemove', '|',
+                        'tableRows', 'tableColumns', 'tableStyle', 'tableCells',
+                        'cellBackground', 'cellVerticalAlign', 'cellHorizontalAlign'
+                    ]
+                });
+            });
+        });
+    </script>
 
 
 </body>

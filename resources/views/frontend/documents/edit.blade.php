@@ -11,6 +11,7 @@
         }
 
     </style>
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@4.6.2/css/froala_editor.pkgd.min.css" rel="stylesheet">
     <style>
         #fr-logo {
             display: none;
@@ -288,11 +289,11 @@
                 <button class="tablinks hidden-tabs" data-id="PROTOCOLFORMEDIAFILL" onclick="openData(event, 'doc-pfmf')">Protocol For Media Fill</button>
                 <button class="tablinks hidden-tabs" data-id="REPORTFORMEDIAFILL" onclick="openData(event, 'doc-rfmf')">Report For Media Fill</button>
 
-                <button class="tablinks hidden-tabs" data-id="BOM" onclick="openData(event, 'doc-billofmaterial')">Bill Of Matrial</button>
+                <button class="tablinks hidden-tabs" data-id="BOM" onclick="openData(event, 'doc-billofmaterial')">Bill Of Material</button>
                 <button class="tablinks hidden-tabs" data-id="BMR" onclick="openData(event, 'doc-manufacturingRecord')">Batch Manufacturing Record (BMR)</button>
-                <button class="tablinks hidden-tabs" data-id="BPR" onclick="openData(event, 'doc-batchPackingRecord')">Batch Manufacturing Record (BMR)</button>
+                <button class="tablinks hidden-tabs" data-id="BPR" onclick="openData(event, 'doc-batchPackingRecord')">Batch Packing Record (BPR)</button>
                 
-                <button class="tablinks hidden-tabs" data-id="MAForRec" onclick="openData(event, 'doc-masterformulaRecord')">Master Formul Record  </button>
+                <button class="tablinks hidden-tabs" data-id="MAForRec" onclick="openData(event, 'doc-masterformulaRecord')">Master Formul Record</button>
                 <button class="tablinks hidden-tabs" data-id="MAPacRec" onclick="openData(event, 'doc-masterPackingRecord')">Master Packing Record</button>
                 <button class="tablinks hidden-tabs" data-id="SMF" onclick="openData(event, 'doc-SiteMasterFile')">Site Master File (SMF)</button>
 
@@ -329,7 +330,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="open-date">Date Opened</label>
-                                    <div class="default-name"> {{ $document->date }}</div>
+                                    <div class="default-name">{{ $document->date }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -2797,24 +2798,26 @@
                             @endif
                             
                             <div class="col-md-12">
-                                {!! quillEditor(
-                                    'procedure',
-                                    $document->document_content ? $document->document_content->procedure : '',
 
-                                    '
+                                <div class="group-input">
                                     <label for="procedure">Procedure</label>
+
                                     <div>
                                         <small class="text-primary">
                                             Please insert "NA" in the data field if it does not require completion
                                         </small>
                                     </div>
-                                    ',
 
-                                    false
-                                ) !!}
+                                    <textarea
+                                        name="procedure"
+                                        id="procedure"
+                                        class="froala-editor"
+                                    >{{ old('procedure', $document->document_content ? $document->document_content->procedure : '') }}</textarea>
+                                </div>
 
                                 @foreach ($history as $tempHistory)
                                     @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+
                                         @php
                                             $users_name = DB::table('users')
                                                 ->where('id', $tempHistory->user_id)
@@ -2832,8 +2835,10 @@
                                             value="{{ $tempHistory->comment }}"
                                             disabled
                                         >
+
                                     @endif
                                 @endforeach
+
                             </div>
 
                             <div class="col-md-12">
@@ -5869,9 +5874,6 @@
                     </div>
 
 
-
-
-
                     <!-- TDS Tabs -->
                 <div id="doc-tds" class="tabcontent">
                         <div class="orig-head">
@@ -6218,12 +6220,6 @@
                 </div>
 
                       {{-- Finished product,  Inprocess , Cleaning Validation Specification (Commercial  registration , re-registration) tabs --}}
-
-
-          
-
-            
-
 
                 <div id="doc_FPS" class="tabcontent">
                         <div class="orig-head">Finished Product Specification
@@ -7829,213 +7825,452 @@
 
             {{-- bill of material tabs --}}
 
-                        <div id="doc-billofmaterial" class="tabcontent">
-                            <div class="orig-head">
-                                Bill of Materia                    
-                            </div>
-                            <div class="input-fields">
-                                <div class="row">
+                <div id="doc-billofmaterial" class="tabcontent">
+                    <div class="orig-head">
+                        Bill of Material                    
+                    </div>
+                    <div class="input-fields">
+                        <div class="row">
 
-                                    <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment"><b>Bill of Material File Attachment</b></label>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>Bill of Material File Attachment</b></label>
 
-                                            <div>
-                                                <small class="text-primary">
-                                                    Please attach only PDF, JPG, JPEG or PNG files.
-                                                </small>
-                                            </div>
-
-                                            <div class="file-attachment-field">
-
-                                                <div class="file-attachment-list" id="billMatrialDatassp">
-                                                    @if($document->billMatrial)
-                                                        @foreach(json_decode($document->billMatrial) as $file)
-                                                            <h6 class="file-container text-dark"
-                                                                style="background-color: rgb(243,242,240);">
-
-                                                                <b>{{ $file }}</b>
-
-                                                                <a href="{{ asset('upload/'.$file) }}" target="_blank">
-                                                                    <i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px;margin-right:4px;"></i>
-                                                                </a>
-
-                                                                <a href="javascript:void(0)"
-                                                                class="remove-file"
-                                                                data-file-name="{{ $file }}">
-                                                                    <i class="fa-solid fa-circle-xmark"
-                                                                    style="color:red;font-size:20px;"></i>
-                                                                </a>
-
-                                                                <input type="hidden"
-                                                                    name="existing_billMatrial[]"
-                                                                    value="{{ $file }}">
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-
-                                                <div class="add-btn">
-                                                    <label for="bill_matrial_id" style="cursor:pointer;">Add</label>
-
-                                                    <input
-                                                        type="file"
-                                                        id="bill_matrial_id"
-                                                        name="billMatrial[]"
-                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
-                                                        onchange="validateBillMaterialFiles(this)"
-                                                        multiple   {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
-                                                        hidden>
-                                                </div>
-
-                                            </div>
-                                        </div>
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
                                     </div>
 
-                                    <input type="hidden"
-                                        id="deleted_billMatrial"
-                                        name="deleted_billMatrial"
-                                        value="">
+                                    <div class="file-attachment-field">
 
-                                    <script>
+                                        <div class="file-attachment-list" id="billMatrialDatassp">
+                                            @if($document->billMatrial)
+                                                @foreach(json_decode($document->billMatrial) as $file)
+                                                    <h6 class="file-container text-dark"
+                                                        style="background-color: rgb(243,242,240);">
 
-                                    document.addEventListener('DOMContentLoaded', function () {
+                                                        <b>{{ $file }}</b>
 
-                                        document.querySelectorAll('#billMatrialDatassp .remove-file').forEach(button => {
+                                                        <a href="{{ asset('upload/'.$file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary"
+                                                            style="font-size:20px;margin-right:4px;"></i>
+                                                        </a>
 
-                                            button.addEventListener('click', function () {
+                                                        <a href="javascript:void(0)"
+                                                        class="remove-file"
+                                                        data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark"
+                                                            style="color:red;font-size:20px;"></i>
+                                                        </a>
 
-                                                const fileName = this.dataset.fileName;
-                                                const fileContainer = this.closest('.file-container');
+                                                        <input type="hidden"
+                                                            name="existing_billMatrial[]"
+                                                            value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
 
-                                                if(fileContainer){
+                                        <div class="add-btn">
+                                            <label for="bill_matrial_id" style="cursor:pointer;">Add</label>
 
-                                                    fileContainer.remove();
+                                            <input
+                                                type="file"
+                                                id="bill_matrial_id"
+                                                name="billMatrial[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateBillMaterialFiles(this)"
+                                                multiple   {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
+                                                hidden>
+                                        </div>
 
-                                                    const deletedInput = document.getElementById('deleted_billMatrial');
+                                    </div>
+                                </div>
+                            </div>
 
-                                                    let deletedFiles = deletedInput.value
-                                                        ? deletedInput.value.split(',')
-                                                        : [];
+                            <input type="hidden"
+                                id="deleted_billMatrial"
+                                name="deleted_billMatrial"
+                                value="">
 
-                                                    deletedFiles.push(fileName);
+                            <script>
 
-                                                    deletedInput.value = deletedFiles.join(',');
-                                                }
+                            document.addEventListener('DOMContentLoaded', function () {
 
-                                            });
+                                document.querySelectorAll('#billMatrialDatassp .remove-file').forEach(button => {
+
+                                    button.addEventListener('click', function () {
+
+                                        const fileName = this.dataset.fileName;
+                                        const fileContainer = this.closest('.file-container');
+
+                                        if(fileContainer){
+
+                                            fileContainer.remove();
+
+                                            const deletedInput = document.getElementById('deleted_billMatrial');
+
+                                            let deletedFiles = deletedInput.value
+                                                ? deletedInput.value.split(',')
+                                                : [];
+
+                                            deletedFiles.push(fileName);
+
+                                            deletedInput.value = deletedFiles.join(',');
+                                        }
+
+                                    });
+
+                                });
+
+                            });
+
+
+                            function validateBillMaterialFiles(input){
+
+                                const allowedExtensions = [
+                                    'pdf',
+                                    'jpg',
+                                    'jpeg',
+                                    'png'
+                                ];
+
+                                const allowedMimeTypes = [
+                                    'application/pdf',
+                                    'image/jpeg',
+                                    'image/png'
+                                ];
+
+                                const files = Array.from(input.files);
+
+                                if(files.length === 0){
+                                    return;
+                                }
+
+                                for(const file of files){
+
+                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                    if(
+                                        !allowedExtensions.includes(ext) ||
+                                        !allowedMimeTypes.includes(file.type)
+                                    ){
+
+                                        Swal.fire({
+                                            icon:'error',
+                                            title:'Invalid File',
+                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                        });
+
+                                        input.value = '';
+                                        return;
+                                    }
+                                }
+
+                                addMultipleFiles(input,'billMatrialDatassp');
+                            }
+
+
+                            function addMultipleFiles(input,listId){
+
+                                const fileList = document.getElementById(listId);
+
+                                for(const file of input.files){
+
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container','text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let remove = document.createElement('a');
+                                    remove.href = "javascript:void(0)";
+                                    remove.classList.add('remove-file');
+
+                                    remove.innerHTML =
+                                        '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                    remove.onclick = function(){
+                                        fileContainer.remove();
+                                    };
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(remove);
+
+                                    fileList.appendChild(fileContainer);
+                                }
+
+                            }
+
+                            </script>
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+
+
+                {{-- batch manifacturing  of material tabs --}}
+
+                <div id="doc-manufacturingRecord" class="tabcontent">
+                    <div class="orig-head">
+                        Batch Manufacturing Record (BMR)                    
+                    </div>
+                    <div class="input-fields">
+                        <div class="row">
+
+                            <div>
+                                <small class="text-primary">
+                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                </small>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment">
+                                        <b>Batch Manufacturing Record (BMR) File Attachment</b>
+                                    </label>
+
+                                    <div class="file-attachment-field">
+
+                                        <div class="file-attachment-list" id="batchManufacturingBmrDatassp">
+                                            @if ($document->batchManufacturingBmr)
+
+                                                @foreach (json_decode($document->batchManufacturingBmr, true) ?? [] as $file)
+
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243,242,240);">
+
+                                                        <b>{{ $file }}</b>
+
+                                                        <a href="{{ asset('upload/'.$file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px;margin-right:4px;"></i>
+                                                        </a>
+
+                                                        <a type="button"
+                                                        class="remove-bmr-file"
+                                                        data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark"
+                                                            style="color:red;font-size:20px;"></i>
+                                                        </a>
+
+                                                        <input type="hidden"
+                                                            name="existing_batchManufacturingBmr[]"
+                                                            value="{{ $file }}" >
+
+                                                    </h6>
+
+                                                @endforeach
+
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+
+                                            <label for="batchManufacturingBmr_id" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="batchManufacturingBmr_id"
+                                                name="batchManufacturingBmr[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateBatchManufacturingBmrFiles(this)"
+                                                multiple
+                                                hidden  {{ $isReadOnlyattachemnt  ? 'disabled' : '' }} >
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden"
+                                id="deleted_batchManufacturingBmr"
+                                name="deleted_batchManufacturingBmr" value="">
+
+                            <script>
+
+                                document.addEventListener('DOMContentLoaded', function () {
+
+                                    document.querySelectorAll('.remove-bmr-file').forEach(function(button){
+
+                                        button.addEventListener('click', function(){
+
+                                            const fileName=this.getAttribute('data-file-name');
+
+                                            const fileContainer=this.closest('.file-container');
+
+                                            if(!fileContainer){
+                                                return;
+                                            }
+
+                                            fileContainer.style.display='none';
+
+                                            const hiddenInput=fileContainer.querySelector('input[type="hidden"]');
+
+                                            if(hiddenInput){
+                                                hiddenInput.remove();
+                                            }
+
+                                            const deletedFilesInput=document.getElementById('deleted_batchManufacturingBmr');
+
+                                            let deletedFiles=deletedFilesInput.value
+                                                ? deletedFilesInput.value.split(',')
+                                                :[];
+
+                                            if(!deletedFiles.includes(fileName)){
+                                                deletedFiles.push(fileName);
+                                            }
+
+                                            deletedFilesInput.value=deletedFiles.join(',');
 
                                         });
 
                                     });
 
+                                });
 
-                                    function validateBillMaterialFiles(input){
 
-                                        const allowedExtensions = [
-                                            'pdf',
-                                            'jpg',
-                                            'jpeg',
-                                            'png'
-                                        ];
+                                function validateBatchManufacturingBmrFiles(input){
 
-                                        const allowedMimeTypes = [
-                                            'application/pdf',
-                                            'image/jpeg',
-                                            'image/png'
-                                        ];
+                                    const allowedExtensions=[
+                                        'pdf',
+                                        'jpg',
+                                        'jpeg',
+                                        'png'
+                                    ];
 
-                                        const files = Array.from(input.files);
+                                    const allowedMimeTypes=[
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
 
-                                        if(files.length === 0){
+                                    const selectedFiles=Array.from(input.files);
+
+                                    if(selectedFiles.length===0){
+                                        return;
+                                    }
+
+                                    for(const file of selectedFiles){
+
+                                        const extension=file.name.split('.').pop().toLowerCase();
+
+                                        const validExtension=allowedExtensions.includes(extension);
+
+                                        const validMime=allowedMimeTypes.includes(file.type);
+
+                                        if(!validExtension || !validMime){
+
+                                            alert('Only PDF, JPG, JPEG and PNG files are allowed.');
+
+                                            input.value='';
+
                                             return;
-                                        }
 
-                                        for(const file of files){
-
-                                            const ext = file.name.split('.').pop().toLowerCase();
-
-                                            if(
-                                                !allowedExtensions.includes(ext) ||
-                                                !allowedMimeTypes.includes(file.type)
-                                            ){
-
-                                                Swal.fire({
-                                                    icon:'error',
-                                                    title:'Invalid File',
-                                                    text:'Only PDF, JPG, JPEG and PNG files are allowed.'
-                                                });
-
-                                                input.value = '';
-                                                return;
-                                            }
-                                        }
-
-                                        addMultipleFiles(input,'billMatrialDatassp');
-                                    }
-
-
-                                    function addMultipleFiles(input,listId){
-
-                                        const fileList = document.getElementById(listId);
-
-                                        for(const file of input.files){
-
-                                            let fileContainer = document.createElement('h6');
-                                            fileContainer.classList.add('file-container','text-dark');
-                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
-
-                                            let fileText = document.createElement('b');
-                                            fileText.textContent = file.name;
-
-                                            let remove = document.createElement('a');
-                                            remove.href = "javascript:void(0)";
-                                            remove.classList.add('remove-file');
-
-                                            remove.innerHTML =
-                                                '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
-
-                                            remove.onclick = function(){
-                                                fileContainer.remove();
-                                            };
-
-                                            fileContainer.appendChild(fileText);
-                                            fileContainer.appendChild(remove);
-
-                                            fileList.appendChild(fileContainer);
                                         }
 
                                     }
 
-                                    </script>
+                                    addMultipleBmrFiles(input,'batchManufacturingBmrDatassp');
+
+                                }
+
+
+
+                                function addMultipleBmrFiles(input,listId){
+
+                                    const fileList=document.getElementById(listId);
+
+                                    for(const file of input.files){
+
+                                        const fileContainer=document.createElement('h6');
+
+                                        fileContainer.classList.add(
+                                            'file-container',
+                                            'text-dark'
+                                        );
+
+                                        fileContainer.style.backgroundColor='rgb(243,242,240)';
+
+                                        const fileText=document.createElement('b');
+
+                                        fileText.textContent=file.name;
+
+                                        const removeLink=document.createElement('a');
+
+                                        removeLink.type='button';
+
+                                        removeLink.classList.add('remove-bmr-file');
+
+                                        removeLink.dataset.fileName=file.name;
+
+                                        removeLink.innerHTML='<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                        removeLink.onclick=function(){
+
+                                            fileContainer.remove();
+
+                                        };
+
+                                        fileContainer.appendChild(fileText);
+
+                                        fileContainer.appendChild(removeLink);
+
+                                        fileList.appendChild(fileContainer);
+
+                                    }
+
+                                }
+
+                            </script>
 
 
 
 
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" value="save" name="submit" id="DocsaveButton"
-                                    class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                                    </a>
-                                </button>
-                            </div>
                         </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
 
 
+                    {{-- batch Packing  Record of material tabs --}}
 
-                        {{-- batch manifacturing  of material tabs --}}
+                <div id="doc-batchPackingRecord" class="tabcontent">
+                    <div class="orig-head">
+                        Batch Packing Record (BPR)                    
+                    </div>
+                    <div class="input-fields">
+                        <div class="row">
 
-                        <div id="doc-manufacturingRecord" class="tabcontent">
-                            <div class="orig-head">
-                                Batch Manufacturing Record (BMR)                    
-                            </div>
-                            <div class="input-fields">
-                                <div class="row">
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment">
+                                        <b>Batch Packing Record (BPR) File Attachment</b>
+                                    </label>
 
                                     <div>
                                         <small class="text-primary">
@@ -8043,860 +8278,621 @@
                                         </small>
                                     </div>
 
-                                    <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment">
-                                                <b>Batch Manufacturing Record (BMR) File Attachment</b>
+                                    <div class="file-attachment-field">
+
+                                        <div class="file-attachment-list" id="batchPackingRecordBprDatassp">
+                                            @if($document->batchPackingRecordBpr)
+                                                @foreach(json_decode($document->batchPackingRecordBpr) as $file)
+                                                    <h6 class="file-container text-dark"
+                                                        style="background-color: rgb(243,242,240);">
+
+                                                        <b>{{ $file }}</b>
+
+                                                        <a href="{{ asset('upload/'.$file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary"
+                                                            style="font-size:20px;margin-right:4px;"></i>
+                                                        </a>
+
+                                                        <a href="javascript:void(0)"
+                                                        class="remove-file"
+                                                        data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark"
+                                                            style="color:red;font-size:20px;"></i>
+                                                        </a>
+
+                                                        <input type="hidden"
+                                                            name="existing_batchPackingRecordBpr[]"
+                                                            value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="batchPackingRecordBpr_id" style="cursor:pointer;">
+                                                Add
                                             </label>
 
-                                            <div class="file-attachment-field">
-
-                                                <div class="file-attachment-list" id="batchManufacturingBmrDatassp">
-                                                    @if ($document->batchManufacturingBmr)
-
-                                                        @foreach (json_decode($document->batchManufacturingBmr, true) ?? [] as $file)
-
-                                                            <h6 class="file-container text-dark" style="background-color: rgb(243,242,240);">
-
-                                                                <b>{{ $file }}</b>
-
-                                                                <a href="{{ asset('upload/'.$file) }}" target="_blank">
-                                                                    <i class="fa fa-eye text-primary" style="font-size:20px;margin-right:4px;"></i>
-                                                                </a>
-
-                                                                <a type="button"
-                                                                class="remove-bmr-file"
-                                                                data-file-name="{{ $file }}">
-                                                                    <i class="fa-solid fa-circle-xmark"
-                                                                    style="color:red;font-size:20px;"></i>
-                                                                </a>
-
-                                                                <input type="hidden"
-                                                                    name="existing_batchManufacturingBmr[]"
-                                                                    value="{{ $file }}" >
-
-                                                            </h6>
-
-                                                        @endforeach
-
-                                                    @endif
-                                                </div>
-
-                                                <div class="add-btn">
-
-                                                    <label for="batchManufacturingBmr_id" style="cursor:pointer;">
-                                                        Add
-                                                    </label>
-
-                                                    <input
-                                                        type="file"
-                                                        id="batchManufacturingBmr_id"
-                                                        name="batchManufacturingBmr[]"
-                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
-                                                        onchange="validateBatchManufacturingBmrFiles(this)"
-                                                        multiple
-                                                        hidden  {{ $isReadOnlyattachemnt  ? 'disabled' : '' }} >
-
-                                                </div>
-
-                                            </div>
+                                            <input
+                                                type="file"
+                                                id="batchPackingRecordBpr_id"
+                                                name="batchPackingRecordBpr[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateBatchPackingRecordBprFiles(this)"
+                                                multiple
+                                                hidden  {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                         </div>
+
                                     </div>
+                                </div>
+                            </div>
 
-                                    <input type="hidden"
-                                        id="deleted_batchManufacturingBmr"
-                                        name="deleted_batchManufacturingBmr" value="">
+                            <input type="hidden"
+                                id="deleted_batchPackingRecordBpr"
+                                name="deleted_batchPackingRecordBpr"
+                                value="">
 
-                                    <script>
+                            <script>
 
-                                        document.addEventListener('DOMContentLoaded', function () {
+                            document.addEventListener('DOMContentLoaded', function () {
 
-                                            document.querySelectorAll('.remove-bmr-file').forEach(function(button){
+                                document.querySelectorAll('#batchPackingRecordBprDatassp .remove-file').forEach(button => {
 
-                                                button.addEventListener('click', function(){
+                                    button.addEventListener('click', function () {
 
-                                                    const fileName=this.getAttribute('data-file-name');
+                                        const fileName = this.dataset.fileName;
+                                        const fileContainer = this.closest('.file-container');
 
-                                                    const fileContainer=this.closest('.file-container');
+                                        if(fileContainer){
 
-                                                    if(!fileContainer){
-                                                        return;
-                                                    }
+                                            fileContainer.remove();
 
-                                                    fileContainer.style.display='none';
+                                            const deletedInput = document.getElementById('deleted_batchPackingRecordBpr');
 
-                                                    const hiddenInput=fileContainer.querySelector('input[type="hidden"]');
+                                            let deletedFiles = deletedInput.value
+                                                ? deletedInput.value.split(',')
+                                                : [];
 
-                                                    if(hiddenInput){
-                                                        hiddenInput.remove();
-                                                    }
+                                            deletedFiles.push(fileName);
 
-                                                    const deletedFilesInput=document.getElementById('deleted_batchManufacturingBmr');
+                                            deletedInput.value = deletedFiles.join(',');
+                                        }
 
-                                                    let deletedFiles=deletedFilesInput.value
-                                                        ? deletedFilesInput.value.split(',')
-                                                        :[];
+                                    });
 
-                                                    if(!deletedFiles.includes(fileName)){
-                                                        deletedFiles.push(fileName);
-                                                    }
+                                });
 
-                                                    deletedFilesInput.value=deletedFiles.join(',');
+                            });
 
-                                                });
 
-                                            });
+                            function validateBatchPackingRecordBprFiles(input){
 
+                                const allowedExtensions = ['pdf','jpg','jpeg','png'];
+
+                                const allowedMimeTypes = [
+                                    'application/pdf',
+                                    'image/jpeg',
+                                    'image/png'
+                                ];
+
+                                const files = Array.from(input.files);
+
+                                if(files.length === 0){
+                                    return;
+                                }
+
+                                for(const file of files){
+
+                                    const ext = file.name.split('.').pop().toLowerCase();
+
+                                    if(
+                                        !allowedExtensions.includes(ext) ||
+                                        !allowedMimeTypes.includes(file.type)
+                                    ){
+
+                                        Swal.fire({
+                                            icon:'error',
+                                            title:'Invalid File',
+                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.'
                                         });
 
+                                        input.value = '';
+                                        return;
+                                    }
+                                }
 
-                                        function validateBatchManufacturingBmrFiles(input){
+                                addMultipleFiles(input,'batchPackingRecordBprDatassp');
+                            }
 
-                                            const allowedExtensions=[
-                                                'pdf',
-                                                'jpg',
-                                                'jpeg',
-                                                'png'
-                                            ];
 
-                                            const allowedMimeTypes=[
-                                                'application/pdf',
-                                                'image/jpeg',
-                                                'image/png'
-                                            ];
+                            function addMultipleFiles(input,listId){
 
-                                            const selectedFiles=Array.from(input.files);
+                                const fileList = document.getElementById(listId);
 
-                                            if(selectedFiles.length===0){
-                                                return;
-                                            }
+                                Array.from(input.files).forEach(file => {
 
-                                            for(const file of selectedFiles){
+                                    const fileContainer = document.createElement('h6');
+                                    fileContainer.className = 'file-container text-dark';
+                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
 
-                                                const extension=file.name.split('.').pop().toLowerCase();
+                                    fileContainer.innerHTML = `
+                                        <b>${file.name}</b>
+                                        <a href="javascript:void(0)" class="remove-new-file">
+                                            <i class="fa-solid fa-circle-xmark"
+                                            style="color:red;font-size:20px;"></i>
+                                        </a>
+                                    `;
 
-                                                const validExtension=allowedExtensions.includes(extension);
+                                    fileContainer.querySelector('.remove-new-file').addEventListener('click', function () {
+                                        fileContainer.remove();
+                                    });
 
-                                                const validMime=allowedMimeTypes.includes(file.type);
+                                    fileList.appendChild(fileContainer);
 
-                                                if(!validExtension || !validMime){
+                                });
 
-                                                    alert('Only PDF, JPG, JPEG and PNG files are allowed.');
+                            }
 
-                                                    input.value='';
-
-                                                    return;
-
-                                                }
-
-                                            }
-
-                                            addMultipleBmrFiles(input,'batchManufacturingBmrDatassp');
-
-                                        }
+                            </script>
 
 
 
-                                        function addMultipleBmrFiles(input,listId){
 
-                                            const fileList=document.getElementById(listId);
-
-                                            for(const file of input.files){
-
-                                                const fileContainer=document.createElement('h6');
-
-                                                fileContainer.classList.add(
-                                                    'file-container',
-                                                    'text-dark'
-                                                );
-
-                                                fileContainer.style.backgroundColor='rgb(243,242,240)';
-
-                                                const fileText=document.createElement('b');
-
-                                                fileText.textContent=file.name;
-
-                                                const removeLink=document.createElement('a');
-
-                                                removeLink.type='button';
-
-                                                removeLink.classList.add('remove-bmr-file');
-
-                                                removeLink.dataset.fileName=file.name;
-
-                                                removeLink.innerHTML='<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
-
-                                                removeLink.onclick=function(){
-
-                                                    fileContainer.remove();
-
-                                                };
-
-                                                fileContainer.appendChild(fileText);
-
-                                                fileContainer.appendChild(removeLink);
-
-                                                fileList.appendChild(fileContainer);
-
-                                            }
-
-                                        }
-
-                                    </script>
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
 
 
+                    {{-- Master Formula ecord R  of material tabs --}}
 
+                <div id="doc-masterformulaRecord" class="tabcontent">
+                        <div class="orig-head">
+                            Master Formula  Record                     
+                        </div>
+                    <div class="input-fields">
+                        <div class="row">
+
+                            <div>
+                                <small class="text-primary">
+                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                </small>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+
+                                    <label>
+                                        <b>Master Formula Record File Attachment</b>
+                                    </label>
+
+                                    <div class="file-attachment-field">
+
+                                        <div class="file-attachment-list" id="MasterFormulaRecordBMRDatassp">
+
+                                            @if($document->MasterFormulaRecordBMR)
+
+                                                @foreach(json_decode($document->MasterFormulaRecordBMR,true) ?? [] as $file)
+
+                                                    <h6 class="file-container text-dark" style="background-color:rgb(243,242,240);">
+
+                                                        <b>{{ $file }}</b>
+
+                                                        <a href="{{ asset('upload/'.$file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px;margin-right:4px;"></i>
+                                                        </a>
+
+                                                        <a class="remove-master-file"
+                                                        data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark"
+                                                            style="color:red;font-size:20px;"></i>
+                                                        </a>
+
+                                                        <input type="hidden"
+                                                            name="existing_MasterFormulaRecordBMR[]"
+                                                            value="{{ $file }}">
+
+                                                    </h6>
+
+                                                @endforeach
+
+                                            @endif
+
+                                        </div>
+
+                                        <div class="add-btn">
+
+                                            <label for="MasterFormulaRecordBMR_id" style="cursor:pointer">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="MasterFormulaRecordBMR_id"
+                                                name="MasterFormulaRecordBMR[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateMasterFormulaFiles(this)"
+                                                multiple
+                                                hidden  {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
+
+                                        </div>
+
+                                    </div>
 
                                 </div>
                             </div>
-                            <div class="button-block">
-                                <button type="submit" value="save" name="submit" id="DocsaveButton"
-                                    class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                                    </a>
-                                </button>
-                            </div>
-                        </div>
 
+                            <input type="hidden"
+                                id="deleted_MasterFormulaRecordBMR"
+                                name="deleted_MasterFormulaRecordBMR"
+                                value="">
+                            <script>
 
-                         {{-- batch Packing  Record of material tabs --}}
+                                document.addEventListener('DOMContentLoaded',function(){
 
-                        <div id="doc-batchPackingRecord" class="tabcontent">
-                            <div class="orig-head">
-                                Batch Packing Record (BPR)                    
-                            </div>
-                            <div class="input-fields">
-                                <div class="row">
+                                    document.querySelectorAll('.remove-master-file').forEach(function(btn){
 
-                                    <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment">
-                                                <b>Batch Packing Record (BPR) File Attachment</b>
-                                            </label>
+                                        btn.addEventListener('click',function(){
 
-                                            <div>
-                                                <small class="text-primary">
-                                                    Please attach only PDF, JPG, JPEG or PNG files.
-                                                </small>
-                                            </div>
+                                            const fileName=this.dataset.fileName;
 
-                                            <div class="file-attachment-field">
+                                            const container=this.closest('.file-container');
 
-                                                <div class="file-attachment-list" id="batchPackingRecordBprDatassp">
-                                                    @if($document->batchPackingRecordBpr)
-                                                        @foreach(json_decode($document->batchPackingRecordBpr) as $file)
-                                                            <h6 class="file-container text-dark"
-                                                                style="background-color: rgb(243,242,240);">
+                                            if(!container) return;
 
-                                                                <b>{{ $file }}</b>
+                                            container.style.display='none';
 
-                                                                <a href="{{ asset('upload/'.$file) }}" target="_blank">
-                                                                    <i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px;margin-right:4px;"></i>
-                                                                </a>
+                                            const hidden=container.querySelector('input[type="hidden"]');
 
-                                                                <a href="javascript:void(0)"
-                                                                class="remove-file"
-                                                                data-file-name="{{ $file }}">
-                                                                    <i class="fa-solid fa-circle-xmark"
-                                                                    style="color:red;font-size:20px;"></i>
-                                                                </a>
+                                            if(hidden){
+                                                hidden.remove();
+                                            }
 
-                                                                <input type="hidden"
-                                                                    name="existing_batchPackingRecordBpr[]"
-                                                                    value="{{ $file }}">
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
+                                            const deleted=document.getElementById('deleted_MasterFormulaRecordBMR');
 
-                                                <div class="add-btn">
-                                                    <label for="batchPackingRecordBpr_id" style="cursor:pointer;">
-                                                        Add
-                                                    </label>
+                                            let files=deleted.value
+                                                ? deleted.value.split(',')
+                                                :[];
 
-                                                    <input
-                                                        type="file"
-                                                        id="batchPackingRecordBpr_id"
-                                                        name="batchPackingRecordBpr[]"
-                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
-                                                        onchange="validateBatchPackingRecordBprFiles(this)"
-                                                        multiple
-                                                        hidden  {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
-                                                </div>
+                                            if(!files.includes(fileName)){
+                                                files.push(fileName);
+                                            }
 
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <input type="hidden"
-                                        id="deleted_batchPackingRecordBpr"
-                                        name="deleted_batchPackingRecordBpr"
-                                        value="">
-
-                                    <script>
-
-                                    document.addEventListener('DOMContentLoaded', function () {
-
-                                        document.querySelectorAll('#batchPackingRecordBprDatassp .remove-file').forEach(button => {
-
-                                            button.addEventListener('click', function () {
-
-                                                const fileName = this.dataset.fileName;
-                                                const fileContainer = this.closest('.file-container');
-
-                                                if(fileContainer){
-
-                                                    fileContainer.remove();
-
-                                                    const deletedInput = document.getElementById('deleted_batchPackingRecordBpr');
-
-                                                    let deletedFiles = deletedInput.value
-                                                        ? deletedInput.value.split(',')
-                                                        : [];
-
-                                                    deletedFiles.push(fileName);
-
-                                                    deletedInput.value = deletedFiles.join(',');
-                                                }
-
-                                            });
+                                            deleted.value=files.join(',');
 
                                         });
 
                                     });
 
+                                });
 
-                                    function validateBatchPackingRecordBprFiles(input){
 
-                                        const allowedExtensions = ['pdf','jpg','jpeg','png'];
+                                function validateMasterFormulaFiles(input){
 
-                                        const allowedMimeTypes = [
-                                            'application/pdf',
-                                            'image/jpeg',
-                                            'image/png'
-                                        ];
+                                    const allowedExtensions=[
+                                        'pdf',
+                                        'jpg',
+                                        'jpeg',
+                                        'png'
+                                    ];
 
-                                        const files = Array.from(input.files);
+                                    const allowedMimeTypes=[
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
 
-                                        if(files.length === 0){
+                                    const files=Array.from(input.files);
+
+                                    if(files.length==0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const extension=file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(extension) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            alert("Only PDF, JPG, JPEG and PNG files are allowed.");
+
+                                            input.value='';
+
+                                            return;
+
+                                        }
+
+                                    }
+
+                                    addMasterFormulaFiles(input,'MasterFormulaRecordBMRDatassp');
+
+                                }
+
+
+                                function addMasterFormulaFiles(input,listId){
+
+                                    const list=document.getElementById(listId);
+
+                                    for(const file of input.files){
+
+                                        const h6=document.createElement('h6');
+
+                                        h6.classList.add('file-container','text-dark');
+
+                                        h6.style.backgroundColor='rgb(243,242,240)';
+
+                                        const b=document.createElement('b');
+
+                                        b.textContent=file.name;
+
+                                        const remove=document.createElement('a');
+
+                                        remove.classList.add('remove-master-file');
+
+                                        remove.innerHTML='<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                        remove.onclick=function(){
+
+                                            h6.remove();
+
+                                        };
+
+                                        h6.appendChild(b);
+
+                                        h6.appendChild(remove);
+
+                                        list.appendChild(h6);
+
+                                    }
+
+                                }
+
+                            </script>                                
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+
+                    {{-- Master Packing ecord R  of material tabs --}}
+
+                <div id="doc-masterPackingRecord" class="tabcontent">
+                    <div class="orig-head">
+                        Master Packing  Record                     
+                    </div>
+                    <div class="input-fields">
+                        <div class="row">
+
+                            <div>
+                                <small class="text-primary">
+                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                </small>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label>
+                                        <b>Master Packing Record File Attachment</b>
+                                    </label>
+
+                                    <div class="file-attachment-field">
+
+                                        <div class="file-attachment-list" id="MasterPackingRecordDatassp">
+
+                                            @if($document->MasterPackingRecord)
+
+                                                @foreach(json_decode($document->MasterPackingRecord,true) ?? [] as $file)
+
+                                                    <h6 class="file-container text-dark" style="background-color:rgb(243,242,240);">
+
+                                                        <b>{{ $file }}</b>
+
+                                                        <a href="{{ asset('upload/'.$file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px;margin-right:4px;"></i>
+                                                        </a>
+
+                                                        <a class="remove-master-packing-file"
+                                                        data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark"
+                                                            style="color:red;font-size:20px;"></i>
+                                                        </a>
+
+                                                        <input type="hidden"
+                                                            name="existing_MasterPackingRecord[]"
+                                                            value="{{ $file }}">
+
+                                                    </h6>
+
+                                                @endforeach
+
+                                            @endif
+
+                                        </div>
+
+                                        <div class="add-btn">
+
+                                            <label for="MasterPackingRecord_id" style="cursor:pointer;">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="MasterPackingRecord_id"
+                                                name="MasterPackingRecord[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateMasterPackingRecordFiles(this)"
+                                                multiple
+                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input
+                                type="hidden"
+                                id="deleted_MasterPackingRecord"
+                                name="deleted_MasterPackingRecord"
+                                value="">
+
+                            <script>
+
+                                document.addEventListener('DOMContentLoaded', function(){
+
+                                    document.querySelectorAll('.remove-master-packing-file').forEach(function(btn){
+
+                                        btn.addEventListener('click', function(){
+
+                                            const fileName = this.dataset.fileName;
+
+                                            const container = this.closest('.file-container');
+
+                                            if(!container) return;
+
+                                            container.style.display = 'none';
+
+                                            const hidden = container.querySelector('input[type="hidden"]');
+
+                                            if(hidden){
+                                                hidden.remove();
+                                            }
+
+                                            const deleted = document.getElementById('deleted_MasterPackingRecord');
+
+                                            let files = deleted.value
+                                                ? deleted.value.split(',')
+                                                : [];
+
+                                            if(!files.includes(fileName)){
+                                                files.push(fileName);
+                                            }
+
+                                            deleted.value = files.join(',');
+
+                                        });
+
+                                    });
+
+                                });
+
+
+                                function validateMasterPackingRecordFiles(input){
+
+                                    const allowedExtensions = [
+                                        'pdf',
+                                        'jpg',
+                                        'jpeg',
+                                        'png'
+                                    ];
+
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    const files = Array.from(input.files);
+
+                                    if(files.length === 0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const extension = file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(extension) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            alert('Only PDF, JPG, JPEG and PNG files are allowed.');
+
+                                            input.value = '';
+
                                             return;
                                         }
 
-                                        for(const file of files){
-
-                                            const ext = file.name.split('.').pop().toLowerCase();
-
-                                            if(
-                                                !allowedExtensions.includes(ext) ||
-                                                !allowedMimeTypes.includes(file.type)
-                                            ){
-
-                                                Swal.fire({
-                                                    icon:'error',
-                                                    title:'Invalid File',
-                                                    text:'Only PDF, JPG, JPEG and PNG files are allowed.'
-                                                });
-
-                                                input.value = '';
-                                                return;
-                                            }
-                                        }
-
-                                        addMultipleFiles(input,'batchPackingRecordBprDatassp');
                                     }
 
+                                    addMasterPackingRecordFiles(input,'MasterPackingRecordDatassp');
 
-                                    function addMultipleFiles(input,listId){
+                                }
 
-                                        const fileList = document.getElementById(listId);
 
-                                        Array.from(input.files).forEach(file => {
+                                function addMasterPackingRecordFiles(input,listId){
 
-                                            const fileContainer = document.createElement('h6');
-                                            fileContainer.className = 'file-container text-dark';
-                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+                                    const fileList = document.getElementById(listId);
 
-                                            fileContainer.innerHTML = `
-                                                <b>${file.name}</b>
-                                                <a href="javascript:void(0)" class="remove-new-file">
-                                                    <i class="fa-solid fa-circle-xmark"
-                                                    style="color:red;font-size:20px;"></i>
-                                                </a>
-                                            `;
+                                    for(const file of input.files){
 
-                                            fileContainer.querySelector('.remove-new-file').addEventListener('click', function () {
-                                                fileContainer.remove();
-                                            });
+                                        const h6 = document.createElement('h6');
 
-                                            fileList.appendChild(fileContainer);
+                                        h6.classList.add('file-container','text-dark');
 
-                                        });
+                                        h6.style.backgroundColor = 'rgb(243,242,240)';
+
+                                        const b = document.createElement('b');
+
+                                        b.textContent = file.name;
+
+                                        const remove = document.createElement('a');
+
+                                        remove.classList.add('remove-master-packing-file');
+
+                                        remove.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                        remove.onclick = function(){
+                                            h6.remove();
+                                        };
+
+                                        h6.appendChild(b);
+                                        h6.appendChild(remove);
+
+                                        fileList.appendChild(h6);
 
                                     }
 
-                                    </script>
+                                }
 
-
-
-
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" value="save" name="submit" id="DocsaveButton"
-                                    class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                                    </a>
-                                </button>
-                            </div>
+                            </script>
                         </div>
-
-
-                           {{-- Master Formula ecord R  of material tabs --}}
-
-                           <div id="doc-masterformulaRecord" class="tabcontent">
-                                <div class="orig-head">
-                                    Master Formula  Record                     
-                                </div>
-                            <div class="input-fields">
-                                <div class="row">
-
-                                    <div>
-                                        <small class="text-primary">
-                                            Please attach only PDF, JPG, JPEG or PNG files.
-                                        </small>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <div class="group-input">
-
-                                            <label>
-                                                <b>Master Formula Record File Attachment</b>
-                                            </label>
-
-                                            <div class="file-attachment-field">
-
-                                                <div class="file-attachment-list" id="MasterFormulaRecordBMRDatassp">
-
-                                                    @if($document->MasterFormulaRecordBMR)
-
-                                                        @foreach(json_decode($document->MasterFormulaRecordBMR,true) ?? [] as $file)
-
-                                                            <h6 class="file-container text-dark" style="background-color:rgb(243,242,240);">
-
-                                                                <b>{{ $file }}</b>
-
-                                                                <a href="{{ asset('upload/'.$file) }}" target="_blank">
-                                                                    <i class="fa fa-eye text-primary" style="font-size:20px;margin-right:4px;"></i>
-                                                                </a>
-
-                                                                <a class="remove-master-file"
-                                                                data-file-name="{{ $file }}">
-                                                                    <i class="fa-solid fa-circle-xmark"
-                                                                    style="color:red;font-size:20px;"></i>
-                                                                </a>
-
-                                                                <input type="hidden"
-                                                                    name="existing_MasterFormulaRecordBMR[]"
-                                                                    value="{{ $file }}">
-
-                                                            </h6>
-
-                                                        @endforeach
-
-                                                    @endif
-
-                                                </div>
-
-                                                <div class="add-btn">
-
-                                                    <label for="MasterFormulaRecordBMR_id" style="cursor:pointer">
-                                                        Add
-                                                    </label>
-
-                                                    <input
-                                                        type="file"
-                                                        id="MasterFormulaRecordBMR_id"
-                                                        name="MasterFormulaRecordBMR[]"
-                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
-                                                        onchange="validateMasterFormulaFiles(this)"
-                                                        multiple
-                                                        hidden  {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <input type="hidden"
-                                        id="deleted_MasterFormulaRecordBMR"
-                                        name="deleted_MasterFormulaRecordBMR"
-                                        value="">
-                                    <script>
-
-                                        document.addEventListener('DOMContentLoaded',function(){
-
-                                            document.querySelectorAll('.remove-master-file').forEach(function(btn){
-
-                                                btn.addEventListener('click',function(){
-
-                                                    const fileName=this.dataset.fileName;
-
-                                                    const container=this.closest('.file-container');
-
-                                                    if(!container) return;
-
-                                                    container.style.display='none';
-
-                                                    const hidden=container.querySelector('input[type="hidden"]');
-
-                                                    if(hidden){
-                                                        hidden.remove();
-                                                    }
-
-                                                    const deleted=document.getElementById('deleted_MasterFormulaRecordBMR');
-
-                                                    let files=deleted.value
-                                                        ? deleted.value.split(',')
-                                                        :[];
-
-                                                    if(!files.includes(fileName)){
-                                                        files.push(fileName);
-                                                    }
-
-                                                    deleted.value=files.join(',');
-
-                                                });
-
-                                            });
-
-                                        });
-
-
-                                        function validateMasterFormulaFiles(input){
-
-                                            const allowedExtensions=[
-                                                'pdf',
-                                                'jpg',
-                                                'jpeg',
-                                                'png'
-                                            ];
-
-                                            const allowedMimeTypes=[
-                                                'application/pdf',
-                                                'image/jpeg',
-                                                'image/png'
-                                            ];
-
-                                            const files=Array.from(input.files);
-
-                                            if(files.length==0){
-                                                return;
-                                            }
-
-                                            for(const file of files){
-
-                                                const extension=file.name.split('.').pop().toLowerCase();
-
-                                                if(
-                                                    !allowedExtensions.includes(extension) ||
-                                                    !allowedMimeTypes.includes(file.type)
-                                                ){
-
-                                                    alert("Only PDF, JPG, JPEG and PNG files are allowed.");
-
-                                                    input.value='';
-
-                                                    return;
-
-                                                }
-
-                                            }
-
-                                            addMasterFormulaFiles(input,'MasterFormulaRecordBMRDatassp');
-
-                                        }
-
-
-                                        function addMasterFormulaFiles(input,listId){
-
-                                            const list=document.getElementById(listId);
-
-                                            for(const file of input.files){
-
-                                                const h6=document.createElement('h6');
-
-                                                h6.classList.add('file-container','text-dark');
-
-                                                h6.style.backgroundColor='rgb(243,242,240)';
-
-                                                const b=document.createElement('b');
-
-                                                b.textContent=file.name;
-
-                                                const remove=document.createElement('a');
-
-                                                remove.classList.add('remove-master-file');
-
-                                                remove.innerHTML='<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
-
-                                                remove.onclick=function(){
-
-                                                    h6.remove();
-
-                                                };
-
-                                                h6.appendChild(b);
-
-                                                h6.appendChild(remove);
-
-                                                list.appendChild(h6);
-
-                                            }
-
-                                        }
-
-                                    </script>                                
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" value="save" name="submit" id="DocsaveButton"
-                                    class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                                    </a>
-                                </button>
-                            </div>
-                        </div>
-
-
-                         {{-- Master Packing ecord R  of material tabs --}}
-
-                         <div id="doc-masterPackingRecord" class="tabcontent">
-                            <div class="orig-head">
-                                Master Packing  Record                     
-                            </div>
-                            <div class="input-fields">
-                                <div class="row">
-
-                                    <div>
-                                        <small class="text-primary">
-                                            Please attach only PDF, JPG, JPEG or PNG files.
-                                        </small>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <div class="group-input">
-                                            <label>
-                                                <b>Master Packing Record File Attachment</b>
-                                            </label>
-
-                                            <div class="file-attachment-field">
-
-                                                <div class="file-attachment-list" id="MasterPackingRecordDatassp">
-
-                                                    @if($document->MasterPackingRecord)
-
-                                                        @foreach(json_decode($document->MasterPackingRecord,true) ?? [] as $file)
-
-                                                            <h6 class="file-container text-dark" style="background-color:rgb(243,242,240);">
-
-                                                                <b>{{ $file }}</b>
-
-                                                                <a href="{{ asset('upload/'.$file) }}" target="_blank">
-                                                                    <i class="fa fa-eye text-primary" style="font-size:20px;margin-right:4px;"></i>
-                                                                </a>
-
-                                                                <a class="remove-master-packing-file"
-                                                                data-file-name="{{ $file }}">
-                                                                    <i class="fa-solid fa-circle-xmark"
-                                                                    style="color:red;font-size:20px;"></i>
-                                                                </a>
-
-                                                                <input type="hidden"
-                                                                    name="existing_MasterPackingRecord[]"
-                                                                    value="{{ $file }}">
-
-                                                            </h6>
-
-                                                        @endforeach
-
-                                                    @endif
-
-                                                </div>
-
-                                                <div class="add-btn">
-
-                                                    <label for="MasterPackingRecord_id" style="cursor:pointer;">
-                                                        Add
-                                                    </label>
-
-                                                    <input
-                                                        type="file"
-                                                        id="MasterPackingRecord_id"
-                                                        name="MasterPackingRecord[]"
-                                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
-                                                        onchange="validateMasterPackingRecordFiles(this)"
-                                                        multiple
-                                                        hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <input
-                                        type="hidden"
-                                        id="deleted_MasterPackingRecord"
-                                        name="deleted_MasterPackingRecord"
-                                        value="">
-
-                                    <script>
-
-                                        document.addEventListener('DOMContentLoaded', function(){
-
-                                            document.querySelectorAll('.remove-master-packing-file').forEach(function(btn){
-
-                                                btn.addEventListener('click', function(){
-
-                                                    const fileName = this.dataset.fileName;
-
-                                                    const container = this.closest('.file-container');
-
-                                                    if(!container) return;
-
-                                                    container.style.display = 'none';
-
-                                                    const hidden = container.querySelector('input[type="hidden"]');
-
-                                                    if(hidden){
-                                                        hidden.remove();
-                                                    }
-
-                                                    const deleted = document.getElementById('deleted_MasterPackingRecord');
-
-                                                    let files = deleted.value
-                                                        ? deleted.value.split(',')
-                                                        : [];
-
-                                                    if(!files.includes(fileName)){
-                                                        files.push(fileName);
-                                                    }
-
-                                                    deleted.value = files.join(',');
-
-                                                });
-
-                                            });
-
-                                        });
-
-
-                                        function validateMasterPackingRecordFiles(input){
-
-                                            const allowedExtensions = [
-                                                'pdf',
-                                                'jpg',
-                                                'jpeg',
-                                                'png'
-                                            ];
-
-                                            const allowedMimeTypes = [
-                                                'application/pdf',
-                                                'image/jpeg',
-                                                'image/png'
-                                            ];
-
-                                            const files = Array.from(input.files);
-
-                                            if(files.length === 0){
-                                                return;
-                                            }
-
-                                            for(const file of files){
-
-                                                const extension = file.name.split('.').pop().toLowerCase();
-
-                                                if(
-                                                    !allowedExtensions.includes(extension) ||
-                                                    !allowedMimeTypes.includes(file.type)
-                                                ){
-
-                                                    alert('Only PDF, JPG, JPEG and PNG files are allowed.');
-
-                                                    input.value = '';
-
-                                                    return;
-                                                }
-
-                                            }
-
-                                            addMasterPackingRecordFiles(input,'MasterPackingRecordDatassp');
-
-                                        }
-
-
-                                        function addMasterPackingRecordFiles(input,listId){
-
-                                            const fileList = document.getElementById(listId);
-
-                                            for(const file of input.files){
-
-                                                const h6 = document.createElement('h6');
-
-                                                h6.classList.add('file-container','text-dark');
-
-                                                h6.style.backgroundColor = 'rgb(243,242,240)';
-
-                                                const b = document.createElement('b');
-
-                                                b.textContent = file.name;
-
-                                                const remove = document.createElement('a');
-
-                                                remove.classList.add('remove-master-packing-file');
-
-                                                remove.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
-
-                                                remove.onclick = function(){
-                                                    h6.remove();
-                                                };
-
-                                                h6.appendChild(b);
-                                                h6.appendChild(remove);
-
-                                                fileList.appendChild(h6);
-
-                                            }
-
-                                        }
-
-                                    </script>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" value="save" name="submit" id="DocsaveButton"
-                                    class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                                    </a>
-                                </button>
-                            </div>
-                        </div>
-
-
-                                         {{-- Site master  tabs   of material tabs --}}
-
-                 <div id="doc-SiteMasterFile" class="tabcontent">
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+
+                {{-- Site master  tabs   of material tabs --}}
+
+                <div id="doc-SiteMasterFile" class="tabcontent">
                     <div class="orig-head">
                         Site Master File            
                     </div>
@@ -9123,219 +9119,219 @@
 
 
 
-                    <!-- Format for compressed air and Nitrogen gas system Report -->
+                <!-- Format for compressed air and Nitrogen gas system Report -->
 
-                    <div id="doc-fcreport" class="tabcontent">
-                        <div class="orig-head">
-                            Format for compressed air and Nitrogen gas system Report
-                        </div>
+                <div id="doc-fcreport" class="tabcontent">
+                    <div class="orig-head">
+                        Format for compressed air and Nitrogen gas system Report
+                    </div>
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="File_Attachment">
-                                        <b>File Attachment</b>
-                                    </label>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment">
+                                    <b>File Attachment</b>
+                                </label>
 
-                                    <div>
-                                        <small class="text-primary">
-                                            Please attach only PDF, JPG, JPEG or PNG files.
-                                        </small>
-                                    </div>
+                                <div>
+                                    <small class="text-primary">
+                                        Please attach only PDF, JPG, JPEG or PNG files.
+                                    </small>
+                                </div>
 
-                                    <div class="file-attachment-field">
+                                <div class="file-attachment-field">
 
-                                        <div class="file-attachment-list" id="attach_comp_nitrogenDatafield">
+                                    <div class="file-attachment-list" id="attach_comp_nitrogenDatafield">
 
-                                            @if ($document->attach_comp_nitrogen)
+                                        @if ($document->attach_comp_nitrogen)
 
-                                                @foreach(json_decode($document->attach_comp_nitrogen, true) ?? [] as $file)
+                                            @foreach(json_decode($document->attach_comp_nitrogen, true) ?? [] as $file)
 
-                                                    <h6 class="file-container text-dark"
-                                                        style="background-color:rgb(243,242,240);">
+                                                <h6 class="file-container text-dark"
+                                                    style="background-color:rgb(243,242,240);">
 
-                                                        <b>{{ $file }}</b>
+                                                    <b>{{ $file }}</b>
 
-                                                        <a href="{{ asset('upload/'.$file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary"
-                                                                style="font-size:20px;margin-right:4px;"></i>
-                                                        </a>
+                                                    <a href="{{ asset('upload/'.$file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary"
+                                                            style="font-size:20px;margin-right:4px;"></i>
+                                                    </a>
 
-                                                        <a type="button"
-                                                            class="remove-attachNitrogen"
-                                                            data-file-name="{{ $file }}">
-                                                            <i class="fa-solid fa-circle-xmark"
-                                                                style="color:red;font-size:20px;"></i>
-                                                        </a>
+                                                    <a type="button"
+                                                        class="remove-attachNitrogen"
+                                                        data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark"
+                                                            style="color:red;font-size:20px;"></i>
+                                                    </a>
 
-                                                        <input type="hidden"
-                                                            name="existing_attach_comp_nitrogen[]"
-                                                            value="{{ $file }}">
+                                                    <input type="hidden"
+                                                        name="existing_attach_comp_nitrogen[]"
+                                                        value="{{ $file }}">
 
-                                                    </h6>
+                                                </h6>
 
-                                                @endforeach
+                                            @endforeach
 
-                                            @endif
-
-                                        </div>
-
-                                        <div class="add-btn">
-                                            <label for="attach_comp_nitrogenData" style="cursor:pointer">
-                                                Add
-                                            </label>
-
-                                            <input
-                                                type="file"
-                                                id="attach_comp_nitrogenData"
-                                                name="attach_comp_nitrogen[]"
-                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
-                                                onchange="validateAttachCompNitrogen(this)"
-                                                multiple
-                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
-                                        </div>
+                                        @endif
 
                                     </div>
+
+                                    <div class="add-btn">
+                                        <label for="attach_comp_nitrogenData" style="cursor:pointer">
+                                            Add
+                                        </label>
+
+                                        <input
+                                            type="file"
+                                            id="attach_comp_nitrogenData"
+                                            name="attach_comp_nitrogen[]"
+                                            accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                            onchange="validateAttachCompNitrogen(this)"
+                                            multiple
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
+                                    </div>
+
                                 </div>
                             </div>
+                        </div>
 
-                            <input type="hidden"
-                                id="deleted_attach_comp_nitrogen"
-                                name="deleted_attach_comp_nitrogen"
-                                value="">
+                        <input type="hidden"
+                            id="deleted_attach_comp_nitrogen"
+                            name="deleted_attach_comp_nitrogen"
+                            value="">
 
 
-                            <script>
+                        <script>
 
-                                    document.addEventListener('DOMContentLoaded',function(){
+                                document.addEventListener('DOMContentLoaded',function(){
 
-                                        document.querySelectorAll('.remove-attachNitrogen').forEach(function(btn){
+                                    document.querySelectorAll('.remove-attachNitrogen').forEach(function(btn){
 
-                                            btn.addEventListener('click',function(){
+                                        btn.addEventListener('click',function(){
 
-                                                let fileName=this.dataset.fileName;
+                                            let fileName=this.dataset.fileName;
 
-                                                let container=this.closest('.file-container');
+                                            let container=this.closest('.file-container');
 
-                                                if(!container) return;
+                                            if(!container) return;
 
-                                                container.style.display='none';
+                                            container.style.display='none';
 
-                                                let hidden=container.querySelector('input[type="hidden"]');
+                                            let hidden=container.querySelector('input[type="hidden"]');
 
-                                                if(hidden){
-                                                    hidden.remove();
-                                                }
+                                            if(hidden){
+                                                hidden.remove();
+                                            }
 
-                                                let deleted=document.getElementById('deleted_attach_comp_nitrogen');
+                                            let deleted=document.getElementById('deleted_attach_comp_nitrogen');
 
-                                                let files=deleted.value
-                                                    ? deleted.value.split(',')
-                                                    : [];
+                                            let files=deleted.value
+                                                ? deleted.value.split(',')
+                                                : [];
 
-                                                if(!files.includes(fileName)){
-                                                    files.push(fileName);
-                                                }
+                                            if(!files.includes(fileName)){
+                                                files.push(fileName);
+                                            }
 
-                                                deleted.value=files.join(',');
-
-                                            });
+                                            deleted.value=files.join(',');
 
                                         });
 
                                     });
 
+                                });
 
-                                    function validateAttachCompNitrogen(input){
 
-                                        const allowedExtensions=[
-                                            'pdf',
-                                            'jpg',
-                                            'jpeg',
-                                            'png'
-                                        ];
+                                function validateAttachCompNitrogen(input){
 
-                                        const allowedMimeTypes=[
-                                            'application/pdf',
-                                            'image/jpeg',
-                                            'image/png'
-                                        ];
+                                    const allowedExtensions=[
+                                        'pdf',
+                                        'jpg',
+                                        'jpeg',
+                                        'png'
+                                    ];
 
-                                        const files=Array.from(input.files);
+                                    const allowedMimeTypes=[
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
 
-                                        if(files.length===0){
+                                    const files=Array.from(input.files);
+
+                                    if(files.length===0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const ext=file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(ext) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                confirmButtonText:'OK'
+                                            });
+
+                                            input.value='';
+
                                             return;
                                         }
 
-                                        for(const file of files){
+                                    }
 
-                                            const ext=file.name.split('.').pop().toLowerCase();
+                                    addAttachCompNitrogenFiles(input,'attach_comp_nitrogenDatafield');
 
-                                            if(
-                                                !allowedExtensions.includes(ext) ||
-                                                !allowedMimeTypes.includes(file.type)
-                                            ){
+                                }
 
-                                                Swal.fire({
-                                                    icon:'error',
-                                                    title:'Invalid File',
-                                                    text:'Only PDF, JPG, JPEG and PNG files are allowed.',
-                                                    confirmButtonText:'OK'
-                                                });
 
-                                                input.value='';
+                                function addAttachCompNitrogenFiles(input,listId){
 
-                                                return;
-                                            }
+                                    let fileList=document.getElementById(listId);
 
-                                        }
+                                    for(const file of input.files){
 
-                                        addAttachCompNitrogenFiles(input,'attach_comp_nitrogenDatafield');
+                                        let fileContainer=document.createElement('h6');
+
+                                        fileContainer.classList.add(
+                                            'file-container',
+                                            'text-dark'
+                                        );
+
+                                        fileContainer.style.backgroundColor='rgb(243,242,240)';
+
+                                        let fileText=document.createElement('b');
+                                        fileText.textContent=file.name;
+
+                                        let remove=document.createElement('a');
+                                        remove.type='button';
+                                        remove.innerHTML='<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                        remove.addEventListener('click',function(){
+                                            fileContainer.remove();
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(remove);
+
+                                        fileList.appendChild(fileContainer);
 
                                     }
 
+                                }
 
-                                    function addAttachCompNitrogenFiles(input,listId){
-
-                                        let fileList=document.getElementById(listId);
-
-                                        for(const file of input.files){
-
-                                            let fileContainer=document.createElement('h6');
-
-                                            fileContainer.classList.add(
-                                                'file-container',
-                                                'text-dark'
-                                            );
-
-                                            fileContainer.style.backgroundColor='rgb(243,242,240)';
-
-                                            let fileText=document.createElement('b');
-                                            fileText.textContent=file.name;
-
-                                            let remove=document.createElement('a');
-                                            remove.type='button';
-                                            remove.innerHTML='<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
-
-                                            remove.addEventListener('click',function(){
-                                                fileContainer.remove();
-                                            });
-
-                                            fileContainer.appendChild(fileText);
-                                            fileContainer.appendChild(remove);
-
-                                            fileList.appendChild(fileContainer);
-
-                                        }
-
-                                    }
-
-                            </script>
-                        <div class="button-block">
-                                    <button type="submit" name="submit" value="save" class="saveButton">Save</button>
-                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                </div>
-                    </div>
+                        </script>
+                    <div class="button-block">
+                                <button type="submit" name="submit" value="save" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            </div>
+                </div>
 
 
                     <!--Process Validation Protocol Interim  -->
@@ -9552,7 +9548,7 @@
 
 
 
-           <!-- Annexure I-Gxp Assessment start  -->
+                <!-- Annexure I-Gxp Assessment start  -->
                 <div id="doc_Annexure_I" class="tabcontent">
                     <div class="orig-head">
                         ANNEXURE I-Gxp Assessment
@@ -9756,9 +9752,9 @@
                          </div>
                     </div>
                 </div>
-               <!-- Annexure I-Gxp Assessment end  -->
+                <!-- Annexure I-Gxp Assessment end  -->
 
-               <!-- Annexure II-Initial Risk Assessment start -->
+                <!-- Annexure II-Initial Risk Assessment start -->
                 <div id="doc_Annexure_II" class="tabcontent">
                     <div class="orig-head">
                         Annexure II-Initial Risk Assessment
@@ -9963,9 +9959,9 @@
                          </div>
                     </div>
                 </div>
-               <!-- Annexure II-Initial Risk Assessment end -->
+                <!-- Annexure II-Initial Risk Assessment end -->
 
-               <!-- Annexure III-ERES Assessment start -->
+                <!-- Annexure III-ERES Assessment start -->
                 <div id="doc_Annexure_III" class="tabcontent">
                     <div class="orig-head">
                         Annexure III-ERES Assessment
@@ -10184,9 +10180,9 @@
                          </div>
                     </div>
                 </div>
-               <!-- Annexure III-ERES Assessment end -->
+                <!-- Annexure III-ERES Assessment end -->
 
-               <!-- Annexure IV-Validation Plan start -->
+                <!-- Annexure IV-Validation Plan start -->
                 <div id="doc_Annexure_IV" class="tabcontent">
                     <div class="orig-head">
                         Annexure IV-Validation Plan
@@ -11690,7 +11686,7 @@
 
 
                <!-- Annexure XI-Configuration Specification start -->
-               <div id="doc_Annexure_XI" class="tabcontent">
+                <div id="doc_Annexure_XI" class="tabcontent">
                     <div class="orig-head">
                         Annexure XI-Configuration Specification
                         </div>
@@ -12153,9 +12149,7 @@
                                                         style="color:red;font-size:20px;"></i>
                                                     </a>
 
-                                                    <input type="hidden"
-                                                        name="existing_annefile_attach13[]"
-                                                        value="{{ $file }}">
+                                                    <input type="hidden" name="existing_annefile_attach13[]" value="{{ $file }}">
 
                                                 </h6>
 
@@ -12170,27 +12164,14 @@
                                             Add
                                         </label>
 
-                                        <input
-                                            type="file"
-                                            id="annex_XIII_unit_integ_attachment"
-                                            name="annex_XIII_unit_integ_attachment[]"
-                                            accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
-                                            onchange="validateAnnexXIIIFiles(this)"
-                                            multiple
-                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
-                                        >
+                                        <input type="file" id="annex_XIII_unit_integ_attachment" name="annex_XIII_unit_integ_attachment[]" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" onchange="validateAnnexXIIIFiles(this)" multiple hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                     </div>
 
                                 </div>
                                 </div>
                             </div>
 
-                                <input
-                                    type="hidden"
-                                    id="deleted_anne_attach13"
-                                    name="deleted_anne_attach13"
-                                    value=""
-                                >
+                                <input type="hidden" id="deleted_anne_attach13" name="deleted_anne_attach13" value="">
 
                                 <script>
 
@@ -12256,10 +12237,7 @@
 
                                                 const ext = file.name.split('.').pop().toLowerCase();
 
-                                                if(
-                                                    !allowedExtensions.includes(ext) ||
-                                                    !allowedMimeTypes.includes(file.type)
-                                                ){
+                                                if(!allowedExtensions.includes(ext) || !allowedMimeTypes.includes(file.type)){
 
                                                     Swal.fire({
                                                         icon:'error',
@@ -12310,7 +12288,6 @@
 
                                 </script>
 
-
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -12331,8 +12308,7 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                               
-
+                            
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment"><b>File Attachment</b></label>
@@ -12366,9 +12342,7 @@
                                                             style="color:red;font-size:20px;"></i>
                                                         </a>
 
-                                                        <input type="hidden"
-                                                            name="existing_annefile_attach14[]"
-                                                            value="{{ $file }}">
+                                                        <input type="hidden" name="existing_annefile_attach14[]" value="{{ $file }}">
 
                                                     </h6>
 
@@ -12383,146 +12357,132 @@
                                                 Add
                                             </label>
 
-                                            <input
-                                                type="file"
-                                                id="annex_XIV_data_migra_attachment"
-                                                name="annex_XIV_data_migra_attachment[]"
-                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
-                                                onchange="validateAnnexXIVFiles(this)"
-                                                multiple
-                                                hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}
-                                            >
+                                            <input type="file" id="annex_XIV_data_migra_attachment" name="annex_XIV_data_migra_attachment[]" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" onchange="validateAnnexXIVFiles(this)" multiple hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
 
-                            <input
-                                type="hidden"
-                                id="deleted_anne_attach14"
-                                name="deleted_anne_attach14"
-                                value=""
-                            >
+                            <input type="hidden" id="deleted_anne_attach14" name="deleted_anne_attach14" value="">
 
-                            <script>
+                                <script>
 
-                                    document.addEventListener('DOMContentLoaded', function () {
+                                        document.addEventListener('DOMContentLoaded', function () {
 
-                                        document.querySelectorAll('.remove-file').forEach(function(button){
+                                            document.querySelectorAll('.remove-file').forEach(function(button){
 
-                                            button.addEventListener('click', function(){
+                                                button.addEventListener('click', function(){
 
-                                                const fileName = this.dataset.fileName;
-                                                const fileContainer = this.closest('.file-container');
+                                                    const fileName = this.dataset.fileName;
+                                                    const fileContainer = this.closest('.file-container');
 
-                                                if(!fileContainer) return;
+                                                    if(!fileContainer) return;
 
-                                                fileContainer.style.display = 'none';
+                                                    fileContainer.style.display = 'none';
 
-                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
 
-                                                if(hiddenInput){
-                                                    hiddenInput.remove();
-                                                }
+                                                    if(hiddenInput){
+                                                        hiddenInput.remove();
+                                                    }
 
-                                                const deletedInput = document.getElementById('deleted_anne_attach14');
+                                                    const deletedInput = document.getElementById('deleted_anne_attach14');
 
-                                                let deletedFiles = deletedInput.value
-                                                    ? deletedInput.value.split(',')
-                                                    : [];
+                                                    let deletedFiles = deletedInput.value
+                                                        ? deletedInput.value.split(',')
+                                                        : [];
 
-                                                if(!deletedFiles.includes(fileName)){
-                                                    deletedFiles.push(fileName);
-                                                }
+                                                    if(!deletedFiles.includes(fileName)){
+                                                        deletedFiles.push(fileName);
+                                                    }
 
-                                                deletedInput.value = deletedFiles.join(',');
+                                                    deletedInput.value = deletedFiles.join(',');
+                                                });
+
                                             });
 
                                         });
 
-                                    });
 
+                                        function validateAnnexXIVFiles(input){
 
-                                    function validateAnnexXIVFiles(input){
+                                            const allowedExtensions = [
+                                                'pdf',
+                                                'jpg',
+                                                'jpeg',
+                                                'png'
+                                            ];
 
-                                        const allowedExtensions = [
-                                            'pdf',
-                                            'jpg',
-                                            'jpeg',
-                                            'png'
-                                        ];
+                                            const allowedMimeTypes = [
+                                                'application/pdf',
+                                                'image/jpeg',
+                                                'image/png'
+                                            ];
 
-                                        const allowedMimeTypes = [
-                                            'application/pdf',
-                                            'image/jpeg',
-                                            'image/png'
-                                        ];
+                                            const files = Array.from(input.files);
 
-                                        const files = Array.from(input.files);
+                                            if(files.length === 0){
+                                                return;
+                                            }
 
-                                        if(files.length === 0){
-                                            return;
+                                            for(const file of files){
+
+                                                const ext = file.name.split('.').pop().toLowerCase();
+
+                                                if(
+                                                    !allowedExtensions.includes(ext) ||
+                                                    !allowedMimeTypes.includes(file.type)
+                                                ){
+
+                                                    Swal.fire({
+                                                        icon:'error',
+                                                        title:'Invalid File',
+                                                        text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                                    });
+
+                                                    input.value = '';
+                                                    return;
+                                                }
+                                            }
+
+                                            addMultipleFiles(input,'annex_XIV_dataMigra_fileattachement');
                                         }
 
-                                        for(const file of files){
 
-                                            const ext = file.name.split('.').pop().toLowerCase();
+                                        function addMultipleFiles(input,listId){
 
-                                            if(
-                                                !allowedExtensions.includes(ext) ||
-                                                !allowedMimeTypes.includes(file.type)
-                                            ){
+                                            const fileList = document.getElementById(listId);
 
-                                                Swal.fire({
-                                                    icon:'error',
-                                                    title:'Invalid File',
-                                                    text:'Only PDF, JPG, JPEG and PNG files are allowed.'
-                                                });
+                                            for(const file of input.files){
 
-                                                input.value = '';
-                                                return;
+                                                let fileContainer = document.createElement('h6');
+                                                fileContainer.classList.add('file-container','text-dark');
+                                                fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+
+                                                let fileText = document.createElement('b');
+                                                fileText.textContent = file.name;
+
+                                                let remove = document.createElement('a');
+                                                remove.type = 'button';
+                                                remove.classList.add('remove-file');
+                                                remove.dataset.fileName = file.name;
+
+                                                remove.innerHTML =
+                                                    '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                                remove.onclick = function(){
+                                                    fileContainer.remove();
+                                                };
+
+                                                fileContainer.appendChild(fileText);
+                                                fileContainer.appendChild(remove);
+
+                                                fileList.appendChild(fileContainer);
                                             }
                                         }
 
-                                        addMultipleFiles(input,'annex_XIV_dataMigra_fileattachement');
-                                    }
-
-
-                                    function addMultipleFiles(input,listId){
-
-                                        const fileList = document.getElementById(listId);
-
-                                        for(const file of input.files){
-
-                                            let fileContainer = document.createElement('h6');
-                                            fileContainer.classList.add('file-container','text-dark');
-                                            fileContainer.style.backgroundColor = 'rgb(243,242,240)';
-
-                                            let fileText = document.createElement('b');
-                                            fileText.textContent = file.name;
-
-                                            let remove = document.createElement('a');
-                                            remove.type = 'button';
-                                            remove.classList.add('remove-file');
-                                            remove.dataset.fileName = file.name;
-
-                                            remove.innerHTML =
-                                                '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
-
-                                            remove.onclick = function(){
-                                                fileContainer.remove();
-                                            };
-
-                                            fileContainer.appendChild(fileText);
-                                            fileContainer.appendChild(remove);
-
-                                            fileList.appendChild(fileContainer);
-                                        }
-                                    }
-
-                            </script>
-
+                                </script>
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -12598,7 +12558,6 @@
                                 <input type="hidden" id="deleted_anne_attach15" name="deleted_anne_attach15" value="">
 
                                 <script>
-
                                         document.addEventListener('DOMContentLoaded', function () {
 
                                             document.querySelectorAll('.remove-file').forEach(function(button){
@@ -12777,170 +12736,170 @@
                                         @endforeach
                                     </div>
 
-                                   <div class="group-input">
-    <label for="revision-history">Revision History</label>
+                                    <div class="group-input">
+                                        <label for="revision-history">Revision History</label>
 
-    <div class="table-responsive">
-        <table class="table table-bordered" id="Details-table-revision">
-            <thead>
-                <tr>
-                    <th>Sr. No.</th>
-                    <th>Revision No.</th>
-                    <th>Change Control No.</th>
-                    <th>Effective Date</th>
-                    <th>Reason of Revision</th>
-                </tr>
-            </thead>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="Details-table-revision">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sr. No.</th>
+                                                        <th>Revision No.</th>
+                                                        <th>Change Control No.</th>
+                                                        <th>Effective Date</th>
+                                                        <th>Reason of Revision</th>
+                                                    </tr>
+                                                </thead>
 
-            <tbody id="revision-history-fpstp">
+                                                <tbody id="revision-history-fpstp">
 
-                @php
-                    $serialNumber = 1;
-                    $GtpData = [];
+                                                    @php
+                                                        $serialNumber = 1;
+                                                        $GtpData = [];
 
-                    if (!empty($RevisionGridfpstpData) && isset($RevisionGridfpstpData->data)) {
+                                                        if (!empty($RevisionGridfpstpData) && isset($RevisionGridfpstpData->data)) {
 
-                        $GtpData = is_string($RevisionGridfpstpData->data)
-                            ? json_decode($RevisionGridfpstpData->data, true)
-                            : (is_array($RevisionGridfpstpData->data)
-                                ? $RevisionGridfpstpData->data
-                                : []);
-                    }
-                @endphp
+                                                            $GtpData = is_string($RevisionGridfpstpData->data)
+                                                                ? json_decode($RevisionGridfpstpData->data, true)
+                                                                : (is_array($RevisionGridfpstpData->data)
+                                                                    ? $RevisionGridfpstpData->data
+                                                                    : []);
+                                                        }
+                                                    @endphp
 
-                @foreach ($GtpData as $index => $gtp_data)
+                                                    @foreach ($GtpData as $index => $gtp_data)
 
-                    <tr>
-                        <td>
-                            {{ $serialNumber++ }}
-                        </td>
+                                                        <tr>
+                                                            <td>
+                                                                {{ $serialNumber++ }}
+                                                            </td>
 
-                        <td>
-                            <input
-                                type="text"
-                                name="revision_fpstp_data[{{ $index }}][rev_fpstp_no]"
-                                value="{{ $gtp_data['rev_fpstp_no'] ?? '' }}"
-                                readonly>
-                        </td>
+                                                            <td>
+                                                                <input
+                                                                    type="text"
+                                                                    name="revision_fpstp_data[{{ $index }}][rev_fpstp_no]"
+                                                                    value="{{ $gtp_data['rev_fpstp_no'] ?? '' }}"
+                                                                    readonly>
+                                                            </td>
 
-                        <td>
-                            <input
-                                type="text"
-                                name="revision_fpstp_data[{{ $index }}][change_ctrl_fpstp_no]"
-                                value="{{ $gtp_data['change_ctrl_fpstp_no'] ?? '' }}">
-                        </td>
+                                                            <td>
+                                                                <input
+                                                                    type="text"
+                                                                    name="revision_fpstp_data[{{ $index }}][change_ctrl_fpstp_no]"
+                                                                    value="{{ $gtp_data['change_ctrl_fpstp_no'] ?? '' }}">
+                                                            </td>
 
-                        <td>
-                            <input
-                                type="date"
-                                name="revision_fpstp_data[{{ $index }}][eff_date_fpstp]"
-                                value="{{ $gtp_data['eff_date_fpstp'] ?? '' }}"
-                                readonly>
-                        </td>
+                                                            <td>
+                                                                <input
+                                                                    type="date"
+                                                                    name="revision_fpstp_data[{{ $index }}][eff_date_fpstp]"
+                                                                    value="{{ $gtp_data['eff_date_fpstp'] ?? '' }}"
+                                                                    readonly>
+                                                            </td>
 
-                        <td>
-                            <textarea
-                                name="revision_fpstp_data[{{ $index }}][rev_reason_fpstp]"
-                            >{{ $gtp_data['rev_reason_fpstp'] ?? '' }}</textarea>
-                        </td>
-                    </tr>
+                                                            <td>
+                                                                <textarea
+                                                                    name="revision_fpstp_data[{{ $index }}][rev_reason_fpstp]"
+                                                                >{{ $gtp_data['rev_reason_fpstp'] ?? '' }}</textarea>
+                                                            </td>
+                                                        </tr>
 
-                @endforeach
+                                                    @endforeach
 
-            </tbody>
-        </table>
-    </div>
-</div>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
 
 
-<script>
-$(document).ready(function () {
+                                    <script>
+                                        $(document).ready(function () {
 
-    fetchFpstpRevisionHistory();
+                                            fetchFpstpRevisionHistory();
 
-    function fetchFpstpRevisionHistory() {
+                                            function fetchFpstpRevisionHistory() {
 
-        var documentId = {{ $document->id }};
+                                                var documentId = {{ $document->id }};
 
-        $.ajax({
-            url: '/get-revision-history-fpstp',
-            method: 'GET',
+                                                $.ajax({
+                                                    url: '/get-revision-history-fpstp',
+                                                    method: 'GET',
 
-            data: {
-                document_id: documentId
-            },
+                                                    data: {
+                                                        document_id: documentId
+                                                    },
 
-            success: function (response) {
+                                                    success: function (response) {
 
-                console.log('FPSTP Revision Response:', response);
+                                                        console.log('FPSTP Revision Response:', response);
 
-                if (
-                    response.revision_fpstp_data &&
-                    Array.isArray(response.revision_fpstp_data)
-                ) {
+                                                        if (
+                                                            response.revision_fpstp_data &&
+                                                            Array.isArray(response.revision_fpstp_data)
+                                                        ) {
 
-                    var tbody = $('#revision-history-fpstp');
+                                                            var tbody = $('#revision-history-fpstp');
 
-                    tbody.empty();
+                                                            tbody.empty();
 
-                    response.revision_fpstp_data.forEach(function (fpstphistory, index) {
+                                                            response.revision_fpstp_data.forEach(function (fpstphistory, index) {
 
-                        var row = `
-                            <tr>
+                                                                var row = `
+                                                                    <tr>
 
-                                <td>
-                                    ${index + 1}
-                                </td>
+                                                                        <td>
+                                                                            ${index + 1}
+                                                                        </td>
 
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="revision_fpstp_data[${index}][rev_fpstp_no]"
-                                        value="${fpstphistory.rev_fpstp_no || ''}"
-                                        readonly>
-                                </td>
+                                                                        <td>
+                                                                            <input
+                                                                                type="text"
+                                                                                name="revision_fpstp_data[${index}][rev_fpstp_no]"
+                                                                                value="${fpstphistory.rev_fpstp_no || ''}"
+                                                                                readonly>
+                                                                        </td>
 
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="revision_fpstp_data[${index}][change_ctrl_fpstp_no]"
-                                        value="${fpstphistory.change_ctrl_fpstp_no || ''}">
-                                </td>
+                                                                        <td>
+                                                                            <input
+                                                                                type="text"
+                                                                                name="revision_fpstp_data[${index}][change_ctrl_fpstp_no]"
+                                                                                value="${fpstphistory.change_ctrl_fpstp_no || ''}">
+                                                                        </td>
 
-                                <td>
-                                    <input
-                                        type="date"
-                                        name="revision_fpstp_data[${index}][eff_date_fpstp]"
-                                        value="${fpstphistory.eff_date_fpstp || ''}"
-                                        readonly>
-                                </td>
+                                                                        <td>
+                                                                            <input
+                                                                                type="date"
+                                                                                name="revision_fpstp_data[${index}][eff_date_fpstp]"
+                                                                                value="${fpstphistory.eff_date_fpstp || ''}"
+                                                                                readonly>
+                                                                        </td>
 
-                                <td>
-                                    <textarea
-                                        name="revision_fpstp_data[${index}][rev_reason_fpstp]"
-                                    >${fpstphistory.rev_reason_fpstp || ''}</textarea>
-                                </td>
+                                                                        <td>
+                                                                            <textarea
+                                                                                name="revision_fpstp_data[${index}][rev_reason_fpstp]"
+                                                                            >${fpstphistory.rev_reason_fpstp || ''}</textarea>
+                                                                        </td>
 
-                            </tr>
-                        `;
+                                                                    </tr>
+                                                                `;
 
-                        tbody.append(row);
-                    });
-                }
-            },
+                                                                tbody.append(row);
+                                                            });
+                                                        }
+                                                    },
 
-            error: function (xhr, status, error) {
+                                                    error: function (xhr, status, error) {
 
-                console.log('FPSTP Revision History Error:', error);
-                console.log(xhr.responseText);
+                                                        console.log('FPSTP Revision History Error:', error);
+                                                        console.log(xhr.responseText);
 
-            }
-        });
+                                                    }
+                                                });
 
-    }
+                                            }
 
-});
-</script>
+                                        });
+                                    </script>
                                     
                                 </div>
                             </div>
@@ -13297,8 +13256,8 @@ $(document).ready(function () {
                     <div class="orig-head">
                          GENERAL TESTING PROCEDURE
                         </div>
-                    <div class="input-fields">
-                        <div class="row">
+                            <div class="input-fields">
+                                <div class="row">
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -13461,7 +13420,7 @@ $(document).ready(function () {
                                         </a>
                                     </button>
                                 </div>
-                         </div>
+                        </div>
 
 
     <!---------------------------------------------- RMSTP tab ----------------------------------------->
@@ -19473,33 +19432,50 @@ $(document).ready(function () {
                         $isReadOnly = ($document->status == 'Effective');
                     @endphp
                     <div class="input-fields">
+
                         @if ($document->document_content && !empty($document->document_content->annexuredata))
 
-                                @foreach (unserialize($document->document_content->annexuredata) as $index => $data)
+                            @foreach (unserialize($document->document_content->annexuredata) as $index => $data)
 
-                                    {!! quillEditor(
-                                        "annexuredata[$index]",
-                                        $data,
-                                        '<label>Annexure A-' . ($index + 1) . '</label>',
-                                        $isReadOnly
-                                    ) !!}
+                                <div class="group-input mb-3">
 
-                                @endforeach
+                                    <label for="annexuredata_{{ $index }}">
+                                        Annexure A-{{ $index + 1 }}
+                                    </label>
 
-                            @else
+                                    <textarea
+                                        name="annexuredata[{{ $index }}]"
+                                        id="annexuredata_{{ $index }}"
+                                        class="froala-editor"
+                                        {{ $isReadOnly ? 'readonly' : '' }}
+                                    >{{ $data }}</textarea>
 
-                                @for ($i = 0; $i < 30; $i++)
+                                </div>
 
-                                    {!! quillEditor(
-                                        "annexuredata[$i]",
-                                        '',
-                                        '<label>Annexure A-' . ($i + 1) . '</label>',
-                                        $isReadOnly
-                                    ) !!}
+                            @endforeach
 
-                                @endfor
+                        @else
 
-                            @endif
+                            @for ($i = 0; $i < 30; $i++)
+
+                                <div class="group-input mb-3">
+
+                                    <label for="annexuredata_{{ $i }}">
+                                        Annexure A-{{ $i + 1 }}
+                                    </label>
+
+                                    <textarea
+                                        name="annexuredata[{{ $i }}]"
+                                        id="annexuredata_{{ $i }}"
+                                        class="froala-editor"
+                                        {{ $isReadOnly ? 'readonly' : '' }}
+                                    ></textarea>
+
+                                </div>
+
+                            @endfor
+
+                        @endif
 
                     </div>
                     <div class="button-block">

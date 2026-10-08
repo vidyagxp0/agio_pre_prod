@@ -7075,7 +7075,7 @@ class DocumentController extends Controller
 
         $watermarkText = strtoupper(Helpers::getDocStatusByStage($data->stage, $data->training_required));
 
-        $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
+        $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "normal");
         $fontSize = 25;
         $textWidth = $pdf->getDomPDF()->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
 
@@ -8401,10 +8401,10 @@ class DocumentController extends Controller
 
                         $font = $fontMetrics->get_font(
                             'sans-serif',
-                            'bold'
+                            'normal'
                         );
 
-                        $fontSize = 12;
+                        $fontSize = 9;
 
                         $pageText = sprintf(
                             '%02d of %02d',
@@ -8415,7 +8415,7 @@ class DocumentController extends Controller
 
                         $canvas->text(
                             500,
-                            765,
+                            762,
                             $pageText,
                             $font,
                             $fontSize,
