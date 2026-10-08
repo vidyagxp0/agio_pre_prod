@@ -243,6 +243,14 @@
             padding: 5px 10px;
 
         }
+        table.table-bordered tr,
+        table.table-bordered thead {
+            page-break-inside: avoid;
+        }
+
+        table.table-bordered thead {
+            display: table-header-group;
+        }
 
         table.small-content td,
         table.small-content th {
@@ -292,29 +300,40 @@
        
         @page {
             size: A4;
+            margin: 340px 34px 190px 34px;   /* bottom 160 se 190 kiya */
         }
-
         header {
             position: fixed;
-            top: 0;
+            top: -306px;          /* 340 - 34 = header page ke top se 34px par shuru */
             left: 0;
             width: 100%;
+            height: 300px;        /* header kabhi isse bada nahi hoga */
             z-index: 1000;
         }
 
         body {
-            margin-top: 320px;
-            margin-bottom: 160px;
+            margin: 0;            /* purana margin-top: 320px / margin-bottom: 160px hata diya */
         }
 
         footer {
             position: fixed;
-            bottom: 0;
+            bottom: -156px;      /* 190 - 34 */
             left: 0;
             width: 100%;
             z-index: 1000;
-            margin-top: 20px;
+            background: #fff;    /* kuch dab bhi jaye to peeche ka text na dikhe */
         }
+
+        .hdr-cell {
+            border: 1px solid #000;
+            padding: 4px 6px;
+            font-size: 14px;
+            line-height: 1.25;
+            text-align: left;
+            vertical-align: middle;
+        }
+        .hdr-label { font-weight: bold; white-space: nowrap; }
+        .hdr-clip  { overflow: hidden; }
 
         header .doc-num{
             /* font-weight: bold; */
@@ -473,149 +492,103 @@
 
             background: #fff;
         }
-        
-    </style>
 
-
-    <style>
-        
-       .quill-pdf-content {
-            margin-left: 2.5rem;
-            width: 650px;
-            max-width: 650px;
-            font-size: 12px;
-            line-height: 1.6;
-            text-align: justify;
+        .quill-pdf-content {
+            margin-left: 0;
+            width: 100%;
+            max-width: 100%;
+            font-size: 13px;
+            line-height: 1.5;
+            text-align: left;
             word-wrap: break-word;
             overflow-wrap: break-word;
             box-sizing: border-box;
         }
 
         .quill-pdf-content p {
-            margin: 0 0 12px 0;
-            font-size: 12px;
-            line-height: 1.6;
-            font-weight: normal;
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            line-height: 1.5;
         }
 
         .quill-pdf-content .proc-heading {
-            margin: 18px 0 8px 0;
-            font-size: 12px;
-            line-height: 1.5;
+            margin: 14px 0 6px 0;
             font-weight: bold;
         }
 
-        .quill-pdf-content span {
-            font-size: 12px;
+        .quill-pdf-content h1, .quill-pdf-content h2, .quill-pdf-content h3,
+        .quill-pdf-content h4, .quill-pdf-content h5, .quill-pdf-content h6 {
+            font-size: 14px;
+            line-height: 1.5;
+            font-weight: bold;
+            margin: 14px 0 6px 0;
         }
 
-        .quill-pdf-content h1,
-        .quill-pdf-content h2,
-        .quill-pdf-content h3,
-        .quill-pdf-content h4,
-        .quill-pdf-content h5,
-        .quill-pdf-content h6 {
-            font-size: 12px !important;
-            line-height: 1.5 !important;
-            font-weight: bold !important;
-            margin: 18px 0 8px 0 !important;
+        .quill-pdf-content ul, .quill-pdf-content ol {
+            padding-left: 22px;
+            margin: 2px 0 6px 0;
         }
+        .quill-pdf-content li { font-size: 12px; line-height: 1.5; margin-bottom: 2px; }
 
-        /* Procedure tables */
+        /* TABLES */
         .quill-pdf-content table {
-            width: 100% !important;
-            max-width: 100% !important;
-            border-collapse: collapse !important;
-            border-spacing: 0 !important;
-            table-layout: fixed !important;
-            margin: 10px 0 15px 0 !important;
-            page-break-inside: auto;
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin: 8px 0 12px 0;
         }
 
         .quill-pdf-content table,
-        .quill-pdf-content table tr,
-        .quill-pdf-content table th,
-        .quill-pdf-content table td {
-            border: 1px solid #000 !important;
+        .quill-pdf-content th,
+        .quill-pdf-content td {
+            border: 1px solid #000;
         }
 
-        .quill-pdf-content table th,
-        .quill-pdf-content table td {
-            font-size: 10px !important;
-            line-height: 1.35 !important;
-            padding: 5px !important;
-            vertical-align: top !important;
-            text-align: left !important;
-            word-wrap: break-word !important;
-            overflow-wrap: break-word !important;
-            word-break: break-word !important;
-            white-space: normal !important;
+        .quill-pdf-content table.pdf-borderless,
+        .quill-pdf-content table.pdf-borderless th,
+        .quill-pdf-content table.pdf-borderless td {
+            border: none;
+        }
+        .quill-pdf-content th,
+        .quill-pdf-content td {
+            font-size: 14px;
+            line-height: 1.4;
+            padding: 4px 6px;
+            vertical-align: top;
+            text-align: left;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
         }
 
-        .quill-pdf-content table tr:first-child td,
-        .quill-pdf-content table tr:first-child th {
-            font-weight: bold !important;
-            text-align: center !important;
+        .quill-pdf-content th { font-weight: bold; text-align: center; }
+
+        .quill-pdf-content td p, .quill-pdf-content th p,
+        .quill-pdf-content td div, .quill-pdf-content th div {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            line-height: 1.4;
         }
 
-        .quill-pdf-content table td p,
-        .quill-pdf-content table th p,
-        .quill-pdf-content table td div,
-        .quill-pdf-content table th div,
-        .quill-pdf-content table td span,
-        .quill-pdf-content table th span {
-            font-size: 10px !important;
-            line-height: 1.35 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            text-align: inherit !important;
-        }
+        .quill-pdf-content td span, .quill-pdf-content th span,
+        .quill-pdf-content td li, .quill-pdf-content th li { font-size: 12px; }
 
-        .quill-pdf-content table tr {
-            page-break-inside: avoid;
-            page-break-after: auto;
-        }
+        .quill-pdf-content table tr { page-break-inside: avoid; }
+        .quill-pdf-content table thead { display: table-header-group; }
 
-        .quill-pdf-content table thead {
-            display: table-header-group;
-        }
-
-        .quill-pdf-content table tfoot {
-            display: table-footer-group;
-        }
-
-        .quill-pdf-content table[width] {
-            width: 100% !important;
-        }
-
-        .quill-pdf-content td[width],
-        .quill-pdf-content th[width] {
-            width: auto !important;
-        }
-
-        /* Lists */
-        .quill-pdf-content ul,
-        .quill-pdf-content ol {
-            padding-left: 25px !important;
-            margin: 5px 0 10px 0 !important;
-        }
-
-        .quill-pdf-content li {
-            font-size: 12px !important;
-            line-height: 1.5 !important;
-            margin-bottom: 3px;
-        }
-
-        /* Images */
         .quill-pdf-content img {
             display: block;
-            width: auto !important;
-            max-width: 100% !important;
-            height: auto !important;
-            margin: 8px auto !important;
+            max-width: 100%;
+            height: auto;
+            margin: 6px auto;
             page-break-inside: avoid;
         }
+        
     </style>
+
+
 
 </head>
 
@@ -627,96 +600,56 @@
                 MASTER COPY
             </div>
         @endif
-        <header class="">
-            <table class="border" style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td class="logo w-15">
-                            <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
-                                style="max-height: 55px; max-width: 40px;">
-                        </td>
-                        <td class="title w-60"
-                            style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
-                            <p style="margin: 0; text-align: center; font-weight:bold" >{{ config('site.pdf_title') }}</p>
-                            <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <header>
+            <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+                <colgroup>
+                    <col style="width:16%">   {{-- label column = logo column --}}
+                    <col style="width:44%">   {{-- data column --}}
+                    <col style="width:18%">   {{-- right label --}}
+                    <col style="width:22%">   {{-- right data --}}
+                </colgroup>
 
-            <table class="border border-top-none" style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td class="doc-num">
-                            STANDARD OPERATING PROCEDURE
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table style="width:100%; border-collapse:collapse; border-left:1px solid; border-right:1px solid #000; border-bottom:1px solid #000;" class="border border-top-none">
-                <!-- Department Row -->
+                {{-- ROW 1: Logo | Company name --}}
                 <tr>
-                    <td class="w-20" style="border:1px solid; font-weight:bold; text-align:left; padding:6px; ">
-                        Department:
+                    <td class="hdr-cell" style="text-align:center; vertical-align:middle;">
+                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                            style="max-height:55px; max-width:60px; width:auto;">
                     </td>
-
-                    <td class="w-35" style="border:1px solid; text-align:left; padding:6px;">
-                        {{ Helpers::getFullDepartmentName($data->department_id) }}
-                    </td>
-
-                    <td style="border:1px solid; font-weight:bold; text-align:left; padding:6px;">
-                        Page No.
-                    </td>
-
-                    <td class="w-25" style="border:1px solid; text-align:center; padding:6px;">
-                        
+                    <td class="hdr-cell" colspan="3" style="text-align:center; padding:2px;">
+                        <p style="margin:0; font-weight:bold; font-size:16px;">{{ config('site.pdf_title') }}</p>
+                        <p style="margin:0; font-size:13px;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
                     </td>
                 </tr>
 
-                <!-- Title + SOP -->
+                {{-- ROW 2: SOP heading --}}
                 <tr>
-                    <td rowspan="2"
-                        style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px; vertical-align:middle;">
-                        Title:
-                    </td>
-
-                    <td rowspan="2"
-                        style="border:1px solid #000; text-align:left; padding:6px; vertical-align:middle;">
-                        {{ $data->document_name }}
-                    </td>
-
-                    <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
-                        SOP No.:
-                    </td>
-
-                    <td style="border:1px solid #000; text-align:left; padding:6px;">
-                            @php
-                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-                            @endphp
-                        {{-- @if($document->revised == 'Yes')
-                            @if(in_array($document->sop_type_short,['EOP','IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @endif
-                        @else
-                            @if(in_array($document->sop_type_short,['EOP','IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-00
-                            @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-00
-                            @endif
-                        @endif --}}
-
-                        {{ $data->document_number }}
+                    <td class="hdr-cell" colspan="4" style="text-align:center; font-weight:bold; font-size:13px;">
+                        STANDARD OPERATING PROCEDURE
                     </td>
                 </tr>
 
+                {{-- ROW 3: Department | Page No --}}
                 <tr>
-                    <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
-                        Effective Date:
-                    </td>
+                    <td class="hdr-cell hdr-label">Department:</td>
+                    <td class="hdr-cell">{{ Helpers::getFullDepartmentName($data->department_id) }}</td>
+                    <td class="hdr-cell hdr-label">Page No.</td>
+                    <td class="hdr-cell"></td>
+                </tr>
 
-                    <td style="border:1px solid #000; text-align:left; padding:6px;">
+                {{-- ROW 4-5: Title | SOP No, Effective Date --}}
+                <tr>
+                    <td class="hdr-cell hdr-label" rowspan="2">Title:</td>
+                    <td class="hdr-cell" rowspan="2">
+                        <div class="hdr-clip" style="height:62px;">
+                            {{ \Illuminate\Support\Str::limit($data->document_name, 110) }}
+                        </div>
+                    </td>
+                    <td class="hdr-cell hdr-label">SOP No.:</td>
+                    <td class="hdr-cell">{{ $data->document_number }}</td>
+                </tr>
+                <tr>
+                    <td class="hdr-cell hdr-label">Effective Date:</td>
+                    <td class="hdr-cell">
                         @if ($data->training_required == 'yes')
                             @if ($data->stage >= 11)
                                 {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
@@ -729,43 +662,31 @@
                     </td>
                 </tr>
 
-                <!-- Area + Review -->
+                {{-- ROW 6-7: Area | Next Review, Supersedes --}}
                 <tr>
-                    <td rowspan="2"
-                        style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px; vertical-align:middle;">
-                        Area:
+                    <td class="hdr-cell hdr-label" rowspan="2">Area:</td>
+                    <td class="hdr-cell" rowspan="2">
+                        <div class="hdr-clip" style="height:44px;">
+                            {{ Helpers::getFullDepartmentName($data->department_id) }}
+                        </div>
                     </td>
-
-                    <td rowspan="2"
-                        style="border:1px solid #000; text-align:left; padding:6px; vertical-align:middle;">
-                        {{ Helpers::getFullDepartmentName($data->department_id) }}
-                    </td>
-
-                    <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
-                        Next Review Date:
-                    </td>
-
-                    <td style="border:1px solid #000; text-align:left; padding:6px;">
+                    <td class="hdr-cell hdr-label">Next Review Date:</td>
+                    <td class="hdr-cell">
                         @if($data->stage >= 11)
                             {{ $data->next_review_date ? \Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') : '-' }}
                         @endif
                     </td>
                 </tr>
-
                 <tr>
-                    <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
-                        Supersedes No.:
-                    </td>
-
-                    <td style="border:1px solid #000; text-align:left; padding:6px;">
-                    @if($document->revised == 'Yes' && $document->revised_doc)
-                        {{ $document->supersedes_no ?? 'Nil' }}
-                    @else
-                        Nil
-                    @endif
+                    <td class="hdr-cell hdr-label">Supersedes No.:</td>
+                    <td class="hdr-cell">
+                        @if($document->revised == 'Yes' && $document->revised_doc)
+                            {{ $document->supersedes_no ?? 'Nil' }}
+                        @else
+                            Nil
+                        @endif
                     </td>
                 </tr>
-
             </table>
         </header>
     </div>    
@@ -1226,11 +1147,13 @@
                         </thead>
                     </table>
                     @php
-                        $procedure = $data->document_content->procedure ?? '';
+                        $procedure = \App\Helpers\ProcedureHtml::clean(
+                            Helpers::renderQuillPdf($data->document_content->procedure ?? '')
+                        );
                     @endphp
 
                     <div class="quill-pdf-content">
-                        {!! Helpers::renderQuillPdf($procedure) !!}
+                        {!! $procedure !!}
                     </div>
                 </div>
                 {{-- PROCEDURE END --}}
@@ -2038,15 +1961,15 @@
                             "normal"
                         );
 
-                        $size = 12;
+                        $size = 10;
 
                         $pageNumber = str_pad($PAGE_NUM, 2, "0", STR_PAD_LEFT);
                         $totalPages = str_pad($PAGE_COUNT, 2, "0", STR_PAD_LEFT);
 
                         $pageText = $pageNumber . " of " . $totalPages;
 
-                        $y = 115;
-                        $x = 490;
+                        $y = 100;
+                        $x = 460;
 
                         $pdf->text(
                             $x,
