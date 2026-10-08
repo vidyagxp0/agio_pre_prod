@@ -2688,15 +2688,49 @@
                         </div>
                     </div> -->
 
+                    <style>
+    .input-scroll-wrapper {
+        width: 100%;
+        height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+
+    .input-scroll-wrapper input {
+        width: 2000px !important;
+        height: 100%;
+        border: none;
+        outline: none;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+</style>
+
                 <div id="CCForm11" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="closure_incident">Closure of Incident<span class="text-danger">*</span></label>
-                                    <input type="text" name="closure_incident_c" {{ $istab7 ? "required" : "readonly" }}  value="{{$labnew->closure_incident_c}}">
-                                </div>
-                            </div>
+                              <div class="col-lg-12">
+                <div class="group-input">
+
+                    <label for="closure_incident">
+                        Closure of Incident
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    <div class="input-scroll-wrapper">
+                        <input
+                            type="text"
+                            name="closure_incident_c"
+                            id="closure_incident"
+                            {{ $istab7 ? 'required' : 'readonly' }}
+                            value="{{ $labnew->closure_incident_c }}"
+                        >
+                    </div>
+
+                </div>
+            </div>
 
                             <!-- <div class="col-lg-12">
                                 <div class="group-input">

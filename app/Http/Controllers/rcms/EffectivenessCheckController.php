@@ -27,6 +27,21 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use App\Models\ActionItem;
+
+
+use App\Models\LabIncident;
+use App\Models\Observation;
+use App\Models\InternalAudit;
+
+// use App\Models\CC;
+use App\Models\ManagementReview;
+use App\Models\MarketComplaint;
+use App\Models\Auditee;
+use App\Models\OutOfCalibration;
+use App\Models\OOS;
+use App\Models\RiskManagement;
+
 
 class EffectivenessCheckController extends Controller
 {
@@ -726,7 +741,16 @@ class EffectivenessCheckController extends Controller
     public function show($id)
     {
         $data = EffectivenessCheck::find($id);
-        return view('frontend.effectivenessCheck.view', compact('data'));
+          $due_date_data = LabIncident::where('id', $data->parent_id)->value('due_date') ??
+        Capa::where('id', $data->parent_id)->value('due_date') ??
+        OOS::where('id', $data->parent_id)->value('due_date') ??
+        OutOfCalibration::where('id', $data->parent_id)->value('due_date') ??
+        Auditee::where('id', $data->parent_id)->value('due_date') ??
+        MarketComplaint::where('id', $data->parent_id)->value('due_date_gi') ??
+        CC::where('id', $data->parent_id)->value('due_date') ??
+        InternalAudit::where('id', $data->parent_id)->value('due_date') ??
+        Observation::where('id', $data->parent_id)->value('due_date');
+        return view('frontend.effectivenessCheck.view', compact('data','due_date_data'));
     }
 
     public function edit($id)

@@ -5,6 +5,17 @@
     <!-- Include Choices.js -->
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
+     <style>
+
+            .field-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #222;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+    </style>
 
     <style>
         #fr-logo {
@@ -1780,6 +1791,15 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                     </div>
                                 </div>
 
+                                <div class="col-12 sub-head">
+                                
+                                    <div class="field-title">Specification</div>
+                                    <div class="group-input">
+                                     
+                                        <textarea name="master_specification" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
@@ -1821,13 +1841,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             </div>
                         </div> --}}
 
-                        <div class="col-12 sub-head">
-                            SPECIFICATION
-                            <div class="group-input">
-                                <label for="procedure"></label>
-                                <textarea name="master_specification" class="summernote"></textarea>
-                            </div>
-                        </div>
+                        
 
                         
 
@@ -2627,7 +2641,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 </div> --}}
 
                                 <div class="col-12 sub-head">
-                                    Standard Testing procedure
+                                    <div class="field-title">Standard Testing Procedure</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="mfpstp_specification" class="summernote"></textarea>
@@ -9316,7 +9330,8 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 </div>
 
                                 <div class="col-12 sub-head">
-                                    Standard Testing Procedure
+                                    
+                                     <div class="field-title">Standard Testing Procedure</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="rawmaterials_testing" class="summernote"></textarea>
@@ -10249,7 +10264,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                             </div> -->
 
                             <div class="col-12 sub-head">
-                                    SPECIFICATION
+                                    <div class="field-title">Specification</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="packingmaterial_specification" class="summernote"></textarea>
@@ -10676,7 +10691,8 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
 
                                 <div class="col-12 sub-head">
-                                  A) Summary of Results:-
+                                 
+                                  <div class="field-title">A) Summary of Results</div>
 
                                 {{-- <div class="group-input">
                                     <label for="audit-agenda-grid">
@@ -10717,7 +10733,8 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                    
 
                             <div class="col-12 sub-head">
-                             B) Test wise data and calculation:-
+                            
+                             <div class="field-title"> B) Test wise data and calculation</div>
                                 <div class="group-input">
                                     <label for="procedure"></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -12226,7 +12243,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 </div> --}}
 
                                 <div class="col-12 sub-head">
-                                     Label Claim
+                                        <div class="field-title">Label Claim</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="label_claim" class="summernote"></textarea>
@@ -12257,8 +12274,10 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                     </div>
                                 </div> --}}
 
+                               
+
                                 <div class="col-12 sub-head">
-                                    Sample Quantity for Analysis
+                                     <div class="field-title">Sample Quantity for Analysis</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="sample_quantity" class="summernote"></textarea>
@@ -12293,7 +12312,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
 
                                 <div class="col-12 sub-head">
-                                    SPECIFICATION
+                                       <div class="field-title">Specification</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="fps_specificationGrid" class="summernote"></textarea>
@@ -12479,7 +12498,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 </div> --}}
 
                                 <div class="col-12 sub-head">
-                                     Label Claim
+                                     <div class="field-title">Label Claim</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="label_claim_cvs" class="summernote"></textarea>
@@ -12511,7 +12530,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 </div> --}}
 
                                 <div class="col-12 sub-head">
-                                       Sample Quantity for Analysis
+                                       <div class="field-title">Sample Quantity for Analysis</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="sample_quantity_cvs" class="summernote"></textarea>
@@ -12616,7 +12635,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
 
                             <div class="col-12 sub-head">
-                                 Specification
+                                <div class="field-title">Specification</div>
                                 <div class="group-input">
                                     <label for="procedure"></label>
                                     <textarea name="cvs_specificationGrid" class="summernote"></textarea>
@@ -12738,7 +12757,8 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 </div> --}}
 
                                 <div class="col-12 sub-head">
-                                     Label Claim
+                                    
+                                        <div class="field-title">Label Claim</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="label_claim_inps" class="summernote"></textarea>
@@ -12759,7 +12779,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
 
                                 <div class="col-12 sub-head">
-                                      Sample Quantity for Analysis
+                                     <div class="field-title"> Sample Quantity for Analysis</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="sample_quantity_inps" class="summernote"></textarea>
@@ -12863,7 +12883,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
 
                             <div class="col-12 sub-head">
-                                     Specification
+                                   <div class="field-title">  Specification </div>
                                 <div class="group-input">
                                     <label for="procedure"></label>
                                     <textarea name="ips_specificationGrid" class="summernote"></textarea>
@@ -15382,7 +15402,9 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
 
                                 <div class="col-12 sub-head">
-                                    STANDARD TESTING PROCEDURE
+                                    <div class="field-title">
+                                        Standard Testing Procedure
+                                    </div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -15489,7 +15511,8 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 </div>
 
                                 <div class="col-12 sub-head">
-                                    STANDARD TESTING PROCEDURE
+                                  
+                                     <div class="field-title">Standard Testing Procedure</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -15597,7 +15620,8 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
 
                                 <div class="col-12 sub-head">
-                                    STANDARD TESTING PROCEDURE
+                                   
+                                    <div class="field-title">Standard Testing Procedure</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -19039,7 +19063,8 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 </div> --}}
 
                                 <div class="col-12 sub-head">
-                                     Sampling Procedure
+                                     
+                                     <div class="field-title">Sampling Procedure</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="sampling_procedure_row_material" class="summernote"></textarea>
@@ -19064,7 +19089,8 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 </div> --}}
 
                                 <div class="col-12 sub-head">
-                                    Sample Quantity for Analysis
+                                    
+                                    <div class="field-title">Sample Quantity for Analysis</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="sample_quantity_row_material" class="summernote"></textarea>
@@ -19276,139 +19302,153 @@ if (showReviewerApproverDocs.includes(selectedType)) {
 
                     <div id="distribution-retrieval" class="tabcontent">
                         <div class="orig-head">
-                            Distribution & Retrieval
+                           Distribution, Retrieval & Destruction
                         </div>
-                        {{-- <div class="col-md-12 input-fields">
-                            <div class="group-input">
-                                <label for="distribution" id="distribution">
-                                    Distribution & Retrieval<button type="button" id="distributionbtnadd" >+</button>
-                                </label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <input type="text" name="distribution[]" class="myclassname">
-                                <div id="distributiondiv"></div>
-                            </div>
-                        </div> --}}
-                        <div class="input-fields">
-                            <div class="group-input">
-                                <label for="distriution_retrieval">
-                                    Distribution & Retrieval
-                                    <button type="button" name="    "
-                                        onclick="addDistributionRetrieval('distribution-retrieval-grid')" disabled>+</button>
-                                </label>
-                                <div class="table-responsive retrieve-table">
-                                    <table class="table table-bordered" id="distribution-retrieval-grid">
-                                        <thead>
-                                            <tr>
-                                                <th>Row </th>
-                                                <th>Document Title</th>
-                                                <th>Document Number</th>
-                                                <th>Document Printed By</th>
-                                                <th>Document Printed on</th>
-                                                <th>Number of Print Copies</th>
-                                                <th>Issuance Date</th>
-                                                <th>Issued To </th>
-                                                <th>Department/Location</th>
-                                                <th>Number of Issued Copies</th>
-                                                <th>Reason for Issuance</th>
-                                                <th>Retrieval Date</th>
-                                                <th>Retrieved By</th>
-                                                <th>Retrieved Person Department</th>
-                                                <th>Number of Retrieved Copies</th>
-                                                <th>Reason for Retrieval</th>
-                                                <th>Remarks</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {{-- <tr>
-                                                 <td><input type="text" Value="1" name="distribution[0][serial_number]" readonly>
-                                                 </td>
-                                                 <td><input type="text" name="distribution[0][document_title]">
-                                                 </td>
-                                                 <td><input type="number" name="distribution[0][document_number]">
-                                                 </td>
-                                                 <td><input type="text" name="distribution[0][document_printed_by]">
-                                                 </td>
-                                                 <td><input type="text" name="distribution[0][document_printed_on]">
-                                                 </td>
-                                                 <td><input type="number" name="distribution[0][document_printed_copies]">
-                                                 </td>
-                                                 <td><div class="group-input new-date-data-field mb-0">
-                                                    <div class="input-date "><div
-                                                     class="calenderauditee">
-                                                    <input type="text" id="issuance_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="distribution[0][issuance_date]" class="hide-input"
-                                                    oninput="handleDateInput(this, `issuance_date' + serialNumber +'`)" /></div></div></div>
-                                                </td>
+                       
+                        <div class="table-responsive">
 
-                                                    <td>
-                                                        <select id="select-state" placeholder="Select..."
-                                                            name="distribution[0][issuance_to]">
-                                                            <option value='0'>-- Select --</option>
-                                                            <option value='1'>Amit Guru</option>
-                                                            <option value='2'>Shaleen Mishra</option>
-                                                            <option value='3'>Madhulika Mishra</option>
-                                                            <option value='4'>Amit Patel</option>
-                                                            <option value='5'>Harsh Mishra</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select id="select-state" placeholder="Select..."
-                                                            name="distribution[0][location]">
-                                                            <option value='0'>-- Select --</option>
-                                                            <option value='1'>Tech Team</option>
-                                                            <option value='2'>Quality Assurance</option>
-                                                            <option value='3'>Quality Management</option>
-                                                            <option value='4'>IT Administration</option>
-                                                            <option value='5'>Business Administration</option>
-                                                        </select>
-                                                    </td>
-                                                <td><input type="number" name="distribution[0][issued_copies]">
-                                                </td>
-                                                <td><input type="text" name="distribution[0][issued_reason]">
-                                                </td>
-                                                <td><div class="group-input new-date-data-field mb-0">
-                                                    <div class="input-date "><div
-                                                     class="calenderauditee">
-                                                    <input type="text" id="retrieval_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="distribution[0][retrieval_date]" class="hide-input"
-                                                    oninput="handleDateInput(this, `retrieval_date' + serialNumber +'`)" /></div></div></div>
-                                                </td>
-                                                <td>
-                                                    <select id="select-state" placeholder="Select..."
-                                                        name="distribution[0][retrieval_by]">
-                                                        <option value="">Select a value</option>
-                                                        <option value='1'>Amit Guru</option>
-                                                        <option value='2'>Shaleen Mishra</option>
-                                                        <option value='3'>Madhulika Mishra</option>
-                                                        <option value='4'>Amit Patel</option>
-                                                        <option value='5'>Harsh Mishra</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select id="select-state" placeholder="Select..."
-                                                        name="distribution[0][retrieved_department]">
-                                                        <option value='0'>-- Select --</option>
-                                                        <option value='1'>Tech Team</option>
-                                                        <option value='2'>Quality Assurance</option>
-                                                        <option value='3'>Quality Management</option>
-                                                        <option value='4'>IT Administration</option>
-                                                        <option value='5'>Business Administration</option>
-                                                    </select>
-                                                </td>
-                                                <td><input type="number" name="distribution[0][retrieved_copies]">
-                                                </td>
-                                                <td><input type="text" name="distribution[0][retrieved_reason]">
-                                                </td>
-                                                <td><input type="text" name="distribution[0][remark]">
-                                                </td>
-                                                <td></td>
-                                        </tr> --}}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                            <table class="table table-bordered" id="distribution-retrieval-grid">
+
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2">Sr. No.</th>
+
+                                        <th colspan="10">Distribution</th>
+
+                                        <th colspan="4">Retrieval / Usage</th>
+
+                                        <th colspan="3">Destruction</th>
+                                    </tr>
+
+                                    <tr>
+                                        {{-- Distribution --}}
+                                        <th>Doc. Title</th>
+                                        <th>Doc. No.</th>
+                                        <th>Request ID</th>
+                                        <th>Copy No.</th>
+                                        <th>Issued By</th>
+                                        <th>Issued Date</th>
+                                        <th>No. of Copies Issued</th>
+                                        <th>Issued To</th>
+                                        <th>Department</th>
+                                        <th>Issued Reason</th>
+
+                                        {{-- Retrieval / Usage --}}
+                                        <th>Retrieved / Used</th>
+                                        <th>Retrieved / Used By</th>
+                                        <th>Retrieved / Used Date</th>
+                                        <th>Reason</th>
+
+                                        {{-- Destruction --}}
+                                        <th>Destructed By</th>
+                                        <th>Destruction Date</th>
+                                        <th>Reason</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+                                        <td colspan="18" class="text-center">
+                                            No distribution record found.
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
                         </div>
+                        <style>
+                            #distribution-retrieval-grid {
+                                width: 100%;
+                                min-width: 2250px;
+                                border-collapse: collapse !important;
+                                border: 1px solid #000 !important;
+                            }
+
+                            #distribution-retrieval-grid thead,
+                            #distribution-retrieval-grid tbody,
+                            #distribution-retrieval-grid tr {
+                                border: 1px solid #000 !important;
+                            }
+
+                            #distribution-retrieval-grid th,
+                            #distribution-retrieval-grid td {
+                                border: 1px solid #000 !important;
+                                padding: 7px !important;
+                                vertical-align: middle !important;
+                            }
+
+                            #distribution-retrieval-grid thead th {
+                                background-color: #d9e3f4;
+                                text-align: center !important;
+                                font-weight: 600;
+                                color: #000;
+                                white-space: nowrap;
+                            }
+
+                            #distribution-retrieval-grid tbody td {
+                                background-color: #fff;
+                            }
+
+                            #distribution-retrieval-grid input,
+                            #distribution-retrieval-grid select,
+                            #distribution-retrieval-grid textarea {
+                                width: 100%;
+                                min-width: 125px;
+                                border: 1px solid #999 !important;
+                                border-radius: 2px;
+                                padding: 6px;
+                                box-sizing: border-box;
+                            }
+
+                            #distribution-retrieval-grid textarea {
+                                min-height: 62px;
+                                resize: vertical;
+                            }
+
+                            #distribution-retrieval-grid .grid-readonly-field {
+                                background-color: #f3f3f3 !important;
+                                border: 1px solid #aaa !important;
+                                color: #333 !important;
+                                cursor: not-allowed;
+                            }
+
+                            #distribution-retrieval-grid .grid-editable-field,
+                            #distribution-retrieval-grid .grid-editable-textarea {
+                                background-color: #fff !important;
+                                color: #000 !important;
+                            }
+
+                            #distribution-retrieval-grid select:disabled {
+                                background-color: #f3f3f3 !important;
+                                color: #333 !important;
+                                opacity: 1;
+                                cursor: not-allowed;
+                            }
+
+                            .grid-date-wrapper {
+                                position: relative;
+                                width: 100%;
+                            }
+
+                            .grid-hidden-date {
+                                position: absolute;
+                                width: 1px !important;
+                                min-width: 1px !important;
+                                height: 1px !important;
+                                opacity: 0;
+                                pointer-events: none;
+                                bottom: 0;
+                                left: 0;
+                            }
+
+                            #distribution-retrieval-grid .text-center {
+                                text-align: center !important;
+                            }
+                        </style>
+                      
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>

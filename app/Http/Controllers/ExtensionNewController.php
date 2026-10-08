@@ -6,6 +6,7 @@ use App\Models\Auditee;
 use App\Models\Capa;
 use App\Models\Deviation;
 use App\Models\CC;
+use App\Models\ActionItem;
 use App\Models\extension_new;
 use App\Models\EffectivenessCheck;
 use App\Models\extension_new_audit_trail;
@@ -2070,6 +2071,13 @@ class ExtensionNewController extends Controller
                                 case 'CC':
                                     CC::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange1]);
+
+                                      // 2. Is Change Control ke saare Action Items ki due date update
+                                    // ActionItem::where('parent_id', $extensionNew->parent_id)
+                                    //     ->where('parent_type', 'CC')
+                                    //     ->update([
+                                    //         'due_date' => $proposedDatechange1
+                                    //     ]);
                                     break;
 
                                 case 'CAPA':
@@ -2091,6 +2099,16 @@ class ExtensionNewController extends Controller
                                     OutOfCalibration::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
+
+                               case 'EffectivenessCheck':
+
+   
+                                EffectivenessCheck::where('id', $extensionNew->parent_id)
+                                    ->update([
+                                        'due_date' => $proposedDatechange
+                                    ]);
+
+                                break;
 
                                 case 'OOS Chemical':
                                 case 'OOS Micro':
@@ -2248,6 +2266,13 @@ class ExtensionNewController extends Controller
                                 case 'CC':
                                     CC::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange1]);
+
+                                         // 2. Is Change Control ke saare Action Items ki due date update
+                                    ActionItem::where('parent_id', $extensionNew->parent_id)
+                                        ->where('parent_type', 'CC')
+                                        ->update([
+                                            'due_date' => $proposedDatechange1
+                                        ]);
                                     break;
 
                                 case 'CAPA':
@@ -2270,6 +2295,14 @@ class ExtensionNewController extends Controller
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
 
+                                     case 'EffectivenessCheck':
+
+                                EffectivenessCheck::where('id', $extensionNew->parent_id)
+                                    ->update([
+                                        'due_date' => $proposedDatechange
+                                    ]);
+
+                                break;
                                 case 'OOS Chemical':
                                 case 'OOS Micro':
                                 case 'OOT':
