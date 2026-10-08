@@ -2372,41 +2372,8 @@
                                             });
 
                                             </script>
-                                                    {{-- <script>
-                                                        document.addEventListener('DOMContentLoaded', function() {
-                                                            const typeIncidenceSelect = document.getElementById('Incident_Category_data');
-                                                            const otherIncidenceDiv = document.getElementById('other_incidence_data');
-
-                                                            function toggleOtherIncidence() {
-                                                                if (typeIncidenceSelect.value === 'Other') {
-                                                                    otherIncidenceDiv.style.display = 'block';
-                                                                } else {
-                                                                    otherIncidenceDiv.style.display = 'none';
-                                                                }
-                                                            }
-
-                                                            typeIncidenceSelect.addEventListener('change', toggleOtherIncidence);
-
-                                                            // Initial check on page load
-                                                            toggleOtherIncidence();
-                                                        });
-                                                    </script> --}}
-                            <!-- <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="search">
-                                                QC Head/HOD Person <span class="text-danger"></span>
-                                            </label>
-                                            <select id="select-state" placeholder="Select..." name="qc_head" {{ $data->stage == 0 || $data->stage == 1 || $data->stage >= 3 ? "readonly" : "" }}>
-                                                <option value="">--Select--</option>
-                                                @foreach ($users as $key=> $value)
-                                                    <option  @if ($data->qc_head == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('qc_head')
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div> -->
+                                                 
+                        
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Incident Category">QC Head/HOD Secondary Review Comments  @if($data->stage==5)<span class="text-danger">*</span>

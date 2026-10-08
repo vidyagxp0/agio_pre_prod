@@ -735,6 +735,7 @@ class ActionItemController extends Controller
         MarketComplaint::where('id', $data->parent_id)->value('due_date_gi') ??
         CC::where('id', $data->parent_id)->value('due_date') ??
         InternalAudit::where('id', $data->parent_id)->value('due_date') ??
+        EffectivenessCheck::where('id', $data->parent_id)->value('due_date') ??
         Observation::where('id', $data->parent_id)->value('due_date');
 
 // Use null coalescing operator (??) to stop at the first non-null value.

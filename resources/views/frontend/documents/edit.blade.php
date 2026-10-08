@@ -1,5 +1,16 @@
 @extends('frontend.layout.main')
 @section('container')
+  <style>
+
+            .field-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #222;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+    </style>
 <link href="https://cdn.jsdelivr.net/npm/froala-editor@4.6.2/css/froala_editor.pkgd.min.css" rel="stylesheet">
     <style>
         #fr-logo {
@@ -4207,7 +4218,8 @@
 
 
                             <div class="col-12 sub-head">
-                                A) Summary of Results
+                               
+                                <div class="field-title"> A) Summary of Results</div>
 
                                 {!! quillEditor(
                                     'tds_result',
@@ -4522,7 +4534,8 @@
                                 </div>
 
                                 <div class="col-12 sub-head">
-                                    Label Claim
+                                   
+                                    <div class="field-title">Label Claim</div>
 
                                     {!! quillEditor(
                                         'label_claim',
@@ -4572,7 +4585,8 @@
                                 </div>
          
                                 <div class="col-12 sub-head">
-                                    Sample Quantity for Analysis
+                                    
+                                    <div class="field-title">Sample Quantity for Analysis</div>
 
                                     {!! quillEditor(
                                         'sample_quantity',
@@ -4634,7 +4648,7 @@
                                 </div>
 
                                 <div class="col-12 sub-head">
-                                    SPECIFICATION
+                                     <div class="field-title">Specification</div>
 
                                     {!! quillEditor(
                                         'fps_specificationGrid',
@@ -4861,7 +4875,8 @@
                                 </div>
 
                                 <div class="col-12 sub-head">
-                                    Label Claim
+                                   
+                                      <div class="field-title">Label Claim</div>
 
                                     {!! quillEditor(
                                         'label_claim_cvs',
@@ -4910,7 +4925,9 @@
                                 </div>
    
                                 <div class="col-12 sub-head">
-                                    Sample Quantity for Analysis
+                                  
+
+                                      <div class="field-title">Sample Quantity for Analysis</div>
 
                                     {!! quillEditor(
                                         'sample_quantity_cvs',
@@ -4968,8 +4985,8 @@
 
     
                         <div class="col-12 sub-head">
-                            Specification
-
+                            
+                         <div class="field-title">Specification</div>
                             {!! quillEditor(
                                 'cvs_specificationGrid',
                                 $document->cvs_specificationGrid ?? '',
@@ -5186,7 +5203,8 @@
     
 
                                 <div class="col-12 sub-head">
-                                    Label Claim
+                                  
+                                      <div class="field-title">Label Claim</div>
 
                                     {!! quillEditor(
                                         'label_claim_inps',
@@ -5235,7 +5253,8 @@
                                 </div>
 
                                 <div class="col-12 sub-head">
-                                    Sample Quantity for Analysis
+                                    
+                                      <div class="field-title">Sample Quantity for Analysis</div>
 
                                     {!! quillEditor(
                                         'sample_quantity_inps',
@@ -5297,7 +5316,8 @@
 
 
                             <div class="col-12 sub-head">
-                                Specification
+                               
+                                  <div class="field-title">Specification</div>
 
                                 {!! quillEditor(
                                     'ips_specificationGrid',
@@ -7598,9 +7618,9 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                <div class="">
+                                <!-- <div class="">
                                   PRODUCT DETAILS
-                                </div>  <br>
+                                </div>  <br> -->
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -11200,7 +11220,8 @@
                                     </div>
 
                                     <div class="col-12 sub-head">
-                                           STANDARD TESTING PROCEDURE
+                                           
+                                           <div class="field-title">Standard Testing Procedure</div>
                                         {!! quillEditor(
                                             'ipstp_testfield',
                                             $document->document_content->ipstp_testfield ?? '',
@@ -11367,7 +11388,7 @@
                                     </div>
 
                                     <div class="col-12 sub-head">
-                                           STANDARD TESTING PROCEDURE
+                                           <div class="field-title">Standard Testing Procedure</div>
                                         {!! quillEditor(
                                             'cvstp_testfield',
                                             $document->document_content->cvstp_testfield ?? '',
@@ -11707,7 +11728,8 @@
                                 </div>
 
                                 <div class="col-12 sub-head">
-                                     Standard Testing Procedure
+                                    
+                                     <div class="field-title"> Standard Testing Procedure</div>
                                     {!! quillEditor(
                                         'rawmaterials_testing',
                                         $document->rawmaterials_testing ?? '',
@@ -13686,7 +13708,8 @@
 
 
                                     <div class="col-12 sub-head">
-                                        SPECIFICATION
+                                        
+                                        <div class="field-title">SPECIFICATION</div>
                                         {!! quillEditor(
                                             'packingmaterial_specification',
                                             $document->packingmaterial_specification ?? '',
@@ -16128,11 +16151,11 @@
                                         </div>
 
                                         <!-- View Attachments Button -->
-                                        <a href="{{ route('view.attachments', $document->id) }}"
+                                        <!-- <a href="{{ route('view.attachments', $document->id) }}"
                                         target="_blank"
                                         class="btn btn-primary mt-3">
                                             View Attachments
-                                        </a>
+                                        </a> -->
 
                                     </div>
                                 </div>
@@ -16934,7 +16957,8 @@
                                 </div>
 
                                 <div class="col-12 sub-head">
-                                    Molecular Formula
+                                   
+                                      <div class="field-title">Molecular Formula</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="molecular_formula_row_material" id="" class="summernote">{{ $document->molecular_formula_row_material ? $document->molecular_formula_row_material : '' }}</textarea>
@@ -16942,7 +16966,8 @@
                                 </div>
 
                                 <div class="col-12 sub-head">
-                                     Molecular Weight
+                                     
+                                       <div class="field-title">Molecular Weight</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="molecular_weight_row_material" id="" class="summernote">{{ $document->molecular_weight_row_material ? $document->molecular_weight_row_material : '' }}</textarea>
@@ -16964,7 +16989,8 @@
         
 
                                 <div class="col-12 sub-head">
-                                      Sampling Procedure
+                                     
+                                        <div class="field-title"> Sampling Procedure</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="sampling_procedure_row_material" id="summernote" class="summernote">{{ $document->sampling_procedure_row_material ? $document->sampling_procedure_row_material : '' }}</textarea>
@@ -16995,7 +17021,8 @@
 
 
                                 <div class="col-12 sub-head">
-                                    Sample Quantity for Analysis
+                                   
+                                    <div class="field-title">Sample Quantity for Analysis</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="sample_quantity_row_material" id="summernote" class="summernote">{{ $document->sample_quantity_row_material ? $document->sample_quantity_row_material : '' }}</textarea>
@@ -17038,7 +17065,8 @@
                                 </div> --}}
 
                                 <div class="col-12 sub-head">
-                                    Sampling Instructions, Warnings, and Precautions
+                                    
+                                    <div class="field-title">Sampling Instructions, Warnings, and Precautions</div>
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <textarea name="sampling_instructions_row_material" id="" class="summernote">{{ $document->sampling_instructions_row_material ? $document->sampling_instructions_row_material : '' }}</textarea>
