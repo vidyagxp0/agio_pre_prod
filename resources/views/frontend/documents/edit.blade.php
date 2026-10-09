@@ -1,8 +1,8 @@
 @extends('frontend.layout.main')
 @section('container')
-  <style>
+    <style>
 
-            .field-title {
+        .field-title {
             font-size: 14px;
             font-weight: 500;
             color: #222;
@@ -11,7 +11,7 @@
         }
 
     </style>
-<link href="https://cdn.jsdelivr.net/npm/froala-editor@4.6.2/css/froala_editor.pkgd.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/froala-editor@4.6.2/css/froala_editor.pkgd.min.css" rel="stylesheet">
     <style>
         #fr-logo {
             display: none;

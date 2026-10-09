@@ -255,114 +255,50 @@
     </style>
 
     <style>
-        #isPasted {
-            width: 100% !important;
-            max-width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-
-        #isPasted td:first-child,
-        #isPasted th:first-child {
-            white-space: normal;
-            width: auto;
-            vertical-align: top;
-        }
-
-        #isPasted td:last-child,
-        #isPasted th:last-child {
-            width: auto;
-            vertical-align: top;
-        }
-
-        #isPasted th,
-        #isPasted td {
-            border: 1px solid #000 !important;
-            padding: 8px;
-            text-align: left;
-            max-width: 100%;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        #isPasted td > p {
-            text-align: justify;
-            text-justify: inter-word;
-            margin: 0;
-            max-width: 100%;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        #isPasted td > p span {
-            display: inline-block;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        #isPasted img {
-            max-width: 100% !important;
-            height: auto;
-            display: block;
-            margin: 5px auto;
-        }
-
-        #isPasted td img {
-            max-width: 100% !important;
-            height: auto;
-            margin: 5px auto;
-        }
-
-        .table-containers {
-            width: 100%;
-            max-width: 100%;
-            overflow-x: hidden;
-        }
-
-        #isPasted table {
-            width: 100% !important;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-
-        #isPasted table th,
-        #isPasted table td {
-            border: 1px solid #000 !important;
-            padding: 8px;
-            text-align: left;
-            max-width: 100%;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        #isPasted table img {
-            max-width: 100% !important;
-            height: auto;
-            display: block;
-            margin: 5px auto;
-        }
-
         .quill-pdf-content {
+            margin-left: 0;
             width: 100%;
             max-width: 100%;
-            font-size: 12px;
-            line-height: 1.4;
-            box-sizing: border-box;
-            overflow-wrap: break-word;
+            font-size: 13px;
+            line-height: 1.5;
+            text-align: left;
             word-wrap: break-word;
+            overflow-wrap: break-word;
+            box-sizing: border-box;
         }
 
         .quill-pdf-content p {
-            margin: 5px 0;
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            line-height: 1.5;
         }
 
+        .quill-pdf-content .proc-heading {
+            margin: 14px 0 6px 0;
+            font-weight: bold;
+        }
+
+        .quill-pdf-content h1, .quill-pdf-content h2, .quill-pdf-content h3,
+        .quill-pdf-content h4, .quill-pdf-content h5, .quill-pdf-content h6 {
+            font-size: 14px;
+            line-height: 1.5;
+            font-weight: bold;
+            margin: 14px 0 6px 0;
+        }
+
+        .quill-pdf-content ul, .quill-pdf-content ol {
+            padding-left: 22px;
+            margin: 2px 0 6px 0;
+        }
+        .quill-pdf-content li { font-size: 12px; line-height: 1.5; margin-bottom: 2px; }
+
+        /* TABLES */
         .quill-pdf-content table {
             width: 100%;
-            max-width: 100%;
             table-layout: fixed;
             border-collapse: collapse;
-            margin-top: 10px;
-            margin-bottom: 10px;
+            border-spacing: 0;
+            margin: 8px 0 12px 0;
         }
 
         .quill-pdf-content table,
@@ -371,47 +307,45 @@
             border: 1px solid #000;
         }
 
-        .quill-pdf-content td,
-        .quill-pdf-content th {
-            padding: 5px;
+        .quill-pdf-content table.pdf-borderless,
+        .quill-pdf-content table.pdf-borderless th,
+        .quill-pdf-content table.pdf-borderless td {
+            border: none;
+        }
+        .quill-pdf-content th,
+        .quill-pdf-content td {
+            font-size: 14px;
+            line-height: 1.4;
+            padding: 4px 6px;
             vertical-align: top;
+            text-align: left;
             word-wrap: break-word;
             overflow-wrap: break-word;
+            white-space: normal;
         }
+
+        .quill-pdf-content th { font-weight: bold; text-align: center; }
+
+        .quill-pdf-content td p, .quill-pdf-content th p,
+        .quill-pdf-content td div, .quill-pdf-content th div {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .quill-pdf-content td span, .quill-pdf-content th span,
+        .quill-pdf-content td li, .quill-pdf-content th li { font-size: 12px; }
+
+        .quill-pdf-content table tr { page-break-inside: avoid; }
+        .quill-pdf-content table thead { display: table-header-group; }
 
         .quill-pdf-content img {
+            display: block;
             max-width: 100%;
             height: auto;
-        }
-
-        .quill-pdf-content ul,
-        .quill-pdf-content ol {
-            padding-left: 20px;
-        }
-
-        .quill-pdf-content strong,
-        .quill-pdf-content b {
-            font-weight: bold;
-        }
-
-        /* Quill se aaye inline font/size/color ko document ke style par force karo */
-        .quill-pdf-content,
-        .quill-pdf-content * {
-            font-family: "Open Sans", "Roboto", "Noto Sans KR", "Poppins", sans-serif !important;
-            font-size: 12px !important;
-            color: #000 !important;
-            background-color: transparent !important;
-            line-height: 1.4 !important;
-        }
-
-        .quill-pdf-content strong,
-        .quill-pdf-content b {
-            font-weight: bold !important;
-        }
-
-        .quill-pdf-content em,
-        .quill-pdf-content i {
-            font-style: italic !important;
+            margin: 6px auto;
+            page-break-inside: avoid;
         }
 
         .master-copy {
@@ -437,33 +371,33 @@
     </style>
 
     <style>
-     .first-page-stp {
-    width: 100%;
-    margin: -20pt 0 10px 0;   /* sirf yahin negative margin */
-    padding: 0;
-    page-break-inside: avoid;
-    break-inside: avoid;
-}
+        .first-page-stp {
+            width: 100%;
+            margin: -20pt 0 10px 0;   /* sirf yahin negative margin */
+            padding: 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
 
-.first-page-stp table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
-    margin: 0;
-}
+        .first-page-stp table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            margin: 0;
+        }
 
-.first-page-stp td {
-    padding: 5px;
-    border: 1px solid #000;
-    text-align: left;
-    font-weight: bold;
-    /* font-size hata diya: header ke Supersedes No. wala default size lega */
-}
+        .first-page-stp td {
+            padding: 5px;
+            border: 1px solid #000;
+            text-align: left;
+            font-weight: bold;
+            /* font-size hata diya: header ke Supersedes No. wala default size lega */
+        }
 
-.first-page-content {
-    width: 100%;
-    margin-top: 0;            /* -20pt hata diya */
-}
+        .first-page-content {
+            width: 100%;
+            margin-top: 0;            /* -20pt hata diya */
+        }
     </style>
 </head>
 <body>
