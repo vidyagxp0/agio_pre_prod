@@ -494,7 +494,8 @@
                                     </div>
                                 </div>
                                 <input type="hidden" name="sop_type_short" id="sop_type_short">
-
+                   
+                            {{--
                                 <div class="col-md-4 new-date-data-field" id="dueDateContainer" style="display: none;">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger" id="dueDateRequired" style="display: none;">*</span></label>
@@ -509,10 +510,12 @@
                                                 oninput="handleDateInput(this, 'due_dateDoc')" />
                                         </div>
                                     </div>
+                                    
                                     <p id="due_dateDocError" style="color:red; display: none;">**Due Date is required</p>
 
                                 </div>
-
+                    
+                           
                                 <div class="col-md-8" id="notifyContainer" style="display: none;">
                                     <div class="group-input">
                                         <label for="notify_to">Notify To</label>
@@ -526,6 +529,7 @@
                                         </select>
                                     </div>
                                 </div>
+                            --}}
 
                             </div>
                         </div>
@@ -804,8 +808,8 @@
                                         const sopTypeContainer = document.getElementById('sopTypeContainer');
                                         const sopType = document.getElementById('sop_type');
 
-                                        const dueDateContainer = document.getElementById('dueDateContainer');
-                                        const dueDateInput = document.getElementById('due_dateDoc');
+                                       // const dueDateContainer = document.getElementById('dueDateContainer');
+                                     //   const dueDateInput = document.getElementById('due_dateDoc');
 
                                         // const departContainer = document.getElementById('departContainer');
                                         // const departInput = document.getElementById('depart-name');
@@ -813,7 +817,7 @@
                                         const docVerContainer = document.getElementById('docVerContainer');
                                         const majorInput = document.getElementById('major');
 
-                                        const notifyContainer = document.getElementById('notifyContainer');
+                                        // const notifyContainer = document.getElementById('notifyContainer');
                                         const keywordContainer = document.getElementById('keywordsContainer');
 
                                         const docLangContainer = document.getElementById('docLangContainer');
@@ -911,10 +915,11 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                             sopTypeRequired.style.display = 'inline';
 
 
-                                            dueDateContainer.style.display = 'block';
-                                            dueDateInput.setAttribute('required', 'required');
-                                            dueDateRequired.style.display = 'inline';
+                                          //  dueDateContainer.style.display = 'block';
+                                           // dueDateInput.setAttribute('required', 'required');
+                                           // dueDateRequired.style.display = 'inline';
 
+                                            
                                             // departContainer.style.display = 'block';
                                             // departInput.setAttribute('required', 'required');
                                             // dueDateRequired.style.display = 'inline';
@@ -922,7 +927,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                             docVerContainer.style.display = 'block';
                                             majorInput.setAttribute('required', 'required');
 
-                                            notifyContainer.style.display = 'block';
+                                           // notifyContainer.style.display = 'block';
                                             effectiveContainer.style.display = 'block';
                                             reviewContainer.style.display = 'block';
                                             nextReviewContainer.style.display = 'block';
@@ -963,9 +968,9 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                             sopType.removeAttribute('required');
                                             sopType.value = '';
 
-                                            dueDateContainer.style.display = 'none';
-                                            dueDateInput.removeAttribute('required');
-                                            dueDateInput.value = '';
+                                            // dueDateContainer.style.display = 'none';
+                                            // dueDateInput.removeAttribute('required');
+                                            // dueDateInput.value = '';
 
                                             // departContainer.style.display = 'none';
                                             // departInput.removeAttribute('required');
@@ -975,7 +980,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                             majorInput.removeAttribute('required');
                                             majorInput.value = '';
 
-                                            notifyContainer.style.display = 'none';
+                                            //notifyContainer.style.display = 'none';
                                             effectiveContainer.style.display = 'none';
                                             nextReviewContainer.style.display = 'none';
                                             reviewContainer.style.display = 'none';

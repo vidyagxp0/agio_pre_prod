@@ -2622,7 +2622,7 @@ class RiskManagementController extends Controller
                 $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
                 $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
                 $Cft->Microbiology_Review = $request->Microbiology_Review;
-                $Cft->Microbiology_person = $request->ProductionLiquid_person;
+                $Cft->Microbiology_person = $request->Microbiology_person;
                 $Cft->Engineering_review = $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person;
                 $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;

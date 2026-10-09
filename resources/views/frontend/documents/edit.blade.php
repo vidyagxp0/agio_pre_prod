@@ -550,7 +550,7 @@
                                         updateSopTypeShort();
                                     }
                                 </script>
-
+                {{--
                         @if($document->document_type_id == 'SOP')   
                             <div class="col-md-4 new-date-data-field">
                                 <div class="group-input input-date">
@@ -641,7 +641,8 @@
                                 <p id="due_dateDocError" style="color:red; display: none;">**Due Date is required</p>
                                 </div>
                             @endif 
-
+                    --}}
+                        {{--    
                             @if($document->document_type_id == 'SOP') 
                             <div class="col-md-8">
                                 <div class="group-input">
@@ -706,7 +707,7 @@
                                             <option value="{{ $data->id }}"
                                                 {{ in_array($data->id, $notify_user_id) ? 'selected' : '' }}>
                                                 {{ $data->name }}
-                                                {{-- ({{ $data->role }}) --}}
+                                              
                                             </option>
                                         @endforeach
                                     </select>
@@ -745,7 +746,7 @@
                                     </div>
                                 </div>
                             @endif
-
+                      --}}
                         </div>
                     </div>
                     <div class="orig-head">
@@ -766,7 +767,7 @@
                                         >
                                     </div>
                                 </div>
-
+                    {{--
                             @if($document->document_type_id == 'SOP') 
                             <div class="col-md-6">
                                 <div class="group-input">
@@ -891,7 +892,7 @@
                                 </div>
                             @endif
                         
-
+                    --}}
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="depart-name">Department Name</label>
@@ -3235,6 +3236,7 @@
                                             class="froala-editor"
                                         >{{ old('master_specification', $document->master_specification ?? '') }}</textarea>
                                     </div>
+                                    
 
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
@@ -4217,24 +4219,34 @@
                                 </div>
 
 
-                            <div class="col-12 sub-head">
-                               
-                                <div class="field-title"> A) Summary of Results</div>
+                            
 
-                                {!! quillEditor(
-                                    'tds_result',
-                                    $document->document_content->tds_result ?? '',
-                                    '
-                                    <label></label>
+
+                          
+                            <div class="col-12 sub-head">
+
+                                <div class="field-title">A) Summary of Results</div>
+
+                                <div class="group-input">
+                                    <label for="tds_result"></label>
+
                                     <div>
                                         <small class="text-primary">
                                             Please insert "NA" in the data field if it does not require completion
                                         </small>
                                     </div>
-                                    ',
-                                    false
-                                ) !!}
+
+                                    <textarea
+                                        name="tds_result"
+                                        id="tds_result"
+                                        class="froala-editor">{{ old('tds_result', $document->document_content->tds_result ?? '') }}</textarea>
+                                </div>
+
                             </div>
+
+
+
+
                              
                         
                             <div class="col-md-12">
@@ -4245,21 +4257,24 @@
                             </div>
 
                             <div class="col-12 sub-head">
-                                B) Test wise data and calculation:-
 
-                                {!! quillEditor(
-                                    'tds_test_wise',
-                                    $document->document_content->tds_test_wise ?? '',
-                                    '
-                                    <label></label>
+                                <div class="field-title">B) Test wise data and calculation</div>
+
+                                <div class="group-input">
+                                    <label for="tds_test_wise"></label>
+
                                     <div>
                                         <small class="text-primary">
                                             Please insert "NA" in the data field if it does not require completion
                                         </small>
                                     </div>
-                                    ',
-                                    false
-                                ) !!}
+
+                                    <textarea
+                                        name="tds_test_wise"
+                                        id="tds_test_wise"
+                                        class="froala-editor">{{ old('tds_test_wise', $document->document_content->tds_test_wise ?? '') }}</textarea>
+                                </div>
+
                             </div>
 
                             <div class="orig-head">
@@ -4537,16 +4552,10 @@
                                    
                                     <div class="field-title">Label Claim</div>
 
-                                    {!! quillEditor(
-                                        'label_claim',
-                                        $document->label_claim ?? '',
-
-                                        '
-                                        <label for="label_claim"></label>
-                                        ',
-
-                                        false
-                                    ) !!}
+                                        <div class="group-input">
+                                            <textarea name="label_claim" id="label_claim"
+                                                class="froala-editor">{{ old('label_claim', $document->label_claim ?? '') }}</textarea>
+                                        </div>
 
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
@@ -4588,17 +4597,12 @@
                                     
                                     <div class="field-title">Sample Quantity for Analysis</div>
 
-                                    {!! quillEditor(
-                                        'sample_quantity',
-                                        $document->sample_quantity ?? '',
+                                    
 
-                                        '
-                                        <label for="sample_quantity"></label>
-                                        ',
-
-                                        false
-                                    ) !!}
-
+                                        <div class="group-input">
+                                            <textarea name="sample_quantity" id="sample_quantity"
+                                                class="froala-editor">{{ old('sample_quantity', $document->sample_quantity ?? '') }}</textarea>
+                                        </div>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                             @php
@@ -4650,16 +4654,10 @@
                                 <div class="col-12 sub-head">
                                      <div class="field-title">Specification</div>
 
-                                    {!! quillEditor(
-                                        'fps_specificationGrid',
-                                        $document->fps_specificationGrid ?? '',
-
-                                        '
-                                        <label for="fps_specificationGrid"></label>
-                                        ',
-
-                                        false
-                                    ) !!}
+                                    <div class="group-input">
+                                        <textarea name="fps_specificationGrid" id="fps_specificationGrid"
+                                            class="froala-editor">{{ old('fps_specificationGrid', $document->fps_specificationGrid ?? '') }}</textarea>
+                                    </div>
 
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
@@ -4878,16 +4876,12 @@
                                    
                                       <div class="field-title">Label Claim</div>
 
-                                    {!! quillEditor(
-                                        'label_claim_cvs',
-                                        $document->label_claim_cvs ?? '',
+                                    
 
-                                        '
-                                        <label for="label_claim_cvs"></label>
-                                        ',
-
-                                        false
-                                    ) !!}
+                                    <div class="group-input">
+                                        <textarea name="label_claim_cvs" id="label_claim_cvs"
+                                            class="froala-editor">{{ old('label_claim_cvs', $document->label_claim_cvs ?? '') }}</textarea>
+                                    </div>
 
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
@@ -4929,12 +4923,10 @@
 
                                       <div class="field-title">Sample Quantity for Analysis</div>
 
-                                    {!! quillEditor(
-                                        'sample_quantity_cvs',
-                                        $document->sample_quantity_cvs ?? '',
-                                        '',
-                                        false
-                                    ) !!}
+                                    <div class="group-input">
+                                        <textarea name="sample_quantity_cvs" id="sample_quantity_cvs"
+                                            class="froala-editor">{{ old('sample_quantity_cvs', $document->sample_quantity_cvs ?? '') }}</textarea>
+                                    </div>
 
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
@@ -4987,12 +4979,12 @@
                         <div class="col-12 sub-head">
                             
                          <div class="field-title">Specification</div>
-                            {!! quillEditor(
-                                'cvs_specificationGrid',
-                                $document->cvs_specificationGrid ?? '',
-                                '',
-                                false
-                            ) !!}
+                           
+
+                            <div class="group-input">
+                                <textarea name="cvs_specificationGrid" id="cvs_specificationGrid"
+                                    class="froala-editor">{{ old('cvs_specificationGrid', $document->cvs_specificationGrid ?? '') }}</textarea>
+                            </div>
 
                             @foreach ($history as $tempHistory)
                                 @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
@@ -5206,17 +5198,11 @@
                                   
                                       <div class="field-title">Label Claim</div>
 
-                                    {!! quillEditor(
-                                        'label_claim_inps',
-                                        $document->label_claim_inps ?? '',
-
-                                        '
-                                        <label for="label_claim_inps"></label>
-                                        ',
-
-                                        false
-                                    ) !!}
-
+                                   
+                                    <div class="group-input">
+                                        <textarea name="label_claim_inps" id="label_claim_inps"
+                                            class="froala-editor">{{ old('label_claim_inps', $document->label_claim_inps ?? '') }}</textarea>
+                                    </div>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                             @php
@@ -5256,16 +5242,11 @@
                                     
                                       <div class="field-title">Sample Quantity for Analysis</div>
 
-                                    {!! quillEditor(
-                                        'sample_quantity_inps',
-                                        $document->sample_quantity_inps ?? '',
-
-                                        '
-                                        <label for="sample_quantity_inps"></label>
-                                        ',
-
-                                        false
-                                    ) !!}
+                                    
+                                    <div class="group-input">
+                                        <textarea name="sample_quantity_inps" id="sample_quantity_inps"
+                                            class="froala-editor">{{ old('sample_quantity_inps', $document->sample_quantity_inps ?? '') }}</textarea>
+                                    </div>
 
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
@@ -5319,17 +5300,12 @@
                                
                                   <div class="field-title">Specification</div>
 
-                                {!! quillEditor(
-                                    'ips_specificationGrid',
-                                    $document->ips_specificationGrid ?? '',
+                               
 
-                                    '
-                                    <label for="ips_specificationGrid"></label>
-                                    ',
-
-                                    false
-                                ) !!}
-
+                                <div class="group-input">
+                                    <textarea name="ips_specificationGrid" id="ips_specificationGrid"
+                                        class="froala-editor">{{ old('ips_specificationGrid', $document->ips_specificationGrid ?? '') }}</textarea>
+                                </div>
                                 @foreach ($history as $tempHistory)
                                     @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                         @php
@@ -11222,18 +11198,12 @@
                                     <div class="col-12 sub-head">
                                            
                                            <div class="field-title">Standard Testing Procedure</div>
-                                        {!! quillEditor(
-                                            'ipstp_testfield',
-                                            $document->document_content->ipstp_testfield ?? '',
-                                            '
-                                            <div>
-                                                <small class="text-primary">
-                                                    Please insert "NA" in the data field if it does not require completion
-                                                </small>
-                                            </div>
-                                            ',
-                                            false
-                                        ) !!}
+                                        
+
+                                        <div class="group-input">
+                                            <textarea name="ipstp_testfield" id="ipstp_testfield"
+                                                class="froala-editor">{{ old('ipstp_testfield', $document->document_content->ipstp_testfield ?? '') }}</textarea>
+                                        </div>
 
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
@@ -11389,18 +11359,12 @@
 
                                     <div class="col-12 sub-head">
                                            <div class="field-title">Standard Testing Procedure</div>
-                                        {!! quillEditor(
-                                            'cvstp_testfield',
-                                            $document->document_content->cvstp_testfield ?? '',
-                                            '
-                                            <div>
-                                                <small class="text-primary">
-                                                    Please insert "NA" in the data field if it does not require completion
-                                                </small>
-                                            </div>
-                                            ',
-                                            false
-                                        ) !!}
+                                        
+
+                                        <div class="group-input">
+                                            <textarea name="cvstp_testfield" id="cvstp_testfield"
+                                                class="froala-editor">{{ old('cvstp_testfield', $document->document_content->cvstp_testfield ?? '') }}</textarea>
+                                        </div>
 
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
@@ -11559,19 +11523,13 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
 
-                                        {!! quillEditor(
-                                            'gtp_test',
-                                            $document->document_content ? $document->document_content->gtp_test : '',
-                                            '
-                                                <label for="procedure">Test</label>
-                                                <div>
-                                                    <small class="text-primary">
-                                                        Please insert "NA" in the data field if it does not require completion
-                                                    </small>
-                                                </div>
-                                            ',
-                                            false
-                                        ) !!}
+                                       
+
+                                       <div class="field-title">Test</div>
+                                            <div class="group-input">
+                                                <textarea name="gtp_test" id="rawmaterials_testing"
+                                                    class="froala-editor">{{ old('rawmaterials_testing', $document->document_content ? $document->document_content->gtp_test : '') }}</textarea>
+                                            </div>
 
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
@@ -11729,15 +11687,11 @@
 
                                 <div class="col-12 sub-head">
                                     
-                                     <div class="field-title"> Standard Testing Procedure</div>
-                                    {!! quillEditor(
-                                        'rawmaterials_testing',
-                                        $document->rawmaterials_testing ?? '',
-                                        '
-                                        <label></label>
-                                        ',
-                                        false
-                                    ) !!}
+                                    <div class="field-title"> Standard Testing Procedure</div>
+                                     <div class="group-input">
+                                        <textarea name="rawmaterials_testing" id="rawmaterials_testing"
+                                            class="froala-editor">{{ old('rawmaterials_testing', $document->rawmaterials_testing ?? '') }}</textarea>
+                                    </div>
 
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
@@ -12786,11 +12740,6 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br>
-                           
-
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="File_Attachment">
@@ -13710,14 +13659,10 @@
                                     <div class="col-12 sub-head">
                                         
                                         <div class="field-title">SPECIFICATION</div>
-                                        {!! quillEditor(
-                                            'packingmaterial_specification',
-                                            $document->packingmaterial_specification ?? '',
-                                            '
-                                            <label></label>
-                                            ',
-                                            false
-                                        ) !!}
+                                        <div class="group-input">
+                                            <textarea name="packingmaterial_specification" id="packingmaterial_specification"
+                                                class="froala-editor">{{ old('packingmaterial_specification', $document->packingmaterial_specification ?? '') }}</textarea>
+                                        </div>
 
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
@@ -17073,23 +17018,26 @@
                                     </div>
                                 </div>
 
-                                {!! quillEditor(
-                                    'rawmaterials_specifications',
-                                    $document->rawmaterials_specifications,
+                                
 
-                                    '
+                               
+                                <div class="group-input">
                                     <label for="rawmaterials_specifications">
                                         Specifications
                                     </label>
+
                                     <div>
                                         <small class="text-primary">
                                             Please insert "NA" in the data field if it does not require completion
                                         </small>
                                     </div>
-                                    ',
 
-                                    false
-                                ) !!}
+                                    <textarea
+                                        name="rawmaterials_specifications"
+                                        id="rawmaterials_specifications"
+                                        class="froala-editor">{{ old('rawmaterials_specifications', $document->rawmaterials_specifications ?? '') }}</textarea>
+                                </div>
+
 
                                 <div class="group-input">
                                     <label for="revision-history">Revision History</label>
