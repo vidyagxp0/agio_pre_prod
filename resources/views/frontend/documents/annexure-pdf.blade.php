@@ -363,7 +363,7 @@
 
         .annexure-content th,
         .annexure-content td {
-            font-size: 10px !important;
+            font-size: 13px !important;
             line-height: 1.35 !important;
             padding: 5px !important;
             text-align: left !important;
@@ -378,7 +378,7 @@
         /* Table paragraph */
         .annexure-content td p,
         .annexure-content th p {
-            font-size: 10px !important;
+            font-size: 13px !important;
             line-height: 1.35 !important;
             margin: 0 !important;
             padding: 0 !important;
@@ -486,7 +486,7 @@
         .annexure-content pre,
         .annexure-content code {
             font-family: "DejaVu Sans Mono", monospace !important;
-            font-size: 10px !important;
+            font-size: 13px !important;
             white-space: pre-wrap !important;
             word-wrap: break-word !important;
             overflow-wrap: break-word !important;

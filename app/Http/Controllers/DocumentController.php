@@ -8415,7 +8415,7 @@ class DocumentController extends Controller
 
                         $canvas->text(
                             500,
-                            762,
+                            765,
                             $pageText,
                             $font,
                             $fontSize,
@@ -8580,7 +8580,7 @@ class DocumentController extends Controller
 
                             $canvas->text(
                                 500,
-                                762,
+                                765,
                                 $pageText,
                                 $font,
                                 $fontSize,
