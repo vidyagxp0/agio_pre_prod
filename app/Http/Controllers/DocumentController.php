@@ -8404,7 +8404,7 @@ class DocumentController extends Controller
                             'normal'
                         );
 
-                        $fontSize = 9;
+                        $fontSize = 10;
 
                         $pageText = sprintf(
                             '%02d of %02d',
@@ -8565,10 +8565,10 @@ class DocumentController extends Controller
 
                             $font = $fontMetrics->get_font(
                                 'sans-serif',
-                                'bold'
+                                'normal'
                             );
 
-                            $fontSize = 12;
+                            $fontSize = 9;
 
 
                             $pageText = sprintf(
@@ -8580,7 +8580,7 @@ class DocumentController extends Controller
 
                             $canvas->text(
                                 500,
-                                765,
+                                762,
                                 $pageText,
                                 $font,
                                 $fontSize,

@@ -267,7 +267,7 @@
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
-            font-size: 12px;
+            font-size: 14px;
             line-height: 1.5;
             text-align: left;
             word-wrap: break-word;
@@ -277,7 +277,7 @@
 
         /* Paragraph */
         .annexure-content p {
-            font-size: 12px !important;
+            font-size: 14px !important;
             line-height: 1.5 !important;
             margin: 4px 0 7px 0 !important;
             padding: 0 !important;
