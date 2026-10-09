@@ -258,137 +258,97 @@
     </style>
 
     <style>     
-        /*Main Table Styling */
-        #isPasted {
-            width: 690px !important;
-        border-collapse: collapse;
-        table-layout: fixed;
-        }
-
-        /* First column adjusts to its content */
-        #isPasted td:first-child,
-        #isPasted th:first-child {
-            white-space: nowrap; 
-            width: 1%;
-            vertical-align: top;
-        }
-
-        /* Second column takes remaining space */
-        #isPasted td:last-child,
-        #isPasted th:last-child {
-            width: auto;
-            vertical-align: top;
-
-        }
-
-        /* Common Table Cell Styling */
-        #isPasted th,
-        #isPasted td {
-            border: 1px solid #000 !important;
-            padding: 8px;
+        .quill-pdf-content {
+            margin-left: 0;
+            width: 100%;
+            max-width: 100%;
+            font-size: 13px;
+            line-height: 1.5;
             text-align: left;
-            max-width: 500px;
             word-wrap: break-word;
             overflow-wrap: break-word;
+            box-sizing: border-box;
         }
 
-        /* Paragraph Styling Inside Table Cells */
-        #isPasted td > p {
-            text-align: justify;
-            text-justify: inter-word;
-            margin: 0;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+        .quill-pdf-content p {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            line-height: 1.5;
         }
 
-        #isPasted img {
-            max-width: 500px !important; /* Ensure image doesn't overflow the cell */
-            height: 100%; /* Maintain image aspect ratio */
-            display: block; /* Remove extra space below the image */
-            margin: 5px auto; /* Add spacing and center align */
+        .quill-pdf-content .proc-heading {
+            margin: 14px 0 6px 0;
+            font-weight: bold;
         }
 
-        /* If you want larger images */
-        #isPasted td img {
-            max-width: 400px !important; /* Adjust this to your preferred maximum width */
-            height: 300px;
-            margin: 5px auto;
+        .quill-pdf-content h1, .quill-pdf-content h2, .quill-pdf-content h3,
+        .quill-pdf-content h4, .quill-pdf-content h5, .quill-pdf-content h6 {
+            font-size: 14px;
+            line-height: 1.5;
+            font-weight: bold;
+            margin: 14px 0 6px 0;
         }
 
-        .table-containers {
-            width: 650px;
-            overflow-x: fixed; /* Enable horsizontal scrolling */
+        .quill-pdf-content ul, .quill-pdf-content ol {
+            padding-left: 22px;
+            margin: 2px 0 6px 0;
         }
+        .quill-pdf-content li { font-size: 12px; line-height: 1.5; margin-bottom: 2px; }
 
-    
-        #isPasted table {
-            width: 100% !important;
-            border-collapse: collapse;
+        /* TABLES */
+        .quill-pdf-content table {
+            width: 100%;
             table-layout: fixed;
-        }
-
-
-        #isPasted table th,
-        #isPasted table td {
-            border: 1px solid #000 !important;
-            padding: 8px;
-            text-align: left;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-
-        #isPasted table img {
-            max-width: 100% !important;
-            height: auto;
-            display: block;
-            margin: 5px auto;
-        }
-
-        .quill-pdf-content{
-            width:100%;
-            font-size:12px;
-            line-height:1.4;
-        }
-
-        .quill-pdf-content p{
-            margin:5px 0;
-        }
-
-        .quill-pdf-content table{
-            width:100%;
-            border-collapse:collapse;
-            margin-top:10px;
-            margin-bottom:10px;
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin: 8px 0 12px 0;
         }
 
         .quill-pdf-content table,
         .quill-pdf-content th,
-        .quill-pdf-content td{
-            border:1px solid #000;
+        .quill-pdf-content td {
+            border: 1px solid #000;
         }
 
-        .quill-pdf-content td,
-        .quill-pdf-content th{
-            padding:5px;
-            vertical-align:top;
+        .quill-pdf-content table.pdf-borderless,
+        .quill-pdf-content table.pdf-borderless th,
+        .quill-pdf-content table.pdf-borderless td {
+            border: none;
+        }
+        .quill-pdf-content th,
+        .quill-pdf-content td {
+            font-size: 14px;
+            line-height: 1.4;
+            padding: 4px 6px;
+            vertical-align: top;
+            text-align: left;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
         }
 
-        .quill-pdf-content img{
-            max-width:100%;
-            height:auto;
+        .quill-pdf-content th { font-weight: bold; text-align: center; }
+
+        .quill-pdf-content td p, .quill-pdf-content th p,
+        .quill-pdf-content td div, .quill-pdf-content th div {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            line-height: 1.4;
         }
 
-        .quill-pdf-content ul,
-        .quill-pdf-content ol{
-            padding-left:20px;
-        }
+        .quill-pdf-content td span, .quill-pdf-content th span,
+        .quill-pdf-content td li, .quill-pdf-content th li { font-size: 12px; }
 
-        .quill-pdf-content strong,
-        .quill-pdf-content b{
-            font-weight:bold;
+        .quill-pdf-content table tr { page-break-inside: avoid; }
+        .quill-pdf-content table thead { display: table-header-group; }
+
+        .quill-pdf-content img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 6px auto;
+            page-break-inside: avoid;
         }
         
     </style>
