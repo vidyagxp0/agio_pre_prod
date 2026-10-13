@@ -299,7 +299,7 @@
 
                             @elseif(
                                 $data->stage == 4 && (Helpers::check_roles($data->division_id, 'Change Control', 5) ||
-                                in_array(Auth::user()->id, $valuesArray)))
+                                in_array(Auth::user()->name, $valuesArray)))
                                 @if (!$cftCompleteUser)
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         CFT Assessment Complete
@@ -6727,6 +6727,8 @@
 
                                                 </div>
                                             </div>
+
+                                            
                                             <div class="col-lg-6 Information_Technology">
                                                 <div class="group-input">
                                                     <label for="Information_Technology_on">Information Technology Review Completed On</label>
@@ -6740,7 +6742,9 @@
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Information_Technology_on" name="Information_Technology_on"
 
-                                                            value="{{ \Carbon\Carbon::parse($data1->Information_Technology_on)->format('Y-m-d') }}"
+                                                            value="{{ $data1->Information_Technology_on
+                                                            ? Helpers::getdateFormat($data1->Information_Technology_on)
+                                                            : '' }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                             oninput="handleDateInput(this, 'Information_Technology_on_display')" />
@@ -6912,7 +6916,9 @@
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Information_Technology_on" name="Information_Technology_on"
 
-                                                            value="{{ \Carbon\Carbon::parse($data1->Information_Technology_on)->format('Y-m-d') }}"
+                                                             value="{{ $data1->Information_Technology_on
+                                                            ? Helpers::getdateFormat($data1->Information_Technology_on)
+                                                            : '' }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                             oninput="handleDateInput(this, 'Information_Technology_on_display')" />

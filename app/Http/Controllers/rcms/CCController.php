@@ -12916,7 +12916,33 @@ class CCController extends Controller
                     }
                 }
        
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
+
+                  ChangeControlCftResponse::withoutTrashed()
+                    ->where('cc_id', $id)
+                    ->whereIn('status', ['In-progress', 'Completed'])
+                    ->get()
+                    ->each(function ($response) {
+                        $response->delete();
+                    });
+
+                
                 $changeControl->update();
+              
                 $Cft = CcCft::where('cc_id', $changeControl->id)->first();
                     if ($Cft) {
                         $Cft->QualityAssurance_by = null;
@@ -12955,6 +12981,8 @@ class CCController extends Controller
                         $Cft->Microbiology_on = null;
                         $Cft->Environment_Health_Safety_by = null;
                         $Cft->Environment_Health_Safety_on = null;
+                        $Cft->Information_Technology_by = null;
+                        $Cft->Information_Technology_on = null;
                         $Cft->ContractGiver_by = null;
                         $Cft->ContractGiver_on = null;
                         $Cft->Other1_by = null;
@@ -12998,7 +13026,6 @@ class CCController extends Controller
             if ($changeControl->stage == 4) {
                 $changeControl->stage = "3";
                 $changeControl->status = "QA/CQA Initial Review";
-
                 $comment->cc_id = $id;
                 $comment->cftToQaInitialBy = Auth::user()->name;
                 $comment->cftToQaInitialOn = Carbon::now()->format('d-M-Y');
@@ -13059,20 +13086,32 @@ class CCController extends Controller
                         }
                     }
                 }
+
+                  ChangeControlCftResponse::withoutTrashed()
+                    ->where('cc_id', $id)
+                    ->whereIn('status', ['In-progress', 'Completed'])
+                    ->get()
+                    ->each(function ($response) {
+                        $response->delete();
+                    });
                  
                
                 $changeControl->update();
+
+              
+
+             
                 $Cft = CcCft::where('cc_id', $changeControl->id)->first();
                     if ($Cft) {
-                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_by = null;  //
                         $Cft->QualityAssurance_on = null;
                         $Cft->Quality_Control_by = null;
-                        $Cft->Quality_Control_on = null;
+                        $Cft->Quality_Control_on = null;  //
                         $Cft->Warehouse_by = null;
                         $Cft->Warehouse_on = null;
-                        $Cft->Production_Injection_By = null;
+                        $Cft->Production_Injection_By = null;  //
                         $Cft->Production_Injection_On = null;
-                        $Cft->Production_Table_By = null;
+                        $Cft->Production_Table_By = null;  //
                         $Cft->Production_Table_On = null;
                         $Cft->RA_by = null;
                         $Cft->RA_on = null;
@@ -13085,7 +13124,7 @@ class CCController extends Controller
                         $Cft->CorporateQualityAssurance_by = null;
                         $Cft->CorporateQualityAssurance_on = null;
                         $Cft->Store_by = null;
-                        $Cft->Store_on = null;
+                        $Cft->Store_on = null;  //
                         $Cft->Engineering_by = null;
                         $Cft->Engineering_on = null;
                         $Cft->RegulatoryAffair_by = null;
@@ -13100,6 +13139,8 @@ class CCController extends Controller
                         $Cft->Microbiology_on = null;
                         $Cft->Environment_Health_Safety_by = null;
                         $Cft->Environment_Health_Safety_on = null;
+                        $Cft->Information_Technology_by = null;
+                        $Cft->Information_Technology_on = null;
                         $Cft->ContractGiver_by = null;
                         $Cft->ContractGiver_on = null;
                         $Cft->Other1_by = null;
@@ -13506,6 +13547,16 @@ class CCController extends Controller
                             }
                             }
                         }
+
+
+                        
+            ChangeControlCftResponse::withoutTrashed()
+            ->where('cc_id', $id)
+            ->whereIn('status', ['In-progress', 'Completed'])
+            ->get()
+            ->each(function ($response) {
+                $response->delete();
+            });
         $changeControl->update();
         $Cft = CcCft::where('cc_id', $changeControl->id)->first();
                     if ($Cft) {
@@ -13545,6 +13596,8 @@ class CCController extends Controller
                         $Cft->Microbiology_on = null;
                         $Cft->Environment_Health_Safety_by = null;
                         $Cft->Environment_Health_Safety_on = null;
+                        $Cft->Information_Technology_by = null;
+                        $Cft->Information_Technology_on = null;
                         $Cft->ContractGiver_by = null;
                         $Cft->ContractGiver_on = null;
                         $Cft->Other1_by = null;
@@ -13655,6 +13708,15 @@ class CCController extends Controller
                             }  
                             }
                         }
+
+                        
+                  ChangeControlCftResponse::withoutTrashed()
+                    ->where('cc_id', $id)
+                    ->whereIn('status', ['In-progress', 'Completed'])
+                    ->get()
+                    ->each(function ($response) {
+                        $response->delete();
+                    });
       
         $changeControl->update();
         $Cft = CcCft::where('cc_id', $changeControl->id)->first();
@@ -13695,6 +13757,8 @@ class CCController extends Controller
                         $Cft->Microbiology_on = null;
                         $Cft->Environment_Health_Safety_by = null;
                         $Cft->Environment_Health_Safety_on = null;
+                        $Cft->Information_Technology_by = null;
+                        $Cft->Information_Technology_on = null;
                         $Cft->ContractGiver_by = null;
                         $Cft->ContractGiver_on = null;
                         $Cft->Other1_by = null;
@@ -13861,6 +13925,15 @@ class CCController extends Controller
                             }
                     }
                 }
+
+                
+            ChangeControlCftResponse::withoutTrashed()
+            ->where('cc_id', $id)
+            ->whereIn('status', ['In-progress', 'Completed'])
+            ->get()
+            ->each(function ($response) {
+                $response->delete();
+            });
        
         $changeControl->update();
 
@@ -13912,6 +13985,8 @@ class CCController extends Controller
                             $Cft->Microbiology_on = null;
                             $Cft->Environment_Health_Safety_by = null;
                             $Cft->Environment_Health_Safety_on = null;
+                            $Cft->Information_Technology_by = null;
+                            $Cft->Information_Technology_on = null;
                             $Cft->ContractGiver_by = null;
                             $Cft->ContractGiver_on = null;
                             $Cft->Other1_by = null;

@@ -2073,11 +2073,11 @@ class ExtensionNewController extends Controller
                                         ->update(['due_date' => $proposedDatechange1]);
 
                                       // 2. Is Change Control ke saare Action Items ki due date update
-                                    // ActionItem::where('parent_id', $extensionNew->parent_id)
-                                    //     ->where('parent_type', 'CC')
-                                    //     ->update([
-                                    //         'due_date' => $proposedDatechange1
-                                    //     ]);
+                                     ActionItem::where('parent_id', $extensionNew->parent_id)
+                                        ->where('parent_type', 'CC')
+                                        ->update([
+                                            'due_date' => $proposedDatechange1
+                                        ]);
                                     break;
 
                                 case 'CAPA':
