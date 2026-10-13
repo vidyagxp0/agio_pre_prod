@@ -807,7 +807,7 @@
 
                     {{-- GENERIC NAME / BRAND NAME --}}
                     <table class="keep-together"
-                           style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 12px;">
+                           style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 14px;">
                         <tbody>
 
                             <tr>

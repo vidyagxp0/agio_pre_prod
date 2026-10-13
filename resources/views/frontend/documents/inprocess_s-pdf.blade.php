@@ -257,7 +257,6 @@
         }
     </style>
 
-
     <style> 
         .quill-pdf-content {
             width: 100%;
@@ -793,7 +792,7 @@
                     </thead>
                 </table>
 
-                <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 12px; page-break-inside: avoid;">
+                <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 14px; page-break-inside: avoid;">
                     <tbody>
                         <tr>
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Generic Name</td>

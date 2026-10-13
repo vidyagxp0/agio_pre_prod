@@ -72,6 +72,9 @@ class ProcedureHtml
             }
         }
 
+        // 2b) Bade single-cell rows ko todo
+        self::splitTallCells($dom, $xp);
+
         // 3) Faltu khali paragraphs hatao (table ke bahar)
         foreach (iterator_to_array($xp->query('//div[@id="__root"]//div')) as $div) {
             self::collapseEmpty($div);
@@ -428,5 +431,44 @@ class ProcedureHtml
             return false;
         }
         return true;
+    }
+
+    private static function splitTallCells(DOMDocument $dom, DOMXPath $xp): void
+    {
+        foreach (iterator_to_array($xp->query('//table')) as $table) {
+            foreach (iterator_to_array($xp->query('./tbody/tr | ./tr', $table)) as $tr) {
+                $cells = $xp->query('./td | ./th', $tr);
+                if ($cells->length !== 1) {
+                    continue;
+                }
+                $cell = $cells->item(0);
+
+                // sirf asli blocks lo (khali text nodes nahi)
+                $blocks = [];
+                foreach (iterator_to_array($cell->childNodes) as $n) {
+                    if ($n->nodeType === XML_TEXT_NODE && trim($n->textContent) === '') {
+                        continue;
+                    }
+                    $blocks[] = $n;
+                }
+                if (count($blocks) < 2) {
+                    continue;
+                }
+
+                $last = count($blocks) - 1;
+                foreach ($blocks as $i => $node) {
+                    $newTr   = $tr->cloneNode(false);
+                    $newCell = $cell->cloneNode(false);
+                    $newCell->appendChild($node);
+                    $newCell->setAttribute(
+                        'class',
+                        $i === 0 ? 'pdf-cont-first' : ($i === $last ? 'pdf-cont-last' : 'pdf-cont-mid')
+                    );
+                    $newTr->appendChild($newCell);
+                    $tr->parentNode->insertBefore($newTr, $tr);
+                }
+                $tr->parentNode->removeChild($tr);
+            }
+        }
     }
 }

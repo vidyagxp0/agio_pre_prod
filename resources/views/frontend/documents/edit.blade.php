@@ -4367,21 +4367,17 @@
                                     });
                                 </script>
 
-                                    <div id="ir_test_field" style="display: none;">
-                                        {!! quillEditor(
-                                            'IR_Test',
-                                            $document->IR_Test ?? '',
-                                            '
-                                            <label for="procedure">Individual Identification Test By IR</label>
-                                            <div>
-                                                <small class="text-primary">
-                                                    Please insert "NA" in the data field if it does not require completion
-                                                </small>
-                                            </div>
-                                            ',
-                                            false
-                                        ) !!}
+                                <div class="group-input" id="ir_test_field" style="display: none;">
+                                    <label for="IR_Test">Individual Identification Test By IR</label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small>
                                     </div>
+
+                                    <textarea name="IR_Test" id="IR_Test" class="froala-editor">{{ old('IR_Test', $document->IR_Test ?? '') }}</textarea>
+                                </div>
 
                                     <script>
                                         document.addEventListener("DOMContentLoaded", function () {

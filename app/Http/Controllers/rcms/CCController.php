@@ -10833,26 +10833,18 @@ class CCController extends Controller
                     $history->stage = 'Plan Proposed';
                     $history->save();
 
-                    // $list = Helpers::getQAHeadUserList($changeControl->division_id); // Notify QA Head
-                   
-                    // $list = Helpers::getCQAHeadUsersList($changeControl->division_id); // Notify CQA Head
-                    
-
-
-                   
-                      $usersmerge = collect()
+                    $usersmerge = collect()
                     ->merge(Helpers::getQAHeadUserList($changeControl->division_id))
                     ->merge(Helpers::getCQAHeadUsersList($changeControl->division_id))
                     ->unique('user_id');
 
-                foreach ($usersmerge as $u) {
+                    foreach ($usersmerge as $u) {
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                        $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
+                        if ($email !== null) {
 
-                          try {
-
+                            try {
                                 $data = [
                                     'data'    => $changeControl,
                                     'site' => "CC",
@@ -10862,8 +10854,7 @@ class CCController extends Controller
                                     'user'    => Auth::user()->name
                                 ];
 
-                                SendMail::dispatch(
-                                    
+                                SendMail::dispatch(   
                                     $data,
                                     $email,
                                     $changeControl,
@@ -10873,13 +10864,10 @@ class CCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
-
-                       
+                        }
                     }
-                }
 
                     
-
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -10905,6 +10893,7 @@ class CCController extends Controller
                     return back();
 
             }
+
             if ($changeControl->stage == 7) {
 
 
@@ -11050,9 +11039,6 @@ class CCController extends Controller
                     return back();
             }
 
-
-
-
             if ($changeControl->stage == 9) {
                  // exetnsion child validation
                         $extensionchild = extension_new::where('parent_id', $id)
@@ -11155,113 +11141,7 @@ class CCController extends Controller
                 toastr()->success('Sent to HOD Final Review');
                 return back();
             }
-
-            // if ($changeControl->stage == 9) {
-            //     $changeControl->stage = "11";
-            //     $changeControl->status = "";
-
-            //     $comments->cc_id = $id;
-
-            //     $comments->HOD_finalReview_complete_by = Auth::user()->name;
-            //     $comments->HOD_finalReview_complete_on = Carbon::now()->format('d-M-Y');
-            //     $comments->HOD_finalReview_complete_comment = $request->comments;
-            //     $comments->save();
-            //     $history = new RcmDocHistory();
-            //     $history->cc_id = $id;
-            //     $lastDocument = ChangeControlComment::find($id);
-            //     $history->activity_type = 'HOD Final Review Complete By, HOD Final Review Complete On';
-            //     if (is_null($lastDocument->HOD_finalReview_complete_by) || $lastDocument->HOD_finalReview_complete_by === '') {
-            //         $history->previous = "NULL";
-            //     } else {
-            //         $history->previous = $lastDocument->HOD_finalReview_complete_by . ' , ' . $lastDocument->HOD_finalReview_complete_on;
-            //     }
-            //     $history->current = $comments->HOD_finalReview_complete_by . ' , ' . $comments->HOD_finalReview_complete_on;
-            //     if (is_null($lastDocument->HOD_finalReview_complete_by) || $lastDocument->HOD_finalReview_complete_on === '') {
-            //         $history->action_name = 'New';
-            //     } else {
-            //         $history->action_name = 'Update';
-            //     }
-
-            //     $history->action = 'HOD Final Review Complete';
-            //     $history->comment = $request->comments;
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = \Helpers::getRoleName(Auth::user()->role);
-            //     $history->origin_state = $lastDocument->status;
-            //     $history->change_to = "Implementation Verification by QA";
-            //     $history->change_from = $lastDocument->status;
-            //     $history->stage = 'Plan Proposed';
-            //     $history->save();
-
-            //     $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA Person
-            //     foreach ($list as $u) {
-            //         // if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getUserEmail($u->user_id);
-            //                 if ($email !== null) {
-            //                     try {
-            //                         Mail::send(
-            //                             'mail.view-mail',
-            //                             ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-            //                             function ($message) use ($email, $changeControl) {
-            //                                 $message->to($email)
-            //                                 ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
-            //                             }
-            //                         );
-            //                     } catch(\Exception $e) {
-            //                         info('Error sending mail', [$e]);
-            //                     }
-            //             }
-            //         // }
-            //     }
-
-            //     $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA Person
-            //     foreach ($list as $u) {
-            //         // if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getUserEmail($u->user_id);
-            //                 if ($email !== null) {
-            //                     try {
-            //                         Mail::send(
-            //                             'mail.view-mail',
-            //                             ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-            //                             function ($message) use ($email, $changeControl) {
-            //                                 $message->to($email)
-            //                                 ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
-            //                             }
-            //                         );
-            //                     } catch(\Exception $e) {
-            //                         info('Error sending mail', [$e]);
-            //                     }
-            //             }
-            //         // }
-            //     }
-
-            //     $changeControl->update();
-            //     $history = new CCStageHistory();
-            //     $history->type = "Change-Control";
-            //     $history->doc_id = $id;
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->stage_id = $changeControl->stage;
-            //     $history->comments = $request->comments;
-            //     $history->status = $changeControl->status;
-            //     $history->save();
-
-            //     $history = new CCStageHistory();
-            //     $history->type = "Activity-log";
-            //     $history->doc_id = $id;
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->stage_id = $changeControl->stage;
-            //     $history->comments = $request->comments;
-            //     $history->status = $changeControl->status;
-            //     $history->save();
-            //     // Helpers::hodMail($changeControl);
-            //     toastr()->success('Sent to Implementation Verification by QA');
-            //     return back();
-            // }
-
-
-            
+    
             if ($changeControl->stage == 10) {
 
                  // exetnsion child validation
@@ -11373,7 +11253,6 @@ class CCController extends Controller
                 toastr()->success('Sent to Implementation Verification by QA');
                 return back();
             }
-
 
             if ($changeControl->stage == 11) {
                 
@@ -11498,7 +11377,6 @@ class CCController extends Controller
                 toastr()->success('Sent to Implementation Verification by QA/CQA');
                 return back();
             }
-
 
         } else {
             toastr()->error('E-signature Not match');
@@ -12525,7 +12403,6 @@ class CCController extends Controller
             $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
 
 
-
             if ($changeControl->stage == 12) {
                 $changeControl->stage = "11";
                 $changeControl->status = "Implementation Verification by QA/CQA";
@@ -12539,18 +12416,6 @@ class CCController extends Controller
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
 
-                // $history->activity_type = 'More Info Required By, More Info Required On';
-                // if (is_null($lastDocument->QaClouseToPostImplementationBy) || $lastDocument->QaClouseToPostImplementationBy === '') {
-                //     $history->previous = "NULL";
-                // } else {
-                //     $history->previous = $lastDocument->QaClouseToPostImplementationBy . ' , ' . $lastDocument->QaClouseToPostImplementationOn;
-                // }
-                // $history->current = $changeControl->QaClouseToPostImplementationBy . ' , ' . $changeControl->QaClouseToPostImplementationOn;
-                // if (is_null($lastDocument->QaClouseToPostImplementationBy) || $lastDocument->QaClouseToPostImplementationOn === '') {
-                //     $history->action_name = 'New';
-                // } else {
-                //     $history->action_name = 'Update';
-                // }
                 $history->activity_type = 'Not Applicable';
                 $history->previous = 'Not Applicable';
                 $history->action_name = 'Not Applicable';
@@ -12566,28 +12431,7 @@ class CCController extends Controller
                 $history->stage = 'Plan Proposed';
                 $history->save();
 
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
-
-                 
-
-                
-
-                 $usersmerge = collect()
+                $usersmerge = collect()
                 ->merge(Helpers::getCQAUsersList($changeControl->division_id))
                 ->merge(Helpers::getQAUserList($changeControl->division_id))              
                 ->unique('user_id');
@@ -12597,27 +12441,26 @@ class CCController extends Controller
                     $email = Helpers::getUserEmail($u->user_id);
                     if ($email !== null) {                     
 
-                          try {
+                        try {
+                            $data = [
+                                'data'    => $changeControl,
+                                'site' => "CC",
+                                'history' => "More Info Required",
+                                'process' => 'Change Control',
+                                'comment' => $request->comments,
+                                'user'    => Auth::user()->name
+                            ];
 
-                                $data = [
-                                    'data'    => $changeControl,
-                                    'site' => "CC",
-                                    'history' => "More Info Required",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
-                                    'user'    => Auth::user()->name
-                                ];
+                            SendMail::dispatch(
+                                $data,
+                                $email,
+                                $changeControl,
+                                'Change Control'
+                            );
 
-                                SendMail::dispatch(
-                                    $data,
-                                    $email,
-                                    $changeControl,
-                                    'Change Control'
-                                );
-
-                            } catch (\Exception $e) {
-                                \Log::error('Mail Error: ' . $e->getMessage());
-                            }
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
+                        }
                     }
                 }
                 $changeControl->update();
@@ -12644,19 +12487,11 @@ class CCController extends Controller
                 toastr()->success('Sent to Implementation verification by QA/CQA');
                 return back();
 
-        }
-
-
-
+            }
 
             if ($changeControl->stage == 11) {
                 $changeControl->stage = "9";
                 $changeControl->status = "Pending Initiator Update";
-                // $changeControl->QaClouseToPostImplementationBy = Auth::user()->name;
-                // $changeControl->QaClouseToPostImplementationOn = Carbon::now()->format('d-M-Y');
-                // $changeControl->QaClouseToPostImplementationComment = $request->comments;
-
-
                 
                 $comment->cc_id =$id;
                 $comment->send_to_pending_initiator_by = Auth::user()->name;
@@ -12668,18 +12503,7 @@ class CCController extends Controller
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
 
-                // $history->activity_type = 'More Info Required By, More Info Required On';
-                // if (is_null($lastDocument->QaClouseToPostImplementationBy) || $lastDocument->QaClouseToPostImplementationBy === '') {
-                //     $history->previous = "NULL";
-                // } else {
-                //     $history->previous = $lastDocument->QaClouseToPostImplementationBy . ' , ' . $lastDocument->QaClouseToPostImplementationOn;
-                // }
-                // $history->current = $changeControl->QaClouseToPostImplementationBy . ' , ' . $changeControl->QaClouseToPostImplementationOn;
-                // if (is_null($lastDocument->QaClouseToPostImplementationBy) || $lastDocument->QaClouseToPostImplementationOn === '') {
-                //     $history->action_name = 'New';
-                // } else {
-                //     $history->action_name = 'Update';
-                // }
+             
                 $history->activity_type = 'Not Applicable';
                 $history->previous = 'Not Applicable';
                 $history->action_name = 'Not Applicable';
@@ -12694,41 +12518,19 @@ class CCController extends Controller
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 $history->save();
-
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
-
-
-                
                
                  $list = Helpers::getInitiatorUserList($changeControl->division_id);
-                     foreach ($list as $u) {
+                    foreach ($list as $u) {
 
-                            $email = Helpers::getUserEmail($u->user_id);
+                        $email = Helpers::getUserEmail($u->user_id);
 
-                            if ($email !== null) {
+                        if ($email !== null) {
 
-                               
-                                  try {
-
+                            try {
                                 $data = [
                                     'data'    => $changeControl,
                                     'site' => "CC",
-                                    'history' => "Send For Final QA/CQA Head Approval",
+                                    'history' => "More Info Required",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
                                     'user'    => Auth::user()->name
@@ -12744,8 +12546,8 @@ class CCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             } 
-                            }
                         }
+                    }
 
                 $changeControl->update();
                 $history = new CCStageHistory();
@@ -12771,13 +12573,7 @@ class CCController extends Controller
                 toastr()->success('Sent to Pending Initiator Update');
                 return back();
 
-        }
-
-
-
-
-
-
+            }
 
             if ($changeControl->stage == 10) {
                     $changeControl->stage = "9";
@@ -12789,18 +12585,6 @@ class CCController extends Controller
                     $history = new RcmDocHistory();
                     $history->cc_id = $id;
 
-                    // $history->activity_type = 'More Info Required By, More Info Required On';
-                    // if (is_null($lastDocument->QaClouseToPostImplementationBy) || $lastDocument->QaClouseToPostImplementationBy === '') {
-                    //     $history->previous = "NULL";
-                    // } else {
-                    //     $history->previous = $lastDocument->QaClouseToPostImplementationBy . ' , ' . $lastDocument->QaClouseToPostImplementationOn;
-                    // }
-                    // $history->current = $changeControl->QaClouseToPostImplementationBy . ' , ' . $changeControl->QaClouseToPostImplementationOn;
-                    // if (is_null($lastDocument->QaClouseToPostImplementationBy) || $lastDocument->QaClouseToPostImplementationOn === '') {
-                    //     $history->action_name = 'New';
-                    // } else {
-                    //     $history->action_name = 'Update';
-                    // }
                     $history->activity_type = 'Not Applicable';
                     $history->previous = 'Not Applicable';
                     $history->action_name = 'Not Applicable';
@@ -12817,39 +12601,37 @@ class CCController extends Controller
                     $history->stage = 'Plan Proposed';
                     $history->save();
 
-                       $list = Helpers::getInitiatorUserList($changeControl->division_id);
-                     foreach ($list as $u) {
+                    $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        foreach ($list as $u) {
 
                             $email = Helpers::getUserEmail($u->user_id);
 
                             if ($email !== null) {
-  
-                                  try {
 
-                                $data = [
-                                    'data'    => $changeControl,
-                                    'site' => "CC",
-                                    'history' => "More Info Required",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
-                                    'user'    => Auth::user()->name
-                                ];
+                                try {
 
-                                SendMail::dispatch(
-                                    $data,
-                                    $email,
-                                    $changeControl,
-                                    'Change Control'
-                                );
+                                    $data = [
+                                        'data'    => $changeControl,
+                                        'site' => "CC",
+                                        'history' => "More Info Required",
+                                        'process' => 'Change Control',
+                                        'comment' => $request->comments,
+                                        'user'    => Auth::user()->name
+                                    ];
 
-                            } catch (\Exception $e) {
-                                \Log::error('Mail Error: ' . $e->getMessage());
-                            }
+                                    SendMail::dispatch(
+                                        $data,
+                                        $email,
+                                        $changeControl,
+                                        'Change Control'
+                                    );
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
+                                }
                             }
                         }
 
-
-                    
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -12885,18 +12667,6 @@ class CCController extends Controller
                     $history = new RcmDocHistory();
                     $history->cc_id = $id;
 
-                    // $history->activity_type = 'More Info Required By, More Info Required On';
-                    // if (is_null($lastDocument->postImplementationToQaHeadBy) || $lastDocument->postImplementationToQaHeadBy === '') {
-                    //     $history->previous = "NULL";
-                    // } else {
-                    //     $history->previous = $lastDocument->postImplementationToQaHeadBy . ' , ' . $lastDocument->postImplementationToQaHeadOn;
-                    // }
-                    // $history->current = $changeControl->postImplementationToQaHeadBy . ' , ' . $changeControl->postImplementationToQaHeadOn;
-                    // if (is_null($lastDocument->postImplementationToQaHeadBy) || $lastDocument->postImplementationToQaHeadOn === '') {
-                    //     $history->action_name = 'New';
-                    // } else {
-                    //     $history->action_name = 'Update';
-                    // }
                     $history->activity_type = 'Not Applicable';
                     $history->previous = 'Not Applicable';
                     $history->action_name = 'Not Applicable';
@@ -12912,15 +12682,14 @@ class CCController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
-                     $list = Helpers::getHodUserList();
-                   foreach ($list as $u) {
+                    $list = Helpers::getHodUserList();
+                    foreach ($list as $u) {
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                        $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
+                        if ($email !== null) {
 
-                        
-                          try {
+                            try {
 
                                 $data = [
                                     'data'    => $changeControl,
@@ -12941,8 +12710,8 @@ class CCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
+                        }
                     }
-                }
 
                     $changeControl->update();
                     $history = new CCStageHistory();
@@ -13146,21 +12915,7 @@ class CCController extends Controller
                             }
                     }
                 }
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+       
                 $changeControl->update();
                 $Cft = CcCft::where('cc_id', $changeControl->id)->first();
                     if ($Cft) {
@@ -13253,18 +13008,6 @@ class CCController extends Controller
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
 
-                // $history->activity_type = 'More Info Required By, More Info Required On';
-                // if (is_null($lastDocument->cftToQaInitialBy) || $lastDocument->cftToQaInitialBy === '') {
-                //     $history->previous = "NULL";
-                // } else {
-                //     $history->previous = $lastDocument->cftToQaInitialBy . ' , ' . $lastDocument->cftToQaInitialOn;
-                // }
-                // $history->current = $changeControl->cftToQaInitialBy . ' , ' . $changeControl->cftToQaInitialOn;
-                // if (is_null($lastDocument->cftToQaInitialBy) || $lastDocument->cftToQaInitialOn === '') {
-                //     $history->action_name = 'New';
-                // } else {
-                //     $history->action_name = 'Update';
-                // }
                 $history->activity_type = 'Not Applicable';
                 $history->previous = 'Not Applicable';
                 $history->action_name = 'Not Applicable';
@@ -13281,7 +13024,7 @@ class CCController extends Controller
                 $history->stage = 'Plan Proposed';
                 $history->save();
 
-                 $usersmerge = collect()
+                $usersmerge = collect()
                 ->merge(Helpers::getCQAUsersList($changeControl->division_id))
                 
                 ->merge(Helpers::getQAUserList($changeControl->division_id))
@@ -13292,30 +13035,28 @@ class CCController extends Controller
 
                     $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
-
-                        
+                    if ($email !== null) { 
                         try {
 
-                                $data = [
-                                    'data'    => $changeControl,
-                                    'site' => "CC",
-                                    'history' => "More Info Required",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
-                                    'user'    => Auth::user()->name
-                                ];
+                            $data = [
+                                'data'    => $changeControl,
+                                'site' => "CC",
+                                'history' => "More Info Required",
+                                'process' => 'Change Control',
+                                'comment' => $request->comments,
+                                'user'    => Auth::user()->name
+                            ];
 
-                                SendMail::dispatch(
-                                    $data,
-                                    $email,
-                                    $changeControl,
-                                    'Change Control'
-                                );
+                            SendMail::dispatch(
+                                $data,
+                                $email,
+                                $changeControl,
+                                'Change Control'
+                            );
 
-                            } catch (\Exception $e) {
-                                \Log::error('Mail Error: ' . $e->getMessage());
-                            }
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
+                        }
                     }
                 }
                  
@@ -13440,7 +13181,7 @@ class CCController extends Controller
                 $history->save();
                   $list = Helpers::getHodUserList($changeControl->division_id);
              
-            foreach ($list as $u) {
+                        foreach ($list as $u) {
 
                             $email = Helpers::getUserEmail($u->user_id);
 

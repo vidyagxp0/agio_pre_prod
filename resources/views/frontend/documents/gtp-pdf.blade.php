@@ -514,6 +514,7 @@
             padding: 5px !important;
             vertical-align: top !important;
         }
+
         .header-wrapper{
             position: fixed;
             top: 0;
@@ -754,85 +755,79 @@
                     <table>
                         <thead>
                             <tr>
-                              
+                                <th class="text-left">
+                                    <div class="bold">
+                                        Test
+                                    </div>
+                                </th>
                             </tr>
                         </thead>
                     </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        @php
-                                            $gtp_test = \App\Helpers\ProcedureHtml::clean(
-                                                Helpers::renderQuillPdf($data->document_content->gtp_test ?? '')
-                                            );
-                                        @endphp
-                                        <div class="quill-pdf-content">
-                                            {!! $gtp_test !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    @php
+                        $gtp_test = \App\Helpers\ProcedureHtml::clean(
+                            Helpers::renderQuillPdf($data->document_content->gtp_test ?? '')
+                        );
+                    @endphp
+                    <div class="quill-pdf-content">
+                        {!! $gtp_test !!}
                     </div>
                 </div>
                 {{-- PROCEDURE END --}}
         </section>
     </div>
 
-<div class="content">
-    <section>
-        <h4 class="revision-title">REVISION HISTORY:</h4>
-            <div class="table-responsive retrieve-table">
-                <table class="table table-bordered" id="distribution-list">
-                    <thead>
-                        <tr>
-                            <th style="font-size: 16px; font-weight: bold; width:10%">Revision No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:20%">Change Control No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
-                            <th style="font-size: 16px; font-weight: bold; width:50%">Reason of revision</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (!empty($GtpGridData))
-                            @foreach ($GtpGridData as $key => $item)
-                                <tr>
-                                    <td>{{ $item['revision_no_gtp'] ?? '' }}</td>
-                                    <td>{{ $item['changContNo_gtp'] ?? '' }}</td>
-                                    <td>                                                    
-                                        @if ($data->training_required == 'yes' && $data->stage >= 11)
-                                            {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                                        @elseif ($data->training_required != 'yes' && $data->stage > 10)
-                                            {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                                        @else
-                                            {{ !empty($item['effectiveDate_gtp']) ? \Carbon\Carbon::parse($item['effectiveDate_gtp'])->format('d-M-Y') : '' }}
-                                        @endif
-                                    </td>
-                                    <td>{{ $item['reasonRevi_gtp'] ?? '' }}</td>
-                                </tr>
-                            @endforeach
-                        @else
+    <div class="content">
+        <section>
+            <h4 class="revision-title">REVISION HISTORY:</h4>
+                <div class="table-responsive retrieve-table">
+                    <table class="table table-bordered" id="distribution-list">
+                        <thead>
                             <tr>
-                                <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
+                                <th style="font-size: 16px; font-weight: bold; width:10%">Revision No.</th>
+                                <th style="font-size: 16px; font-weight: bold; width:20%">Change Control No.</th>
+                                <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
+                                <th style="font-size: 16px; font-weight: bold; width:50%">Reason of revision</th>
                             </tr>
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-    </section>
-</div>
+                        </thead>
+                        <tbody>
+                            @if (!empty($GtpGridData))
+                                @foreach ($GtpGridData as $key => $item)
+                                    <tr>
+                                        <td>{{ $item['revision_no_gtp'] ?? '' }}</td>
+                                        <td>{{ $item['changContNo_gtp'] ?? '' }}</td>
+                                        <td>                                                    
+                                            @if ($data->training_required == 'yes' && $data->stage >= 11)
+                                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                            @elseif ($data->training_required != 'yes' && $data->stage > 10)
+                                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                            @else
+                                                {{ !empty($item['effectiveDate_gtp']) ? \Carbon\Carbon::parse($item['effectiveDate_gtp'])->format('d-M-Y') : '' }}
+                                            @endif
+                                        </td>
+                                        <td>{{ $item['reasonRevi_gtp'] ?? '' }}</td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+        </section>
+    </div>
 
-<style>
-    .revision-title {
-        font-size: 16px;
-        font-weight: bold;
-    }
-    .revision-header {
-        font-size: 16px;
-        font-weight: bold;
-    }
-</style>
+    <style>
+        .revision-title {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .revision-header {
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
     <script type="text/php">
         if (isset($pdf)) {
             $pdf->page_script('

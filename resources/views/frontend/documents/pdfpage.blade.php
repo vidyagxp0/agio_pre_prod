@@ -332,6 +332,7 @@
             text-align: left;
             vertical-align: middle;
         }
+        
         .hdr-label { font-weight: bold; white-space: nowrap; }
         .hdr-clip  { overflow: hidden; }
 
