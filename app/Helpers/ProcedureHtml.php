@@ -433,42 +433,131 @@ class ProcedureHtml
         return true;
     }
 
+    private static function blocksOf(DOMElement $cell): array
+    {
+        $filter = function (DOMNode $parent): array {
+            $out = [];
+            foreach (iterator_to_array($parent->childNodes) as $n) {
+                if ($n->nodeType === XML_TEXT_NODE && trim(str_replace("\xC2\xA0", ' ', $n->textContent)) === '') {
+                    continue;
+                }
+                $out[] = $n;
+            }
+            return $out;
+        };
+
+        $blocks = $filter($cell);
+
+        // Ek hi div/span wrapper ho to uske andar ke blocks lo
+        while (count($blocks) === 1
+            && $blocks[0] instanceof DOMElement
+            && in_array(strtolower($blocks[0]->nodeName), ['div', 'span'], true)) {
+            $inner = $filter($blocks[0]);
+            if (!$inner) {
+                break;
+            }
+            $blocks = $inner;
+        }
+        return $blocks;
+    }
+
     private static function splitTallCells(DOMDocument $dom, DOMXPath $xp): void
     {
         foreach (iterator_to_array($xp->query('//table')) as $table) {
             foreach (iterator_to_array($xp->query('./tbody/tr | ./tr', $table)) as $tr) {
-                $cells = $xp->query('./td | ./th', $tr);
-                if ($cells->length !== 1) {
+                $cells = iterator_to_array($xp->query('./td | ./th', $tr));
+                if (!$cells) {
                     continue;
                 }
-                $cell = $cells->item(0);
 
-                // sirf asli blocks lo (khali text nodes nahi)
-                $blocks = [];
-                foreach (iterator_to_array($cell->childNodes) as $n) {
-                    if ($n->nodeType === XML_TEXT_NODE && trim($n->textContent) === '') {
-                        continue;
+                foreach ($cells as $c) {
+                    if ((int) $c->getAttribute('rowspan') > 1) {
+                        continue 2; // rowspan wali rows nahi todte
                     }
-                    $blocks[] = $n;
                 }
-                if (count($blocks) < 2) {
+
+                // Sabse zyada blocks wala cell dhundo
+                $big = null;
+                $bigBlocks = [];
+                foreach ($cells as $c) {
+                    $b = self::blocksOf($c);
+                    if (count($b) > count($bigBlocks)) {
+                        $big = $c;
+                        $bigBlocks = $b;
+                    }
+                }
+                $expanded = [];
+                foreach ($bigBlocks as $b) {
+                    if ($b instanceof DOMElement && strtolower($b->nodeName) === 'table') {
+                        foreach (self::chunkTable($b, 6) as $part) {
+                            $expanded[] = $part;
+                        }
+                    } else {
+                        $expanded[] = $b;
+                    }
+                }
+                $bigBlocks = $expanded;
+                if (!$big || count($bigBlocks) < 2) {
                     continue;
                 }
 
-                $last = count($blocks) - 1;
-                foreach ($blocks as $i => $node) {
-                    $newTr   = $tr->cloneNode(false);
-                    $newCell = $cell->cloneNode(false);
-                    $newCell->appendChild($node);
-                    $newCell->setAttribute(
-                        'class',
-                        $i === 0 ? 'pdf-cont-first' : ($i === $last ? 'pdf-cont-last' : 'pdf-cont-mid')
-                    );
-                    $newTr->appendChild($newCell);
+                $last = count($bigBlocks) - 1;
+                foreach ($bigBlocks as $i => $node) {
+                    $cls   = $i === 0 ? 'pdf-cont-first' : ($i === $last ? 'pdf-cont-last' : 'pdf-cont-mid');
+                    $newTr = $tr->cloneNode(false);
+
+                    foreach ($cells as $c) {
+                        if ($c === $big) {
+                            $nc = $c->cloneNode(false);
+                            $nc->appendChild($node);
+                        } elseif ($i === 0) {
+                            $nc = $c; // asli cell (jaise "1.") pehli row mein
+                        } else {
+                            $nc = $c->cloneNode(false);
+                            $nc->appendChild($dom->createTextNode("\xC2\xA0"));
+                        }
+                        $nc->setAttribute('class', $cls);
+                        $newTr->appendChild($nc);
+                    }
                     $tr->parentNode->insertBefore($newTr, $tr);
                 }
                 $tr->parentNode->removeChild($tr);
             }
         }
+    }
+
+    private static function chunkTable(DOMElement $table, int $n = 6): array
+    {
+        $xp   = new DOMXPath($table->ownerDocument);
+        $rows = iterator_to_array($xp->query('./tbody/tr | ./thead/tr | ./tr', $table));
+
+        if (count($rows) <= $n + 1) {
+            return [$table];
+        }
+        foreach ($xp->query('.//td | .//th', $table) as $c) {
+            if ((int) $c->getAttribute('rowspan') > 1) {
+                return [$table]; // rowspan wali table nahi todte
+            }
+        }
+
+        $header   = array_shift($rows);              // pehli row header maan lo
+        $colgroup = $xp->query('./colgroup', $table)->item(0);
+        $out      = [];
+
+        foreach (array_chunk($rows, $n) as $i => $chunk) {
+            $t = $table->cloneNode(false);
+            $t->setAttribute('class', 'pdf-chunk');
+            if ($colgroup) {
+                $t->appendChild($colgroup->cloneNode(true));
+            }
+            $tb = $table->ownerDocument->createElement('tbody');
+            $tb->appendChild($i === 0 ? $header : $header->cloneNode(true));
+            foreach ($chunk as $r) {
+                $tb->appendChild($r);
+            }
+            $t->appendChild($tb);
+            $out[] = $t;
+        }
+        return $out;
     }
 }

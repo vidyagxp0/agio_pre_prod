@@ -114,38 +114,29 @@
             margin-bottom: 15px;
         }
 
-        @page {
-            size: A4;
-            /* margin: 20mm; */
-        }
+        @page { size: A4; margin: 240px 34px 185px 34px; }
 
         header {
             position: fixed;
-            top: 0;
+            top: -218px;          /* 215 - 34 */
             left: 0;
             width: 100%;
             z-index: 1000;
+            background: #fff;
         }
 
-        /* body {
-            margin-top: 260px;
-            margin-bottom: 180px;
-        } */
-        body{
-            margin-top: 180px;
-            margin-bottom: 140px;
-            padding-top: 95px;
-            padding-bottom: 40px; 
-        }
-        
+        body { margin: 0; padding: 0; }
+
         footer {
             position: fixed;
-            bottom: 0;
+            bottom: -172px;       /* 170 - 34 */
             left: 0;
             width: 100%;
             z-index: 1000;
-            margin-top: 20px;
+            background: #fff;
         }
+
+        .header-wrapper { position: absolute; top: 0; left: 0; right: 0; }
 
         .table-responsive {
             overflow-x: auto;
@@ -262,259 +253,62 @@
     <style>
         .quill-pdf-content {
             width: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.5;
+            text-align: left;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            box-sizing: border-box;
+        }
+        .quill-pdf-content p { margin: 0 0 6px 0; font-size: 13px; line-height: 1.5; }
+        .quill-pdf-content h1, .quill-pdf-content h2, .quill-pdf-content h3,
+        .quill-pdf-content h4, .quill-pdf-content h5, .quill-pdf-content h6 {
+            font-size: 13px; font-weight: bold; margin: 10px 0 6px 0;
+        }
+        .quill-pdf-content ul, .quill-pdf-content ol { padding-left: 22px; margin: 2px 0 6px 0; }
+        .quill-pdf-content li { font-size: 13px; line-height: 1.5; margin-bottom: 2px; }
+
+        .quill-pdf-content table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin: 6px 0 10px 0;
+        }
+        .quill-pdf-content table.pdf-chunk { margin: 0; }
+        .quill-pdf-content table,
+        .quill-pdf-content th,
+        .quill-pdf-content td { border: 1px solid #000; }
+
+        .quill-pdf-content th,
+        .quill-pdf-content td {
+            font-size: 12px;
+            line-height: 1.35;
+            padding: 3px 5px;
+            vertical-align: top;
             text-align: left;
             word-wrap: break-word;
             overflow-wrap: break-word;
             white-space: normal;
         }
-
-        /* Paragraph */
-        .quill-pdf-content p {
-            font-size: 14px !important;
-            line-height: 1.5 !important;
-            margin: 4px 0 7px 0 !important;
-            padding: 0 !important;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+        .quill-pdf-content th { font-weight: bold; text-align: center; }
+        .quill-pdf-content td p, .quill-pdf-content th p,
+        .quill-pdf-content td div, .quill-pdf-content th div {
+            margin: 0; padding: 0; font-size: 12px; line-height: 1.35;
         }
+        .quill-pdf-content td span, .quill-pdf-content th span,
+        .quill-pdf-content td li, .quill-pdf-content th li { font-size: 12px; }
 
-        /* Div / Span */
-        .quill-pdf-content div,
-        .quill-pdf-content span {
-            max-width: 100%;
-            box-sizing: border-box;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
+        .quill-pdf-content table.pdf-borderless,
+        .quill-pdf-content table.pdf-borderless th,
+        .quill-pdf-content table.pdf-borderless td { border: none; }
 
-        /* Headings */
-        .quill-pdf-content h1,
-        .quill-pdf-content h2,
-        .quill-pdf-content h3,
-        .quill-pdf-content h4,
-        .quill-pdf-content h5,
-        .quill-pdf-content h6 {
-            line-height: 1.4 !important;
-            font-weight: bold !important;
-            margin: 8px 0 !important;
-            padding: 0 !important;
-            page-break-after: avoid;
-        }
+        .quill-pdf-content td.pdf-cont-first { border-bottom: none; }
+        .quill-pdf-content td.pdf-cont-mid   { border-top: none; border-bottom: none; }
+        .quill-pdf-content td.pdf-cont-last  { border-top: none; }
 
-        /* Bold */
-        .quill-pdf-content strong,
-        .quill-pdf-content b {
-            font-weight: bold !important;
-        }
-
-        /* Italic */
-        .quill-pdf-content em,
-        .quill-pdf-content i {
-            font-style: italic !important;
-        }
-
-        /* Underline */
-        .quill-pdf-content u {
-            text-decoration: underline !important;
-        }
-
-        /* =====================================================
-        LISTS
-        ===================================================== */
-
-        .quill-pdf-content ul,
-        .quill-pdf-content ol {
-            margin: 5px 0 8px 0 !important;
-            padding-left: 25px !important;
-        }
-
-        .quill-pdf-content li {
-            margin: 2px 0 !important;
-            line-height: 1.5 !important;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        /* =====================================================
-        TABLE
-        ===================================================== */
-
-        .quill-pdf-content table {
-            width: 100% !important;
-            max-width: 100% !important;
-            border-collapse: collapse !important;
-            table-layout: fixed !important;
-            margin: 8px 0 12px 0 !important;
-            box-sizing: border-box;
-        }
-
-        .quill-pdf-content table,
-        .quill-pdf-content th,
-        .quill-pdf-content td {
-            border: 1px solid #000 !important;
-        }
-
-        .quill-pdf-content th,
-        .quill-pdf-content td {
-            font-size: 13px !important;
-            line-height: 1.35 !important;
-            padding: 5px !important;
-            text-align: left !important;
-            vertical-align: top !important;
-            word-break: break-word !important;
-            word-wrap: break-word !important;
-            overflow-wrap: break-word !important;
-            white-space: normal !important;
-            box-sizing: border-box;
-        }
-
-        /* Table paragraph */
-        .quill-pdf-content td p,
-        .quill-pdf-content th p {
-            font-size: 13px !important;
-            line-height: 1.35 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-
-        /* Table row */
-        .quill-pdf-content tr {
-            page-break-inside: avoid;
-        }
-
-        /* Table header */
-        .quill-pdf-content th {
-            font-weight: bold !important;
-            text-align: center !important;
-        }
-
-        /* =====================================================
-        IMAGES
-        ===================================================== */
-
-        .quill-pdf-content img {
-            display: block;
-            width: auto !important;
-            max-width: 100% !important;
-            height: auto !important;
-            margin: 6px auto !important;
-            page-break-inside: avoid;
-        }
-
-        .quill-pdf-content td img,
-        .quill-pdf-content th img {
-            display: block;
-            width: auto !important;
-            max-width: 100% !important;
-            height: auto !important;
-            margin: 4px auto !important;
-        }
-
-        /* =====================================================
-        QUILL ALIGNMENT
-        ===================================================== */
-
-        .quill-pdf-content .ql-align-left {
-            text-align: left !important;
-        }
-
-        .quill-pdf-content .ql-align-center {
-            text-align: center !important;
-        }
-
-        .quill-pdf-content .ql-align-right {
-            text-align: right !important;
-        }
-
-        .quill-pdf-content .ql-align-justify {
-            text-align: justify !important;
-        }
-
-        /* Inline alignment */
-        .quill-pdf-content [style*="text-align: center"],
-        .quill-pdf-content [style*="text-align:center"] {
-            text-align: center !important;
-        }
-
-        .quill-pdf-content [style*="text-align: right"],
-        .quill-pdf-content [style*="text-align:right"] {
-            text-align: right !important;
-        }
-
-        .quill-pdf-content [style*="text-align: left"],
-        .quill-pdf-content [style*="text-align:left"] {
-            text-align: left !important;
-        }
-
-        .quill-pdf-content [style*="text-align: justify"],
-        .quill-pdf-content [style*="text-align:justify"] {
-            text-align: justify !important;
-        }
-
-        /* =====================================================
-        LINKS
-        ===================================================== */
-
-        .quill-pdf-content a {
-            color: #000 !important;
-            text-decoration: underline;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        /* =====================================================
-        BLOCKQUOTE
-        ===================================================== */
-
-        .quill-pdf-content blockquote {
-            margin: 8px 0 8px 15px !important;
-            padding-left: 10px !important;
-            border-left: 3px solid #777 !important;
-        }
-
-        /* =====================================================
-        PRE / CODE
-        ===================================================== */
-
-        .quill-pdf-content pre,
-        .quill-pdf-content code {
-            font-family: "DejaVu Sans Mono", monospace !important;
-            font-size: 13px !important;
-            white-space: pre-wrap !important;
-            word-wrap: break-word !important;
-            overflow-wrap: break-word !important;
-        }
-
-        /* =====================================================
-        GENERAL
-        ===================================================== */
-
-        .quill-pdf-content * {
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-
-        .quill-pdf-content table {
-            width: 100% !important;
-            border-collapse: collapse !important;
-        }
-
-        .quill-pdf-content td,
-        .quill-pdf-content th {
-            padding: 5px !important;
-        }
-
-        .quill-pdf-content table td,
-        .quill-pdf-content table th {
-            border: 1px solid #000 !important;
-            padding: 5px !important;
-            vertical-align: top !important;
-        }
-
+        .quill-pdf-content thead { display: table-header-group; }
+        .quill-pdf-content img { display: block; max-width: 100%; height: auto; margin: 6px auto; page-break-inside: avoid; }        
         .header-wrapper{
             position: fixed;
             top: 0;
@@ -547,123 +341,122 @@
 </head>
 <body>
     <div class="header-wrapper">
+            @if ($document->status == 'Effective' || $document->status == 'Obsolete')
 
-        @if ($document->status == 'Effective' || $document->status == 'Obsolete')
+                {{-- Existing normal SOP master-copy logic --}}
+                <div class="master-copy">
+                    MASTER COPY
+                </div>
 
-            {{-- Existing normal SOP master-copy logic --}}
-            <div class="master-copy">
-                MASTER COPY
-            </div>
-
-        @endif
-    <header class="">
-        <table class="border" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td class="logo w-15">
-                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
-                            style="max-height: 55px; max-width: 40px;">
+            @endif
+        <header class="">
+            <table class="border" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td class="logo w-15">
+                            <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                                style="max-height: 55px; max-width: 40px;">
+                        </td>
+                        <td class="title w-50"
+                            style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
+                            <p style="margin: 0; text-align: center; font-weight: bold;">{{ config('site.pdf_title') }}</p>
+                            <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="border border-top-none" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="font-weight: bold;">
+                        PACKING MATERIAL GENERAL TESTING PROCEDURE
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="border border-top-none" style="width: 100%;">
+                <tbody>
+                    <tr>
+                    <td style="width: 50%; padding: 5px; text-align: center; font-weight: bold;" class="doc-num">
+                        @if(!empty($data->document_content->gtp_product_material_name))
+                            {{ $data->document_content->gtp_product_material_name }}
+                        @else
+                            NA
+                        @endif
                     </td>
-                    <td class="title w-50"
-                        style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
-                        <p style="margin: 0; text-align: center; font-weight: bold;">{{ config('site.pdf_title') }}</p>
-                        <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td style="font-weight: bold;">
-                    PACKING MATERIAL GENERAL TESTING PROCEDURE
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                <td style="width: 50%; padding: 5px; text-align: center; font-weight: bold;" class="doc-num">
-                    @if(!empty($data->document_content->gtp_product_material_name))
-                        {{ $data->document_content->gtp_product_material_name }}
-                    @else
-                        NA
-                    @endif
-                </td>
-                </tr>
-            </tbody>
-        </table>
+                    </tr>
+                </tbody>
+            </table>
 
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">GTP No.:
-                        <span>
-                        {{-- @if($document->revised == 'Yes')
+            <table class="border border-top-none" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">GTP No.:
+                            <span>
+                            {{-- @if($document->revised == 'Yes')
+                                @php
+                                    $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                                @endphp
+
+                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                        PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    @else
+                                        PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    @endif
+                            @else                            
+                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                        PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
+                                    @else
+                                        PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
+                                    @endif
+                            @endif --}}
+                            {{$document->document_number ?? 'NA'}}
+                            </span>
+                        </td>
+                        <td class="w-50"
+                            style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
+                            Effective Date:
+                            <span>
+                            @if ($data->training_required == 'yes')
+                                @if ($data->stage >= 11)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @endif
+                            @else
+                                @if ($data->stage > 10)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @endif
+                            @endif
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="border border-top-none" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No:
+                            <span>
                             @php
-                                $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                                $temp = DB::table('document_types')
+                                    ->where('name', $document->document_type_name)
+                                    ->value('typecode');
                             @endphp
 
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @else
-                                    PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @endif
-                        @else                            
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
-                                @else
-                                    PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
-                                @endif
-                        @endif --}}
-                        {{$document->document_number ?? 'NA'}}
-                        </span>
-                    </td>
-                    <td class="w-50"
-                        style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
-                        Effective Date:
-                        <span>
-                        @if ($data->training_required == 'yes')
-                            @if ($data->stage >= 11)
-                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                            @if($document->revised == 'Yes' && $document->revised_doc)
+                                {{ $document->supersedes_no ?? 'Nil' }}
+                            @else
+                                Nil
                             @endif
-                        @else
-                            @if ($data->stage > 10)
-                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                            @endif
-                        @endif
-                        </span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No:
-                        <span>
-                        @php
-                            $temp = DB::table('document_types')
-                                ->where('name', $document->document_type_name)
-                                ->value('typecode');
-                        @endphp
-
-                        @if($document->revised == 'Yes' && $document->revised_doc)
-                            {{ $document->supersedes_no ?? 'Nil' }}
-                        @else
-                            Nil
-                        @endif
-                        </span>
-                    </td>
-                    <td class="w-50"
-                        style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
-                        Page No.:
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </header>
+                            </span>
+                        </td>
+                        <td class="w-50"
+                            style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
+                            Page No.:
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </header>
     </div>
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
@@ -749,27 +542,32 @@
     
     <div class="content">
         <section>
-
-        {{-- PROCEDURE START --}}
+                {{-- PROCEDURE START --}}
                 <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
-                                <th class="text-left">
-                                    <div class="bold">
-                                        Test
-                                    </div>
-                                </th>
+                              
                             </tr>
                         </thead>
                     </table>
-                    @php
-                        $gtp_test = \App\Helpers\ProcedureHtml::clean(
-                            Helpers::renderQuillPdf($data->document_content->gtp_test ?? '')
-                        );
-                    @endphp
-                    <div class="quill-pdf-content">
-                        {!! $gtp_test !!}
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        @php
+                                            $gtp_test = \App\Helpers\ProcedureHtml::clean(
+                                                Helpers::renderQuillPdf($data->document_content->gtp_test ?? '')
+                                            );
+                                        @endphp
+                                        <div class="quill-pdf-content">
+                                            {!! $gtp_test !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {{-- PROCEDURE END --}}
@@ -819,9 +617,10 @@
     </div>
 
     <style>
-        .revision-title {
-            font-size: 16px;
-            font-weight: bold;
+        .revision-title { 
+            font-size: 16px; 
+            font-weight: bold; 
+            margin: 8px 0 6px 0; 
         }
         .revision-header {
             font-size: 16px;
@@ -833,8 +632,8 @@
             $pdf->page_script('
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
-                $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 165;
+                $pageText = "" . $PAGE_NUM . " of " . $PAGE_COUNT;
+                $y = 150;
                 $x = 400;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');

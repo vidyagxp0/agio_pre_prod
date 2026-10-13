@@ -7409,7 +7409,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
                     heightMin: 300,
 
                     pastePlain: false,
-                    wordPasteModal: false,
+                    wordPasteModal: true,
                     wordPasteKeepFormatting: true,
 
                     pasteDeniedTags: ['style', 'script', 'meta', 'link'],

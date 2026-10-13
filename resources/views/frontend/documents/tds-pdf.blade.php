@@ -440,23 +440,20 @@
     <style>
         .quill-pdf-content {
             width: 100%;
-            font-size: 13px;
+            font-size: 14px;
             line-height: 1.5;
             text-align: left;
             word-wrap: break-word;
             overflow-wrap: break-word;
             box-sizing: border-box;
         }
-
-        .quill-pdf-content p { margin: 0 0 6px 0; font-size: 13px; line-height: 1.5; }
-
+        .quill-pdf-content p { margin: 0 0 6px 0; font-size: 14px; line-height: 1.5; }
         .quill-pdf-content h1, .quill-pdf-content h2, .quill-pdf-content h3,
         .quill-pdf-content h4, .quill-pdf-content h5, .quill-pdf-content h6 {
-            font-size: 13px; font-weight: bold; margin: 10px 0 6px 0;
+            font-size: 14px; font-weight: bold; margin: 10px 0 6px 0;
         }
-
         .quill-pdf-content ul, .quill-pdf-content ol { padding-left: 22px; margin: 2px 0 6px 0; }
-        .quill-pdf-content li { font-size: 13px; line-height: 1.5; margin-bottom: 2px; }
+        .quill-pdf-content li { font-size: 14px; line-height: 1.5; margin-bottom: 2px; }
 
         .quill-pdf-content table {
             width: 100%;
@@ -465,14 +462,14 @@
             border-spacing: 0;
             margin: 6px 0 10px 0;
         }
-
+        .quill-pdf-content table.pdf-chunk { margin: 0; }
         .quill-pdf-content table,
         .quill-pdf-content th,
         .quill-pdf-content td { border: 1px solid #000; }
 
         .quill-pdf-content th,
         .quill-pdf-content td {
-            font-size: 12px;
+            font-size: 14px;
             line-height: 1.35;
             padding: 3px 5px;
             vertical-align: top;
@@ -481,9 +478,7 @@
             overflow-wrap: break-word;
             white-space: normal;
         }
-
         .quill-pdf-content th { font-weight: bold; text-align: center; }
-
         .quill-pdf-content td p, .quill-pdf-content th p,
         .quill-pdf-content td div, .quill-pdf-content th div {
             margin: 0; padding: 0; font-size: 12px; line-height: 1.35;
@@ -491,19 +486,42 @@
         .quill-pdf-content td span, .quill-pdf-content th span,
         .quill-pdf-content td li, .quill-pdf-content th li { font-size: 12px; }
 
-        /* Word ki borderless layout tables */
         .quill-pdf-content table.pdf-borderless,
         .quill-pdf-content table.pdf-borderless th,
         .quill-pdf-content table.pdf-borderless td { border: none; }
+
         .quill-pdf-content td.pdf-cont-first { border-bottom: none; }
         .quill-pdf-content td.pdf-cont-mid   { border-top: none; border-bottom: none; }
         .quill-pdf-content td.pdf-cont-last  { border-top: none; }
 
         .quill-pdf-content thead { display: table-header-group; }
+        .quill-pdf-content img { display: block; max-width: 100%; height: auto; margin: 6px auto; page-break-inside: avoid; }        
+        .header-wrapper{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
 
-        .quill-pdf-content img {
-            display: block; max-width: 100%; height: auto;
-            margin: 6px auto; page-break-inside: avoid;
+        .master-copy{
+            position: absolute;
+            top: -35px;
+            right: 10px;
+
+            border: 2px solid #00bcd4;
+            color: #00bcd4;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            padding: 4px 12px;
+
+            transform: rotate(-4deg);
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            background: #fff;
         }
     </style>
 
@@ -991,7 +1009,7 @@
                     $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                     $size = 12;
                     $pageText =  $PAGE_NUM . " of " . $PAGE_COUNT;
-                    $y = 790;
+                    $y = 802;
                     $x = 485;
                     $pdf->text($x, $y, $pageText, $font, $size);
                 }
