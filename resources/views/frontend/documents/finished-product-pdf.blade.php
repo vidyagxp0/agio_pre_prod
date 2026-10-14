@@ -690,32 +690,20 @@
                             </thead>
                         </table>
 
-                        <div class="custom-procedure-block">
-                            <div class="custom-container">
-                                <div class="custom-table-wrapper">
-                                    <div class="custom-procedure-content">
-                                        <div class="custom-content-wrapper">
-                                            @php
-                                                $sample_quantity = \App\Helpers\ProcedureHtml::clean(
-                                                    Helpers::renderQuillPdf($data->sample_quantity ?? '')
-                                                );
-                                            @endphp
-                                            <div class="quill-pdf-content">
-                                                {!! $sample_quantity !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        @php
+                            $sample_quantity = \App\Helpers\ProcedureHtml::clean(
+                                Helpers::renderQuillPdf($data->sample_quantity ?? '')
+                            );
+                        @endphp
+                        <div class="quill-pdf-content">
+                            {!! $sample_quantity !!}
                         </div>
-
                     </div>
 
 
                     {{-- SAMPLE DETAILS --}}
                     <table class="keep-together">
                         <tbody>
-
                             <tr>
                                 <td style="width: 50%; padding: 3px; text-align: left;
                                            border: 1px solid black; font-weight: bold;">

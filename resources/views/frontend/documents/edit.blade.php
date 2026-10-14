@@ -13654,7 +13654,7 @@
 
                                     <div class="col-12 sub-head">
                                         
-                                        <div class="field-title">SPECIFICATION</div>
+                                        <div class="field-title">Specification</div>
                                         <div class="group-input">
                                             <textarea name="packingmaterial_specification" id="packingmaterial_specification"
                                                 class="froala-editor">{{ old('packingmaterial_specification', $document->packingmaterial_specification ?? '') }}</textarea>

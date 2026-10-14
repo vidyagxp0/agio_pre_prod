@@ -387,144 +387,126 @@
             </div>
 
         @endif
-    <header class="">
-        <table class="border" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td class="logo w-15">
-                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
-                            style="max-height: 55px; max-width: 40px;">
-                    </td>
-                    <td class="title w-50"
-                        style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
-                        <p style="margin: 0; text-align: center; font-weight: bold;">{{ config('site.pdf_title') }}</p>
-                        <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td style="font-weight: bold;">
-                        INPROCESS SPECIFICATION
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td>
-                        @if(!empty( $data->product_name_inps ))
-                          {{ $data->product_name_inps }}
-                        @else
-                         -
-                        @endif
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.:
-                        <span>
-                        {{-- @if($document->revised == 'Yes')
-                            @php
-                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-                            @endphp
-
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    IPS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @else
-                                    IPS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @endif
-                        @else
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   IPS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
-                                @else
-                                   IPS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
-                                @endif
-                        @endif --}}
-                        {{$document->document_number ?? 'NA'}}
-                        </span>
-                       
-                    </td>
-                    <td class="w-50"
-                        style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
-                        Effective Date:
-                        <span>@if ($data->training_required == 'yes')
-                            @if ($data->stage >= 11)
-                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                            @endif
-                        @else
-                            @if ($data->stage > 10)
-                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                            @endif
-                        @endif
-                        </span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No.:
-                    <span>
-                   
-                   @php
-                       $temp = DB::table('document_types')
-                           ->where('name', $document->document_type_name)
-                           ->value('typecode');
-                   @endphp
-
-
-                    @if($document->revised == 'Yes' && $document->revised_doc)
-                        {{ $document->supersedes_no ?? 'Nil' }}
-                    @else
-                        Nil
-                    @endif
-                   </span>   
-                
-                </td>
-                    <td class="w-50"
-                        style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
-                        Page No.:
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="border border-top-none" style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No:
-                        <span>
-                            @if($document->revised == 'Yes')
-                                @php
-                                    $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-                                @endphp
-
-                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                        IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                                    @else
-                                        IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                                    @endif
+        <header class="">
+            <table class="border" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td class="logo w-15">
+                            <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                                style="max-height: 55px; max-width: 40px;">
+                        </td>
+                        <td class="title w-50"
+                            style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
+                            <p style="margin: 0; text-align: center; font-weight: bold;">{{ config('site.pdf_title') }}</p>
+                            <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="border border-top-none" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="font-weight: bold;">
+                            INPROCESS SPECIFICATION
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="border border-top-none" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td>
+                            @if(!empty( $data->product_name_inps ))
+                            {{ $data->product_name_inps }}
                             @else
-                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                       IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                                    @else
-                                       IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                                    @endif
+                            -
                             @endif
-                        </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="border border-top-none" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.:
+                            <span>
+                            {{$document->document_number ?? 'NA'}}
+                            </span>
+                        
+                        </td>
+                        <td class="w-50"
+                            style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
+                            Effective Date:
+                            <span>@if ($data->training_required == 'yes')
+                                @if ($data->stage >= 11)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @endif
+                            @else
+                                @if ($data->stage > 10)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @endif
+                            @endif
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="border border-top-none" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No.:
+                        <span>
+                    
+                        @php
+                            $temp = DB::table('document_types')
+                                ->where('name', $document->document_type_name)
+                                ->value('typecode');
+                        @endphp
+
+                        @if($document->revised == 'Yes' && $document->revised_doc)
+                            {{ $document->supersedes_no ?? 'Nil' }}
+                        @else
+                            Nil
+                        @endif
+                    </span>   
+                    
                     </td>
-                </tr>
-            </tbody>
-        </table>
-    </header>
+                        <td class="w-50"
+                            style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
+                            Page No.:
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            {{-- <table class="border border-top-none" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No:
+                            <span>
+                                @if($document->revised == 'Yes')
+                                    @php
+                                        $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+                                    @endphp
+
+                                        @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                            IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                                        @else
+                                            IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                                        @endif
+                                @else
+                                        @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                        IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                                        @else
+                                        IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                                        @endif
+                                @endif
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> --}}
+        </header>
     </div>
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
@@ -611,81 +593,68 @@
     </footer>
 
 
-<div style="margin-top: 10px;">
-    <section class="main-section" id="pdf-page">
-        <section style="page-break-after: never;">
-            <div class="other-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="text-center">
-                                <div style="font-weight: bold;">GENERAL INFORMATION</div>
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
-
-                <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 14px; page-break-inside: avoid;">
+    <div class="first-page-content">
+        <section class="main-section" id="pdf-page">
+            <div class="first-page-stp">
+                <table class="">
                     <tbody>
                         <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Generic Name</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{$data->generic_name_inps}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Brand Name</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->brand_name_inps}}</td>
+                            <td class="doc-num">STP No:
+                                <span>
+                                    @if($document->revised == 'Yes')
+                                        @php
+                                            $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+                                        @endphp
+
+                                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                                IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                                            @else
+                                                IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                                            @endif
+                                    @else
+                                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                            IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                                            @else
+                                            IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                                            @endif
+                                    @endif
+                                </span>
+                            </td>
                         </tr>
                     </tbody>
-                </table>        
-
-                <div class="other-container ">
+                </table>
+            </div>
+            <section style="page-break-after: never;">
+                <div class="other-container">
                     <table>
                         <thead>
                             <tr>
-                                <th class="text-left">
-                                    <div class="bold">Label Claim</div>
+                                <th class="text-center">
+                                    <div style="font-weight: bold;">GENERAL INFORMATION</div>
                                 </th>
                             </tr>
                         </thead>
                     </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        @php
-                                            $label_claim_inps = \App\Helpers\ProcedureHtml::clean(
-                                                Helpers::renderQuillPdf($data->label_claim_inps ?? '')
-                                            );
-                                        @endphp
-                                        <div class="quill-pdf-content">
-                                            {!! $label_claim_inps !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>    
-                <table>        
-                    <tbody>    
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Product Code</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->product_code_inps}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Storage Condition</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->storage_condition_inps}}</td>
-                        </tr>
-                    </tbody>
-                </table>        
+
+                    <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 14px; page-break-inside: avoid;">
+                        <tbody>
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Generic Name</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{$data->generic_name_inps}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Brand Name</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->brand_name_inps}}</td>
+                            </tr>
+                        </tbody>
+                    </table>        
 
                     <div class="other-container ">
                         <table>
                             <thead>
                                 <tr>
                                     <th class="text-left">
-                                        <div class="bold">Sample Quantity for Analysis</div>
+                                        <div class="bold">Label Claim</div>
                                     </th>
                                 </tr>
                             </thead>
@@ -696,43 +665,85 @@
                                     <div class="custom-procedure-content">
                                         <div class="custom-content-wrapper">
                                             @php
-                                                $sample_quantity_inps = \App\Helpers\ProcedureHtml::clean(
-                                                    Helpers::renderQuillPdf($data->sample_quantity_inps ?? '')
+                                                $label_claim_inps = \App\Helpers\ProcedureHtml::clean(
+                                                    Helpers::renderQuillPdf($data->label_claim_inps ?? '')
                                                 );
                                             @endphp
                                             <div class="quill-pdf-content">
-                                                {!! $sample_quantity_inps !!}
+                                                {!! $label_claim_inps !!}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>   
-                <table>        
-                    <tbody>    
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->reserve_sample_inps}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Custom Sample</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->custom_sample_inps}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Reference</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->reference_inps}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling Instructions Warning and Precautions</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->sampling_instructions_inps}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    </div>    
+                    <table>        
+                        <tbody>    
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Product Code</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->product_code_inps}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Storage Condition</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->storage_condition_inps}}</td>
+                            </tr>
+                        </tbody>
+                    </table>        
+
+                        <div class="other-container ">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">
+                                            <div class="bold">Sample Quantity for Analysis</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div class="custom-procedure-block">
+                                <div class="custom-container">
+                                    <div class="custom-table-wrapper" id="custom-table2">
+                                        <div class="custom-procedure-content">
+                                            <div class="custom-content-wrapper">
+                                                @php
+                                                    $sample_quantity_inps = \App\Helpers\ProcedureHtml::clean(
+                                                        Helpers::renderQuillPdf($data->sample_quantity_inps ?? '')
+                                                    );
+                                                @endphp
+                                                <div class="quill-pdf-content">
+                                                    {!! $sample_quantity_inps !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+                    <table>        
+                        <tbody>    
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->reserve_sample_inps}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Custom Sample</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->custom_sample_inps}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Reference</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->reference_inps}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling Instructions Warning and Precautions</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->sampling_instructions_inps}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </section>
-    </section>
-</div>
+    </div>
 
     {{-- PROCEDURE START --}}
     <div class="other-container ">
@@ -811,8 +822,6 @@
             </tbody>
         </table>
     </div>
-
-
 
     <script type="text/php">
         if (isset($pdf)) {
