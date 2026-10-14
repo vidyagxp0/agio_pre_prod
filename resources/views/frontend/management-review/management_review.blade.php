@@ -26,6 +26,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+     <script>
+    $(document).ready(function() {
+        $('.formSubmit').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    });
+</script>
+
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
         integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
@@ -434,7 +442,7 @@
                 });
             </script>
 
-            <form action="{{ route('manageUpdate', $data->id) }}" method="post" enctype="multipart/form-data">
+            <form class="formSubmit" action="{{ route('manageUpdate', $data->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
                     <div id="CCForm1" class="inner-block cctabcontent">
@@ -1133,7 +1141,7 @@
                                 </script>
                             </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton"
+                                <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button"
                                      >Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
@@ -1501,7 +1509,7 @@
                                 </div>
                             </div> --}}
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white"> Exit </a> </button>
@@ -2017,7 +2025,7 @@
                                 </div>
                             </div> --}}
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white"> Exit </a> </button>
@@ -12639,7 +12647,7 @@
 
 
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -12822,7 +12830,7 @@
                                 <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->due_date_extension }}</textarea>
                             </div> --}}
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             {{-- <button type="submit">Submit</button> --}}

@@ -10,6 +10,14 @@
         }
     </style>
 
+ <script>
+    $(document).ready(function() {
+        $('.formSubmit').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    });
+</script>
+
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -39,7 +47,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity log</button>
             </div>
 
-            <form action="{{ route('managestore') }}" method="post" enctype="multipart/form-data">
+            <form  class="formSubmit" action="{{ route('managestore') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
                     <div id="CCForm1" class="inner-block cctabcontent">
@@ -363,7 +371,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                <button type="submit" id="ChangesaveButton"  class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
@@ -429,7 +437,7 @@
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit"  class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -1335,7 +1343,7 @@
                                 </div>
                             </div> --}}
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit"  class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -3372,7 +3380,7 @@
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton"
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                    class="saveButton">Save</button>
+                                     class="saveButton on-submit-disable-button">Save</button>
                                 {{-- <a href="/rcms/qms-dashboard"
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <button type="button" class="backButton">Back</button>
@@ -5432,7 +5440,7 @@
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton"
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                    class="saveButton">Save</button>
+                                     class="saveButton on-submit-disable-button">Save</button>
                                 {{-- <a href="/rcms/qms-dashboard"
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <button type="button" class="backButton">Back</button>
@@ -5487,7 +5495,7 @@
                             </div>
 
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit"  class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
@@ -5683,7 +5691,7 @@
                                 <textarea name="due_date_extension"></textarea>
                             </div> --}}
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit"  class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 {{-- <button type="submit">Submit1</button> --}}
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -5854,7 +5862,7 @@
                             </div>
 
                             <div class="button-block">
-                                {{-- <button type="submit" class="saveButton">Save</button> --}}
+                                {{-- <button type="submit"  class="saveButton on-submit-disable-button">Save</button> --}}
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 {{-- <button type="submit">Submit</button> --}}
                                 <button type="button"> <a class="text-white" href="{{ url('dashboard') }}"> Exit

@@ -26,6 +26,14 @@ $userDetails = DB::table('users')->whereIn('id', $userIds)->select('id', 'name')
 </style>
 </style>
 
+ <script>
+    $(document).ready(function() {
+        $('.formSubmit').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    });
+</script>
+
 <script>
     $(document).ready(function() {
         $('#ObservationAdd').click(function(e) {
@@ -92,7 +100,7 @@ $userDetails = DB::table('users')->whereIn('id', $userIds)->select('id', 'name')
             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button>
 
         </div>
-        <form action="{{ route('extension_new.store') }}" method="POST" enctype="multipart/form-data">
+        <form class="formSubmit" action="{{ route('extension_new.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <!-- Tab content -->
             <div id="step-form">
@@ -465,7 +473,7 @@ $userDetails = DB::table('users')->whereIn('id', $userIds)->select('id', 'name')
 </div>
 
 <div class="button-block">
-    <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
+    <button type="submit" id="ChangesaveButton01" class="saveButton on-submit-disable-button">Save</button>
     <button type="button" class="backButton" onclick="previousStep()">Back</button>
     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -507,7 +515,7 @@ $userDetails = DB::table('users')->whereIn('id', $userIds)->select('id', 'name')
             </div>
         </div>
         <div class="button-block">
-            <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
+            <button type="submit" id="ChangesaveButton02" class="saveButton on-submit-disable-button">Save</button>
             <button type="button" class="backButton" onclick="previousStep()">Back</button>
             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -546,7 +554,7 @@ $userDetails = DB::table('users')->whereIn('id', $userIds)->select('id', 'name')
             </div>
         </div>
         <div class="button-block">
-            <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
+            <button type="submit" id="ChangesaveButton02" class="saveButton on-submit-disable-button">Save</button>
             <button type="button" class="backButton" onclick="previousStep()">Back</button>
             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -753,7 +761,7 @@ $userDetails = DB::table('users')->whereIn('id', $userIds)->select('id', 'name')
 
         </div>
         {{-- <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
+                        <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                         <a href="/rcms/qms-dashboard">
                             <button type="button" class="backButton">Back</button>
                         </a>
@@ -764,7 +772,7 @@ $userDetails = DB::table('users')->whereIn('id', $userIds)->select('id', 'name')
 
 
     <div class="button-block">
-        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+        <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
         <button type="button" class="backButton" onclick="previousStep()">Back</button>
 
         <button type="button">

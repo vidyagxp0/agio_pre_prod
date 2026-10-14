@@ -122,28 +122,34 @@ class ExtensionNewController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            //     'site_location_code' => 'required|string',
-            //     'initiator' => 'required|string',
-            //     'initiation_date' => 'required|date',
+            
             'short_description' => 'required|string',
-            //     'reviewers' => 'required|json',
-            //     'approvers' => 'required|json',
-            //     'current_due_date' => 'required|date',
-            //     'proposed_due_date' => 'required|date',
-            // 'description' => 'required|string',
-            //     'file_attachment_extension' => 'required|string',
-            //     'reviewer_remarks' => 'nullable|string',
-            //     'file_attachment_reviewer' => 'nullable|string',
-            //     'approver_remarks' => 'nullable|string',
-            //     'file_attachment_approver' => 'nullable|string',
+           
         ]);
 
-         $lastrecordnumber = extension_new::orderBy('record_number', 'desc')->first();
-        $record_number = $lastrecordnumber ? $lastrecordnumber->record_number + 1 : 1;
+        //  $lastrecordnumber = extension_new::orderBy('record_number', 'desc')->first();
+        // $record_number = $lastrecordnumber ? $lastrecordnumber->record_number + 1 : 1;
 
 
-        $lastrecord = extension_new::orderBy('record', 'desc')->first();
-        $record = $lastrecord ? $lastrecord->record + 1 : 1;
+        // $lastrecord = extension_new::orderBy('record', 'desc')->first();
+        // $record = $lastrecord ? $lastrecord->record + 1 : 1;
+
+
+       
+        $lastrecordnumber = extension_new::orderByRaw('CAST(record_number AS UNSIGNED) DESC')->first();
+
+            $record_number = $lastrecordnumber
+                ? (int) $lastrecordnumber->record_number + 1
+                : 1;
+
+
+            $lastrecord = extension_new::orderByRaw('CAST(record AS UNSIGNED) DESC')->first();
+
+            $record = $lastrecord
+                ? (int) $lastrecord->record + 1
+                : 1;
+       
+
 
 
         $extensionNew = new extension_new();
