@@ -2647,71 +2647,106 @@ class DeviationController extends Controller
                         $Cft->Other5_person = $request->Other5_person;
                         $Cft->Other5_Department_person = $request->Other5_Department_person;
                     }
-                    $Cft->Warehouse_feedback = $request->Warehouse_feedback;
-                    $Cft->Warehouse_assessment = $request->Warehouse_assessment;
-                    $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
-                    $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
+                    // $Cft->Warehouse_feedback = $request->Warehouse_feedback;
+                    // $Cft->Warehouse_assessment = $request->Warehouse_assessment;
+                    // // $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
+                    // // $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
 
-                    $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
-                    $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
+                    // $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
+                    // $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
 
-                    $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
-                    $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
+                    // $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
+                    // $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
 
-                    $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
-                    $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
+                    // $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
+                    // $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
 
-                    $Cft->Store_feedback = $request->Store_feedback;
-                    $Cft->Store_assessment = $request->Store_assessment;
+                    // $Cft->Store_feedback = $request->Store_feedback;
+                    // $Cft->Store_assessment = $request->Store_assessment;
 
-                    $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
-                    $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
+                    // $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
+                    // $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
 
-                    $Cft->Microbiology_feedback = $request->Microbiology_feedback;
-                    $Cft->Microbiology_assessment = $request->Microbiology_assessment;
+                    // $Cft->Microbiology_feedback = $request->Microbiology_feedback;
+                    // $Cft->Microbiology_assessment = $request->Microbiology_assessment;
 
-                    $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
-                    $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
+                    // $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
+                    // $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
 
-                    $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
-                    $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
+                    // $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
+                    // $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
 
-                    $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
-                    $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
+                    // $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
+                    // $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
 
-                    $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
-                    $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
+                    // $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
+                    // $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
 
-                    $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
-                    $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
+                    // $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
+                    // $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
 
-                    $Cft->Engineering_assessment = $request->Engineering_assessment;
-                    $Cft->Engineering_feedback = $request->Engineering_feedback;
+                    // $Cft->Engineering_assessment = $request->Engineering_assessment;
+                    // $Cft->Engineering_feedback = $request->Engineering_feedback;
 
-                    $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
-                    $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
+                    // $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
+                    // $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
 
-                    $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
-                    $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
+                    // $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
+                    // $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
 
-                    $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
-                    $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
+                    // $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
+                    // $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
 
-                    $Cft->Other1_assessment = $request->Other1_assessment;
-                    $Cft->Other1_feedback = $request->Other1_feedback;
+                    // $Cft->Other1_assessment = $request->Other1_assessment;
+                    // $Cft->Other1_feedback = $request->Other1_feedback;
 
-                    $Cft->Other2_Assessment = $request->Other2_Assessment;
-                    $Cft->Other2_feedback = $request->Other2_feedback;
+                    // $Cft->Other2_Assessment = $request->Other2_Assessment;
+                    // $Cft->Other2_feedback = $request->Other2_feedback;
 
-                    $Cft->Other3_Assessment = $request->Other3_Assessment;
-                    $Cft->Other3_feedback = $request->Other3_feedback;
+                    // $Cft->Other3_Assessment = $request->Other3_Assessment;
+                    // $Cft->Other3_feedback = $request->Other3_feedback;
 
-                    $Cft->Other4_Assessment = $request->Other4_Assessment;
-                    $Cft->Other4_feedback = $request->Other4_feedback;
+                    // $Cft->Other4_Assessment = $request->Other4_Assessment;
+                    // $Cft->Other4_feedback = $request->Other4_feedback;
 
-                    $Cft->Other5_Assessment = $request->Other5_Assessment;
-                    $Cft->Other5_feedback = $request->Other5_feedback;
+                    // $Cft->Other5_Assessment = $request->Other5_Assessment;
+                    // $Cft->Other5_feedback = $request->Other5_feedback;
 
+
+
+
+
+                    //////////////////
+
+                    $Cft->Production_Table_Assessment = $request->filled('Production_Table_Assessment') ? $request->Production_Table_Assessment : $Cft->Production_Table_Assessment;
+                    $Cft->Warehouse_assessment = $request->filled('Warehouse_assessment') ? $request->Warehouse_assessment : $Cft->Warehouse_assessment;
+                    $Cft->Production_Injection_Assessment = $request->filled('Production_Injection_Assessment') ? $request->Production_Injection_Assessment : $Cft->Production_Injection_Assessment;
+                    $Cft->ProductionLiquid_assessment = $request->filled('ProductionLiquid_assessment') ? $request->ProductionLiquid_assessment : $Cft->ProductionLiquid_assessment;
+                    $Cft->Store_assessment = $request->filled('Store_assessment') ? $request->Store_assessment : $Cft->Store_assessment;
+                    $Cft->ResearchDevelopment_assessment = $request->filled('ResearchDevelopment_assessment') ? $request->ResearchDevelopment_assessment : $Cft->ResearchDevelopment_assessment;
+                    $Cft->Microbiology_assessment = $request->filled('Microbiology_assessment') ? $request->Microbiology_assessment : $Cft->Microbiology_assessment;
+                    $Cft->RegulatoryAffair_assessment = $request->filled('RegulatoryAffair_assessment') ? $request->RegulatoryAffair_assessment : $Cft->RegulatoryAffair_assessment;
+                    $Cft->ResearchDevelopment_assessment = $request->filled('ResearchDevelopment_assessment') ? $request->ResearchDevelopment_assessment : $Cft->ResearchDevelopment_assessment;
+                    $Cft->CorporateQualityAssurance_assessment = $request->filled('CorporateQualityAssurance_assessment') ? $request->CorporateQualityAssurance_assessment : $Cft->CorporateQualityAssurance_assessment;
+                    $Cft->ContractGiver_assessment = $request->filled('ContractGiver_assessment') ? $request->ContractGiver_assessment : $Cft->ContractGiver_assessment;
+                    $Cft->Quality_Control_assessment = $request->filled('Quality_Control_assessment') ? $request->Quality_Control_assessment : $Cft->Quality_Control_assessment;
+                    $Cft->Engineering_assessment = $request->filled('Engineering_assessment') ? $request->Engineering_assessment : $Cft->Engineering_assessment;
+                    $Cft->QualityAssurance_assessment = $request->filled('QualityAssurance_assessment') ? $request->QualityAssurance_assessment : $Cft->QualityAssurance_assessment;
+                    $Cft->Health_Safety_assessment = $request->filled('Health_Safety_assessment') ? $request->Health_Safety_assessment : $Cft->Health_Safety_assessment;
+                    $Cft->Human_Resource_assessment = $request->filled('Human_Resource_assessment') ? $request->Human_Resource_assessment : $Cft->Human_Resource_assessment;
+                    $Cft->Information_Technology_assessment = $request->filled('Information_Technology_assessment') ? $request->Information_Technology_assessment : $Cft->Information_Technology_assessment;
+                    $Cft->Other1_assessment = $request->filled('Other1_assessment') ? $request->Other1_assessment : $Cft->Other1_assessment;
+                    $Cft->Other2_Assessment = $request->filled('Other2_Assessment') ? $request->Other2_Assessment : $Cft->Other2_Assessment;
+                    $Cft->Other3_Assessment = $request->filled('Other3_Assessment') ? $request->Other3_Assessment : $Cft->Other3_Assessment;
+                    $Cft->Other4_Assessment = $request->filled('Other4_Assessment') ? $request->Other4_Assessment : $Cft->Other4_Assessment;
+                    $Cft->Other5_Assessment = $request->filled('Other5_Assessment') ? $request->Other5_Assessment : $Cft->Other5_Assessment;
+
+                      
+
+
+
+
+                    /////////////
 
                     if (!empty ($request->RA_attachment)) {
                         $files = [];
@@ -9556,12 +9591,14 @@ class DeviationController extends Controller
                 }
            if ($deviation->stage == 4) {
 
+    
+
                     $deviation->stage = "3";
                     $deviation->status = "QA/CQA Initial Assessment";
                     $deviation->qa_more_info_required_by = 'Not Applicable';
                     $deviation->qa_more_info_required_on = 'Not Applicable';
                     // $deviation->pending_Cancel_comment = $request->comment;
-
+                  
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
                     $history->previous = 'Not Applicable';
@@ -9636,7 +9673,78 @@ class DeviationController extends Controller
                             }
                         // }
                     }
+
+                     DeviationCftsResponse::withoutTrashed()
+                        ->where('deviation_id', $id)
+                        ->whereIn('status', ['In-progress', 'Completed'])
+                        ->get()
+                        ->each(function ($response) {
+                            $response->delete();
+                        });
+
+                          
                     $deviation->update();
+                      
+                     $Cft = DeviationCft::where('deviation_id', $deviation->id)->first();
+                        if ($Cft) {
+                            $Cft->QualityAssurance_by = null;
+                            $Cft->QualityAssurance_on = null;
+                            $Cft->Quality_Control_by = null;
+                            $Cft->Quality_Control_on = null;
+                            $Cft->Warehouse_by = null;
+                            $Cft->Warehouse_on = null;
+                            $Cft->Production_Injection_By = null;
+                            $Cft->Production_Injection_On = null;
+                            $Cft->Production_Table_By = null;
+                            $Cft->Production_Table_On = null;
+                            $Cft->RA_by = null;
+                            $Cft->RA_on = null;
+                            $Cft->production_by = null;
+                            $Cft->production_on = null;
+                            $Cft->ResearchDevelopment_by = null;
+                            $Cft->ResearchDevelopment_on = null;
+                            $Cft->Human_Resource_by = null;
+                            $Cft->Human_Resource_on = null;
+                            $Cft->CorporateQualityAssurance_by = null;
+                            $Cft->CorporateQualityAssurance_on = null;
+                            $Cft->Store_by = null;
+                            $Cft->Store_on = null;
+                            $Cft->Engineering_by = null;
+                            $Cft->Engineering_on = null;
+                            $Cft->RegulatoryAffair_by = null;
+                            $Cft->RegulatoryAffair_on = null;
+                            $Cft->QualityAssurance_by = null;
+                            $Cft->QualityAssurance_on = null;
+                            $Cft->ProductionLiquid_by = null;
+                            $Cft->ProductionLiquid_on = null;
+                            $Cft->Quality_Control_by = null;
+                            $Cft->Quality_Control_on = null;
+                            $Cft->Microbiology_by = null;
+                            $Cft->Microbiology_on = null;
+                            $Cft->Environment_Health_Safety_by = null;
+                            $Cft->Environment_Health_Safety_on = null;
+                            $Cft->Information_Technology_by = null;
+                            $Cft->Information_Technology_on = null;
+                            $Cft->ContractGiver_by = null;
+                            $Cft->ContractGiver_on = null;
+                            $Cft->Other1_by = null;
+                            $Cft->Other1_on = null;
+                            $Cft->Other2_by = null;
+                            $Cft->Other2_on = null;
+                            $Cft->Other3_by = null;
+                            $Cft->Other3_on = null;
+                            $Cft->Other4_by = null;
+                            $Cft->Other4_on = null;
+                            $Cft->Other5_by = null;
+                            $Cft->Other5_on = null;
+
+                            $Cft->save();
+
+                            return back();
+                        }
+
+
+
                     return back();
                 }
                if ($deviation->stage == 5) {
@@ -10220,6 +10328,14 @@ class DeviationController extends Controller
                             }
                         // }
                     }
+
+                      DeviationCftsResponse::withoutTrashed()
+                        ->where('deviation_id', $id)
+                        ->whereIn('status', ['In-progress', 'Completed'])
+                        ->get()
+                        ->each(function ($response) {
+                            $response->delete();
+                        });
                     $deviation->update();
 
                         $Cft = DeviationCft::where('deviation_id', $deviation->id)->first();
@@ -10260,6 +10376,8 @@ class DeviationController extends Controller
                                     $Cft->Microbiology_on = null;
                                     $Cft->Environment_Health_Safety_by = null;
                                     $Cft->Environment_Health_Safety_on = null;
+                                    $Cft->Information_Technology_by = null;
+                                    $Cft->Information_Technology_on = null;
                                     $Cft->ContractGiver_by = null;
                                     $Cft->ContractGiver_on = null;
                                     $Cft->Other1_by = null;
@@ -10353,8 +10471,17 @@ class DeviationController extends Controller
                             }
                         // }
                     }
+
+                      DeviationCftsResponse::withoutTrashed()
+                        ->where('deviation_id', $id)
+                        ->whereIn('status', ['In-progress', 'Completed'])
+                        ->get()
+                        ->each(function ($response) {
+                            $response->delete();
+                        });
                     $deviation->update();
-                                        $Cft = DeviationCft::where('deviation_id', $deviation->id)->first();
+
+                            $Cft = DeviationCft::where('deviation_id', $deviation->id)->first();
                                 if ($Cft) {
                                     $Cft->QualityAssurance_by = null;
                                     $Cft->QualityAssurance_on = null;
@@ -10392,6 +10519,8 @@ class DeviationController extends Controller
                                     $Cft->Microbiology_on = null;
                                     $Cft->Environment_Health_Safety_by = null;
                                     $Cft->Environment_Health_Safety_on = null;
+                                    $Cft->Information_Technology_by = null;
+                                    $Cft->Information_Technology_on = null;
                                     $Cft->ContractGiver_by = null;
                                     $Cft->ContractGiver_on = null;
                                     $Cft->Other1_by = null;
@@ -10431,7 +10560,7 @@ class DeviationController extends Controller
            if ($deviation->stage == 5) {
 
  
-
+                      
                     $deviation->stage = "3";
                     $deviation->status = "QA/CQA Initial Assessment";
                     $deviation->qa_more_info_required_by ='Not Applicable';
@@ -10517,6 +10646,14 @@ class DeviationController extends Controller
                             }
                         // }
                     }
+
+                      DeviationCftsResponse::withoutTrashed()
+                        ->where('deviation_id', $id)
+                        ->whereIn('status', ['In-progress', 'Completed'])
+                        ->get()
+                        ->each(function ($response) {
+                            $response->delete();
+                        });
                     $deviation->update();
 
                      $Cft = DeviationCft::where('deviation_id', $deviation->id)->first();
@@ -10557,6 +10694,8 @@ class DeviationController extends Controller
                                     $Cft->Microbiology_on = null;
                                     $Cft->Environment_Health_Safety_by = null;
                                     $Cft->Environment_Health_Safety_on = null;
+                                    $Cft->Information_Technology_by = null;
+                                    $Cft->Information_Technology_on = null;
                                     $Cft->ContractGiver_by = null;
                                     $Cft->ContractGiver_on = null;
                                     $Cft->Other1_by = null;
@@ -13385,6 +13524,7 @@ class DeviationController extends Controller
             }
 
             if ($deviation->stage == 4) {
+                dd('vgbhnjmk');
                 $deviation->stage = "3";
                 $deviation->status = "QA/CQA Initial Review";
                 $deviation->qa_more_info_required_by = Auth::user()->name;
