@@ -78,8 +78,8 @@
                             $num = str_pad($document->id , 5, '0', STR_PAD_LEFT);
                             $originator = DB::table('users')->find($document->originator_id);
                         @endphp
-                        <li><strong>Document Number :</strong> {{ $division->name }}/{{ $doctype->typecode }}/{{ $year }}/{{ $num }}</li>
-                        <li><strong>Author :</strong> {{ $originator->name }}</li>
+                        <li><strong>Document Number :</strong> {{ $division->name ?? 'N/A' }}/{{ $doctype->typecode ?? 'N/A' }}/{{ $year }}/{{ $num }}</li>
+                        <li><strong>Author :</strong> {{ $originator->name ?? 'N/A' }}</li>
                         <br>
                         <p>Please Login the Document Management system.</p>
                     </ul>

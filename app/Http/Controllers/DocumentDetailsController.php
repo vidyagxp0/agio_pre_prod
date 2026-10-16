@@ -30,6 +30,8 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
+use App\Jobs\SendDocumentMail;
 
 class DocumentDetailsController extends Controller
 {
@@ -76,6 +78,7 @@ class DocumentDetailsController extends Controller
 
   function sendforstagechanage(Request $request)
   {
+    
     if ($request->username == Auth::user()->emp_code) {
       if (Hash::check($request->password, Auth::user()->password)) {
         $document = Document::withTrashed()->find($request->document_id);
@@ -86,38 +89,83 @@ class DocumentDetailsController extends Controller
         // $fullPermission = UserRole::where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $document->division_id])->get();
         // $fullPermissionIds = $fullPermission->pluck('q_m_s_roles_id')->toArray();
 
-        if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id && $request->stage_id == 2 || $request->stage_id == 6 || $request->stage_id == 8 || $request->stage_id == 10 || $request->stage_id == 12) {
+        if (Helpers::checkRoles(3) && (int) $document->originator_id === (int) Auth::id() && in_array((int) $request->stage_id, [2, 6, 8, 10, 12], true)) {
 
           $stage = new StageManage;
           $stage->document_id = $request->document_id;
           $stage->user_id = Auth::user()->id;
           $stage->role = RoleGroup::where('id', Auth::user()->role)->value('name');
           $stage->stage = Stage::where('id', $request->stage_id)->value('name');
+
           $stage->comment = $request->comment;
 
-
           if ($stage->stage == "In-Review") {
-            $deletePreviousApproval = StageManage::where('document_id', $request->document_id)->get();
-            if ($deletePreviousApproval) {
+
+              $deletePreviousApproval = StageManage::where(
+                  'document_id',
+                  $request->document_id
+              )->get();
+
               foreach ($deletePreviousApproval as $updateRecords) {
-                $updateRecords->delete();
+                  $updateRecords->delete();
               }
-            }
-            $history = new DocumentHistory();
-            $history->document_id = $request->document_id;
-            $history->activity_type = 'Send for Reviewer';
-            $history->previous = '';
-            $history->current = '';
-            $history->comment = $request->comment;
-            $history->action_name = 'Submit';
-            $history->change_from = 'Draft';
-            $history->change_to = 'In-Review';
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = 'Draft';
-            $history->save();
+
+              $history = new DocumentHistory();
+              $history->document_id = $request->document_id;
+              $history->activity_type = 'Send for Reviewer';
+              $history->previous = '';
+              $history->current = '';
+              $history->comment = $request->comment;
+              $history->action_name = 'Submit';
+              $history->change_from = 'Draft';
+              $history->change_to = 'In-Review';
+              $history->user_id = Auth::id();
+              $history->user_name = Auth::user()->name;
+              $history->user_role = RoleGroup::where(
+                  'id',
+                  Auth::user()->role
+              )->value('name');
+              $history->origin_state = 'Draft';
+              $history->save();
+
+              try {
+                  $originator = DB::table('users')
+                      ->where('id', $document->originator_id)
+                      ->first();
+
+                  if (!$originator || empty($originator->email)) {
+                      Log::error('DRAFT TO REVIEW: ORIGINATOR EMAIL NOT FOUND', [
+                          'document_id' => $document->id,
+                          'originator_id' => $document->originator_id,
+                      ]);
+                  } else {
+
+                      SendDocumentMail::dispatch(
+                          [
+                              'history' => 'Send for Reviewer',
+                              'comment' => $request->comment ?? '',
+                              'user' => Auth::user()->name,
+                              'process' => 'Document',
+                              'site' => 'AI',
+                          ],
+                          $originator->email,
+                          $document,
+                          'mail.reviewed',
+                          'Document Sent for Reviewer'
+                      );
+
+                  }
+              } catch (\Throwable $e) {
+                  Log::error('DRAFT TO REVIEW: EMAIL ERROR', [
+                      'document_id' => $document->id ?? null,
+                      'message' => $e->getMessage(),
+                      'file' => $e->getFile(),
+                      'line' => $e->getLine(),
+                  ]);
+              }
+
           }
+
           $stage->save();
         } else {
           $stage = new StageManage;
@@ -268,24 +316,47 @@ class DocumentDetailsController extends Controller
             $history->comment = $request->comment;
             $history->action_name = 'Submit';
             $history->change_from = 'In-Review';
-            $history->change_to = 'HOD Review Complete';
+            $history->change_to = 'Draft';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = 'In-Review';
             $history->save();
+
             try {
-              Mail::send(
-                'mail.review-reject',
-                ['document' => $document],
-                function ($message) use ($originator) {
-                  $message->to($originator->email)
-                    ->subject('Rejected By' . Auth::user()->name . '(Reviewer)');
+                $email = $originator->email ?? null;
+
+                if (empty($email)) {
+                    Log::warning('Document rejection mail skipped: originator email empty', [
+                        'document_id' => $document->id,
+                    ]);
+                } else {
+                    SendDocumentMail::dispatch(
+                        [
+                            'history' => 'More Info-by-Reviewer',
+                            'comment' => $request->comment,
+                            'user' => Auth::user()->name,
+                            'process' => 'Document',
+                            'site' => 'AI',
+                        ],
+                        $email,
+                        $document,
+                        'mail.review-reject',
+                        'Rejected By ' . Auth::user()->name . ' (Reviewer)'
+                    );
+
+                    Log::info('Document rejection mail dispatched', [
+                        'document_id' => $document->id,
+                        'recipient' => $email,
+                    ]);
                 }
-              );
-            } catch (\Exception $e) {
-              // 
+            } catch (\Throwable $e) {
+                Log::error('Document rejection mail dispatch failed', [
+                    'document_id' => $document->id ?? null,
+                    'error' => $e->getMessage(),
+                ]);
             }
+
           }else
            
           if ($request->stage_id == "Cancel-by-InEffective") {
@@ -313,32 +384,42 @@ class DocumentDetailsController extends Controller
             $history->origin_state = 'In-Review';
             $history->save();
             try {
-              Mail::send(
-                'mail.review-reject',
-                ['document' => $document],
-                function ($message) use ($originator) {
-                  $message->to($originator->email)
-                    ->subject('Rejected By' . Auth::user()->name . '(Reviewer)');
-                }
-              );
-            } catch (\Exception $e) {
-              // 
+                SendDocumentMail::dispatch(
+                    [
+                        'history' => 'Cancel-by-Reviewer',
+                        'comment' => $request->comment ?? '',
+                        'user' => Auth::user()->name,
+                        'process' => 'Document',
+                        'site' => 'AI',
+                    ],
+                    $originator->email,
+                    $document,
+                    'mail.review-reject',
+                    'Rejected By' . Auth::user()->name . '(Reviewer)'
+                );
+            } catch (\Throwable $e) {
+                report($e);
             }
           }
           
           else {
-            try {
-              Mail::send(
-                'mail.reviewed',
-                ['document' => $document],
-                function ($message) use ($originator) {
-                  $message->to($originator->email)
-                    ->subject('Reviewed By' . Auth::user()->name . '(Reviewer)');
-                }
-              );
-            } catch (\Exception $e) {
-              // 
-            }
+              try {
+                  SendDocumentMail::dispatch(
+                      [
+                          'history' => 'Reviewed',
+                          'comment' => $request->comment ?? '',
+                          'user' => Auth::user()->name,
+                          'process' => 'Document',
+                          'site' => 'AI',
+                      ],
+                      $originator->email,
+                      $document,
+                      'mail.reviewed',
+                      'Reviewed By' . Auth::user()->name . '(Reviewer)'
+                  );
+              } catch (\Throwable $e) {
+                  report($e);
+              }
             $reviewersData = 0;
             $reviewersDataforgroup = 0;
             if ($document->reviewers) {
@@ -372,32 +453,42 @@ class DocumentDetailsController extends Controller
                     $document->stage = 5;
                     $document->status = Stage::where('id', 5)->value('name');
                     try {
-                      Mail::send(
-                        'mail.reviewed',
-                        ['document' => $document],
-                        function ($message) use ($originator) {
-                          $message->to($originator->email)
-                            ->subject('Document is now Reviewed');
-                        }
-                      );
-                    } catch (\Exception $e) {
-                      // 
+                        SendDocumentMail::dispatch(
+                            [
+                                'history' => 'Document is now Reviewed',
+                                'comment' => $request->comment ?? '',
+                                'user' => Auth::user()->name,
+                                'process' => 'Document',
+                                'site' => 'AI',
+                            ],
+                            $originator->email,
+                            $document,
+                            'mail.reviewed',
+                            'Document is now Reviewed'
+                        );
+                    } catch (\Throwable $e) {
+                        report($e);
                     }
                   }
                 } else {
                   $document->stage = 5;
                   $document->status = Stage::where('id', 5)->value('name');
                   try {
-                    Mail::send(
-                      'mail.reviewed',
-                      ['document' => $document],
-                      function ($message) use ($originator) {
-                        $message->to($originator->email)
-                          ->subject('Document is now Reviewed');
-                      }
-                    );
-                  } catch (\Exception $e) {
-                    // 
+                      SendDocumentMail::dispatch(
+                          [
+                              'history' => 'Document is now Reviewed',
+                              'comment' => $request->comment ?? '',
+                              'user' => Auth::user()->name,
+                              'process' => 'Document',
+                              'site' => 'AI',
+                          ],
+                          $originator->email,
+                          $document,
+                          'mail.reviewed',
+                          'Document is now Reviewed'
+                      );
+                  } catch (\Throwable $e) {
+                      report($e);
                   }
                 }
               }
@@ -408,16 +499,21 @@ class DocumentDetailsController extends Controller
                   $document->stage = 5;
                   $document->status = Stage::where('id', 5)->value('name');
                   try {
-                    Mail::send(
-                      'mail.reviewed',
-                      ['document' => $document],
-                      function ($message) use ($originator) {
-                        $message->to($originator->email)
-                          ->subject('Document is now Reviewed');
-                      }
-                    );
-                  } catch (\Exception $e) {
-                    // 
+                      SendDocumentMail::dispatch(
+                          [
+                              'history' => 'Document is now Reviewed',
+                              'comment' => $request->comment ?? '',
+                              'user' => Auth::user()->name,
+                              'process' => 'Document',
+                              'site' => 'AI',
+                          ],
+                          $originator->email,
+                          $document,
+                          'mail.reviewed',
+                          'Document is now Reviewed'
+                      );
+                  } catch (\Throwable $e) {
+                      report($e);
                   }
                 }
               } else {
@@ -425,16 +521,21 @@ class DocumentDetailsController extends Controller
                   $document->stage = 5;
                   $document->status = Stage::where('id', 5)->value('name');
                   try {
-                    Mail::send(
-                      'mail.reviewed',
-                      ['document' => $document],
-                      function ($message) use ($originator) {
-                        $message->to($originator->email)
-                          ->subject('Document is Reviewed');
-                      }
-                    );
-                  } catch (\Exception $e) {
-                    // 
+                      SendDocumentMail::dispatch(
+                          [
+                              'history' => 'Document is now Reviewed',
+                              'comment' => $request->comment ?? '',
+                              'user' => Auth::user()->name,
+                              'process' => 'Document',
+                              'site' => 'AI',
+                          ],
+                          $originator->email,
+                          $document,
+                          'mail.reviewed',
+                          'Document is now Reviewed'
+                      );
+                  } catch (\Throwable $e) {
+                      report($e);
                   }
                 }
               }
@@ -461,29 +562,39 @@ class DocumentDetailsController extends Controller
             $history->origin_state = 'In-Approver';
             $history->save();
             try {
-              Mail::send(
-                'mail.approve-reject',
-                ['document' => $document],
-                function ($message) use ($originator) {
-                  $message->to($originator->email)
-                    ->subject('More Info by' . Auth::user()->name . '(Approver)');
-                }
-              );
-            } catch (\Exception $e) {
-              // 
+                SendDocumentMail::dispatch(
+                    [
+                        'history' => 'More Info-by-Approver',
+                        'comment' => $request->comment ?? '',
+                        'user' => Auth::user()->name,
+                        'process' => 'Document',
+                        'site' => 'AI',
+                    ],
+                    $originator->email,
+                    $document,
+                    'mail.approve-reject',
+                    'More Info by' . Auth::user()->name . '(Approver)'
+                );
+            } catch (\Throwable $e) {
+                report($e);
             }
           } else {
             try {
-              Mail::send(
-                'mail.approved',
-                ['document' => $document],
-                function ($message) use ($originator) {
-                  $message->to($originator->email)
-                    ->subject('Approved by' . Auth::user()->name . '(Approver)');
-                }
-              );
-            } catch (\Exception $e) {
-              // 
+                SendDocumentMail::dispatch(
+                    [
+                        'history' => 'Approved',
+                        'comment' => $request->comment ?? '',
+                        'user' => Auth::user()->name,
+                        'process' => 'Document',
+                        'site' => 'AI',
+                    ],
+                    $originator->email,
+                    $document,
+                    'mail.approved',
+                    'Approved by' . Auth::user()->name . '(Approver)'
+                );
+            } catch (\Throwable $e) {
+                report($e);
             }
             $reviewersData = 0;
             $reviewersDataforgroup = 0;
@@ -517,32 +628,42 @@ class DocumentDetailsController extends Controller
                     $document->stage = 7;
                     $document->status = Stage::where('id', 7)->value('name');
                     try {
-                      Mail::send(
-                        'mail.approved',
-                        ['document' => $document],
-                        function ($message) use ($originator) {
-                          $message->to($originator->email)
-                            ->subject("Document is now Approved");
-                        }
-                      );
-                    } catch (\Exception $e) {
-                      // 
+                        SendDocumentMail::dispatch(
+                            [
+                                'history' => 'Document is now Approved',
+                                'comment' => $request->comment ?? '',
+                                'user' => Auth::user()->name,
+                                'process' => 'Document',
+                                'site' => 'AI',
+                            ],
+                            $originator->email,
+                            $document,
+                            'mail.approved',
+                            'Document is now Approved'
+                        );
+                    } catch (\Throwable $e) {
+                        report($e);
                     }
                   }
                 } else {
                   $document->stage = 7;
                   $document->status = Stage::where('id', 7)->value('name');
                   try {
-                    Mail::send(
-                      'mail.approved',
-                      ['document' => $document],
-                      function ($message) use ($originator) {
-                        $message->to($originator->email)
-                          ->subject("Document is now Approved");
-                      }
-                    );
-                  } catch (\Exception $e) {
-                    // 
+                      SendDocumentMail::dispatch(
+                          [
+                              'history' => 'Document is now Approved',
+                              'comment' => $request->comment ?? '',
+                              'user' => Auth::user()->name,
+                              'process' => 'Document',
+                              'site' => 'AI',
+                          ],
+                          $originator->email,
+                          $document,
+                          'mail.approved',
+                          'Document is now Approved'
+                      );
+                  } catch (\Throwable $e) {
+                      report($e);
                   }
                 }
               }
@@ -553,16 +674,21 @@ class DocumentDetailsController extends Controller
                   $document->stage = 5;
                   $document->status = Stage::where('id', 5)->value('name');
                   try {
-                    Mail::send(
-                      'mail.approved',
-                      ['document' => $document],
-                      function ($message) use ($originator) {
-                        $message->to($originator->email)
-                          ->subject("Document is now Approved.");
-                      }
-                    );
-                  } catch (\Exception $e) {
-                    // 
+                      SendDocumentMail::dispatch(
+                          [
+                              'history' => 'Document is now Approved',
+                              'comment' => $request->comment ?? '',
+                              'user' => Auth::user()->name,
+                              'process' => 'Document',
+                              'site' => 'AI',
+                          ],
+                          $originator->email,
+                          $document,
+                          'mail.approved',
+                          'Document is now Approved'
+                      );
+                  } catch (\Throwable $e) {
+                      report($e);
                   }
                 }
               } else {
@@ -570,16 +696,21 @@ class DocumentDetailsController extends Controller
                   $document->stage = 7;
                   $document->status = Stage::where('id', 7)->value('name');
                   try {
-                    Mail::send(
-                      'mail.approved',
-                      ['document' => $document],
-                      function ($message) use ($originator) {
-                        $message->to($originator->email)
-                          ->subject("Document is now Approved");
-                      }
-                    );
-                  } catch (\Exception $e) {
-                    // 
+                      SendDocumentMail::dispatch(
+                          [
+                              'history' => 'Document is now Approved',
+                              'comment' => $request->comment ?? '',
+                              'user' => Auth::user()->name,
+                              'process' => 'Document',
+                              'site' => 'AI',
+                          ],
+                          $originator->email,
+                          $document,
+                          'mail.approved',
+                          'Document is now Approved'
+                      );
+                  } catch (\Throwable $e) {
+                      report($e);
                   }
                 }
               }
@@ -631,29 +762,39 @@ class DocumentDetailsController extends Controller
             $history->origin_state = 'In-HOD Review';
             $history->save();
             try {
-              Mail::send(
-                'mail.approve-reject',
-                ['document' => $document],
-                function ($message) use ($originator) {
-                  $message->to($originator->email)
-                    ->subject('Rejected by' . Auth::user()->name . '(HOD)');
-                }
-              );
-            } catch (\Exception $e) {
-              // 
+                SendDocumentMail::dispatch(
+                    [
+                        'history' => 'Cancel-by-HOD',
+                        'comment' => $request->comment ?? '',
+                        'user' => Auth::user()->name,
+                        'process' => 'Document',
+                        'site' => 'AI',
+                    ],
+                    $originator->email,
+                    $document,
+                    'mail.approve-reject',
+                    'Rejected by' . Auth::user()->name . '(HOD)'
+                );
+            } catch (\Throwable $e) {
+                report($e);
             }
           } else {
             try {
-              Mail::send(
-                'mail.approved',
-                ['document' => $document],
-                function ($message) use ($originator) {
-                  $message->to($originator->email)
-                    ->subject('HOD Review completed by' . Auth::user()->name . '(HOD)');
-                }
-              );
-            } catch (\Exception $e) {
-              // 
+                SendDocumentMail::dispatch(
+                    [
+                        'history' => 'HOD Review completed',
+                        'comment' => $request->comment ?? '',
+                        'user' => Auth::user()->name,
+                        'process' => 'Document',
+                        'site' => 'AI',
+                    ],
+                    $originator->email,
+                    $document,
+                    'mail.approved',
+                    'HOD Review completed by' . Auth::user()->name . '(HOD)'
+                );
+            } catch (\Throwable $e) {
+                report($e);
             }
             // $hodsData = 0;
             // $hodsDataforgroup = 0;
@@ -693,7 +834,7 @@ class DocumentDetailsController extends Controller
           }
         }
 
-        if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id && $request->stage_id == 2 || $request->stage_id == 4 || $request->stage_id == 6 ||  $request->stage_id == 8 || $request->stage_id == 10 || $request->stage_id == 11 || $request->stage_id == 12) {
+        if (Helpers::checkRoles(3) && (int) $document->originator_id === (int) Auth::id() && in_array((int) $request->stage_id, [2, 4, 6, 8, 10, 11, 12], true)) {
 
           if ($request->stage_id) {
             $document->stage = $request->stage_id;
@@ -721,45 +862,64 @@ class DocumentDetailsController extends Controller
                 }
               }
             }
-            if ($request->stage_id == 4) {
-              if ($document->hods) {
-                $document['stage'] = $request->stage_id;
-                $document['status'] = Stage::where('id', $request->stage_id)->value('name');
+            
+            if ((int) $request->stage_id === 4) {
+                // if ($document->hods) {
 
-                $document->update();
-                $history = new DocumentHistory();
-                $history->document_id = $request->document_id;
-                $history->activity_type = 'Send for Review';
-                $history->previous = '';
-                $history->current = '';
-                $history->comment = $request->comment;
-                $history->action_name = 'Submit';
-                $history->change_from = 'HOD-Review Complete';
-                $history->change_to = 'In-Review';
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = 'Reviewed';
-                $history->save();
-                $temperory = explode(',', $document->approvers);
-                for ($i = 0; $i < count($temperory); $i++) {
-                  $temp_user = User::find($temperory[$i]);
-                  $temp_user->fromMain = User::find($document->originator_id);
-                  try {
-                    Mail::send(
-                      'mail.for_approval',
-                      ['document' => $document],
-                      function ($message) use ($temp_user) {
-                        $message->to($temp_user->email)
-                          ->subject('Document is for Approval');
-                      }
-                    );
-                  } catch (\Exception $e) {
-                    // 
-                  }
-                }
-              }
+                    $document->stage = $request->stage_id;
+                    $document->status = Stage::where('id', $request->stage_id)->value('name');
+                    $document->update();
+
+                    $history = new DocumentHistory();
+                    $history->document_id = $request->document_id;
+                    $history->activity_type = 'Send for Checking';
+                    $history->previous = '';
+                    $history->current = '';
+                    $history->comment = $request->comment;
+                    $history->action_name = 'Submit';
+                    $history->change_from = 'HOD-Review Complete';
+                    $history->change_to = 'In-Review';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = 'Reviewed';
+                    $history->save();
+
+                    $approverIds = array_unique(array_filter(
+                        array_map('trim', explode(',', (string) $document->approvers))
+                    ));
+
+                    foreach ($approverIds as $approverId) {
+                        $temp_user = User::find($approverId);
+
+                        if (!$temp_user || empty($temp_user->email)) {
+                            continue;
+                        }
+
+                        try {
+                            $temp_user->fromMain = User::find($document->originator_id);
+
+                            SendDocumentMail::dispatch(
+                                [
+                                    'history' => 'Send for Checking',
+                                    'comment' => $request->comment ?? '',
+                                    'user' => Auth::user()->name,
+                                    'process' => 'Document',
+                                    'site' => 'AI',
+                                ],
+                                $temp_user->email,
+                                $document,
+                                'mail.for_approval',
+                                'Document is for Checking'
+                            );
+
+                        } catch (\Throwable $e) {
+                            report($e);
+                        }
+                    }
+                // }
             }
+
             if ($request->stage_id == 6) {
               $assignedReviewers = explode(",", $document->reviewers);
               $reviewerComments = $document->reviewer_comments ? json_decode($document->reviewer_comments, true) : [];
@@ -807,21 +967,33 @@ class DocumentDetailsController extends Controller
               $history->origin_state = 'Reviewed';
               $history->save();
 
+
               $traning = DocumentTraining::where('document_id', $document->id)->first();
+
               if ($traning) {
-                $traning->trainer = User::find($traning->trainer);
-                try {
-                  Mail::send(
-                    'mail.for_training',
-                    ['document' => $document],
-                    function ($message) use ($traning) {
-                      $message->to($traning->trainer->email)
-                        ->subject('Document is for training');
-                    }
-                  );
-                } catch (\Exception $e) {
-                }
+                  $trainer = User::find($traning->trainer);
+
+                  if ($trainer && !empty($trainer->email)) {
+                      try {
+                          SendDocumentMail::dispatch(
+                              [
+                                  'process' => 'Document',
+                                  'history' => 'Send for training',
+                                  'comment' => $request->comment ?? '',
+                                  'user' => Auth::user()->name,
+                                  'site' => 'AI',
+                              ],
+                              $trainer->email,
+                              $document,
+                              'mail.for_training',
+                              'Document is for training'
+                          );
+                      } catch (\Throwable $e) {
+                          report($e);
+                      }
+                  }
               }
+
             }
             if ($request->stage_id == 10) {
              
@@ -843,20 +1015,31 @@ class DocumentDetailsController extends Controller
               $history->origin_state = 'Approved';
               $history->save();
 
+
               $traning = DocumentTraining::where('document_id', $document->id)->first();
+
               if ($traning) {
-                $traning->trainer = User::find($traning->trainer);
-                try {
-                  Mail::send(
-                    'mail.for_training',
-                    ['document' => $document],
-                    function ($message) use ($traning) {
-                      $message->to($traning->trainer->email)
-                        ->subject('Document is for training');
-                    }
-                  );
-                } catch (\Exception $e) {
-                }
+                  $trainer = User::find($traning->trainer);
+
+                  if ($trainer && !empty($trainer->email)) {
+                      try {
+                          SendDocumentMail::dispatch(
+                              [
+                                  'process' => 'Document',
+                                  'history' => 'Send for In-Effective',
+                                  'comment' => $request->comment ?? '',
+                                  'user' => Auth::user()->name,
+                                  'site' => 'AI',
+                              ],
+                              $trainer->email,
+                              $document,
+                              'mail.for_training',
+                              'Document is for training'
+                          );
+                      } catch (\Throwable $e) {
+                          report($e);
+                      }
+                  }
               }
             }
 
