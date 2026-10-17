@@ -8510,9 +8510,9 @@ class DocumentController extends Controller
 
                 $font = $fontMetrics->get_font('sans-serif', 'normal');
 
-                $pageText = sprintf('%02d of %02d', $pageNumber, $pageCount);
+                $pageText = sprintf(': %02d of %02d', $pageNumber, $pageCount);
 
-                $canvas->text(500, 765, $pageText, $font, $pageNumberFontSize, [0, 0, 0]);
+                $canvas->text(500, 772, $pageText, $font, $pageNumberFontSize, [0, 0, 0]);
             }
         );
 
@@ -9566,65 +9566,66 @@ class DocumentController extends Controller
     //     }
     // }
 
-  private function generateDocumentNumber(
-    $departmentId,
-    $documentTypeId,
-    $sopType,
-    $sopTypeShort,
-    $revised = 'No',
-    $revisedDoc = null,
-    $excludeDocumentId = null,
-    $originalDocumentNumber = null   // revise ke time purana document number pass karo
-) {
-    $sopTypeShort   = strtoupper(trim($sopTypeShort ?? ''));
-    $revisionNumber = $revised === 'Yes'
-        ? str_pad((int) ($revisedDoc ?? 0), 2, '0', STR_PAD_LEFT)
-        : '00';
+    private function generateDocumentNumber(
+        $departmentId,
+        $documentTypeId,
+        $sopType,
+        $sopTypeShort,
+        $revised = 'No',
+        $revisedDoc = null,
+        $excludeDocumentId = null,
+        $originalDocumentNumber = null   // revise ke time purana document number pass karo
+    ) {
+        $sopTypeShort   = strtoupper(trim($sopTypeShort ?? ''));
+        $revisionNumber = $revised === 'Yes'
+            ? str_pad((int) ($revisedDoc ?? 0), 2, '0', STR_PAD_LEFT)
+            : '00';
 
-    // ---------- REVISE: base number wahi rahega, sirf -XX change hoga ----------
-    if ($revised === 'Yes' && !empty($originalDocumentNumber)) {
-        // e.g. INPSTP/0002-00  => base: INPSTP/0002
-        //      SOP/5/003-00    => base: SOP/5/003
-        if (preg_match('/^(.+)-(\d+)$/', $originalDocumentNumber, $m)) {
-            return "{$m[1]}-{$revisionNumber}";
+        // ---------- REVISE: base number wahi rahega, sirf -XX change hoga ----------
+        if ($revised === 'Yes' && !empty($originalDocumentNumber)) {
+            // e.g. INPSTP/0002-00  => base: INPSTP/0002
+            //      SOP/5/003-00    => base: SOP/5/003
+            if (preg_match('/^(.+)-(\d+)$/', $originalDocumentNumber, $m)) {
+                return "{$m[1]}-{$revisionNumber}";
+            }
         }
-    }
 
-    // ---------- NEW DOCUMENT ----------
-    if ($sopTypeShort === 'SOP') {
-        $prefix = "SOP/{$departmentId}/";
-        $pad    = 3;
-    } elseif (in_array($sopTypeShort, ['EOP', 'IOP'])) {
-        $prefix = "{$departmentId}/{$sopTypeShort}/";
-        $pad    = 3;
-    } else {
-        // DocumentType ka short code lo (INPSTP, RMS ...)
-        $docType = DocumentType::find($documentTypeId);
-        $code    = strtoupper(trim($docType->short_name ?? $documentTypeId)); // column ka naam apne hisab se badlo
-        $prefix  = "{$code}/";
-        $pad     = 4;
-    }
-
-    // Is prefix ke sabhi existing numbers nikalo
-    $query = Document::where('document_number', 'like', $prefix . '%');
-
-    if (!empty($excludeDocumentId)) {
-        $query->where('id', '!=', $excludeDocumentId);
-    }
-
-    $maxSequence = 0;
-    foreach ($query->pluck('document_number') as $number) {
-        // prefix hatao, phir "0002-01" se 0002 nikalo
-        $rest = substr($number, strlen($prefix));
-        if (preg_match('/^(\d+)-\d+$/', $rest, $m)) {
-            $maxSequence = max($maxSequence, (int) $m[1]);
+        // ---------- NEW DOCUMENT ----------
+        if ($sopTypeShort === 'SOP') {
+            $prefix = "SOP/{$departmentId}/";
+            $pad    = 3;
+        } elseif (in_array($sopTypeShort, ['EOP', 'IOP'])) {
+            $prefix = "{$departmentId}/{$sopTypeShort}/";
+            $pad    = 3;
+        } else {
+            // DocumentType ka short code lo (INPSTP, RMS ...)
+            $docType = DocumentType::find($documentTypeId);
+            $code    = strtoupper(trim($docType->short_name ?? $documentTypeId)); // column ka naam apne hisab se badlo
+            $prefix  = "{$code}/";
+            $pad     = 4;
         }
+
+        // Is prefix ke sabhi existing numbers nikalo
+        $query = Document::where('document_number', 'like', $prefix . '%');
+
+        if (!empty($excludeDocumentId)) {
+            $query->where('id', '!=', $excludeDocumentId);
+        }
+
+        $maxSequence = 0;
+        foreach ($query->pluck('document_number') as $number) {
+            // prefix hatao, phir "0002-01" se 0002 nikalo
+            $rest = substr($number, strlen($prefix));
+            if (preg_match('/^(\d+)-\d+$/', $rest, $m)) {
+                $maxSequence = max($maxSequence, (int) $m[1]);
+            }
+        }
+
+        $formattedId = str_pad($maxSequence + 1, $pad, '0', STR_PAD_LEFT);
+
+        return "{$prefix}{$formattedId}-{$revisionNumber}";
     }
 
-    $formattedId = str_pad($maxSequence + 1, $pad, '0', STR_PAD_LEFT);
-
-    return "{$prefix}{$formattedId}-{$revisionNumber}";
-}
     private function checkDocumentDownloadLimit($controls, $userId, $documentId) {
         $query = DownloadHistory::where('user_id', $userId)->where('document_id', $documentId);
 

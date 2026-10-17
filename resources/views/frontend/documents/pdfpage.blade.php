@@ -299,15 +299,13 @@
         .doc-control table.table-bordered tr { page-break-inside: auto; }
         .doc-control .block { page-break-inside: auto; }        
 
-        @page { size: A4; margin: 245px 34px 175px 34px; }
+        @page { size: A4; margin: 345px 34px 185px 34px; }
 
-        header { position: fixed; top: -211px; left: 0; width: 100%; z-index: 1000; background: #fff; }   /* height: 300px hata do */
+        header { position: fixed; top: -311px; left: 0; width: 100%; z-index: 1000; background: #fff; }   /* 345 - 34 */
 
-        footer { position: fixed; bottom: -141px; left: 0; width: 100%; z-index: 1000; background: #fff; }
+        footer { position: fixed; bottom: -151px; left: 0; width: 100%; z-index: 1000; background: #fff; } /* 185 - 34 */
 
-        body {
-            margin: 0;            /* purana margin-top: 320px / margin-bottom: 160px hata diya */
-        }
+        body { margin: 0; padding: 0; }
 
         .hdr-cell {
             border: 1px solid #000;
@@ -524,7 +522,7 @@
 
         .master-copy {
             position: absolute;
-            top: -200px;
+            top: -330px;
             right: 10px;
 
             border: 2px solid #00bcd4;
@@ -1921,7 +1919,7 @@
 
                         $pageText = $pageNumber . " of " . $totalPages;
 
-                        $y = 100;
+                        $y = 110;
                         $x = 460;
 
                         $pdf->text(

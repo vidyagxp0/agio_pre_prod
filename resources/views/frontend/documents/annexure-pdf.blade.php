@@ -281,15 +281,16 @@
 </head>
 <body>
 
-        @if ($document->status == 'Effective' || $document->status == 'Obsolete')
 
-            {{-- Existing normal SOP master-copy logic --}}
-            <div class="master-copy">
-                MASTER COPY
-            </div>
-
-        @endif
         <header class="">
+            @if ($document->status == 'Effective' || $document->status == 'Obsolete')
+
+                {{-- Existing normal SOP master-copy logic --}}
+                <div class="master-copy">
+                    MASTER COPY
+                </div>
+
+            @endif
             <table class="border" style="width: 100%;">
                 <tbody>
                     <tr>
@@ -339,11 +340,11 @@
                         @endif
                     </th>
                    <td style="padding: 20px; border: 1px solid #ddd;">
-                        Page No.
+                        Page No. : 
                     </td>
                              
                 </tr>
-               
+               `
             </tbody>
 
         </table>
