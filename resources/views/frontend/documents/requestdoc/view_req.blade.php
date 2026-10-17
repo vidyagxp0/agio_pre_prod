@@ -124,7 +124,7 @@
                                 href="{{ url('document-requestAudittrial', $data->id) }}">Audit Trail</a> </button>
                         @if ($data->stage == 1 && ($data->request_by == Auth::user()->id || Helpers::check_roles($data->division_id, 'Document Issuance Request', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Request Sent
+                                Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-required-modal">
                                 Cancel
@@ -220,7 +220,7 @@
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
                         </div>
-                    @elseif ($data->stage == 4)
+                    @elseif ($data->stage == 5)
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Rejected</div>
                         </div>

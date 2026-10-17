@@ -11843,7 +11843,7 @@ class DocumentController extends Controller
     {
         try {
             // Sirf QA Approval (stage 2) wali request hi close hogi
-            if ((string) $documentRequest->stage !== '2') {
+            if ((string) $documentRequest->stage !== '3') {
                 return;
             }
 
