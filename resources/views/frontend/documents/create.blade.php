@@ -709,75 +709,75 @@
                                         const selectedType = selectElement.value;
 
 
-                            const requiredAttachments = {
-                                BOM: 'billMatrial_I_gxp_attachment',
-                                BMR: 'batchManufacturingBmr_I_gxp_attachment',
-                                BPR: 'batchPackingRecordBpr_I_gxp_attachment',
-                                TEMPMAPPING: 'TemMapProCumRep_fileattachement',
-                                PROVALIDRE: 'file_attach_pvrData',
-                                PROVALIINTERRE: 'pvir_attachment',
-                                EQUIPMENTHOLDREPORT: 'attachment_ehtsrData',
-                                EQUIPMENTHOLDPROTOCOL: 'attachment_ehtsprtData',
-                                STUDYPROTOCOL: 'attachment_sptData',
-                                ANNEQUALPROTO: 'afqpfile',
-                                ANNEQUALREPORT: 'afqrfile',
-                                STUDY: 'attachment_srtData',
-                                AAEUSERREQUESPECI: 'afursfile',
-                                CLEAVALIPROTODOC :'annex_I_gxp_attachment',
-                                CLEAVALIREPORTDOC:'file_attach_cvrdData',
-                                QUALIPROCUMREP:'procumrepo_file_attachData',
-                                AREAQUALIFICATIONREPORT:'aqrfile',
-                                PROVALIPROTOCOL:'ProValProtocol_I_gxp_attachment',
-                                REQULIFICATIONPROTOCOL:'aqpfile',
-                                REPORTFORMEDIAFILL:'rfmffile',
-                                PROTOCOLFORMEDIAFILL: 'pfmffile',
-                                ANNACINQULIPROTOCOL:'AIQPfile',
-                                ANNACOPERQULIPROTOCOL:'AOQPfile',
-                                ANNACPERMQULIPROTOCOL:'APQPfile',
-                                PACKVALIREPORT:'PacValRepfile_attachData',
-                                PACKVALIPROTOCOL:'pvpfile',
-                                HOLDTIMESTUDYREPORT:'HolTimSutRep_I_gxp_attachment',
-                                HOLDTIMESTUDYPROTOCOL:'htpsfile',
-                                FOCONITOGENREPORT:'attach_comp_nitrogendata',
-                                FOCONITOGENPROTOCOL:'annex_I_gxp_attachmentformateComp',
-                                STABILITYPROTOCOL:'file_attachDataSSP',
-                                ANNIGxPASSES:'annex_I_gxp_attachment',
-                                ANNIGxPASSES:'annex_I_gxp_attachment',
-                                ANNIIRiskASSES:'annex_II_risk_attachment',
-                                ANNIIIERESASSES:'annex_III_eres_attachment',
-                                ANNIVPlanASSES:'annex_IV_plan_attachment',
-                                ANNVUserReqSpe:'annex_V_user_attachment',
-                                ANNVIFunReqSpe:'annex_VI_req_attachment',
-                                ANNVIIFunSpe:'annex_VII_fun_attachment',
-                                ANNVIIITechSpe:'annex_VIII_tech_attachment',
-                                ANNIXFunRiskASSES:'annex_IX_risk_attachment',
-                                ANNXDesignSpe:'annex_X_design_attachment',
-                                ANNXIConfiSpe:'annex_XI_confi_attachment',
-                                ANNXIIQualiProto:'annex_XII_qua_proto_attachment',
-                                ANNXIIIUnitInTest:'annex_XIII_unit_integ_attachment',
-                                ANNXIVDataMigPro:'annex_XIV_data_migra_attachment',
-                                ANNXVPerfQualif:'annex_XV_data_qualif_attachment',
-                                ANNEXUREXVIIITRACEABILITYMATRIX:'atmfile',
-                                ANNEXUREXVIINSTALLATION:'aiiopqfile', 
-                                ANNEXUREXIXSYSTEMRETIREMENT:'asrfile',
-                                MAForRec:'MasterFormulaRecordBMR_I_gxp_attachment',
-                                MAPacRec:'MasterPackingRecord_I_gxp_attachment',
-                                SMF:'SiteMasterFileatt_I_gxp_attachment',
-                                VMP:'file_attach_vmpData',
-                                QM:'file_attach_qmData',
-                                ANNEXUREXVIIVALIDATION:'avsrfile',
-                            
-                            
+                                        const requiredAttachments = {
+                                            BOM: 'billMatrial_I_gxp_attachment',
+                                            BMR: 'batchManufacturingBmr_I_gxp_attachment',
+                                            BPR: 'batchPackingRecordBpr_I_gxp_attachment',
+                                            TEMPMAPPING: 'TemMapProCumRep_fileattachement',
+                                            PROVALIDRE: 'file_attach_pvrData',
+                                            PROVALIINTERRE: 'pvir_attachment',
+                                            EQUIPMENTHOLDREPORT: 'attachment_ehtsrData',
+                                            EQUIPMENTHOLDPROTOCOL: 'attachment_ehtsprtData',
+                                            STUDYPROTOCOL: 'attachment_sptData',
+                                            ANNEQUALPROTO: 'afqpfile',
+                                            ANNEQUALREPORT: 'afqrfile',
+                                            STUDY: 'attachment_srtData',
+                                            AAEUSERREQUESPECI: 'afursfile',
+                                            CLEAVALIPROTODOC :'annex_I_gxp_attachment',
+                                            CLEAVALIREPORTDOC:'file_attach_cvrdData',
+                                            QUALIPROCUMREP:'procumrepo_file_attachData',
+                                            AREAQUALIFICATIONREPORT:'aqrfile',
+                                            PROVALIPROTOCOL:'ProValProtocol_I_gxp_attachment',
+                                            REQULIFICATIONPROTOCOL:'aqpfile',
+                                            REPORTFORMEDIAFILL:'rfmffile',
+                                            PROTOCOLFORMEDIAFILL:'pfmffile',
+                                            ANNACINQULIPROTOCOL:'AIQPfile',
+                                            ANNACOPERQULIPROTOCOL:'AOQPfile',
+                                            ANNACPERMQULIPROTOCOL:'APQPfile',
+                                            PACKVALIREPORT:'PacValRepfile_attachData',
+                                            PACKVALIPROTOCOL:'pvpfile',
+                                            HOLDTIMESTUDYREPORT:'HolTimSutRep_I_gxp_attachment',
+                                            HOLDTIMESTUDYPROTOCOL:'htpsfile',
+                                            FOCONITOGENREPORT:'attach_comp_nitrogendata',
+                                            FOCONITOGENPROTOCOL:'annex_I_gxp_attachmentformateComp',
+                                            STABILITYPROTOCOL:'file_attachDataSSP',
+                                            ANNIGxPASSES:'annex_I_gxp_attachment',
+                                            ANNIGxPASSES:'annex_I_gxp_attachment',
+                                            ANNIIRiskASSES:'annex_II_risk_attachment',
+                                            ANNIIIERESASSES:'annex_III_eres_attachment',
+                                            ANNIVPlanASSES:'annex_IV_plan_attachment',
+                                            ANNVUserReqSpe:'annex_V_user_attachment',
+                                            ANNVIFunReqSpe:'annex_VI_req_attachment',
+                                            ANNVIIFunSpe:'annex_VII_fun_attachment',
+                                            ANNVIIITechSpe:'annex_VIII_tech_attachment',
+                                            ANNIXFunRiskASSES:'annex_IX_risk_attachment',
+                                            ANNXDesignSpe:'annex_X_design_attachment',
+                                            ANNXIConfiSpe:'annex_XI_confi_attachment',
+                                            ANNXIIQualiProto:'annex_XII_qua_proto_attachment',
+                                            ANNXIIIUnitInTest:'annex_XIII_unit_integ_attachment',
+                                            ANNXIVDataMigPro:'annex_XIV_data_migra_attachment',
+                                            ANNXVPerfQualif:'annex_XV_data_qualif_attachment',
+                                            ANNEXUREXVIIITRACEABILITYMATRIX:'atmfile',
+                                            ANNEXUREXVIINSTALLATION:'aiiopqfile', 
+                                            ANNEXUREXIXSYSTEMRETIREMENT:'asrfile',
+                                            MAForRec:'MasterFormulaRecordBMR_I_gxp_attachment',
+                                            MAPacRec:'MasterPackingRecord_I_gxp_attachment',
+                                            SMF:'SiteMasterFileatt_I_gxp_attachment',
+                                            VMP:'file_attach_vmpData',
+                                            QM:'file_attach_qmData',
+                                            ANNEXUREXVIIVALIDATION:'avsrfile',
+                                        
+                                        
 
-                            };
+                                        };
 
-                            Object.entries(requiredAttachments).forEach(([type, inputId]) => {
-                                const input = document.getElementById(inputId);
+                                        Object.entries(requiredAttachments).forEach(([type, inputId]) => {
+                                            const input = document.getElementById(inputId);
 
-                                if (!input) return;
+                                            if (!input) return;
 
-                                input.toggleAttribute('required', selectedType === type);
-                            });
+                                            input.toggleAttribute('required', selectedType === type);
+                                        });
 
                                         // Get all hidden tabs
                                         const tabs = document.querySelectorAll('.hidden-tabs');
@@ -809,7 +809,7 @@
                                         const sopType = document.getElementById('sop_type');
 
                                        // const dueDateContainer = document.getElementById('dueDateContainer');
-                                     //   const dueDateInput = document.getElementById('due_dateDoc');
+                                       //   const dueDateInput = document.getElementById('due_dateDoc');
 
                                         // const departContainer = document.getElementById('departContainer');
                                         // const departInput = document.getElementById('depart-name');
@@ -830,33 +830,33 @@
                                         const attachdraftContainer = document.getElementById('attachdraftContainer');
                                         const attacheffectContainer = document.getElementById('attacheffectContainer');
 
-const reviewersContainer = document.getElementById('reviewers-container');
-const approversContainer = document.getElementById('approvers-container');
+                                        const reviewersContainer = document.getElementById('reviewers-container');
+                                        const approversContainer = document.getElementById('approvers-container');
 
-const reviewersDropdown = document.getElementById('reviewers-dropdown');
-const approversDropdown = document.getElementById('approvers-dropdown');
-const otherInformationHeading = document.getElementById('otherInformationHeading');
-const otherInformationSection = document.getElementById('otherInformationSection');
+                                        const reviewersDropdown = document.getElementById('reviewers-dropdown');
+                                        const approversDropdown = document.getElementById('approvers-dropdown');
+                                        const otherInformationHeading = document.getElementById('otherInformationHeading');
+                                        const otherInformationSection = document.getElementById('otherInformationSection');
 
-const showReviewerApproverDocs = [
-    'SOP',
-    'FPS',
-    'IPS',
-    'CVS',
-    'RMS',
-    'PMS',
-    'PIAS',
-    'MFPS',
-    'MFPSTP',
-    'FPSTP',
-    'IPSTP',
-    'CVSTP',
-    'RMSTP',
-    'SPEC',
-    'STP',
-    'TDS',
-    'GTP'
-];
+                                        const showReviewerApproverDocs = [
+                                            'SOP',
+                                            'FPS',
+                                            'IPS',
+                                            'CVS',
+                                            'RMS',
+                                            'PMS',
+                                            'PIAS',
+                                            'MFPS',
+                                            'MFPSTP',
+                                            'FPSTP',
+                                            'IPSTP',
+                                            'CVSTP',
+                                            'RMSTP',
+                                            'SPEC',
+                                            'STP',
+                                            'TDS',
+                                            'GTP'
+                                        ];
 
                                             // HODs field
                                         // const hodsContainer = document.getElementById('hods-container');
@@ -866,37 +866,37 @@ const showReviewerApproverDocs = [
                                         const reviewersLabel = document.getElementById('reviewers-label');
 
 
-                                    // YAHAN PASTE KARO
-if (showReviewerApproverDocs.includes(selectedType)) {
+                                        // YAHAN PASTE KARO
+                                        if (showReviewerApproverDocs.includes(selectedType)) {
 
-    // Show Other Information
-    otherInformationHeading.style.display = "block";
-    otherInformationSection.style.display = "block";
-
-
-
-    reviewersContainer.style.display = "block";
-    approversContainer.style.display = "block";
+                                            // Show Other Information
+                                            otherInformationHeading.style.display = "block";
+                                            otherInformationSection.style.display = "block";
 
 
-    reviewersDropdown.setAttribute("required", "required");
-    approversDropdown.setAttribute("required", "required");
 
-} else {
+                                            reviewersContainer.style.display = "block";
+                                            approversContainer.style.display = "block";
 
- // Hide Other Information
-    otherInformationHeading.style.display = "none";
-    otherInformationSection.style.display = "none";
 
-    reviewersContainer.style.display = "none";
-    approversContainer.style.display = "none";
+                                            reviewersDropdown.setAttribute("required", "required");
+                                            approversDropdown.setAttribute("required", "required");
 
-    reviewersDropdown.removeAttribute("required");
-    approversDropdown.removeAttribute("required");
+                                        } else {
 
-    $('#reviewers-dropdown').val(null).trigger('change');
-    $('#approvers-dropdown').val(null).trigger('change');
-}
+                                        // Hide Other Information
+                                            otherInformationHeading.style.display = "none";
+                                            otherInformationSection.style.display = "none";
+
+                                            reviewersContainer.style.display = "none";
+                                            approversContainer.style.display = "none";
+
+                                            reviewersDropdown.removeAttribute("required");
+                                            approversDropdown.removeAttribute("required");
+
+                                            $('#reviewers-dropdown').val(null).trigger('change');
+                                            $('#approvers-dropdown').val(null).trigger('change');
+                                        }
 
                                         
                                         if (selectedType === "SOP") {
@@ -16297,7 +16297,7 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                 </div>
                             </div>
 
-                            <script>
+                        <script>
 
                             function validatePFMFFiles(input){
 
@@ -16373,11 +16373,11 @@ if (showReviewerApproverDocs.includes(selectedType)) {
                                     fileList.appendChild(fileContainer);
                                 }
 
-                                input.value = "";
+                                // input.value = "";
 
                             }
 
-                            </script>
+                        </script>
 
                             </div>
                         </div>

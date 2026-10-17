@@ -45,6 +45,11 @@ class ProcedureHtml
         $html = preg_replace('#<(style|script)\b[^>]*>.*?</\1>#is', '', $html);
         $html = preg_replace('#</?o:p[^>]*>#i', '', $html);
 
+        // bekaar <span> wrappers (bina attribute wale) hata do
+        $html = preg_replace('#<span>(.*?)</span>#is', '$1', $html);
+        // khali <span style=...></span>
+        $html = preg_replace('#<span[^>]*>\s*</span>#i', '', $html);
+
         libxml_use_internal_errors(true);
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadHTML(
@@ -70,6 +75,14 @@ class ProcedureHtml
             if ($el->parentNode) {
                 self::sanitizeElement($el);
             }
+        }
+
+        // 2a) bina style wale span unwrap karo
+        foreach (iterator_to_array($xp->query('//div[@id="__root"]//span[not(@style)]')) as $sp) {
+            while ($sp->firstChild) {
+                $sp->parentNode->insertBefore($sp->firstChild, $sp);
+            }
+            $sp->parentNode->removeChild($sp);
         }
 
         // 2b) Bade single-cell rows ko todo

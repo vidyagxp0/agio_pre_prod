@@ -146,14 +146,13 @@ class DocumentDetailsController extends Controller
                               'comment' => $request->comment ?? '',
                               'user' => Auth::user()->name,
                               'process' => 'Document',
-                              'site' => 'AI',
+                              'site' => 'Document',
                           ],
                           $originator->email,
                           $document,
                           'mail.reviewed',
                           'Document Sent for Reviewer'
                       );
-
                   }
               } catch (\Throwable $e) {
                   Log::error('DRAFT TO REVIEW: EMAIL ERROR', [
@@ -337,7 +336,7 @@ class DocumentDetailsController extends Controller
                             'comment' => $request->comment,
                             'user' => Auth::user()->name,
                             'process' => 'Document',
-                            'site' => 'AI',
+                            'site' => 'Document',
                         ],
                         $email,
                         $document,
@@ -390,7 +389,7 @@ class DocumentDetailsController extends Controller
                         'comment' => $request->comment ?? '',
                         'user' => Auth::user()->name,
                         'process' => 'Document',
-                        'site' => 'AI',
+                        'site' => 'Document',
                     ],
                     $originator->email,
                     $document,
@@ -410,7 +409,7 @@ class DocumentDetailsController extends Controller
                           'comment' => $request->comment ?? '',
                           'user' => Auth::user()->name,
                           'process' => 'Document',
-                          'site' => 'AI',
+                          'site' => 'Document',
                       ],
                       $originator->email,
                       $document,
@@ -459,7 +458,7 @@ class DocumentDetailsController extends Controller
                                 'comment' => $request->comment ?? '',
                                 'user' => Auth::user()->name,
                                 'process' => 'Document',
-                                'site' => 'AI',
+                                'site' => 'Document',
                             ],
                             $originator->email,
                             $document,
@@ -480,7 +479,7 @@ class DocumentDetailsController extends Controller
                               'comment' => $request->comment ?? '',
                               'user' => Auth::user()->name,
                               'process' => 'Document',
-                              'site' => 'AI',
+                              'site' => 'Document',
                           ],
                           $originator->email,
                           $document,
@@ -505,7 +504,7 @@ class DocumentDetailsController extends Controller
                               'comment' => $request->comment ?? '',
                               'user' => Auth::user()->name,
                               'process' => 'Document',
-                              'site' => 'AI',
+                              'site' => 'Document',
                           ],
                           $originator->email,
                           $document,
@@ -527,7 +526,7 @@ class DocumentDetailsController extends Controller
                               'comment' => $request->comment ?? '',
                               'user' => Auth::user()->name,
                               'process' => 'Document',
-                              'site' => 'AI',
+                              'site' => 'Document',
                           ],
                           $originator->email,
                           $document,
@@ -568,7 +567,7 @@ class DocumentDetailsController extends Controller
                         'comment' => $request->comment ?? '',
                         'user' => Auth::user()->name,
                         'process' => 'Document',
-                        'site' => 'AI',
+                        'site' => 'Document',
                     ],
                     $originator->email,
                     $document,
@@ -586,7 +585,7 @@ class DocumentDetailsController extends Controller
                         'comment' => $request->comment ?? '',
                         'user' => Auth::user()->name,
                         'process' => 'Document',
-                        'site' => 'AI',
+                        'site' => 'Document',
                     ],
                     $originator->email,
                     $document,
@@ -634,7 +633,7 @@ class DocumentDetailsController extends Controller
                                 'comment' => $request->comment ?? '',
                                 'user' => Auth::user()->name,
                                 'process' => 'Document',
-                                'site' => 'AI',
+                                'site' => 'Document',
                             ],
                             $originator->email,
                             $document,
@@ -655,7 +654,7 @@ class DocumentDetailsController extends Controller
                               'comment' => $request->comment ?? '',
                               'user' => Auth::user()->name,
                               'process' => 'Document',
-                              'site' => 'AI',
+                              'site' => 'Document',
                           ],
                           $originator->email,
                           $document,
@@ -680,7 +679,7 @@ class DocumentDetailsController extends Controller
                               'comment' => $request->comment ?? '',
                               'user' => Auth::user()->name,
                               'process' => 'Document',
-                              'site' => 'AI',
+                              'site' => 'Document',
                           ],
                           $originator->email,
                           $document,
@@ -702,7 +701,7 @@ class DocumentDetailsController extends Controller
                               'comment' => $request->comment ?? '',
                               'user' => Auth::user()->name,
                               'process' => 'Document',
-                              'site' => 'AI',
+                              'site' => 'Document',
                           ],
                           $originator->email,
                           $document,
@@ -768,7 +767,7 @@ class DocumentDetailsController extends Controller
                         'comment' => $request->comment ?? '',
                         'user' => Auth::user()->name,
                         'process' => 'Document',
-                        'site' => 'AI',
+                        'site' => 'Document',
                     ],
                     $originator->email,
                     $document,
@@ -786,7 +785,7 @@ class DocumentDetailsController extends Controller
                         'comment' => $request->comment ?? '',
                         'user' => Auth::user()->name,
                         'process' => 'Document',
-                        'site' => 'AI',
+                        'site' => 'Document',
                     ],
                     $originator->email,
                     $document,
@@ -905,7 +904,7 @@ class DocumentDetailsController extends Controller
                                     'comment' => $request->comment ?? '',
                                     'user' => Auth::user()->name,
                                     'process' => 'Document',
-                                    'site' => 'AI',
+                                    'site' => 'Document',
                                 ],
                                 $temp_user->email,
                                 $document,
@@ -981,7 +980,7 @@ class DocumentDetailsController extends Controller
                                   'history' => 'Send for training',
                                   'comment' => $request->comment ?? '',
                                   'user' => Auth::user()->name,
-                                  'site' => 'AI',
+                                  'site' => 'Document',
                               ],
                               $trainer->email,
                               $document,
@@ -995,6 +994,7 @@ class DocumentDetailsController extends Controller
               }
 
             }
+
             if ($request->stage_id == 10) {
              
               $document['stage'] = $request->stage_id;
@@ -1029,7 +1029,7 @@ class DocumentDetailsController extends Controller
                                   'history' => 'Send for In-Effective',
                                   'comment' => $request->comment ?? '',
                                   'user' => Auth::user()->name,
-                                  'site' => 'AI',
+                                  'site' => 'Document',
                               ],
                               $trainer->email,
                               $document,
@@ -1069,6 +1069,7 @@ class DocumentDetailsController extends Controller
                 // 
               }
             }
+            
             if ($request->stage_id == 12) {
               $document['stage'] = $request->stage_id;
               $document['status'] = Stage::where('id', $request->stage_id)->value('name');

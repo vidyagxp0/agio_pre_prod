@@ -1877,7 +1877,7 @@
                         'document_id',
                         $document->id
                     )
-                    ->where('status', 'QA Approval')
+                    ->where('status', 'Request For Print')
                     ->whereNotIn(
                         'request_id',
                         $usedRequestIds)
@@ -2460,7 +2460,7 @@
             */
 
             $documentRequests = \App\Models\DocumentRequest::where('document_id', $currentDocumentRecord)
-                ->where('status', 'QA Approval')
+                ->where('status', 'Request For Print')
                 ->whereNotIn('request_id', $usedRequestIds)
                 ->orderBy('request_id', 'asc')
                 ->get();

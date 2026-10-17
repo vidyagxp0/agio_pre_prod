@@ -114,32 +114,26 @@
             margin-bottom: 15px;
         }
 
-        @page {
-            size: A4;
-        }
+        @page { size: A4; margin: 130px 34px 120px 34px; }
 
         header {
             position: fixed;
-            top: 0;
+            top: -96px;           /* 130 - 34 */
             left: 0;
             width: 100%;
-            z-index: 1000;
-        }
-
-        body {
-            margin-top: 120px;
-            margin-bottom: 100px;
+            background: #fff;
         }
 
         footer {
             position: fixed;
-            bottom: 0;
+            bottom: -86px;        /* 120 - 34 */
             left: 0;
             width: 100%;
-            z-index: 1000;
-            margin-top: 20px;
+            background: #fff;
         }
 
+        body { margin: 0; padding: 0; }
+        
         header .doc-num{
             /* font-weight: bold; */
         }
@@ -259,296 +253,33 @@
     
 
     <style>
-        /* =====================================================
-        ANNEXURE CONTENT - FROALA / PDF
-        ===================================================== */
+        .rich-pdf-content { width: 100%; font-size: 15px; line-height: 1.4; text-align: left; word-wrap: break-word; }
+        .rich-pdf-content p { margin: 0 0 4px 0; }
+        .rich-pdf-content ul, .rich-pdf-content ol { padding-left: 20px; margin: 2px 0 4px 0; }
+        .rich-pdf-content table { width: 100%; table-layout: fixed; border-collapse: collapse; margin: 4px 0 8px 0; }
+        .rich-pdf-content table, .rich-pdf-content th, .rich-pdf-content td { border: 1px solid #000; }
+        .rich-pdf-content th, .rich-pdf-content td { font-size: 11px; padding: 2px 4px; vertical-align: top; text-align: left; word-wrap: break-word; }
+        .rich-pdf-content th { font-weight: bold; text-align: center; }
+        .rich-pdf-content td p, .rich-pdf-content th p { margin: 0; }
+        .rich-pdf-content table.pdf-borderless, .rich-pdf-content table.pdf-borderless th, .rich-pdf-content table.pdf-borderless td { border: none; }
+        .rich-pdf-content thead { display: table-header-group; }
+        .rich-pdf-content img { max-width: 100%; height: auto; }
 
-        .annexure-content {
-            width: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
-            font-size: 14px;
-            line-height: 1.5;
-            text-align: left;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            white-space: normal;
-        }
-
-        /* Paragraph */
-        .annexure-content p {
-            font-size: 14px !important;
-            line-height: 1.5 !important;
-            margin: 4px 0 7px 0 !important;
-            padding: 0 !important;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        /* Div / Span */
-        .annexure-content div,
-        .annexure-content span {
-            max-width: 100%;
-            box-sizing: border-box;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        /* Headings */
-        .annexure-content h1,
-        .annexure-content h2,
-        .annexure-content h3,
-        .annexure-content h4,
-        .annexure-content h5,
-        .annexure-content h6 {
-            line-height: 1.4 !important;
-            font-weight: bold !important;
-            margin: 8px 0 !important;
-            padding: 0 !important;
-            page-break-after: avoid;
-        }
-
-        /* Bold */
-        .annexure-content strong,
-        .annexure-content b {
-            font-weight: bold !important;
-        }
-
-        /* Italic */
-        .annexure-content em,
-        .annexure-content i {
-            font-style: italic !important;
-        }
-
-        /* Underline */
-        .annexure-content u {
-            text-decoration: underline !important;
-        }
-
-        /* =====================================================
-        LISTS
-        ===================================================== */
-
-        .annexure-content ul,
-        .annexure-content ol {
-            margin: 5px 0 8px 0 !important;
-            padding-left: 25px !important;
-        }
-
-        .annexure-content li {
-            margin: 2px 0 !important;
-            line-height: 1.5 !important;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        /* =====================================================
-        TABLE
-        ===================================================== */
-
-        .annexure-content table {
-            width: 100% !important;
-            max-width: 100% !important;
-            border-collapse: collapse !important;
-            table-layout: fixed !important;
-            margin: 8px 0 12px 0 !important;
-            box-sizing: border-box;
-        }
-
-        .annexure-content table,
-        .annexure-content th,
-        .annexure-content td {
-            border: 1px solid #000 !important;
-        }
-
-        .annexure-content th,
-        .annexure-content td {
-            font-size: 13px !important;
-            line-height: 1.35 !important;
-            padding: 5px !important;
-            text-align: left !important;
-            vertical-align: top !important;
-            word-break: break-word !important;
-            word-wrap: break-word !important;
-            overflow-wrap: break-word !important;
-            white-space: normal !important;
-            box-sizing: border-box;
-        }
-
-        /* Table paragraph */
-        .annexure-content td p,
-        .annexure-content th p {
-            font-size: 13px !important;
-            line-height: 1.35 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-
-        /* Table row */
-        .annexure-content tr {
-            page-break-inside: avoid;
-        }
-
-        /* Table header */
-        .annexure-content th {
-            font-weight: bold !important;
-            text-align: center !important;
-        }
-
-        /* =====================================================
-        IMAGES
-        ===================================================== */
-
-        .annexure-content img {
-            display: block;
-            width: auto !important;
-            max-width: 100% !important;
-            height: auto !important;
-            margin: 6px auto !important;
-            page-break-inside: avoid;
-        }
-
-        .annexure-content td img,
-        .annexure-content th img {
-            display: block;
-            width: auto !important;
-            max-width: 100% !important;
-            height: auto !important;
-            margin: 4px auto !important;
-        }
-
-        /* =====================================================
-        FROALA ALIGNMENT
-        ===================================================== */
-
-        .annexure-content .fr-text-left {
-            text-align: left !important;
-        }
-
-        .annexure-content .fr-text-center {
-            text-align: center !important;
-        }
-
-        .annexure-content .fr-text-right {
-            text-align: right !important;
-        }
-
-        .annexure-content .fr-text-justify {
-            text-align: justify !important;
-        }
-
-        /* Inline alignment from Froala */
-        .annexure-content [style*="text-align: center"],
-        .annexure-content [style*="text-align:center"] {
-            text-align: center !important;
-        }
-
-        .annexure-content [style*="text-align: right"],
-        .annexure-content [style*="text-align:right"] {
-            text-align: right !important;
-        }
-
-        .annexure-content [style*="text-align: left"],
-        .annexure-content [style*="text-align:left"] {
-            text-align: left !important;
-        }
-
-        .annexure-content [style*="text-align: justify"],
-        .annexure-content [style*="text-align:justify"] {
-            text-align: justify !important;
-        }
-
-        /* =====================================================
-        LINKS
-        ===================================================== */
-
-        .annexure-content a {
-            color: #000 !important;
-            text-decoration: underline;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        /* =====================================================
-        BLOCKQUOTE
-        ===================================================== */
-
-        .annexure-content blockquote {
-            margin: 8px 0 8px 15px !important;
-            padding-left: 10px !important;
-            border-left: 3px solid #777 !important;
-        }
-
-        /* =====================================================
-        PRE / CODE
-        ===================================================== */
-
-        .annexure-content pre,
-        .annexure-content code {
-            font-family: "DejaVu Sans Mono", monospace !important;
-            font-size: 13px !important;
-            white-space: pre-wrap !important;
-            word-wrap: break-word !important;
-            overflow-wrap: break-word !important;
-        }
-
-        /* =====================================================
-        GENERAL
-        ===================================================== */
-
-        .annexure-content * {
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-
-        .annexure-content table {
-            width: 100% !important;
-            border-collapse: collapse !important;
-        }
-
-        .annexure-content td,
-        .annexure-content th {
-            padding: 5px !important;
-        }
-
-        .annexure-content table td,
-        .annexure-content table th {
-            border: 1px solid #000 !important;
-            padding: 5px !important;
-            vertical-align: top !important;
-        }
-
-        .header-wrapper{
+        .master-copy {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-        }
-
-        .master-copy{
-            position: absolute;
-            top: -35px;
+            top: -110px;
             right: 10px;
-
             border: 2px solid #00bcd4;
             color: #00bcd4;
-
             font-size: 14px;
             font-weight: bold;
-
             padding: 4px 12px;
-
-            transform: rotate(-4deg);
-
-            text-transform: uppercase;
-            letter-spacing: 1px;
-
             background: #fff;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
-    <div class="header-wrapper">
 
         @if ($document->status == 'Effective' || $document->status == 'Obsolete')
 
@@ -576,7 +307,7 @@
                 </tbody>
             </table>
         </header>
-    </div>
+ 
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
         <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">
@@ -641,7 +372,7 @@
                                 ANNEXURE {{ $annexureNo }}
                             </h3>
 
-                            <div class="annexure-content">
+                            <div class="rich-pdf-content">
                                 {!! $annexure !!}
                             </div>
 

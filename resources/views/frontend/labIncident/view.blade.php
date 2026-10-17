@@ -4,7 +4,7 @@
         $users = DB::table('users')->select('id', 'name')->orderByRaw('LOWER(name) ASC')->get();
 @endphp
 
-<style>
+    <style>
         
         /*Main Table Styling */
         #isPasted {

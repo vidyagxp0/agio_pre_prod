@@ -230,12 +230,11 @@
                                 $currentStage = $data->stage;
                             @endphp
 
-                            <div class="{{ $currentStage > 1 ? 'active' : ($currentStage == 1 ? 'current' : '') }}">Request For Print
-                            </div>
-
+                            <div class="{{ $currentStage > 1 ? 'active' : ($currentStage == 1 ? 'current' : '') }}">Opened</div>
                             <div class="{{ $currentStage > 2 ? 'active' : ($currentStage == 2 ? 'current' : '') }}">QA Approval</div>
+                            <div class="{{ $currentStage > 3 ? 'active' : ($currentStage == 3 ? 'current' : '') }}">Request For Print</div>
 
-                            @if ($data->stage >= 3)
+                            @if ($data->stage >= 4)
                                 <div class="bg-danger" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
                             @else
                                 <div class="" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
@@ -249,7 +248,8 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Request For Print</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button>
             </div>
             <script>
                 function activateTabBasedOnStage(stage) {
@@ -267,11 +267,11 @@
                         tabToActivate = 'CCForm2';
                     } else if (stage == 3) {
                         tabToActivate = 'CCForm3';
-                    } else if (stage == 0) {
-                        tabToActivate = 'CCForm3';
+                    } else if (stage == 4) {
+                        tabToActivate = 'CCForm4';
                     }
                     else if (stage == 4) {
-                        tabToActivate = 'CCForm3';
+                        tabToActivate = 'CCForm4';
                     }
 
                     if (tabToActivate) {
@@ -507,8 +507,29 @@
                     </div>
                 </div>
 
-                <!-- Activity Log content -->
                 <div id="CCForm3" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Assigned To">Request Print Comment</label>
+                                    <textarea name="req_comment" id="comment" cols="30" >{{ $data->req_comment }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                            <button type="button"> <a href="{{ url('document-request-list') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Log content -->
+                <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-lg-4">
@@ -583,9 +604,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            
-
                         </div>
                         
                         <div class="button-block">

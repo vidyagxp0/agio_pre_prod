@@ -186,6 +186,7 @@ class DocumentRequestController extends Controller
         $data->reason = $request->reason;
 
         $data->comment = $request->comment;
+        $data->req_comment = $request->req_comment;
         $data->instrument_id = $request->instrument_id;
         $data->area_location = $request->area_location;
 
@@ -473,6 +474,67 @@ class DocumentRequestController extends Controller
                     ]);
                 }
                 $data->stage = "3";
+                $data->status = "Request For Print";
+                $data->completed_by = Auth::user()->name;
+                $data->completed_on = Carbon::now()->format('d-M-Y');
+                $data->complete_comment = $request->comment;
+
+                $history = new DocumentRequestAuditTrial();
+                $history->document_request_id = $id;
+                $history->activity_type = 'Approved By, Approved On';
+                if (is_null($lastDocument->completed_by) || $lastDocument->completed_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->completed_by . ' , ' . $lastDocument->completed_on;
+                }
+                $history->current = $data->completed_by . ' , ' . $data->completed_on;
+                $history->comment = $request->comment;
+                $history->action = 'Approved';
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "Request For Print";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Request For Print';
+                if (is_null($lastDocument->completed_by) || $lastDocument->completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+
+
+                 $list = Helpers::getQAUserList($data->division_id);
+
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    $DataEmail = [
+                                        'data' => $data,
+                                        'site' => "Document Issuance Request",
+                                        'history' => "Approved",
+                                        'process' => 'Document Issuance Request',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
+
+                                    SendMail::dispatch($DataEmail, $email, $data, 'Document Issuance Request');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
+                                }
+                            }
+                        }
+
+                $data->update();
+                return back();
+            }
+
+            if ($data->stage == 3) {
+                $data->stage = "4";
                 $data->status = "Closed - Done";
                 $data->completed_by = Auth::user()->name;
                 $data->completed_on = Carbon::now()->format('d-M-Y');

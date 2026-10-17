@@ -1,101 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notification</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
-    <style>
-        body,
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Lora', serif;
-        }
-
-        #main-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #main-container .notification-container {
-            max-width: 600px;
-            width: 100%;
-            padding: 20px;
-            backdrop-filter: blur(10px);
-            background: #00000027;
-            border-top: 10px solid #1558af;
-        }
-
-        #main-container .logo {
-            width: 120px;
-            aspect-ratio: 1/0.3;
-            margin-bottom: 30px;
-        }
-
-        #main-container .logo img {
-            width: 100%;
-            height: 100%;
-        }
-
-        #main-container .mail-content {
-            text-align: justify;
-            margin-bottom: 20px;
-        }
-
-        #main-container .bar {
-            margin-bottom: 20px;
-        }
-    </style>
+    <title>Document Review Notification</title>
 </head>
 
-<body>
+<body style="margin:0; padding:0; background-color:#f4f6f9; font-family:Arial, Helvetica, sans-serif; color:#333333;">
 
-    <div id="main-container">
-        <div class="notification-container">
-            <div class="inner-block">
-                <div class="logo">
-                    <img src="{{ asset('user/images/logo.png') }}" alt="...">
-                </div>
-                <div class="mail-content">
+    @php
+        $division = DB::table('divisions')->find($document->division_id);
+        $doctype = DB::table('document_types')->find($document->document_type_id);
+        $originator = DB::table('users')->find($document->originator_id);
 
-                
-                    <h6> Hello Reviewer</h6>
-                    <br>
-                    <p>The Following document is now available for you to review.</p>
-                    <br>
-                    <ul>
-                        <li><strong>Document Name :</strong> {{ $document->document_name }}</li><br>
-                        @php
-                            $division = DB::table('divisions')->find($document->division_id);
-                            $doctype = DB::table('document_types')->find($document->document_type_id);
-                            $year = Carbon\Carbon::parse($document->created_at)->format('Y');
-                            $num = str_pad($document->id , 5, '0', STR_PAD_LEFT);
-                            $originator = DB::table('users')->find($document->originator_id);
-                        @endphp
-                        <li><strong>Document Number :</strong> {{ $division->name }}/{{ $doctype->typecode }}/{{ $year }}/{{ $num }}</li>
-                        <li><strong>Author :</strong> {{ $originator->name }}</li>
-                        <br>
-                        <p>Please Login the Document Management system.</p>
-                    </ul>
-                        <a href="{{ url('rev-details', $document->id) }}"> Click here to view the status</a>.
+        $year = \Carbon\Carbon::parse($document->created_at)->format('Y');
+        $num = str_pad($document->id, 5, '0', STR_PAD_LEFT);
 
-                </div>
+        $documentNumber = $document->document_number ?? 'N/A';
 
-                <div class="slogan">
-                    <small>You can see all of your tasks on your DMS Dashboard.</small>
-                </div>
-            </div>
-        </div>
-    </div>
+        $documentStatus = $document->status ?? 'N/A';
+    @endphp
+
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0"
+           border="0" style="background-color:#f4f6f9; padding:25px 10px;">
+        <tr>
+            <td align="center">
+
+                <table role="presentation" width="600" cellspacing="0" cellpadding="0"
+                       border="0" style="width:100%; max-width:600px; background-color:#ffffff; border:1px solid #e2e6ea;">
+
+                    <!-- Header -->
+                    <tr>
+                        <td style="background-color:#1558af; padding:18px 25px; text-align:left;">
+                            <img src="{{ asset('user/images/logo.png') }}"
+                                 alt="Company Logo"
+                                 style="display:block; width:120px; max-width:100%; height:auto; border:0;">
+                        </td>
+                    </tr>
+
+                    <!-- Title -->
+                    <tr>
+                        <td style="padding:25px 25px 10px 25px;">
+                            <h2 style="margin:0; font-size:21px; line-height:1.4; color:#1558af; font-weight:600;">
+                                Document Review Notification
+                            </h2>
+                        </td>
+                    </tr>
+
+                    <!-- Message -->
+                    <tr>
+                        <td style="padding:10px 25px 20px 25px; font-size:14px; line-height:1.7; color:#444444;">
+                            <p style="margin:0 0 12px 0;">Hello Reviewer,</p>
+
+                            <p style="margin:0;">
+                                The following document is now available for your review.
+                                Please review the document in the Document Management System.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Document Details -->
+                    <tr>
+                        <td style="padding:0 25px 20px 25px;">
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0"
+                                   border="0" style="border-collapse:collapse; font-size:14px;">
+
+                                <tr>
+                                    <td colspan="2"
+                                        style="padding:12px; background-color:#eef4fc; border:1px solid #d9e2ef; color:#1558af; font-weight:bold;">
+                                        Document Details
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td width="38%"
+                                        style="padding:11px; border:1px solid #e2e6ea; font-weight:bold; background-color:#f8f9fb;">
+                                        Document Name
+                                    </td>
+                                    <td style="padding:11px; border:1px solid #e2e6ea; overflow-wrap:anywhere;">
+                                        {{ $document->document_name ?? 'N/A' }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding:11px; border:1px solid #e2e6ea; font-weight:bold; background-color:#f8f9fb;">
+                                        Document Number
+                                    </td>
+                                    <td style="padding:11px; border:1px solid #e2e6ea; overflow-wrap:anywhere;">
+                                        {{ $documentNumber }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding:11px; border:1px solid #e2e6ea; font-weight:bold; background-color:#f8f9fb;">
+                                        Author
+                                    </td>
+                                    <td style="padding:11px; border:1px solid #e2e6ea;">
+                                        {{ $originator->name ?? 'N/A' }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding:11px; border:1px solid #e2e6ea; font-weight:bold; background-color:#f8f9fb;">
+                                        Document Status
+                                    </td>
+                                    <td style="padding:11px; border:1px solid #e2e6ea;">
+                                        <span style="display:inline-block; padding:5px 10px; background-color:#e8f1ff; color:#1558af; font-weight:bold; border-radius:3px;">
+                                            {{ $documentStatus }}
+                                        </span>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- CTA -->
+                    <tr>
+                        <td align="center" style="padding:5px 25px 25px 25px;">
+                            <p style="margin:0 0 18px 0; font-size:14px; line-height:1.6; color:#444444;">
+                                Please log in to the Document Management System to review the document.
+                            </p>
+
+                            <a href="{{ url('rev-details', $document->id) }}"
+                               style="display:inline-block; padding:12px 24px; background-color:#1558af; color:#ffffff; text-decoration:none; font-size:14px; font-weight:bold; border-radius:4px;">
+                                View Document
+                            </a>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding:16px 25px; background-color:#f8f9fb; border-top:1px solid #e2e6ea; text-align:center;">
+                            <p style="margin:0 0 6px 0; font-size:12px; line-height:1.5; color:#555555;">
+                                You can see all your assigned tasks on your DMS Dashboard.
+                            </p>
+                            <p style="margin:0; font-size:11px; color:#888888;">
+                                This is an automated notification from the Document Management System.
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
 
 </body>
-
 </html>
-
-

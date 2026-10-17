@@ -278,7 +278,7 @@
 
         .doc-control .head {
             max-width: 600px;
-            margin: 0 auto 30px;
+            margin: 0 auto 15px;
 
         }
 
@@ -296,32 +296,17 @@
             font-weight: bold;
             margin-bottom: 15px;
         }
+        .doc-control table.table-bordered tr { page-break-inside: auto; }
+        .doc-control .block { page-break-inside: auto; }        
 
-       
-        @page {
-            size: A4;
-            margin: 340px 34px 190px 34px;   /* bottom 160 se 190 kiya */
-        }
-        header {
-            position: fixed;
-            top: -306px;          /* 340 - 34 = header page ke top se 34px par shuru */
-            left: 0;
-            width: 100%;
-            height: 300px;        /* header kabhi isse bada nahi hoga */
-            z-index: 1000;
-        }
+        @page { size: A4; margin: 245px 34px 175px 34px; }
+
+        header { position: fixed; top: -211px; left: 0; width: 100%; z-index: 1000; background: #fff; }   /* height: 300px hata do */
+
+        footer { position: fixed; bottom: -141px; left: 0; width: 100%; z-index: 1000; background: #fff; }
 
         body {
             margin: 0;            /* purana margin-top: 320px / margin-bottom: 160px hata diya */
-        }
-
-        footer {
-            position: fixed;
-            bottom: -156px;      /* 190 - 34 */
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background: #fff;    /* kuch dab bhi jaye to peeche ka text na dikhe */
         }
 
         .hdr-cell {
@@ -529,32 +514,32 @@
         .quill-pdf-content img { display: block; max-width: 100%; height: auto; margin: 6px auto; page-break-inside: avoid; }  
         .quill-pdf-content th,
         .quill-pdf-content td { font-size: 14px; line-height: 1.35; padding: 3px 5px; vertical-align: top; text-align: left; word-wrap: break-word; overflow-wrap: break-word; white-space: normal; }      
-        .header-wrapper{
+        .header-wrapper {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
+            z-index: 2000;
         }
 
-        .master-copy{
+        .master-copy {
             position: absolute;
-            top: -35px;
+            top: -200px;
             right: 10px;
 
             border: 2px solid #00bcd4;
             color: #00bcd4;
-
             font-size: 14px;
             font-weight: bold;
-
             padding: 4px 12px;
 
             transform: rotate(-4deg);
+            transform-origin: center;
 
             text-transform: uppercase;
             letter-spacing: 1px;
-
             background: #fff;
+            z-index: 2001;
         }
     </style>
 
@@ -571,10 +556,10 @@
         <header>
             <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
                 <colgroup>
-                    <col style="width:16%">   {{-- label column = logo column --}}
-                    <col style="width:44%">   {{-- data column --}}
-                    <col style="width:18%">   {{-- right label --}}
-                    <col style="width:22%">   {{-- right data --}}
+                    <col style="width:14%">
+                    <col style="width:50%">
+                    <col style="width:16%">
+                    <col style="width:20%">
                 </colgroup>
 
                 {{-- ROW 1: Logo | Company name --}}
@@ -745,7 +730,7 @@
 
     <div>
         <section class="main-section" id="pdf-page">
-            <section style="page-break-after: never;">
+            <div style="page-break-after: never;">
             
                 <div class="other-container">
                     <table>
@@ -1341,13 +1326,13 @@
                         </thead>
                     </table>
                     <div class="table-responsive retrieve-table">
-                        <table class="table table-bordered" id="distribution-list">
+                        <table class="table table-bordered" id="revision-table">
                             <thead>
                                 <tr>
-                                    <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                                    <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th>
-                                    <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
-                                    <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
+                                    <th style="font-size:14px; font-weight:bold; width:12%">Revision No.</th>
+                                    <th style="font-size:14px; font-weight:bold; width:20%">Change Control No.</th>
+                                    <th style="font-size:14px; font-weight:bold; width:16%">Effective Date</th>
+                                    <th style="font-size:14px; font-weight:bold; width:52%">Reason of revision</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1388,9 +1373,9 @@
                     </div>
 
                 </div>
-            </section>
+            </div>
 
-            <section class="doc-control" style="page-break-after: never;">
+            <section class="doc-control" style="page-break-before: always;">
                 <div class="head">
                     <div>
                         Document Control Information

@@ -13645,12 +13645,11 @@
                                     </div>
                             </div>
                             <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Approved Vendors</label>
-                                        <input type="text" name="approved_vendor" value="{{ $document->approved_vendor }}">
-                                    </div>
+                                <div class="group-input">
+                                    <label for="scope">Approved Vendors</label>
+                                    <input type="text" name="approved_vendor" value="{{ $document->approved_vendor }}">
+                                </div>
                             </div>
-
 
                                     <div class="col-12 sub-head">
                                         
