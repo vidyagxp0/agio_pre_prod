@@ -8430,8 +8430,78 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                             // }
                         }
 
+                       
+
+               
+
+
+                    ExternalAuditCFTResponse::where('external_audit_id', $id)
+                    ->whereIn('status', ['In-progress', 'Completed'])
+                    ->get()
+                    ->each(function ($response) {
+                        $response->delete();
+                    });
+                    
 
                 $changeControl->update();
+              
+                  $Cft = ExternalAuditCFT::where('external_audit_id', $changeControl->id)->first();
+                    if ($Cft) {
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Warehouse_by = null;
+                        $Cft->Warehouse_on = null;
+                        $Cft->Production_Injection_By = null;
+                        $Cft->Production_Injection_On = null;
+                        $Cft->Production_Table_By = null;
+                        $Cft->Production_Table_On = null;
+                        $Cft->RA_by = null;
+                        $Cft->RA_on = null;
+                        $Cft->production_by = null;
+                        $Cft->production_on = null;
+                        $Cft->ResearchDevelopment_by = null;
+                        $Cft->ResearchDevelopment_on = null;
+                        $Cft->Human_Resource_by = null;
+                        $Cft->Human_Resource_on = null;
+                        $Cft->CorporateQualityAssurance_by = null;
+                        $Cft->CorporateQualityAssurance_on = null;
+                        $Cft->Store_by = null;
+                        $Cft->Store_on = null;
+                        $Cft->Engineering_by = null;
+                        $Cft->Engineering_on = null;
+                        $Cft->RegulatoryAffair_by = null;
+                        $Cft->RegulatoryAffair_on = null;
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->ProductionLiquid_by = null;
+                        $Cft->ProductionLiquid_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Microbiology_by = null;
+                        $Cft->Microbiology_on = null;
+                        $Cft->Environment_Health_Safety_by = null;
+                        $Cft->Environment_Health_Safety_on = null;
+                        $Cft->ContractGiver_by = null;
+                        $Cft->ContractGiver_on = null;
+                        $Cft->Other1_by = null;
+                        $Cft->Other1_on = null;
+                        $Cft->Other2_by = null;
+                        $Cft->Other2_on = null;
+                        $Cft->Other3_by = null;
+                        $Cft->Other3_on = null;
+                        $Cft->Other4_by = null;
+                        $Cft->Other4_on = null;
+                        $Cft->Other5_by = null;
+                        $Cft->Other5_on = null;
+
+                        $Cft->save();
+
+                        return back();
+                    }
+
+                
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -8528,6 +8598,15 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                                 }
                             // }
                         }
+
+
+               
+                    ExternalAuditCFTResponse::where('external_audit_id', $id)
+                    ->whereIn('status', ['In-progress', 'Completed'])
+                    ->get()
+                    ->each(function ($response) {
+                        $response->delete();
+                    });
                 $changeControl->update();
 
                 $Cft = ExternalAuditCFT::where('external_audit_id', $changeControl->id)->first();

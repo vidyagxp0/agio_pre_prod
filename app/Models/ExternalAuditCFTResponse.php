@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ExternalAuditCFTResponse extends Model
 {
     use HasFactory;
+
+  
 }
