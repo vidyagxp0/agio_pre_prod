@@ -495,7 +495,7 @@
                                                 @if($currentUserId != $reviewerUser->id) disabled @endif>{{ old('reviewer_comments.' . $reviewerUser->id, $reviewerComments[$reviewerUser->id] ?? '') }}</textarea>
                                         </div>
                                     @endif
-                                @endforeach
+                                @endforeach 
                             </div>
                             
                             <!-- Approver Comments Section -->

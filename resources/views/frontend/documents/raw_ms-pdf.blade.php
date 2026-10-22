@@ -94,6 +94,8 @@
             font-size: 1.1rem;
             font-weight: bold;
         }
+        header td, header th { font-size: 14px; }
+header td.title p { font-size: 14px; }
 
         .doc-control .head {
             max-width: 600px;
@@ -131,21 +133,31 @@
 
         body {
             margin-top: 260px;
-            margin-bottom: 160px;
-            /* padding-top: 60px; */
-            /* padding-bottom: 50px; */
+            margin-bottom: 160px;   /* footer ke liye jagah (har page par) */
         }
 
-        footer {
+        /* FIXED footer: har page par repeat hota hai (sirf Prepared By + Checked By).
+           Page 1 par ye script se hide hota hai, wahan content ke baad 3-column table aata hai */
+       footer {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            height: 160px; /* Set a specific height for the footer */
+            height: 160px;
+            background: #fff;
         }
 
-        .table-responsive {
+        .footer-first {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 160px;
+                background: #fff;
+                z-index: 2000;
+            }
+                .table-responsive {
             overflow-x: auto;
             max-width: 100%;
         }
@@ -223,6 +235,19 @@
         .annexure-block {
             margin: 40px 0 0;
         }
+
+        .quill-pdf-content { text-align: left !important; }
+.quill-pdf-content table {
+    width: 100%;
+    table-layout: auto;
+    border-collapse: collapse;
+}
+.quill-pdf-content table, .quill-pdf-content th, .quill-pdf-content td {
+    border: 1px solid #000 !important;
+    text-align: left !important;
+    vertical-align: top;
+}
+.quill-pdf-content th { background: #f4f4f4; font-weight: bold; }
 
         .page-break-before {
             page-break-before: always;
@@ -386,7 +411,7 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td style="font-weight: bold;">
+                    <td style="font-weight: bold; font-size: 14px;">
                        RAW MATERIAL SPECIFICATION
                     </td>
                 </tr>
@@ -395,7 +420,7 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td>
+                   <td style="font-weight: bold;">
                         @if(!empty( $document->material_name ))
                            {{ $document->material_name}}
                         @else
@@ -507,30 +532,40 @@
     </header>
 
 
-    <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
-            <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">
-                <thead>
-                    <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;"></th>
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Prepared By</th>
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Checked By</th>
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Approved By</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        @php
-                            $inreviews = DB::table('stage_manages')
-                                ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                                ->select('stage_manages.*', 'users.name as user_name')
-                                ->where('document_id', $document->id)
-                                ->where('stage', 'Review-Submit')
-                                ->where('deleted_at', null)
-                                ->get();
-                        @endphp
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Sign</th>
-                        <td style="padding: 5px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
-                        <td style="padding: 5px; border: 1px solid #ddd;">
+    @php
+        $inreviews = DB::table('stage_manages')
+            ->join('users', 'stage_manages.user_id', '=', 'users.id')
+            ->select('stage_manages.*', 'users.name as user_name')
+            ->where('document_id', $document->id)
+            ->where('stage', 'Review-Submit')
+            ->where('deleted_at', null)
+            ->get();
+
+        $inreview = DB::table('stage_manages')
+            ->join('users', 'stage_manages.user_id', '=', 'users.id')
+            ->select('stage_manages.*', 'users.name as user_name')
+            ->where('document_id', $document->id)
+            ->where('stage', 'Approval-Submit')
+            ->where('deleted_at', null)
+            ->get();
+    @endphp
+
+    {{-- FIXED FOOTER (har page par): sirf Prepared By + Checked By.
+         Page 1 par ye footer script se hide hota hai, wahan neeche wala 3-column table aata hai --}}
+    <footer class="footer" style="font-family: Arial, sans-serif; font-size: 14px;">
+        <table class="border" style="width: 100%; border-collapse: collapse; table-layout: fixed; text-align: left;">
+            <thead>
+                <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
+                    <th style="width: 10%; padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;"></th>
+                    <th style="width: 45%; padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Prepared By</th>
+                    <th style="width: 45%; padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Checked By</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Sign</th>
+                    <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
+                    <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
                         @if ($inreviews->isEmpty())
                             <div>Yet Not Performed</div>
                         @else
@@ -538,58 +573,93 @@
                                 <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
                             @endforeach
                         @endif
-                        @php
-                            $inreview = DB::table('stage_manages')
-                                ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                                ->select('stage_manages.*', 'users.name as user_name')
-                                ->where('document_id', $document->id)
-                                ->where('stage', 'Approval-Submit')
-                                ->where('deleted_at', null)
-                                ->get();
-
-                        @endphp
-                        <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
-                        @if ($inreview->isEmpty())
-                            <div>Yet Not Performed</div>
-                        @else
-                            @foreach ($inreview as $temp)
-                                <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
-                            @endforeach
-                        @endif
-                    </tr>
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        <td style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Date</td>
-                        <td style="padding: 5px; border: 1px solid #ddd;">
-                        {{ $formattedDate = \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
-                        </td>
-                        <td style="padding: 5px; border: 1px solid #ddd;">
+                    </td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Date</td>
+                    <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
+                        {{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
+                    </td>
+                    <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
                         @if ($inreviews->isEmpty())
                             <div>Yet Not Performed</div>
                         @else
                             @foreach ($inreviews as $temp)
-                            <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                                <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
                             @endforeach
                         @endif
-                        </td>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-                        <td style="padding: 5px; border: 1px solid #ddd;">
-                        @if ($inreview->isEmpty())
-                            <div>Yet Not Performed</div>
-                        @else
-                            @foreach ($inreview as $temp)
-                            <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
-                            @endforeach
-                        @endif
-                        </td>
-                    </tr>
-                </tbody>
-                    </table>
-
-            
-            <span>
-                Format No.: QA/097/F5-01                              
-            </span>
+        <span>
+            Format No.: QA/097/F5-01
+        </span>
     </footer>
+
+    {{-- PAGE 1 ONLY: Prepared + Checked + Approved --}}
+<div class="footer-first" style="font-size: 14px;">
+    <table class="border" style="width: 100%; border-collapse: collapse; table-layout: fixed; text-align: left;">
+        <thead>
+            <tr style="background-color: #f4f4f4;">
+                <th style="width: 10%; padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;"></th>
+                <th style="width: 30%; padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Prepared By</th>
+                <th style="width: 30%; padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Checked By</th>
+                <th style="width: 30%; padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Approved By</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Sign</th>
+                <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
+                <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
+                    @if ($inreviews->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreviews as $temp)
+                            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif
+                </td>
+                <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
+                    @if ($inreview->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreview as $temp)
+                            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Date</td>
+                <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
+                    {{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
+                </td>
+                <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
+                    @if ($inreviews->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreviews as $temp)
+                            <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif
+                </td>
+                <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
+                    @if ($inreview->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreview as $temp)
+                            <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <span>Format No.: QA/097/F5-01</span>
+</div>
 
     <div style="margin-top: 10px;">
         <section class="main-section" id="pdf-page">
@@ -672,29 +742,55 @@
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->retest_sample_quantity_row_material }}</td>
                             </tr>
 
-                            <tr> 
-                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling instructions,warning and precautions</td>
+                                                    <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">
+                                    Sampling instructions, warning and precautions
+                                </td>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;" class="quill-pdf-content">
-                                    {!! $data->sampling_instructions_row_material !!}
+                                    @php
+                                        $si = $data->sampling_instructions_row_material ?? '';
+                                        if (!empty(trim(strip_tags($si))) && stripos($si, '<li') === false) {
+                                            // plain text hai -> "1. ", "2. " pe split karke list banao
+                                            $plain = trim(strip_tags($si));
+                                            $parts = preg_split('/(?:^|\s)\d+\.\s+(?=\S)/u', $plain, -1, PREG_SPLIT_NO_EMPTY);
+                                            $parts = array_map('trim', $parts);
+                                        } else {
+                                            $parts = null;
+                                        }
+                                    @endphp
+
+                                    @if (is_array($parts) && count($parts) > 0)
+                                        <ol style="margin: 0; padding-left: 18px;">
+                                            @foreach ($parts as $p)
+                                                <li style="margin-bottom: 3px;">{{ $p }}</li>
+                                            @endforeach
+                                        </ol>
+                                    @else
+                                        {!! $si !!}
+                                    @endif
                                 </td>
                             </tr>
 
                         </tbody>
                     </table>
                 </div>
+
+              
             </section>
         </section>
     </div>
 
 
 
-            <div class="other-container ">
+           <div class="other-container page-break-before">
                 <table>
                     <thead>
                         <tr>
-                            <th class="text-left">
+                             <th class="text-left">
                                 <div class="bold">SPECIFICATION</div>
                             </th>
+                               
+                           
                         </tr>
                     </thead>
                 </table>
@@ -720,68 +816,67 @@
             </div>
 
 
-            <table>
-                <thead>
-                    <tr>
-                        <th class="text-center">
-                            <div class="bold">REVISION HISTORY</div>
-                        </th>
-                    </tr>
-                </thead>
-            </table>
+           {{-- REVISION HISTORY: nayi page se start --}}
+<div class="page-break-before">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">
+                    <div class="bold" style="font-size: 14px;">REVISION HISTORY</div>
+                </th>
+            </tr>
+        </thead>
+    </table>
 
-            <div class="table-responsive retrieve-table">
-                <table class="table table-bordered" id="distribution-list">
-                    <thead>
+    <div class="table-responsive retrieve-table">
+        <table class="table table-bordered" id="distribution-list">
+            <thead>
+                <tr>
+                    <th style="font-size: 14px; font-weight: bold; width:15%">Revision No.</th>
+                    {{-- <th style="font-size: 14px; font-weight: bold; width:20%">Change Control No.</th> --}}
+                    <th style="font-size: 14px; font-weight: bold; width:25%">Effective Date</th>
+                    <th style="font-size: 14px; font-weight: bold; width:60%">Reason of revision</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!empty($RevisionGridrawmsData))
+                    @foreach ($RevisionGridrawmsData as $key => $item)
                         <tr>
-                            <th style="font-size: 16px; font-weight: bold; width:10%">Revision No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:20%">Change Control No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
-                            <th style="font-size: 16px; font-weight: bold; width:50%">Reason of revision</th>
+                            <td style="border: 1px solid black; width: 15%;">{{ $item['rev_rawms_no'] ?? '' }}</td>
+                            {{-- <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_rawms_no'] ?? '' }}</td> --}}
+                            <td style="border: 1px solid black; width: 25%;">
+                                @if ($data->training_required == 'yes' && $data->stage >= 11)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @elseif ($data->training_required != 'yes' && $data->stage > 10)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @else
+                                    {{ !empty($item['eff_date_rawms']) ? \Carbon\Carbon::parse($item['eff_date_rawms'])->format('d-M-Y') : '' }}
+                                @endif
+                            </td>
+                            <td style="border: 1px solid black; width: 60%;">{{ $item['rev_reason_rawms'] ?? '' }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @if (!empty($RevisionGridrawmsData))
-                            @foreach ($RevisionGridrawmsData as $key => $item)
-                                <tr>
-                                    <td style="border: 1px solid black; width: 20%;">{{ $item['rev_rawms_no'] ?? '' }}</td>
-                                    <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_rawms_no'] ?? '' }}</td>
-                                    <td style="border: 1px solid black; width: 20%;">                                                    
-                                        @if ($data->training_required == 'yes' && $data->stage >= 11)
-                                            {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                                        @elseif ($data->training_required != 'yes' && $data->stage > 10)
-                                            {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                                        @else
-                                            {{ !empty($item['eff_date_rawms']) ? \Carbon\Carbon::parse($item['eff_date_rawms'])->format('d-M-Y') : '' }}
-                                        @endif
-                                    </td>
-                                    {{-- <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date_rawms']) ? \Carbon\Carbon::parse($item['eff_date_rawms'])->format('d-M-Y') : '' }}</td> --}}
-                                    <td style="border: 1px solid black; width: 20%;">{{ $item['rev_reason_rawms'] ?? '' }}</td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-            </div>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="3" style="text-align: center; font-weight: bold;">No Data Available</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
-
-    <script type="text/php">
-        if (isset($pdf)) {
-            $pdf->page_script('
-                $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
-                $size = 12;
-                $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 175;
-                $x = 380;
-                $pdf->text($x, $y, $pageText, $font, $size);
-            ');
-        }
-    </script>
+<script type="text/php">
+    if (isset($pdf)) {
+        $pdf->page_script('
+            $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
+            $size = 12;
+            $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
+            $pdf->text(380, 166, $pageText, $font, $size);
+        ');
+    }
+</script>
 
 </body>
 </html>
