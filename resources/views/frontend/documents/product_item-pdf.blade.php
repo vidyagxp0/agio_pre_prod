@@ -130,7 +130,7 @@
         }
 
         body {
-            margin-top: 250px;
+            margin-top: 120px;
             margin-bottom: 160px;
             padding-top: 60px;
             padding-bottom: 50px; 
@@ -515,7 +515,7 @@
 
     @else
 
-    <table style="margin-top: 15px;">
+    <table style="margin-top: 10px;">
         <thead>
             <tr>
                 <th class="text-left">
@@ -648,7 +648,7 @@
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
                 $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 760;
+                $y = 770;
                 $x = 480;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');

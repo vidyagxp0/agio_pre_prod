@@ -671,7 +671,8 @@
                     <td style="width: 30%; padding: 6px 8px; text-align: left; vertical-align: top; border: 1px solid black; font-weight: bold;">
                         TDS No. :
                         <span style="font-weight: normal;">
-                            {{ $document->document_number ?? 'NA' }}
+                            {{ $document->tds_no ?? 'NA' }}
+                          
                         </span>
                     </td>
                 </tr>
@@ -894,7 +895,7 @@
                 {{-- Test wise data End --}}
                     
                   
-                    <div style="margin-top: 20px;">
+                   {{-- <div style="margin-top: 20px;">
                         <table style="width: 100%; border: none;">
                             <tr>
                                 <td style="width: 50%; text-align: left;">
@@ -908,6 +909,7 @@
                             </tr>
                         </table>
                     </div>
+                    --}}
                 </div>
 
                 <div>

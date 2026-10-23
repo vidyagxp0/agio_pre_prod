@@ -130,13 +130,50 @@
         }
 
         footer {
-            position: fixed;
-            bottom: -141px;       /* 175 - 34 */
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background: #fff;
-        }
+    position: fixed;
+    bottom: -141px;       /* 175 - 34 */
+    left: 0;
+    width: 100%;
+    height: 135px;
+    z-index: 1000;
+    background: #fff;
+}
+
+/* PAGE 1 ONLY: 3 columns, fixed footer ke upar baithta hai */
+.footer-first {
+    position: absolute;
+    bottom: -141px;
+    left: 0;
+    width: 100%;
+    height: 135px;
+    z-index: 2000;
+    background: #fff;
+}
+
+.sign-footer table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    border: 1px solid #000;
+}
+.sign-footer th,
+.sign-footer td {
+    border: 1px solid #000;
+    padding: 5px 4px;
+    font-size: 14px;
+    text-align: center;
+}
+.sign-footer th {
+    font-weight: bold;
+    background-color: #f4f4f4;
+}
+.sign-footer td div { font-size: 14px; }
+.sign-footer .format-no {
+    display: block;
+    text-align: left;
+    font-size: 14px;
+    margin-top: 4px;
+}
 
         body { margin: 0; padding: 0; }
 
@@ -455,88 +492,132 @@
     </div>
 
 
-    <footer class="footer" style="font-family: Arial, sans-serif; font-size: 14px;">
-        <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">
-            <thead>
-                <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
-                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;"></th>
-                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Prepared By</th>
-                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Checked By</th>
-                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Approved By</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr style="border-bottom: 1px solid #ddd;">
-                    @php
-                        $inreviews = DB::table('stage_manages')
-                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                            ->select('stage_manages.*', 'users.name as user_name')
-                            ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
-                            ->where('deleted_at', null)
-                            ->get();
-                    @endphp
-                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Sign</th>
-                    <td style="padding: 5px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
-                    <td style="padding: 5px; border: 1px solid #ddd;">
-                    @if ($inreviews->isEmpty())
-                        <div>Yet Not Performed</div>
-                    @else
-                        @foreach ($inreviews as $temp)
-                            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
-                        @endforeach
-                    @endif
-                    </td>
-                    @php
-                        $inreview = DB::table('stage_manages')
-                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                            ->select('stage_manages.*', 'users.name as user_name')
-                            ->where('document_id', $document->id)
-                            ->where('stage', 'Approval-Submit')
-                            ->where('deleted_at', null)
-                            ->get();
-                    @endphp
-                    <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
-                    @if ($inreview->isEmpty())
-                        <div>Yet Not Performed</div>
-                    @else
-                        @foreach ($inreview as $temp)
-                            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
-                        @endforeach
-                    @endif
-                    </td>
-                </tr>
-                <tr style="border-bottom: 1px solid #ddd;">
-                    <td style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Date</td>
-                    <td style="padding: 5px; border: 1px solid #ddd;">
-                    {{ $formattedDate = \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
-                    </td>
-                    <td style="padding: 5px; border: 1px solid #ddd;">
-                    @if ($inreviews->isEmpty())
-                        <div>Yet Not Performed</div>
-                    @else
-                        @foreach ($inreviews as $temp)
-                        <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
-                        @endforeach
-                    @endif
-                    </td>
+    
 
-                    <td style="padding: 5px; border: 1px solid #ddd;">
+
+    @php
+    $inreviews = DB::table('stage_manages')
+        ->join('users', 'stage_manages.user_id', '=', 'users.id')
+        ->select('stage_manages.*', 'users.name as user_name')
+        ->where('document_id', $document->id)
+        ->where('stage', 'Review-Submit')
+        ->where('deleted_at', null)
+        ->get();
+
+    $inreview = DB::table('stage_manages')
+        ->join('users', 'stage_manages.user_id', '=', 'users.id')
+        ->select('stage_manages.*', 'users.name as user_name')
+        ->where('document_id', $document->id)
+        ->where('stage', 'Approval-Submit')
+        ->where('deleted_at', null)
+        ->get();
+
+    $preparedName = Helpers::getInitiatorName($data->originator_id);
+    $preparedDate = \Carbon\Carbon::parse($document->created_at)->format('d-M-Y');
+@endphp
+
+{{-- PAGE 2+ : Prepared + Checked (poori width) --}}
+<footer class="sign-footer">
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 12%;"></th>
+                <th style="width: 44%;">Prepared By</th>
+                <th style="width: 44%;">Checked By</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Sign</th>
+                <td>{{ $preparedName }}</td>
+                <td>
+                    @if ($inreviews->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreviews as $row)
+                            <div>{{ $row->user_name ?: 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ $preparedDate }}</td>
+                <td>
+                    @if ($inreviews->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreviews as $row)
+                            <div>{{ $row->created_at ? \Carbon\Carbon::parse($row->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <span class="format-no">Format No.: QA/097/F2-01</span>
+</footer>
+
+{{-- PAGE 1 ONLY : Prepared + Checked + Approved --}}
+<div class="sign-footer footer-first">
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 12%;"></th>
+                <th style="width: 29.33%;">Prepared By</th>
+                <th style="width: 29.33%;">Checked By</th>
+                <th style="width: 29.33%;">Approved By</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Sign</th>
+                <td>{{ $preparedName }}</td>
+                <td>
+                    @if ($inreviews->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreviews as $row)
+                            <div>{{ $row->user_name ?: 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif
+                </td>
+                <td>
                     @if ($inreview->isEmpty())
                         <div>Yet Not Performed</div>
                     @else
-                        @foreach ($inreview as $temp)
-                        <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                        @foreach ($inreview as $row)
+                            <div>{{ $row->user_name ?: 'Yet Not Performed' }}</div>
                         @endforeach
                     @endif
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <span>
-            Format No.: QA/097/F2-01
-        </span>
-    </footer>
+                </td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ $preparedDate }}</td>
+                <td>
+                    @if ($inreviews->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreviews as $row)
+                            <div>{{ $row->created_at ? \Carbon\Carbon::parse($row->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif
+                </td>
+                <td>
+                    @if ($inreview->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreview as $row)
+                            <div>{{ $row->created_at ? \Carbon\Carbon::parse($row->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <span class="format-no">Format No.: QA/097/F2-01</span>
+</div>
 
     <div class="first-page-content">
         <section class="main-section" id="pdf-page">

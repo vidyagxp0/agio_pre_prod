@@ -4185,8 +4185,8 @@
                                         </select>
                                     </div>
                                 </div>
-
-                                <div class="col-md-6">
+<!-- 
+                                 <div class="col-md-6">
                                     <div class="group-input">
                                     <label for="train-require">TDS No.</label>
                                         @php
@@ -4195,7 +4195,33 @@
                                         @endphp
                                         <input type="text" id="stp" name="tds_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
+                                </div> -->
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="tds_no">TDS No.</label>
+
+                                        @php
+                                            $revisionNumber = $document->revised == 'Yes'
+                                                ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT)
+                                                : '00';
+
+                                            $documentNumber = str_pad($document->record_spec, 4, '0', STR_PAD_LEFT);
+
+                                            $mfpstpNumber = $document->tds_name_code 
+                                                . $document->document_number;
+                                        @endphp
+
+                                        <input type="text"
+                                            id="tds_no"
+                                            name="tds_no"
+                                            value="{{ $mfpstpNumber }}"
+                                            maxlength="255"
+                                            readonly>
+                                    </div>
                                 </div>
+
+                               
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -4686,7 +4712,7 @@
                                             <tr>
                                                 <th>Sr. No.</th>
                                                 <th>Revision No.</th>
-                                                <th>Change Control No.</th>
+                                                <!-- <th>Change Control No.</th> -->
                                                 <th>Effective Date</th>
                                                 <th>Reason of Revision</th>
                                             </tr>
@@ -4710,10 +4736,10 @@
                                                         <input type="text" name="revision_data[{{ $index }}][rev_no]" 
                                                             value="{{ $gtp_data['rev_no'] ?? '' }}" readonly>
                                                     </td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <input type="text" name="revision_data[{{ $index }}][change_ctrl_no]" 
                                                             value="{{ $gtp_data['change_ctrl_no'] ?? '' }}">
-                                                    </td>
+                                                    </td> -->
                                                     <td>
                                                         <input type="date" name="revision_data[{{ $index }}][eff_date]" 
                                                             value="{{ $gtp_data['eff_date'] ?? '' }}" readonly>
@@ -4752,7 +4778,7 @@
                                                                 <td>${index + 1}</td>
                                                                 <td><input type="text" name="revision_data[${index}][rev_no]" 
                                                                         value="${fpshistory.rev_no || ''}" readonly></td>
-                                                                <td><input type="text" name="revision_data[${index}][change_ctrl_no]" value="${fpshistory.change_ctrl_no}"></td>
+                                                             {{-- <td><input type="text" name="revision_data[${index}][change_ctrl_no]" value="${fpshistory.change_ctrl_no}"></td>--}}
                                                                 <td><input type="date" name="revision_data[${index}][eff_date]" 
                                                                         value="${fpshistory.eff_date || ''}" readonly></td>
                                                                 <td><textarea name="revision_data[${index}][rev_reason]">${fpshistory.rev_reason}</textarea></td>
@@ -17174,7 +17200,8 @@
                         
                         <div class="col-md-6">
                             <div class="group-input">
-                                <label for="piaNameCode">Specification No.</label>
+                                <label for="recordSelect">Specification No.</label>
+
                                 <select id="recordSelect" name="select_specification">
                                     <option value="">Select Specification</option>
                                 </select>
@@ -17184,24 +17211,28 @@
                         <input type="hidden" id="saved_specification" value="{{ old('select_specification', $document->select_specification ?? '') }}">
 
                         <script>
-                            $(document).ready(function () {
+                        $(document).ready(function () {
                                 $.ajax({
-                                    url: "{{ route('getRecordsByType') }}", 
+                                    url: "{{ route('getRecordsByType') }}",
                                     type: "GET",
+                                    dataType: "json",
+
                                     success: function (response) {
                                         var select = $("#recordSelect");
-                                        var savedValue = $("#saved_specification").val(); // Get saved value
+                                        var savedValue = $("#saved_specification").val();
 
                                         select.empty();
-                                        select.append('<option value="">Select Specification</option>');
+                                        select.append(new Option("Select Specification", ""));
 
                                         $.each(response, function (index, value) {
-                                            if (value == savedValue) {
-                                                select.append('<option value="' + value + '" selected>' + value + '</option>');
-                                            } else {
-                                                select.append('<option value="' + value + '">' + value + '</option>');
-                                            }
+                                            select.append(new Option(value, value));
                                         });
+
+                                        select.val(savedValue);
+                                    },
+
+                                    error: function (xhr) {
+                                        console.log(xhr.responseText);
                                     }
                                 });
                             });

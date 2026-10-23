@@ -3691,9 +3691,9 @@ class DocumentController extends Controller
                 // PIAS
                 $document->pia_name = $request->pia_name;
                 $document->pia_name_code = $request->pia_name_code;
-                $document->select_specification = $request->select_specification;
-
-
+                // $document->select_specification = $request->select_specification;
+                $document->select_specification = $request->input('select_specification');
+         
                 // Finished Product Specification
                 $document->fsproduct_name = $request->fsproduct_name;
                 $document->generic_name = $request->generic_name;
@@ -7950,21 +7950,35 @@ class DocumentController extends Controller
         return response()->json(['revision_pias_data' => $historyData]);
     }
 
+    // public function getRecordsByType(Request $request)
+    // {
+    //     $allowedTypes = ['FPS', 'IPS', 'CVS', 'RMS'];
+        
+    //     $records = Document::whereIn('document_type_id', $allowedTypes)->get();
+    
+    //     $formattedRecords = [];
+    
+    //     foreach ($records as $data) {
+            
+    //         $formattedRecord = $data->document_type_id . "/" . str_pad($data->id, 4, '0', STR_PAD_LEFT);
+    //         $formattedRecords[] = $formattedRecord;
+    //     }
+    //     return response()->json($formattedRecords);
+    // }    
+
+
     public function getRecordsByType(Request $request)
     {
-        $allowedTypes = ['FPS', 'IPS', 'CVS', 'RMS'];
-        
-        $records = Document::whereIn('document_type_id', $allowedTypes)->get();
-    
-        $formattedRecords = [];
-    
-        foreach ($records as $data) {
-            
-            $formattedRecord = $data->document_type_id . "/" . str_pad($data->id, 4, '0', STR_PAD_LEFT);
-            $formattedRecords[] = $formattedRecord;
-        }
-        return response()->json($formattedRecords);
-    }    
+    $allowedTypes = ['FPS', 'IPS', 'CVS', 'RMS'];
+
+    $records = Document::whereIn('document_type_id', $allowedTypes)
+        ->whereNotNull('document_number')
+        ->orderBy('id')
+        ->pluck('document_number');
+
+    return response()->json($records);
+
+    }
 
     public function viewAttachments($id)
     {
