@@ -630,7 +630,7 @@
         <table>
             <thead>
                 <tr>
-                    <th class="text-left">
+                    <th class="text-center">
                         <div class="bold">Specification</div>
                     </th>
                 </tr>
@@ -665,7 +665,7 @@
                     <thead>
                         <tr>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th>
+                            <!-- <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th> -->
                             <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
                         </tr>
@@ -675,7 +675,7 @@
                             @foreach ($RevisionGridmfpsData as $key => $item)
                                 <tr>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['rev_mfps_no'] ?? '' }}</td>
-                                    <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_mfps_no'] ?? '' }}</td>
+                                    <!-- <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_mfps_no'] ?? '' }}</td> -->
 
                                     <td style="border: 1px solid black; width: 20%;">                                                    
                                         @if ($data->training_required == 'yes' && $data->stage >= 11)

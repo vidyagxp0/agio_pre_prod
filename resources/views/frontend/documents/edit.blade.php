@@ -3269,7 +3269,7 @@
                                                     <tr>
                                                         <th>Sr. No.</th>
                                                         <th>Revision No.</th>
-                                                        <th>Change Control No.</th>
+                                                        <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
                                                         <th>Reason of Revision</th>
                                                     </tr>
@@ -3294,10 +3294,10 @@
                                                                 <input type="text" name="revision_mfps_data[{{ $index }}][rev_mfps_no]" 
                                                                     value="{{ $mfphistory['revision_no'] ?? '' }}" readonly>
                                                             </td>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <input type="text" name="revision_mfps_data[{{ $index }}][change_ctrl_mfps_no]" 
                                                                     value="{{ $mfphistory['change_ctrl_mfps_no'] ?? '' }}">
-                                                            </td>
+                                                            </td> -->
                                                             <td>
                                                                 <input type="date" name="revision_mfps_data[{{ $index }}][eff_date_mfps]" 
                                                                     value="{{ $mfphistory['effective_date'] ?? '' }}" readonly>
@@ -3336,7 +3336,7 @@
                                                                         <td>${index + 1}</td>
                                                                         <td><input type="text" name="revision_mfps_data[${index}][rev_mfps_no]" 
                                                                                 value="${history.revision_no || ''}" readonly></td>
-                                                                        <td><input type="text" name="revision_mfps_data[${index}][change_ctrl_mfps_no]" value="${history.change_ctrl_mfps_no}"></td>
+                                                                       {{-- <td><input type="text" name="revision_mfps_data[${index}][change_ctrl_mfps_no]" value="${history.change_ctrl_mfps_no}"></td> --}}
                                                                         <td><input type="date" name="revision_mfps_data[${index}][eff_date_mfps]" 
                                                                                 value="${history.effective_date || ''}" readonly></td>
                                                                         <td><textarea name="revision_mfps_data[${index}][rev_reason_mfps]" >${history.rev_reason_mfps}</textarea></td>
@@ -3431,7 +3431,7 @@
                                                 <tr>
                                                     <th>Sr. No.</th>
                                                     <th>Revision No.</th>
-                                                    <th>Change Control No.</th>
+                                                    <!-- <th>Change Control No.</th> -->
                                                     <th>Effective Date</th>
                                                     <th>Reason of Revision</th>
                                                 </tr>
@@ -3455,10 +3455,10 @@
                                                             <input type="text" name="revision_mfpstp_data[{{ $index }}][rev_mfpstp_no]" 
                                                                 value="{{ $mfpstphistory['revision_no'] ?? '' }}" readonly>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <input type="text" name="revision_mfpstp_data[{{ $index }}][change_ctrl_mfpstp_no]" 
                                                                 value="{{ $mfpstphistory['change_ctrl_mfpstp_no'] ?? '' }}">
-                                                        </td>
+                                                        </td> -->
                                                         <td>
                                                             <input type="date" name="revision_mfpstp_data[{{ $index }}][eff_date_mfpstp]" 
                                                                 value="{{ $mfpstphistory['effective_date'] ?? '' }}" readonly>
@@ -3497,7 +3497,7 @@
                                                                     <td>${index + 1}</td>
                                                                     <td><input type="text" name="revision_mfpstp_data[${index}][rev_mfpstp_no]" 
                                                                             value="${history.revision_no || ''}" readonly></td>
-                                                                    <td><input type="text" name="revision_mfpstp_data[${index}][change_ctrl_mfpstp_no]" value="${history.change_ctrl_mfpstp_no}"></td>
+                                                                {{--  <td><input type="text" name="revision_mfpstp_data[${index}][change_ctrl_mfpstp_no]" value="${history.change_ctrl_mfpstp_no}"></td> --}}
                                                                     <td><input type="date" name="revision_mfpstp_data[${index}][eff_date_mfpstp]" 
                                                                             value="${history.effective_date || ''}" readonly></td>
                                                                     <td><textarea name="revision_mfpstp_data[${index}][rev_reason_mfpstp]" >${history.rev_reason_mfpstp}</textarea></td>
@@ -4436,7 +4436,7 @@
                                             <tr>
                                                 <th>Sr. No.</th>
                                                 <th>Revision No.</th>
-                                                <th>Change Control No.</th>
+                                                <!-- <th>Change Control No.</th> -->
                                                 <th>Effective Date</th>
                                                 <th>Reason of Revision</th>
                                             </tr>
@@ -4460,10 +4460,10 @@
                                                         <input type="text" name="summaryResult[{{ $index }}][revision_no_tds]" 
                                                             value="{{ $tdshistory['revision_no_tds'] ?? '' }}" readonly>
                                                     </td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <input type="text" name="summaryResult[{{ $index }}][changContNo_tds]" 
                                                             value="{{ $tdshistory['changContNo_tds'] ?? '' }}">
-                                                    </td>
+                                                    </td> -->
                                                     <td>
                                                         <input type="date" name="summaryResult[{{ $index }}][effectiveDate_tds]" 
                                                             value="{{ $tdshistory['effectiveDate_tds'] ?? '' }}" readonly>
@@ -4504,7 +4504,7 @@
                                                                 <td>${index + 1}</td>
                                                                 <td><input type="text" name="summaryResult[${index}][revision_no_tds]" 
                                                                         value="${tdshistory.revision_no_tds || ''}" readonly></td>
-                                                                <td><input type="text" name="summaryResult[${index}][changContNo_tds]" value="${tdshistory.changContNo_tds}"></td>
+                                                            {{--    <td><input type="text" name="summaryResult[${index}][changContNo_tds]" value="${tdshistory.changContNo_tds}"></td> --}}
                                                                 <td><input type="date" name="summaryResult[${index}][effectiveDate_tds]" 
                                                                         value="${tdshistory.effectiveDate_tds || ''}" readonly></td>
                                                                 <td><textarea type="text" name="summaryResult[${index}][reasonRevi_tds]" value="">${tdshistory.reasonRevi_tds}</textarea></td>
@@ -5083,7 +5083,7 @@
                                             <tr>
                                                 <th>Sr. No.</th>
                                                 <th>Revision No.</th>
-                                                <th>Change Control No.</th>
+                                                <!-- <th>Change Control No.</th> -->
                                                 <th>Effective Date</th>
                                                 <th>Reason of Revision</th>
                                             </tr>
@@ -5107,10 +5107,10 @@
                                                         <input type="text" name="revision_cvs_data[{{ $index }}][rev_cvs_no]" 
                                                             value="{{ $gtp_data['rev_cvs_no'] ?? '' }}" readonly>
                                                     </td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <input type="text" name="revision_cvs_data[{{ $index }}][change_ctrl_cvs_no]" 
                                                             value="{{ $gtp_data['change_ctrl_cvs_no'] ?? '' }}">
-                                                    </td>
+                                                    </td> -->
                                                     <td>
                                                         <input type="date" name="revision_cvs_data[{{ $index }}][eff_date_cvs]" 
                                                             value="{{ $gtp_data['eff_date_cvs'] ?? '' }}" readonly>
@@ -5150,7 +5150,7 @@
                                                                 <td>${index + 1}</td>
                                                                 <td><input type="text" name="revision_cvs_data[${index}][rev_cvs_no]" 
                                                                         value="${cvshistory.rev_cvs_no || ''}" readonly></td>
-                                                                <td><input type="text" name="revision_cvs_data[${index}][change_ctrl_cvs_no]" value="${cvshistory.change_ctrl_cvs_no}"></td>
+                                                              {{--  <td><input type="text" name="revision_cvs_data[${index}][change_ctrl_cvs_no]" value="${cvshistory.change_ctrl_cvs_no}"></td> --}}
                                                                 <td><input type="date" name="revision_cvs_data[${index}][eff_date_cvs]" 
                                                                         value="${cvshistory.eff_date_cvs || ''}" readonly></td>
                                                                 <td><textarea name="revision_cvs_data[${index}][rev_reason_cvs]" >${cvshistory.rev_reason_cvs}</textarea></td>
@@ -5359,7 +5359,7 @@
                                             <tr>
                                                 <th>Sr. No.</th>
                                                 <th>Revision No.</th>
-                                                <th>Change Control No.</th>
+                                                <!-- <th>Change Control No.</th> -->
                                                 <th>Effective Date</th>
                                                 <th>Reason of Revision</th>
                                             </tr>
@@ -5383,10 +5383,10 @@
                                                         <input type="text" name="revision_inps_data[{{ $index }}][rev_inps_no]" 
                                                             value="{{ $gtp_data['rev_inps_no'] ?? '' }}" readonly>
                                                     </td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <input type="text" name="revision_inps_data[{{ $index }}][change_ctrl_inps_no]" 
                                                             value="{{ $gtp_data['change_ctrl_inps_no'] ?? '' }}">
-                                                    </td>
+                                                    </td> -->
                                                     <td>
                                                         <input type="date" name="revision_inps_data[{{ $index }}][eff_date_inps]" 
                                                             value="{{ $gtp_data['eff_date_inps'] ?? '' }}" readonly>
@@ -5426,7 +5426,7 @@
                                                                 <td>${index + 1}</td>
                                                                 <td><input type="text" name="revision_inps_data[${index}][rev_inps_no]" 
                                                                         value="${inpshistory.rev_inps_no || ''}" readonly></td>
-                                                                <td><input type="text" name="revision_inps_data[${index}][change_ctrl_inps_no]" value="${inpshistory.change_ctrl_inps_no}"></td>
+                                                              {{--  <td><input type="text" name="revision_inps_data[${index}][change_ctrl_inps_no]" value="${inpshistory.change_ctrl_inps_no}"></td> --}}
                                                                 <td><input type="date" name="revision_inps_data[${index}][eff_date_inps]" 
                                                                         value="${inpshistory.eff_date_inps || ''}" readonly></td>
                                                                 <td><textarea name="revision_inps_data[${index}][rev_reason_inps]">${inpshistory.rev_reason_inps}</textarea></td>
@@ -11021,7 +11021,7 @@
                                                     <tr>
                                                         <th>Sr. No.</th>
                                                         <th>Revision No.</th>
-                                                        <th>Change Control No.</th>
+                                                        <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
                                                         <th>Reason of Revision</th>
                                                     </tr>
@@ -11058,12 +11058,12 @@
                                                                     readonly>
                                                             </td>
 
-                                                            <td>
+                                                            <!-- <td>
                                                                 <input
                                                                     type="text"
                                                                     name="revision_fpstp_data[{{ $index }}][change_ctrl_fpstp_no]"
                                                                     value="{{ $gtp_data['change_ctrl_fpstp_no'] ?? '' }}">
-                                                            </td>
+                                                            </td> -->
 
                                                             <td>
                                                                 <input
@@ -11135,12 +11135,12 @@
                                                                                 readonly>
                                                                         </td>
 
-                                                                        <td>
+                                                                      {{--  <td>
                                                                             <input
                                                                                 type="text"
                                                                                 name="revision_fpstp_data[${index}][change_ctrl_fpstp_no]"
                                                                                 value="${fpstphistory.change_ctrl_fpstp_no || ''}">
-                                                                        </td>
+                                                                        </td> --}}
 
                                                                         <td>
                                                                             <input
@@ -11258,7 +11258,7 @@
                                                     <tr>
                                                         <th>Sr. No.</th>
                                                         <th>Revision No.</th>
-                                                        <th>Change Control No.</th>
+                                                        <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
                                                         <th>Reason of Revision</th>
                                                     </tr>
@@ -11282,10 +11282,10 @@
                                                                 <input type="text" name="revision_inpstp_data[{{ $index }}][rev_inpstp_no]" 
                                                                     value="{{ $gtp_data['rev_inpstp_no'] ?? '' }}" readonly>
                                                             </td>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <input type="text" name="revision_inpstp_data[{{ $index }}][change_ctrl_inpstp_no]" 
                                                                     value="{{ $gtp_data['change_ctrl_inpstp_no'] ?? '' }}">
-                                                            </td>
+                                                            </td> -->
                                                             <td>
                                                                 <input type="date" name="revision_inpstp_data[{{ $index }}][eff_date_inpstp]" 
                                                                     value="{{ $gtp_data['eff_date_inpstp'] ?? '' }}" readonly>
@@ -11324,7 +11324,7 @@
                                                                         <td>${index + 1}</td>
                                                                         <td><input type="text" name="revision_inpstp_data[${index}][rev_inpstp_no]" 
                                                                                 value="${ipstphistory.rev_inpstp_no || ''}" readonly></td>
-                                                                        <td><input type="text" name="revision_inpstp_data[${index}][change_ctrl_inpstp_no]" value="${ipstphistory.change_ctrl_inpstp_no}"></td>
+                                                                      {{--  <td><input type="text" name="revision_inpstp_data[${index}][change_ctrl_inpstp_no]" value="${ipstphistory.change_ctrl_inpstp_no}"></td> --}}
                                                                         <td><input type="date" name="revision_inpstp_data[${index}][eff_date_inpstp]" 
                                                                                 value="${ipstphistory.eff_date_inpstp || ''}" readonly></td>
                                                                         <td><textarea type="text" name="revision_inpstp_data[${index}][rev_reason_inpstp]" value="">${ipstphistory.rev_reason_inpstp}</textarea></td>
@@ -11419,7 +11419,7 @@
                                                     <tr>
                                                         <th>Sr. No.</th>
                                                         <th>Revision No.</th>
-                                                        <th>Change Control No.</th>
+                                                        <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
                                                         <th>Reason of Revision</th>
                                                     </tr>
@@ -11443,10 +11443,10 @@
                                                                 <input type="text" name="revision_cvstp_data[{{ $index }}][rev_cvstp_no]" 
                                                                     value="{{ $gtp_data['rev_cvstp_no'] ?? '' }}" readonly>
                                                             </td>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <input type="text" name="revision_cvstp_data[{{ $index }}][change_ctrl_cvstp_no]" 
                                                                     value="{{ $gtp_data['change_ctrl_cvstp_no'] ?? '' }}">
-                                                            </td>
+                                                            </td> -->
                                                             <td>
                                                                 <input type="date" name="revision_cvstp_data[{{ $index }}][eff_date_cvstp]" 
                                                                     value="{{ $gtp_data['eff_date_cvstp'] ?? '' }}" readonly>
@@ -11485,7 +11485,7 @@
                                                                         <td>${index + 1}</td>
                                                                         <td><input type="text" name="revision_cvstp_data[${index}][rev_cvstp_no]" 
                                                                                 value="${cvstphistory.rev_cvstp_no || ''}" readonly></td>
-                                                                        <td><input type="text" name="revision_cvstp_data[${index}][change_ctrl_cvstp_no]" value="${cvstphistory.change_ctrl_cvstp_no}"></td>
+                                                                    {{--<td><input type="text" name="revision_cvstp_data[${index}][change_ctrl_cvstp_no]" value="${cvstphistory.change_ctrl_cvstp_no}"></td> --}}
                                                                         <td><input type="date" name="revision_cvstp_data[${index}][eff_date_cvstp]" 
                                                                                 value="${cvstphistory.eff_date_cvstp || ''}" readonly></td>
                                                                         <td><textarea type="" name="revision_cvstp_data[${index}][rev_reason_cvstp]" value="">${cvstphistory.rev_reason_cvstp}</textarea></td>
@@ -11586,7 +11586,7 @@
                                                     <tr>
                                                         <th>Sr.No.</th>
                                                         <th>Revision No.</th>
-                                                        <th>Change Control No.</th>
+                                                        <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
                                                         <th>Reason of Revision</th>
                                                     </tr>
@@ -11610,10 +11610,10 @@
                                                                 <input type="text" name="gtp[{{ $index }}][revision_no_gtp]" 
                                                                     value="{{ $gtphistory['revision_no_gtp'] ?? '' }}" readonly>
                                                             </td>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <input type="text" name="gtp[{{ $index }}][changContNo_gtp]" 
                                                                     value="{{ $gtphistory['changContNo_gtp'] ?? '' }}">
-                                                            </td>
+                                                            </td> -->
                                                             <td>
                                                                 <input type="date" name="gtp[{{ $index }}][effectiveDate_gtp]" 
                                                                     value="{{ $gtphistory['effectiveDate_gtp'] ?? '' }}" readonly>
@@ -11653,7 +11653,7 @@
                                                                         <td>${index + 1}</td>
                                                                         <td><input type="text" name="gtp[${index}][revision_no_gtp]" 
                                                                                 value="${gtphistory.revision_no_gtp || ''}" readonly></td>
-                                                                        <td><input type="text" name="gtp[${index}][changContNo_gtp]" value="${gtphistory.changContNo_gtp}"></td>
+                                                                   {{--     <td><input type="text" name="gtp[${index}][changContNo_gtp]" value="${gtphistory.changContNo_gtp}"></td> --}}
                                                                         <td><input type="date" name="gtp[${index}][effectiveDate_gtp]" 
                                                                                 value="${gtphistory.effectiveDate_gtp || ''}" readonly></td>
                                                                         <td><textarea type="" name="gtp[${index}][reasonRevi_gtp]" value="">${gtphistory.reasonRevi_gtp}</textarea></td>
@@ -11745,7 +11745,7 @@
                                                 <tr>
                                                     <th>Sr. No.</th>
                                                     <th>Revision No.</th>
-                                                    <th>Change Control No.</th>
+                                                    <!-- <th>Change Control No.</th> -->
                                                     <th>Effective Date</th>
                                                     <th>Reason of Revision</th>
                                                 </tr>
@@ -11769,10 +11769,10 @@
                                                                 <input type="text" name="revision_rawmstp_data[{{ $index }}][rev_rawmstp_no]" 
                                                                     value="{{ $rmstphistory['revision_no'] ?? '' }}" readonly>
                                                             </td>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <input type="text" name="revision_rawmstp_data[{{ $index }}][change_ctrl_rawmstp_no]" 
                                                                     value="{{ $rmstphistory['change_ctrl_rawmstp_no'] ?? '' }}">
-                                                            </td>
+                                                            </td> -->
                                                             <td>
                                                                 <input type="date" name="revision_rawmstp_data[{{ $index }}][eff_date_rawmstp]" 
                                                                     value="{{ $rmstphistory['effective_date'] ?? '' }}" readonly>
@@ -11811,7 +11811,7 @@
                                                                     <td>${index + 1}</td>
                                                                     <td><input type="text" name="revision_rawmstp_data[${index}][rev_rawmstp_no]" 
                                                                             value="${history.revision_no || ''}" readonly></td>
-                                                                    <td><input type="text" name="revision_rawmstp_data[${index}][change_ctrl_rawmstp_no]" value="${history.change_ctrl_rawmstp_no}"></td>
+                                                                   {{-- <td><input type="text" name="revision_rawmstp_data[${index}][change_ctrl_rawmstp_no]" value="${history.change_ctrl_rawmstp_no}"></td>--}}
                                                                     <td><input type="date" name="revision_rawmstp_data[${index}][eff_date_rawmstp]" 
                                                                             value="${history.effective_date || ''}" readonly></td>
                                                                     <td><textarea type="" name="revision_rawmstp_data[${index}][rev_reason_rawmstp]" value="">${history.rev_reason_rawmstp}</textarea></td>
@@ -13716,7 +13716,7 @@
                                                     <tr>
                                                         <th>Sr. No.</th>
                                                         <th>Revision No.</th>
-                                                        <th>Change Control No.</th>
+                                                        <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
                                                         <th>Reason of Revision</th>
                                                     </tr>
@@ -13742,10 +13742,10 @@
                                                                 <input type="text" name="revision_pams_data[{{ $index }}][rev_pams_no]" 
                                                                     value="{{ $gtp_data['rev_pams_no'] ?? '' }}" readonly>
                                                             </td>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <input type="text" name="revision_pams_data[{{ $index }}][change_ctrl_pams_no]" 
                                                                     value="{{ $gtp_data['change_ctrl_pams_no'] ?? '' }}">
-                                                            </td>
+                                                            </td> -->
                                                             <td>
                                                                 <input type="date" name="revision_pams_data[{{ $index }}][eff_date_pams]" 
                                                                     value="{{ $gtp_data['eff_date_pams'] ?? '' }}" readonly>
@@ -13783,7 +13783,7 @@
                                                                         <td>${index + 1}</td>
                                                                         <td><input type="text" name="revision_pams_data[${index}][rev_pams_no]" 
                                                                                 value="${pamshistory.rev_pams_no || ''}" readonly></td>
-                                                                        <td><input type="text" name="revision_pams_data[${index}][change_ctrl_pams_no]" value="${pamshistory.change_ctrl_pams_no}"></td>
+                                                                    {{--     <td><input type="text" name="revision_pams_data[${index}][change_ctrl_pams_no]" value="${pamshistory.change_ctrl_pams_no}"></td> --}}
                                                                         <td><input type="date" name="revision_pams_data[${index}][eff_date_pams]" 
                                                                                 value="${pamshistory.eff_date_pams || ''}" readonly></td>
                                                                         <td><textarea name="revision_pams_data[${index}][rev_reason_pams]" >${pamshistory.rev_reason_pams}</textarea></td>
@@ -17069,7 +17069,7 @@
                                                 <tr>
                                                     <th>Sr. No.</th>
                                                     <th>Revision No.</th>
-                                                    <th>Change Control No.</th>
+                                                    <!-- <th>Change Control No.</th> -->
                                                     <th>Effective Date</th>
                                                     <th>Reason of Revision</th>
                                                 </tr>
@@ -17093,10 +17093,10 @@
                                                             <input type="text" name="revision_rawms_data[{{ $index }}][rev_rawms_no]" 
                                                                 value="{{ $rmshistory['revision_no'] ?? '' }}" readonly>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <input type="text" name="revision_rawms_data[{{ $index }}][change_ctrl_rawms_no]" 
                                                                 value="{{ $rmshistory['change_ctrl_rawms_no'] ?? '' }}">
-                                                        </td>
+                                                        </td> -->
                                                         <td>
                                                             <input type="date" name="revision_rawms_data[{{ $index }}][eff_date_rawms]" 
                                                                 value="{{ $rmshistory['effective_date'] ?? '' }}" readonly>
@@ -17135,7 +17135,7 @@
                                                                     <td>${index + 1}</td>
                                                                     <td><input type="text" name="revision_rawms_data[${index}][rev_rawms_no]" 
                                                                             value="${history.revision_no || ''}" readonly></td>
-                                                                    <td><input type="text" name="revision_rawms_data[${index}][change_ctrl_rawms_no]" value="${history.change_ctrl_rawms_no}"></td>
+                                                                  {{--  <td><input type="text" name="revision_rawms_data[${index}][change_ctrl_rawms_no]" value="${history.change_ctrl_rawms_no}"></td> --}}
                                                                     <td><input type="date" name="revision_rawms_data[${index}][eff_date_rawms]" 
                                                                             value="${history.effective_date || ''}" readonly></td>
                                                                     <td><textarea name="revision_rawms_data[${index}][rev_reason_rawms]" >${history.rev_reason_rawms}</textarea></td>
@@ -17583,7 +17583,7 @@
                                                 <tr>
                                                     <th>Sr. No.</th>
                                                     <th>Revision No.</th>
-                                                    <th>Change Control No.</th>
+                                                    <!-- <th>Change Control No.</th> -->
                                                     <th>Effective Date</th>
                                                     <th>Reason of Revision</th>
                                                 </tr>
@@ -17606,9 +17606,9 @@
                                                         <td>
                                                             <input type="text" name="revision_pias_data[{{ $index }}][rev_pias_no]" value="{{ $piashistory['rev_pias_no'] ?? '' }}" readonly>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <input type="text" name="revision_pias_data[{{ $index }}][change_ctrl_pias_no]" value="{{ $piashistory['change_ctrl_pias_no'] ?? '' }}">
-                                                        </td>
+                                                        </td> -->
                                                         <td>
                                                             <input type="date" name="revision_pias_data[{{ $index }}][eff_date_pias]"  value="{{ $piashistory['eff_date_pias'] ?? '' }}" readonly>
                                                         </td>
@@ -17645,7 +17645,7 @@
                                                                     <td>${index + 1}</td>
                                                                     <td><input type="text" name="revision_pias_data[${index}][rev_pias_no]" 
                                                                             value="${history.rev_pias_no || ''}" readonly></td>
-                                                                    <td><input type="text" name="revision_pias_data[${index}][change_ctrl_pias_no]" value="${history.change_ctrl_pias_no}"></td>
+                                                                 {{--   <td><input type="text" name="revision_pias_data[${index}][change_ctrl_pias_no]" value="${history.change_ctrl_pias_no}"></td> --}}
                                                                     <td><input type="date" name="revision_pias_data[${index}][eff_date_pias]" 
                                                                             value="${history.eff_date_pias || ''}" readonly></td>
                                                                     <td><textarea name="revision_pias_data[${index}][rev_reason_pias]" >${history.rev_reason_pias}</textarea></td>

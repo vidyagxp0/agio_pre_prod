@@ -789,7 +789,7 @@
         <table>
             <thead>
                 <tr>
-                    <th class="text-left">
+                    <th class="text-center">
                         <div class="bold">SPECIFICATION</div>
                     </th>
                 </tr>
@@ -830,7 +830,7 @@
             <thead>
                 <tr>
                     <th style="font-size: 16px; font-weight: bold; width:10%">Revision No.</th>
-                    <th style="font-size: 16px; font-weight: bold; width:20%">Change Control No.</th>
+                    <!-- <th style="font-size: 16px; font-weight: bold; width:20%">Change Control No.</th> -->
                     <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
                     <th style="font-size: 16px; font-weight: bold; width:50%">Reason of revision</th>
                 </tr>
@@ -840,7 +840,7 @@
                     @foreach ($RevisionGridInpsData as $key => $item)
                         <tr>
                             <td style="border: 1px solid black; width: 20%;">{{ $item['rev_inps_no'] ?? '' }}</td>
-                            <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_inps_no'] ?? '' }}</td>
+                            <!-- <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_inps_no'] ?? '' }}</td> -->
                             <td style="border: 1px solid black; width: 20%;">                                                    
                                 @if ($data->training_required == 'yes' && $data->stage >= 11)
                                     {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}

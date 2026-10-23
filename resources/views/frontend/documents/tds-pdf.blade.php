@@ -1055,7 +1055,7 @@
                             <thead>
                                 <tr>
                                     <th style="font-size: 16px; font-weight: bold; width:10%">Revision No.</th>
-                                    <th style="font-size: 16px; font-weight: bold; width:20%">Change Control No.</th>
+                                    <!-- <th style="font-size: 16px; font-weight: bold; width:20%">Change Control No.</th> -->
                                     <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
                                     <th style="font-size: 16px; font-weight: bold; width:50%">Reason of revision</th>
                                 </tr>
@@ -1066,7 +1066,7 @@
                                     @foreach ($SummaryDataGrid as $key => $item)
                                         <tr>
                                             <td>{{ $item['revision_no_tds'] ?? '' }}</td>
-                                            <td>{{ $item['changContNo_tds'] ?? '' }}</td>
+                                            <!-- <td>{{ $item['changContNo_tds'] ?? '' }}</td> -->
                                             <td>                                                    
                                                 @if ($data->training_required == 'yes' && $data->stage >= 11)
                                                     {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}

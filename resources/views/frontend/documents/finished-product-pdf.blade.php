@@ -874,7 +874,7 @@
         <thead>
             <tr>
                 <th style="border:1px solid black; width:12%;">Revision No.</th>
-                <th style="border:1px solid black; width:22%;">Change Control No.</th>
+                <!-- <th style="border:1px solid black; width:22%;">Change Control No.</th> -->
                 <th style="border:1px solid black; width:18%;">Effective Date</th>
                 <th style="border:1px solid black; width:48%;">Reason of revision</th>
             </tr>
@@ -885,7 +885,7 @@
                 @foreach ($RevisionProductSpecificationData as $key => $item)
                     <tr>
                         <td style="border: 1px solid black; width: 20%;">{{ $item['rev_no'] ?? '' }}</td>
-                        <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_no'] ?? '' }}</td>
+                        <!-- <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_no'] ?? '' }}</td> -->
                         <td style="border: 1px solid black; width: 20%;">
                             @if ($data->training_required == 'yes' && $data->stage >= 11)
                                 {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}

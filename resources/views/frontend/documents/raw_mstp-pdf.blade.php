@@ -656,7 +656,7 @@
                     <thead style="width:20%">
                         <tr>
                             <th style="font-size: 16px; font-weight: bold; width:10%">Revision No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:20%">Change Control No.</th>
+                            <!-- <th style="font-size: 16px; font-weight: bold; width:20%">Change Control No.</th> -->
                             <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
                             <th style="font-size: 16px; font-weight: bold; width:50%">Reason of revision</th>
                         </tr>
@@ -666,7 +666,7 @@
                             @foreach ($RevisionGridrawmstpData as $key => $item)
                                 <tr>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['rev_rawmstp_no'] ?? '' }}</td>
-                                    <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_rawmstp_no'] ?? '' }}</td>
+                                    <!-- <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_rawmstp_no'] ?? '' }}</td> -->
                                     <td style="border: 1px solid black; width: 20%;">
                                         @if ($data->training_required == 'yes' && $data->stage >= 11)
                                             {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}

@@ -9123,7 +9123,7 @@
                                                     <tr>
                                                         <th style="width:5%">Sr. No.</th>
                                                         <th class="">Revision No.</th>
-                                                        <th class="">Change Control No.</th>
+                                                        <!-- <th class="">Change Control No.</th> -->
                                                         <th class="">Effective Date</th>
                                                         <th class="">Reason of revision</th>
                                                     </tr>
@@ -9134,7 +9134,7 @@
                                                     @endphp
                                                     <td disabled>{{ $serialNumber++ }}</td>
                                                     <td><input type="text" name="gtp[0][revision_no_gtp]"></td>
-                                                    <td><input type="text" name="gtp[0][changContNo_gtp]"></td>
+                                                {{--    <td><input type="text" name="gtp[0][changContNo_gtp]"></td> --}}
                                                     <td><input type="date" name="gtp[0][effectiveDate_gtp]"></td>
                                                     <td><input type="text" name="gtp[0][reasonRevi_gtp]"></td>
                                                 </tbody>
@@ -10892,7 +10892,7 @@
                                                         <tr>
                                                             <th style="width:5%">Sr. No.</th>
                                                             <th class="">Revision No.</th>
-                                                            <th class="">Change Control No./ DCRF No</th>
+                                                            <!-- <th class="">Change Control No./ DCRF No</th> -->
                                                             <th class="">Effective Date</th>
                                                             <th class="">Reason of revision</th>
                                                         </tr>
@@ -10901,7 +10901,7 @@
                                                         <tr>
                                                             <td><input disabled type="text" name="summaryResult[0][serial]" value="1"></td>
                                                             <td><input type="text" name="summaryResult[0][revision_no_tds]"></td>
-                                                            <td><input type="text" name="summaryResult[0][changContNo_tds]"></td>
+                                                          {{--  <td><input type="text" name="summaryResult[0][changContNo_tds]"></td>--}}
                                                             <td><input type="date" name="summaryResult[0][effectiveDate_tds]"></td>
                                                             <td><input type="text" name="summaryResult[0][reasonRevi_tds]"></td>
                                                         </tr>
