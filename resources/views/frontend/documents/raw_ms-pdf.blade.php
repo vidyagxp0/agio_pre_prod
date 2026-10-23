@@ -237,17 +237,17 @@ header td.title p { font-size: 14px; }
         }
 
         .quill-pdf-content { text-align: left !important; }
-.quill-pdf-content table {
-    width: 100%;
-    table-layout: auto;
-    border-collapse: collapse;
-}
-.quill-pdf-content table, .quill-pdf-content th, .quill-pdf-content td {
-    border: 1px solid #000 !important;
-    text-align: left !important;
-    vertical-align: top;
-}
-.quill-pdf-content th { background: #f4f4f4; font-weight: bold; }
+        .quill-pdf-content table {
+            width: 100%;
+            table-layout: auto;
+            border-collapse: collapse;
+        }
+        .quill-pdf-content table, .quill-pdf-content th, .quill-pdf-content td {
+            border: 1px solid #000 !important;
+            text-align: left !important;
+            vertical-align: top;
+        }
+        .quill-pdf-content th { background: #f4f4f4; font-weight: bold; }
 
         .page-break-before {
             page-break-before: always;
@@ -742,7 +742,7 @@ header td.title p { font-size: 14px; }
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->retest_sample_quantity_row_material }}</td>
                             </tr>
 
-                                                    <tr>
+                            {{-- <tr>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">
                                     Sampling instructions, warning and precautions
                                 </td>
@@ -769,7 +769,7 @@ header td.title p { font-size: 14px; }
                                         {!! $si !!}
                                     @endif
                                 </td>
-                            </tr>
+                            </tr> --}}
 
                         </tbody>
                     </table>
@@ -781,102 +781,131 @@ header td.title p { font-size: 14px; }
     </div>
 
 
-
-           <div class="other-container page-break-before">
+            <div class="other-container page-break-before">
                 <table>
                     <thead>
                         <tr>
-                             <th class="text-left">
-                                <div class="bold">SPECIFICATION</div>
+                            <th class="text-center">
+                                <div class="bold">
+                                    Sampling instructions, warning and precautions
+                                </div>
                             </th>
-                               
-                           
                         </tr>
                     </thead>
                 </table>
-    
-                <div class="custom-procedure-block">
-                    <div class="custom-container">
-                        <div class="custom-table-wrapper" id="custom-table2">
-                            <div class="custom-procedure-content">
-                                <div class="custom-content-wrapper">
-                                    @php
-                                        $rawmaterials_specifications = \App\Helpers\ProcedureHtml::clean(
-                                            Helpers::renderQuillPdf($document->rawmaterials_specifications ?? '')
-                                        );
-                                    @endphp
-                                    <div class="quill-pdf-content" >
-                                        {!! $rawmaterials_specifications !!}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+                <div class="">
+                    @php
+                        $si = $data->sampling_instructions_row_material ?? '';
+
+                        if (!empty(trim(strip_tags($si))) && stripos($si, '<li') === false) {
+                            $plain = trim(strip_tags($si));
+
+                            $parts = preg_split('/(?:^|\s)\d+\.\s+(?=\S)/u', $plain, -1, PREG_SPLIT_NO_EMPTY);
+
+                            $parts = array_map('trim', $parts);
+                        } else {
+                            $parts = null;
+                        }
+                    @endphp
+
+                    @if (is_array($parts) && count($parts) > 0)
+                        <ol style="margin: 0; padding-left: 18px;">
+                            @foreach ($parts as $p)
+                                <li style="margin-bottom: 3px;">
+                                    {{ $p }}
+                                </li>
+                            @endforeach
+                        </ol>
+                    @else
+                        {!! $si !!}
+                    @endif
+                </div>
+            </div>
+
+            <div class="other-container page-break-before">
+                <table>
+                    <thead>
+                        <tr>
+                             <th class="text-center">
+                                <div class="bold">SPECIFICATION</div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+
+                @php
+                    $rawmaterials_specifications = \App\Helpers\ProcedureHtml::clean(
+                        Helpers::renderQuillPdf($document->rawmaterials_specifications ?? '')
+                    );
+                @endphp
+                <div class="quill-pdf-content" >
+                    {!! $rawmaterials_specifications !!}
                 </div>
             </div>
 
 
            {{-- REVISION HISTORY: nayi page se start --}}
-<div class="page-break-before">
-    <table>
-        <thead>
-            <tr>
-                <th class="text-center">
-                    <div class="bold" style="font-size: 14px;">REVISION HISTORY</div>
-                </th>
-            </tr>
-        </thead>
-    </table>
-
-    <div class="table-responsive retrieve-table">
-        <table class="table table-bordered" id="distribution-list">
-            <thead>
-                <tr>
-                    <th style="font-size: 14px; font-weight: bold; width:15%">Revision No.</th>
-                    {{-- <th style="font-size: 14px; font-weight: bold; width:20%">Change Control No.</th> --}}
-                    <th style="font-size: 14px; font-weight: bold; width:25%">Effective Date</th>
-                    <th style="font-size: 14px; font-weight: bold; width:60%">Reason of revision</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (!empty($RevisionGridrawmsData))
-                    @foreach ($RevisionGridrawmsData as $key => $item)
+            <div class="page-break-before">
+                <table>
+                    <thead>
                         <tr>
-                            <td style="border: 1px solid black; width: 15%;">{{ $item['rev_rawms_no'] ?? '' }}</td>
-                            {{-- <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_rawms_no'] ?? '' }}</td> --}}
-                            <td style="border: 1px solid black; width: 25%;">
-                                @if ($data->training_required == 'yes' && $data->stage >= 11)
-                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                                @elseif ($data->training_required != 'yes' && $data->stage > 10)
-                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
-                                @else
-                                    {{ !empty($item['eff_date_rawms']) ? \Carbon\Carbon::parse($item['eff_date_rawms'])->format('d-M-Y') : '' }}
-                                @endif
-                            </td>
-                            <td style="border: 1px solid black; width: 60%;">{{ $item['rev_reason_rawms'] ?? '' }}</td>
+                            <th class="text-center">
+                                <div class="bold" style="font-size: 14px;">REVISION HISTORY</div>
+                            </th>
                         </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td colspan="3" style="text-align: center; font-weight: bold;">No Data Available</td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
-    </div>
-</div>
+                    </thead>
+                </table>
+
+                <div class="table-responsive retrieve-table">
+                    <table class="table table-bordered" id="distribution-list">
+                        <thead>
+                            <tr>
+                                <th style="font-size: 14px; font-weight: bold; width:15%">Revision No.</th>
+                                {{-- <th style="font-size: 14px; font-weight: bold; width:20%">Change Control No.</th> --}}
+                                <th style="font-size: 14px; font-weight: bold; width:25%">Effective Date</th>
+                                <th style="font-size: 14px; font-weight: bold; width:60%">Reason of revision</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!empty($RevisionGridrawmsData))
+                                @foreach ($RevisionGridrawmsData as $key => $item)
+                                    <tr>
+                                        <td style="border: 1px solid black; width: 15%;">{{ $item['rev_rawms_no'] ?? '' }}</td>
+                                        {{-- <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_rawms_no'] ?? '' }}</td> --}}
+                                        <td style="border: 1px solid black; width: 25%;">
+                                            @if ($data->training_required == 'yes' && $data->stage >= 11)
+                                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                            @elseif ($data->training_required != 'yes' && $data->stage > 10)
+                                                {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                            @else
+                                                {{ !empty($item['eff_date_rawms']) ? \Carbon\Carbon::parse($item['eff_date_rawms'])->format('d-M-Y') : '' }}
+                                            @endif
+                                        </td>
+                                        <td style="border: 1px solid black; width: 60%;">{{ $item['rev_reason_rawms'] ?? '' }}</td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="3" style="text-align: center; font-weight: bold;">No Data Available</td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
 
-<script type="text/php">
-    if (isset($pdf)) {
-        $pdf->page_script('
-            $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
-            $size = 12;
-            $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
-            $pdf->text(380, 166, $pageText, $font, $size);
-        ');
-    }
-</script>
+            <script type="text/php">
+                if (isset($pdf)) {
+                    $pdf->page_script('
+                        $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
+                        $size = 12;
+                        $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
+                        $pdf->text(380, 166, $pageText, $font, $size);
+                    ');
+                }
+            </script>
 
 </body>
 </html>
