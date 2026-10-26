@@ -591,6 +591,9 @@
                                     </div>
                                 </div>
 
+
+                                
+
                                 <div class="col-md-6" id="departContainer">
                                     <div class="group-input">
                                         <label for="depart-name">Department Name<span class="text-danger">*</span></label>
@@ -640,6 +643,9 @@
                                 </div>
                             </div>
 
+
+
+                           
                                 <div class="col-md-6" id="docLangContainer" style="display: none;">
                                     <div class="group-input">
                                         <label for="doc-lang">Document Language</label>
@@ -12017,54 +12023,104 @@
 
                                         <div class="add-btn">
                                             <label for="OtherDocument_input" style="cursor:pointer">Add</label>
+                                           
                                             <input
                                                 type="file"
                                                 id="OtherDocument_input"
                                                 name="Otherdata_data_filed[]"
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
-                                                onchange="validateOtherDocumentAttachment(this)"
+                                                onchange="validateOtherDocumentsTabAttachment(this)"
                                                 multiple
                                                 hidden>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
+                            
                             <script>
-                                function validateOtherDocumentAttachment(input){
-                                    const allowedExtensions = ['pdf','jpg','jpeg','png'];
-                                    const allowedMimeTypes = ['application/pdf','image/jpeg','image/png'];
-                                    const files = Array.from(input.files);
+                                function validateOtherDocumentsTabAttachment(input) {
+                                    const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
 
-                                    if(files.length === 0) return;
+                                    const files = Array.from(input.files || []);
 
-                                    for(const file of files){
-                                        const ext = file.name.split('.').pop().toLowerCase();
-                                        if(!allowedExtensions.includes(ext) || !allowedMimeTypes.includes(file.type)){
-                                            Swal.fire({
-                                                icon:'error',
-                                                title:'Invalid File',
-                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.',
-                                                confirmButtonText:'OK'
-                                            });
+                                    for (const file of files) {
+                                        const extension = file.name.split('.').pop().toLowerCase();
+                                        const validMime = !file.type ||
+                                            allowedMimeTypes.includes(file.type);
+
+                                        if (!allowedExtensions.includes(extension) || !validMime) {
                                             input.value = '';
-                                            document.getElementById('OtherDocument_list').innerHTML = '';
+                                            renderOtherDocumentsAttachments(input);
+
+                                            if (typeof Swal !== 'undefined') {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Invalid File',
+                                                    text: 'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                    confirmButtonText: 'OK'
+                                                });
+                                            } else {
+                                                alert('Only PDF, JPG, JPEG and PNG files are allowed.');
+                                            }
+
                                             return;
                                         }
                                     }
-                                    addOtherDocumentFiles(input,'OtherDocument_list');
+
+                                    renderOtherDocumentsAttachments(input);
                                 }
 
-                                function addOtherDocumentFiles(input,listId){
-                                    const fileList = document.getElementById(listId);
-                                    fileList.innerHTML = "";
-                                    for(const file of input.files){
-                                        const div = document.createElement("div");
-                                        div.textContent = file.name;
-                                        fileList.appendChild(div);
-                                    }
+                                function renderOtherDocumentsAttachments(input) {
+                                    const fileList = document.getElementById('OtherDocument_list');
+                                    fileList.innerHTML = '';
+
+                                    Array.from(input.files || []).forEach((file, index) => {
+                                        const item = document.createElement('div');
+                                        item.style.cssText =
+                                            'display:flex;align-items:center;gap:10px;margin-bottom:8px;';
+
+                                        const fileName = document.createElement('span');
+                                        fileName.textContent = file.name;
+
+                                      const removeButton = document.createElement('button');
+                                        removeButton.type = 'button';
+                                        removeButton.textContent = '×';
+                                        removeButton.title = 'Remove file';
+                                        removeButton.setAttribute('aria-label', 'Remove ' + file.name);
+
+                                        removeButton.style.cssText =
+                                            'display:inline-block!important;' +
+                                            'background:transparent!important;color:red!important;' +
+                                            'border:none!important;box-shadow:none!important;' +
+                                            'font-size:24px!important;padding:0 5px!important;' +
+                                            'cursor:pointer;flex-shrink:0;line-height:1;';
+
+                                        removeButton.addEventListener('click', function () {
+                                            const remainingFiles = new DataTransfer();
+
+                                            Array.from(input.files).forEach((selectedFile, fileIndex) => {
+                                                if (fileIndex !== index) {
+                                                    remainingFiles.items.add(selectedFile);
+                                                }
+                                            });
+
+                                            input.files = remainingFiles.files;
+                                            renderOtherDocumentsAttachments(input);
+                                        });
+
+                                        item.appendChild(fileName);
+                                        item.appendChild(removeButton);
+                                        fileList.appendChild(item);
+                                    });
                                 }
                             </script>
+                          
                         </div>
                     </div>
 
@@ -12114,9 +12170,8 @@
                                 </div>
                             </div>
 
-                           <script>
+                            <script>
                                 function validateQualificationReportAttachment(input) {
-                                    const fileList = document.getElementById('QualificationReport_data');
                                     const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
                                     const allowedMimeTypes = [
                                         'application/pdf',
@@ -12124,39 +12179,76 @@
                                         'image/png'
                                     ];
 
-                                    fileList.innerHTML = '';
-
                                     const files = Array.from(input.files || []);
 
-                                    for (const file of files) {
+                                    const invalidFile = files.some(file => {
                                         const extension = file.name.split('.').pop().toLowerCase();
 
-                                        // Some browsers return an empty MIME type.
-                                        const validMime = !file.type ||
-                                            allowedMimeTypes.includes(file.type);
+                                        return !allowedExtensions.includes(extension) ||
+                                            (file.type && !allowedMimeTypes.includes(file.type));
+                                    });
 
-                                        if (!allowedExtensions.includes(extension) || !validMime) {
-                                            input.value = '';
+                                    if (invalidFile) {
+                                        input.value = '';
 
-                                            if (typeof Swal !== 'undefined') {
-                                                Swal.fire({
-                                                    icon: 'error',
-                                                    title: 'Invalid File',
-                                                    text: 'Only PDF, JPG, JPEG and PNG files are allowed.',
-                                                    confirmButtonText: 'OK'
-                                                });
-                                            } else {
-                                                alert('Only PDF, JPG, JPEG and PNG files are allowed.');
-                                            }
-
-                                            return;
+                                        if (typeof Swal !== 'undefined') {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Invalid File',
+                                                text: 'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                confirmButtonText: 'OK'
+                                            });
+                                        } else {
+                                            alert('Only PDF, JPG, JPEG and PNG files are allowed.');
                                         }
                                     }
 
-                                    files.forEach(file => {
-                                        const item = document.createElement('div');
-                                        item.textContent = file.name;
-                                        fileList.appendChild(item);
+                                    renderQualificationReportFiles(input);
+                                }
+
+                                function renderQualificationReportFiles(input) {
+                                    const fileList = input.closest('.file-attachment-field')
+                                        .querySelector('.file-attachment-list');
+
+                                    fileList.replaceChildren();
+
+                                    Array.from(input.files || []).forEach((file, index) => {
+                                        const row = document.createElement('div');
+                                        row.style.cssText =
+                                            'display:flex;align-items:center;gap:12px;margin-bottom:8px;';
+
+                                        const fileName = document.createElement('span');
+                                        fileName.textContent = file.name;
+                                        fileName.style.overflowWrap = 'anywhere';
+
+                                        const remove = document.createElement('button');
+                                        remove.type = 'button';
+                                        remove.textContent = '×';
+                                        remove.title = 'Remove file';
+                                        remove.setAttribute('aria-label', 'Remove ' + file.name);
+
+                                        remove.style.cssText =
+                                            'display:inline-block!important;' +
+                                            'background:transparent!important;color:red!important;' +
+                                            'border:none!important;box-shadow:none!important;' +
+                                            'font-size:24px!important;padding:0 5px!important;' +
+                                            'cursor:pointer;flex-shrink:0;line-height:1;';
+
+                                        remove.addEventListener('click', function () {
+                                            const remainingFiles = new DataTransfer();
+
+                                            Array.from(input.files).forEach((selectedFile, fileIndex) => {
+                                                if (fileIndex !== index) {
+                                                    remainingFiles.items.add(selectedFile);
+                                                }
+                                            });
+
+                                            input.files = remainingFiles.files;
+                                            renderQualificationReportFiles(input);
+                                        });
+
+                                        row.append(fileName, remove);
+                                        fileList.appendChild(row);
                                     });
                                 }
                             </script>
@@ -12200,7 +12292,7 @@
                                                 id="QualificationProtocol_id"
                                                 name="QualificationProtocol_data_filed[]"
                                                 accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
-                                                onchange="validateOtherDocumentAttachment(this)"
+                                               onchange="validateQualificationProtocolAttachment(this)"
                                                 multiple
                                                 hidden>
                                         </div>
@@ -12208,39 +12300,87 @@
                                 </div>
                             </div>
 
-                            <script>
-                                function validateOtherDocumentAttachment(input){
-                                    const allowedExtensions = ['pdf','jpg','jpeg','png'];
-                                    const allowedMimeTypes = ['application/pdf','image/jpeg','image/png'];
-                                    const files = Array.from(input.files);
+                           <script>
+                                function validateQualificationProtocolAttachment(input) {
+                                    const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
 
-                                    if(files.length === 0) return;
+                                    const files = Array.from(input.files || []);
 
-                                    for(const file of files){
-                                        const ext = file.name.split('.').pop().toLowerCase();
-                                        if(!allowedExtensions.includes(ext) || !allowedMimeTypes.includes(file.type)){
+                                    const invalidFile = files.some(file => {
+                                        const extension = file.name.split('.').pop().toLowerCase();
+
+                                        return !allowedExtensions.includes(extension) ||
+                                            (file.type && !allowedMimeTypes.includes(file.type));
+                                    });
+
+                                    if (invalidFile) {
+                                        input.value = '';
+
+                                        if (typeof Swal !== 'undefined') {
                                             Swal.fire({
-                                                icon:'error',
-                                                title:'Invalid File',
-                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.',
-                                                confirmButtonText:'OK'
+                                                icon: 'error',
+                                                title: 'Invalid File',
+                                                text: 'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                confirmButtonText: 'OK'
                                             });
-                                            input.value = '';
-                                            document.getElementById('QualificationProtocol_data').innerHTML = '';
-                                            return;
+                                        } else {
+                                            alert('Only PDF, JPG, JPEG and PNG files are allowed.');
                                         }
                                     }
-                                    addOtherDocumentFiles(input,'QualificationProtocol_data');
+
+                                    renderQualificationProtocolFiles(input);
                                 }
 
-                                function addOtherDocumentFiles(input,listId){
-                                    const fileList = document.getElementById(listId);
-                                    fileList.innerHTML = "";
-                                    for(const file of input.files){
-                                        const div = document.createElement("div");
-                                        div.textContent = file.name;
-                                        fileList.appendChild(div);
-                                    }
+                                function renderQualificationProtocolFiles(input) {
+                                    const fileList = document.getElementById(
+                                        'QualificationProtocol_data'
+                                    );
+
+                                    fileList.replaceChildren();
+
+                                    Array.from(input.files || []).forEach((file, index) => {
+                                        const row = document.createElement('div');
+                                        row.style.cssText =
+                                            'display:flex;align-items:center;gap:12px;margin-bottom:8px;';
+
+                                        const fileName = document.createElement('span');
+                                        fileName.textContent = file.name;
+                                        fileName.style.overflowWrap = 'anywhere';
+
+                                        const remove = document.createElement('button');
+                                        remove.type = 'button';
+                                        remove.textContent = '×';
+                                        remove.title = 'Remove file';
+                                        remove.setAttribute('aria-label', 'Remove ' + file.name);
+
+                                        remove.style.cssText =
+                                            'display:inline-block!important;' +
+                                            'background:transparent!important;color:red!important;' +
+                                            'border:none!important;box-shadow:none!important;' +
+                                            'font-size:24px!important;padding:0 5px!important;' +
+                                            'cursor:pointer;flex-shrink:0;line-height:1;';
+
+                                        remove.addEventListener('click', function () {
+                                            const remainingFiles = new DataTransfer();
+
+                                            Array.from(input.files).forEach((selectedFile, fileIndex) => {
+                                                if (fileIndex !== index) {
+                                                    remainingFiles.items.add(selectedFile);
+                                                }
+                                            });
+
+                                            input.files = remainingFiles.files;
+                                            renderQualificationProtocolFiles(input);
+                                        });
+
+                                        row.append(fileName, remove);
+                                        fileList.appendChild(row);
+                                    });
                                 }
                             </script>
                         </div>
@@ -12328,17 +12468,14 @@
                     </div>
                 </div>
 
-                <script>
+              <script>
                     function validateCompressedAirReportAttachment(input) {
-                        const fileList = document.getElementById('compressed_air_sys_report');
                         const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
                         const allowedMimeTypes = [
                             'application/pdf',
                             'image/jpeg',
                             'image/png'
                         ];
-
-                        fileList.innerHTML = '';
 
                         const files = Array.from(input.files || []);
 
@@ -12349,6 +12486,7 @@
 
                             if (!allowedExtensions.includes(extension) || !validMime) {
                                 input.value = '';
+                                renderCompressedAirReportFiles(input);
 
                                 if (typeof Swal !== 'undefined') {
                                     Swal.fire({
@@ -12365,14 +12503,52 @@
                             }
                         }
 
-                        files.forEach(file => {
+                        renderCompressedAirReportFiles(input);
+                    }
+
+                    function renderCompressedAirReportFiles(input) {
+                        const fileList = document.getElementById(
+                            'compressed_air_sys_report'
+                        );
+
+                        fileList.innerHTML = '';
+
+                        Array.from(input.files || []).forEach((file, index) => {
                             const item = document.createElement('div');
-                            item.textContent = file.name;
+                            item.style.cssText =
+                                'display:flex;align-items:center;gap:10px;margin-bottom:8px;';
+
+                            const fileName = document.createElement('span');
+                            fileName.textContent = file.name;
+
+                            const removeButton = document.createElement('button');
+                            removeButton.type = 'button';
+                            removeButton.textContent = '×';
+                            removeButton.title = 'Remove file';
+                            removeButton.setAttribute('aria-label', 'Remove ' + file.name);
+                            removeButton.style.cssText =
+                                'background:none;border:none;color:red;' +
+                                'font-size:24px;cursor:pointer;padding:0 5px;line-height:1;';
+
+                            removeButton.addEventListener('click', function () {
+                                const remainingFiles = new DataTransfer();
+
+                                Array.from(input.files).forEach((selectedFile, fileIndex) => {
+                                    if (fileIndex !== index) {
+                                        remainingFiles.items.add(selectedFile);
+                                    }
+                                });
+
+                                input.files = remainingFiles.files;
+                                renderCompressedAirReportFiles(input);
+                            });
+
+                            item.appendChild(fileName);
+                            item.appendChild(removeButton);
                             fileList.appendChild(item);
                         });
                     }
                 </script>
-
 
 
 
@@ -12394,27 +12570,35 @@
                                         <small class="text-primary">Please attach only PDF, JPG, JPEG or PNG files.</small>
                                     </div>
 
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="compressed_air_sys_protocol"></div>
+                                        <div class="file-attachment-field">
+                                            <div
+                                                class="file-attachment-list"
+                                                id="compressed_air_sys_protocol">
+                                            </div>
 
-                                        <div class="add-btn">
-                                            <label for="compressed_air_sys_protocol_id" style="cursor:pointer">Add</label>
+                                            <div class="add-btn">
+                                                <label for="compressed_air_sys_protocol_id" style="cursor:pointer">
+                                                    Add
+                                                </label>
+
                                                 <input
-                                                type="file"
-                                                id="compressed_air_sys_protocol_id"
-                                                name="compressed_air_sys_protocol[]"
-                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
-                                                onchange="validateQualificationReportAttachment(this)"
-                                                multiple
-                                                hidden>
+                                                    type="file"
+                                                    id="compressed_air_sys_protocol_id"
+                                                    name="compressed_air_sys_protocol[]"
+                                                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                    onchange="validateCompressedAirProtocolAttachment(this)"
+                                                    multiple
+                                                    hidden>
+                                            </div>
                                         </div>
-                                    </div>
+
                                 </div>
                             </div>
 
-                           <script>
-                                function validateQualificationReportAttachment(input) {
-                                    const fileList = document.getElementById('compressed_air_sys_protocol');
+
+
+                            <script>
+                                function validateCompressedAirProtocolAttachment(input) {
                                     const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
                                     const allowedMimeTypes = [
                                         'application/pdf',
@@ -12422,42 +12606,82 @@
                                         'image/png'
                                     ];
 
-                                    fileList.innerHTML = '';
-
                                     const files = Array.from(input.files || []);
 
-                                    for (const file of files) {
+                                    const invalidFile = files.some(file => {
                                         const extension = file.name.split('.').pop().toLowerCase();
 
-                                        // Some browsers return an empty MIME type.
-                                        const validMime = !file.type ||
-                                            allowedMimeTypes.includes(file.type);
+                                        return !allowedExtensions.includes(extension) ||
+                                            (file.type && !allowedMimeTypes.includes(file.type));
+                                    });
 
-                                        if (!allowedExtensions.includes(extension) || !validMime) {
-                                            input.value = '';
+                                    if (invalidFile) {
+                                        input.value = '';
 
-                                            if (typeof Swal !== 'undefined') {
-                                                Swal.fire({
-                                                    icon: 'error',
-                                                    title: 'Invalid File',
-                                                    text: 'Only PDF, JPG, JPEG and PNG files are allowed.',
-                                                    confirmButtonText: 'OK'
-                                                });
-                                            } else {
-                                                alert('Only PDF, JPG, JPEG and PNG files are allowed.');
-                                            }
-
-                                            return;
+                                        if (typeof Swal !== 'undefined') {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Invalid File',
+                                                text: 'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                            });
+                                        } else {
+                                            alert('Only PDF, JPG, JPEG and PNG files are allowed.');
                                         }
                                     }
 
-                                    files.forEach(file => {
-                                        const item = document.createElement('div');
-                                        item.textContent = file.name;
-                                        fileList.appendChild(item);
+                                    renderCompressedAirProtocolFiles(input);
+                                }
+
+                                function renderCompressedAirProtocolFiles(input) {
+                                    // Find the list within this input's attachment field.
+                                    const fileList = input.closest('.file-attachment-field')
+                                        .querySelector('.file-attachment-list');
+
+                                    fileList.replaceChildren();
+
+                                    Array.from(input.files || []).forEach((file, index) => {
+                                        const row = document.createElement('div');
+                                        row.style.cssText =
+                                            'display:flex;align-items:center;gap:12px;margin-bottom:8px;';
+
+                                        const name = document.createElement('span');
+                                        name.textContent = file.name;
+                                        name.style.overflowWrap = 'anywhere';
+
+                                        const remove = document.createElement('button');
+                                        remove.type = 'button';
+                                       remove.textContent = '×';
+                                      remove.title = 'Remove file';
+                                        remove.setAttribute('aria-label', 'Remove ' + file.name);
+
+                                        // Explicit styles so the button remains visible.
+                                      remove.style.cssText =
+                                        'display:inline-block!important;' +
+                                        'background:transparent!important;color:red!important;' +
+                                        'border:none!important;box-shadow:none!important;' +
+                                        'font-size:24px!important;padding:0 5px!important;' +
+                                        'cursor:pointer;flex-shrink:0;line-height:1;';
+
+                                        remove.onclick = function () {
+                                            const remaining = new DataTransfer();
+
+                                            Array.from(input.files).forEach((selectedFile, i) => {
+                                                if (i !== index) {
+                                                    remaining.items.add(selectedFile);
+                                                }
+                                            });
+
+                                            input.files = remaining.files;
+                                            renderCompressedAirProtocolFiles(input);
+                                        };
+
+                                        row.append(name, remove);
+                                        fileList.appendChild(row);
                                     });
                                 }
                             </script>
+
+                        
                         </div>
                     </div>
 
