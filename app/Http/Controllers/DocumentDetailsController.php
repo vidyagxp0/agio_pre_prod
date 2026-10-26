@@ -863,7 +863,6 @@ class DocumentDetailsController extends Controller
             }
             
             if ((int) $request->stage_id === 4) {
-                // if ($document->hods) {
 
                     $document->stage = $request->stage_id;
                     $document->status = Stage::where('id', $request->stage_id)->value('name');
@@ -884,12 +883,46 @@ class DocumentDetailsController extends Controller
                     $history->origin_state = 'Reviewed';
                     $history->save();
 
-                    $approverIds = array_unique(array_filter(
-                        array_map('trim', explode(',', (string) $document->approvers))
+                    // $approverIds = array_unique(array_filter(
+                    //     array_map('trim', explode(',', (string) $document->approvers))
+                    // ));
+
+                    // foreach ($approverIds as $approverId) {
+                    //     $temp_user = User::find($approverId);
+
+                    //     if (!$temp_user || empty($temp_user->email)) {
+                    //         continue;
+                    //     }
+
+                    //     try {
+                    //         $temp_user->fromMain = User::find($document->originator_id);
+
+                    //         SendDocumentMail::dispatch(
+                    //             [
+                    //                 'history' => 'Send for Checking',
+                    //                 'comment' => $request->comment ?? '',
+                    //                 'user' => Auth::user()->name,
+                    //                 'process' => 'Document',
+                    //                 'site' => 'Document',
+                    //             ],
+                    //             $temp_user->email,
+                    //             $document,
+                    //             'mail.for_approval',
+                    //             'Document is for Checking'
+                    //         );
+
+                    //     } catch (\Throwable $e) {
+                    //         report($e);
+                    //     }
+                    // }
+
+                    
+                    $reviewerIds = array_unique(array_filter(
+                        array_map('trim', explode(',', (string) $document->reviewers))
                     ));
 
-                    foreach ($approverIds as $approverId) {
-                        $temp_user = User::find($approverId);
+                    foreach ($reviewerIds as $reviewerId) {
+                        $temp_user = User::find($reviewerId);
 
                         if (!$temp_user || empty($temp_user->email)) {
                             continue;
@@ -916,7 +949,7 @@ class DocumentDetailsController extends Controller
                             report($e);
                         }
                     }
-                // }
+
             }
 
             if ($request->stage_id == 6) {

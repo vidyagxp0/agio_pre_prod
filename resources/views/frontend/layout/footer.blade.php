@@ -7419,9 +7419,17 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
                     pasteAllowedStyleProps: allowedStyles,
                     wordAllowedStyleProps: allowedStyles,
 
+
                     events: {
                         'paste.afterCleanup': function (html) {
+                            var subMap = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+
                             return html
+                                // Unicode subscript -> <sub>
+                                .replace(/[\u2080-\u2089]+/g, function (m) {
+                                    return '<sub>' + m.replace(/./g, function (c) { return subMap[c]; }) + '</sub>';
+                                })
+                                // purani cleanup
                                 .replace(/font-family:[^;"]+;?/gi, '')
                                 .replace(/font-size:[^;"]+;?/gi, '')
                                 .replace(/line-height:[^;"]+;?/gi, '')
@@ -7432,8 +7440,10 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
 
                     toolbarButtons: [
                         'bold', 'italic', 'underline', 'strikeThrough',
+                        'subscript', 'superscript',
                         'textColor', 'align', 'formatOL', 'formatUL', 'outdent', 'indent',
-                        'insertLink', 'insertTable', 'quote', 'undo', 'redo', 'clearFormatting'
+                        'insertLink', 'insertTable', 'quote', 'undo', 'redo', 'clearFormatting',
+                        'html'
                     ],
 
                     tableEditButtons: [

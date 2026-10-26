@@ -101,6 +101,90 @@ class ProcedureHtml
         return trim($out);
     }
 
+    public static function flattenRowspans(?string $html): string
+    {
+        $html = (string) $html;
+
+        if (stripos($html, 'rowspan') === false) {
+            return $html;
+        }
+
+        libxml_use_internal_errors(true);
+
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->loadHTML(
+            '<?xml encoding="UTF-8"><div id="w">' . $html . '</div>',
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
+        $xp = new \DOMXPath($dom);
+
+        foreach ($xp->query('//table') as $table) {
+            $pending = []; // col index => ['left' => baaki rows, 'cs' => colspan]
+
+            foreach ($xp->query('.//tr', $table) as $tr) {
+                // nested table ki rows skip karo
+                $p = $tr->parentNode;
+                if (strtolower($p->nodeName) !== 'table') {
+                    $p = $p->parentNode;
+                }
+                if (!$p->isSameNode($table)) {
+                    continue;
+                }
+
+                $cells = [];
+                foreach ($tr->childNodes as $n) {
+                    if ($n->nodeType === XML_ELEMENT_NODE && in_array(strtolower($n->nodeName), ['td', 'th'])) {
+                        $cells[] = $n;
+                    }
+                }
+
+                $col = 0;
+
+                $fill = function ($before) use (&$pending, &$col, $dom, $tr) {
+                    while (!empty($pending[$col]) && $pending[$col]['left'] > 0) {
+                        $at = $col;
+                        $td = $dom->createElement('td');
+
+                        if ($pending[$at]['cs'] > 1) {
+                            $td->setAttribute('colspan', $pending[$at]['cs']);
+                        }
+
+                        $pending[$at]['left']--;
+                        $td->setAttribute('class', $pending[$at]['left'] > 0 ? 'rs-mid' : 'rs-last');
+                        $td->appendChild($dom->createTextNode("\xC2\xA0"));
+
+                        $before ? $tr->insertBefore($td, $before) : $tr->appendChild($td);
+                        $col += $pending[$at]['cs'];
+                    }
+                };
+
+                foreach ($cells as $cell) {
+                    $fill($cell);
+
+                    $cs = max(1, (int) $cell->getAttribute('colspan'));
+                    $rs = max(1, (int) $cell->getAttribute('rowspan'));
+
+                    if ($rs > 1) {
+                        $pending[$col] = ['left' => $rs - 1, 'cs' => $cs];
+                        $cell->removeAttribute('rowspan');
+                        $cell->setAttribute('class', trim($cell->getAttribute('class') . ' rs-first'));
+                    }
+
+                    $col += $cs;
+                }
+
+                $fill(null);
+            }
+        }
+
+        $out = '';
+        foreach ($xp->query('//div[@id="w"]')->item(0)->childNodes as $n) {
+            $out .= $dom->saveHTML($n);
+        }
+
+        return $out;
+    }
+    
     /* ---------------- TABLE ---------------- */
 
     private static function fixTable(DOMElement $table, DOMXPath $xp): void

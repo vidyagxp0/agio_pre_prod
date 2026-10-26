@@ -95,7 +95,7 @@
             font-weight: bold;
         }
         header td, header th { font-size: 14px; }
-header td.title p { font-size: 14px; }
+        header td.title p { font-size: 14px; }
 
         .doc-control .head {
             max-width: 600px;
@@ -248,7 +248,9 @@ header td.title p { font-size: 14px; }
             vertical-align: top;
         }
         .quill-pdf-content th { background: #f4f4f4; font-weight: bold; }
-
+        .quill-pdf-content td.rs-first { border-bottom: none !important; }
+        .quill-pdf-content td.rs-mid   { border-top: none !important; border-bottom: none !important; }
+        .quill-pdf-content td.rs-last  { border-top: none !important; }
         .page-break-before {
             page-break-before: always;
         }
@@ -348,7 +350,9 @@ header td.title p { font-size: 14px; }
         .quill-pdf-content thead { display: table-header-group; }
         .quill-pdf-content img { display: block; max-width: 100%; height: auto; margin: 6px auto; page-break-inside: avoid; }  
         .quill-pdf-content th,
-        .quill-pdf-content td { font-size: 14px; line-height: 1.35; padding: 3px 5px; vertical-align: top; text-align: left; word-wrap: break-word; overflow-wrap: break-word; white-space: normal; }      
+        .quill-pdf-content td { font-size: 14px; line-height: 1.35; padding: 3px 5px; vertical-align: top; text-align: left; word-wrap: break-word; overflow-wrap: break-word; white-space: normal; }    
+        .quill-pdf-content sub { vertical-align: sub; font-size: 10px; line-height: 0; }
+        .quill-pdf-content sup { vertical-align: super; font-size: 10px; line-height: 0; }  
         .header-wrapper{
             position: fixed;
             top: 0;
@@ -599,67 +603,67 @@ header td.title p { font-size: 14px; }
     </footer>
 
     {{-- PAGE 1 ONLY: Prepared + Checked + Approved --}}
-<div class="footer-first" style="font-size: 14px;">
-    <table class="border" style="width: 100%; border-collapse: collapse; table-layout: fixed; text-align: left;">
-        <thead>
-            <tr style="background-color: #f4f4f4;">
-                <th style="width: 10%; padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;"></th>
-                <th style="width: 30%; padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Prepared By</th>
-                <th style="width: 30%; padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Checked By</th>
-                <th style="width: 30%; padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Approved By</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Sign</th>
-                <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
-                <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
-                    @if ($inreviews->isEmpty())
-                        <div>Yet Not Performed</div>
-                    @else
-                        @foreach ($inreviews as $temp)
-                            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
-                        @endforeach
-                    @endif
-                </td>
-                <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
-                    @if ($inreview->isEmpty())
-                        <div>Yet Not Performed</div>
-                    @else
-                        @foreach ($inreview as $temp)
-                            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
-                        @endforeach
-                    @endif
-                </td>
-            </tr>
-            <tr>
-                <td style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Date</td>
-                <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
-                    {{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
-                </td>
-                <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
-                    @if ($inreviews->isEmpty())
-                        <div>Yet Not Performed</div>
-                    @else
-                        @foreach ($inreviews as $temp)
-                            <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
-                        @endforeach
-                    @endif
-                </td>
-                <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
-                    @if ($inreview->isEmpty())
-                        <div>Yet Not Performed</div>
-                    @else
-                        @foreach ($inreview as $temp)
-                            <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
-                        @endforeach
-                    @endif
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <span>Format No.: QA/097/F5-01</span>
-</div>
+    <div class="footer-first" style="font-size: 14px;">
+        <table class="border" style="width: 100%; border-collapse: collapse; table-layout: fixed; text-align: left;">
+            <thead>
+                <tr style="background-color: #f4f4f4;">
+                    <th style="width: 10%; padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;"></th>
+                    <th style="width: 30%; padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Prepared By</th>
+                    <th style="width: 30%; padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Checked By</th>
+                    <th style="width: 30%; padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Approved By</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Sign</th>
+                    <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
+                    <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
+                        @if ($inreviews->isEmpty())
+                            <div>Yet Not Performed</div>
+                        @else
+                            @foreach ($inreviews as $temp)
+                                <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                            @endforeach
+                        @endif
+                    </td>
+                    <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
+                        @if ($inreview->isEmpty())
+                            <div>Yet Not Performed</div>
+                        @else
+                            @foreach ($inreview as $temp)
+                                <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                            @endforeach
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px; border: 1px solid #ddd; font-size: 14px; font-weight: bold;">Date</td>
+                    <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
+                        {{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
+                    </td>
+                    <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
+                        @if ($inreviews->isEmpty())
+                            <div>Yet Not Performed</div>
+                        @else
+                            @foreach ($inreviews as $temp)
+                                <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                            @endforeach
+                        @endif
+                    </td>
+                    <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">
+                        @if ($inreview->isEmpty())
+                            <div>Yet Not Performed</div>
+                        @else
+                            @foreach ($inreview as $temp)
+                                <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                            @endforeach
+                        @endif
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <span>Format No.: QA/097/F5-01</span>
+    </div>
 
     <div style="margin-top: 10px;">
         <section class="main-section" id="pdf-page">
@@ -683,10 +687,43 @@ header td.title p { font-size: 14px; }
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->cas_no_row_material }}</td>
                             </tr>
                   
-                            <tr> 
+                            {{-- <tr> 
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Formula</td>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;" class="quill-pdf-content">
                                     {!! $data->molecular_formula_row_material !!}
+                                </td>
+                            </tr> --}}
+                            @php
+                                // Unicode subscript/superscript ko real <sub>/<sup> me convert karo
+                                $subMap = ['₀'=>'0','₁'=>'1','₂'=>'2','₃'=>'3','₄'=>'4','₅'=>'5','₆'=>'6','₇'=>'7','₈'=>'8','₉'=>'9'];
+                                $supMap = ['⁰'=>'0','¹'=>'1','²'=>'2','³'=>'3','⁴'=>'4','⁵'=>'5','⁶'=>'6','⁷'=>'7','⁸'=>'8','⁹'=>'9','⁺'=>'+','⁻'=>'-'];
+
+                                $fixSubSup = function ($html) use ($subMap, $supMap) {
+                                    $html = (string) $html;
+                                    $html = preg_replace_callback('/[\x{2080}-\x{2089}]+/u', function ($m) use ($subMap) {
+                                        return '<sub>' . strtr($m[0], $subMap) . '</sub>';
+                                    }, $html);
+                                    $html = preg_replace_callback('/[\x{2070}\x{00B9}\x{00B2}\x{00B3}\x{2074}-\x{207B}]+/u', function ($m) use ($supMap) {
+                                        return '<sup>' . strtr($m[0], $supMap) . '</sup>';
+                                    }, $html);
+                                    return $html;
+                                };
+
+                                $molecular_formula = $fixSubSup(
+                                    \App\Helpers\ProcedureHtml::clean(
+                                        Helpers::renderQuillPdf($data->molecular_formula_row_material ?? '')
+                                    )
+                                );
+                                $molecular_weight = $fixSubSup(
+                                    \App\Helpers\ProcedureHtml::clean(
+                                        Helpers::renderQuillPdf($data->molecular_weight_row_material ?? '')
+                                    )
+                                );
+                            @endphp
+                            <tr>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Formula</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">
+                                    <div class="quill-pdf-content">{!! $molecular_formula !!}</div>
                                 </td>
                             </tr>
 
@@ -741,36 +778,6 @@ header td.title p { font-size: 14px; }
                                 </td>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->retest_sample_quantity_row_material }}</td>
                             </tr>
-
-                            {{-- <tr>
-                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">
-                                    Sampling instructions, warning and precautions
-                                </td>
-                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;" class="quill-pdf-content">
-                                    @php
-                                        $si = $data->sampling_instructions_row_material ?? '';
-                                        if (!empty(trim(strip_tags($si))) && stripos($si, '<li') === false) {
-                                            // plain text hai -> "1. ", "2. " pe split karke list banao
-                                            $plain = trim(strip_tags($si));
-                                            $parts = preg_split('/(?:^|\s)\d+\.\s+(?=\S)/u', $plain, -1, PREG_SPLIT_NO_EMPTY);
-                                            $parts = array_map('trim', $parts);
-                                        } else {
-                                            $parts = null;
-                                        }
-                                    @endphp
-
-                                    @if (is_array($parts) && count($parts) > 0)
-                                        <ol style="margin: 0; padding-left: 18px;">
-                                            @foreach ($parts as $p)
-                                                <li style="margin-bottom: 3px;">{{ $p }}</li>
-                                            @endforeach
-                                        </ol>
-                                    @else
-                                        {!! $si !!}
-                                    @endif
-                                </td>
-                            </tr> --}}
-
                         </tbody>
                     </table>
                 </div>
@@ -828,17 +835,20 @@ header td.title p { font-size: 14px; }
                     <thead>
                         <tr>
                              <th class="text-center">
-                                <div class="bold">SPECIFICATION</div>
+                                <div class="bold">Specification</div>
                             </th>
                         </tr>
                     </thead>
                 </table>
 
                 @php
-                    $rawmaterials_specifications = \App\Helpers\ProcedureHtml::clean(
-                        Helpers::renderQuillPdf($document->rawmaterials_specifications ?? '')
+                    $rawmaterials_specifications = \App\Helpers\ProcedureHtml::flattenRowspans(
+                        \App\Helpers\ProcedureHtml::clean(
+                            Helpers::renderQuillPdf($document->rawmaterials_specifications ?? '')
+                        )
                     );
                 @endphp
+                
                 <div class="quill-pdf-content" >
                     {!! $rawmaterials_specifications !!}
                 </div>
@@ -900,7 +910,7 @@ header td.title p { font-size: 14px; }
                 if (isset($pdf)) {
                     $pdf->page_script('
                         $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
-                        $size = 12;
+                        $size = 10;
                         $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
                         $pdf->text(380, 166, $pageText, $font, $size);
                     ');
