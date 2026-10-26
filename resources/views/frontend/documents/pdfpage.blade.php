@@ -1330,7 +1330,7 @@
                                     <th style="font-size:14px; font-weight:bold; width:12%">Revision No.</th>
                                     <th style="font-size:14px; font-weight:bold; width:20%">Change Control No.</th>
                                     <th style="font-size:14px; font-weight:bold; width:16%">Effective Date</th>
-                                    <th style="font-size:14px; font-weight:bold; width:52%">Reason of revision</th>
+                                    <th style="font-size:14px; font-weight:bold; width:52%">Details of Revision</th>
                                 </tr>
                             </thead>
                             <tbody>

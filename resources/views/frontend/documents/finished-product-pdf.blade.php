@@ -876,7 +876,7 @@
                 <th style="border:1px solid black; width:12%;">Revision No.</th>
                 <!-- <th style="border:1px solid black; width:22%;">Change Control No.</th> -->
                 <th style="border:1px solid black; width:18%;">Effective Date</th>
-                <th style="border:1px solid black; width:48%;">Reason of revision</th>
+                <th style="border:1px solid black; width:48%;">Details of Revision</th>
             </tr>
         </thead>
         <tbody>

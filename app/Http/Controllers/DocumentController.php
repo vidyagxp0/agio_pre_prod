@@ -872,7 +872,101 @@ class DocumentController extends Controller
 
                 }
                 $document->ForComANiGasProtocolfile_attach = json_encode($files);
+                
             }
+
+           ///////////////////////////////////////////// New changes /////////////////////////////////////////////////
+
+           if (!empty($request->QualificationProtocol_data_filed)) {
+                $files = [];
+                if ($request->hasfile('QualificationProtocol_data_filed')) {
+                    foreach ($request->file('QualificationProtocol_data_filed') as $file) {
+
+                        // $name = $request->name . 'QualificationProtocol_data_filed' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'QualificationProtocol_data_filed' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+
+                $document->QualificationProtocol_data_filed = json_encode($files);
+                }
+            }
+
+
+
+              if (!empty($request->QualificationReport_data_filed)) {
+                $files = [];
+                if ($request->hasfile('QualificationReport_data_filed')) {
+                    foreach ($request->file('QualificationReport_data_filed') as $file) {
+
+                        // $name = $request->name . 'QualificationReport_data_filed' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'QualificationReport_data_filed' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+
+                $document->QualificationReport_data_filed = json_encode($files);
+                }
+            }
+
+
+              if (!empty($request->Otherdata_data_filed)) {
+                $files = [];
+                if ($request->hasfile('Otherdata_data_filed')) {
+                    foreach ($request->file('Otherdata_data_filed') as $file) {
+
+                        // $name = $request->name . 'Otherdata_data_filed' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Otherdata_data_filed' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+
+                $document->Otherdata_data_filed = json_encode($files);
+                }
+            }
+
+
+
+             if (!empty($request->compressed_air_sys_protocol)) {
+                $files = [];
+                if ($request->hasfile('compressed_air_sys_protocol')) {
+                    foreach ($request->file('compressed_air_sys_protocol') as $file) {
+
+                        // $name = $request->name . 'compressed_air_sys_protocol' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'compressed_air_sys_protocol' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+
+                $document->compressed_air_sys_protocol = json_encode($files);
+                }
+            }
+
+
+             if (!empty($request->compressed_air_sys_report)) {
+                $files = [];
+                if ($request->hasfile('compressed_air_sys_report')) {
+                    foreach ($request->file('compressed_air_sys_report') as $file) {
+
+                        // $name = $request->name . 'compressed_air_sys_report' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'compressed_air_sys_report' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+
+                $document->compressed_air_sys_report = json_encode($files);
+                }
+            }
+
+
+
+
+
+
+           //////////////////////////////////////////new changes////////////////////////////////////////////
+
+
+
                        // packing validation report attachnemnt
 
             if (!empty($request->PacValRepfile_attach)) {
@@ -3916,6 +4010,167 @@ class DocumentController extends Controller
             $allFiles = array_merge($existingFiles, $newFiles);
             $document->TemMapProCumRepfile_attach = json_encode($allFiles);
             }
+
+
+            /////////////////////////////////////// New Changes////////////////////////////////////////////////
+
+
+              if (!empty($request->QualificationProtocol_data_filed) || !empty($request->deleted_QualificationProtocol_data_filed)) {
+                $existingFiles = json_decode($document->QualificationProtocol_data_filed, true) ?? [];
+
+                // Handle deleted files
+                if (!empty($request->deleted_QualificationProtocol_data_filed)) {
+                $filesToDelete = explode(',', $request->deleted_QualificationProtocol_data_filed);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+                }
+
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('QualificationProtocol_data_filed')) {
+                foreach ($request->file('QualificationProtocol_data_filed') as $file) {
+                    $name = $request->name . 'QualificationProtocol_data_filed' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+                }
+
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $document->QualificationProtocol_data_filed = json_encode($allFiles);
+                }
+
+
+
+                ////////////////
+
+                if (!empty($request->QualificationReport_data_filed) || !empty($request->deleted_QualificationReport_data_filed)) {
+                    $existingFiles = json_decode($document->QualificationReport_data_filed, true) ?? [];
+
+                    // Handle deleted files
+                    if (!empty($request->deleted_QualificationReport_data_filed)) {
+                    $filesToDelete = explode(',', $request->deleted_QualificationReport_data_filed);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                    }
+
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('QualificationReport_data_filed')) {
+                    foreach ($request->file('QualificationReport_data_filed') as $file) {
+                        $name = $request->name . 'QualificationReport_data_filed' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                    }
+
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $document->QualificationReport_data_filed = json_encode($allFiles);
+                }
+
+                ////////////////////////
+
+
+
+                  if (!empty($request->Otherdata_data_filed) || !empty($request->deleted_Otherdata_data_filed)) {
+                    $existingFiles = json_decode($document->Otherdata_data_filed, true) ?? [];
+
+                    // Handle deleted files
+                    if (!empty($request->deleted_Otherdata_data_filed)) {
+                    $filesToDelete = explode(',', $request->deleted_Otherdata_data_filed);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                    }
+
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('Otherdata_data_filed')) {
+                    foreach ($request->file('Otherdata_data_filed') as $file) {
+                        $name = $request->name . 'Otherdata_data_filed' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                    }
+
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $document->Otherdata_data_filed = json_encode($allFiles);
+                }
+
+
+
+
+                /////////////////////////
+
+
+
+
+                  if (!empty($request->compressed_air_sys_protocol) || !empty($request->deleted_compressed_air_sys_protocol)) {
+                    $existingFiles = json_decode($document->compressed_air_sys_protocol, true) ?? [];
+
+                    // Handle deleted files
+                    if (!empty($request->deleted_compressed_air_sys_protocol)) {
+                    $filesToDelete = explode(',', $request->deleted_compressed_air_sys_protocol);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                    }
+
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('compressed_air_sys_protocol')) {
+                    foreach ($request->file('compressed_air_sys_protocol') as $file) {
+                        $name = $request->name . 'compressed_air_sys_protocol' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                    }
+
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $document->compressed_air_sys_protocol = json_encode($allFiles);
+                }
+
+                /////////////////////////////////////////////////////////////////////
+
+
+
+                  if (!empty($request->compressed_air_sys_report) || !empty($request->deleted_compressed_air_sys_report)) {
+                    $existingFiles = json_decode($document->compressed_air_sys_report, true) ?? [];
+
+                    // Handle deleted files
+                    if (!empty($request->deleted_compressed_air_sys_report)) {
+                    $filesToDelete = explode(',', $request->deleted_compressed_air_sys_report);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                    }
+
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('compressed_air_sys_report')) {
+                    foreach ($request->file('compressed_air_sys_report') as $file) {
+                        $name = $request->name . 'compressed_air_sys_report' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                    }
+
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $document->compressed_air_sys_report = json_encode($allFiles);
+                }
+
+                ///////////////////////////////////////////////////////////////////////
+
+
+
+
+            ///////////////////////////////////////New Changes //////////////////////////////////////////////////
 
             // bill of matrial tabs
 
@@ -7990,10 +8245,20 @@ class DocumentController extends Controller
         }
     
         $viewName = match ($data->document_type_id) {
-       
+
+
             'BMR' => 'frontend.documents.bmr-pdf',
             'BOM' => 'frontend.documents.bom-pdf',
             'BPR' => 'frontend.documents.bpr-pdf',
+
+
+            'QP'=>'frontend.documents.QualificationProtocol-pdf',
+            'QR'=> 'frontend.documents.QualificationReport-pdf',
+            'OA'=>'frontend.documents.other-attachment-pdf',
+            'CASP'=>'frontend.documents.compress-air-system-protocol-pdf',
+            'CASR'=>'frontend.documents.compress-air-systemR-pdf',     
+         
+         
             // 'PROTO' => 'frontend.documents.proto-pdf',
             'STUDYPROTOCOL' => 'frontend.documents.protocol.study_protocol',
             'STUDY' => 'frontend.documents.reports.study_report',
@@ -8019,8 +8284,8 @@ class DocumentController extends Controller
             'PACKVALIPROTOCOL'=>'frontend.documents.protocol.packvaliprotocol',
             'HOLDTIMESTUDYREPORT'=>'frontend.documents.reports.hold-time-study-report',
             'HOLDTIMESTUDYPROTOCOL'=>'frontend.documents.protocol.hold-time-study-protocol',
-            'FOCONITOGENREPORT'=>' frontend.documents.reports.for-com-air-nitogen-report',
-            'FOCONITOGENPROTOCOL'=>'frontend.documents.protocol.for-com-air-nitogen-protocol',
+            'NGSR'=>' frontend.documents.reports.for-com-air-nitogen-report',
+            'NGSP'=>'frontend.documents.protocol.for-com-air-nitogen-protocol',
             'STABILITYPROTOCOL'=>'frontend.documents.protocol.stability-protocol',
             'CLEAVALIPROTODOC' => 'frontend.documents.protocol.cleaning_validation_protocoldoc',
             'CLEAVALIREPORTDOC' => 'frontend.documents.reports.cleaning_validation_reportdoc',
@@ -8054,6 +8319,17 @@ class DocumentController extends Controller
 
         $attachmentFields = [
             'BMR' => 'bmrattachment',
+
+
+            
+             'QP'=>'otherAttchment',
+            'QR'=> 'QRAttchment',
+            'OA'=>'QPAttchment',
+            'CASP'=>'CASPAttachment',
+            'CASR'=>'CASRAttachment',     
+         
+
+            
             // 'BPR' => 'bprattachment',
             // 'PROTO' => 'protoattachment',
             'STUDYPROTOCOL' => 'studyattachment',
@@ -8074,8 +8350,8 @@ class DocumentController extends Controller
             'ANNACPERMQULIPROTOCOL' => 'studyattachment',
             'PROVALIINTERRE' => 'studyattachment',
             'PACKVALIREPORT' => 'studyattachment',
-            'FOCONITOGENREPORT' => 'studyattachment',
-            'FOCONITOGENPROTOCOL' => 'studyattachment',
+            'NGSR' => 'studyattachment',
+            'NGSP' => 'studyattachment',
             'STABILITYPROTOCOL' => 'studyattachment',
             'CLEAVALIPROTODOC' => 'studyattachment',
             'CLEAVALIREPORTDOC' => 'studyattachment',
@@ -8109,6 +8385,11 @@ class DocumentController extends Controller
             'QM' => 'file_attach_qm',
             'SMF' => 'SiteMasterFileatt',
             'VMP' => 'file_attach_vmp',
+
+
+
+            ''
+
 
         ];
     
@@ -10441,6 +10722,14 @@ class DocumentController extends Controller
             'TDS' => 'frontend.documents.tds-pdf',
             'GTP' => 'frontend.documents.gtp-pdf',
 
+            
+            'QP'=>'frontend.documents.QualificationProtocol-pdf',
+            'QR'=> 'frontend.documents.QualificationReport-pdf',
+            'OA'=>'frontend.documents.other-attachment-pdf',
+            'CASP'=>'frontend.documents.compress-air-system-protocol-pdf',
+            'CASR'=>'frontend.documents.compress-air-systemR-pdf',     
+         
+
             'STUDYPROTOCOL' => 'frontend.documents.protocol.study_protocol',
             'STUDY' => 'frontend.documents.reports.study_report',
             'EQUIPMENTHOLDREPORT' => 'frontend.documents.reports.equipment_hold_report',
@@ -10464,8 +10753,8 @@ class DocumentController extends Controller
             'PACKVALIPROTOCOL' => 'frontend.documents.protocol.packvaliprotocol',
             'HOLDTIMESTUDYREPORT' => 'frontend.documents.reports.hold-time-study-report',
             'HOLDTIMESTUDYPROTOCOL' => 'frontend.documents.protocol.hold-time-study-protocol',
-            'FOCONITOGENREPORT' => 'frontend.documents.reports.for-com-air-nitogen-report',
-            'FOCONITOGENPROTOCOL' => 'frontend.documents.protocol.for-com-air-nitogen-protocol',
+            'NGSR' => 'frontend.documents.reports.for-com-air-nitogen-report',
+            'NGSP' => 'frontend.documents.protocol.for-com-air-nitogen-protocol',
             'STABILITYPROTOCOL' => 'frontend.documents.protocol.stability-protocol',
             'CLEAVALIPROTODOC' => 'frontend.documents.protocol.cleaning_validation_protocoldoc',
             'CLEAVALIREPORTDOC' => 'frontend.documents.reports.cleaning_validation_reportdoc',
@@ -10560,12 +10849,12 @@ class DocumentController extends Controller
                 'studyattachment',
             ],
 
-            'FOCONITOGENPROTOCOL' => [
+            'NGSP' => [
                 'ForComANiGasProtocolfile_attach',
                 'studyattachment',
             ],
 
-            'FOCONITOGENREPORT' => [
+            'NGSR' => [
                 'attach_comp_nitrogen',
                 'studyattachment',
             ],

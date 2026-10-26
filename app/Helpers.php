@@ -925,10 +925,17 @@ class Helpers
             'ANNACPERMQULIPROTOCOL' => 'Annexure For Acceptance Of Performance Qualification Protocol',
             'PACKVALIREPORT' => 'Packing Validation Report',
             'PACKVALIPROTOCOL' => 'Packing Validation Protocol',
+            'QR' =>'Qualification Report',
+            'QP'=>'Qualification Protocol',
             'HOLDTIMESTUDYREPORT' => ' Hold Time Study Report',
             'HOLDTIMESTUDYPROTOCOL' => 'Hold Time Study Protocol',
-            'FOCONITOGENREPORT' => 'Format For Compressed Air And Nitrogen Gas System Report',
-            'FOCONITOGENPROTOCOL' => 'Format For Compressed Air And Nitrogen Gas System Protocol',
+            'NGSR' => 'Nitrogen gas system Report',
+            'NGSP' => 'Nitrogen Gas System Protocol',
+            
+            'CASR'=>'compressed air system Report',
+
+            'CASP'=>'Compressed Air System Protocol',
+
             'STABILITYPROTOCOL' => 'Stability study protocol',
 
             'ANNIGxPASSES' => 'Annexure I-Gxp Assessment',
@@ -959,6 +966,7 @@ class Helpers
             'SMF' => 'Site Master File',
             'VMP' => 'Validation Master Plan',
             'QM' => 'Quality Manual',
+            'OA'=>'Other Attachment',
         ];
 
         return $document_types;

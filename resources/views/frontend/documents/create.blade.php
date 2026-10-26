@@ -290,7 +290,7 @@
             <div class="tab">
                 <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document
                  information</button>
-                <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
+                <button class="tablinks hidden-tabs" data-id="SOP" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks hidden-tabs" data-id="SOP" onclick="openData(event, 'doc-content')">Document Content</button>
                 <!-- Tabs that should be hidden initially -->
                 <button class="tablinks hidden-tabs" data-id="FPS" onclick="openData(event, 'doc_FPS')">Finished Product Specification</button>
@@ -311,7 +311,7 @@
                 <button class="tablinks hidden-tabs" data-id="ANNACPERMQULIPROTOCOL" onclick="openData(event, 'doc-APQP')">Annexure For Acceptance Of Performance Qualification Protocol</button>
 
                 <button class="tablinks hidden-tabs" data-id="PACKVALIREPORT" onclick="openData(event, 'doc-PacValRep')">Packing Validation Report</button>
-                <button class="tablinks hidden-tabs" data-id="FOCONITOGENPROTOCOL" onclick="openData(event, 'doc-FoCoANGsP')">Format For Compressed Air And Nitrogen Gas System Protocol</button>
+                <button class="tablinks hidden-tabs" data-id="NGSP" onclick="openData(event, 'doc-FoCoANGsP')">Nitrogen Gas System Protocol</button>
 
                 <button class="tablinks hidden-tabs" data-id="RMS" onclick="openData(event, 'doc-rms')">Raw Material Specification</button>
 
@@ -330,7 +330,7 @@
                 <button class="tablinks hidden-tabs" data-id="EQUIPMENTHOLDREPORT" onclick="openData(event, 'doc-eqpreport')">Equipment Hold Time Study Report</button>
 
                 <button class="tablinks hidden-tabs" data-id="EQUIPMENTHOLDPROTOCOL" onclick="openData(event, 'doc-eqpprotocol')">Equipment Hold Time Study Protocol</button>
-                <button class="tablinks hidden-tabs" data-id="FOCONITOGENREPORT" onclick="openData(event, 'doc-fcreport')">Format for compressed air and Nitrogen gas system Report</button>
+                <button class="tablinks hidden-tabs" data-id="NGSR" onclick="openData(event, 'doc-fcreport')">Nitrogen gas system Report</button>
 
                 <button class="tablinks hidden-tabs" data-id="PROVALIDRE" onclick="openData(event, 'doc_pvr')">Process Validation Report</button>
                 <button class="tablinks hidden-tabs" data-id="CLEAVALIPROTODOC" onclick="openData(event, 'doc_cvpd')">Cleaning Validation Protocol.doc</button>
@@ -384,8 +384,29 @@
                 <button class="tablinks hidden-tabs" data-id="MAForRec" onclick="openData(event, 'doc-masterformulaRecord')">Master Formula Record</button>
                 <button class="tablinks hidden-tabs" data-id="MAPacRec" onclick="openData(event, 'doc-masterPackingRecord')">Master Packing Record</button>
                 <button class="tablinks hidden-tabs" data-id="SMF" onclick="openData(event, 'doc-SiteMasterFile')">Site Master File (SMF)</button>
+             
+              
+                <button class="tablinks hidden-tabs" data-id="OA,OTHER,OTHERS,Other" onclick="openData(event, 'doc-OtherDocument')">Other Attachment</button>
 
-                <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
+                <button class="tablinks hidden-tabs" data-id="QR" onclick="openData(event, 'doc-QR')"> Qualification Report</button>
+
+                <button class="tablinks hidden-tabs" data-id="QP" onclick="openData(event, 'doc-QP')"> Qualification Protocol</button>
+
+                <button class="tablinks hidden-tabs" data-id="CASR" onclick="openData(event, 'doc-casreport')">Compressed Air System Report</button>
+                
+              
+                 <button class="tablinks hidden-tabs" data-id="CASP" onclick="openData(event, 'doc-CASP')">Compressed Air System Protocol</button>
+               
+                
+               
+              
+                <button
+                    type="button"
+                    class="tablinks hidden-tabs"
+                    data-id="SOP,FPSTP,IPSTP,CVSTP,RMSTP,MFPSTP"
+                    onclick="openData(event, 'annexures')">
+                    Annexures
+                </button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
                 {{-- <button class="tablinks printdoc" style="float: right;" onclick="window.print();return false;">Print</button> --}}
@@ -738,8 +759,8 @@
                                             PACKVALIPROTOCOL:'pvpfile',
                                             HOLDTIMESTUDYREPORT:'HolTimSutRep_I_gxp_attachment',
                                             HOLDTIMESTUDYPROTOCOL:'htpsfile',
-                                            FOCONITOGENREPORT:'attach_comp_nitrogendata',
-                                            FOCONITOGENPROTOCOL:'annex_I_gxp_attachmentformateComp',
+                                            NGSR:'attach_comp_nitrogendata',
+                                            NGSP:'annex_I_gxp_attachmentformateComp',
                                             STABILITYPROTOCOL:'file_attachDataSSP',
                                             ANNIGxPASSES:'annex_I_gxp_attachment',
                                             ANNIGxPASSES:'annex_I_gxp_attachment',
@@ -766,17 +787,23 @@
                                             VMP:'file_attach_vmpData',
                                             QM:'file_attach_qmData',
                                             ANNEXUREXVIIVALIDATION:'avsrfile',
+                                      
+                                            OTHER: 'OtherDocument_input',
+                                            OA: 'OtherDocument_input',
+
+                                     
+                                       
+
                                         
                                         
 
                                         };
 
+                                     
                                         Object.entries(requiredAttachments).forEach(([type, inputId]) => {
                                             const input = document.getElementById(inputId);
-
                                             if (!input) return;
-
-                                            input.toggleAttribute('required', selectedType === type);
+                                            input.toggleAttribute('required', (selectedType || '').toLowerCase() === type.toLowerCase());
                                         });
 
                                         // Get all hidden tabs
@@ -787,13 +814,23 @@
                                             tab.style.display = 'none';
                                         });
 
-                                        // Show the matching tab
+                                        // // Show the matching tab
+                                        // tabs.forEach(tab => {
+                                        //     if (tab.getAttribute('data-id') === selectedType) {
+                                        //         tab.style.display = 'block';
+                                        //     }
+                                        // });
+
+                                        // Show the matching tab (comma separated + case-insensitive)
+                                        const selectedLower = (selectedType || '').trim().toLowerCase();
                                         tabs.forEach(tab => {
-                                            if (tab.getAttribute('data-id') === selectedType) {
+                                            const ids = (tab.getAttribute('data-id') || '')
+                                                .split(',')
+                                                .map(s => s.trim().toLowerCase());
+                                            if (ids.includes(selectedLower)) {
                                                 tab.style.display = 'block';
                                             }
                                         });
-
 
                                         // Update document type code display
                                         document.getElementById('document_type_code').innerText = selectElement.value || "Not selected";
@@ -1739,7 +1776,7 @@
                                                     <th class="copy-name">Revision No.</th>
                                                     <th class="copy-name">Change Control No.</th>
                                                     <th class="copy-name">Effective Date</th>
-                                                    <th class="copy-name">Reason of revision</th>
+                                                    <th class="copy-name">Details of Revision</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -5198,7 +5235,7 @@
 
                     <div id="doc-fcreport" class="tabcontent">
                         <div class="orig-head">
-                            Format for compressed air and Nitrogen gas system Report
+                          Nitrogen gas system Report
                         </div>
                         {{--
                         <div class="input-fields">
@@ -5758,7 +5795,7 @@
                 {{-- -----------------Format for comppressed air and nitrgen ges sys protocal  ----------------------- --}}
                 <div id="doc-FoCoANGsP" class="tabcontent">
                     <div class="orig-head">
-                        Format for Compressed Air and Nitrogen Gas System Protocol
+                       Nitrogen gas system Protocol
                     </div>
                     <div class="input-fields">
                         <div class="row">
@@ -6129,7 +6166,7 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="File_Attachment"><b>Format For Compressed Air And Nitrogen Gas System Protocol File Attachment<span class='text-danger'>*</span></b></label>
+                                    <label for="File_Attachment"><b>File Attachment<span class='text-danger'>*</span></b></label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
 
                                     <div class="file-attachment-field">
@@ -9125,7 +9162,7 @@
                                                         <th class="">Revision No.</th>
                                                         <!-- <th class="">Change Control No.</th> -->
                                                         <th class="">Effective Date</th>
-                                                        <th class="">Reason of revision</th>
+                                                        <th class="">Details of Revision</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -9329,7 +9366,7 @@
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="reference">Product Name</label>
+                                        <label for="reference">Product / Material Name</label>
                                         <input type="text" name="product_name_rawmstp">
                                     </div>
                                 </div>
@@ -10623,6 +10660,7 @@
                                             <option value="IP">Inprocess Product</option>
                                             <option value="CV">Cleaning Validation</option>
                                             <option value="RW">Raw Material</option>
+                                            <option value="PM">Packing Material</option>
                                         </select>
                                     </div>
                                 </div>
@@ -10894,7 +10932,7 @@
                                                             <th class="">Revision No.</th>
                                                             <!-- <th class="">Change Control No./ DCRF No</th> -->
                                                             <th class="">Effective Date</th>
-                                                            <th class="">Reason of revision</th>
+                                                            <th class="">Details of Revision</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -11952,6 +11990,482 @@
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
                             </a>
                         </button>
+                    </div>
+                </div>
+
+
+                {{-- Other Documents Attchment --}}
+
+                {{-- Other Documents Attachment --}}
+                <div id="doc-OtherDocument" class="tabcontent">
+                    <div class="orig-head">Other Documents</div>
+
+                    <div class="input-fields">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment">
+                                        <b>Other Attachment<span class="text-danger">*</span></b>
+                                    </label>
+
+                                    <div>
+                                        <small class="text-primary">Please attach only PDF, JPG, JPEG or PNG files.</small>
+                                    </div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="OtherDocument_list"></div>
+
+                                        <div class="add-btn">
+                                            <label for="OtherDocument_input" style="cursor:pointer">Add</label>
+                                            <input
+                                                type="file"
+                                                id="OtherDocument_input"
+                                                name="Otherdata_data_filed[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateOtherDocumentAttachment(this)"
+                                                multiple
+                                                hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                function validateOtherDocumentAttachment(input){
+                                    const allowedExtensions = ['pdf','jpg','jpeg','png'];
+                                    const allowedMimeTypes = ['application/pdf','image/jpeg','image/png'];
+                                    const files = Array.from(input.files);
+
+                                    if(files.length === 0) return;
+
+                                    for(const file of files){
+                                        const ext = file.name.split('.').pop().toLowerCase();
+                                        if(!allowedExtensions.includes(ext) || !allowedMimeTypes.includes(file.type)){
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                confirmButtonText:'OK'
+                                            });
+                                            input.value = '';
+                                            document.getElementById('OtherDocument_list').innerHTML = '';
+                                            return;
+                                        }
+                                    }
+                                    addOtherDocumentFiles(input,'OtherDocument_list');
+                                }
+
+                                function addOtherDocumentFiles(input,listId){
+                                    const fileList = document.getElementById(listId);
+                                    fileList.innerHTML = "";
+                                    for(const file of input.files){
+                                        const div = document.createElement("div");
+                                        div.textContent = file.name;
+                                        fileList.appendChild(div);
+                                    }
+                                }
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a></button>
+                    </div>
+                </div>
+
+
+
+                {{-- Qualification  Report --}}
+
+
+                <div id="doc-QR" class="tabcontent">
+                    <div class="orig-head">Qualification Report </div>
+
+                    <div class="input-fields">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment">
+                                        <b>Attachment<span class="text-danger">*</span></b>
+                                    </label>
+
+                                    <div>
+                                        <small class="text-primary">Please attach only PDF, JPG, JPEG or PNG files.</small>
+                                    </div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="QualificationReport_data"></div>
+
+                                        <div class="add-btn">
+                                            <label for="QualificationReport_id" style="cursor:pointer">Add</label>
+                                                <input
+                                                type="file"
+                                                id="QualificationReport_id"
+                                                name="QualificationReport_data_filed[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateQualificationReportAttachment(this)"
+                                                multiple
+                                                hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                           <script>
+                                function validateQualificationReportAttachment(input) {
+                                    const fileList = document.getElementById('QualificationReport_data');
+                                    const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    fileList.innerHTML = '';
+
+                                    const files = Array.from(input.files || []);
+
+                                    for (const file of files) {
+                                        const extension = file.name.split('.').pop().toLowerCase();
+
+                                        // Some browsers return an empty MIME type.
+                                        const validMime = !file.type ||
+                                            allowedMimeTypes.includes(file.type);
+
+                                        if (!allowedExtensions.includes(extension) || !validMime) {
+                                            input.value = '';
+
+                                            if (typeof Swal !== 'undefined') {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Invalid File',
+                                                    text: 'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                    confirmButtonText: 'OK'
+                                                });
+                                            } else {
+                                                alert('Only PDF, JPG, JPEG and PNG files are allowed.');
+                                            }
+
+                                            return;
+                                        }
+                                    }
+
+                                    files.forEach(file => {
+                                        const item = document.createElement('div');
+                                        item.textContent = file.name;
+                                        fileList.appendChild(item);
+                                    });
+                                }
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a></button>
+                    </div>
+                </div>
+
+
+                {{--    Qualification Protocol   --}}
+
+
+                 <div id="doc-QP" class="tabcontent">
+                    <div class="orig-head">Qualification Protocol </div>
+
+                    <div class="input-fields">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment">
+                                        <b>Attachment<span class="text-danger">*</span></b>
+                                    </label>
+
+                                    <div>
+                                        <small class="text-primary">Please attach only PDF, JPG, JPEG or PNG files.</small>
+                                    </div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="QualificationProtocol_data"></div>
+
+                                        <div class="add-btn">
+                                            <label for="QualificationProtocol_id" style="cursor:pointer">Add</label>
+                                            <input
+                                                type="file"
+                                                id="QualificationProtocol_id"
+                                                name="QualificationProtocol_data_filed[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateOtherDocumentAttachment(this)"
+                                                multiple
+                                                hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                function validateOtherDocumentAttachment(input){
+                                    const allowedExtensions = ['pdf','jpg','jpeg','png'];
+                                    const allowedMimeTypes = ['application/pdf','image/jpeg','image/png'];
+                                    const files = Array.from(input.files);
+
+                                    if(files.length === 0) return;
+
+                                    for(const file of files){
+                                        const ext = file.name.split('.').pop().toLowerCase();
+                                        if(!allowedExtensions.includes(ext) || !allowedMimeTypes.includes(file.type)){
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                confirmButtonText:'OK'
+                                            });
+                                            input.value = '';
+                                            document.getElementById('QualificationProtocol_data').innerHTML = '';
+                                            return;
+                                        }
+                                    }
+                                    addOtherDocumentFiles(input,'QualificationProtocol_data');
+                                }
+
+                                function addOtherDocumentFiles(input,listId){
+                                    const fileList = document.getElementById(listId);
+                                    fileList.innerHTML = "";
+                                    for(const file of input.files){
+                                        const div = document.createElement("div");
+                                        div.textContent = file.name;
+                                        fileList.appendChild(div);
+                                    }
+                                }
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a></button>
+                    </div>
+                </div>
+
+                {{-- Compressed air system Report --}}
+
+
+                <div id="doc-casreport" class="tabcontent">
+                    <div class="orig-head">Compressed Air System Report</div>
+
+                    <div class="input-fields">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="compressed_air_sys_report_id">
+                                        <b>Attachment<span class="text-danger">*</span></b>
+                                    </label>
+
+                                    <div>
+                                        <small class="text-primary">
+                                            Please attach only PDF, JPG, JPEG or PNG files.
+                                        </small>
+                                    </div>
+
+                                    <div class="file-attachment-field">
+                                        <div
+                                            class="file-attachment-list"
+                                            id="compressed_air_sys_report">
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label
+                                                for="compressed_air_sys_report_id"
+                                                style="cursor:pointer">
+                                                Add
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                id="compressed_air_sys_report_id"
+                                                name="compressed_air_sys_report[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateCompressedAirReportAttachment(this)"
+                                                multiple
+                                                hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-block">
+                        <button
+                            type="submit"
+                            value="save"
+                            name="submit"
+                            id="CompressedAirReportSaveButton"
+                            class="saveButton">
+                            Save
+                        </button>
+
+                        <button type="button" class="backButton" onclick="previousStep()">
+                            Back
+                        </button>
+
+                        <button type="button" class="nextButton" onclick="nextStep()">
+                            Next
+                        </button>
+
+                        <button type="button">
+                            <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+                <script>
+                    function validateCompressedAirReportAttachment(input) {
+                        const fileList = document.getElementById('compressed_air_sys_report');
+                        const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+                        const allowedMimeTypes = [
+                            'application/pdf',
+                            'image/jpeg',
+                            'image/png'
+                        ];
+
+                        fileList.innerHTML = '';
+
+                        const files = Array.from(input.files || []);
+
+                        for (const file of files) {
+                            const extension = file.name.split('.').pop().toLowerCase();
+                            const validMime = !file.type ||
+                                allowedMimeTypes.includes(file.type);
+
+                            if (!allowedExtensions.includes(extension) || !validMime) {
+                                input.value = '';
+
+                                if (typeof Swal !== 'undefined') {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Invalid File',
+                                        text: 'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                        confirmButtonText: 'OK'
+                                    });
+                                } else {
+                                    alert('Only PDF, JPG, JPEG and PNG files are allowed.');
+                                }
+
+                                return;
+                            }
+                        }
+
+                        files.forEach(file => {
+                            const item = document.createElement('div');
+                            item.textContent = file.name;
+                            fileList.appendChild(item);
+                        });
+                    }
+                </script>
+
+
+
+
+                {{-- Compressed Air system Protocol --}}
+
+
+                <div id="doc-CASP" class="tabcontent">
+                    <div class="orig-head"> compressed air system Protocol </div>
+
+                    <div class="input-fields">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment">
+                                        <b>Attachment<span class="text-danger">*</span></b>
+                                    </label>
+
+                                    <div>
+                                        <small class="text-primary">Please attach only PDF, JPG, JPEG or PNG files.</small>
+                                    </div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="compressed_air_sys_protocol"></div>
+
+                                        <div class="add-btn">
+                                            <label for="compressed_air_sys_protocol_id" style="cursor:pointer">Add</label>
+                                                <input
+                                                type="file"
+                                                id="compressed_air_sys_protocol_id"
+                                                name="compressed_air_sys_protocol[]"
+                                                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                                onchange="validateQualificationReportAttachment(this)"
+                                                multiple
+                                                hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                           <script>
+                                function validateQualificationReportAttachment(input) {
+                                    const fileList = document.getElementById('compressed_air_sys_protocol');
+                                    const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    fileList.innerHTML = '';
+
+                                    const files = Array.from(input.files || []);
+
+                                    for (const file of files) {
+                                        const extension = file.name.split('.').pop().toLowerCase();
+
+                                        // Some browsers return an empty MIME type.
+                                        const validMime = !file.type ||
+                                            allowedMimeTypes.includes(file.type);
+
+                                        if (!allowedExtensions.includes(extension) || !validMime) {
+                                            input.value = '';
+
+                                            if (typeof Swal !== 'undefined') {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Invalid File',
+                                                    text: 'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                    confirmButtonText: 'OK'
+                                                });
+                                            } else {
+                                                alert('Only PDF, JPG, JPEG and PNG files are allowed.');
+                                            }
+
+                                            return;
+                                        }
+                                    }
+
+                                    files.forEach(file => {
+                                        const item = document.createElement('div');
+                                        item.textContent = file.name;
+                                        fileList.appendChild(item);
+                                    });
+                                }
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a></button>
                     </div>
                 </div>
 
@@ -17080,7 +17594,7 @@
                                                         <th class="copy-name">Revision No.</th>
                                                         <th class="copy-name">Change Control No./ DCRF No</th>
                                                         <th class="copy-name">Effective Date</th>
-                                                        <th class="copy-name">Reason of revision</th>
+                                                        <th class="copy-name">Details of Revision</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -17792,7 +18306,7 @@
                                                         <th class="copy-name">Revision No.</th>
                                                         <th class="copy-name">Change Control No./ DCRF No</th>
                                                         <th class="copy-name">Effective Date</th>
-                                                        <th class="copy-name">Reason of revision</th>
+                                                        <th class="copy-name">Details of Revision</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -18148,7 +18662,7 @@
                                                         <th class="copy-name">Revision No.</th>
                                                         <th class="copy-name">Change Control No./ DCRF No</th>
                                                         <th class="copy-name">Effective Date</th>
-                                                        <th class="copy-name">Reason of revision</th>
+                                                        <th class="copy-name">Details of Revision</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

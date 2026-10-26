@@ -864,7 +864,7 @@ header td.title p { font-size: 14px; }
                                 <th style="font-size: 14px; font-weight: bold; width:15%">Revision No.</th>
                                 {{-- <th style="font-size: 14px; font-weight: bold; width:20%">Change Control No.</th> --}}
                                 <th style="font-size: 14px; font-weight: bold; width:25%">Effective Date</th>
-                                <th style="font-size: 14px; font-weight: bold; width:60%">Reason of revision</th>
+                                <th style="font-size: 14px; font-weight: bold; width:60%">Details of Revision</th>
                             </tr>
                         </thead>
                         <tbody>

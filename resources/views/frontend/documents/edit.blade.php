@@ -84,29 +84,48 @@
     </style>
 
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let docTypeSelect = document.getElementById("doc-type");
-            let allTabs = document.querySelectorAll(".hidden-tabs");
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const docTypeSelect = document.getElementById("doc-type");
+        const allTabs = document.querySelectorAll(".hidden-tabs");
 
-            function showMatchingTabs(docTypeId) {
-                allTabs.forEach(tab => {
-                    tab.style.display = "none";
-                    if (tab.dataset.id === docTypeId) {
-                        tab.style.display = "inline-block";
-                    }
-                });
-            }
+        if (!docTypeSelect) return;
 
-            if (docTypeSelect.value) {
-                showMatchingTabs(docTypeSelect.value);
-            }
+        function showMatchingTabs(docTypeId) {
+            const selectedType = String(docTypeId || "")
+                .trim()
+                .toUpperCase();
 
-            docTypeSelect.addEventListener("change", function () {
-                showMatchingTabs(this.value);
+            allTabs.forEach(tab => {
+                const raw = (tab.dataset.id || "").trim();
+                let ids = [];
+
+                try {
+                    ids = raw.startsWith("[")
+                        ? JSON.parse(raw)
+                        : raw.split(",");
+                } catch {
+                    ids = [];
+                }
+
+                const matches = Array.isArray(ids) &&
+                    selectedType !== "" &&
+                    ids.some(id =>
+                        String(id).trim().toUpperCase() === selectedType
+                    );
+
+                tab.style.display = matches ? "inline-block" : "none";
             });
+        }
+
+        // Edit page par saved document type ke tabs bhi dikhenge.
+        showMatchingTabs(docTypeSelect.value);
+
+        docTypeSelect.addEventListener("change", function () {
+            showMatchingTabs(this.value);
         });
-    </script>
+    });
+</script>
 
 
     <style>
@@ -208,7 +227,7 @@
         <div class="container-fluid">
             <div class="tab">
                 <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document Information</button>
-                <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
+                <button class="tablinks hidden-tabs" data-id="SOP" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks hidden-tabs" data-id="SOP" onclick="openData(event, 'doc-content')">Document Content</button>
 
                 <!-- Hidden Tabs (Only Show Based on document_type_id) -->
@@ -226,12 +245,18 @@
                 <button class="tablinks hidden-tabs" data-id="HOLDTIMESTUDYPROTOCOL" onclick="openData(event, 'doc-htsp')">Hold Time Study Protocol</button>
                 <button class="tablinks hidden-tabs" data-id="PACKVALIPROTOCOL" onclick="openData(event, 'doc-pvp')">Packing validation Protocol</button>
 
+                <button class="tablinks hidden-tabs" data-id="QR" onclick="openData(event, 'doc-QR')">Qualification Report</button>
+                <button class="tablinks hidden-tabs" data-id="QP" onclick="openData(event, 'doc-QP')">Qualification Protocol</button>
+
+
                 <button class="tablinks hidden-tabs" data-id="ANNACINQULIPROTOCOL" onclick="openData(event, 'doc-AIQP')">Annexure For Acceptance Of Installation Qualification Protocol</button>
                 <button class="tablinks hidden-tabs" data-id="ANNACOPERQULIPROTOCOL" onclick="openData(event, 'doc-AOQP')">Annexure For Acceptance Of Operational Qualification Protocol</button>
                 <button class="tablinks hidden-tabs" data-id="ANNACPERMQULIPROTOCOL" onclick="openData(event, 'doc-APQP')">Annexure For Acceptance Of Performance Qualification Protocol</button>
 
                 <button class="tablinks hidden-tabs" data-id="PACKVALIREPORT" onclick="openData(event, 'doc-PacValRep')">Packing Validation Report</button>
-                <button class="tablinks hidden-tabs" data-id="FOCONITOGENPROTOCOL" onclick="openData(event, 'doc-FoCoANGsP')">Format For Compressed Air And Nitrogen Gas System Protocol</button>
+                <button class="tablinks hidden-tabs" data-id="NGSP" onclick="openData(event, 'doc-FoCoANGsP')">Nitrogen Gas System Protocol</button>
+
+                 <button class="tablinks hidden-tabs" data-id="CASP" onclick="openData(event, 'doc-CASP')">Compressed Air System Protocol</button>
 
                 <button class="tablinks hidden-tabs" data-id="PROVALIPROTOCOL" onclick="openData(event, 'doc_prvp')">Process Validation Protocol</button>
 
@@ -250,7 +275,9 @@
                 <button class="tablinks hidden-tabs" data-id="EQUIPMENTHOLDREPORT" onclick="openData(event, 'doc-eqpreport')">Equipment Hold Time Study Report</button>
 
                 <button class="tablinks hidden-tabs" data-id="EQUIPMENTHOLDPROTOCOL" onclick="openData(event, 'doc-eqpprotocol')">Equipment Hold Time Study Protocol</button>
-                <button class="tablinks hidden-tabs" data-id="FOCONITOGENREPORT" onclick="openData(event, 'doc-fcreport')">Format for compressed air and Nitrogen gas system Report</button>
+                <button class="tablinks hidden-tabs" data-id="NGSR" onclick="openData(event, 'doc-fcreport')">Nitrogen gas system Report</button>
+
+                <button class="tablinks hidden-tabs" data-id="CASR" onclick="openData(event, 'doc-casreport')">compressed air system Report</button>
 
                 <button class="tablinks hidden-tabs" data-id="PROVALIDRE" onclick="openData(event, 'doc_pvr')">Process Validation Report</button>
 
@@ -302,7 +329,16 @@
                 <button class="tablinks hidden-tabs" data-id="ANNEXUREXVIIVALIDATION" onclick="openData(event, 'doc-avsr')">annexure-XVII - Validation Summary Report </button>
                 <button class="tablinks hidden-tabs" data-id="ANNEXUREXVIINSTALLATION" onclick="openData(event, 'doc-aiiopq')">annexure-XVI - Installation_Infrastructure_Operational_Performance Qualification</button>
 
-                <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
+                <button class="tablinks hidden-tabs" data-id="OA" onclick="openData(event, 'doc-OtherDocument')">Other Attachment</button>
+
+               
+                <button
+                    type="button"
+                    class="tablinks hidden-tabs"
+                    data-id='["SOP","FPSTP","IPSTP","CVSTP","RMSTP","MFPSTP"]'
+                    onclick="openData(event, 'annexures')">
+                    Annexures
+                </button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
               {{--  <button class="tablinks printdoc" style="float: right;" onclick="window.print();return false;">Print</button> --}}
@@ -550,203 +586,7 @@
                                         updateSopTypeShort();
                                     }
                                 </script>
-                {{--
-                        @if($document->document_type_id == 'SOP')   
-                            <div class="col-md-4 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="due-date">Due Date</label>
-                                    <div><small class="text-primary">Kindly Fill Target Date of Completion</small>
-                                    </div>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="due_dateDoc"
-                                            value="{{ $document->due_dateDoc ? Carbon\Carbon::parse($document->due_dateDoc)->format('d-M-Y') : '' }}"
-                                            placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_dateDoc"
-                                            value="{{ $document->due_dateDoc ? Carbon\Carbon::parse($document->due_dateDoc)->format('Y-m-d') : '' }}"
-                                            readonly {{ Helpers::isRevised($document->stage) }} class="hide-input"
-                                            style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                            min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
-                                            oninput="handleDateInput(this, 'due_dateDoc')" />
-                                    </div>
-                                    @foreach ($history as $tempHistory)
-                                        @if (
-                                            $tempHistory->activity_type == 'Due Date' &&
-                                                !empty($tempHistory->comment) &&
-                                                $tempHistory->user_id == Auth::user()->id)
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                            color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                                <p id="due_dateDocError" style="color:red">**Due Date is required</p>
-
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
-                                    <div class="comment">
-                                        <div>
-                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
-                                                at
-                                                {{ date('d-M-Y h:i:s') }}
-                                            </p>
-
-                                            <input class="input-field" type="text" name="due_date_comment">
-                                        </div>
-
-                                        <div class="button">Add Comment</div>
-                                    </div>
-                                @endif
-                            </div>
-                            @else
-                            <div class="col-md-4 new-date-data-field" style="display: none;">
-                                <div class="group-input input-date">
-                                    <label for="due-date">Due Date</label>
-                                    <div><small class="text-primary">Kindly Fill Target Date of Completion</small>
-                                    </div>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="due_dateDoc"
-                                            value="{{ $document->due_dateDoc ? Carbon\Carbon::parse($document->due_dateDoc)->format('d-M-Y') : '' }}"
-                                            placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_dateDoc"
-                                            value="{{ $document->due_dateDoc ? Carbon\Carbon::parse($document->due_dateDoc)->format('Y-m-d') : '' }}"/>
-                                    </div>
-                                    @foreach ($history as $tempHistory)
-                                        @if (
-                                            $tempHistory->activity_type == 'Due Date' &&
-                                                !empty($tempHistory->comment) &&
-                                                $tempHistory->user_id == Auth::user()->id)
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                            color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                                <p id="due_dateDocError" style="color:red; display: none;">**Due Date is required</p>
-                                </div>
-                            @endif 
-                    --}}
-                        {{--    
-                            @if($document->document_type_id == 'SOP') 
-                            <div class="col-md-8">
-                                <div class="group-input">
-                                    <label for="notify_to">Notify To</label>
-                                    <select multiple name="notify_to[]" placeholder="Select Persons" data-search="false"
-                                        data-silent-initial-value-set="true" id="notify_to"
-                                        {{ Helpers::isRevised($document->stage) }}>
-                                        @php
-                                            $notify_user_id = explode(',', $document->notify_to);
-                                        @endphp
-                                        @foreach ($users as $data)
-                                            <option value="{{ $data->id }}"
-                                                {{ in_array($data->id, $notify_user_id) ? 'selected' : '' }}>
-                                                {{ $data->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @foreach ($history as $tempHistory)
-                                        @if (
-                                            $tempHistory->activity_type == 'Notify To' &&
-                                                !empty($tempHistory->comment) &&
-                                                $tempHistory->user_id == Auth::user()->id)
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
-                                    <div class="comment">
-                                        <div>
-                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
-                                                at {{ date('d-M-Y h:i:s') }}</p>
-
-                                            <input class="input-field" type="text" name="notify_to_comment">
-                                        </div>
-                                        <div class="button">Add Comment</div>
-                                    </div>
-                                @endif
-                            </div>
-                            @else
-                            <div class="col-md-8" style="display: none;">
-                                <div class="group-input">
-                                    <label for="notify_to">Notify To</label>
-                                    <select multiple name="notify_to[]" placeholder="Select Persons" data-search="false"
-                                        data-silent-initial-value-set="true" id="notify_to"
-                                        {{ Helpers::isRevised($document->stage) }}>
-                                        @php
-                                            $notify_user_id = explode(',', $document->notify_to);
-                                        @endphp
-                                        @foreach ($users as $data)
-                                            <option value="{{ $data->id }}"
-                                                {{ in_array($data->id, $notify_user_id) ? 'selected' : '' }}>
-                                                {{ $data->name }}
-                                              
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @foreach ($history as $tempHistory)
-                                        @if (
-                                            $tempHistory->activity_type == 'Notify To' &&
-                                                !empty($tempHistory->comment) &&
-                                                $tempHistory->user_id == Auth::user()->id)
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                              </div>
-                            @endif    
-
-
-                            @if (Auth::user()->role != 3 && $document->stage < 8) <div
-                                    class="comment">
-                                    <div>
-                                        <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
-                                            {{ date('d-M-Y h:i:s') }}
-                                        </p>
-
-                                        <input class="input-field" type="text" name="description_comment">
-                                    </div>
-                                </div>
-                            @endif
-                      --}}
+                    
                         </div>
                     </div>
                     <div class="orig-head">
@@ -767,132 +607,7 @@
                                         >
                                     </div>
                                 </div>
-                    {{--
-                            @if($document->document_type_id == 'SOP') 
-                            <div class="col-md-6">
-                                <div class="group-input">
-                                    <label for="legacy_number">Legacy Document Number</label>
-                                    <input type="text" id="legacy_number" name="legacy_number"
-                                        value="{{ $document->legacy_number }}" maxlength="255"
-                                        {{ Helpers::isRevised($document->stage) }}>
-                                </div>
-                            </div>
-                            @else
-                            <div class="col-md-6" style="display: none;">
-                                <div class="group-input">
-                                    <label for="legacy_number">Legacy Document Number</label>
-                                    <input type="text" id="legacy_number" name="legacy_number"
-                                        value="{{ $document->legacy_number }}" maxlength="255"
-                                        {{ Helpers::isRevised($document->stage) }}>
-                                </div>
-                            </div>
-                            @endif
-
-                            @if($document->document_type_id == 'SOP')
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="link-doc">Reference Record</label>
-                                        <select multiple name="reference_record[]" placeholder="Select Reference Records"
-                                            data-search="false" data-silent-initial-value-set="true" id="reference_record"
-                                            {{ Helpers::isRevised($document->stage) }}>
-                                            @if (!empty($document_data))
-                                                @foreach ($document_data as $temp)
-                                                    @if ($temp->id != $document->id)
-                                                        <option value="{{ $temp->id }}"
-                                                            {{ str_contains($document->reference_record, $temp->id) ? 'selected' : '' }}>
-                                                            {{ $temp->sop_type_short }}/000{{ $temp->id }}/R{{ $temp->major }}.{{ $temp->minor }}/{{ $temp->document_name }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                        </select>
-
-                                        @foreach ($history as $tempHistory)
-                                            @if (
-                                                $tempHistory->activity_type == 'Reference Record' &&
-                                                    !empty($tempHistory->comment) &&
-                                                    $tempHistory->user_id == Auth::user()->id)
-                                                @php
-                                                    $users_name = DB::table('users')
-                                                        ->where('id', $tempHistory->user_id)
-                                                        ->value('name');
-                                                @endphp
-                                                <p style="color: blue">Modify by {{ $users_name }} at
-                                                    {{ $tempHistory->created_at }}
-                                                </p>
-                                                <input class="input-field"
-                                                    style="background: #ffff0061;
-                                        color: black;"
-                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                    @if (Auth::user()->role != 3 && $document->stage < 8)
-                                        <div class="comment">
-                                            <div>
-                                                <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
-                                                    at {{ date('d-M-Y h:i:s') }}</p>
-
-                                                <input class="input-field" type="text" name="reference_record_comment">
-                                            </div>
-                                            <div class="button">Add Comment</div>
-                                        </div>
-                                    @endif
-                                </div>
-                            @else
-                                <div class="col-md-12" style="display: none;">
-                                    <div class="group-input">
-                                        <label for="link-doc">Reference Record</label>
-                                        <select multiple name="reference_record[]" placeholder="Select Reference Records"
-                                            data-search="false" data-silent-initial-value-set="true" id="reference_record"
-                                            {{ Helpers::isRevised($document->stage) }}>
-                                            @if (!empty($document_data))
-                                                @foreach ($document_data as $temp)
-                                                    @if ($temp->id != $document->id)
-                                                        <option value="{{ $temp->id }}"
-                                                            {{ str_contains($document->reference_record, $temp->id) ? 'selected' : '' }}>
-                                                            {{ $temp->sop_type_short }}/000{{ $temp->id }}/R{{ $temp->major }}.{{ $temp->minor }}/{{ $temp->document_name }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                        </select>
-
-                                        @foreach ($history as $tempHistory)
-                                            @if (
-                                                $tempHistory->activity_type == 'Reference Record' &&
-                                                    !empty($tempHistory->comment) &&
-                                                    $tempHistory->user_id == Auth::user()->id)
-                                                @php
-                                                    $users_name = DB::table('users')
-                                                        ->where('id', $tempHistory->user_id)
-                                                        ->value('name');
-                                                @endphp
-                                                <p style="color: blue">Modify by {{ $users_name }} at
-                                                    {{ $tempHistory->created_at }}
-                                                </p>
-                                                <input class="input-field"
-                                                    style="background: #ffff0061;
-                                        color: black;"
-                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                    @if (Auth::user()->role != 3 && $document->stage < 8)
-                                        <div class="comment">
-                                            <div>
-                                                <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
-                                                    at {{ date('d-M-Y h:i:s') }}</p>
-
-                                                <input class="input-field" type="text" name="reference_record_comment">
-                                            </div>
-                                            <div class="button">Add Comment</div>
-                                        </div>
-                                    @endif
-                                </div>
-                            @endif
-                        
-                    --}}
+              
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="depart-name">Department Name</label>
@@ -1821,7 +1536,8 @@
                                 'SPEC',
                                 'STP',
                                 'TDS',
-                                'GTP'
+                                'GTP',
+                                
                             ]);
                         @endphp
 
@@ -1848,12 +1564,12 @@
                                                 @if (Helpers::checkUserRolesreviewer($lan))
                                                     <option value="{{ $lan->id }}"
                                                         @if ($document->reviewers) @php
-                                $data = explode(",", $document->reviewers);
-                                $count = count($data);
-                            @endphp
-                            @for ($i = 0; $i < $count; $i++)
-                                @if ($data[$i] == $lan->id)
-                                    selected @endif
+                                                    $data = explode(",", $document->reviewers);
+                                                    $count = count($data);
+                                                @endphp
+                                                @for ($i = 0; $i < $count; $i++)
+                                                    @if ($data[$i] == $lan->id)
+                                                        selected @endif
                                                         @endfor
                                                 @endif>
                                                 {{ $lan->name }}
@@ -3116,7 +2832,7 @@
                                             <th>Revision No.</th>
                                             <th>Change Control No.</th>
                                             <th>Effective Date</th>
-                                            <th>Reason of Revision</th>
+                                            <th>Details of Revision</th>
                                         </tr>
                                     </thead>
                                     <tbody id="revision-history-body">
@@ -3271,7 +2987,7 @@
                                                         <th>Revision No.</th>
                                                         <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
-                                                        <th>Reason of Revision</th>
+                                                        <th>Details of Revision</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="mfprevision-history-body">
@@ -3433,7 +3149,7 @@
                                                     <th>Revision No.</th>
                                                     <!-- <th>Change Control No.</th> -->
                                                     <th>Effective Date</th>
-                                                    <th>Reason of Revision</th>
+                                                    <th>Details of Revision</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="mfpstprevision-history-body">
@@ -4182,6 +3898,8 @@
                                                         value="CV">Cleaning Validation</option>
                                             <option {{ $document->tds_name_code == 'RW' ? 'selected' : '' }}
                                                         value="RW">Raw Material</option>
+                                            <option {{ $document->tds_name_code == 'PM' ? 'selected' : '' }}
+                                                        value="PM">Packing Material</option>
                                         </select>
                                     </div>
                                 </div>
@@ -4438,7 +4156,7 @@
                                                 <th>Revision No.</th>
                                                 <!-- <th>Change Control No.</th> -->
                                                 <th>Effective Date</th>
-                                                <th>Reason of Revision</th>
+                                                <th>Details of Revision</th>
                                             </tr>
                                         </thead>
                                         <tbody id="revision-tdshistory-body">
@@ -4714,7 +4432,7 @@
                                                 <th>Revision No.</th>
                                                 <!-- <th>Change Control No.</th> -->
                                                 <th>Effective Date</th>
-                                                <th>Reason of Revision</th>
+                                                <th>Details of Revision</th>
                                             </tr>
                                         </thead>
                                         <tbody id="revision-history-fps">
@@ -5085,7 +4803,7 @@
                                                 <th>Revision No.</th>
                                                 <!-- <th>Change Control No.</th> -->
                                                 <th>Effective Date</th>
-                                                <th>Reason of Revision</th>
+                                                <th>Details of Revision</th>
                                             </tr>
                                         </thead>
                                         <tbody id="revision-history-cvs">
@@ -5361,7 +5079,7 @@
                                                 <th>Revision No.</th>
                                                 <!-- <th>Change Control No.</th> -->
                                                 <th>Effective Date</th>
-                                                <th>Reason of Revision</th>
+                                                <th>Details of Revision</th>
                                             </tr>
                                         </thead>
                                         <tbody id="revision-history-inps">
@@ -5995,14 +5713,14 @@
 
         <div id="doc-FoCoANGsP" class="tabcontent">
             <div class="orig-head">
-                Format for Compressed Air and Nitrogen Gas System Protocol
+               Nitrogen Gas System Protocol
             </div>
             <div class="input-fields">
                 <div class="row">
 
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="File_Attachment"><b>Format For Compressed Air And Nitrogen Gas System Protocol</b></label>
+                                <label for="File_Attachment"><b>File Attachment</b></label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
 
                                 <div class="file-attachment-field">
@@ -6097,6 +5815,223 @@
                     </button>
                 </div>
             </div>
+
+
+            <!--  -->
+
+
+                <div id="doc-CASP" class="tabcontent">
+                    <div class="orig-head">
+                    Compressed Air System Protocol
+                    </div>
+
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment">
+                                    <b>File Attachment</b>
+                                </label>
+
+                                <div>
+                                    <small class="text-primary">
+                                        Please attach only PDF, JPG, JPEG or PNG files.
+                                    </small>
+                                </div>
+
+                                <div class="file-attachment-field">
+
+                                    <div class="file-attachment-list" id="compressed_air_sys_protocolDatafield_datafiled_protocol">
+
+                                        @if ($document->compressed_air_sys_protocol)
+
+                                            @foreach(json_decode($document->compressed_air_sys_protocol, true) ?? [] as $file)
+
+                                                <h6 class="file-container text-dark"
+                                                    style="background-color:rgb(243,242,240);">
+
+                                                    <b>{{ $file }}</b>
+
+                                                    <a href="{{ asset('upload/'.$file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary"
+                                                            style="font-size:20px;margin-right:4px;"></i>
+                                                    </a>
+
+                                                    <a type="button"
+                                                        class="remove-attachNitrogen"
+                                                        data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark"
+                                                            style="color:red;font-size:20px;"></i>
+                                                    </a>
+
+                                                    <input type="hidden"
+                                                        name="existing_compressed_air_sys_protocol[]"
+                                                        value="{{ $file }}">
+
+                                                </h6>
+
+                                            @endforeach
+
+                                        @endif
+
+                                    </div>
+
+                                    <div class="add-btn">
+                                        <label for="compressed_air_sys_protocolData" style="cursor:pointer">
+                                            Add
+                                        </label>
+
+                                        <input
+                                            type="file"
+                                            id="compressed_air_sys_protocolData"
+                                            name="compressed_air_sys_protocol[]"
+                                            accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                            onchange="validateAttachCompNitrogen(this)"
+                                            multiple
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden"
+                            id="deleted_compressed_air_sys_protocol"
+                            name="deleted_compressed_air_sys_protocol"
+                            value="">
+
+
+                        <script>
+
+                                document.addEventListener('DOMContentLoaded',function(){
+
+                                    document.querySelectorAll('.remove-attachNitrogen').forEach(function(btn){
+
+                                        btn.addEventListener('click',function(){
+
+                                            let fileName=this.dataset.fileName;
+
+                                            let container=this.closest('.file-container');
+
+                                            if(!container) return;
+
+                                            container.style.display='none';
+
+                                            let hidden=container.querySelector('input[type="hidden"]');
+
+                                            if(hidden){
+                                                hidden.remove();
+                                            }
+
+                                            let deleted=document.getElementById('deleted_compressed_air_sys_protocol');
+
+                                            let files=deleted.value
+                                                ? deleted.value.split(',')
+                                                : [];
+
+                                            if(!files.includes(fileName)){
+                                                files.push(fileName);
+                                            }
+
+                                            deleted.value=files.join(',');
+
+                                        });
+
+                                    });
+
+                                });
+
+
+                                function validateAttachCompNitrogen(input){
+
+                                    const allowedExtensions=[
+                                        'pdf',
+                                        'jpg',
+                                        'jpeg',
+                                        'png'
+                                    ];
+
+                                    const allowedMimeTypes=[
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    const files=Array.from(input.files);
+
+                                    if(files.length===0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const ext=file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(ext) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                confirmButtonText:'OK'
+                                            });
+
+                                            input.value='';
+
+                                            return;
+                                        }
+
+                                    }
+
+                                    addAttachCompNitrogenFiles(input,'compressed_air_sys_protocolDatafield_datafiled_protocol');
+
+                                }
+
+
+                                function addAttachCompNitrogenFiles(input,listId){
+
+                                    let fileList=document.getElementById(listId);
+
+                                    for(const file of input.files){
+
+                                        let fileContainer=document.createElement('h6');
+
+                                        fileContainer.classList.add(
+                                            'file-container',
+                                            'text-dark'
+                                        );
+
+                                        fileContainer.style.backgroundColor='rgb(243,242,240)';
+
+                                        let fileText=document.createElement('b');
+                                        fileText.textContent=file.name;
+
+                                        let remove=document.createElement('a');
+                                        remove.type='button';
+                                        remove.innerHTML='<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                        remove.addEventListener('click',function(){
+                                            fileContainer.remove();
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(remove);
+
+                                        fileList.appendChild(fileContainer);
+
+                                    }
+
+                                }
+
+                        </script>
+                        <div class="button-block">
+                            <button type="submit" name="submit" value="save" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        </div>
+                 </div>
+
 
             {{-- bill of material tabs --}}
 
@@ -7398,7 +7333,7 @@
 
                 <div id="doc-fcreport" class="tabcontent">
                     <div class="orig-head">
-                        Format for compressed air and Nitrogen gas system Report
+                       Nitrogen gas system Report
                     </div>
 
                         <div class="col-12">
@@ -7607,6 +7542,222 @@
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             </div>
                 </div>
+
+
+                <!-- compressed air system Report -->
+                <div id="doc-casreport" class="tabcontent">
+                    <div class="orig-head">
+                    compressed air system Report
+                    </div>
+
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment">
+                                    <b>File Attachment</b>
+                                </label>
+
+                                <div>
+                                    <small class="text-primary">
+                                        Please attach only PDF, JPG, JPEG or PNG files.
+                                    </small>
+                                </div>
+
+                                <div class="file-attachment-field">
+
+                                    <div class="file-attachment-list" id="compressed_air_sys_reportDatafield_datafiled">
+
+                                        @if ($document->compressed_air_sys_report)
+
+                                            @foreach(json_decode($document->compressed_air_sys_report, true) ?? [] as $file)
+
+                                                <h6 class="file-container text-dark"
+                                                    style="background-color:rgb(243,242,240);">
+
+                                                    <b>{{ $file }}</b>
+
+                                                    <a href="{{ asset('upload/'.$file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary"
+                                                            style="font-size:20px;margin-right:4px;"></i>
+                                                    </a>
+
+                                                    <a type="button"
+                                                        class="remove-attachNitrogen"
+                                                        data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark"
+                                                            style="color:red;font-size:20px;"></i>
+                                                    </a>
+
+                                                    <input type="hidden"
+                                                        name="existing_compressed_air_sys_report[]"
+                                                        value="{{ $file }}">
+
+                                                </h6>
+
+                                            @endforeach
+
+                                        @endif
+
+                                    </div>
+
+                                    <div class="add-btn">
+                                        <label for="compressed_air_sys_reportData" style="cursor:pointer">
+                                            Add
+                                        </label>
+
+                                        <input
+                                            type="file"
+                                            id="compressed_air_sys_reportData"
+                                            name="compressed_air_sys_report[]"
+                                            accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                            onchange="validateAttachCompNitrogen(this)"
+                                            multiple
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden"
+                            id="deleted_compressed_air_sys_report"
+                            name="deleted_compressed_air_sys_report"
+                            value="">
+
+
+                        <script>
+
+                                document.addEventListener('DOMContentLoaded',function(){
+
+                                    document.querySelectorAll('.remove-attachNitrogen').forEach(function(btn){
+
+                                        btn.addEventListener('click',function(){
+
+                                            let fileName=this.dataset.fileName;
+
+                                            let container=this.closest('.file-container');
+
+                                            if(!container) return;
+
+                                            container.style.display='none';
+
+                                            let hidden=container.querySelector('input[type="hidden"]');
+
+                                            if(hidden){
+                                                hidden.remove();
+                                            }
+
+                                            let deleted=document.getElementById('deleted_compressed_air_sys_report');
+
+                                            let files=deleted.value
+                                                ? deleted.value.split(',')
+                                                : [];
+
+                                            if(!files.includes(fileName)){
+                                                files.push(fileName);
+                                            }
+
+                                            deleted.value=files.join(',');
+
+                                        });
+
+                                    });
+
+                                });
+
+
+                                function validateAttachCompNitrogen(input){
+
+                                    const allowedExtensions=[
+                                        'pdf',
+                                        'jpg',
+                                        'jpeg',
+                                        'png'
+                                    ];
+
+                                    const allowedMimeTypes=[
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    const files=Array.from(input.files);
+
+                                    if(files.length===0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const ext=file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(ext) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                confirmButtonText:'OK'
+                                            });
+
+                                            input.value='';
+
+                                            return;
+                                        }
+
+                                    }
+
+                                    addAttachCompNitrogenFiles(input,'compressed_air_sys_reportDatafield_datafiled');
+
+                                }
+
+
+                                function addAttachCompNitrogenFiles(input,listId){
+
+                                    let fileList=document.getElementById(listId);
+
+                                    for(const file of input.files){
+
+                                        let fileContainer=document.createElement('h6');
+
+                                        fileContainer.classList.add(
+                                            'file-container',
+                                            'text-dark'
+                                        );
+
+                                        fileContainer.style.backgroundColor='rgb(243,242,240)';
+
+                                        let fileText=document.createElement('b');
+                                        fileText.textContent=file.name;
+
+                                        let remove=document.createElement('a');
+                                        remove.type='button';
+                                        remove.innerHTML='<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                        remove.addEventListener('click',function(){
+                                            fileContainer.remove();
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(remove);
+
+                                        fileList.appendChild(fileContainer);
+
+                                    }
+
+                                }
+
+                        </script>
+                        <div class="button-block">
+                                    <button type="submit" name="submit" value="save" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        </div>
+                </div>
+
+
 
 
                     <!--Process Validation Protocol Interim  -->
@@ -11023,7 +11174,7 @@
                                                         <th>Revision No.</th>
                                                         <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
-                                                        <th>Reason of Revision</th>
+                                                        <th>Details of Revision</th>
                                                     </tr>
                                                 </thead>
 
@@ -11260,7 +11411,7 @@
                                                         <th>Revision No.</th>
                                                         <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
-                                                        <th>Reason of Revision</th>
+                                                        <th>Details of Revision</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="revision-history-ipstp">
@@ -11421,7 +11572,7 @@
                                                         <th>Revision No.</th>
                                                         <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
-                                                        <th>Reason of Revision</th>
+                                                        <th>Details of Revision</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="revision-history-cvstp">
@@ -11588,7 +11739,7 @@
                                                         <th>Revision No.</th>
                                                         <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
-                                                        <th>Reason of Revision</th>
+                                                        <th>Details of Revision</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="gtprevision-history-body">
@@ -11702,7 +11853,7 @@
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="reference">Product Name</label>
+                                        <label for="reference">Product / Material Name</label>
                                         <input type="text" name="product_name_rawmstp" value="{{$document->document_content->product_name_rawmstp}}">
                                     </div>
                                 </div>
@@ -11747,7 +11898,7 @@
                                                     <th>Revision No.</th>
                                                     <!-- <th>Change Control No.</th> -->
                                                     <th>Effective Date</th>
-                                                    <th>Reason of Revision</th>
+                                                    <th>Details of Revision</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="rmstprevision-history-body">
@@ -13718,7 +13869,7 @@
                                                         <th>Revision No.</th>
                                                         <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
-                                                        <th>Reason of Revision</th>
+                                                        <th>Details of Revision</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="revision-history-pams">
@@ -16046,6 +16197,9 @@
                     </div>
                 </div>
 
+
+                
+                
                 {{-- Packing validation Protocol --}}
                 <div id="doc-pvp" class="tabcontent">
                     <div class="orig-head">
@@ -16260,6 +16414,655 @@
                         </button>
                     </div>
                 </div>
+
+
+                <!-- Qualification Report -->
+
+
+                <div id="doc-QR" class="tabcontent">
+                            <div class="orig-head">
+                        Qualification Report
+                            </div>
+
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment">
+                                    <b>File Attachment</b>
+                                </label>
+
+                                <div>
+                                    <small class="text-primary">
+                                        Please attach only PDF, JPG, JPEG or PNG files.
+                                    </small>
+                                </div>
+
+                                <div class="file-attachment-field">
+
+                                    <div class="file-attachment-list" id="QualificationReport_data">
+
+                                        @if ($document->QualificationReport_data_filed)
+
+                                            @foreach(json_decode($document->QualificationReport_data_filed, true) ?? [] as $file)
+
+                                                <h6 class="file-container text-dark"
+                                                    style="background-color:rgb(243,242,240);">
+
+                                                    <b>{{ $file }}</b>
+
+                                                    <a href="{{ asset('upload/'.$file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary"
+                                                            style="font-size:20px;margin-right:4px;"></i>
+                                                    </a>
+
+                                                    <a type="button"
+                                                        class="remove-attachNitrogen"
+                                                        data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark"
+                                                            style="color:red;font-size:20px;"></i>
+                                                    </a>
+
+                                                    <input type="hidden"
+                                                        name="existing_QualificationReport_data_filed[]"
+                                                        value="{{ $file }}">
+
+                                                </h6>
+
+                                            @endforeach
+
+                                        @endif
+
+                                    </div>
+
+                                    <div class="add-btn">
+                                        <label for="QualificationReport_data_filedData" style="cursor:pointer">
+                                            Add
+                                        </label>
+
+                                        <input
+                                            type="file"
+                                            id="QualificationReport_data_filedData"
+                                            name="QualificationReport_data_filed[]"
+                                            accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                            onchange="validateAttachCompNitrogen(this)"
+                                            multiple
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden"
+                            id="deleted_QualificationReport_data_filed"
+                            name="deleted_QualificationReport_data_filed"
+                            value="">
+
+
+                        <script>
+
+                                document.addEventListener('DOMContentLoaded',function(){
+
+                                    document.querySelectorAll('.remove-attachNitrogen').forEach(function(btn){
+
+                                        btn.addEventListener('click',function(){
+
+                                            let fileName=this.dataset.fileName;
+
+                                            let container=this.closest('.file-container');
+
+                                            if(!container) return;
+
+                                            container.style.display='none';
+
+                                            let hidden=container.querySelector('input[type="hidden"]');
+
+                                            if(hidden){
+                                                hidden.remove();
+                                            }
+
+                                            let deleted=document.getElementById('deleted_QualificationReport_data_filed');
+
+                                            let files=deleted.value
+                                                ? deleted.value.split(',')
+                                                : [];
+
+                                            if(!files.includes(fileName)){
+                                                files.push(fileName);
+                                            }
+
+                                            deleted.value=files.join(',');
+
+                                        });
+
+                                    });
+
+                                });
+
+
+                                function validateAttachCompNitrogen(input){
+
+                                    const allowedExtensions=[
+                                        'pdf',
+                                        'jpg',
+                                        'jpeg',
+                                        'png'
+                                    ];
+
+                                    const allowedMimeTypes=[
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    const files=Array.from(input.files);
+
+                                    if(files.length===0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const ext=file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(ext) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                confirmButtonText:'OK'
+                                            });
+
+                                            input.value='';
+
+                                            return;
+                                        }
+
+                                    }
+
+                                    addAttachCompNitrogenFiles(input,'QualificationReport_data');
+
+                                }
+
+
+                                function addAttachCompNitrogenFiles(input,listId){
+
+                                    let fileList=document.getElementById(listId);
+
+                                    for(const file of input.files){
+
+                                        let fileContainer=document.createElement('h6');
+
+                                        fileContainer.classList.add(
+                                            'file-container',
+                                            'text-dark'
+                                        );
+
+                                        fileContainer.style.backgroundColor='rgb(243,242,240)';
+
+                                        let fileText=document.createElement('b');
+                                        fileText.textContent=file.name;
+
+                                        let remove=document.createElement('a');
+                                        remove.type='button';
+                                        remove.innerHTML='<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                        remove.addEventListener('click',function(){
+                                            fileContainer.remove();
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(remove);
+
+                                        fileList.appendChild(fileContainer);
+
+                                    }
+
+                                }
+
+                        </script>
+                        <div class="button-block">
+                            <button type="submit" name="submit" value="save" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        </div>
+                </div>
+
+
+                <!-- Qualification Protocol -->
+
+                <div id="doc-QP" class="tabcontent">
+                        <div class="orig-head">
+                            Qualification Protocol
+                        </div>
+
+                    <div class="col-12">
+                        <div class="group-input">
+                            <label for="File_Attachment">
+                                <b>File Attachment</b>
+                            </label>
+
+                            <div>
+                                <small class="text-primary">
+                                    Please attach only PDF, JPG, JPEG or PNG files.
+                                </small>
+                            </div>
+
+                            <div class="file-attachment-field">
+
+                                <div class="file-attachment-list" id="QualificationProtocol_data">
+
+                                    @if ($document->QualificationProtocol_data_filed)
+
+                                        @foreach(json_decode($document->QualificationProtocol_data_filed, true) ?? [] as $file)
+
+                                            <h6 class="file-container text-dark"
+                                                style="background-color:rgb(243,242,240);">
+
+                                                <b>{{ $file }}</b>
+
+                                                <a href="{{ asset('upload/'.$file) }}" target="_blank">
+                                                    <i class="fa fa-eye text-primary"
+                                                        style="font-size:20px;margin-right:4px;"></i>
+                                                </a>
+
+                                                <a type="button"
+                                                    class="remove-attachNitrogen"
+                                                    data-file-name="{{ $file }}">
+                                                    <i class="fa-solid fa-circle-xmark"
+                                                        style="color:red;font-size:20px;"></i>
+                                                </a>
+
+                                                <input type="hidden"
+                                                    name="existing_QualificationProtocol_data_filed[]"
+                                                    value="{{ $file }}">
+
+                                            </h6>
+
+                                        @endforeach
+
+                                    @endif
+
+                                </div>
+
+                                <div class="add-btn">
+                                    <label for="QualificationProtocol_data_filedData" style="cursor:pointer">
+                                        Add
+                                    </label>
+
+                                    <input
+                                        type="file"
+                                        id="QualificationProtocol_data_filedData"
+                                        name="QualificationProtocol_data_filed[]"
+                                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                        onchange="validateAttachCompNitrogen(this)"
+                                        multiple
+                                        hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden"
+                        id="deleted_QualificationProtocol_data_filed"
+                        name="deleted_QualificationProtocol_data_filed"
+                        value="">
+
+
+                    <script>
+
+                            document.addEventListener('DOMContentLoaded',function(){
+
+                                document.querySelectorAll('.remove-attachNitrogen').forEach(function(btn){
+
+                                    btn.addEventListener('click',function(){
+
+                                        let fileName=this.dataset.fileName;
+
+                                        let container=this.closest('.file-container');
+
+                                        if(!container) return;
+
+                                        container.style.display='none';
+
+                                        let hidden=container.querySelector('input[type="hidden"]');
+
+                                        if(hidden){
+                                            hidden.remove();
+                                        }
+
+                                        let deleted=document.getElementById('deleted_QualificationProtocol_data_filed');
+
+                                        let files=deleted.value
+                                            ? deleted.value.split(',')
+                                            : [];
+
+                                        if(!files.includes(fileName)){
+                                            files.push(fileName);
+                                        }
+
+                                        deleted.value=files.join(',');
+
+                                    });
+
+                                });
+
+                            });
+
+
+                            function validateAttachCompNitrogen(input){
+
+                                const allowedExtensions=[
+                                    'pdf',
+                                    'jpg',
+                                    'jpeg',
+                                    'png'
+                                ];
+
+                                const allowedMimeTypes=[
+                                    'application/pdf',
+                                    'image/jpeg',
+                                    'image/png'
+                                ];
+
+                                const files=Array.from(input.files);
+
+                                if(files.length===0){
+                                    return;
+                                }
+
+                                for(const file of files){
+
+                                    const ext=file.name.split('.').pop().toLowerCase();
+
+                                    if(
+                                        !allowedExtensions.includes(ext) ||
+                                        !allowedMimeTypes.includes(file.type)
+                                    ){
+
+                                        Swal.fire({
+                                            icon:'error',
+                                            title:'Invalid File',
+                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                            confirmButtonText:'OK'
+                                        });
+
+                                        input.value='';
+
+                                        return;
+                                    }
+
+                                }
+
+                                addAttachCompNitrogenFiles(input,'QualificationProtocol_data');
+
+                            }
+
+
+                            function addAttachCompNitrogenFiles(input,listId){
+
+                                let fileList=document.getElementById(listId);
+
+                                for(const file of input.files){
+
+                                    let fileContainer=document.createElement('h6');
+
+                                    fileContainer.classList.add(
+                                        'file-container',
+                                        'text-dark'
+                                    );
+
+                                    fileContainer.style.backgroundColor='rgb(243,242,240)';
+
+                                    let fileText=document.createElement('b');
+                                    fileText.textContent=file.name;
+
+                                    let remove=document.createElement('a');
+                                    remove.type='button';
+                                    remove.innerHTML='<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                    remove.addEventListener('click',function(){
+                                        fileContainer.remove();
+                                    });
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(remove);
+
+                                    fileList.appendChild(fileContainer);
+
+                                }
+
+                            }
+
+                    </script>
+                        <div class="button-block">
+                            <button type="submit" name="submit" value="save" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        </div>
+                </div>
+
+                <!-- Other Attachment  -->
+
+                 <div id="doc-OtherDocument" class="tabcontent">
+                    <div class="orig-head">
+                    Other Attchment
+                    </div>
+
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment">
+                                    <b>File Attachment</b>
+                                </label>
+
+                                <div>
+                                    <small class="text-primary">
+                                        Please attach only PDF, JPG, JPEG or PNG files.
+                                    </small>
+                                </div>
+
+                                <div class="file-attachment-field">
+
+                                    <div class="file-attachment-list" id="Otherdata_data_filedDatafield_datafiled_protocol">
+
+                                        @if ($document->Otherdata_data_filed)
+
+                                            @foreach(json_decode($document->Otherdata_data_filed, true) ?? [] as $file)
+
+                                                <h6 class="file-container text-dark"
+                                                    style="background-color:rgb(243,242,240);">
+
+                                                    <b>{{ $file }}</b>
+
+                                                    <a href="{{ asset('upload/'.$file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary"
+                                                            style="font-size:20px;margin-right:4px;"></i>
+                                                    </a>
+
+                                                    <a type="button"
+                                                        class="remove-attachNitrogen"
+                                                        data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark"
+                                                            style="color:red;font-size:20px;"></i>
+                                                    </a>
+
+                                                    <input type="hidden"
+                                                        name="existing_Otherdata_data_filed[]"
+                                                        value="{{ $file }}">
+
+                                                </h6>
+
+                                            @endforeach
+
+                                        @endif
+
+                                    </div>
+
+                                    <div class="add-btn">
+                                        <label for="Otherdata_data_filedData" style="cursor:pointer">
+                                            Add
+                                        </label>
+
+                                        <input
+                                            type="file"
+                                            id="Otherdata_data_filedData"
+                                            name="Otherdata_data_filed[]"
+                                            accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                                            onchange="validateAttachCompNitrogen(this)"
+                                            multiple
+                                            hidden {{ $isReadOnlyattachemnt  ? 'disabled' : '' }}>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden"
+                            id="deleted_Otherdata_data_filed"
+                            name="deleted_Otherdata_data_filed"
+                            value="">
+
+
+                        <script>
+
+                                document.addEventListener('DOMContentLoaded',function(){
+
+                                    document.querySelectorAll('.remove-attachNitrogen').forEach(function(btn){
+
+                                        btn.addEventListener('click',function(){
+
+                                            let fileName=this.dataset.fileName;
+
+                                            let container=this.closest('.file-container');
+
+                                            if(!container) return;
+
+                                            container.style.display='none';
+
+                                            let hidden=container.querySelector('input[type="hidden"]');
+
+                                            if(hidden){
+                                                hidden.remove();
+                                            }
+
+                                            let deleted=document.getElementById('deleted_Otherdata_data_filed');
+
+                                            let files=deleted.value
+                                                ? deleted.value.split(',')
+                                                : [];
+
+                                            if(!files.includes(fileName)){
+                                                files.push(fileName);
+                                            }
+
+                                            deleted.value=files.join(',');
+
+                                        });
+
+                                    });
+
+                                });
+
+
+                                function validateAttachCompNitrogen(input){
+
+                                    const allowedExtensions=[
+                                        'pdf',
+                                        'jpg',
+                                        'jpeg',
+                                        'png'
+                                    ];
+
+                                    const allowedMimeTypes=[
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
+
+                                    const files=Array.from(input.files);
+
+                                    if(files.length===0){
+                                        return;
+                                    }
+
+                                    for(const file of files){
+
+                                        const ext=file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(ext) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.',
+                                                confirmButtonText:'OK'
+                                            });
+
+                                            input.value='';
+
+                                            return;
+                                        }
+
+                                    }
+
+                                    addAttachCompNitrogenFiles(input,'Otherdata_data_filedDatafield_datafiled_protocol');
+
+                                }
+
+
+                                function addAttachCompNitrogenFiles(input,listId){
+
+                                    let fileList=document.getElementById(listId);
+
+                                    for(const file of input.files){
+
+                                        let fileContainer=document.createElement('h6');
+
+                                        fileContainer.classList.add(
+                                            'file-container',
+                                            'text-dark'
+                                        );
+
+                                        fileContainer.style.backgroundColor='rgb(243,242,240)';
+
+                                        let fileText=document.createElement('b');
+                                        fileText.textContent=file.name;
+
+                                        let remove=document.createElement('a');
+                                        remove.type='button';
+                                        remove.innerHTML='<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+
+                                        remove.addEventListener('click',function(){
+                                            fileContainer.remove();
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(remove);
+
+                                        fileList.appendChild(fileContainer);
+
+                                    }
+
+                                }
+
+                        </script>
+                        <div class="button-block">
+                            <button type="submit" name="submit" value="save" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        </div>
+                </div>
+
+  
+                
+
                 <!-- rajendra end -->
 
                 <div id="doc-AIQP" class="tabcontent">
@@ -16924,13 +17727,23 @@
                                 </div>
 
                                 <div class="col-12 sub-head">
-                                   
-                                      <div class="field-title">Molecular Formula</div>
                                     <div class="group-input">
-                                        <label for="procedure"></label>
-                                        <textarea name="molecular_formula_row_material" id="" class="summernote">{{ $document->molecular_formula_row_material ? $document->molecular_formula_row_material : '' }}</textarea>
+                                        <label for="molecular_formula_row_material">
+                                            Molecular Formula
+                                        </label>
+
+                                        <div>
+                                            <small class="text-primary">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small>
+                                        </div>
+
+                                        <textarea
+                                            name="molecular_formula_row_material"
+                                            id="molecular_formula_row_material"
+                                            class="froala-editor">{{ old('molecular_formula_row_material', $document->molecular_formula_row_material ?? '') }}</textarea>
                                     </div>
-                                </div>
+                                </div>    
 
                                 <div class="col-12 sub-head">
                                      
@@ -17071,7 +17884,7 @@
                                                     <th>Revision No.</th>
                                                     <!-- <th>Change Control No.</th> -->
                                                     <th>Effective Date</th>
-                                                    <th>Reason of Revision</th>
+                                                    <th>Details of Revision</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="rmsrevision-history-body">
@@ -17585,7 +18398,7 @@
                                                     <th>Revision No.</th>
                                                     <!-- <th>Change Control No.</th> -->
                                                     <th>Effective Date</th>
-                                                    <th>Reason of Revision</th>
+                                                    <th>Details of Revision</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="piasrevision-history-body">

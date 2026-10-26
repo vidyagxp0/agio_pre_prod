@@ -725,7 +725,7 @@
             <tr>
                 <th style="border: 1px solid black; width: 20%; font-weight: bold;">Revision No.</th>
                 <th style="border: 1px solid black; width: 20%; font-weight: bold;">Effective Date</th>
-                <th style="border: 1px solid black; width: 60%; font-weight: bold;">Reason of revision</th>
+                <th style="border: 1px solid black; width: 60%; font-weight: bold;">Details of Revision</th>
             </tr>
         </thead>
         <tbody>
