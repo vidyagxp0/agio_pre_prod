@@ -1919,7 +1919,7 @@
 
                         $pageText = $pageNumber . " of " . $totalPages;
 
-                        $y = 110;
+                        $y = 100;
                         $x = 460;
 
                         $pdf->text(
