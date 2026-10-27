@@ -797,6 +797,12 @@
                                             OTHER: 'OtherDocument_input',
                                             OA: 'OtherDocument_input',
 
+                                            OA: 'OtherDocument_input',
+                                            QR :'QualificationReport_id',
+                                            QP:'QualificationProtocol_id',
+                                            CASP:'compressed_air_sys_protocol_id',
+                                            CASR:'compressed_air_sys_report_id',
+
                                      
                                        
 
