@@ -636,13 +636,43 @@
                                 <p id="doc-typeError" style="color:red">** Department is required</p>
                             </div>
 
-                            <div class="col-md-6">
+
+                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="doc-code">Document Type Code</label>
                                     <div class="default-name"><span id="document_type_code">Not selected</span></div>
                                 </div>
                             </div>
 
+
+
+                            <div class="col-md-12" id="docNameContainerData" style="display: none;">
+                                <div class="group-input">
+                                    <label for="docnamedata">
+                                        Document Name
+                                        <span id="docNameRequiredfile"
+                                            class="text-danger"
+                                            style="display: none;"></span>
+                                    </label>
+
+                                    <input type="text"
+                                        id="docnamedata"
+                                        name="new_attachment_data_filed" 
+                                        maxlength="255"
+                                        placeholder="Enter Document Name">
+
+                                    <span id="docnamedataError"
+                                        class="text-danger"
+                                        style="display: none;">
+                                        Document Name is required.
+                                    </span>
+                                </div>
+                            </div>
+
+
+
+
+                           
 
 
                            
@@ -728,335 +758,329 @@
                                     </div>
                                 </div>
 
+                              
                                 <script>
                                     var maxLength = 255;
 
+                                    // Document Type ke according attachment IDs
+                                    const requiredAttachments = {
+                                        BOM: 'billMatrial_I_gxp_attachment',
+                                        BMR: 'batchManufacturingBmr_I_gxp_attachment',
+                                        BPR: 'batchPackingRecordBpr_I_gxp_attachment',
+                                        TEMPMAPPING: 'TemMapProCumRep_fileattachement',
+                                        PROVALIDRE: 'file_attach_pvrData',
+                                        PROVALIINTERRE: 'pvir_attachment',
+                                        EQUIPMENTHOLDREPORT: 'attachment_ehtsrData',
+                                        EQUIPMENTHOLDPROTOCOL: 'attachment_ehtsprtData',
+                                        STUDYPROTOCOL: 'attachment_sptData',
+                                        ANNEQUALPROTO: 'afqpfile',
+                                        ANNEQUALREPORT: 'afqrfile',
+                                        STUDY: 'attachment_srtData',
+                                        AAEUSERREQUESPECI: 'afursfile',
+                                        CLEAVALIPROTODOC: 'annex_I_gxp_attachment',
+                                        CLEAVALIREPORTDOC: 'file_attach_cvrdData',
+                                        QUALIPROCUMREP: 'procumrepo_file_attachData',
+                                        AREAQUALIFICATIONREPORT: 'aqrfile',
+                                        PROVALIPROTOCOL: 'ProValProtocol_I_gxp_attachment',
+                                        REQULIFICATIONPROTOCOL: 'aqpfile',
+                                        REPORTFORMEDIAFILL: 'rfmffile',
+                                        PROTOCOLFORMEDIAFILL: 'pfmffile',
+                                        ANNACINQULIPROTOCOL: 'AIQPfile',
+                                        ANNACOPERQULIPROTOCOL: 'AOQPfile',
+                                        ANNACPERMQULIPROTOCOL: 'APQPfile',
+                                        PACKVALIREPORT: 'PacValRepfile_attachData',
+                                        PACKVALIPROTOCOL: 'pvpfile',
+                                        HOLDTIMESTUDYREPORT: 'HolTimSutRep_I_gxp_attachment',
+                                        HOLDTIMESTUDYPROTOCOL: 'htpsfile',
+                                        NGSR: 'attach_comp_nitrogendata',
+                                        NGSP: 'annex_I_gxp_attachmentformateComp',
+                                        STABILITYPROTOCOL: 'file_attachDataSSP',
+                                        ANNIGxPASSES: 'annex_I_gxp_attachment',
+                                        ANNIIRiskASSES: 'annex_II_risk_attachment',
+                                        ANNIIIERESASSES: 'annex_III_eres_attachment',
+                                        ANNIVPlanASSES: 'annex_IV_plan_attachment',
+                                        ANNVUserReqSpe: 'annex_V_user_attachment',
+                                        ANNVIFunReqSpe: 'annex_VI_req_attachment',
+                                        ANNVIIFunSpe: 'annex_VII_fun_attachment',
+                                        ANNVIIITechSpe: 'annex_VIII_tech_attachment',
+                                        ANNIXFunRiskASSES: 'annex_IX_risk_attachment',
+                                        ANNXDesignSpe: 'annex_X_design_attachment',
+                                        ANNXIConfiSpe: 'annex_XI_confi_attachment',
+                                        ANNXIIQualiProto: 'annex_XII_qua_proto_attachment',
+                                        ANNXIIIUnitInTest: 'annex_XIII_unit_integ_attachment',
+                                        ANNXIVDataMigPro: 'annex_XIV_data_migra_attachment',
+                                        ANNXVPerfQualif: 'annex_XV_data_qualif_attachment',
+                                        ANNEXUREXVIIITRACEABILITYMATRIX: 'atmfile',
+                                        ANNEXUREXVIINSTALLATION: 'aiiopqfile',
+                                        ANNEXUREXIXSYSTEMRETIREMENT: 'asrfile',
+                                        MAForRec: 'MasterFormulaRecordBMR_I_gxp_attachment',
+                                        MAPacRec: 'MasterPackingRecord_I_gxp_attachment',
+                                        SMF: 'SiteMasterFileatt_I_gxp_attachment',
+                                        VMP: 'file_attach_vmpData',
+                                        QM: 'file_attach_qmData',
+                                        ANNEXUREXVIIVALIDATION: 'avsrfile',
+                                        OTHER: 'OtherDocument_input',
+                                        OA: 'OtherDocument_input',
+                                        QR: 'QualificationReport_id',
+                                        QP: 'QualificationProtocol_id',
+                                        CASP: 'compressed_air_sys_protocol_id',
+                                        CASR: 'compressed_air_sys_report_id'
+                                    };
+
+                                    // Safe element selector
+                                    function getElement(id) {
+                                        return document.getElementById(id);
+                                    }
+
+                                    // Document Name field show/hide
+                                    function toggleAttachmentDocumentName(selectedType) {
+                                        const container = getElement('docNameContainerData');
+                                        const input = getElement('docnamedata');
+                                        const requiredLabel = getElement('docNameRequiredfile');
+                                        const error = getElement('docnamedataError');
+
+                                        if (!container || !input) {
+                                            return;
+                                        }
+
+                                        const selected = (selectedType || '').trim().toLowerCase();
+
+                                        // Mapping mein selected document type hai ya nahi
+                                        const hasAttachmentType = Object.keys(requiredAttachments)
+                                            .some(type => type.toLowerCase() === selected);
+
+                                        if (hasAttachmentType && selected !== '') {
+                                            container.style.display = 'block';
+                                            input.setAttribute('required', 'required');
+
+                                            if (requiredLabel) {
+                                                requiredLabel.style.display = 'inline';
+                                            }
+                                        } else {
+                                            container.style.display = 'none';
+                                            input.removeAttribute('required');
+                                            input.value = '';
+
+                                            if (requiredLabel) {
+                                                requiredLabel.style.display = 'none';
+                                            }
+
+                                            if (error) {
+                                                error.style.display = 'none';
+                                            }
+                                        }
+                                    }
+
                                     function handleDocumentSelection(selectElement) {
-                                        // Get selected value
-                                        const selectedType = selectElement.value;
+                                        if (!selectElement) {
+                                            return;
+                                        }
 
+                                        const selectedType = (selectElement.value || '').trim();
+                                        const selectedLower = selectedType.toLowerCase();
 
-                                        const requiredAttachments = {
-                                            BOM: 'billMatrial_I_gxp_attachment',
-                                            BMR: 'batchManufacturingBmr_I_gxp_attachment',
-                                            BPR: 'batchPackingRecordBpr_I_gxp_attachment',
-                                            TEMPMAPPING: 'TemMapProCumRep_fileattachement',
-                                            PROVALIDRE: 'file_attach_pvrData',
-                                            PROVALIINTERRE: 'pvir_attachment',
-                                            EQUIPMENTHOLDREPORT: 'attachment_ehtsrData',
-                                            EQUIPMENTHOLDPROTOCOL: 'attachment_ehtsprtData',
-                                            STUDYPROTOCOL: 'attachment_sptData',
-                                            ANNEQUALPROTO: 'afqpfile',
-                                            ANNEQUALREPORT: 'afqrfile',
-                                            STUDY: 'attachment_srtData',
-                                            AAEUSERREQUESPECI: 'afursfile',
-                                            CLEAVALIPROTODOC :'annex_I_gxp_attachment',
-                                            CLEAVALIREPORTDOC:'file_attach_cvrdData',
-                                            QUALIPROCUMREP:'procumrepo_file_attachData',
-                                            AREAQUALIFICATIONREPORT:'aqrfile',
-                                            PROVALIPROTOCOL:'ProValProtocol_I_gxp_attachment',
-                                            REQULIFICATIONPROTOCOL:'aqpfile',
-                                            REPORTFORMEDIAFILL:'rfmffile',
-                                            PROTOCOLFORMEDIAFILL:'pfmffile',
-                                            ANNACINQULIPROTOCOL:'AIQPfile',
-                                            ANNACOPERQULIPROTOCOL:'AOQPfile',
-                                            ANNACPERMQULIPROTOCOL:'APQPfile',
-                                            PACKVALIREPORT:'PacValRepfile_attachData',
-                                            PACKVALIPROTOCOL:'pvpfile',
-                                            HOLDTIMESTUDYREPORT:'HolTimSutRep_I_gxp_attachment',
-                                            HOLDTIMESTUDYPROTOCOL:'htpsfile',
-                                            NGSR:'attach_comp_nitrogendata',
-                                            NGSP:'annex_I_gxp_attachmentformateComp',
-                                            STABILITYPROTOCOL:'file_attachDataSSP',
-                                            ANNIGxPASSES:'annex_I_gxp_attachment',
-                                            ANNIGxPASSES:'annex_I_gxp_attachment',
-                                            ANNIIRiskASSES:'annex_II_risk_attachment',
-                                            ANNIIIERESASSES:'annex_III_eres_attachment',
-                                            ANNIVPlanASSES:'annex_IV_plan_attachment',
-                                            ANNVUserReqSpe:'annex_V_user_attachment',
-                                            ANNVIFunReqSpe:'annex_VI_req_attachment',
-                                            ANNVIIFunSpe:'annex_VII_fun_attachment',
-                                            ANNVIIITechSpe:'annex_VIII_tech_attachment',
-                                            ANNIXFunRiskASSES:'annex_IX_risk_attachment',
-                                            ANNXDesignSpe:'annex_X_design_attachment',
-                                            ANNXIConfiSpe:'annex_XI_confi_attachment',
-                                            ANNXIIQualiProto:'annex_XII_qua_proto_attachment',
-                                            ANNXIIIUnitInTest:'annex_XIII_unit_integ_attachment',
-                                            ANNXIVDataMigPro:'annex_XIV_data_migra_attachment',
-                                            ANNXVPerfQualif:'annex_XV_data_qualif_attachment',
-                                            ANNEXUREXVIIITRACEABILITYMATRIX:'atmfile',
-                                            ANNEXUREXVIINSTALLATION:'aiiopqfile', 
-                                            ANNEXUREXIXSYSTEMRETIREMENT:'asrfile',
-                                            MAForRec:'MasterFormulaRecordBMR_I_gxp_attachment',
-                                            MAPacRec:'MasterPackingRecord_I_gxp_attachment',
-                                            SMF:'SiteMasterFileatt_I_gxp_attachment',
-                                            VMP:'file_attach_vmpData',
-                                            QM:'file_attach_qmData',
-                                            ANNEXUREXVIIVALIDATION:'avsrfile',
-                                      
-                                            OTHER: 'OtherDocument_input',
-                                            OA: 'OtherDocument_input',
-
-                                            OA: 'OtherDocument_input',
-                                            QR :'QualificationReport_id',
-                                            QP:'QualificationProtocol_id',
-                                            CASP:'compressed_air_sys_protocol_id',
-                                            CASR:'compressed_air_sys_report_id',
-
-                                     
-                                       
-
-                                        
-                                        
-
-                                        };
-
-                                     
+                                        // 1. Required attachment field set karein
                                         Object.entries(requiredAttachments).forEach(([type, inputId]) => {
-                                            const input = document.getElementById(inputId);
-                                            if (!input) return;
-                                            input.toggleAttribute('required', (selectedType || '').toLowerCase() === type.toLowerCase());
+                                            const input = getElement(inputId);
+
+                                            if (!input) {
+                                                return;
+                                            }
+
+                                            const isRequired = selectedLower === type.toLowerCase();
+
+                                            input.toggleAttribute('required', isRequired);
                                         });
 
-                                        // Get all hidden tabs
+                                        // 2. Sabhi attachment tabs hide karein
                                         const tabs = document.querySelectorAll('.hidden-tabs');
 
-                                        // Hide all tabs initially
                                         tabs.forEach(tab => {
                                             tab.style.display = 'none';
                                         });
 
-                                        // // Show the matching tab
-                                        // tabs.forEach(tab => {
-                                        //     if (tab.getAttribute('data-id') === selectedType) {
-                                        //         tab.style.display = 'block';
-                                        //     }
-                                        // });
-
-                                        // Show the matching tab (comma separated + case-insensitive)
-                                        const selectedLower = (selectedType || '').trim().toLowerCase();
+                                        // 3. Selected Document Type ka matching tab show karein
                                         tabs.forEach(tab => {
                                             const ids = (tab.getAttribute('data-id') || '')
                                                 .split(',')
-                                                .map(s => s.trim().toLowerCase());
-                                            if (ids.includes(selectedLower)) {
+                                                .map(value => value.trim().toLowerCase());
+
+                                            if (ids.includes(selectedLower) && selectedLower !== '') {
                                                 tab.style.display = 'block';
                                             }
                                         });
 
-                                        // Update document type code display
-                                        document.getElementById('document_type_code').innerText = selectElement.value || "Not selected";
+                                        // 4. Document Type code display update karein
+                                        const typeCode = getElement('document_type_code');
 
-                                        // Handle field validation and visibility
-                                        const shortDescContainer = document.getElementById('shortDescContainer');
-                                        const shortDescInput = document.getElementById('short_desc');
-
-                                        const docNameContainer = document.getElementById('docNameContainer');
-                                        const docNameInput = document.getElementById('docname');
-
-                                        const sopTypeContainer = document.getElementById('sopTypeContainer');
-                                        const sopType = document.getElementById('sop_type');
-
-                                       // const dueDateContainer = document.getElementById('dueDateContainer');
-                                       //   const dueDateInput = document.getElementById('due_dateDoc');
-
-                                        // const departContainer = document.getElementById('departContainer');
-                                        // const departInput = document.getElementById('depart-name');
-
-                                        const docVerContainer = document.getElementById('docVerContainer');
-                                        const majorInput = document.getElementById('major');
-
-                                        // const notifyContainer = document.getElementById('notifyContainer');
-                                        const keywordContainer = document.getElementById('keywordsContainer');
-
-                                        const docLangContainer = document.getElementById('docLangContainer');
-                                        const docLangCodeContainer = document.getElementById('docLangCodeContainer');
-
-                                        const effectiveContainer = document.getElementById('effectiveContainer');
-                                        const reviewContainer = document.getElementById('reviewContainer');
-                                        const nextReviewContainer = document.getElementById('nextReviewContainer');
-
-                                        const attachdraftContainer = document.getElementById('attachdraftContainer');
-                                        const attacheffectContainer = document.getElementById('attacheffectContainer');
-
-                                        const reviewersContainer = document.getElementById('reviewers-container');
-                                        const approversContainer = document.getElementById('approvers-container');
-
-                                        const reviewersDropdown = document.getElementById('reviewers-dropdown');
-                                        const approversDropdown = document.getElementById('approvers-dropdown');
-                                        const otherInformationHeading = document.getElementById('otherInformationHeading');
-                                        const otherInformationSection = document.getElementById('otherInformationSection');
-
-                                        const showReviewerApproverDocs = [
-                                            'SOP',
-                                            'FPS',
-                                            'IPS',
-                                            'CVS',
-                                            'RMS',
-                                            'PMS',
-                                            'PIAS',
-                                            'MFPS',
-                                            'MFPSTP',
-                                            'FPSTP',
-                                            'IPSTP',
-                                            'CVSTP',
-                                            'RMSTP',
-                                            'SPEC',
-                                            'STP',
-                                            'TDS',
-                                            'GTP'
-                                        ];
-
-                                            // HODs field
-                                        // const hodsContainer = document.getElementById('hods-container');
-                                        // const hodsDropdown  = document.getElementById('hods-dropdown');
-                                        // const hodsError = document.getElementById('hodError');
-
-                                        const reviewersLabel = document.getElementById('reviewers-label');
-
-
-                                        // YAHAN PASTE KARO
-                                        if (showReviewerApproverDocs.includes(selectedType)) {
-
-                                            // Show Other Information
-                                            otherInformationHeading.style.display = "block";
-                                            otherInformationSection.style.display = "block";
-
-
-
-                                            reviewersContainer.style.display = "block";
-                                            approversContainer.style.display = "block";
-
-
-                                            reviewersDropdown.setAttribute("required", "required");
-                                            approversDropdown.setAttribute("required", "required");
-
-                                        } else {
-
-                                        // Hide Other Information
-                                            otherInformationHeading.style.display = "none";
-                                            otherInformationSection.style.display = "none";
-
-                                            reviewersContainer.style.display = "none";
-                                            approversContainer.style.display = "none";
-
-                                            reviewersDropdown.removeAttribute("required");
-                                            approversDropdown.removeAttribute("required");
-
-                                            $('#reviewers-dropdown').val(null).trigger('change');
-                                            $('#approvers-dropdown').val(null).trigger('change');
+                                        if (typeCode) {
+                                            typeCode.innerText = selectedType || 'Not selected';
                                         }
 
-                                        
-                                        if (selectedType === "SOP") {
-                                            shortDescContainer.style.display = 'block';
-                                            shortDescInput.setAttribute('required', 'required');
-                                            shortDescInput.setAttribute('name', 'short_desc');
-                                            shortDescRequired.style.display = 'inline';
+                                        // 5. NEW Document Name field show/hide karein
+                                        toggleAttachmentDocumentName(selectedType);
 
-                                            docNameContainer.style.display = 'block';
-                                            docNameInput.setAttribute('required', 'required');
-                                            docNameInput.setAttribute('name', 'document_name');
-                                            docNameRequired.style.display = 'inline';
+                                        // 6. SOP ke existing fields
+                                        const shortDescContainer = getElement('shortDescContainer');
+                                        const shortDescInput = getElement('short_desc');
+                                        const docNameContainer = getElement('docNameContainer');
+                                        const docNameInput = getElement('docname');
+                                        const sopTypeContainer = getElement('sopTypeContainer');
+                                        const sopType = getElement('sop_type');
+                                        const docVerContainer = getElement('docVerContainer');
+                                        const majorInput = getElement('major');
+                                        const keywordContainer = getElement('keywordsContainer');
+                                        const docLangContainer = getElement('docLangContainer');
+                                        const docLangCodeContainer = getElement('docLangCodeContainer');
+                                        const effectiveContainer = getElement('effectiveContainer');
+                                        const reviewContainer = getElement('reviewContainer');
+                                        const nextReviewContainer = getElement('nextReviewContainer');
+                                        const attachdraftContainer = getElement('attachdraftContainer');
+                                        const attacheffectContainer = getElement('attacheffectContainer');
 
-                                            sopTypeContainer.style.display = 'block';
-                                            sopType.setAttribute('required', 'required');
-                                            sopTypeRequired.style.display = 'inline';
+                                        const showSopField = (element, show) => {
+                                            if (element) {
+                                                element.style.display = show ? 'block' : 'none';
+                                            }
+                                        };
 
+                                        const setRequired = (element, required) => {
+                                            if (element) {
+                                                element.toggleAttribute('required', required);
+                                            }
+                                        };
 
-                                          //  dueDateContainer.style.display = 'block';
-                                           // dueDateInput.setAttribute('required', 'required');
-                                           // dueDateRequired.style.display = 'inline';
+                                        const clearField = element => {
+                                            if (element) {
+                                                element.value = '';
+                                            }
+                                        };
 
-                                            
-                                            // departContainer.style.display = 'block';
-                                            // departInput.setAttribute('required', 'required');
-                                            // dueDateRequired.style.display = 'inline';
+                                        const isSOP = selectedType === 'SOP';
 
-                                            docVerContainer.style.display = 'block';
-                                            majorInput.setAttribute('required', 'required');
+                                        showSopField(shortDescContainer, isSOP);
+                                        showSopField(docNameContainer, isSOP);
+                                        showSopField(sopTypeContainer, isSOP);
+                                        showSopField(docVerContainer, isSOP);
+                                        showSopField(effectiveContainer, isSOP);
+                                        showSopField(reviewContainer, isSOP);
+                                        showSopField(nextReviewContainer, isSOP);
+                                        showSopField(keywordContainer, isSOP);
+                                        showSopField(docLangContainer, isSOP);
+                                        showSopField(docLangCodeContainer, isSOP);
+                                        showSopField(attachdraftContainer, isSOP);
+                                        showSopField(attacheffectContainer, isSOP);
 
-                                           // notifyContainer.style.display = 'block';
-                                            effectiveContainer.style.display = 'block';
-                                            reviewContainer.style.display = 'block';
-                                            nextReviewContainer.style.display = 'block';
+                                        setRequired(shortDescInput, isSOP);
+                                        setRequired(docNameInput, isSOP);
+                                        setRequired(sopType, isSOP);
+                                        setRequired(majorInput, isSOP);
 
-                                            keywordContainer.style.display = 'block';
-                                            docLangContainer.style.display = 'block';
-                                            docLangCodeContainer.style.display = 'block';
+                                        const shortDescRequired = getElement('shortDescRequired');
+                                        const docNameRequired = getElement('docNameRequired');
+                                        const sopTypeRequired = getElement('sopTypeRequired');
 
-                                            attachdraftContainer.style.display = 'block';
-                                            attacheffectContainer.style.display = 'block';
+                                        if (shortDescRequired) {
+                                            shortDescRequired.style.display = isSOP ? 'inline' : 'none';
+                                        }
 
-                                            // Show HODs field
-                                                // hodsContainer.style.display = 'block';
-                                                // hodsDropdown.setAttribute('required', 'required');
-                                                // hodsError.style.display = 'none';
+                                        if (docNameRequired) {
+                                            docNameRequired.style.display = isSOP ? 'inline' : 'none';
+                                        }
 
-                                            reviewersLabel.innerHTML = "Checked By<span class='text-danger'>*</span>";
+                                        if (sopTypeRequired) {
+                                            sopTypeRequired.style.display = isSOP ? 'inline' : 'none';
+                                        }
 
-                                            // Character counter for inputs
-                                            $('#docname').off('keyup').on('keyup', function() {
-                                                $('#rchars').text(maxLength - $(this).val().length);
-                                            });
+                                        if (!isSOP) {
+                                            clearField(shortDescInput);
+                                            clearField(docNameInput);
+                                            clearField(sopType);
+                                            clearField(majorInput);
+                                        }
 
-                                            $('#short_desc').off('keyup').on('keyup', function() {
-                                                $('#new-rchars').text(maxLength - $(this).val().length);
-                                            });
+                                        // 7. Reviewers and Approvers
+                                        const reviewerTypes = [
+                                            'SOP', 'FPS', 'IPS', 'CVS', 'RMS', 'PMS', 'PIAS',
+                                            'MFPS', 'MFPSTP', 'FPSTP', 'IPSTP', 'CVSTP',
+                                            'RMSTP', 'SPEC', 'STP', 'TDS', 'GTP'
+                                        ];
 
-                                        } else {
-                                            shortDescContainer.style.display = 'none';
-                                            shortDescInput.removeAttribute('required');
-                                            shortDescInput.value = '';
+                                        const showReviewers = reviewerTypes.includes(selectedType);
 
-                                            docNameContainer.style.display = 'none';
-                                            docNameInput.removeAttribute('required');
-                                            docNameInput.value = '';
+                                        const otherHeading = getElement('otherInformationHeading');
+                                        const otherSection = getElement('otherInformationSection');
+                                        const reviewersContainer = getElement('reviewers-container');
+                                        const approversContainer = getElement('approvers-container');
+                                        const reviewersDropdown = getElement('reviewers-dropdown');
+                                        const approversDropdown = getElement('approvers-dropdown');
+                                        const reviewersLabel = getElement('reviewers-label');
 
-                                            sopTypeContainer.style.display = 'none';
-                                            sopType.removeAttribute('required');
-                                            sopType.value = '';
+                                        showSopField(otherHeading, showReviewers);
+                                        showSopField(otherSection, showReviewers);
+                                        showSopField(reviewersContainer, showReviewers);
+                                        showSopField(approversContainer, showReviewers);
 
-                                            // dueDateContainer.style.display = 'none';
-                                            // dueDateInput.removeAttribute('required');
-                                            // dueDateInput.value = '';
+                                        setRequired(reviewersDropdown, showReviewers);
+                                        setRequired(approversDropdown, showReviewers);
 
-                                            // departContainer.style.display = 'none';
-                                            // departInput.removeAttribute('required');
-                                            // departInput.value = '';
+                                        if (!showReviewers && typeof window.jQuery !== 'undefined') {
+                                            if (window.jQuery('#reviewers-dropdown').length) {
+                                                window.jQuery('#reviewers-dropdown').val(null).trigger('change');
+                                            }
 
-                                            docVerContainer.style.display = 'none';
-                                            majorInput.removeAttribute('required');
-                                            majorInput.value = '';
+                                            if (window.jQuery('#approvers-dropdown').length) {
+                                                window.jQuery('#approvers-dropdown').val(null).trigger('change');
+                                            }
+                                        }
 
-                                            //notifyContainer.style.display = 'none';
-                                            effectiveContainer.style.display = 'none';
-                                            nextReviewContainer.style.display = 'none';
-                                            reviewContainer.style.display = 'none';
+                                        if (reviewersLabel) {
+                                            reviewersLabel.innerHTML =
+                                                "Checked By<span class='text-danger'>*</span>";
+                                        }
 
-                                            keywordContainer.style.display = 'none';
-                                            docLangContainer.style.display = 'none';
-                                            docLangCodeContainer.style.display = 'none';
+                                        // 8. SOP character counter
+                                        if (typeof window.jQuery !== 'undefined') {
+                                            if (window.jQuery('#docname').length) {
+                                                window.jQuery('#docname')
+                                                    .off('keyup')
+                                                    .on('keyup', function () {
+                                                        const counter = getElement('rchars');
 
-                                            attachdraftContainer.style.display = 'none';
-                                            attacheffectContainer.style.display = 'none';
+                                                        if (counter) {
+                                                            counter.textContent =
+                                                                maxLength - this.value.length;
+                                                        }
+                                                    });
+                                            }
 
+                                            if (window.jQuery('#short_desc').length) {
+                                                window.jQuery('#short_desc')
+                                                    .off('keyup')
+                                                    .on('keyup', function () {
+                                                        const counter = getElement('new-rchars');
 
-                                            // Hide HODs field
-                                                // hodsContainer.style.display = 'none';
-                                                // hodsDropdown.removeAttribute('required');
-                                                // hodsDropdown.value = '';
-                                                // hodsError.style.display = 'none';
-
-                                            reviewersLabel.innerHTML = "Checked By<span class='text-danger'>*</span>";
-                                            
+                                                        if (counter) {
+                                                            counter.textContent =
+                                                                maxLength - this.value.length;
+                                                        }
+                                                    });
+                                            }
                                         }
                                     }
 
-
+                                    // SOP type ke according short code
                                     function updateSopTypeShort() {
-                                        const sopType = document.getElementById('sop_type').value;
+                                        const sopTypeElement = getElement('sop_type');
+                                        const shortCodeElement = getElement('sop_type_short');
+
+                                        if (!sopTypeElement || !shortCodeElement) {
+                                            return;
+                                        }
+
+                                        const sopType = sopTypeElement.value;
                                         let shortName = '';
+
                                         if (sopType === 'SOP (Standard Operating procedure)') {
                                             shortName = 'SOP';
                                         } else if (sopType === 'EOP (Equipment Operating procedure)') {
@@ -1064,34 +1088,73 @@
                                         } else if (sopType === 'IOP (Instrument Operating Procedure)') {
                                             shortName = 'IOP';
                                         }
-                                        document.getElementById('sop_type_short').value = shortName;
+
+                                        shortCodeElement.value = shortName;
                                     }
 
+                                    // Form validation
                                     function validateForm() {
                                         let isValid = true;
-                                        const shortDesc = document.getElementById('short_desc');
-                                        const shortDescError = document.getElementById('short_descError');
-                                        const docName = document.getElementById('docname');
-                                        const docNameError = document.getElementById('docnameError');
 
-                                        if (shortDesc.hasAttribute('required') && shortDesc.value.trim() === "") {
-                                            shortDescError.style.display = 'inline';
+                                        const shortDesc = getElement('short_desc');
+                                        const shortDescError = getElement('short_descError');
+                                        const docName = getElement('docname');
+                                        const docNameError = getElement('docnameError');
+
+                                        if (
+                                            shortDesc &&
+                                            shortDesc.hasAttribute('required') &&
+                                            shortDesc.value.trim() === ''
+                                        ) {
+                                            if (shortDescError) {
+                                                shortDescError.style.display = 'inline';
+                                            }
                                             isValid = false;
-                                        } else {
+                                        } else if (shortDescError) {
                                             shortDescError.style.display = 'none';
                                         }
 
-                                        if (docName.hasAttribute('required') && docName.value.trim() === "") {
-                                            docNameError.style.display = 'inline';
+                                        if (
+                                            docName &&
+                                            docName.hasAttribute('required') &&
+                                            docName.value.trim() === ''
+                                        ) {
+                                            if (docNameError) {
+                                                docNameError.style.display = 'inline';
+                                            }
                                             isValid = false;
-                                        } else {
+                                        } else if (docNameError) {
                                             docNameError.style.display = 'none';
                                         }
 
-                                        if (isValid) {
-                                            alert("Form Submitted Successfully!");
+                                        // NEW Document Name validation
+                                        const newDocName = getElement('docnamedata');
+                                        const newDocNameError = getElement('docnamedataError');
+
+                                        if (
+                                            newDocName &&
+                                            newDocName.hasAttribute('required') &&
+                                            newDocName.value.trim() === ''
+                                        ) {
+                                            if (newDocNameError) {
+                                                newDocNameError.style.display = 'inline';
+                                            }
+                                            isValid = false;
+                                        } else if (newDocNameError) {
+                                            newDocNameError.style.display = 'none';
                                         }
+
+                                        return isValid;
                                     }
+
+                                    // Page load par selected Document Type ke hisaab se fields set karein
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const select = getElement('doc-type');
+
+                                        if (select) {
+                                            handleDocumentSelection(select);
+                                        }
+                                    });
                                 </script>
 
                                 <div class="col-md-6" id="attachdraftContainer" style="display: none">
@@ -19771,6 +19834,25 @@
                                         <input type="text" name="cas_no_row_material">
                                     </div>
                                 </div>
+
+
+                                
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="refrence_rms">Reference</label>
+
+                                        <select name="refrence_rms" id="refrence_rms">
+                                            <option value="">Select Reference</option>
+                                            <option value="USP">USP</option>
+                                            <option value="BP">BP</option>
+                                            <option value="EP">EP</option>
+                                            <option value="IP">IP</option>
+                                            <option value="JP">JP</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+
 
                                 <div class="col-md-6">
                                     <div class="group-input">

@@ -1276,7 +1276,6 @@
                             <table class="table table-bordered" id="distribution-list">
                                 <thead>
                                     <tr>
-                                        <th style="font-size: 16px; font-weight: bold;">Row</th>
                                         <th style="font-size: 16px; font-weight: bold;">Copy</th>
                                         <th style="font-size: 16px; font-weight: bold;">No. of Copies</th>
                                         <th style="font-size: 16px; font-weight: bold;">User Department</th>
@@ -1284,13 +1283,11 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td style="font-size: 16px; font-weight: bold;">1</td>
                                         <td style="font-weight: bold;">Master Copy</td>
                                         <td>{{ $data->master_copy_number}}</td>
                                         <td>{{ $data->master_user_department}}</td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size: 16px; font-weight: bold;">2</td>
                                         <td style="font-weight: bold;">Controlled Copy</td>
                                         <td>{{ $data->controlled_copy_number}}</td>
                                          <td>
@@ -1299,7 +1296,6 @@
                                        
                                     </tr>
                                     <tr>
-                                        <td style="font-size: 16px; font-weight: bold;">3</td>
                                         <td style="font-weight: bold;">Display Copy</td>
                                         <td>{{ $data->display_copy_number}}</td>
                                         <td>

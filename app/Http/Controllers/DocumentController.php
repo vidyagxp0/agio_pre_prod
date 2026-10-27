@@ -733,6 +733,8 @@ class DocumentController extends Controller
             $document->sop_type = $request->sop_type;
             $document->sop_type_short = $request->sop_type_short;
 
+
+            $document->new_attachment_data_filed = $request->new_attachment_data_filed;
             /*
             |--------------------------------------------------------------------------
             | Generate Document Number
@@ -808,6 +810,8 @@ class DocumentController extends Controller
 
             // raw  material store
             $document->material_name = $request->material_name;
+            $document->refrence_rms = $request->refrence_rms;
+            
             $document->cas_no_row_material = $request->cas_no_row_material;
             $document->molecular_formula_row_material = $request->molecular_formula_row_material;
             $document->molecular_weight_row_material = $request->molecular_weight_row_material;
@@ -3661,6 +3665,12 @@ class DocumentController extends Controller
                 $oldRevised = $document->revised ?? 'No';
                 $oldRevisedDoc = $document->revised_doc;
 
+
+
+
+
+
+
                 /*
                 |--------------------------------------------------------------------------
                 | New Numbering Values
@@ -3760,6 +3770,7 @@ class DocumentController extends Controller
 
                 //raw material specification
                 $document->material_name = $request->material_name;
+                  $document->refrence_rms = $request->refrence_rms;
                 $document->cas_no_row_material = $request->cas_no_row_material;
                 $document->molecular_formula_row_material = $request->molecular_formula_row_material;
                 $document->molecular_weight_row_material = $request->molecular_weight_row_material;
@@ -4168,7 +4179,7 @@ class DocumentController extends Controller
                 ///////////////////////////////////////////////////////////////////////
 
 
-
+                   $document->new_attachment_data_filed = $request->new_attachment_data_filed;
 
             ///////////////////////////////////////New Changes //////////////////////////////////////////////////
 

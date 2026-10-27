@@ -374,7 +374,7 @@
         .first-page-stp table { width: 100%; border-collapse: collapse; table-layout: fixed; margin: 0; }
         .first-page-stp td {
             padding: 5px;
-            border: 1px solid #000;
+            border: 1px solid #424040;
             text-align: left;
             font-weight: bold;
         }
@@ -632,9 +632,11 @@
                         <tr>
                             <td class="doc-num">
                                 STP No.:
-                                <span>FPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}</span>
+                                <span>FPSTP/{{ str_pad(explode('/', $data->document_number)[1] ?? '', 4, STR_PAD_LEFT) }}</span>
                             </td>
                         </tr>
+
+                        
                     </tbody>
                 </table>
             </div>

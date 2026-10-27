@@ -766,6 +766,88 @@
                                 @endif
                             </div>
 
+
+
+                          
+                            <div class="col-md-12"
+                                id="docNameContainerData"
+                                style="display: none;">
+
+                                <div class="group-input">
+                                    <label for="docnamedata">
+                                        Document Name
+                                        <span id="docNameRequiredfile"
+                                            class="text-danger"
+                                            style="display: none;"></span>
+                                    </label>
+
+                                    <input type="text"
+                                        id="docnamedata"
+                                        name="new_attachment_data_filed"  {{ Helpers::isRevised($document->stage) }}
+                                        maxlength="255"
+                                        value="{{ old('new_attachment_data_filed', $document->new_attachment_data_filed ?? '') }}"
+                                        placeholder="Enter Document Name">
+
+                                    <span id="docnamedataError"
+                                        class="text-danger"
+                                        style="display: none;">
+                                        Document Name is required.
+                                    </span>
+                                </div>
+                            </div>
+
+                            <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const docTypeSelect = document.getElementById("doc-type");
+    const container     = document.getElementById("docNameContainerData");
+    const requiredStar  = document.getElementById("docNameRequiredfile");
+    const input         = document.getElementById("docnamedata");
+
+    if (!docTypeSelect || !container) return;
+
+    // Attachment-field wale document type codes
+    const attachmentTypes = [
+        'BOM','BMR','BPR','TEMPMAPPING','PROVALIDRE','PROVALIINTERRE',
+        'EQUIPMENTHOLDREPORT','EQUIPMENTHOLDPROTOCOL','STUDYPROTOCOL',
+        'ANNEQUALPROTO','ANNEQUALREPORT','STUDY','AAEUSERREQUESPECI',
+        'CLEAVALIPROTODOC','CLEAVALIREPORTDOC','QUALIPROCUMREP',
+        'AREAQUALIFICATIONREPORT','PROVALIPROTOCOL','REQULIFICATIONPROTOCOL',
+        'REPORTFORMEDIAFILL','PROTOCOLFORMEDIAFILL','ANNACINQULIPROTOCOL',
+        'ANNACOPERQULIPROTOCOL','ANNACPERMQULIPROTOCOL','PACKVALIREPORT',
+        'PACKVALIPROTOCOL','HOLDTIMESTUDYREPORT','HOLDTIMESTUDYPROTOCOL',
+        'NGSR','NGSP','STABILITYPROTOCOL','ANNIGxPASSES','ANNIIRiskASSES',
+        'ANNIIIERESASSES','ANNIVPlanASSES','ANNVUserReqSpe','ANNVIFunReqSpe',
+        'ANNVIIFunSpe','ANNVIIITechSpe','ANNIXFunRiskASSES','ANNXDesignSpe',
+        'ANNXIConfiSpe','ANNXIIQualiProto','ANNXIIIUnitInTest','ANNXIVDataMigPro',
+        'ANNXVPerfQualif','ANNEXUREXVIIITRACEABILITYMATRIX',
+        'ANNEXUREXVIINSTALLATION','ANNEXUREXIXSYSTEMRETIREMENT',
+        'MAForRec','MAPacRec','SMF','VMP','QM','ANNEXUREXVIIVALIDATION',
+        'OTHER','OA','QR','QP','CASP','CASR'
+    ].map(c => c.toUpperCase());
+
+    function toggleDocName(value) {
+        const selected = String(value || "").trim().toUpperCase();
+        const show = attachmentTypes.includes(selected);
+
+        container.style.display = show ? "block" : "none";
+        if (requiredStar) requiredStar.style.display = show ? "inline" : "none";
+
+        if (!show && input) {
+            input.value = "";   // hide hone par value clear (optional)
+        }
+    }
+
+    // Edit page load par saved type ke hisab se
+    toggleDocName(docTypeSelect.value);
+
+    // Dropdown change par
+    docTypeSelect.addEventListener("change", function () {
+        toggleDocName(this.value);
+    });
+});
+</script>
+
+
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="doc-code">Document Type Code</label>
@@ -2757,7 +2839,7 @@
                                 <table class="table table-bordered" id="distribution-list">
                                     <thead>
                                         <tr>
-                                            <th>Row</th>
+                                            
                                             <th class="copy-name">Copy</th>
                                             <th class="copy-name">No. of Copies</th>
                                             <th class="copy-name">User Department</th>
@@ -2765,7 +2847,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>1</td>
+                                            
                                             <td style="font-weight: bold;">Master Copy</td>
                                             <td><input type="text" id="copies-master"
                                                     name="master_copy_number"
@@ -2782,7 +2864,7 @@
                                            
                                         </tr>
                                         <tr>
-                                            <td>2</td>
+                                            
                                             <td style="font-weight: bold;">Controlled Copy</td>
                                             <td><input type="text" id="copies-controlled"
                                                     name="controlled_copy_number"
@@ -2800,7 +2882,7 @@
                                             
                                         </tr>
                                         <tr>
-                                            <td>3</td>
+                                            
                                             <td style="font-weight: bold;">Display Copy</td>
                                             <td><input type="text" id="copies-display"
                                                     name="display_copy_number"
@@ -17718,6 +17800,43 @@
                                         <input type="text" name="cas_no_row_material" value="{{$document->cas_no_row_material}}">
                                     </div>
                                 </div>
+
+
+                                
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reference">Reference</label>
+
+                                        <select name="refrence_rms" id="refrence_rms">
+                                            <option value="">Select Reference</option>
+
+                                            <option value="USP" {{ old('refrence_rms', $document->refrence_rms ?? '') == 'USP' ? 'selected' : '' }}>
+                                                USP
+                                            </option>
+
+                                            <option value="BP" {{ old('refrence_rms', $document->refrence_rms ?? '') == 'BP' ? 'selected' : '' }}>
+                                                BP
+                                            </option>
+
+                                            <option value="EP" {{ old('refrence_rms', $document->refrence_rms ?? '') == 'EP' ? 'selected' : '' }}>
+                                                EP
+                                            </option>
+
+                                            <option value="IP" {{ old('refrence_rms', $document->refrence_rms ?? '') == 'IP' ? 'selected' : '' }}>
+                                                IP
+                                            </option>
+
+                                            <option value="JP" {{ old('refrence_rms', $document->refrence_rms ?? '') == 'JP' ? 'selected' : '' }}>
+                                                JP
+                                            </option>
+
+                                            <option value="Other" {{ old('refrence_rms', $document->refrence_rms ?? '') == 'Other' ? 'selected' : '' }}>
+                                                Other
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
 
                                 <div class="col-md-6">
                                     <div class="group-input">

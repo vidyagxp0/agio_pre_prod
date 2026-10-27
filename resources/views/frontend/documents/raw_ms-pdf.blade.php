@@ -431,6 +431,7 @@
                           -
                         @endif
                     </td>
+
                 </tr>
             </tbody>
         </table>
@@ -475,6 +476,10 @@
                             @endif
                         </span>
                     </td>
+
+                     
+                   
+
                 </tr>
             </tbody>
         </table>
@@ -509,25 +514,26 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Reference:
+                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;"
+                        class="doc-num">
+                        Reference:
                         <span>
-                            @if($document->revised == 'Yes')
-                                @php
-                                    $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-                                @endphp
+                            {{ $document->refrence_rms ?? 'N/A' }}
+                        </span>
+                    </td>
+                    
 
-                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                        RMSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                                    @else
-                                        RMSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                                    @endif
-                            @else
-                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    RMSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                                    @else
-                                    RMSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                                    @endif
-                            @endif
+                </tr>
+            </tbody>
+        </table>
+
+         <table class="border border-top-none" style="width: 100%;">
+            <tbody>
+               <tr>
+                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">
+                        STP No.:
+                        <span>
+                            RMSTP/{{ str_pad(explode('/', $data->document_number)[1] ?? '', 4, STR_PAD_LEFT) }}
                         </span>
                     </td>
                 </tr>
@@ -916,6 +922,26 @@
                     ');
                 }
             </script>
+
+            <script type="text/php">
+    if (isset($pdf)) {
+        $pdf->page_script('
+            $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
+            $size = 10;
+            $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
+            $pdf->text(380, 166, $pageText, $font, $size);
+
+            // Page 1 par STP No. row ko white box se cover karo
+             if ($PAGE_NUM == 1) {
+                $coverX = 28;
+                $coverY = 209;   // pehle 192 tha, ab ~22pt neeche
+                $coverW = 568;
+                $coverH = 24;
+                $pdf->filled_rectangle($coverX, $coverY, $coverW, $coverH, array(1, 1, 1));
+            }
+        ');
+    }
+</script>
 
 </body>
 </html>
