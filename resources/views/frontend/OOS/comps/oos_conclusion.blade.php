@@ -2,7 +2,7 @@
    $istab8 = $data->stage == 8 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 65) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18));
 @endphp   -->
 @php
-$canEditConclusion =
+                        $canEditConclusion =
                             (
                                 $data->assign_cause_found == "Yes" ||
                                 $data->phase_ib_assi_cause == "Yes" ||
