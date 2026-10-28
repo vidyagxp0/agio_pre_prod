@@ -496,7 +496,7 @@
 
                                         <textarea
                                             id="docname"
-                                            maxlength="255"
+                                            maxlength="255" name="document_name"
                                             rows="3"
                                             style="width: 100%; resize: vertical;"
                                         ></textarea>

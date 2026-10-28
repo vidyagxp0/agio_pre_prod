@@ -66,10 +66,10 @@
 <header>
     <table class="hdr">
         <tr>
-            <td style="width:20%; text-align:center; vertical-align:middle;">
-                <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png" 
-                     width="60" 
-                     style="width:60px; height:auto; display:inline-block;">
+            <td class="logo w-20" style="text-align: center; vertical-align: middle;">
+                @if (!empty($logoSrc))
+                    <img src="{{ $logoSrc }}" style="width: 40px; height: auto;">
+                @endif
             </td>
             <td style="width:80%;">
                 <p style="margin:0; font-weight:bold; font-size:14px;">{{ config('site.pdf_title') }}</p>
