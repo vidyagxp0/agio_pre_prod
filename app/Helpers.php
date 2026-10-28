@@ -827,7 +827,7 @@ class Helpers
             'EN' => 'Engineering',
             'HR' => 'Human Resource',
             'ST' => 'Store',
-            'IT' => 'Electronic Data Processing',
+            'IT' => 'Information Technology',
             'FD' => 'Formulation Development',
             'AL' => 'Analytical research and Development Laboratory',
             'PD' => 'Packaging Development',

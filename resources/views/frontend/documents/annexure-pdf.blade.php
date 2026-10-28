@@ -267,7 +267,7 @@
 
         .master-copy {
             position: fixed;
-            top: -110px;
+            top: -128px;
             right: 10px;
             border: 2px solid #00bcd4;
             color: #00bcd4;
@@ -279,6 +279,7 @@
         }
     </style>
 </head>
+
 <body>
 
 
@@ -294,9 +295,10 @@
             <table class="border" style="width: 100%;">
                 <tbody>
                     <tr>
-                        <td class="logo w-20">
-                            <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
-                                style="max-height: 55px; max-width: 40px;">
+                       <td class="logo w-20" style="text-align: center; vertical-align: middle;">
+                            @if (!empty($logoSrc))
+                                <img src="{{ $logoSrc }}" style="width: 40px; height: auto;">
+                            @endif
                         </td>
                         
                         <td class="title w-60"
@@ -339,9 +341,9 @@
                             @endforeach
                         @endif
                     </th>
-                   <td style="padding: 20px; border: 1px solid #ddd;">
-                        Page No. : 
-                    </td>
+                  <td style="padding: 20px; padding-left: px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">
+    Page No. 
+</td>
                              
                 </tr>
                `

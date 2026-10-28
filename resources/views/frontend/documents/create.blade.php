@@ -484,13 +484,27 @@
                                     <p id="short_descError" style="color:red">**Short description is required</p>
                                 </div> --}}
 
+                                
+
+
                                 <div class="col-md-12" id="docNameContainer" style="display: none;">
                                     <div class="group-input">
-                                        <label for="document_name-desc">Document Name<span class="text-danger" id="docNameRequired" style="display: none;">*</span></label>
-                                        <span id="rchars">255</span> characters remaining
-                                        <input id="docname" type="text" maxlength="255">
+                                        <label for="docname">
+                                            Document Name
+                                            <span class="text-danger" id="docNameRequired" style="display: none;">*</span>
+                                        </label>
+
+                                        <textarea
+                                            id="docname"
+                                            maxlength="255"
+                                            rows="3"
+                                            style="width: 100%; resize: vertical;"
+                                        ></textarea>
                                     </div>
-                                    <p id="docnameError" style="color:red; display: none;">**Document Name is required</p>
+
+                                    <p id="docnameError" style="color: red; display: none;">
+                                        **Document Name is required
+                                    </p>
                                 </div>
 
                                 <!-- Short Description (Initially Hidden) -->
@@ -652,7 +666,7 @@
                                         Document Name
                                         <span id="docNameRequiredfile"
                                             class="text-danger"
-                                            style="display: none;"></span>
+                                            style="display: none;">*</span>
                                     </label>
 
                                     <input type="text"
@@ -665,6 +679,31 @@
                                         class="text-danger"
                                         style="display: none;">
                                         Document Name is required.
+                                    </span>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-12" id="docNameContainerDataSecond" style="display: none;">
+                                <div class="group-input">
+                                    <label for="documentnumberdata">
+                                        Document Number
+                                        <span id="docNameRequiredfileSecond"
+                                            class="text-danger"
+                                            style="display: none;">*</span>
+                                    </label>
+
+                                    <input type="text"
+                                        id="documentnumberdata"
+                                        name="document_number_filed"
+                                        maxlength="255"
+                                        placeholder="Enter Document Number">
+
+                                    <span id="documentnumberdataError"
+                                        class="text-danger"
+                                        style="display: none;">
+                                        Document Number is required.
                                     </span>
                                 </div>
                             </div>
@@ -833,43 +872,58 @@
                                     }
 
                                     // Document Name field show/hide
-                                    function toggleAttachmentDocumentName(selectedType) {
-                                        const container = getElement('docNameContainerData');
-                                        const input = getElement('docnamedata');
-                                        const requiredLabel = getElement('docNameRequiredfile');
-                                        const error = getElement('docnamedataError');
+                                 
+                                    
+function toggleAttachmentDocumentName(selectedType) {
+    const container = getElement('docNameContainerData');
+    const containerSecond = getElement('docNameContainerDataSecond');
 
-                                        if (!container || !input) {
-                                            return;
-                                        }
+    const input = getElement('docnamedata');
+    const inputSecond = getElement('documentnumberdata');
 
-                                        const selected = (selectedType || '').trim().toLowerCase();
+    const requiredLabel = getElement('docNameRequiredfile');
+    const requiredLabelSecond = getElement('docNameRequiredfileSecond');
 
-                                        // Mapping mein selected document type hai ya nahi
-                                        const hasAttachmentType = Object.keys(requiredAttachments)
-                                            .some(type => type.toLowerCase() === selected);
+    const error = getElement('docnamedataError');
+    const errorSecond = getElement('documentnumberdataError');
 
-                                        if (hasAttachmentType && selected !== '') {
-                                            container.style.display = 'block';
-                                            input.setAttribute('required', 'required');
+    const selected = (selectedType || '').trim().toLowerCase();
 
-                                            if (requiredLabel) {
-                                                requiredLabel.style.display = 'inline';
-                                            }
-                                        } else {
-                                            container.style.display = 'none';
-                                            input.removeAttribute('required');
-                                            input.value = '';
+    const hasAttachmentType = Object.keys(requiredAttachments)
+        .some(type => type.toLowerCase() === selected);
 
-                                            if (requiredLabel) {
-                                                requiredLabel.style.display = 'none';
-                                            }
+    // Dono fields ko show/hide karein
+    if (hasAttachmentType && selected !== '') {
+        if (container) container.style.display = 'block';
+        if (containerSecond) containerSecond.style.display = 'block';
 
-                                            if (error) {
-                                                error.style.display = 'none';
-                                            }
-                                        }
-                                    }
+        if (input) input.setAttribute('required', 'required');
+        if (inputSecond) inputSecond.setAttribute('required', 'required');
+
+        if (requiredLabel) requiredLabel.style.display = 'inline';
+        if (requiredLabelSecond) requiredLabelSecond.style.display = 'inline';
+    } else {
+        if (container) container.style.display = 'none';
+        if (containerSecond) containerSecond.style.display = 'none';
+
+        if (input) {
+            input.removeAttribute('required');
+            input.value = '';
+        }
+
+        if (inputSecond) {
+            inputSecond.removeAttribute('required');
+            inputSecond.value = '';
+        }
+
+        if (requiredLabel) requiredLabel.style.display = 'none';
+      
+
+        if (error) error.style.display = 'none';
+        if (errorSecond) errorSecond.style.display = 'none';
+    }
+}
+
 
                                     function handleDocumentSelection(selectElement) {
                                         if (!selectElement) {
@@ -1100,6 +1154,7 @@
                                         const shortDescError = getElement('short_descError');
                                         const docName = getElement('docname');
                                         const docNameError = getElement('docnameError');
+                                        
 
                                         if (
                                             shortDesc &&

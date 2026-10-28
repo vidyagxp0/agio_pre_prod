@@ -381,12 +381,20 @@
                           @if($document->document_type_id == 'SOP')
                             <div class="col-md-12">
                                 <div class="group-input">
-                                    <label for="document_name-desc">Document Name<span
-                                            class="text-danger">*</span></label><span id="rchars">255</span>
-                                    characters remaining
-                                    <input type="text" name="document_name" id="docname" maxlength="255"
-                                        {{ Helpers::isRevised($document->stage) }} value="{{ $document->document_name }}"
-                                        required>
+                                    <label for="docname">
+                                        Document Name<span class="text-danger">*</span>
+                                    </label>
+
+                                  
+
+                                    <textarea
+                                        name="document_name"
+                                        id="docname"
+                                        rows="3"
+                                        style="width: 100%; resize: vertical;"
+                                        {{ Helpers::isRevised($document->stage) }}
+                                        required>{{ old('document_name', $document->document_name) }}</textarea>
+
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Document Name' && !empty($tempHistory->comment))
                                             @php
@@ -394,18 +402,22 @@
                                                     ->where('id', $tempHistory->user_id)
                                                     ->value('name');
                                             @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
+
+                                            <p style="color: blue">
+                                                Modify by {{ $users_name }} at {{ $tempHistory->created_at }}
                                             </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                        color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+
+                                            <input class="input-field" style="background: #ffff0061;
+                                            color: black;"  type="text" value="{{ $tempHistory->comment }}" disabled>
                                         @endif
                                     @endforeach
                                 </div>
-                                <p id="docnameError" style="color:red">**Document Name is required</p>
+
+                                <p id="docnameError" style="color: red;">
+                                    **Document Name is required
+                                </p>
                             </div>
+
 
                               @if (Auth::user()->role != 3 && $document->stage < 8)
                                 <div class="comment">
@@ -474,7 +486,7 @@
                                         @endif
                                     @endforeach
                                 </div>
-                                <p id="short_descError" style="color:red">**Short description is required</p>
+                               
                             </div>
 
                             @if (Auth::user()->role != 3 && $document->stage < 8) <div
@@ -508,7 +520,7 @@
                                             @endif
                                         @endforeach
                                     </div>
-                                    <p id="short_descError" style="color:red; display: none;">**Short description is required</p>
+                                   
                                 </div>
                             @endif
 
@@ -796,56 +808,131 @@
                                 </div>
                             </div>
 
+
+                           <div class="col-md-12"
+                                id="docNameContainerDataSecond"
+                                style="display: none;">
+
+                                <div class="group-input">
+                                    <label for="document_number_filed">
+                                        Document Number
+                                        <span id="docNameRequiredfileSecond"
+                                            class="text-danger"
+                                            style="display: none;">*</span>
+                                    </label>
+
+                                    <input type="text"
+                                        id="document_number_filed"
+                                        name="document_number_filed"
+                                        {{ Helpers::isRevised($document->stage) }}
+                                        maxlength="255"
+                                        value="{{ old('document_number_filed', $document->document_number_filed ?? '') }}"
+                                        placeholder="Enter Document Number">
+
+                                    <span id="document_number_filedError"
+                                        class="text-danger"
+                                        style="display: none;">
+                                        Document Number is required.
+                                    </span>
+                                </div>
+                            </div>
+
                             <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const docTypeSelect = document.getElementById("doc-type");
-    const container     = document.getElementById("docNameContainerData");
-    const requiredStar  = document.getElementById("docNameRequiredfile");
-    const input         = document.getElementById("docnamedata");
+                            
+                            document.addEventListener("DOMContentLoaded", function () {
+                            const docTypeSelect = document.getElementById("doc-type");
 
-    if (!docTypeSelect || !container) return;
+                            const container = document.getElementById("docNameContainerData");
+                            const containerSecond = document.getElementById("docNameContainerDataSecond");
 
-    // Attachment-field wale document type codes
-    const attachmentTypes = [
-        'BOM','BMR','BPR','TEMPMAPPING','PROVALIDRE','PROVALIINTERRE',
-        'EQUIPMENTHOLDREPORT','EQUIPMENTHOLDPROTOCOL','STUDYPROTOCOL',
-        'ANNEQUALPROTO','ANNEQUALREPORT','STUDY','AAEUSERREQUESPECI',
-        'CLEAVALIPROTODOC','CLEAVALIREPORTDOC','QUALIPROCUMREP',
-        'AREAQUALIFICATIONREPORT','PROVALIPROTOCOL','REQULIFICATIONPROTOCOL',
-        'REPORTFORMEDIAFILL','PROTOCOLFORMEDIAFILL','ANNACINQULIPROTOCOL',
-        'ANNACOPERQULIPROTOCOL','ANNACPERMQULIPROTOCOL','PACKVALIREPORT',
-        'PACKVALIPROTOCOL','HOLDTIMESTUDYREPORT','HOLDTIMESTUDYPROTOCOL',
-        'NGSR','NGSP','STABILITYPROTOCOL','ANNIGxPASSES','ANNIIRiskASSES',
-        'ANNIIIERESASSES','ANNIVPlanASSES','ANNVUserReqSpe','ANNVIFunReqSpe',
-        'ANNVIIFunSpe','ANNVIIITechSpe','ANNIXFunRiskASSES','ANNXDesignSpe',
-        'ANNXIConfiSpe','ANNXIIQualiProto','ANNXIIIUnitInTest','ANNXIVDataMigPro',
-        'ANNXVPerfQualif','ANNEXUREXVIIITRACEABILITYMATRIX',
-        'ANNEXUREXVIINSTALLATION','ANNEXUREXIXSYSTEMRETIREMENT',
-        'MAForRec','MAPacRec','SMF','VMP','QM','ANNEXUREXVIIVALIDATION',
-        'OTHER','OA','QR','QP','CASP','CASR'
-    ].map(c => c.toUpperCase());
+                            const requiredStar = document.getElementById("docNameRequiredfile");
+                            const requiredStarSecond = document.getElementById("docNameRequiredfileSecond");
 
-    function toggleDocName(value) {
-        const selected = String(value || "").trim().toUpperCase();
-        const show = attachmentTypes.includes(selected);
+                            const docNameInput = document.getElementById("docnamedata");
+                            const docNumberInput = document.getElementById("document_number_filed");
 
-        container.style.display = show ? "block" : "none";
-        if (requiredStar) requiredStar.style.display = show ? "inline" : "none";
+                            const docNameError = document.getElementById("docnamedataError");
+                            const docNumberError = document.getElementById("document_number_filedError");
 
-        if (!show && input) {
-            input.value = "";   // hide hone par value clear (optional)
-        }
-    }
+                            if (!docTypeSelect || !container || !containerSecond) return;
 
-    // Edit page load par saved type ke hisab se
-    toggleDocName(docTypeSelect.value);
+                            const attachmentTypes = [
+                                'BOM','BMR','BPR','TEMPMAPPING','PROVALIDRE','PROVALIINTERRE',
+                                'EQUIPMENTHOLDREPORT','EQUIPMENTHOLDPROTOCOL','STUDYPROTOCOL',
+                                'ANNEQUALPROTO','ANNEQUALREPORT','STUDY','AAEUSERREQUESPECI',
+                                'CLEAVALIPROTODOC','CLEAVALIREPORTDOC','QUALIPROCUMREP',
+                                'AREAQUALIFICATIONREPORT','PROVALIPROTOCOL','REQULIFICATIONPROTOCOL',
+                                'REPORTFORMEDIAFILL','PROTOCOLFORMEDIAFILL','ANNACINQULIPROTOCOL',
+                                'ANNACOPERQULIPROTOCOL','ANNACPERMQULIPROTOCOL','PACKVALIREPORT',
+                                'PACKVALIPROTOCOL','HOLDTIMESTUDYREPORT','HOLDTIMESTUDYPROTOCOL',
+                                'NGSR','NGSP','STABILITYPROTOCOL','ANNIGxPASSES','ANNIIRiskASSES',
+                                'ANNIIIERESASSES','ANNIVPlanASSES','ANNVUserReqSpe','ANNVIFunReqSpe',
+                                'ANNVIIFunSpe','ANNVIIITechSpe','ANNIXFunRiskASSES','ANNXDesignSpe',
+                                'ANNXIConfiSpe','ANNXIIQualiProto','ANNXIIIUnitInTest','ANNXIVDataMigPro',
+                                'ANNXVPerfQualif','ANNEXUREXVIIITRACEABILITYMATRIX',
+                                'ANNEXUREXVIINSTALLATION','ANNEXUREXIXSYSTEMRETIREMENT',
+                                'MAForRec','MAPacRec','SMF','VMP','QM','ANNEXUREXVIIVALIDATION',
+                                'OTHER','OA','QR','QP','CASP','CASR'
+                            ].map(c => c.toUpperCase());
 
-    // Dropdown change par
-    docTypeSelect.addEventListener("change", function () {
-        toggleDocName(this.value);
-    });
-});
-</script>
+                            function toggleDocName(value) {
+                                const selected = String(value || "").trim().toUpperCase();
+                                const show = attachmentTypes.includes(selected);
+
+                                container.style.display = show ? "block" : "none";
+                                containerSecond.style.display = show ? "block" : "none";
+
+                                if (requiredStar) {
+                                    requiredStar.style.display = show ? "inline" : "none";
+                                }
+
+                                if (requiredStarSecond) {
+                                    requiredStarSecond.style.display = show ? "inline" : "none";
+                                }
+
+                                // Dono fields ki required condition
+                                if (docNameInput) {
+                                    docNameInput.required = show;
+                                }
+
+                                if (docNumberInput) {
+                                    docNumberInput.required = show;
+                                }
+
+                                if (!show) {
+                                    if (docNameError) docNameError.style.display = "none";
+                                    if (docNumberError) docNumberError.style.display = "none";
+                                }
+                            }
+
+                            toggleDocName(docTypeSelect.value);
+
+                            docTypeSelect.addEventListener("change", function () {
+                                toggleDocName(this.value);
+                            });
+
+                            // Document Number validation
+                            if (docNumberInput) {
+                                docNumberInput.addEventListener("input", function () {
+                                    if (this.value.trim() !== "") {
+                                        if (docNumberError) docNumberError.style.display = "none";
+                                    }
+                                });
+                            }
+
+                            // Document Name validation
+                            if (docNameInput) {
+                                docNameInput.addEventListener("input", function () {
+                                    if (this.value.trim() !== "") {
+                                        if (docNameError) docNameError.style.display = "none";
+                                    }
+                                });
+                            }
+                        });
+                            
+                            
+                            
+                            </script>
 
 
                             <div class="col-md-6">

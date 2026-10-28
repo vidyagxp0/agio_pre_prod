@@ -735,6 +735,7 @@ class DocumentController extends Controller
 
 
             $document->new_attachment_data_filed = $request->new_attachment_data_filed;
+            $document->document_number_filed = $request->document_number_filed;
             /*
             |--------------------------------------------------------------------------
             | Generate Document Number
@@ -4180,6 +4181,7 @@ class DocumentController extends Controller
 
 
                    $document->new_attachment_data_filed = $request->new_attachment_data_filed;
+                   $document->document_number_filed = $request->document_number_filed;
 
             ///////////////////////////////////////New Changes //////////////////////////////////////////////////
 
@@ -8422,6 +8424,8 @@ class DocumentController extends Controller
 
     public function annexureviewPdf($id)
     {
+       
+    
         set_time_limit(300);
         ini_set('memory_limit', '1024M');
 
@@ -8608,7 +8612,7 @@ class DocumentController extends Controller
                         'noDataFound' => true,
                     ],
                     $data,
-                    10
+                    12
                 );
 
             } else {
@@ -8634,7 +8638,7 @@ class DocumentController extends Controller
                             'noDataFound' => false,
                         ],
                         $data,
-                        9
+                        12
                     );
                 }
             }
@@ -8744,12 +8748,61 @@ class DocumentController extends Controller
         }
     }
 
+        private function getLogoBase64(): string
+        {
+            $cached = \Cache::get('pdf_logo_base64');
+            if ($cached) {
+                return $cached;
+            }
+
+            $logo = '';
+
+            // Pehle local file try karo
+            $localPath = public_path('user/images/agio-removebg-preview.png');
+
+            if (file_exists($localPath)) {
+                $logo = file_get_contents($localPath);
+            } else {
+                // Local nahi mili to remote se sirf ek baar (5 sec timeout)
+                $ctx = stream_context_create([
+                    'http' => ['timeout' => 5],
+                    'ssl'  => ['verify_peer' => false, 'verify_peer_name' => false],
+                ]);
+
+                $logo = @file_get_contents(
+                    'https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png',
+                    false,
+                    $ctx
+                );
+            }
+
+            if (!$logo) {
+                return '';
+            }
+
+            $base64 = 'data:image/png;base64,' . base64_encode($logo);
+
+            \Cache::put('pdf_logo_base64', $base64, now()->addDay());
+
+            return $base64;
+        }
+
     /**
      * Ek annexure ka PDF banata hai (watermark + page number ke saath)
      * aur temp file ka path return karta hai.
      */
-    private function buildAnnexurePdfFile(array $viewData, $data, int $pageNumberFontSize = 9): string
+    private function buildAnnexurePdfFile(array $viewData, $data, int $pageNumberFontSize = 10): string
     {
+        $viewData['logoSrc'] = $this->getLogoBase64();
+
+    
+        $viewData['watermarkText'] = strtoupper(
+        Helpers::getDocStatusByStage(
+            $data->stage,
+            $data->training_required
+        )
+    );
+    
         $annexurePdf = PDF::loadView('frontend.documents.annexure-pdf', $viewData);
 
         $annexurePdf->setPaper('A4');
@@ -8777,6 +8830,14 @@ class DocumentController extends Controller
         // ==========================================
         // WATERMARK
         // ==========================================
+      
+
+        $width  = $canvas->get_width();
+        $height = $canvas->get_height();
+
+        // ==========================================
+        // WATERMARK TEXT + FONT (same as viewPdf)
+        // ==========================================
         $watermarkText = strtoupper(
             Helpers::getDocStatusByStage(
                 $data->stage,
@@ -8784,38 +8845,51 @@ class DocumentController extends Controller
             )
         );
 
-        $watermarkFont = $dompdf->getFontMetrics()->get_font('sans-serif', 'bold');
-
+        $fontMetrics   = $dompdf->getFontMetrics();
+        $watermarkFont = $fontMetrics->get_font('sans-serif', 'normal');
         $watermarkSize = 25;
 
-        $watermarkTextWidth = $dompdf->getFontMetrics()->getTextWidth(
+        $watermarkTextWidth = $fontMetrics->getTextWidth(
             $watermarkText,
             $watermarkFont,
             $watermarkSize
         );
 
-        $lightGray = [0.82, 0.82, 0.82];
-
-        $canvas->page_text(
-            ($width - $watermarkTextWidth) / 2,
-            ($height / 2) + 50,
-            $watermarkText,
-            $watermarkFont,
-            $watermarkSize,
-            $lightGray,
-            0.0,
-            6,
-            -25
-        );
+        $watermarkX = ($width - $watermarkTextWidth) / 2;
+        $watermarkY = ($height / 2) + 50;
 
         // ==========================================
-        // PAGE NUMBER
+        // WATERMARK + PAGE NUMBER (single script)
         // ==========================================
         $canvas->page_script(
-            function ($pageNumber, $pageCount, $canvas, $fontMetrics) use ($pageNumberFontSize) {
+            function ($pageNumber, $pageCount, $canvas, $fontMetrics) use (
+                $watermarkText,
+                $watermarkFont,
+                $watermarkSize,
+                $watermarkX,
+                $watermarkY,
+                $pageNumberFontSize
+            ) {
+                // ---- Watermark (transparent black, viewPdf jaisa) ----
+                $canvas->set_opacity(0.2, 'Multiply');
 
-                $font = $fontMetrics->get_font('sans-serif', 'normal');
+                $canvas->text(
+                    $watermarkX,
+                    $watermarkY,
+                    $watermarkText,
+                    $watermarkFont,
+                    $watermarkSize,
+                    [0, 0, 0],
+                    0.2,   // word spacing
+                    6,     // char spacing
+                    -25    // angle
+                );
 
+                // ---- Opacity reset, warna page number bhi faded ho jayega ----
+                $canvas->set_opacity(1.0, 'Normal');
+
+                // ---- Page number ----
+                $font     = $fontMetrics->get_font('sans-serif', 'normal');
                 $pageText = sprintf(': %02d of %02d', $pageNumber, $pageCount);
 
                 $canvas->text(500, 772, $pageText, $font, $pageNumberFontSize, [0, 0, 0]);
@@ -8834,6 +8908,8 @@ class DocumentController extends Controller
 
         return $filePath;
     }
+
+    
    
     public function printPDF($id)
     {
