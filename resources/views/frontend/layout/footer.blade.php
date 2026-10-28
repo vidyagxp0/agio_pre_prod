@@ -7382,7 +7382,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         countCharacters();
     }
   </script>
-    <script src="https://cdn.jsdelivr.net/npm/froala-editor@4.6.2/js/froala_editor.pkgd.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/froala-editor@4.6.2/js/froala_editor.pkgd.min.js"></script>
 
     <style>
         /* Editor mein bhi PDF jaisa dikhe */
@@ -7454,7 +7454,80 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
                 });
             });
         });
-    </script>
+    </script> --}}
+
+<script src="https://cdn.jsdelivr.net/npm/froala-editor@4.6.2/js/froala_editor.pkgd.min.js"></script>
+
+<style>
+    .fr-view { font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.4; }
+    .fr-view table { width: 100%; table-layout: fixed; border-collapse: collapse; }
+    .fr-view table td, .fr-view table th { padding: 3px 5px; font-size: 12px; vertical-align: top; word-wrap: break-word; }
+    .fr-view img { max-width: 100%; height: auto; }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var allowedStyles = [
+            'color', 'background', 'background-color', 'font-weight', 'font-style',
+            'text-decoration', 'text-align', 'vertical-align', 'list-style-type', 'width',
+            'border', 'border-top', 'border-right', 'border-bottom', 'border-left',
+            'border-collapse', 'border-width', 'border-style', 'border-color'
+        ];
+
+        document.querySelectorAll('.froala-editor').forEach(function (element) {
+
+            new FroalaEditor(element, {
+                key: "wFE7nD5F4B3J4A11A8C7fLUQZf1ASFb1EFRNh1Hb1BCCQDUHnA8B6E5C5B1D3C3A1C8A6==",
+                heightMin: 300,
+
+                pastePlain: false,
+                wordPasteModal: true,
+                wordPasteKeepFormatting: true,
+
+                pasteDeniedTags: ['style', 'script', 'meta', 'link'],
+                pasteDeniedAttrs: ['class', 'id', 'lang', 'height', 'valign', 'cellspacing', 'cellpadding'],
+
+                htmlAllowedStyleProps: allowedStyles,
+                pasteAllowedStyleProps: allowedStyles,
+                wordAllowedStyleProps: allowedStyles,
+
+                // ---- IMAGES: server par upload nahi, base64 mein content ke andar ----
+                imageUploadURL: null,
+                imagePaste: true,
+                imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif'],
+                imageMaxSize: 5 * 1024 * 1024,
+                imageDefaultWidth: 0,
+                imageResize: true,
+                imageInsertButtons: ['imageUpload', 'imageByURL'],
+
+                events: {
+                    'paste.afterCleanup': function (html) {
+                        return html
+                            .replace(/font-family:[^;"]+;?/gi, '')
+                            .replace(/font-size:[^;"]+;?/gi, '')
+                            .replace(/line-height:[^;"]+;?/gi, '')
+                            .replace(/mso-[^:;"]+:[^;"]+;?/gi, '')
+                            .replace(/<\/?o:p[^>]*>/gi, '');
+                    }
+                },
+
+                toolbarButtons: [
+                    'bold', 'italic', 'underline', 'strikeThrough', 'textColor',
+                    'align', 'formatOL', 'formatUL', 'outdent', 'indent',
+                    'insertLink', 'insertImage', 'insertTable', 'quote',
+                    'undo', 'redo', 'clearFormatting', 'html'
+                ],
+
+                tableEditButtons: [
+                    'tableHeader', 'tableRemove', '|',
+                    'tableRows', 'tableColumns', 'tableStyle', 'tableCells',
+                    'cellBackground', 'cellVerticalAlign', 'cellHorizontalAlign'
+                ]
+            });
+        });
+    });
+</script>
 
 
 </body>

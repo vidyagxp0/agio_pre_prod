@@ -1122,6 +1122,44 @@ class DocumentDetailsController extends Controller
     }
   }
 
+  private function idList($csv): array
+  {
+      return array_values(array_unique(array_filter(
+          array_map('trim', explode(',', (string) $csv))
+      )));
+  }
+
+  private function notifyUsers(array $userIds, $document, string $history, string $view, string $subject, ?string $comment = null): void
+  {
+      if (empty($userIds)) {
+          return;
+      }
+
+      foreach (User::whereIn('id', $userIds)->get() as $user) {
+          if (empty($user->email)) {
+              continue;
+          }
+
+          try {
+              SendDocumentMail::dispatch(
+                  [
+                      'history' => $history,
+                      'comment' => $comment ?? '',
+                      'user' => Auth::user()->name,
+                      'process' => 'Document',
+                      'site' => 'Document',
+                  ],
+                  $user->email,
+                  $document,
+                  $view,
+                  $subject
+              );
+          } catch (\Throwable $e) {
+              report($e);
+          }
+      }
+  }
+
   function auditTrial($id)
   {
     $audit = DocumentHistory::where('document_id', $id)->orderByDESC('id')->get()->unique('activity_type');

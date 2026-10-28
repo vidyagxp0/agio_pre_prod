@@ -52,9 +52,10 @@ class ProcedureHtml
 
         libxml_use_internal_errors(true);
         $dom = new DOMDocument('1.0', 'UTF-8');
+
         $dom->loadHTML(
             '<?xml encoding="UTF-8"><div id="__root">' . $html . '</div>',
-            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_PARSEHUGE
         );
         libxml_clear_errors();
 
@@ -84,6 +85,8 @@ class ProcedureHtml
             }
             $sp->parentNode->removeChild($sp);
         }
+        // 2a2) Word ki layout tables ko divs me badlo
+        self::unwrapLayoutTables($dom, $xp);
 
         // 2b) Bade single-cell rows ko todo
         self::splitTallCells($dom, $xp);
@@ -354,6 +357,11 @@ class ProcedureHtml
                 continue;
             }
             $clean[$prop] = $val;
+        }
+
+        if (isset($clean['text-align']) && $clean['text-align'] === 'center'
+            && in_array($tag, ['div'], true)) {
+            unset($clean['text-align']);
         }
 
         // Attributes
@@ -656,5 +664,54 @@ class ProcedureHtml
             $out[] = $t;
         }
         return $out;
+    }
+
+    private static function unwrapLayoutTables(DOMDocument $dom, DOMXPath $xp): void
+    {
+        foreach (iterator_to_array($xp->query('//table[contains(@class,"pdf-borderless")]')) as $table) {
+            if (!$table->parentNode) {
+                continue;
+            }
+
+            $rows = iterator_to_array($xp->query('./tbody/tr | ./thead/tr | ./tfoot/tr | ./tr', $table));
+            if (!$rows) {
+                continue;
+            }
+
+            // sirf 1-2 cell wali, bina colspan/rowspan wali tables unwrap karo
+            $ok = true;
+            foreach ($rows as $tr) {
+                $cells = $xp->query('./td | ./th', $tr);
+                if ($cells->length < 1 || $cells->length > 2) { $ok = false; break; }
+                foreach ($cells as $c) {
+                    if ((int) $c->getAttribute('colspan') > 1 || (int) $c->getAttribute('rowspan') > 1) { $ok = false; break 2; }
+                }
+            }
+            if (!$ok) {
+                continue;
+            }
+
+            $wrap = $dom->createElement('div');
+
+            foreach ($rows as $tr) {
+                $cells = iterator_to_array($xp->query('./td | ./th', $tr));
+                $row   = $dom->createElement('div');
+
+                if (count($cells) === 2) {
+                    $row->setAttribute('class', 'lrow');
+                    $num = $dom->createElement('div');
+                    $num->setAttribute('class', 'lnum');
+                    while ($cells[0]->firstChild) { $num->appendChild($cells[0]->firstChild); }
+                    $row->appendChild($num);
+
+                    while ($cells[1]->firstChild) { $row->appendChild($cells[1]->firstChild); }
+                } else {
+                    while ($cells[0]->firstChild) { $row->appendChild($cells[0]->firstChild); }
+                }
+                $wrap->appendChild($row);
+            }
+
+            $table->parentNode->replaceChild($wrap, $table);
+        }
     }
 }

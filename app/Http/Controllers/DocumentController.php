@@ -7022,6 +7022,9 @@ class DocumentController extends Controller
     public function viewPdf($id)
     {
       
+        set_time_limit(300);
+        ini_set('memory_limit', '1024M');
+
         $depaArr = ['ACC' => 'Accounting', 'ACC3' => 'Accounting',];
         $data = Document::find($id);
         //$data->department = Department::find($data->department_id);
@@ -7153,20 +7156,22 @@ class DocumentController extends Controller
             ? json_decode($RevisioninpstpData->data, true) : (($RevisioninpstpData && isset($RevisioninpstpData->data) && is_array($RevisioninpstpData->data)) ? $RevisioninpstpData->data : []);
 
         $RevisioncvstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_cvstp_data")->first();
-        $RevisionGridcvstpData = isset($RevisioncvstpData->data) && is_string($RevisioncvstpData->data)
-                ? json_decode($RevisioncvstpData->data, true) :(is_array($RevisioncvstpData->data) ? $RevisioncvstpData->data:[]);
+        $RevisionGridcvstpData = isset($RevisioncvstpData?->data) && is_string($RevisioncvstpData?->data)
+            ? json_decode($RevisioncvstpData->data, true)
+            : (is_array($RevisioncvstpData?->data) ? $RevisioncvstpData->data : []);
 
         $RevisionrawmsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_rawms_data")->first();
-        $RevisionGridrawmsData = isset($RevisionrawmsData->data) && is_string($RevisionrawmsData->data)
-                ? json_decode($RevisionrawmsData->data, true) :(is_array($RevisionrawmsData->data) ? $RevisionrawmsData->data:[]);
+        $RevisionGridrawmsData = isset($RevisionrawmsData?->data) && is_string($RevisionrawmsData?->data)
+            ? json_decode($RevisionrawmsData->data, true)
+            : (is_array($RevisionrawmsData?->data) ? $RevisionrawmsData->data : []);
 
         $RevisionrawmstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_rawmstp_data")->first();
-        $RevisionGridrawmstpData = isset($RevisionrawmstpData->data) && is_string($RevisionrawmstpData->data)
-                ? json_decode($RevisionrawmstpData->data, true) :(is_array($RevisionrawmstpData->data) ? $RevisionrawmstpData->data:[]);
+        $RevisionGridrawmstpData = isset($RevisionrawmstpData?->data) && is_string($RevisionrawmstpData?->data)
+                ? json_decode($RevisionrawmstpData->data, true) :(is_array($RevisionrawmstpData?->data) ? $RevisionrawmstpData->data:[]);
 
         $RevisionpamsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_pams_data")->first();
-        $RevisionGridpamsData = isset($RevisionpamsData->data) && is_string($RevisionpamsData->data)
-                ? json_decode($RevisionpamsData->data, true) :(is_array($RevisionpamsData->data) ? $RevisionpamsData->data:[]);
+        $RevisionGridpamsData = isset($RevisionpamsData?->data) && is_string($RevisionpamsData?->data)
+                ? json_decode($RevisionpamsData->data, true) :(is_array($RevisionpamsData?->data) ? $RevisionpamsData->data:[]);
         
         $RevisionpiasData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_pias_data")->first();
         $RevisionGridpiasData = isset($RevisionpiasData?->data) && is_string($RevisionpiasData?->data)
@@ -7330,22 +7335,22 @@ class DocumentController extends Controller
                     'isRemoteEnabled' => true,
                     'isPhpEnabled' => true,
                 ]);
-        $pdf->setPaper('A4');
-        $pdf->render();
-        $canvas = $pdf->getDomPDF()->getCanvas();
-        $canvas->set_default_view('FitB');
-        $height = $canvas->get_height();
-        $width = $canvas->get_width();
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $canvas->set_default_view('FitB');
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
 
-        $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
+            $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
 
-        $watermarkText = strtoupper(Helpers::getDocStatusByStage($data->stage, $data->training_required));
+            $watermarkText = strtoupper(Helpers::getDocStatusByStage($data->stage, $data->training_required));
 
-        $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "normal");
-        $fontSize = 25;
-        $textWidth = $pdf->getDomPDF()->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
+            $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "normal");
+            $fontSize = 25;
+            $textWidth = $pdf->getDomPDF()->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
 
-        $canvas->page_text(
+            $canvas->page_text(
             ($width - $textWidth) / 2,
             ($height / 2)+50,
             $watermarkText,  
@@ -7355,46 +7360,43 @@ class DocumentController extends Controller
             0.2,  
             6,
             -25
-        );
+            );
 
-       
-       
-      
+        
+            if ($data->documents) {
 
-        if ($data->documents) {
+                $pdfArray = explode(',', $data->documents);
+                foreach ($pdfArray as $pdfFile) {
+                    $existingPdfPath = public_path('upload/PDF/' . $pdfFile);
+                    $permissions = 0644; // Example permission value, change it according to your needs
+                    if (file_exists($existingPdfPath)) {
+                        // Create a new Dompdf instance
+                        $options = new Options();
+                        $options->set('chroot', public_path());
+                        $options->set('isPhpEnabled', true);
+                        $options->set('isRemoteEnabled', true);
+                        $options->set('isHtml5ParserEnabled', true);
+                        $options->set('allowedFileExtensions', ['pdf']); // Allow PDF file extension
 
-            $pdfArray = explode(',', $data->documents);
-            foreach ($pdfArray as $pdfFile) {
-                $existingPdfPath = public_path('upload/PDF/' . $pdfFile);
-                $permissions = 0644; // Example permission value, change it according to your needs
-                if (file_exists($existingPdfPath)) {
-                    // Create a new Dompdf instance
-                    $options = new Options();
-                    $options->set('chroot', public_path());
-                    $options->set('isPhpEnabled', true);
-                    $options->set('isRemoteEnabled', true);
-                    $options->set('isHtml5ParserEnabled', true);
-                    $options->set('allowedFileExtensions', ['pdf']); // Allow PDF file extension
+                        $dompdf = new Dompdf($options);
 
-                    $dompdf = new Dompdf($options);
+                        chmod($existingPdfPath, $permissions);
 
-                    chmod($existingPdfPath, $permissions);
+                        // Load the existing PDF file
+                        $dompdf->loadHtmlFile($existingPdfPath);
 
-                    // Load the existing PDF file
-                    $dompdf->loadHtmlFile($existingPdfPath);
+                        // Render the PDF
+                        $dompdf->render();
 
-                    // Render the PDF
-                    $dompdf->render();
-
-                    // Output the PDF to the browser
-                    $dompdf->stream();
+                        // Output the PDF to the browser
+                        $dompdf->stream();
+                    }
                 }
             }
-        }
 
           return $pdf->stream($data['document_type_code'] . '_' . $id . '.pdf');
-        } catch (\Exception $e) {
-            \Log::error('PDF Generation Error: ' . $e->getMessage());
+        } catch (\Throwable $e) {
+            \Log::error('PDF Generation Error: ' . $e->getMessage(), ['line' => $e->getLine(), 'file' => $e->getFile()]);
             return redirect()->back()->withErrors(['error' => 'PDF generation failed']);
         }
     }
