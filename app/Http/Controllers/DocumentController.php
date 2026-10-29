@@ -7285,13 +7285,7 @@ class DocumentController extends Controller
                 //  dd(array_column($checkAnnexures, 'annexure_document_number'));
                 $annexureDocumentNumbers = array_column($checkAnnexures,'annexure_document_number');
 
-
-
-            
             }
-            /////////
-
-
 
             ////////
 
@@ -7336,6 +7330,7 @@ class DocumentController extends Controller
                     'isHtml5ParserEnabled' => true,
                     'isRemoteEnabled' => true,
                     'isPhpEnabled' => true,
+                    'chroot' => [public_path(), base_path()],
                 ]);
             $pdf->setPaper('A4');
             $pdf->render();
@@ -8614,7 +8609,7 @@ class DocumentController extends Controller
                         'noDataFound' => true,
                     ],
                     $data,
-                    12
+                    10
                 );
 
             } else {
@@ -8640,7 +8635,7 @@ class DocumentController extends Controller
                             'noDataFound' => false,
                         ],
                         $data,
-                        12
+                        10
                     );
                 }
             }
@@ -8892,9 +8887,9 @@ class DocumentController extends Controller
 
                 // ---- Page number ----
                 $font     = $fontMetrics->get_font('sans-serif', 'normal');
-                $pageText = sprintf(': %02d of %02d', $pageNumber, $pageCount);
+                $pageText = sprintf(' %02d of %02d', $pageNumber, $pageCount);
 
-                $canvas->text(500, 772, $pageText, $font, $pageNumberFontSize, [0, 0, 0]);
+                $canvas->text(500, 788, $pageText, $font, $pageNumberFontSize, [0, 0, 0]);
             }
         );
 
@@ -12397,6 +12392,20 @@ class DocumentController extends Controller
         }
 
         return $revisions;
+    }
+
+    public function uploadImage(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/procedure_images'), $filename);
+
+            return response()->json([
+                'link' => url('uploads/procedure_images/' . $filename)
+            ]);
+        }
+        return response()->json(['error' => 'No file uploaded'], 400);
     }
 
 }
