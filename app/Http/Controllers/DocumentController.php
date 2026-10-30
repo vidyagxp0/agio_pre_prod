@@ -8609,7 +8609,7 @@ class DocumentController extends Controller
                         'noDataFound' => true,
                     ],
                     $data,
-                    10
+                    9
                 );
 
             } else {
@@ -8635,7 +8635,7 @@ class DocumentController extends Controller
                             'noDataFound' => false,
                         ],
                         $data,
-                        10
+                        9
                     );
                 }
             }
@@ -8889,7 +8889,7 @@ class DocumentController extends Controller
                 $font     = $fontMetrics->get_font('sans-serif', 'normal');
                 $pageText = sprintf(' %02d of %02d', $pageNumber, $pageCount);
 
-                $canvas->text(500, 788, $pageText, $font, $pageNumberFontSize, [0, 0, 0]);
+                $canvas->text(480, 777, $pageText, $font, $pageNumberFontSize, [0, 0, 0]);
             }
         );
 
