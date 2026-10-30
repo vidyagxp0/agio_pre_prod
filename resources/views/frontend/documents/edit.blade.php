@@ -873,7 +873,11 @@
                                 'ANNXVPerfQualif','ANNEXUREXVIIITRACEABILITYMATRIX',
                                 'ANNEXUREXVIINSTALLATION','ANNEXUREXIXSYSTEMRETIREMENT',
                                 'MAForRec','MAPacRec','SMF','VMP','QM','ANNEXUREXVIIVALIDATION',
-                                'OTHER','OA','QR','QP','CASP','CASR'
+                                'OTHER','OA','QR','QP','CASP','CASR','FPSTP',
+                                'IPSTP',
+                                'CVSTP',
+                                'RMSTP',
+                                'MFPSTP'
                             ].map(c => c.toUpperCase());
 
                             function toggleDocName(value) {

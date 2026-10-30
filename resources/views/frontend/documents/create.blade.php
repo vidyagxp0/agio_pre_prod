@@ -879,63 +879,63 @@
                                     // Document Name field show/hide
                                  
                                     
-function toggleAttachmentDocumentName(selectedType) {
-    const container = getElement('docNameContainerData');
-   
-    const input = getElement('docnamedata');
-    const inputSecond = getElement('documentnumberdata');
+                                function toggleAttachmentDocumentName(selectedType) {
+                                    const container = getElement('docNameContainerData');
+                                
+                                    const input = getElement('docnamedata');
+                                    const inputSecond = getElement('documentnumberdata');
 
-    const requiredLabel = getElement('docNameRequiredfile');
-    const requiredLabelSecond = getElement('docNameRequiredfileSecond');
+                                    const requiredLabel = getElement('docNameRequiredfile');
+                                    const requiredLabelSecond = getElement('docNameRequiredfileSecond');
 
-    const error = getElement('docnamedataError');
-    const errorSecond = getElement('documentnumberdataError');
+                                    const error = getElement('docnamedataError');
+                                    const errorSecond = getElement('documentnumberdataError');
 
-    const selected = (selectedType || '').trim().toLowerCase();
+                                    const selected = (selectedType || '').trim().toLowerCase();
 
-    const documentNameTypes = [
-    'FPSTP',
-    'IPSTP',
-    'CVSTP',
-    'RMSTP',
-    'MFPSTP'
-];
+                                    const documentNameTypes = [
+                                    'FPSTP',
+                                    'IPSTP',
+                                    'CVSTP',
+                                    'RMSTP',
+                                    'MFPSTP'
+                                ];
 
-const hasAttachmentType =
-    Object.keys(requiredAttachments).some(type =>
-        type.toLowerCase() === selected
-    ) ||
-    documentNameTypes.some(type =>
-        type.toLowerCase() === selected
-    );
+                                const hasAttachmentType =
+                                    Object.keys(requiredAttachments).some(type =>
+                                        type.toLowerCase() === selected
+                                    ) ||
+                                    documentNameTypes.some(type =>
+                                        type.toLowerCase() === selected
+                                    );
 
-    // Dono fields ko show/hide karein
-    if (hasAttachmentType && selected !== '') {
-        if (container) container.style.display = 'block';
-   
-        if (input) input.setAttribute('required', 'required');
-   
-        if (requiredLabel) requiredLabel.style.display = 'inline';
-    } else {
-        if (container) container.style.display = 'none';
-   
-        if (input) {
-            input.removeAttribute('required');
-            input.value = '';
-        }
+                                    // Dono fields ko show/hide karein
+                                    if (hasAttachmentType && selected !== '') {
+                                        if (container) container.style.display = 'block';
+                                
+                                        if (input) input.setAttribute('required', 'required');
+                                
+                                        if (requiredLabel) requiredLabel.style.display = 'inline';
+                                    } else {
+                                        if (container) container.style.display = 'none';
+                                
+                                        if (input) {
+                                            input.removeAttribute('required');
+                                            input.value = '';
+                                        }
 
-        if (inputSecond) {
-            inputSecond.removeAttribute('required');
-            inputSecond.value = '';
-        }
+                                        if (inputSecond) {
+                                            inputSecond.removeAttribute('required');
+                                            inputSecond.value = '';
+                                        }
 
-        if (requiredLabel) requiredLabel.style.display = 'none';
-      
+                                        if (requiredLabel) requiredLabel.style.display = 'none';
+                                    
 
-        if (error) error.style.display = 'none';
-        if (errorSecond) errorSecond.style.display = 'none';
-    }
-}
+                                        if (error) error.style.display = 'none';
+                                        if (errorSecond) errorSecond.style.display = 'none';
+                                    }
+                                }
 
 
                                     function handleDocumentSelection(selectElement) {
