@@ -7481,6 +7481,15 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
                 key: "wFE7nD5F4B3J4A11A8C7fLUQZf1ASFb1EFRNh1Hb1BCCQDUHnA8B6E5C5B1D3C3A1C8A6==",
                 heightMin: 300,
 
+                // ---- IMAGES: server par upload nahi, base64 mein content ke andar ----
+                imageUploadURL: "{{ route('froala.upload') }}",
+                imageUploadParams: {
+                    _token: "{{ csrf_token() }}"
+                },
+                imagePaste: true,
+                imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif'],
+                imageMaxSize: 10 * 1024 * 1024,
+
                 pastePlain: false,
                 wordPasteModal: true,
                 wordPasteKeepFormatting: true,
@@ -7491,15 +7500,6 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
                 htmlAllowedStyleProps: allowedStyles,
                 pasteAllowedStyleProps: allowedStyles,
                 wordAllowedStyleProps: allowedStyles,
-
-                // ---- IMAGES: server par upload nahi, base64 mein content ke andar ----
-                imageUploadURL: null,
-                imagePaste: true,
-                imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif'],
-                imageMaxSize: 5 * 1024 * 1024,
-                imageDefaultWidth: 0,
-                imageResize: true,
-                imageInsertButtons: ['imageUpload', 'imageByURL'],
 
                 events: {
                     'paste.afterCleanup': function (html) {

@@ -7,7 +7,7 @@
         @page { size: A4; margin: 130px 34px 120px 34px; }
         * { font-family: Arial, Helvetica, sans-serif; font-style: normal; }
         html { text-align: left; }
-        body { margin: 0; padding: 0; font-size: 11px; line-height: 1.4; }
+        body { margin: 0; padding: 0; font-size: 12px; line-height: 1.4; }
 
         table { width: 100%; table-layout: fixed; border-collapse: collapse; }
         td, th { padding: 4px; text-align: left; vertical-align: top; }
@@ -32,21 +32,40 @@
             text-transform: uppercase;
         }
 
-        .rich-pdf-content { width: 100%; font-size: 11px; line-height: 1.4; text-align: left; word-wrap: break-word; }
-        .rich-pdf-content p { margin: 0 0 5px 0; font-size: 11px; }
+        .rich-pdf-content { width: 100%; font-size: 12px; line-height: 1.4; text-align: left; word-wrap: break-word; }
+        .rich-pdf-content p { margin: 0 0 5px 0; font-size: 12px; }
         .rich-pdf-content ul, .rich-pdf-content ol { padding-left: 22px; margin: 2px 0 5px 0; }
-        .rich-pdf-content li { font-size: 11px; }
+        .rich-pdf-content li { font-size: 12px; }
         .rich-pdf-content table { width: 100%; table-layout: fixed; border-collapse: collapse; margin: 5px 0 8px 0; }
         .rich-pdf-content table, .rich-pdf-content th, .rich-pdf-content td { border: 1px solid #000; }
-        .rich-pdf-content th, .rich-pdf-content td { font-size: 11px; line-height: 1.35; padding: 3px 5px; vertical-align: top; text-align: left; word-wrap: break-word; }
+        .rich-pdf-content th, .rich-pdf-content td { font-size: 12px; line-height: 1.35; padding: 3px 5px; vertical-align: top; text-align: left; word-wrap: break-word; }
         .rich-pdf-content th { font-weight: bold; text-align: center; }
-        .rich-pdf-content td p, .rich-pdf-content th p, .rich-pdf-content td div, .rich-pdf-content th div, .rich-pdf-content td span { margin: 0; font-size: 11px; }
-        .rich-pdf-content table.pdf-borderless, .rich-pdf-content table.pdf-borderless th, .rich-pdf-content table.pdf-borderless td { border: none; }
+        .rich-pdf-content td p, .rich-pdf-content th p, .rich-pdf-content td div, .rich-pdf-content th div, .rich-pdf-content td span { margin: 0; font-size: 12px; }
         .rich-pdf-content .pdf-cont-first { border-bottom: none; }
         .rich-pdf-content .pdf-cont-mid { border-top: none; border-bottom: none; }
         .rich-pdf-content .pdf-cont-last { border-top: none; }
         .rich-pdf-content thead { display: table-header-group; }
-        .rich-pdf-content img { display: block; width: auto; max-width: 100%; height: auto; margin: 4px 0; page-break-inside: avoid; }
+        /* .rich-pdf-content img { display: block; width: auto; max-width: 100%; height: auto; margin: 4px 0; page-break-inside: avoid; } */
+
+        .rich-pdf-content img {display: block; width: 100% !important; max-width: 650px !important; height: auto !important; margin: 8px auto; page-break-inside: avoid;}
+        /* Borderless layout table: sirf apne direct cells ka border hatao */
+        .rich-pdf-content table.pdf-borderless { border: none; }
+        .rich-pdf-content table.pdf-borderless > tbody > tr > td,
+        .rich-pdf-content table.pdf-borderless > tbody > tr > th,
+        .rich-pdf-content table.pdf-borderless > tr > td,
+        .rich-pdf-content table.pdf-borderless > tr > th { border: none; }
+
+        /* Number + text wali layout table */
+        .rich-pdf-content table.lt { table-layout: auto; margin: 0; }
+        .rich-pdf-content table.lt > tbody > tr > td { padding: 1px 2px; text-align: left; }
+        .rich-pdf-content table.lt > tbody > tr > td:first-child { width: 7%; white-space: nowrap; }
+        .rich-pdf-content table.lt > tbody > tr > td:last-child { width: 93%; }
+
+        /* Andar ki asli table hamesha bordered rahe */
+        .rich-pdf-content table.lt table { table-layout: fixed; width: 100%; }
+        .rich-pdf-content table.lt table,
+        .rich-pdf-content table.lt table th,
+        .rich-pdf-content table.lt table td { border: 1px solid #000; white-space: normal; }
     </style>
 </head>
 
@@ -101,7 +120,7 @@
     @if (!empty($noDataFound) && $noDataFound)
         <div style="text-align:center; margin-top:250px; font-size:22px; font-weight:bold;">NO DATA FOUND</div>
     @else
-        <h3 style="text-align:center; margin:0 0 12px 0; font-size:13px;">ANNEXURE {{ $annexureNo }}</h3>
+        <h3 style="text-align:center; margin:0 0 12px 0; font-size:14px;">ANNEXURE {{ $annexureNo }}</h3>
         <div class="rich-pdf-content">{!! $annexure !!}</div>
     @endif
 </main>

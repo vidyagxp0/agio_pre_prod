@@ -13,14 +13,9 @@
     {{-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> --}}
 
     <style>
-        * {
-            font-family: "Open Sans", "Roboto", "Noto Sans KR", "Poppins", sans-serif;
-            font-optical-sizing: auto;
-            
-            font-style: normal;
-            font-variation-settings:
-                "wdth" 100;
-        }
+        * { font-family: Arial, Helvetica, sans-serif; font-style: normal; }
+        html { text-align: left; }
+        body { margin: 0; padding: 0; font-size: 12px; line-height: 1.4; }
 
         .symbol-support {
             font-family: "DeJaVu Sans Mono", monospace !important;
@@ -246,12 +241,12 @@
 
         table.small-content td,
         table.small-content th {
-            font-size: 0.85rem;
+            font-size: 12px;
 
         }
 
         td.title {
-            font-size: 1.1rem;
+            font-size: 13px;
             font-weight: bold;
         }
 
@@ -263,8 +258,8 @@
         }
 
         td.doc-num {
-            font-size: 1rem;
-            font-weight: bold;
+            font-size: 12px;
+            /* font-weight: bold; */
 
         }
 
@@ -275,7 +270,7 @@
         }
 
         .doc-control .head div:nth-child(1) {
-            font-size: 1.5rem;
+            font-size: 12px;
             text-align: center;
             font-weight: bold;
             margin-bottom: 5px;
@@ -284,7 +279,7 @@
 
         .doc-control .body .block-head {
             border-bottom: 2px solid black;
-            font-size: 1.2rem;
+            font-size: 12px;
             font-weight: bold;
             margin-bottom: 15px;
         }
@@ -303,45 +298,45 @@
             background: #fff;     /* height hata di, header apni natural height lega */
         }
 
-     footer {
-    position: fixed;
-    bottom: -136px;       /* 170 - 34 */
-    left: 0;
-    width: 100%;
-    height: 130px;
-    z-index: 1000;
-    background: #fff;
-}
+        footer {
+            position: fixed;
+            bottom: -136px;       /* 170 - 34 */
+            left: 0;
+            width: 100%;
+            height: 130px;
+            z-index: 1000;
+            background: #fff;
+        }
 
-/* PAGE 1 ONLY: 3 columns, fixed footer ke upar baithta hai */
-.footer-first {
-    position: absolute;
-    bottom: -136px;
-    left: 0;
-    width: 100%;
-    height: 130px;
-    z-index: 2000;
-    background: #fff;
-}
+        /* PAGE 1 ONLY: 3 columns, fixed footer ke upar baithta hai */
+        .footer-first {
+            position: absolute;
+            bottom: -136px;
+            left: 0;
+            width: 100%;
+            height: 130px;
+            z-index: 2000;
+            background: #fff;
+        }
 
-.sign-footer table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
-    border: 1px solid #000;
-}
-.sign-footer th,
-.sign-footer td {
-    border: 1px solid #000;
-    padding: 5px 4px;
-    font-size: 14px;
-    text-align: center;
-}
-.sign-footer th {
-    font-weight: bold;
-    background-color: #f4f4f4;
-}
-.sign-footer td div { font-size: 14px; }
+        .sign-footer table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            border: 1px solid #000;
+        }
+        .sign-footer th,
+        .sign-footer td {
+            border: 1px solid #000;
+            padding: 5px 4px;
+            font-size: 12px;
+            text-align: center;
+        }
+        .sign-footer th {
+            font-weight: bold;
+            background-color: #f4f4f4;
+        }
+        .sign-footer td div { font-size: 12px; }
 
         .other-container {
             margin: 0 0 0 0;
@@ -472,20 +467,20 @@
     <style>
         .quill-pdf-content {
             width: 100%;
-            font-size: 14px;
+            font-size: 12px;
             line-height: 1.5;
             text-align: left;
             word-wrap: break-word;
             overflow-wrap: break-word;
             box-sizing: border-box;
         }
-        .quill-pdf-content p { margin: 0 0 6px 0; font-size: 14px; line-height: 1.5; }
+        .quill-pdf-content p { margin: 0 0 6px 0; font-size: 12px; line-height: 1.5; }
         .quill-pdf-content h1, .quill-pdf-content h2, .quill-pdf-content h3,
         .quill-pdf-content h4, .quill-pdf-content h5, .quill-pdf-content h6 {
-            font-size: 14px; font-weight: bold; margin: 10px 0 6px 0;
+            font-size: 12px; font-weight: bold; margin: 10px 0 6px 0;
         }
         .quill-pdf-content ul, .quill-pdf-content ol { padding-left: 22px; margin: 2px 0 6px 0; }
-        .quill-pdf-content li { font-size: 14px; line-height: 1.5; margin-bottom: 2px; }
+        .quill-pdf-content li { font-size: 12px; line-height: 1.5; margin-bottom: 2px; }
 
         .quill-pdf-content table {
             width: 100%;
@@ -501,7 +496,7 @@
 
         .quill-pdf-content th,
         .quill-pdf-content td {
-            font-size: 14px;
+            font-size: 12px;
             line-height: 1.35;
             padding: 3px 5px;
             vertical-align: top;
@@ -629,7 +624,7 @@
                                 font-weight: bold;
                                 padding: 0;
                             ">
-                                MATERIAL NAME
+                                Material Name
                             </div>
 
                             <div style="
@@ -742,7 +737,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div style="margin-top: 2px; font-size: 14px;">
+                <div style="margin-top: 2px; font-size: 12px;">
                     <span>Format No. QA/097/F9-00</span>
                     <span style="margin-left: 330px;">Page No. :-</span>
                 </div>
@@ -806,13 +801,13 @@
                         </tr>
                     </tbody>
                 </table>
-                <div style="margin-top: 2px; font-size: 14px;">
+                <div style="margin-top: 2px; font-size: 12px;">
                     <span>Format No. QA/097/F9-00</span>
                     <span style="margin-left: 330px;">Page No. :-</span>
                 </div>
             </div>
 
-        <table class="border" style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+        <table class="border" style="width: 100%; border-collapse: collapse; border: 1px black;">
             <tbody>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Batch No</td>
@@ -894,22 +889,6 @@
                 </div>
                 {{-- Test wise data End --}}
                     
-                  
-                   {{-- <div style="margin-top: 20px;">
-                        <table style="width: 100%; border: none;">
-                            <tr>
-                                <td style="width: 50%; text-align: left;">
-                                    <p><strong>Analyzed by:</strong> _____________________________</p>
-                                    <p><strong>Date:</strong> ____________________________</p>
-                                </td>
-                                <td style="width: 50%; text-align: right;">
-                                    <p><strong>Reviewed by:</strong> _____________________________</p>
-                                    <p><strong>Date:</strong> _____________________________</p>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    --}}
                 </div>
 
                 <div>
@@ -1045,7 +1024,7 @@
                             <tr>
                                 
                                 <th class="text-left">
-                                    <div class="bold">REVISION HISTORY</div>
+                                    <div class="bold">Revision History</div>
                                 </th>
                             </tr>
                         </thead>
@@ -1054,10 +1033,10 @@
                         <table class="table table-bordered" id="distribution-list">
                             <thead>
                                 <tr>
-                                    <th style="font-size: 16px; font-weight: bold; width:10%">Revision No.</th>
-                                    <!-- <th style="font-size: 16px; font-weight: bold; width:20%">Change Control No.</th> -->
-                                    <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
-                                    <th style="font-size: 16px; font-weight: bold; width:50%">Details of Revision</th>
+                                    <th style="font-size: 12px; width:10%">Revision No.</th>
+                                    <!-- <th style="font-size: 16px; width:20%">Change Control No.</th> -->
+                                    <th style="font-size: 12px; width:20%">Effective Date</th>
+                                    <th style="font-size: 12px; width:50%">Details of Revision</th>
                                 </tr>
                             </thead>
                         
@@ -1082,7 +1061,7 @@
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
+                                        <td colspan="4" style="text-align: center; font-size: 12px;">No Data Available</td>
                                     </tr>
                                 @endif
                             </tbody>
@@ -1098,10 +1077,10 @@
             $pdf->page_script('
                 if ($PAGE_COUNT > 1) {
                     $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
-                    $size = 12;
+                    $size = 9;
                     $pageText =  $PAGE_NUM . " of " . $PAGE_COUNT;
-                    $y = 795;
-                    $x = 485;
+                    $y = 786;
+                    $x = 450;
                     $pdf->text($x, $y, $pageText, $font, $size);
                 }
             ');

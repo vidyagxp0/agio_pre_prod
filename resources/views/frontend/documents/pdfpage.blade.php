@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>DMS Document</title>
     <style>
-        @page { size: A4; margin: 350px 34px 185px 34px; }
+        @page { size: A4; margin: 340px 34px 185px 34px; }
 
         * { font-family: Arial, Helvetica, sans-serif; font-style: normal; }
         html { text-align: left; }
-        body { margin: 0; padding: 0; font-size: 11px; line-height: 1.4; }
+        body { margin: 0; padding: 0; font-size: 12px; line-height: 1.4; }
 
         table { width: 100%; table-layout: fixed; border-collapse: collapse; }
         td, th { padding: 4px; text-align: left; vertical-align: top; }
@@ -19,7 +19,7 @@
         .text-center { text-align: center; }
 
         /* ---------- HEADER / FOOTER ---------- */
-        header { position: fixed; top: -316px; left: 0; width: 100%; z-index: 1000; background: #fff; }
+        header { position: fixed; top: -300px; left: 0; width: 100%; z-index: 1000; background: #fff; }
         footer { position: fixed; bottom: -151px; left: 0; width: 100%; z-index: 1000; background: #fff; }
         .header-wrapper { position: fixed; top: 0; left: 0; right: 0; z-index: 2000; }
 
@@ -37,49 +37,43 @@
         .foot-cell.head { font-weight: bold; }
 
         /* ---------- SECTIONS ---------- */
-        .sec  { position: relative; padding-left: 46px; margin-top: 10px; font-size: 12px; font-weight: bold; text-align: left; }
-        .item { position: relative; padding-left: 46px; font-size: 11px; text-align: justify; page-break-inside: avoid; }
-        .sec .n, .item .n { position: absolute; left: 0; top: 0; text-align: left; }
-        .item .n { font-weight: normal; }
-        .para { padding-left: 46px; text-align: justify; font-size: 11px; }
+     
+        .para { padding-left: 46px; text-align: justify; font-size: 12px; }
 
         /* ---------- PASTED CONTENT (Word / Excel / Froala) ---------- */
-        .quill-pdf-content { width: 100%; font-size: 11px; line-height: 1.4; text-align: left; word-wrap: break-word; overflow-wrap: break-word; }
-        .quill-pdf-content p { margin: 0 0 5px 0; font-size: 11px; line-height: 1.4; }
+        .quill-pdf-content { width: 100%; font-size: 12px; line-height: 1.4; text-align: left; word-wrap: break-word; overflow-wrap: break-word; }
+        .quill-pdf-content p { margin: 0 0 5px 0; font-size: 12px; line-height: 1.4; }
         .quill-pdf-content h1, .quill-pdf-content h2, .quill-pdf-content h3,
-        .quill-pdf-content h4, .quill-pdf-content h5, .quill-pdf-content h6 { font-size: 11px; font-weight: bold; margin: 8px 0 4px 0; }
+        .quill-pdf-content h4, .quill-pdf-content h5, .quill-pdf-content h6 { font-size: 12px; font-weight: bold; margin: 8px 0 4px 0; }
         .quill-pdf-content ul, .quill-pdf-content ol { padding-left: 22px; margin: 2px 0 5px 0; }
-        .quill-pdf-content li { font-size: 11px; line-height: 1.4; margin-bottom: 2px; }
+        .quill-pdf-content li { font-size: 12px; line-height: 1.4; margin-bottom: 2px; }
 
         .quill-pdf-content table { width: 100%; table-layout: fixed; border-collapse: collapse; border-spacing: 0; margin: 5px 0 8px 0; }
         .quill-pdf-content table.pdf-chunk { margin: 0; }
         .quill-pdf-content table, .quill-pdf-content th, .quill-pdf-content td { border: 1px solid #000; }
         .quill-pdf-content th, .quill-pdf-content td {
-            font-size: 11px; line-height: 1.35; padding: 3px 5px; vertical-align: top; text-align: left;
+            font-size: 12px; line-height: 1.35; padding: 3px 5px; vertical-align: top; text-align: left;
             word-wrap: break-word; overflow-wrap: break-word; white-space: normal;
         }
         .quill-pdf-content th { font-weight: bold; text-align: center; }
         .quill-pdf-content td p, .quill-pdf-content th p,
-        .quill-pdf-content td div, .quill-pdf-content th div { margin: 0; padding: 0; font-size: 11px; line-height: 1.35; }
+        .quill-pdf-content td div, .quill-pdf-content th div { margin: 0; padding: 0; font-size: 12px; line-height: 1.35; }
         .quill-pdf-content td span, .quill-pdf-content th span,
-        .quill-pdf-content td li, .quill-pdf-content th li { font-size: 11px; }
+        .quill-pdf-content td li, .quill-pdf-content th li { font-size: 12px; }
 
         .quill-pdf-content, .quill-pdf-content div, .quill-pdf-content p,
-        .quill-pdf-content .lrow, .quill-pdf-content .lnum { text-align: left; }
+        /* .quill-pdf-content .lrow, .quill-pdf-content .lnum { text-align: left; } */
         .quill-pdf-content td, .quill-pdf-content th { text-align: left; }
 
-        .quill-pdf-content table.pdf-borderless,
-        .quill-pdf-content table.pdf-borderless th,
-        .quill-pdf-content table.pdf-borderless td { border: none; }
         .quill-pdf-content .pdf-cont-first { border-bottom: none; }
         .quill-pdf-content .pdf-cont-mid   { border-top: none; border-bottom: none; }
         .quill-pdf-content .pdf-cont-last  { border-top: none; }
         .quill-pdf-content thead { display: table-header-group; }
-        .quill-pdf-content img { display: block; max-width: 100%; height: auto; margin: 6px auto; page-break-inside: avoid; }
+        .quill-pdf-content img {display: block; width: 100% !important; max-width: 620px !important; height: auto !important; margin: 8px auto; page-break-inside: avoid;}
 
         /* ---------- LISTS / TABLES ---------- */
         table.table-bordered { border: 1px solid #777; }
-        table.table-bordered th, table.table-bordered td { border: 1px solid #777; padding: 4px 6px; font-size: 11px; text-align: center; vertical-align: middle; }
+        table.table-bordered th, table.table-bordered td { border: 1px solid #777; padding: 4px 6px; font-size: 12px; text-align: center; vertical-align: middle; }
         table.table-bordered th { font-weight: bold; }
         table.table-bordered tr { page-break-inside: avoid; }
         table.table-bordered thead { display: table-header-group; }
@@ -87,13 +81,40 @@
         /* ---------- DOCUMENT CONTROL ---------- */
         .doc-control .head { margin: 0 auto 12px; text-align: center; font-size: 16px; font-weight: bold; }
         .doc-control .block { margin-bottom: 16px; }
-        .doc-control .block-head { border-bottom: 2px solid #000; font-size: 13px; font-weight: bold; margin-bottom: 8px; }
-        .doc-control th, .doc-control td { font-size: 11px; }
+        .doc-control .block-head { border-bottom: 2px solid #000; font-size: 14px; font-weight: bold; margin-bottom: 8px; }
+        .doc-control th, .doc-control td { font-size: 12px; }
         .doc-control table.table-bordered td, .doc-control table.table-bordered th { text-align: left; }
         .doc-control table.table-bordered tr { page-break-inside: auto; }
 
-        .quill-pdf-content .lrow { position: relative; padding-left: 48px; page-break-inside: auto; }
-        .quill-pdf-content .lnum { position: absolute; left: 0; top: 0; width: 44px; text-align: left; }
+        table.sec { margin-top: 10px; page-break-after: avoid; }
+        table.sec td { font-size: 13px; font-weight: bold; padding: 2px 4px; text-align: left; }
+        table.item { page-break-inside: avoid; }
+        table.item td { font-size: 12px; padding: 1px 4px; text-align: justify; }
+
+        table.sec, table.item { table-layout: auto; width: 100%; }
+        table.sec td:first-child, table.item td:first-child { width: 6%; white-space: nowrap; }
+        table.sec td:last-child,  table.item td:last-child  { width: 94%; }
+        table.sec td, table.item td { text-align: left; }
+        
+        /* Borderless layout table: sirf apne direct cells ka border hatao */
+        .quill-pdf-content table.pdf-borderless { border: none; }
+        .quill-pdf-content table.pdf-borderless > tbody > tr > td,
+        .quill-pdf-content table.pdf-borderless > tbody > tr > th,
+        .quill-pdf-content table.pdf-borderless > tr > td,
+        .quill-pdf-content table.pdf-borderless > tr > th { border: none; }
+
+        /* Number + text wali layout table */
+        .quill-pdf-content table.lt { table-layout: auto; margin: 0; }
+        .quill-pdf-content table.lt > tbody > tr > td { padding: 1px 2px; text-align: left; }
+        .quill-pdf-content table.lt > tbody > tr > td:first-child { width: 7%; white-space: nowrap; }
+        .quill-pdf-content table.lt > tbody > tr > td:last-child { width: 93%; }
+
+        /* Andar ki asli table hamesha bordered rahe */
+        .quill-pdf-content table.lt table { table-layout: fixed; width: 100%; }
+        .quill-pdf-content table.lt table,
+        .quill-pdf-content table.lt table th,
+        .quill-pdf-content table.lt table td { border: 1px solid #000; }
+        .quill-pdf-content table.lt table td { white-space: normal; }
     </style>
 </head>
 
@@ -101,13 +122,14 @@
 @php
     $dc = $data->document_content;
     
-    $heading = function ($no, $title) {
-        return '<div class="sec"><span class="n">' . $no . '.</span>' . $title . '</div>';
-    };
     // serialize array ko safe array banao
     $items = function ($raw) {
         $a = @unserialize($raw);
         return is_array($a) ? $a : [];
+    };
+
+    $heading = function ($no, $title) {
+        return '<table class="sec"><tr><td>' . $no . '.</td><td>' . $title . '</td></tr></table>';
     };
 
     // 3.1, 3.2 / 3.2.1 jaisa numbering (original logic wahi hai)
@@ -118,7 +140,7 @@
             $isSub = str_contains((string) $key, 'sub');
             if (!empty($res)) {
                 $label = $prefix . '.' . ($isSub ? ($i - 1) . '.' . $sub : $i);
-                $out .= '<div class="item"><span class="n">' . $label . '</span>' . nl2br($res) . '</div>';
+                $out .= '<table class="item"><tr><td>' . $label . '</td><td>' . nl2br($res) . '</td></tr></table>';
             }
             if (!$isSub) { $i++; $sub = 1; } else { $sub++; }
         }
@@ -471,7 +493,7 @@
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 10;
                 $pageText = str_pad($PAGE_NUM, 2, "0", STR_PAD_LEFT) . " of " . str_pad($PAGE_COUNT, 2, "0", STR_PAD_LEFT);
-                $pdf->text(460, 100, $pageText, $font, $size);
+                $pdf->text(460, 96, $pageText, $font, $size);
             }
         ');
     }

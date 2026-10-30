@@ -6,10 +6,8 @@
     <title>Document</title>
     <style>
         * {
-            font-family: "Open Sans", "Roboto", "Noto Sans KR", "Poppins", sans-serif;
-            font-optical-sizing: auto;
+            font-family: Arial, Helvetica, sans-serif; font-style: normal;
             font-weight: <weight>;
-            font-style: normal;
             font-variation-settings: "wdth" 100;
         }
 
@@ -125,6 +123,7 @@
         body {
             margin-top: 260px;
             margin-bottom: 170px;
+            font-size: 12px; line-height: 1.4;
         }
 
         /* NOTE: generic footer rule hata diya gaya hai.
@@ -694,9 +693,9 @@
         if (isset($pdf)) {
             $pdf->page_script('
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
-                $size = 12;
+                $size = 9;
                 $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 170;
+                $y = 160;
                 $x = 380;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');

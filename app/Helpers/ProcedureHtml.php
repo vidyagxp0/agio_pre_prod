@@ -26,8 +26,8 @@ class ProcedureHtml
     ];
 
     private const ALLOWED_ATTRS = [
-        'a'   => ['href'],
-        'img' => ['src', 'alt'],
+        'a'   => ['href', 'target'],
+        'img' => ['src', 'alt', 'width', 'height', 'title'],
         'td'  => ['colspan', 'rowspan'],
         'th'  => ['colspan', 'rowspan'],
         'ol'  => ['start', 'type'],
@@ -41,13 +41,15 @@ class ProcedureHtml
             return '';
         }
 
+        // Large images regex crash prevent karne ke liye
+        ini_set('pcre.backtrack_limit', '10000000');
+
         $html = preg_replace('/<!--.*?-->/s', '', $html);
         $html = preg_replace('#<(style|script)\b[^>]*>.*?</\1>#is', '', $html);
         $html = preg_replace('#</?o:p[^>]*>#i', '', $html);
 
-        // bekaar <span> wrappers (bina attribute wale) hata do
+        // bekaar <span> wrappers hata do
         $html = preg_replace('#<span>(.*?)</span>#is', '$1', $html);
-        // khali <span style=...></span>
         $html = preg_replace('#<span[^>]*>\s*</span>#i', '', $html);
 
         libxml_use_internal_errors(true);
@@ -65,12 +67,12 @@ class ProcedureHtml
             return '';
         }
 
-        // 1) Tables pehle (original widths chahiye)
+        // 1) Tables pehle
         foreach ($xp->query('//table') as $table) {
             self::fixTable($table, $xp);
         }
 
-        // 2) Har element ko whitelist se saaf karo
+        // 2) Elements sanitize karo
         $nodes = iterator_to_array($xp->query('//div[@id="__root"]//*'));
         foreach ($nodes as $el) {
             if ($el->parentNode) {
@@ -85,13 +87,17 @@ class ProcedureHtml
             }
             $sp->parentNode->removeChild($sp);
         }
-        // 2a2) Word ki layout tables ko divs me badlo
+
+        // Word ki layout tables ko divs me badlo
         self::unwrapLayoutTables($dom, $xp);
 
-        // 2b) Bade single-cell rows ko todo
+        // Bade single-cell rows ko todo
         self::splitTallCells($dom, $xp);
 
-        // 3) Faltu khali paragraphs hatao (table ke bahar)
+        // 3) IMAGES KO PDF KE LIYE CONVERT & FIT KARO (Dompdf Fix)
+        self::prepareImagesForPdf($xp);
+
+        // 4) Khali paragraphs hatao
         foreach (iterator_to_array($xp->query('//div[@id="__root"]//div')) as $div) {
             self::collapseEmpty($div);
         }
@@ -122,10 +128,9 @@ class ProcedureHtml
         $xp = new \DOMXPath($dom);
 
         foreach ($xp->query('//table') as $table) {
-            $pending = []; // col index => ['left' => baaki rows, 'cs' => colspan]
+            $pending = [];
 
             foreach ($xp->query('.//tr', $table) as $tr) {
-                // nested table ki rows skip karo
                 $p = $tr->parentNode;
                 if (strtolower($p->nodeName) !== 'table') {
                     $p = $p->parentNode;
@@ -187,7 +192,99 @@ class ProcedureHtml
 
         return $out;
     }
-    
+
+    /* ---------------- IMAGE PREPARATION FOR DOMPDF ---------------- */
+
+    private static function prepareImagesForPdf(DOMXPath $xp): void
+    {
+        foreach ($xp->query('//div[@id="__root"]//img') as $img) {
+            $src = trim($img->getAttribute('src'));
+            if ($src === '') {
+                continue;
+            }
+
+            // Local file ya URL ko direct Base64 me convert karo taaki Dompdf 100% bina kisi network error ke load kare
+            $base64 = self::convertSrcToBase64($src);
+            if ($base64) {
+                $img->setAttribute('src', $base64);
+            }
+
+            // Sizing styles set karo taaki image Dompdf mein 0px na ho aur na page se bahar jaye
+            $style = self::parseStyle($img->getAttribute('style'));
+            $style['width']       = '100%';
+            $style['max-width']   = '600px';
+            $style['height']      = 'auto';
+            $style['display']     = 'block';
+            $style['margin']      = '6px auto';
+            self::setStyle($img, $style);
+        }
+    }
+
+    private static function convertSrcToBase64(string $src): ?string
+    {
+        // 1. Agar pehle se Base64 hai
+        if (str_starts_with(strtolower($src), 'data:image/')) {
+            return $src;
+        }
+
+        // 2. Agar MS Word ka file:/// path hai
+        if (str_starts_with(strtolower($src), 'file:///')) {
+            $localFile = str_replace('file:///', '', $src);
+            $localFile = str_replace('/', DIRECTORY_SEPARATOR, $localFile);
+            if (file_exists($localFile) && is_file($localFile)) {
+                $mime = mime_content_type($localFile) ?: 'image/png';
+                return 'data:' . $mime . ';base64,' . base64_encode(file_get_contents($localFile));
+            }
+        }
+
+        // 3. Relative path (/uploads/... ya upload/...)
+        $pathOnly = ltrim(parse_url($src, PHP_URL_PATH) ?? '', '/');
+        $candidates = [
+            public_path($pathOnly),
+            public_path('upload/' . basename($pathOnly)),
+            public_path('uploads/' . basename($pathOnly)),
+            public_path('user/images/' . basename($pathOnly)),
+            base_path($pathOnly),
+        ];
+
+        foreach ($candidates as $filePath) {
+            if (file_exists($filePath) && is_file($filePath)) {
+                $mime = mime_content_type($filePath) ?: 'image/png';
+                return 'data:' . $mime . ';base64,' . base64_encode(file_get_contents($filePath));
+            }
+        }
+
+        // 4. Full domain URL (https://agio.mydemosoftware.com/...)
+        if (preg_match('#^https?:\/\/#i', $src)) {
+            $host = parse_url($src, PHP_URL_HOST);
+            $currentHost = request()->getHost();
+
+            if ($host && ($host === $currentHost || str_contains($src, 'agio.mydemosoftware.com'))) {
+                $local = public_path($pathOnly);
+                if (file_exists($local) && is_file($local)) {
+                    $mime = mime_content_type($local) ?: 'image/png';
+                    return 'data:' . $mime . ';base64,' . base64_encode(file_get_contents($local));
+                }
+            }
+
+            // Agar koi external URL hai to fetch kar lo
+            try {
+                $ctx = stream_context_create([
+                    'ssl' => ['verify_peer' => false, 'verify_peer_name' => false],
+                    'http' => ['timeout' => 5]
+                ]);
+                $content = @file_get_contents($src, false, $ctx);
+                if ($content !== false && strlen($content) > 0) {
+                    $finfo = new \finfo(FILEINFO_MIME_TYPE);
+                    $mime = $finfo->buffer($content) ?: 'image/png';
+                    return 'data:' . $mime . ';base64,' . base64_encode($content);
+                }
+            } catch (\Throwable $e) {}
+        }
+
+        return null;
+    }
+
     /* ---------------- TABLE ---------------- */
 
     private static function fixTable(DOMElement $table, DOMXPath $xp): void
@@ -197,7 +294,6 @@ class ProcedureHtml
         }
         $rows = $xp->query('./tbody/tr | ./thead/tr | ./tfoot/tr | ./tr', $table);
 
-        // colgroup widths (Froala yahi banata hai)
         $colW = [];
         foreach ($xp->query('./colgroup/col', $table) as $col) {
             $w    = self::readWidth($col);
@@ -207,7 +303,6 @@ class ProcedureHtml
             }
         }
 
-        // Sabse zyada cells wali row (colspan ke bina)
         $best = null;
         $max  = 0;
         foreach ($rows as $tr) {
@@ -232,7 +327,6 @@ class ProcedureHtml
             }
         }
 
-        // Saare direct cells ki purani width/height hatao
         $allCells = $xp->query(
             './tbody/tr/td | ./tbody/tr/th | ./thead/tr/td | ./thead/tr/th | ' .
             './tfoot/tr/td | ./tfoot/tr/th | ./tr/td | ./tr/th',
@@ -246,7 +340,6 @@ class ProcedureHtml
             $c->removeAttribute('height');
         }
 
-        // Percent widths nikalo
         $n = $best ? $max : count($colW);
         $raw = [];
         for ($i = 0; $i < $n; $i++) {
@@ -329,7 +422,6 @@ class ProcedureHtml
 
         $style = self::parseStyle($el->getAttribute('style'));
 
-        // Purane HTML attributes ko CSS mein badlo (Excel / old HTML)
         if ($el->hasAttribute('bgcolor') && !isset($style['background-color'])) {
             $style['background-color'] = $el->getAttribute('bgcolor');
         }
@@ -341,6 +433,9 @@ class ProcedureHtml
         $keep = self::ALLOWED_STYLE;
         if (in_array($tag, ['td', 'th', 'col'], true)) {
             $keep[] = 'width';
+        }
+        if ($tag === 'img') {
+            $keep = array_merge($keep, ['width', 'height', 'max-width', 'max-height', 'display', 'margin']);
         }
 
         $clean = [];
@@ -364,7 +459,6 @@ class ProcedureHtml
             unset($clean['text-align']);
         }
 
-        // Attributes
         $allowed = self::ALLOWED_ATTRS[$tag] ?? [];
         $names   = [];
         foreach ($el->attributes as $attr) {
@@ -379,25 +473,25 @@ class ProcedureHtml
             }
         }
 
-        // Sirf apni classes (Quill / proc-heading) rakho
         if ($el->hasAttribute('class')) {
             $keepCls = [];
             foreach (preg_split('/\s+/', trim($el->getAttribute('class'))) as $c) {
-                if ($c !== '' && preg_match('/^(ql-|proc-|pdf-)/', $c)) {
+                if ($c !== '' && preg_match('/^(ql-|proc-|pdf-|fr-)/', $c)) {
                     $keepCls[] = $c;
                 }
             }
             $keepCls ? $el->setAttribute('class', implode(' ', $keepCls)) : $el->removeAttribute('class');
         }
 
-        // Safe links / images
         if ($tag === 'a' && $el->hasAttribute('href')
             && !preg_match('#^(https?:|mailto:|\#)#i', trim($el->getAttribute('href')))) {
             $el->removeAttribute('href');
         }
+
+        // Image source safety: data:image/, http, https, relative paths (/) aur file:/// allow karein
         if ($tag === 'img') {
             $src = trim($el->getAttribute('src'));
-            if (!preg_match('#^(https?:|data:image/)#i', $src)) {
+            if (!preg_match('#^(\/|\.\/|https?:|data:image\/|file:\/\/\/)#i', $src)) {
                 $el->parentNode->removeChild($el);
                 return;
             }
@@ -433,7 +527,7 @@ class ProcedureHtml
 
     private static function collapseEmpty(DOMNode $parent): void
     {
-        $prevEmpty = true; // shuru ke khali hata do
+        $prevEmpty = true;
         foreach (iterator_to_array($parent->childNodes) as $k) {
             if ($k->nodeType === XML_TEXT_NODE && self::isBlank($k)) {
                 continue;
@@ -448,7 +542,6 @@ class ProcedureHtml
             }
             $prevEmpty = false;
         }
-        // end ke khali hata do
         while ($parent->lastChild && self::isBlank($parent->lastChild)) {
             $parent->removeChild($parent->lastChild);
         }
@@ -506,23 +599,21 @@ class ProcedureHtml
         }
 
         if ($explicit) {
-            return false; // cells mein border likhi thi, par sab none/0 thi
+            return false;
         }
 
-        // Cells mein koi info nahi: table ka border attribute dekho
         $attr = $table->getAttribute('border');
         if ($attr !== '' && (float) $attr == 0) {
             return false;
         }
 
-        return true; // default: bordered (editor se insert hui normal table)
+        return true;
     }
 
     private static function isRealBorder(string $prop, string $val): bool
     {
         $v = strtolower(trim($val));
         if ($v === '' || $v === '0' || strpos($v, 'none') !== false || strpos($v, 'hidden') !== false) {
-            // "border-style: solid solid solid none" jaisa mixed case
             if ($prop === 'border-style') {
                 foreach (preg_split('/\s+/', $v) as $t) {
                     if ($t !== 'none' && $t !== 'hidden') {
@@ -553,7 +644,6 @@ class ProcedureHtml
 
         $blocks = $filter($cell);
 
-        // Ek hi div/span wrapper ho to uske andar ke blocks lo
         while (count($blocks) === 1
             && $blocks[0] instanceof DOMElement
             && in_array(strtolower($blocks[0]->nodeName), ['div', 'span'], true)) {
@@ -577,11 +667,10 @@ class ProcedureHtml
 
                 foreach ($cells as $c) {
                     if ((int) $c->getAttribute('rowspan') > 1) {
-                        continue 2; // rowspan wali rows nahi todte
+                        continue 2;
                     }
                 }
 
-                // Sabse zyada blocks wala cell dhundo
                 $big = null;
                 $bigBlocks = [];
                 foreach ($cells as $c) {
@@ -616,7 +705,7 @@ class ProcedureHtml
                             $nc = $c->cloneNode(false);
                             $nc->appendChild($node);
                         } elseif ($i === 0) {
-                            $nc = $c; // asli cell (jaise "1.") pehli row mein
+                            $nc = $c;
                         } else {
                             $nc = $c->cloneNode(false);
                             $nc->appendChild($dom->createTextNode("\xC2\xA0"));
@@ -641,11 +730,11 @@ class ProcedureHtml
         }
         foreach ($xp->query('.//td | .//th', $table) as $c) {
             if ((int) $c->getAttribute('rowspan') > 1) {
-                return [$table]; // rowspan wali table nahi todte
+                return [$table];
             }
         }
 
-        $header   = array_shift($rows);              // pehli row header maan lo
+        $header   = array_shift($rows);
         $colgroup = $xp->query('./colgroup', $table)->item(0);
         $out      = [];
 
@@ -678,7 +767,6 @@ class ProcedureHtml
                 continue;
             }
 
-            // sirf 1-2 cell wali, bina colspan/rowspan wali tables unwrap karo
             $ok = true;
             foreach ($rows as $tr) {
                 $cells = $xp->query('./td | ./th', $tr);
@@ -695,20 +783,30 @@ class ProcedureHtml
 
             foreach ($rows as $tr) {
                 $cells = iterator_to_array($xp->query('./td | ./th', $tr));
-                $row   = $dom->createElement('div');
 
                 if (count($cells) === 2) {
-                    $row->setAttribute('class', 'lrow');
-                    $num = $dom->createElement('div');
-                    $num->setAttribute('class', 'lnum');
-                    while ($cells[0]->firstChild) { $num->appendChild($cells[0]->firstChild); }
-                    $row->appendChild($num);
+                    $t  = $dom->createElement('table');
+                    $t->setAttribute('class', 'lt pdf-borderless');
+                    $tb = $dom->createElement('tbody');
+                    $r  = $dom->createElement('tr');
 
-                    while ($cells[1]->firstChild) { $row->appendChild($cells[1]->firstChild); }
+                    $c1 = $dom->createElement('td');
+                    $c1->setAttribute('style', 'width:48px;');
+                    while ($cells[0]->firstChild) { $c1->appendChild($cells[0]->firstChild); }
+
+                    $c2 = $dom->createElement('td');
+                    while ($cells[1]->firstChild) { $c2->appendChild($cells[1]->firstChild); }
+
+                    $r->appendChild($c1);
+                    $r->appendChild($c2);
+                    $tb->appendChild($r);
+                    $t->appendChild($tb);
+                    $wrap->appendChild($t);
                 } else {
+                    $row = $dom->createElement('div');
                     while ($cells[0]->firstChild) { $row->appendChild($cells[0]->firstChild); }
+                    $wrap->appendChild($row);
                 }
-                $wrap->appendChild($row);
             }
 
             $table->parentNode->replaceChild($wrap, $table);
