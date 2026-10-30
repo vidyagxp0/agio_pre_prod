@@ -76,6 +76,18 @@ class DocumentDetailsController extends Controller
     }
   }
 
+  // =====================================================================
+  //  MAIL RULES (sirf mail change hua hai, baaki sab logic same hai)
+  //  1 -> 4  : Reviewers          (pehle se tha, same)
+  //  4 -> 5  : Reviewers          (Checked)
+  //  5 -> 6  : Approvers          (For Approval)
+  //  6 -> 7  : Approvers          (Approved)
+  //  7 -> 10 : Originator         (In-Effective, training mail nahi)
+  //  10 -> 11: Originator         (Effective)
+  //  Ye 4->5, 5->6, 6->7, 7->10, 10->11 wale mail function ke END me
+  //  stage change check karke ek hi jagah se jaate hain.
+  // =====================================================================
+
   function sendforstagechanage(Request $request)
   {
     
@@ -86,6 +98,10 @@ class DocumentDetailsController extends Controller
         $reviewer = User::find($document->reviewers);
         $approvers = User::find($document->approvers);
         $lastDocument = Document::withTrashed()->find($request->document_id);
+
+        // MAIL: purana stage yaad rakho, end me compare karke mail bhejenge
+        $oldStage = (int) $document->stage;
+
         // $fullPermission = UserRole::where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $document->division_id])->get();
         // $fullPermissionIds = $fullPermission->pluck('q_m_s_roles_id')->toArray();
 
@@ -402,23 +418,9 @@ class DocumentDetailsController extends Controller
           }
           
           else {
-              try {
-                  SendDocumentMail::dispatch(
-                      [
-                          'history' => 'Reviewed',
-                          'comment' => $request->comment ?? '',
-                          'user' => Auth::user()->name,
-                          'process' => 'Document',
-                          'site' => 'Document',
-                      ],
-                      $originator->email,
-                      $document,
-                      'mail.reviewed',
-                      'Reviewed By' . Auth::user()->name . '(Reviewer)'
-                  );
-              } catch (\Throwable $e) {
-                  report($e);
-              }
+              // MAIL: yahan ke saare reviewer mails hata diye hain
+              // ("Reviewed By..." aur "Document is now Reviewed").
+              // 4 -> 5 ka mail ab function ke end me ek hi baar jaata hai.
             $reviewersData = 0;
             $reviewersDataforgroup = 0;
             if ($document->reviewers) {
@@ -451,44 +453,10 @@ class DocumentDetailsController extends Controller
 
                     $document->stage = 5;
                     $document->status = Stage::where('id', 5)->value('name');
-                    try {
-                        SendDocumentMail::dispatch(
-                            [
-                                'history' => 'Document is now Reviewed',
-                                'comment' => $request->comment ?? '',
-                                'user' => Auth::user()->name,
-                                'process' => 'Document',
-                                'site' => 'Document',
-                            ],
-                            $originator->email,
-                            $document,
-                            'mail.reviewed',
-                            'Document is now Reviewed'
-                        );
-                    } catch (\Throwable $e) {
-                        report($e);
-                    }
                   }
                 } else {
                   $document->stage = 5;
                   $document->status = Stage::where('id', 5)->value('name');
-                  try {
-                      SendDocumentMail::dispatch(
-                          [
-                              'history' => 'Document is now Reviewed',
-                              'comment' => $request->comment ?? '',
-                              'user' => Auth::user()->name,
-                              'process' => 'Document',
-                              'site' => 'Document',
-                          ],
-                          $originator->email,
-                          $document,
-                          'mail.reviewed',
-                          'Document is now Reviewed'
-                      );
-                  } catch (\Throwable $e) {
-                      report($e);
-                  }
                 }
               }
             }
@@ -497,45 +465,11 @@ class DocumentDetailsController extends Controller
                 if ($reviewersDataforgroup == 1 && $reviewersData = 1) {
                   $document->stage = 5;
                   $document->status = Stage::where('id', 5)->value('name');
-                  try {
-                      SendDocumentMail::dispatch(
-                          [
-                              'history' => 'Document is now Reviewed',
-                              'comment' => $request->comment ?? '',
-                              'user' => Auth::user()->name,
-                              'process' => 'Document',
-                              'site' => 'Document',
-                          ],
-                          $originator->email,
-                          $document,
-                          'mail.reviewed',
-                          'Document is now Reviewed'
-                      );
-                  } catch (\Throwable $e) {
-                      report($e);
-                  }
                 }
               } else {
                 if ($reviewersData == 1) {
                   $document->stage = 5;
                   $document->status = Stage::where('id', 5)->value('name');
-                  try {
-                      SendDocumentMail::dispatch(
-                          [
-                              'history' => 'Document is now Reviewed',
-                              'comment' => $request->comment ?? '',
-                              'user' => Auth::user()->name,
-                              'process' => 'Document',
-                              'site' => 'Document',
-                          ],
-                          $originator->email,
-                          $document,
-                          'mail.reviewed',
-                          'Document is now Reviewed'
-                      );
-                  } catch (\Throwable $e) {
-                      report($e);
-                  }
                 }
               }
             }
@@ -572,29 +506,15 @@ class DocumentDetailsController extends Controller
                     $originator->email,
                     $document,
                     'mail.approve-reject',
-                    'More Info by' . Auth::user()->name . '(Approver)'
+                    'More Info by ' . Auth::user()->name . ' (Approver)'
                 );
             } catch (\Throwable $e) {
                 report($e);
             }
           } else {
-            try {
-                SendDocumentMail::dispatch(
-                    [
-                        'history' => 'Approved',
-                        'comment' => $request->comment ?? '',
-                        'user' => Auth::user()->name,
-                        'process' => 'Document',
-                        'site' => 'Document',
-                    ],
-                    $originator->email,
-                    $document,
-                    'mail.approved',
-                    'Approved by' . Auth::user()->name . '(Approver)'
-                );
-            } catch (\Throwable $e) {
-                report($e);
-            }
+            // MAIL: yahan ke saare approver mails hata diye hain
+            // ("Approved by..." aur "Document is now Approved").
+            // 6 -> 7 ka mail ab function ke end me ek hi baar jaata hai.
             $reviewersData = 0;
             $reviewersDataforgroup = 0;
             if ($document->approvers) {
@@ -626,44 +546,10 @@ class DocumentDetailsController extends Controller
                   if ($reviewersData == 1) {
                     $document->stage = 7;
                     $document->status = Stage::where('id', 7)->value('name');
-                    try {
-                        SendDocumentMail::dispatch(
-                            [
-                                'history' => 'Document is now Approved',
-                                'comment' => $request->comment ?? '',
-                                'user' => Auth::user()->name,
-                                'process' => 'Document',
-                                'site' => 'Document',
-                            ],
-                            $originator->email,
-                            $document,
-                            'mail.approved',
-                            'Document is now Approved'
-                        );
-                    } catch (\Throwable $e) {
-                        report($e);
-                    }
                   }
                 } else {
                   $document->stage = 7;
                   $document->status = Stage::where('id', 7)->value('name');
-                  try {
-                      SendDocumentMail::dispatch(
-                          [
-                              'history' => 'Document is now Approved',
-                              'comment' => $request->comment ?? '',
-                              'user' => Auth::user()->name,
-                              'process' => 'Document',
-                              'site' => 'Document',
-                          ],
-                          $originator->email,
-                          $document,
-                          'mail.approved',
-                          'Document is now Approved'
-                      );
-                  } catch (\Throwable $e) {
-                      report($e);
-                  }
                 }
               }
             }
@@ -672,45 +558,11 @@ class DocumentDetailsController extends Controller
                 if ($reviewersDataforgroup == 1 && $reviewersData == 1) {
                   $document->stage = 5;
                   $document->status = Stage::where('id', 5)->value('name');
-                  try {
-                      SendDocumentMail::dispatch(
-                          [
-                              'history' => 'Document is now Approved',
-                              'comment' => $request->comment ?? '',
-                              'user' => Auth::user()->name,
-                              'process' => 'Document',
-                              'site' => 'Document',
-                          ],
-                          $originator->email,
-                          $document,
-                          'mail.approved',
-                          'Document is now Approved'
-                      );
-                  } catch (\Throwable $e) {
-                      report($e);
-                  }
                 }
               } else {
                 if ($reviewersData == 1) {
                   $document->stage = 7;
                   $document->status = Stage::where('id', 7)->value('name');
-                  try {
-                      SendDocumentMail::dispatch(
-                          [
-                              'history' => 'Document is now Approved',
-                              'comment' => $request->comment ?? '',
-                              'user' => Auth::user()->name,
-                              'process' => 'Document',
-                              'site' => 'Document',
-                          ],
-                          $originator->email,
-                          $document,
-                          'mail.approved',
-                          'Document is now Approved'
-                      );
-                  } catch (\Throwable $e) {
-                      report($e);
-                  }
                 }
               }
             }
@@ -883,38 +735,7 @@ class DocumentDetailsController extends Controller
                     $history->origin_state = 'Reviewed';
                     $history->save();
 
-                    // $approverIds = array_unique(array_filter(
-                    //     array_map('trim', explode(',', (string) $document->approvers))
-                    // ));
-
-                    // foreach ($approverIds as $approverId) {
-                    //     $temp_user = User::find($approverId);
-
-                    //     if (!$temp_user || empty($temp_user->email)) {
-                    //         continue;
-                    //     }
-
-                    //     try {
-                    //         $temp_user->fromMain = User::find($document->originator_id);
-
-                    //         SendDocumentMail::dispatch(
-                    //             [
-                    //                 'history' => 'Send for Checking',
-                    //                 'comment' => $request->comment ?? '',
-                    //                 'user' => Auth::user()->name,
-                    //                 'process' => 'Document',
-                    //                 'site' => 'Document',
-                    //             ],
-                    //             $temp_user->email,
-                    //             $document,
-                    //             'mail.for_approval',
-                    //             'Document is for Checking'
-                    //         );
-
-                    //     } catch (\Throwable $e) {
-                    //         report($e);
-                    //     }
-                    // }
+                 
 
                     
                     $reviewerIds = array_unique(array_filter(
@@ -999,32 +820,8 @@ class DocumentDetailsController extends Controller
               $history->origin_state = 'Reviewed';
               $history->save();
 
-
-              $traning = DocumentTraining::where('document_id', $document->id)->first();
-
-              if ($traning) {
-                  $trainer = User::find($traning->trainer);
-
-                  if ($trainer && !empty($trainer->email)) {
-                      try {
-                          SendDocumentMail::dispatch(
-                              [
-                                  'process' => 'Document',
-                                  'history' => 'Send for training',
-                                  'comment' => $request->comment ?? '',
-                                  'user' => Auth::user()->name,
-                                  'site' => 'Document',
-                              ],
-                              $trainer->email,
-                              $document,
-                              'mail.for_training',
-                              'Document is for training'
-                          );
-                      } catch (\Throwable $e) {
-                          report($e);
-                      }
-                  }
-              }
+              // MAIL: yahan se trainer ka mail hata diya hai.
+              // 5 -> 6 par approvers ko mail ab function ke end me jaata hai.
 
             }
 
@@ -1048,32 +845,8 @@ class DocumentDetailsController extends Controller
               $history->origin_state = 'Approved';
               $history->save();
 
-
-              $traning = DocumentTraining::where('document_id', $document->id)->first();
-
-              if ($traning) {
-                  $trainer = User::find($traning->trainer);
-
-                  if ($trainer && !empty($trainer->email)) {
-                      try {
-                          SendDocumentMail::dispatch(
-                              [
-                                  'process' => 'Document',
-                                  'history' => 'Send for In-Effective',
-                                  'comment' => $request->comment ?? '',
-                                  'user' => Auth::user()->name,
-                                  'site' => 'Document',
-                              ],
-                              $trainer->email,
-                              $document,
-                              'mail.for_training',
-                              'Document is for training'
-                          );
-                      } catch (\Throwable $e) {
-                          report($e);
-                      }
-                  }
-              }
+              // MAIL: yahan se trainer ka mail hata diya hai.
+              // 7 -> 10 par originator ko mail ab function ke end me jaata hai.
             }
 
             if ($request->stage_id == 11) {
@@ -1110,6 +883,71 @@ class DocumentDetailsController extends Controller
           }
         }
         $document->update();
+
+        // =================================================================
+        // MAIL: stage change hone par hi mail, sirf forward transitions par.
+        // Isse ek click par ek hi mail jaata hai (duplicate nahi).
+        // =================================================================
+        $newStage = (int) $document->stage;
+
+        switch ($oldStage . '-' . $newStage) {
+
+          case '4-5': // Checked -> reviewers
+            $this->notifyUsers(
+              $this->idList($document->reviewers),
+              $document,
+              'Checked',
+              'mail.reviewed',
+              'Document is now Checked',
+              $request->comment
+            );
+            break;
+
+          case '5-6': // For Approval -> approvers
+            $this->notifyUsers(
+              $this->idList($document->approvers),
+              $document,
+              'Send for Approval',
+              'mail.for_approval',
+              'Document is for Approval',
+              $request->comment
+            );
+            break;
+
+          case '6-7': // Approved -> approvers
+            $this->notifyUsers(
+              $this->idList($document->approvers),
+              $document,
+              'Approved',
+              'mail.approved',
+              'Document is now Approved',
+              $request->comment
+            );
+            break;
+
+          case '7-10': // In-Effective -> originator
+            $this->notifyUsers(
+              [$document->originator_id],
+              $document,
+              'Send for In-Effective',
+              'mail.approved',
+              'Document is In-Effective',
+              $request->comment
+            );
+            break;
+
+          case '10-11': // Effective -> originator
+            $this->notifyUsers(
+              [$document->originator_id],
+              $document,
+              'Effective',
+              'mail.approved',
+              'Document is now Effective',
+              $request->comment
+            );
+            break;
+        }
+
         toastr()->success('Document has been sent.');
         return redirect()->back();
       } else {
@@ -1122,43 +960,47 @@ class DocumentDetailsController extends Controller
     }
   }
 
+  // ===================================================================
+  // MAIL HELPERS (same controller class me, function ke neeche paste karo)
+  // ===================================================================
   private function idList($csv): array
   {
-      return array_values(array_unique(array_filter(
-          array_map('trim', explode(',', (string) $csv))
-      )));
+    return array_values(array_unique(array_filter(
+      array_map('trim', explode(',', (string) $csv))
+    )));
   }
 
   private function notifyUsers(array $userIds, $document, string $history, string $view, string $subject, ?string $comment = null): void
   {
-      if (empty($userIds)) {
-          return;
+    if (empty($userIds)) {
+      return;
+    }
+
+    foreach (User::whereIn('id', $userIds)->get() as $user) {
+      if (empty($user->email)) {
+        continue;
       }
 
-      foreach (User::whereIn('id', $userIds)->get() as $user) {
-          if (empty($user->email)) {
-              continue;
-          }
-
-          try {
-              SendDocumentMail::dispatch(
-                  [
-                      'history' => $history,
-                      'comment' => $comment ?? '',
-                      'user' => Auth::user()->name,
-                      'process' => 'Document',
-                      'site' => 'Document',
-                  ],
-                  $user->email,
-                  $document,
-                  $view,
-                  $subject
-              );
-          } catch (\Throwable $e) {
-              report($e);
-          }
+      try {
+        SendDocumentMail::dispatch(
+          [
+            'history' => $history,
+            'comment' => $comment ?? '',
+            'user' => Auth::user()->name,
+            'process' => 'Document',
+            'site' => 'Document',
+          ],
+          $user->email,
+          $document,
+          $view,
+          $subject
+        );
+      } catch (\Throwable $e) {
+        report($e);
       }
+    }
   }
+
 
   function auditTrial($id)
   {

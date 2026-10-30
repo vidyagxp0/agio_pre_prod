@@ -206,9 +206,9 @@
                                     <div class="head">Current Status</div>
                                     <div class="progress-bars">
                                         @if ($document->stage >= 4)
-                                            <div class="active">Draft</div>
+                                            <div class="active">For Checking</div>
                                         @else
-                                            <div>Draft</div>
+                                            <div>For Checking</div>
                                         @endif
                                         {{-- @if ($review_reject)
                                             <div class="active">Rejected </div>
@@ -217,10 +217,10 @@
                                             @if ($stagereview->stage == 'Reviewed' AND $document->stage >= 2)
                                                 <div class="active">Reviewed</div>
                                             @else
-                                                <div>Reviewed</div>
+                                                <div>Checked</div>
                                             @endif
                                         @else
-                                            <div>Reviewed</div>
+                                            <div>Checked</div>
                                         @endif
 
                                         @if ($stagereview_submit)
@@ -267,16 +267,16 @@
                                     <div class="head">Current Status</div>
                                     <div class="progress-bars">
                                         @if ($document->stage >= 6)
-                                            <div class="active">Draft</div>
+                                            <div class="active">For-Approval</div>
                                         @else
                                             @if ($stageapprove)
                                                 @if ($stageapprove->stage == 'Approved')
-                                                <div class="active">Draft</div>
+                                                <div class="active">For-Approval</div>
                                                 @else
-                                                <div>Draft</div>
+                                                <div>For-Approval</div>
                                                 @endif
                                             @else
-                                            <div>Draft</div>
+                                            <div>For-Approval</div>
                                             @endif
 
                                         @endif
@@ -340,16 +340,16 @@
                                     <div class="head">Current Status</div>
                                     <div class="progress-bars">
                                         @if ($document->stage >= 10)
-                                            <div class="active">Draft</div>
+                                            <div class="active">In-Effective</div>
                                         @else
                                             @if ($stageEffective)
                                                 @if ($stageEffective->stage == 'In-Effective')
-                                                    <div class="active">Draft</div>
+                                                    <div class="active">In-Effective</div>
                                                 @else
-                                                    <div>Draft</div>
+                                                    <div>In-Effective</div>
                                                 @endif
                                             @else
-                                                <div>Draft</div>
+                                                <div>In-Effective</div>
                                             @endif
                                         @endif
 

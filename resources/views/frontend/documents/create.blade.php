@@ -663,7 +663,7 @@
                             <div class="col-md-12" id="docNameContainerData" style="display: none;">
                                 <div class="group-input">
                                     <label for="docnamedata">
-                                        Document Name
+                                        Document Name / Number
                                         <span id="docNameRequiredfile"
                                             class="text-danger"
                                             style="display: none;">*</span>
@@ -685,7 +685,7 @@
 
 
 
-                            <div class="col-md-12" id="docNameContainerDataSecond" style="display: none;">
+                       {{--      <div class="col-md-12" id="docNameContainerDataSecond" style="display: none;">
                                 <div class="group-input">
                                     <label for="documentnumberdata">
                                         Document Number
@@ -708,7 +708,7 @@
                                 </div>
                             </div>
 
-
+                        --}}
 
 
                            
@@ -863,7 +863,12 @@
                                         QR: 'QualificationReport_id',
                                         QP: 'QualificationProtocol_id',
                                         CASP: 'compressed_air_sys_protocol_id',
-                                        CASR: 'compressed_air_sys_report_id'
+                                        CASR: 'compressed_air_sys_report_id',
+
+                                       
+                                       
+
+
                                     };
 
                                     // Safe element selector
@@ -876,8 +881,7 @@
                                     
 function toggleAttachmentDocumentName(selectedType) {
     const container = getElement('docNameContainerData');
-    const containerSecond = getElement('docNameContainerDataSecond');
-
+   
     const input = getElement('docnamedata');
     const inputSecond = getElement('documentnumberdata');
 
@@ -889,23 +893,32 @@ function toggleAttachmentDocumentName(selectedType) {
 
     const selected = (selectedType || '').trim().toLowerCase();
 
-    const hasAttachmentType = Object.keys(requiredAttachments)
-        .some(type => type.toLowerCase() === selected);
+    const documentNameTypes = [
+    'FPSTP',
+    'IPSTP',
+    'CVSTP',
+    'RMSTP',
+    'MFPSTP'
+];
+
+const hasAttachmentType =
+    Object.keys(requiredAttachments).some(type =>
+        type.toLowerCase() === selected
+    ) ||
+    documentNameTypes.some(type =>
+        type.toLowerCase() === selected
+    );
 
     // Dono fields ko show/hide karein
     if (hasAttachmentType && selected !== '') {
         if (container) container.style.display = 'block';
-        if (containerSecond) containerSecond.style.display = 'block';
-
+   
         if (input) input.setAttribute('required', 'required');
-        if (inputSecond) inputSecond.setAttribute('required', 'required');
-
+   
         if (requiredLabel) requiredLabel.style.display = 'inline';
-        if (requiredLabelSecond) requiredLabelSecond.style.display = 'inline';
     } else {
         if (container) container.style.display = 'none';
-        if (containerSecond) containerSecond.style.display = 'none';
-
+   
         if (input) {
             input.removeAttribute('required');
             input.value = '';

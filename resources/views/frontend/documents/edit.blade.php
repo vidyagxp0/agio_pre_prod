@@ -787,7 +787,7 @@
 
                                 <div class="group-input">
                                     <label for="docnamedata">
-                                        Document Name
+                                        Document Name / Number
                                         <span id="docNameRequiredfile"
                                             class="text-danger"
                                             style="display: none;"></span>
@@ -808,9 +808,9 @@
                                 </div>
                             </div>
 
-
-                           <div class="col-md-12"
-                                id="docNameContainerDataSecond"
+                         
+                        {{--   <div class="col-md-12"
+                             id="docNameContainerDataSecond"
                                 style="display: none;">
 
                                 <div class="group-input">
@@ -837,24 +837,25 @@
                                 </div>
                             </div>
 
+                         --}}
+                        
+
                             <script>
                             
                             document.addEventListener("DOMContentLoaded", function () {
                             const docTypeSelect = document.getElementById("doc-type");
 
                             const container = document.getElementById("docNameContainerData");
-                            const containerSecond = document.getElementById("docNameContainerDataSecond");
-
+                          
                             const requiredStar = document.getElementById("docNameRequiredfile");
-                            const requiredStarSecond = document.getElementById("docNameRequiredfileSecond");
-
+                          
                             const docNameInput = document.getElementById("docnamedata");
-                            const docNumberInput = document.getElementById("document_number_filed");
+                          //  const docNumberInput = document.getElementById("document_number_filed");
 
                             const docNameError = document.getElementById("docnamedataError");
-                            const docNumberError = document.getElementById("document_number_filedError");
+                            //const docNumberError = document.getElementById("document_number_filedError");
 
-                            if (!docTypeSelect || !container || !containerSecond) return;
+                            if (!docTypeSelect || !container) return;
 
                             const attachmentTypes = [
                                 'BOM','BMR','BPR','TEMPMAPPING','PROVALIDRE','PROVALIINTERRE',
