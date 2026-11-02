@@ -54,51 +54,6 @@
         .first-page-stp table { width: 100%; border-collapse: collapse; table-layout: fixed; margin: 0; }
         .first-page-stp td { padding: 4px; border: 1px solid #000; text-align: left; font-weight: bold; font-size: 12px; }
 
-        /* ---------- PASTED CONTENT (Word / Excel / Froala) ---------- */
-        .quill-pdf-content { width: 100%; font-size: 12px; line-height: 1.4; text-align: left; word-wrap: break-word; overflow-wrap: break-word; }
-        .quill-pdf-content p { margin: 0 0 5px 0; font-size: 12px; line-height: 1.4; }
-        .quill-pdf-content h1, .quill-pdf-content h2, .quill-pdf-content h3,
-        .quill-pdf-content h4, .quill-pdf-content h5, .quill-pdf-content h6 { font-size: 12px; font-weight: bold; margin: 8px 0 4px 0; }
-        .quill-pdf-content ul, .quill-pdf-content ol { padding-left: 22px; margin: 2px 0 5px 0; }
-        .quill-pdf-content li { font-size: 12px; line-height: 1.4; margin-bottom: 2px; }
-
-        .quill-pdf-content table {
-            width: 100%;
-            table-layout: auto;           /* CRITICAL: auto se columns content ke hisaab se fit honge */
-            border-collapse: collapse;
-            border-spacing: 0;
-            margin: 5px 0 8px 0;
-            page-break-inside: auto;      /* Badi table page se cut ke agle page par ja sake */
-        }
-        .quill-pdf-content tr {
-            page-break-inside: avoid;     /* Koi bhi row beech mein na kate */
-            page-break-after: auto;
-        }
-        .quill-pdf-content thead {
-            display: table-header-group;  /* Naye page par table header repeat ho */
-        }
-        .quill-pdf-content table.pdf-chunk { margin: 0; }
-        .quill-pdf-content table, .quill-pdf-content th, .quill-pdf-content td { border: 1px solid #000; }
-        .quill-pdf-content th, .quill-pdf-content td {
-            font-size: 12px; line-height: 1.35; padding: 3px 5px; vertical-align: top; text-align: left;
-            word-wrap: break-word; overflow-wrap: break-word; white-space: normal;
-        }
-        .quill-pdf-content th { font-weight: bold; text-align: center; }
-        .quill-pdf-content td p, .quill-pdf-content th p,
-        .quill-pdf-content td div, .quill-pdf-content th div { margin: 0; padding: 0; font-size: 12px; line-height: 1.35; }
-        .quill-pdf-content td span, .quill-pdf-content th span,
-        .quill-pdf-content td li, .quill-pdf-content th li { font-size: 12px; }
-
-        .quill-pdf-content td, .quill-pdf-content th { text-align: left; }
-        .quill-pdf-content thead { display: table-header-group; }
-        .quill-pdf-content img { display: block; width: 100% !important; max-width: 620px !important; height: auto !important; margin: 8px auto; page-break-inside: avoid; }
-
-        .quill-pdf-content table.pdf-borderless { border: none; }
-        .quill-pdf-content table.pdf-borderless > tbody > tr > td,
-        .quill-pdf-content table.pdf-borderless > tbody > tr > th,
-        .quill-pdf-content table.pdf-borderless > tr > td,
-        .quill-pdf-content table.pdf-borderless > tr > th { border: none; }
-
         /* General Tables */
         .general-table { width: 100%; border-collapse: collapse; border: 1px solid #000; font-size: 12px; margin-bottom: 6px; }
         .general-table td { padding: 4px; border: 1px solid #000; text-align: left; }
@@ -110,6 +65,7 @@
 
         .keep-together { page-break-inside: avoid; }
     </style>
+    @include('frontend.documents.partial')
 </head>
 <body>
     <div class="header-wrapper">

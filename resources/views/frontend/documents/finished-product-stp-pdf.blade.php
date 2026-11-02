@@ -41,31 +41,11 @@
         .footer th, .footer-first th { font-weight: bold; background-color: #f4f4f4; }
         .format-no { display: block; text-align: left; font-size: 11px; margin-top: 3px; }
 
-        /* ---------- PASTED CONTENT (Word / Excel / Froala) ---------- */
-        .quill-pdf-content { width: 100%; font-size: 12px; line-height: 1.4; text-align: left; word-wrap: break-word; overflow-wrap: break-word; }
-        .quill-pdf-content p { margin: 0 0 5px 0; font-size: 12px; line-height: 1.4; }
-        .quill-pdf-content h1, .quill-pdf-content h2, .quill-pdf-content h3,
-        .quill-pdf-content h4, .quill-pdf-content h5, .quill-pdf-content h6 { font-size: 12px; font-weight: bold; margin: 8px 0 4px 0; }
-        .quill-pdf-content ul, .quill-pdf-content ol { padding-left: 22px; margin: 2px 0 5px 0; }
-        .quill-pdf-content li { font-size: 12px; line-height: 1.4; margin-bottom: 2px; }
-
-        .quill-pdf-content table { width: 100%; table-layout: fixed; border-collapse: collapse; border-spacing: 0; margin: 5px 0 8px 0; }
-        .quill-pdf-content table.pdf-chunk { margin: 0; }
-        .quill-pdf-content table, .quill-pdf-content th, .quill-pdf-content td { border: 1px solid #000; }
-        .quill-pdf-content th, .quill-pdf-content td {
-            font-size: 12px; line-height: 1.35; padding: 3px 5px; vertical-align: top; text-align: left;
-            word-wrap: break-word; overflow-wrap: break-word; white-space: normal;
-        }
-        .quill-pdf-content th { font-weight: bold; text-align: center; }
-        .quill-pdf-content thead { display: table-header-group; }
-        .quill-pdf-content img { display: block; width: 100% !important; max-width: 620px !important; height: auto !important; margin: 8px auto; page-break-inside: avoid; }
-        .quill-pdf-content table.pdf-borderless { border: none; }
-        .quill-pdf-content table.pdf-borderless td, .quill-pdf-content table.pdf-borderless th { border: none; }
-
         .section-head { font-weight: bold; font-size: 13px; margin: 10px 0 6px 0; text-align: center; }
         .general-table { width: 100%; border-collapse: collapse; border: 1px solid #000; font-size: 12px; }
         .general-table th, .general-table td { border: 1px solid #000; padding: 4px; }
     </style>
+    @include('frontend.documents.partial')
 </head>
 <body>
     <div class="header-wrapper">
@@ -282,9 +262,9 @@
         if (isset($pdf)) {
             $pdf->page_script('
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
-                $size = 10;
+                $size = 9;
                 $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
-                $pdf->text(460, 100, $pageText, $font, $size);
+                $pdf->text(480, 130, $pageText, $font, $size);
             ');
         }
     </script>

@@ -40,37 +40,6 @@
      
         .para { padding-left: 46px; text-align: justify; font-size: 12px; }
 
-        /* ---------- PASTED CONTENT (Word / Excel / Froala) ---------- */
-        .quill-pdf-content { width: 100%; font-size: 12px; line-height: 1.4; text-align: left; word-wrap: break-word; overflow-wrap: break-word; }
-        .quill-pdf-content p { margin: 0 0 5px 0; font-size: 12px; line-height: 1.4; }
-        .quill-pdf-content h1, .quill-pdf-content h2, .quill-pdf-content h3,
-        .quill-pdf-content h4, .quill-pdf-content h5, .quill-pdf-content h6 { font-size: 12px; font-weight: bold; margin: 8px 0 4px 0; }
-        .quill-pdf-content ul, .quill-pdf-content ol { padding-left: 22px; margin: 2px 0 5px 0; }
-        .quill-pdf-content li { font-size: 12px; line-height: 1.4; margin-bottom: 2px; }
-
-        .quill-pdf-content table { width: 100%; table-layout: fixed; border-collapse: collapse; border-spacing: 0; margin: 5px 0 8px 0; }
-        .quill-pdf-content table.pdf-chunk { margin: 0; }
-        .quill-pdf-content table, .quill-pdf-content th, .quill-pdf-content td { border: 1px solid #000; }
-        .quill-pdf-content th, .quill-pdf-content td {
-            font-size: 12px; line-height: 1.35; padding: 3px 5px; vertical-align: top; text-align: left;
-            word-wrap: break-word; overflow-wrap: break-word; white-space: normal;
-        }
-        .quill-pdf-content th { font-weight: bold; text-align: center; }
-        .quill-pdf-content td p, .quill-pdf-content th p,
-        .quill-pdf-content td div, .quill-pdf-content th div { margin: 0; padding: 0; font-size: 12px; line-height: 1.35; }
-        .quill-pdf-content td span, .quill-pdf-content th span,
-        .quill-pdf-content td li, .quill-pdf-content th li { font-size: 12px; }
-
-        .quill-pdf-content, .quill-pdf-content div, .quill-pdf-content p,
-        /* .quill-pdf-content .lrow, .quill-pdf-content .lnum { text-align: left; } */
-        .quill-pdf-content td, .quill-pdf-content th { text-align: left; }
-
-        .quill-pdf-content .pdf-cont-first { border-bottom: none; }
-        .quill-pdf-content .pdf-cont-mid   { border-top: none; border-bottom: none; }
-        .quill-pdf-content .pdf-cont-last  { border-top: none; }
-        .quill-pdf-content thead { display: table-header-group; }
-        .quill-pdf-content img {display: block; width: 100% !important; max-width: 620px !important; height: auto !important; margin: 8px auto; page-break-inside: avoid;}
-
         /* ---------- LISTS / TABLES ---------- */
         table.table-bordered { border: 1px solid #777; }
         table.table-bordered th, table.table-bordered td { border: 1px solid #777; padding: 4px 6px; font-size: 12px; text-align: center; vertical-align: middle; }
@@ -96,26 +65,9 @@
         table.sec td:last-child,  table.item td:last-child  { width: 94%; }
         table.sec td, table.item td { text-align: left; }
         
-        /* Borderless layout table: sirf apne direct cells ka border hatao */
-        .quill-pdf-content table.pdf-borderless { border: none; }
-        .quill-pdf-content table.pdf-borderless > tbody > tr > td,
-        .quill-pdf-content table.pdf-borderless > tbody > tr > th,
-        .quill-pdf-content table.pdf-borderless > tr > td,
-        .quill-pdf-content table.pdf-borderless > tr > th { border: none; }
-
-        /* Number + text wali layout table */
-        .quill-pdf-content table.lt { table-layout: auto; margin: 0; }
-        .quill-pdf-content table.lt > tbody > tr > td { padding: 1px 2px; text-align: left; }
-        .quill-pdf-content table.lt > tbody > tr > td:first-child { width: 7%; white-space: nowrap; }
-        .quill-pdf-content table.lt > tbody > tr > td:last-child { width: 93%; }
-
-        /* Andar ki asli table hamesha bordered rahe */
-        .quill-pdf-content table.lt table { table-layout: fixed; width: 100%; }
-        .quill-pdf-content table.lt table,
-        .quill-pdf-content table.lt table th,
-        .quill-pdf-content table.lt table td { border: 1px solid #000; }
-        .quill-pdf-content table.lt table td { white-space: normal; }
     </style>
+
+    @include('frontend.documents.partial')
 </head>
 
 <body>

@@ -7460,10 +7460,14 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
 
 <style>
     .fr-view { font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.4; }
-    .fr-view table { width: 100%; table-layout: fixed; border-collapse: collapse; }
-    .fr-view table td, .fr-view table th { min-width: 40px; word-break: normal; padding: 3px 5px; font-size: 12px; vertical-align: top; word-wrap: break-word; }
+    .fr-view p { margin: 0 0 5px 0; }
+    .fr-view table { width: 100%; table-layout: fixed; border-collapse: collapse; margin: 5px 0 8px 0; }
+    .fr-view table td, .fr-view table th {
+        border: 1px solid #000; min-width: 30px; padding: 3px 5px; font-size: 12px;
+        vertical-align: top; word-wrap: break-word; overflow-wrap: break-word;
+    }
+    .fr-view table th { font-weight: bold; text-align: center; }
     .fr-view img { max-width: 100%; height: auto; }
-
 </style>
 
 <script>
