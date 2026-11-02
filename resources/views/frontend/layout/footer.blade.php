@@ -7402,8 +7402,6 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
                 'text-decoration', 'text-align', 'vertical-align', 'list-style-type', 'width'
             ];
 
-            wordPasteKeepFormatting: true,
-
             document.querySelectorAll('.froala-editor').forEach(function (element) {
 
                 new FroalaEditor(element, {
