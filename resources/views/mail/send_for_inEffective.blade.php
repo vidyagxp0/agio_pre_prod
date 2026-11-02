@@ -233,7 +233,7 @@
                                     <td>{{ $document->document_name ?? 'N/A' }}</td>
                                     <td>{{ $documentNumber }}</td>
                                     <td>{{ $division->name ?? 'N/A' }}</td>
-                                    <td>{{ $document->document_type_id ?? $doctype->typecode ?? 'N/A' }}</td>
+                                     <td>{{ $document->document_type_id ?? 'N/A' }}</td>
                                     <td>{{ $originator->name ?? 'N/A' }}</td>
                                     <td>{{ $currentStatus }}</td>
                                     <td>{{ $activity }}</td>
