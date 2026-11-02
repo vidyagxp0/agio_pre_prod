@@ -375,9 +375,11 @@ class DocumentDetailsController extends Controller
           }else
            
           if ($request->stage_id == "Cancel-by-InEffective") {
-            if ($document->document_type_id == "SOP") {
-                $document->stage = 7;
-                $document->status = "Approved";
+            // if ($document->document_type_id == "SOP")
+            if($document->training_required == 'yes')
+              {
+                $document->stage = 9;
+                $document->status = "Training-Complete";
             } else {
                 $document->stage = 7;
                 $document->status = "Approved";
@@ -398,23 +400,196 @@ class DocumentDetailsController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = 'In-Review';
             $history->save();
+            // try {
+            //     SendDocumentMail::dispatch(
+            //         [
+            //             'history' => 'Cancel-by-Reviewer',
+            //             'comment' => $request->comment ?? '',
+            //             'user' => Auth::user()->name,
+            //             'process' => 'Document',
+            //             'site' => 'Document',
+            //         ],
+            //         $originator->email,
+            //         $document,
+            //         'mail.review-reject',
+            //         'Rejected By' . Auth::user()->name . '(Reviewer)'
+            //     );
+            // } catch (\Throwable $e) {
+            //     report($e);
+            // }
+
+            /////////
+
+            //   try {
+
+            //     $approverIds = array_unique(array_filter(
+            //         array_map('trim', explode(',', (string) $document->approvers))
+            //     ));
+
+            //     foreach ($approverIds as $approverId) {
+
+            //         $approver = User::find($approverId);
+
+            //         if (!$approver || empty($approver->email)) {
+            //             continue;
+            //         }
+
+            //         try {
+
+            //             $approver->fromMain = $originator;
+
+            //             SendDocumentMail::dispatch(
+            //                 [
+            //                     'history' => 'More Info-by-QA',
+            //                     'comment' => $request->comment ?? '',
+            //                     'user' => Auth::user()->name,
+            //                     'process' => 'Document',
+            //                     'site' => 'Document',
+            //                 ],
+            //                 $approver->email,
+            //                 $document,
+            //                 'mail.review-reject',
+            //                 'Rejected By ' . Auth::user()->name . ' (QA)'
+            //             );
+
+            //             Log::info('Document rejection mail dispatched to Approver', [
+            //                 'document_id' => $document->id,
+            //                 'approver_id' => $approver->id,
+            //                 'recipient' => $approver->email,
+            //             ]);
+
+            //         } catch (\Throwable $e) {
+
+            //             Log::error('Approver rejection mail failed', [
+            //                 'document_id' => $document->id,
+            //                 'approver_id' => $approver->id,
+            //                 'error' => $e->getMessage(),
+            //             ]);
+            //         }
+            //     }
+
+            // } catch (\Throwable $e) {
+
+            //     Log::error('Document rejection mail process failed', [
+            //         'document_id' => $document->id ?? null,
+            //         'error' => $e->getMessage(),
+            //     ]);
+            // }
+            /////////////////////////////////////////////////////////////
+
+
+            if ($document->training_required == 'yes') {
+
+            // Send mail to Trainer
+
             try {
-                SendDocumentMail::dispatch(
-                    [
-                        'history' => 'Cancel-by-Reviewer',
-                        'comment' => $request->comment ?? '',
-                        'user' => Auth::user()->name,
-                        'process' => 'Document',
-                        'site' => 'Document',
-                    ],
-                    $originator->email,
-                    $document,
-                    'mail.review-reject',
-                    'Rejected By' . Auth::user()->name . '(Reviewer)'
-                );
+
+                $trainerId = $trainingDoc->trainer ?? $document->trainer ?? null;
+
+                $trainer = User::find($trainerId);
+
+                if (!$trainer || empty($trainer->email)) {
+
+                    Log::warning('Trainer mail skipped: Email not found', [
+                        'document_id' => $document->id,
+                        'trainer_id' => $trainerId,
+                    ]);
+
+                } else {
+
+                    $trainer->fromMain = $originator;
+
+                    SendDocumentMail::dispatch(
+                        [
+                            'history' => 'More Info-by-QA',
+                            'comment' => $request->comment ?? '',
+                            'user' => Auth::user()->name,
+                            'process' => 'Document',
+                            'site' => 'Document',
+                        ],
+                        $trainer->email,
+                        $document,
+                        'mail.review-reject',
+                        'Rejected By ' . Auth::user()->name . ' (QA)'
+                    );
+
+                    Log::info('Document mail dispatched to Trainer', [
+                        'document_id' => $document->id,
+                        'trainer_id' => $trainer->id,
+                        'recipient' => $trainer->email,
+                    ]);
+                }
+
             } catch (\Throwable $e) {
-                report($e);
+
+                Log::error('Trainer mail dispatch failed', [
+                    'document_id' => $document->id ?? null,
+                    'error' => $e->getMessage(),
+                ]);
             }
+
+        } else {
+
+            // Send mail to Approvers
+
+            try {
+
+                $approverIds = array_unique(array_filter(
+                    array_map('trim', explode(',', (string) $document->approvers))
+                ));
+
+                foreach ($approverIds as $approverId) {
+
+                    $approver = User::find($approverId);
+
+                    if (!$approver || empty($approver->email)) {
+                        continue;
+                    }
+
+                    try {
+
+                        $approver->fromMain = $originator;
+
+                        SendDocumentMail::dispatch(
+                            [
+                                'history' => 'More Info-by-QA',
+                                'comment' => $request->comment ?? '',
+                                'user' => Auth::user()->name,
+                                'process' => 'Document',
+                                'site' => 'Document',
+                            ],
+                            $approver->email,
+                            $document,
+                            'mail.review-reject',
+                            'Rejected By ' . Auth::user()->name . ' (QA)'
+                        );
+
+                        Log::info('Document rejection mail dispatched to Approver', [
+                            'document_id' => $document->id,
+                            'approver_id' => $approver->id,
+                            'recipient' => $approver->email,
+                        ]);
+
+                    } catch (\Throwable $e) {
+
+                        Log::error('Approver rejection mail failed', [
+                            'document_id' => $document->id,
+                            'approver_id' => $approver->id,
+                            'error' => $e->getMessage(),
+                        ]);
+                    }
+                }
+
+            } catch (\Throwable $e) {
+
+                Log::error('Document rejection mail process failed', [
+                    'document_id' => $document->id ?? null,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
+            //////////
           }
           
           else {
@@ -823,6 +998,9 @@ class DocumentDetailsController extends Controller
               // MAIL: yahan se trainer ka mail hata diya hai.
               // 5 -> 6 par approvers ko mail ab function ke end me jaata hai.
 
+              
+
+
             }
 
             if ($request->stage_id == 10) {
@@ -847,6 +1025,40 @@ class DocumentDetailsController extends Controller
 
               // MAIL: yahan se trainer ka mail hata diya hai.
               // 7 -> 10 par originator ko mail ab function ke end me jaata hai.
+
+
+              
+
+              $list = Helpers::getQAUserList($document->division_id);
+
+                    foreach ($list as $temp_user) {
+
+                        if (empty($temp_user->email)) {
+                            continue;
+                        }
+
+                        try {
+
+                            $temp_user->fromMain = User::find($document->originator_id);
+
+                            SendDocumentMail::dispatch(
+                                [
+                                    'history' => 'Send for In-Effective',
+                                    'comment' => $request->comment ?? '',
+                                    'user' => Auth::user()->name,
+                                    'process' => 'Document',
+                                    'site' => 'Document',
+                                ],
+                                $temp_user->email,
+                                $document,
+                                'mail.send_for_inEffective',
+                                'Document is for In-Effective'
+                            );
+
+                        } catch (\Throwable $e) {
+                            report($e);
+                        }
+                    }
             }
 
             if ($request->stage_id == 11) {
@@ -886,6 +1098,41 @@ class DocumentDetailsController extends Controller
 
         // =================================================================
         // MAIL: stage change hone par hi mail, sirf forward transitions par.
+
+
+        $temp_user = Helpers::getInitiatorName($document->division_id);
+
+          if (!empty($temp_user) && !empty($temp_user->email)) {
+
+              try {
+
+                  $temp_user->fromMain = User::find($document->originator_id);
+
+                  SendDocumentMail::dispatch(
+                      [
+                          'history' => 'Send for Effective',
+                          'comment' => $request->comment ?? '',
+                          'user' => Auth::user()->name,
+                          'process' => 'Document',
+                          'site' => 'Document',
+                      ],
+                      $temp_user->email,
+                      $document,
+                      'mail.send_for_inEffective',
+                      'Document is for Effective'
+                  );
+
+              } catch (\Throwable $e) {
+                  report($e);
+              }
+          }
+
+
+
+    
+
+
+         
         // Isse ek click par ek hi mail jaata hai (duplicate nahi).
         // =================================================================
         $newStage = (int) $document->stage;

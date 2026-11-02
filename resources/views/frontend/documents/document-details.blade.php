@@ -225,14 +225,14 @@
                                         @if ($document->stage == 9)
                                             <input type="hidden" name="stage_id" value="8" />
                                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
-                                                Send For Effective<i class="fa-regular fa-paper-plane"></i>
+                                                Send For In-Effective<i class="fa-regular fa-paper-plane"></i>
                                             </button>
                                         @endif
                                     @elseif($document->training_required == 'no')
                                         @if ($document->stage == 7)
                                             <input type="hidden" name="stage_id" value="10" />
                                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
-                                                Send For Effective<i class="fa-regular fa-paper-plane"></i>
+                                                Send For In-Effective<i class="fa-regular fa-paper-plane"></i>
                                             </button>
                                         @endif
                                     @endif

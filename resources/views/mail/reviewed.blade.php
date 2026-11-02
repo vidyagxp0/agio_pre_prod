@@ -26,7 +26,7 @@
             box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
         }
 
-        
+
         .fl-table {
             border-radius: 5px;
             font-size: 12px;
@@ -234,7 +234,7 @@
                                     <td>{{ $document->document_name ?? 'N/A' }}</td>
                                     <td>{{ $documentNumber }}</td>
                                     <td>{{ $division->name ?? 'N/A' }}</td>
-                                    <td>{{ $doctype->name ?? $doctype->typecode ?? 'N/A' }}</td>
+                                    <td>{{ $document->document_type_id ?? 'N/A' }}</td>
                                     <td>{{ $originator->name ?? 'N/A' }}</td>
                                     <td>{{ $currentStatus }}</td>
                                     <td>{{ $activity }}</td>
