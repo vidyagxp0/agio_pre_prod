@@ -332,61 +332,157 @@
         <div class="content-container">
             <form action="{{ route('division_submit') }}" method="post">
                 @csrf
-                <div class="division-tabs">
-                    <div class="tab">
-                        @php
-                        // Get the user's roles
-                        $userRoles = DB::table('user_roles')->where('user_id', Auth::user()->id)->get();
-                        // Initialize an empty array to store division IDs
-                        $divisionIds = [];
-                        // Loop through user's roles
-                        foreach($userRoles as $role) {
-                        // Store division IDs from user's roles
-                        $divisionIds[] = $role->q_m_s_divisions_id;
-                        }
-                        // Retrieve divisions where status = 1 and the division ID is in the array of division IDs
-                        $divisions = DB::table('q_m_s_divisions')->where('status', 1)->whereIn('id', $divisionIds)->get();
-                        @endphp
-                        <style>
-                            #division-modal .tab a.active {
-                                background-color: #23a723 !important;
-                                color: white !important;
-                            }
-                        </style>
-                        @foreach ($divisions as $temp)
-                        <input type="hidden" value="{{ $temp->id }}" name="division_id" required>
-                        <a style="display: block;
-                                background-color: inherit;
-                                color: black;
-                                padding: 5px 10px;
-                                width: 100%;
-                                border: none;
-                                outline: none;
-                                text-align: left;
-                                cursor: pointer;
-                                transition: 0.3s;" class="divisionlinks" onclick="openDivision(event, {{ $temp->id }})">{{ $temp->name }}</a>
-                        @endforeach
-                    </div>
-                    @php
-                    $process = DB::table('processes')->get();
-                    @endphp
-                    @foreach ($process as $temp)
-                    <div id="{{ $temp->division_id }}" class="divisioncontent">
-                        @php
-                        $pro = DB::table('processes')
-                        ->where('division_id', $temp->division_id)
-                        ->get();
-                        @endphp
-                        @foreach ($pro as $test)
-                        <label for="process">
-                            <input type="radio" class="process_id_reset" for="process" value="{{ $test->id }}" name="process_id" required> {{ $test->process_name }}
-                        </label>
-                        @endforeach
-                    </div>
-                    @endforeach
+            <div class="division-tabs">
 
+    {{-- ===== HEADINGS ===== --}}
+    <div class="division-header">
+        <h5 class="division-header-left">Site/Division</h5>
+        <h5 class="division-header-right">Process</h5>
+    </div>
+
+    {{-- ===== BODY ===== --}}
+    <div class="division-body">
+
+        <div class="tab">
+            @php
+                $userRoles = DB::table('user_roles')->where('user_id', Auth::user()->id)->get();
+                $divisionIds = [];
+                foreach ($userRoles as $role) {
+                    $divisionIds[] = $role->q_m_s_divisions_id;
+                }
+                $divisions = DB::table('q_m_s_divisions')->where('status', 1)->whereIn('id', $divisionIds)->get();
+            @endphp
+
+            @foreach ($divisions as $temp)
+                <input type="hidden" value="{{ $temp->id }}" name="division_id" required>
+                <a class="divisionlinks" onclick="openDivision(event, {{ $temp->id }})">{{ $temp->name }}</a>
+            @endforeach
+        </div>
+
+        <div class="process-area">
+            @php $process = DB::table('processes')->get(); @endphp
+
+            @foreach ($process as $temp)
+                <div id="{{ $temp->division_id }}" class="divisioncontent">
+                    @php
+                        $pro = DB::table('processes')->where('division_id', $temp->division_id)->get();
+                    @endphp
+                    @foreach ($pro as $test)
+                        <label for="process">
+                            <input type="radio" class="process_id_reset" value="{{ $test->id }}" name="process_id" required>
+                            {{ $test->process_name }}
+                        </label>
+                    @endforeach
                 </div>
-                <div class="button-container">
+            @endforeach
+        </div>
+
+    </div>
+</div>
+<style>
+    /* Outer wrapper: bina border, bas white background */
+    #division-modal .division-tabs {
+        display: block !important;
+        border: none !important;
+        width: 100%;
+        padding: 5px;
+        background: #fff;
+    }
+
+    /* ===== Headings ===== */
+    #division-modal .division-header {
+        display: flex;
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    #division-modal .division-header-left,
+    #division-modal .division-header-right {
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: none;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #212529;
+    }
+
+    #division-modal .division-header-left {
+        width: 270px;            /* grey box ki width ke barabar */
+        flex-shrink: 0;
+    }
+
+    #division-modal .division-header-right {
+        flex: 1;
+        padding-left: 0;
+    }
+
+    /* ===== Body ===== */
+    #division-modal .division-body {
+        display: flex;
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    /* Left grey box */
+    #division-modal .division-body .tab {
+        width: 270px;
+        flex-shrink: 0;
+        float: none !important;
+        height: 280px;
+        background: #f0f0f0;
+        border: 1px solid #c8c8c8;
+        box-sizing: border-box;
+        padding: 8px 0;
+        overflow-y: auto;
+    }
+
+    #division-modal .division-body .tab a.divisionlinks {
+        display: block;
+        width: 100%;
+        padding: 8px 10px;
+        margin-bottom: 8px;
+        background: transparent;
+        color: #000;
+        font-size: 0.85rem;
+        text-align: left;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    #division-modal .division-body .tab a.divisionlinks.active {
+        background-color: #23a723 !important;
+        color: #fff !important;
+    }
+
+    /* Right process area: white, bina border */
+    #division-modal .division-body .process-area {
+        flex: 1;
+        padding-left: 0;
+        background: #fff;
+        border: none;
+    }
+
+    #division-modal .division-body .divisioncontent {
+        float: none !important;
+        width: auto !important;
+        border: none;
+        padding: 0 0 0 0;
+    }
+
+    #division-modal .division-body .divisioncontent label {
+        display: block;
+        margin: 6px 0;
+        font-size: 0.9rem;
+    }
+
+    /* Buttons ke liye thoda gap */
+    #division-modal .button-container {
+        margin-top: 15px;
+    }
+</style>                <div class="button-container">
 
                     <a href="/documents" style="border: 1px solid grey;
                         letter-spacing: 1px;

@@ -179,9 +179,15 @@
 
                         {{-- DOCUMENT TITLE --}}
 
-                        <td class="doc-title" style="display: ; width: 350px;,white-space: ; overflow:hidden !important; text-overflow: ellipsis"  title="{{ $doc->document_name ?? 'NA' }}" >
+                       <td class="doc-title"
+                            style="width: 350px; white-space: nowrap; overflow: hidden !important; text-overflow: ellipsis;"
+                            title="{{ $doc->document_type_id == 'SOP' ? ($doc->document_name ?? 'NA') : ($doc->new_attachment_data_filed ?? 'NA') }}">
 
-                            {{ $doc->document_name ?? 'NA' }}
+                            @if($doc->document_type_id == 'SOP')
+                                {{ $doc->document_name ?? 'NA' }}
+                            @else
+                                {{ $doc->new_attachment_data_filed ?? 'NA' }}
+                            @endif
 
                         </td>
 

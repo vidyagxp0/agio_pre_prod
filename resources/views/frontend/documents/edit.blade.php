@@ -671,9 +671,10 @@
 
                             </div>
 
-                            
+                    {{--      
                         @if($document->document_type_id == 'SOP')
-                            <div class="col-6">
+                      
+                        <div class="col-6">
                                 <div class="group-input">
                                     <label for="major">Document Version <small>(Major)</small><span
                                             class="text-danger">*</span>
@@ -730,7 +731,8 @@
                                 </div>
                             </div>
                         @endif    
-
+                      
+                        --}}
 
 
                             <!-- testing code -->

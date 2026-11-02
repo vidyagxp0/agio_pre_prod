@@ -621,6 +621,8 @@
                                     {{-- <p id="depart-nameError" style="color:red; display: none;">** Department is required</p> --}}
                                 </div>
 
+                            {{--
+                             
                                 <div class="col-6" id="docVerContainer" style="display: none">
                                     <div class="group-input">
                                         <label for="major">Document Version <small>(Major)</small> <span
@@ -634,7 +636,7 @@
                                         <input type="number" name="major" id="major" min="0" required>
                                     </div>
                                 </div>
-
+                            --}}
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="doc-type">Document Type<span class="text-danger">*</span></label>
@@ -994,7 +996,7 @@
                                         const docNameInput = getElement('docname');
                                         const sopTypeContainer = getElement('sopTypeContainer');
                                         const sopType = getElement('sop_type');
-                                        const docVerContainer = getElement('docVerContainer');
+                                        // const docVerContainer = getElement('docVerContainer');
                                         const majorInput = getElement('major');
                                         const keywordContainer = getElement('keywordsContainer');
                                         const docLangContainer = getElement('docLangContainer');
@@ -1028,7 +1030,7 @@
                                         showSopField(shortDescContainer, isSOP);
                                         showSopField(docNameContainer, isSOP);
                                         showSopField(sopTypeContainer, isSOP);
-                                        showSopField(docVerContainer, isSOP);
+                                        // showSopField(docVerContainer, isSOP);
                                         showSopField(effectiveContainer, isSOP);
                                         showSopField(reviewContainer, isSOP);
                                         showSopField(nextReviewContainer, isSOP);

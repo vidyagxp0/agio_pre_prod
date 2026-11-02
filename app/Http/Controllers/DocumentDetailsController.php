@@ -357,7 +357,7 @@ class DocumentDetailsController extends Controller
                         $email,
                         $document,
                         'mail.review-reject',
-                        'Rejected By ' . Auth::user()->name . ' (Reviewer)'
+                        'More Info Req.By' . Auth::user()->name . ' (Reviewer)'
                     );
 
                     Log::info('Document rejection mail dispatched', [
@@ -412,7 +412,7 @@ class DocumentDetailsController extends Controller
             //         $originator->email,
             //         $document,
             //         'mail.review-reject',
-            //         'Rejected By' . Auth::user()->name . '(Reviewer)'
+            //         'More Info Req.By ' . Auth::user()->name . '(Reviewer)'
             //     );
             // } catch (\Throwable $e) {
             //     report($e);
@@ -449,7 +449,7 @@ class DocumentDetailsController extends Controller
             //                 $approver->email,
             //                 $document,
             //                 'mail.review-reject',
-            //                 'Rejected By ' . Auth::user()->name . ' (QA)'
+            //                 'More Info Req.By  ' . Auth::user()->name . ' (QA)'
             //             );
 
             //             Log::info('Document rejection mail dispatched to Approver', [
@@ -510,7 +510,7 @@ class DocumentDetailsController extends Controller
                         $trainer->email,
                         $document,
                         'mail.review-reject',
-                        'Rejected By ' . Auth::user()->name . ' (QA)'
+                        'More Info Req.By' . Auth::user()->name . ' (QA)'
                     );
 
                     Log::info('Document mail dispatched to Trainer', [
@@ -561,7 +561,7 @@ class DocumentDetailsController extends Controller
                             $approver->email,
                             $document,
                             'mail.review-reject',
-                            'Rejected By ' . Auth::user()->name . ' (QA)'
+                            'More Info Req.By' . Auth::user()->name . ' (QA)'
                         );
 
                         Log::info('Document rejection mail dispatched to Approver', [
@@ -799,7 +799,7 @@ class DocumentDetailsController extends Controller
                     $originator->email,
                     $document,
                     'mail.approve-reject',
-                    'Rejected by' . Auth::user()->name . '(HOD)'
+                    'More Info Req.By' . Auth::user()->name . '(HOD)'
                 );
             } catch (\Throwable $e) {
                 report($e);

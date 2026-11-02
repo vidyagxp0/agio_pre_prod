@@ -173,25 +173,54 @@
         $remark     = $comment ?? 'N/A';
     @endphp
 
+
+
+      @php
+        $division = DB::table('divisions')->find($document->division_id);
+        $doctype = DB::table('document_types')->find($document->document_type_id);
+        $originator = DB::table('users')->find($document->originator_id);
+
+        $year = $document->created_at
+            ? \Carbon\Carbon::parse($document->created_at)->format('Y')
+            : date('Y');
+
+        $num = str_pad($document->id, 5, '0', STR_PAD_LEFT);
+
+        $documentNumber = $document->document_number ?? 'N/A';
+
+        $currentStatus = $document->status ?? 'N/A';
+        $activity = $history ?? 'Document Notification';
+        $activityComment = $comment ?? 'N/A';
+        $performedBy = $user ?? 'System';
+        
+    @endphp
+
+
     <div id="main-container">
         <div class="notification-container">
             <div class="inner-block">
 
-                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
                     <tr>
                         <td style="width:70%; vertical-align:top; padding:0;">
 
-                            <p style="margin-bottom:12px;">Document No.:- {{ $docNumber }}</p>
+                            <p style="margin-bottom:12px;">Document No.: {{ $documentNumber }}</p>
 
-                            <p style="margin-bottom:12px;">"{{ $activity }}" activity was performed on the below listed Document.</p>
+                            <p style="margin-bottom:12px;">The "{{ $activity }}" activity was performed on the
+                                following document.</p>
 
-                            <p style="margin-bottom:12px;">Originator Name :- {{ $originator }}</p>
+                            <p style="margin-bottom:12px;">Author: {{ $originator->name ?? 'N/A' }}</p>
 
-                            <p style="margin-bottom:12px;">Date Opened:- {{ $openedOn }}</p>
+                            <p style="margin-bottom:12px;">Date Created:
+                                {{ $document->created_at
+                                    ? \Carbon\Carbon::parse($document->created_at)->format('d-M-Y H:i:s')
+                                    : 'N/A' }}
+                            </p>
 
-                            <p style="margin-bottom:12px;">Comment:- {{ $remark }}.</p>
+                            <p style="margin-bottom:12px;">Comment: {{ $activityComment }}</p>
 
                         </td>
+                      
                         <td style="width:30%; vertical-align:top; text-align:right; padding:0;">
                             <div class="logo" style="display:inline-block;">
                                 <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="Logo">
@@ -200,33 +229,38 @@
                     </tr>
                 </table>
 
+
                 <div class="mail-content" style="margin-top: 20px">
                     <div class="table-wrapper">
-                        <table class="fl-table">
+                         <table class="fl-table">
                             <thead>
                                 <tr>
-                                    <th style="width: 15%">Document No.</th>
-                                    <th style="width: 12%">Division</th>
-                                    <th style="width: 38%">Document Name</th>
-                                    <th style="width: 15%">Due Date</th>
-                                    <th style="width: 20%">Status</th>
+                                    <th style="width: 20%">Document Name</th>
+                                    <th style="width: 12%">Document Number</th>
+                                    <th style="width: 10%">Division</th>
+                                    <th style="width: 10%">Document Type</th>
+                                    <th style="width: 10%">Author</th>
+                                    <th style="width: 10%">Current Status</th>
+                                    <th style="width: 14%">Activity</th>
+                                    <th style="width: 14%">Activity Performed By</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{ $docNumber }}</td>
-                                    <td>{{ $division }}</td>
                                     <td>{{ $document->document_name ?? 'N/A' }}</td>
-                                    <td>{{ $dueDate }}</td>
-                                    <td>{{ $document->status ?? 'N/A' }}</td>
+                                    <td>{{ $documentNumber }}</td>
+                                    <td>{{ $division->name ?? 'N/A' }}</td>
+                                     <td>{{ $document->document_type_id ?? 'N/A' }}</td>
+                                    <td>{{ $originator->name ?? 'N/A' }}</td>
+                                    <td>{{ $currentStatus }}</td>
+                                    <td>{{ $activity }}</td>
+                                    <td>{{ $performedBy }}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <div style="margin-top: 20px">
-                        The "{{ $activity }}" activity was performed by {{ $actionBy }}.
-                    </div>
+                  
 
                     <div style="margin-top: 20px">
                         Please log in to the Document Management System to view the document details and take the necessary action.
