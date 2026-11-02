@@ -1036,7 +1036,7 @@
                                     <th style="font-size: 12px; width:10%">Revision No.</th>
                                     <!-- <th style="font-size: 16px; width:20%">Change Control No.</th> -->
                                     <th style="font-size: 12px; width:20%">Effective Date</th>
-                                    <th style="font-size: 12px; width:50%">Details of Revision</th>
+                                    <th style="font-size: 12px; width:50%">Reason of revision</th>
                                 </tr>
                             </thead>
                         

@@ -251,7 +251,7 @@
                 <tr style="background:#f4f4f4;">
                     <th style="width: 15%; font-weight: bold; text-align: center;">Revision No.</th>
                     <th style="width: 25%; font-weight: bold; text-align: center;">Effective Date</th>
-                    <th style="width: 60%; font-weight: bold; text-align: center;">Details of Revision</th>
+                    <th style="width: 60%; font-weight: bold; text-align: center;">Reason of revision</th>
                 </tr>
             </thead>
             <tbody>

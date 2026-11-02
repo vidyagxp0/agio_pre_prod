@@ -378,7 +378,7 @@
                 <tr>
                     <th style="width:15%;">Revision No.</th>
                     <th style="width:25%;">Effective Date</th>
-                    <th style="width:60%;">Details of Revision</th>
+                    <th style="width:60%;">Reason of revision</th>
                 </tr>
             </thead>
             <tbody>
