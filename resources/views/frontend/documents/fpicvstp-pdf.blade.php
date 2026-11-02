@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        * {
-            font-family: "Open Sans", "Roboto", "Noto Sans KR", "Poppins", sans-serif;
-            font-optical-sizing: auto;
-            font-weight: <weight>;
-            font-style: normal;
-            font-variation-settings: "wdth" 100;
-        }
+        /* @page { size: A4; margin: 130px 34px 120px 34px; } */
+        * { font-family: Arial, Helvetica, sans-serif; font-style: normal; }
+        html { text-align: left; }
+        body { margin: 0; padding: 0; font-size: 12px; line-height: 1.4; }
 
         .symbol-support {
             font-family: "DeJaVu Sans Mono", monospace !important;
@@ -87,11 +84,11 @@
 
         table.small-content td,
         table.small-content th {
-            font-size: 0.85rem;
+            font-size: 11px;
         }
 
         td.title {
-            font-size: 1.1rem;
+            font-size: 12px;
             font-weight: bold;
         }
 
@@ -101,7 +98,7 @@
         }
 
         .doc-control .head div:nth-child(1) {
-            font-size: 1.5rem;
+            font-size: 13px;
             text-align: center;
             font-weight: bold;
             margin-bottom: 5px;
@@ -109,7 +106,7 @@
 
         .doc-control .body .block-head {
             border-bottom: 2px solid black;
-            font-size: 1.2rem;
+            font-size: 12px;
             font-weight: bold;
             margin-bottom: 15px;
         }

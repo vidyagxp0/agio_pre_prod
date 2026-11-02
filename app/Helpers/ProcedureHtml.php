@@ -26,8 +26,8 @@ class ProcedureHtml
     ];
 
     private const ALLOWED_ATTRS = [
-        'a'   => ['href', 'target'],
-        'img' => ['src', 'alt', 'width', 'height', 'title'],
+        'a'   => ['href'],
+        'img' => ['src', 'alt', 'width', 'height'],
         'td'  => ['colspan', 'rowspan'],
         'th'  => ['colspan', 'rowspan'],
         'ol'  => ['start', 'type'],
@@ -35,26 +35,27 @@ class ProcedureHtml
         'col' => ['span'],
     ];
 
+    private const BLOCK_TAGS = ['p', 'div', 'table', 'ul', 'ol', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre', 'hr'];
+
+    /* ====================================================================
+       MAIN ENTRY
+       ==================================================================== */
     public static function clean(?string $html): string
     {
         if ($html === null || trim($html) === '') {
             return '';
         }
 
-        // Large images regex crash prevent karne ke liye
         ini_set('pcre.backtrack_limit', '10000000');
 
-        $html = preg_replace('/<!--.*?-->/s', '', $html);
-        $html = preg_replace('#<(style|script)\b[^>]*>.*?</\1>#is', '', $html);
-        $html = preg_replace('#</?o:p[^>]*>#i', '', $html);
-
-        // bekaar <span> wrappers hata do
-        $html = preg_replace('#<span>(.*?)</span>#is', '$1', $html);
-        $html = preg_replace('#<span[^>]*>\s*</span>#i', '', $html);
+        $html = preg_replace('/<!--.*?-->/s', '', $html) ?? $html;
+        $html = preg_replace('#<(style|script)\b[^>]*>.*?</\1>#is', '', $html) ?? $html;
+        $html = preg_replace('#</?(o|w|m):[^>]*>#i', '', $html) ?? $html;
+        $html = preg_replace('#<span>(.*?)</span>#is', '$1', $html) ?? $html;
+        $html = preg_replace('#<span[^>]*>\s*</span>#i', '', $html) ?? $html;
 
         libxml_use_internal_errors(true);
         $dom = new DOMDocument('1.0', 'UTF-8');
-
         $dom->loadHTML(
             '<?xml encoding="UTF-8"><div id="__root">' . $html . '</div>',
             LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_PARSEHUGE
@@ -67,20 +68,19 @@ class ProcedureHtml
             return '';
         }
 
-        // 1) Tables pehle
-        foreach ($xp->query('//table') as $table) {
+        // 1) Table widths (nested tables bhi)
+        foreach (iterator_to_array($xp->query('//table')) as $table) {
             self::fixTable($table, $xp);
         }
 
-        // 2) Elements sanitize karo
-        $nodes = iterator_to_array($xp->query('//div[@id="__root"]//*'));
-        foreach ($nodes as $el) {
+        // 2) Whitelist sanitize
+        foreach (iterator_to_array($xp->query('//div[@id="__root"]//*')) as $el) {
             if ($el->parentNode) {
                 self::sanitizeElement($el);
             }
         }
 
-        // 2a) bina style wale span unwrap karo
+        // 3) bina style wale span unwrap
         foreach (iterator_to_array($xp->query('//div[@id="__root"]//span[not(@style)]')) as $sp) {
             while ($sp->firstChild) {
                 $sp->parentNode->insertBefore($sp->firstChild, $sp);
@@ -88,16 +88,16 @@ class ProcedureHtml
             $sp->parentNode->removeChild($sp);
         }
 
-        // Word ki layout tables ko divs me badlo
-        self::unwrapLayoutTables($dom, $xp);
-
-        // Bade single-cell rows ko todo
-        self::splitTallCells($dom, $xp);
-
-        // 3) IMAGES KO PDF KE LIYE CONVERT & FIT KARO (Dompdf Fix)
+        // 4) Images
         self::prepareImagesForPdf($xp);
 
-        // 4) Khali paragraphs hatao
+        // 5a) 2-column "number | bada text" tables ko flow me badlo (dompdf page-split bug se bachne ke liye)
+        self::flowifyNumberTables($dom, $xp);
+
+        // 5) Bade (Word ke) cells ko chhoti rows me todo, taaki page par fit ho
+        self::splitTallRows($dom, $xp);
+
+        // 6) Faltu khali paragraphs
         foreach (iterator_to_array($xp->query('//div[@id="__root"]//div')) as $div) {
             self::collapseEmpty($div);
         }
@@ -110,26 +110,23 @@ class ProcedureHtml
         return trim($out);
     }
 
+    /* ====================================================================
+       flattenRowspans (RMS specification ke liye, pehle jaisa)
+       ==================================================================== */
     public static function flattenRowspans(?string $html): string
     {
         $html = (string) $html;
-
         if (stripos($html, 'rowspan') === false) {
             return $html;
         }
 
         libxml_use_internal_errors(true);
-
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-        $dom->loadHTML(
-            '<?xml encoding="UTF-8"><div id="w">' . $html . '</div>',
-            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
-        );
-        $xp = new \DOMXPath($dom);
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadHTML('<?xml encoding="UTF-8"><div id="w">' . $html . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $xp = new DOMXPath($dom);
 
         foreach ($xp->query('//table') as $table) {
             $pending = [];
-
             foreach ($xp->query('.//tr', $table) as $tr) {
                 $p = $tr->parentNode;
                 if (strtolower($p->nodeName) !== 'table') {
@@ -138,49 +135,38 @@ class ProcedureHtml
                 if (!$p->isSameNode($table)) {
                     continue;
                 }
-
                 $cells = [];
                 foreach ($tr->childNodes as $n) {
                     if ($n->nodeType === XML_ELEMENT_NODE && in_array(strtolower($n->nodeName), ['td', 'th'])) {
                         $cells[] = $n;
                     }
                 }
-
-                $col = 0;
-
+                $col  = 0;
                 $fill = function ($before) use (&$pending, &$col, $dom, $tr) {
                     while (!empty($pending[$col]) && $pending[$col]['left'] > 0) {
                         $at = $col;
                         $td = $dom->createElement('td');
-
                         if ($pending[$at]['cs'] > 1) {
                             $td->setAttribute('colspan', $pending[$at]['cs']);
                         }
-
                         $pending[$at]['left']--;
                         $td->setAttribute('class', $pending[$at]['left'] > 0 ? 'rs-mid' : 'rs-last');
                         $td->appendChild($dom->createTextNode("\xC2\xA0"));
-
                         $before ? $tr->insertBefore($td, $before) : $tr->appendChild($td);
                         $col += $pending[$at]['cs'];
                     }
                 };
-
                 foreach ($cells as $cell) {
                     $fill($cell);
-
                     $cs = max(1, (int) $cell->getAttribute('colspan'));
                     $rs = max(1, (int) $cell->getAttribute('rowspan'));
-
                     if ($rs > 1) {
                         $pending[$col] = ['left' => $rs - 1, 'cs' => $cs];
                         $cell->removeAttribute('rowspan');
                         $cell->setAttribute('class', trim($cell->getAttribute('class') . ' rs-first'));
                     }
-
                     $col += $cs;
                 }
-
                 $fill(null);
             }
         }
@@ -189,110 +175,79 @@ class ProcedureHtml
         foreach ($xp->query('//div[@id="w"]')->item(0)->childNodes as $n) {
             $out .= $dom->saveHTML($n);
         }
-
         return $out;
     }
 
-    /* ---------------- IMAGE PREPARATION FOR DOMPDF ---------------- */
-
+    /* ====================================================================
+       IMAGES
+       ==================================================================== */
     private static function prepareImagesForPdf(DOMXPath $xp): void
     {
-        foreach ($xp->query('//div[@id="__root"]//img') as $img) {
+        foreach (iterator_to_array($xp->query('//div[@id="__root"]//img')) as $img) {
             $src = trim($img->getAttribute('src'));
             if ($src === '') {
                 continue;
             }
-
-            // Local file ya URL ko direct Base64 me convert karo taaki Dompdf 100% bina kisi network error ke load kare
-            $base64 = self::convertSrcToBase64($src);
-            if ($base64) {
-                $img->setAttribute('src', $base64);
+            $b64 = self::convertSrcToBase64($src);
+            if ($b64) {
+                $img->setAttribute('src', $b64);
             }
-
-            // Sizing styles set karo taaki image Dompdf mein 0px na ho aur na page se bahar jaye
-            $style = self::parseStyle($img->getAttribute('style'));
-            $style['width']       = '100%';
-            $style['max-width']   = '600px';
-            $style['height']      = 'auto';
-            $style['display']     = 'block';
-            $style['margin']      = '6px auto';
-            self::setStyle($img, $style);
+            // Asli size rakho, bas page se bahar na jaye (CSS max-width:100% sambhalega)
+            $st = self::parseStyle($img->getAttribute('style'));
+            unset($st['width'], $st['height'], $st['max-width'], $st['display'], $st['margin']);
+            self::setStyle($img, $st);
         }
     }
 
     private static function convertSrcToBase64(string $src): ?string
     {
-        // 1. Agar pehle se Base64 hai
-        if (str_starts_with(strtolower($src), 'data:image/')) {
+        if (stripos($src, 'data:image/') === 0) {
             return $src;
         }
 
-        // 2. Agar MS Word ka file:/// path hai
-        if (str_starts_with(strtolower($src), 'file:///')) {
-            $localFile = str_replace('file:///', '', $src);
-            $localFile = str_replace('/', DIRECTORY_SEPARATOR, $localFile);
-            if (file_exists($localFile) && is_file($localFile)) {
-                $mime = mime_content_type($localFile) ?: 'image/png';
-                return 'data:' . $mime . ';base64,' . base64_encode(file_get_contents($localFile));
-            }
-        }
-
-        // 3. Relative path (/uploads/... ya upload/...)
-        $pathOnly = ltrim(parse_url($src, PHP_URL_PATH) ?? '', '/');
+        $pathOnly   = ltrim(parse_url($src, PHP_URL_PATH) ?? '', '/');
         $candidates = [
             public_path($pathOnly),
             public_path('upload/' . basename($pathOnly)),
             public_path('uploads/' . basename($pathOnly)),
             public_path('user/images/' . basename($pathOnly)),
-            base_path($pathOnly),
         ];
-
-        foreach ($candidates as $filePath) {
-            if (file_exists($filePath) && is_file($filePath)) {
-                $mime = mime_content_type($filePath) ?: 'image/png';
-                return 'data:' . $mime . ';base64,' . base64_encode(file_get_contents($filePath));
+        foreach ($candidates as $f) {
+            if ($pathOnly !== '' && is_file($f)) {
+                $mime = mime_content_type($f) ?: 'image/png';
+                return 'data:' . $mime . ';base64,' . base64_encode(file_get_contents($f));
             }
         }
 
-        // 4. Full domain URL (https://agio.mydemosoftware.com/...)
-        if (preg_match('#^https?:\/\/#i', $src)) {
-            $host = parse_url($src, PHP_URL_HOST);
-            $currentHost = request()->getHost();
-
-            if ($host && ($host === $currentHost || str_contains($src, 'agio.mydemosoftware.com'))) {
-                $local = public_path($pathOnly);
-                if (file_exists($local) && is_file($local)) {
-                    $mime = mime_content_type($local) ?: 'image/png';
-                    return 'data:' . $mime . ';base64,' . base64_encode(file_get_contents($local));
-                }
-            }
-
-            // Agar koi external URL hai to fetch kar lo
+        if (preg_match('#^https?://#i', $src)) {
             try {
                 $ctx = stream_context_create([
-                    'ssl' => ['verify_peer' => false, 'verify_peer_name' => false],
-                    'http' => ['timeout' => 5]
+                    'ssl'  => ['verify_peer' => false, 'verify_peer_name' => false],
+                    'http' => ['timeout' => 5],
                 ]);
                 $content = @file_get_contents($src, false, $ctx);
-                if ($content !== false && strlen($content) > 0) {
-                    $finfo = new \finfo(FILEINFO_MIME_TYPE);
-                    $mime = $finfo->buffer($content) ?: 'image/png';
+                if ($content !== false && $content !== '') {
+                    $mime = (new \finfo(FILEINFO_MIME_TYPE))->buffer($content) ?: 'image/png';
                     return 'data:' . $mime . ';base64,' . base64_encode($content);
                 }
-            } catch (\Throwable $e) {}
+            } catch (\Throwable $e) {
+            }
         }
-
         return null;
     }
 
-    /* ---------------- TABLE ---------------- */
-
+    /* ====================================================================
+       TABLE WIDTHS
+       - har table (nested bhi) ko percent colgroup + class pdf-fixed
+       - nowrap / height / bade px widths hatao
+       ==================================================================== */
     private static function fixTable(DOMElement $table, DOMXPath $xp): void
     {
-        if (!self::tableHasBorders($table, $xp)) {
-            $table->setAttribute('class', 'pdf-borderless');
+        $layout  = self::isLayoutTable($table, $xp);
+        $classes = [];
+        if ($layout || !self::tableHasBorders($table, $xp)) {
+            $classes[] = 'pdf-borderless';
         }
-        $rows = $xp->query('./tbody/tr | ./thead/tr | ./tfoot/tr | ./tr', $table);
 
         $colW = [];
         foreach ($xp->query('./colgroup/col', $table) as $col) {
@@ -303,6 +258,7 @@ class ProcedureHtml
             }
         }
 
+        $rows = $xp->query('./tbody/tr | ./thead/tr | ./tfoot/tr | ./tr', $table);
         $best = null;
         $max  = 0;
         foreach ($rows as $tr) {
@@ -328,19 +284,20 @@ class ProcedureHtml
         }
 
         $allCells = $xp->query(
-            './tbody/tr/td | ./tbody/tr/th | ./thead/tr/td | ./thead/tr/th | ' .
-            './tfoot/tr/td | ./tfoot/tr/th | ./tr/td | ./tr/th',
+            './tbody/tr/td | ./tbody/tr/th | ./thead/tr/td | ./thead/tr/th | ./tfoot/tr/td | ./tfoot/tr/th | ./tr/td | ./tr/th',
             $table
         );
         foreach ($allCells as $c) {
             $st = self::parseStyle($c->getAttribute('style'));
-            unset($st['width'], $st['height'], $st['min-width'], $st['max-width']);
+            unset($st['width'], $st['height'], $st['min-width'], $st['max-width'], $st['white-space']);
             self::setStyle($c, $st);
             $c->removeAttribute('width');
             $c->removeAttribute('height');
         }
+        $table->removeAttribute('width');
+        $table->removeAttribute('height');
 
-        $n = $best ? $max : count($colW);
+        $n   = $best ? $max : count($colW);
         $raw = [];
         for ($i = 0; $i < $n; $i++) {
             $w = $colW[$i] ?? null;
@@ -349,10 +306,14 @@ class ProcedureHtml
             }
             $raw[] = ($w !== null && $w > 0) ? $w : null;
         }
-
         $known = array_filter($raw, fn ($v) => $v !== null);
 
-        foreach ($xp->query('./colgroup', $table) as $cg) {
+        if ($layout && $n === 2) {          // number | text layout table
+            $raw   = [9, 91];
+            $known = $raw;
+        }
+
+        foreach (iterator_to_array($xp->query('./colgroup', $table)) as $cg) {
             $table->removeChild($cg);
         }
 
@@ -361,10 +322,18 @@ class ProcedureHtml
             $raw   = array_map(fn ($v) => $v ?? $avg, $raw);
             $total = array_sum($raw) ?: 1;
 
+            // har column kam se kam 6% (ya jitna fit ho)
+            $minP = min(6.0, 100 / max($n, 1));
+            $pcts = [];
+            foreach ($raw as $v) {
+                $pcts[] = max($minP, $v / $total * 100);
+            }
+            $sum = array_sum($pcts) ?: 1;
+
             $doc      = $table->ownerDocument;
             $colgroup = $doc->createElement('colgroup');
-            foreach ($raw as $i => $v) {
-                $p   = round($v / $total * 100, 2);
+            foreach ($pcts as $i => $v) {
+                $p   = round($v / $sum * 100, 2);
                 $col = $doc->createElement('col');
                 $col->setAttribute('style', "width:{$p}%");
                 $colgroup->appendChild($col);
@@ -377,6 +346,11 @@ class ProcedureHtml
                 }
             }
             $table->insertBefore($colgroup, $table->firstChild);
+            $classes[] = 'pdf-fixed';
+        }
+
+        if ($classes) {
+            $table->setAttribute('class', trim($table->getAttribute('class') . ' ' . implode(' ', $classes)));
         }
     }
 
@@ -388,9 +362,8 @@ class ProcedureHtml
             return null;
         }
         if (preg_match('/^\s*([\d.]+)\s*(px|pt|%|mm|cm|in)?/i', $w, $m)) {
-            $v    = (float) $m[1];
-            $unit = strtolower($m[2] ?? '');
-            switch ($unit) {
+            $v = (float) $m[1];
+            switch (strtolower($m[2] ?? '')) {
                 case 'pt': return $v * 1.3333;
                 case 'mm': return $v * 3.7795;
                 case 'cm': return $v * 37.795;
@@ -401,8 +374,9 @@ class ProcedureHtml
         return null;
     }
 
-    /* ---------------- SANITIZE ---------------- */
-
+    /* ====================================================================
+       SANITIZE
+       ==================================================================== */
     private static function sanitizeElement(DOMElement $el): void
     {
         $tag = strtolower($el->nodeName);
@@ -411,7 +385,6 @@ class ProcedureHtml
             $el->parentNode->removeChild($el);
             return;
         }
-
         if (!in_array($tag, self::ALLOWED_TAGS, true)) {
             while ($el->firstChild) {
                 $el->parentNode->insertBefore($el->firstChild, $el);
@@ -434,9 +407,6 @@ class ProcedureHtml
         if (in_array($tag, ['td', 'th', 'col'], true)) {
             $keep[] = 'width';
         }
-        if ($tag === 'img') {
-            $keep = array_merge($keep, ['width', 'height', 'max-width', 'max-height', 'display', 'margin']);
-        }
 
         $clean = [];
         foreach ($style as $prop => $val) {
@@ -454,8 +424,8 @@ class ProcedureHtml
             $clean[$prop] = $val;
         }
 
-        if (isset($clean['text-align']) && $clean['text-align'] === 'center'
-            && in_array($tag, ['div'], true)) {
+        // Word ke wrapper div ka center hatao
+        if ($tag === 'div' && ($clean['text-align'] ?? '') === 'center') {
             unset($clean['text-align']);
         }
 
@@ -476,7 +446,7 @@ class ProcedureHtml
         if ($el->hasAttribute('class')) {
             $keepCls = [];
             foreach (preg_split('/\s+/', trim($el->getAttribute('class'))) as $c) {
-                if ($c !== '' && preg_match('/^(ql-|proc-|pdf-|fr-)/', $c)) {
+                if ($c !== '' && preg_match('/^(ql-|proc-|pdf-)/', $c)) {
                     $keepCls[] = $c;
                 }
             }
@@ -488,20 +458,186 @@ class ProcedureHtml
             $el->removeAttribute('href');
         }
 
-        // Image source safety: data:image/, http, https, relative paths (/) aur file:/// allow karein
         if ($tag === 'img') {
             $src = trim($el->getAttribute('src'));
-            if (!preg_match('#^(\/|\.\/|https?:|data:image\/|file:\/\/\/)#i', $src)) {
+            if (!preg_match('#^(/|\./|https?:|data:image/)#i', $src)) {
+                \Log::warning('PDF img dropped: ' . substr($src, 0, 80));
                 $el->parentNode->removeChild($el);
                 return;
             }
+            // width/height attributes px me rehne do (asli size)
         }
 
         self::setStyle($el, $clean);
     }
 
-    /* ---------------- EMPTY PARAGRAPHS ---------------- */
+    /* ====================================================================
+       BADE CELLS KO CHHOTI ROWS ME TODNA
+       Word ke "Sr. No. | Test Methods" jaise table me ek cell me poora test
+       hota hai. dompdf row ko beech se nahi todta, isliye us cell ke
+       blocks (p / nested table) ko alag-alag rows me baant dete hain.
+       Sirf top-level tables par. Nested tables jaise hain waise rehte hain.
+       ==================================================================== */
+    private static function splitTallRows(DOMDocument $dom, DOMXPath $xp): void
+    {
+        $rows = iterator_to_array($xp->query(
+            '//div[@id="__root"]//table[not(ancestor::table)]/tbody/tr | //div[@id="__root"]//table[not(ancestor::table)]/tr'
+        ));
 
+        foreach ($rows as $tr) {
+            if (!$tr->parentNode) {
+                continue;
+            }
+            $cells = iterator_to_array($xp->query('./td | ./th', $tr));
+            if (!$cells) {
+                continue;
+            }
+            foreach ($cells as $c) {
+                if ((int) $c->getAttribute('rowspan') > 1) {
+                    continue 2;
+                }
+            }
+
+            $big       = null;
+            $bigBlocks = [];
+            foreach ($cells as $c) {
+                $b = self::blocksOf($dom, $c);
+                if (count($b) > count($bigBlocks)) {
+                    $big       = $c;
+                    $bigBlocks = $b;
+                }
+            }
+            if (!$big || count($bigBlocks) < 3) {
+                continue;
+            }
+
+            // chhote blocks ko 3-3 ke group me, nested table akeli
+            $chunks = [];
+            $cur    = [];
+            foreach ($bigBlocks as $b) {
+                $isTable = $b instanceof DOMElement && strtolower($b->nodeName) === 'table';
+                if ($isTable) {
+                    if ($cur) { $chunks[] = $cur; $cur = []; }
+                    $chunks[] = [$b];
+                } else {
+                    $cur[] = $b;
+                    if (count($cur) >= 3) { $chunks[] = $cur; $cur = []; }
+                }
+            }
+            if ($cur) {
+                $chunks[] = $cur;
+            }
+            if (count($chunks) < 2) {
+                continue;
+            }
+
+            $last = count($chunks) - 1;
+            foreach ($chunks as $i => $chunk) {
+                $cls   = $i === 0 ? 'pdf-cont-first' : ($i === $last ? 'pdf-cont-last' : 'pdf-cont-mid');
+                $newTr = $tr->cloneNode(false);
+
+                foreach ($cells as $c) {
+                    if ($c === $big) {
+                        $nc = $c->cloneNode(false);
+                        if (count($chunk) === 1) {
+                            $nc->appendChild($chunk[0]);
+                        } else {
+                            $wrap = $dom->createElement('div');
+                            foreach ($chunk as $node) {
+                                $wrap->appendChild($node);
+                            }
+                            $nc->appendChild($wrap);
+                        }
+                    } elseif ($i === 0) {
+                        $nc = $c;
+                    } else {
+                        $nc = $c->cloneNode(false);
+                        $nc->appendChild($dom->createTextNode("\xC2\xA0"));
+                    }
+                    $nc->setAttribute('class', trim($nc->getAttribute('class') . ' ' . $cls));
+                    $newTr->appendChild($nc);
+                }
+                $tr->parentNode->insertBefore($newTr, $tr);
+            }
+            $tr->parentNode->removeChild($tr);
+        }
+    }
+
+    private static function blocksOf(DOMDocument $dom, DOMElement $cell): array
+    {
+        $filter = function (DOMNode $parent): array {
+            $out = [];
+            foreach (iterator_to_array($parent->childNodes) as $n) {
+                if ($n->nodeType === XML_TEXT_NODE && trim(str_replace("\xC2\xA0", ' ', $n->textContent)) === '') {
+                    continue;
+                }
+                $out[] = $n;
+            }
+            return $out;
+        };
+
+        $countBr = function (array $nodes): int {
+            $k = 0;
+            foreach ($nodes as $n) {
+                if ($n instanceof DOMElement && strtolower($n->nodeName) === 'br') {
+                    $k++;
+                }
+            }
+            return $k;
+        };
+
+        $blocks = $filter($cell);
+
+        // ek hi wrapper (div/span, ya <br> wala p) ho to uske andar jao
+        while (count($blocks) === 1 && $blocks[0] instanceof DOMElement) {
+            $name  = strtolower($blocks[0]->nodeName);
+            $inner = $filter($blocks[0]);
+            if (!$inner) {
+                break;
+            }
+            if (in_array($name, ['div', 'span'], true) || ($name === 'p' && $countBr($inner) >= 3)) {
+                $blocks = $inner;
+            } else {
+                break;
+            }
+        }
+
+        // <br> se alag hue lines ko alag blocks banao
+        if ($countBr($blocks) >= 3) {
+            $groups = [];
+            $cur    = [];
+            foreach ($blocks as $b) {
+                if ($b instanceof DOMElement && strtolower($b->nodeName) === 'br') {
+                    if ($cur) { $groups[] = $cur; $cur = []; }
+                } else {
+                    $cur[] = $b;
+                }
+            }
+            if ($cur) {
+                $groups[] = $cur;
+            }
+
+            $blocks = [];
+            foreach ($groups as $g) {
+                if (count($g) === 1 && $g[0] instanceof DOMElement
+                    && in_array(strtolower($g[0]->nodeName), self::BLOCK_TAGS, true)) {
+                    $blocks[] = $g[0];
+                } else {
+                    $d = $dom->createElement('div');
+                    foreach ($g as $node) {
+                        $d->appendChild($node);
+                    }
+                    $blocks[] = $d;
+                }
+            }
+        }
+
+        return $blocks;
+    }
+
+    /* ====================================================================
+       EMPTY PARAGRAPHS
+       ==================================================================== */
     private static function isBlank(DOMNode $n): bool
     {
         if ($n->nodeType === XML_TEXT_NODE) {
@@ -547,8 +683,9 @@ class ProcedureHtml
         }
     }
 
-    /* ---------------- STYLE HELPERS ---------------- */
-
+    /* ====================================================================
+       STYLE HELPERS / BORDER DETECTION
+       ==================================================================== */
     private static function parseStyle(string $style): array
     {
         $out = [];
@@ -579,16 +716,10 @@ class ProcedureHtml
 
     private static function tableHasBorders(DOMElement $table, DOMXPath $xp): bool
     {
-        $cells    = $xp->query('.//td | .//th', $table);
         $explicit = false;
-
-        foreach ($cells as $c) {
-            $st = self::parseStyle($c->getAttribute('style'));
-            foreach ($st as $prop => $val) {
-                if (strpos($prop, 'border') !== 0) {
-                    continue;
-                }
-                if ($prop === 'border-width' || $prop === 'border-color' || $prop === 'border-image') {
+        foreach ($xp->query('.//td | .//th', $table) as $c) {
+            foreach (self::parseStyle($c->getAttribute('style')) as $prop => $val) {
+                if (strpos($prop, 'border') !== 0 || in_array($prop, ['border-width', 'border-color', 'border-image'], true)) {
                     continue;
                 }
                 $explicit = true;
@@ -597,16 +728,13 @@ class ProcedureHtml
                 }
             }
         }
-
         if ($explicit) {
             return false;
         }
-
         $attr = $table->getAttribute('border');
         if ($attr !== '' && (float) $attr == 0) {
             return false;
         }
-
         return true;
     }
 
@@ -629,184 +757,167 @@ class ProcedureHtml
         return true;
     }
 
-    private static function blocksOf(DOMElement $cell): array
+    /**
+     * Word ka "number | text" layout table pehchano:
+     * 3+ rows, har row me max 2 cells, pehla cell chhota (3.1, 9.1.1 ya khali),
+     * koi th / colspan / rowspan nahi, aur header row "Sr. No." jaisi nahi.
+     */
+    private static function isLayoutTable(DOMElement $table, DOMXPath $xp): bool
     {
-        $filter = function (DOMNode $parent): array {
-            $out = [];
-            foreach (iterator_to_array($parent->childNodes) as $n) {
-                if ($n->nodeType === XML_TEXT_NODE && trim(str_replace("\xC2\xA0", ' ', $n->textContent)) === '') {
-                    continue;
-                }
-                $out[] = $n;
-            }
-            return $out;
-        };
-
-        $blocks = $filter($cell);
-
-        while (count($blocks) === 1
-            && $blocks[0] instanceof DOMElement
-            && in_array(strtolower($blocks[0]->nodeName), ['div', 'span'], true)) {
-            $inner = $filter($blocks[0]);
-            if (!$inner) {
-                break;
-            }
-            $blocks = $inner;
+        $rows = iterator_to_array($xp->query('./tbody/tr | ./thead/tr | ./tfoot/tr | ./tr', $table));
+        if (count($rows) < 3) {
+            return false;
         }
-        return $blocks;
+        if ($xp->query('./thead/tr/th | ./tbody/tr/th | ./tr/th', $table)->length) {
+            return false;
+        }
+
+        $short = 0;
+        foreach ($rows as $i => $tr) {
+            $cells = $xp->query('./td | ./th', $tr);
+            if ($cells->length < 1 || $cells->length > 2) {
+                return false;
+            }
+            foreach ($cells as $c) {
+                if ((int) $c->getAttribute('colspan') > 1 || (int) $c->getAttribute('rowspan') > 1) {
+                    return false;
+                }
+            }
+            if ($cells->length === 1) {
+                $short++;
+                continue;
+            }
+            $t = trim(str_replace("\xC2\xA0", ' ', $cells->item(0)->textContent));
+            if ($i === 0 && preg_match('/^(sr\b|s\.?\s*no|no\b|sl\b)/i', $t)) {
+                return false;                       // asli header wali table
+            }
+            if (mb_strlen($t) <= 8) {
+                $short++;
+            }
+        }
+        return ($short / count($rows)) >= 0.8;
     }
 
-    private static function splitTallCells(DOMDocument $dom, DOMXPath $xp): void
+    /**
+     * 2-column table jisme pehla column chhota (number / "Sr. No.") hai aur dusre
+     * column mein bahut bada content (ya nested table) hai.
+     */
+    private static function isNumberTable(DOMElement $table, DOMXPath $xp): bool
     {
-        foreach (iterator_to_array($xp->query('//table')) as $table) {
-            foreach (iterator_to_array($xp->query('./tbody/tr | ./tr', $table)) as $tr) {
-                $cells = iterator_to_array($xp->query('./td | ./th', $tr));
-                if (!$cells) {
-                    continue;
-                }
+        $rows = iterator_to_array($xp->query('./tbody/tr | ./thead/tr | ./tfoot/tr | ./tr', $table));
+        if (count($rows) < 2) {
+            return false;
+        }
 
-                foreach ($cells as $c) {
-                    if ((int) $c->getAttribute('rowspan') > 1) {
-                        continue 2;
-                    }
+        $short = 0;
+        $tall  = false;
+        foreach ($rows as $i => $tr) {
+            $cells = $xp->query('./td | ./th', $tr);
+            if ($cells->length < 1 || $cells->length > 2) {
+                return false;
+            }
+            foreach ($cells as $k => $c) {
+                // number wale cell par rowspan chalega (Word me "3." do rows ko cover karta hai),
+                // par text cell par rowspan, ya number cell par colspan nahi
+                if ($cells->length === 2 && $k === 0 && (int) $c->getAttribute('colspan') > 1) {
+                    return false;
                 }
+                if ((int) $c->getAttribute('rowspan') > 1 && $k === $cells->length - 1) {
+                    return false;
+                }
+            }
 
-                $big = null;
-                $bigBlocks = [];
-                foreach ($cells as $c) {
-                    $b = self::blocksOf($c);
-                    if (count($b) > count($bigBlocks)) {
-                        $big = $c;
-                        $bigBlocks = $b;
-                    }
-                }
-                $expanded = [];
-                foreach ($bigBlocks as $b) {
-                    if ($b instanceof DOMElement && strtolower($b->nodeName) === 'table') {
-                        foreach (self::chunkTable($b, 6) as $part) {
-                            $expanded[] = $part;
-                        }
-                    } else {
-                        $expanded[] = $b;
-                    }
-                }
-                $bigBlocks = $expanded;
-                if (!$big || count($bigBlocks) < 2) {
-                    continue;
-                }
+            $txt = $cells->item($cells->length - 1);
+            if (mb_strlen(trim($txt->textContent)) > 400 || $xp->query('.//table', $txt)->length) {
+                $tall = true;
+            }
 
-                $last = count($bigBlocks) - 1;
-                foreach ($bigBlocks as $i => $node) {
-                    $cls   = $i === 0 ? 'pdf-cont-first' : ($i === $last ? 'pdf-cont-last' : 'pdf-cont-mid');
-                    $newTr = $tr->cloneNode(false);
-
-                    foreach ($cells as $c) {
-                        if ($c === $big) {
-                            $nc = $c->cloneNode(false);
-                            $nc->appendChild($node);
-                        } elseif ($i === 0) {
-                            $nc = $c;
-                        } else {
-                            $nc = $c->cloneNode(false);
-                            $nc->appendChild($dom->createTextNode("\xC2\xA0"));
-                        }
-                        $nc->setAttribute('class', $cls);
-                        $newTr->appendChild($nc);
-                    }
-                    $tr->parentNode->insertBefore($newTr, $tr);
-                }
-                $tr->parentNode->removeChild($tr);
+            if ($cells->length === 1) {
+                $short++;
+                continue;
+            }
+            $t = trim(str_replace("\xC2\xA0", ' ', $cells->item(0)->textContent));
+            if ($i === 0 && preg_match('/^(sr\b|s\.?\s*no|no\b|sl\b)/i', $t)) {
+                $short++;
+                continue;
+            }
+            if (mb_strlen($t) <= 8) {
+                $short++;
             }
         }
+
+        return $tall && ($short / count($rows)) >= 0.8;
     }
 
-    private static function chunkTable(DOMElement $table, int $n = 6): array
+    private static function flowifyNumberTables(DOMDocument $dom, DOMXPath $xp): void
     {
-        $xp   = new DOMXPath($table->ownerDocument);
-        $rows = iterator_to_array($xp->query('./tbody/tr | ./thead/tr | ./tr', $table));
-
-        if (count($rows) <= $n + 1) {
-            return [$table];
-        }
-        foreach ($xp->query('.//td | .//th', $table) as $c) {
-            if ((int) $c->getAttribute('rowspan') > 1) {
-                return [$table];
-            }
-        }
-
-        $header   = array_shift($rows);
-        $colgroup = $xp->query('./colgroup', $table)->item(0);
-        $out      = [];
-
-        foreach (array_chunk($rows, $n) as $i => $chunk) {
-            $t = $table->cloneNode(false);
-            $t->setAttribute('class', 'pdf-chunk');
-            if ($colgroup) {
-                $t->appendChild($colgroup->cloneNode(true));
-            }
-            $tb = $table->ownerDocument->createElement('tbody');
-            $tb->appendChild($i === 0 ? $header : $header->cloneNode(true));
-            foreach ($chunk as $r) {
-                $tb->appendChild($r);
-            }
-            $t->appendChild($tb);
-            $out[] = $t;
-        }
-        return $out;
-    }
-
-    private static function unwrapLayoutTables(DOMDocument $dom, DOMXPath $xp): void
-    {
-        foreach (iterator_to_array($xp->query('//table[contains(@class,"pdf-borderless")]')) as $table) {
-            if (!$table->parentNode) {
+        foreach (iterator_to_array($xp->query('//div[@id="__root"]//table[not(ancestor::table)]')) as $table) {
+            if (!$table->parentNode || !self::isNumberTable($table, $xp)) {
                 continue;
             }
 
-            $rows = iterator_to_array($xp->query('./tbody/tr | ./thead/tr | ./tfoot/tr | ./tr', $table));
-            if (!$rows) {
-                continue;
-            }
-
-            $ok = true;
-            foreach ($rows as $tr) {
-                $cells = $xp->query('./td | ./th', $tr);
-                if ($cells->length < 1 || $cells->length > 2) { $ok = false; break; }
-                foreach ($cells as $c) {
-                    if ((int) $c->getAttribute('colspan') > 1 || (int) $c->getAttribute('rowspan') > 1) { $ok = false; break 2; }
-                }
-            }
-            if (!$ok) {
-                continue;
-            }
+            $boxed = strpos($table->getAttribute('class'), 'pdf-borderless') === false;
 
             $wrap = $dom->createElement('div');
+            $wrap->setAttribute('class', $boxed ? 'pdf-flow pdf-flow-boxed' : 'pdf-flow');
 
+            $rows = iterator_to_array($xp->query('./tbody/tr | ./thead/tr | ./tfoot/tr | ./tr', $table));
             foreach ($rows as $tr) {
-                $cells = iterator_to_array($xp->query('./td | ./th', $tr));
+                $cells   = iterator_to_array($xp->query('./td | ./th', $tr));
+                $numCell = count($cells) === 2 ? $cells[0] : null;
+                $txtCell = end($cells);
+                $isHead  = strtolower($txtCell->nodeName) === 'th'
+                    || ($numCell && strtolower($numCell->nodeName) === 'th');
 
-                if (count($cells) === 2) {
-                    $t  = $dom->createElement('table');
-                    $t->setAttribute('class', 'lt pdf-borderless');
-                    $tb = $dom->createElement('tbody');
-                    $r  = $dom->createElement('tr');
+                $blocks = self::blocksOf($dom, $txtCell);
+                $first  = array_shift($blocks);
 
-                    $c1 = $dom->createElement('td');
-                    $c1->setAttribute('style', 'width:48px;');
-                    while ($cells[0]->firstChild) { $c1->appendChild($cells[0]->firstChild); }
+                $box = $dom->createElement('div');
+                $box->setAttribute('class', trim(($boxed ? 'pdf-fbox' : 'pdf-fplain') . ($isHead ? ' pdf-fhead' : '')));
 
-                    $c2 = $dom->createElement('td');
-                    while ($cells[1]->firstChild) { $c2->appendChild($cells[1]->firstChild); }
-
-                    $r->appendChild($c1);
-                    $r->appendChild($c2);
-                    $tb->appendChild($r);
-                    $t->appendChild($tb);
-                    $wrap->appendChild($t);
-                } else {
-                    $row = $dom->createElement('div');
-                    while ($cells[0]->firstChild) { $row->appendChild($cells[0]->firstChild); }
-                    $wrap->appendChild($row);
+                // pehli line: number | pehla block
+                $lt = $dom->createElement('table');
+                $lt->setAttribute('class', 'lt pdf-borderless pdf-fixed');
+                $cg = $dom->createElement('colgroup');
+                foreach ([9, 91] as $p) {
+                    $col = $dom->createElement('col');
+                    $col->setAttribute('style', "width:{$p}%");
+                    $cg->appendChild($col);
                 }
+                $lt->appendChild($cg);
+                $tb  = $dom->createElement('tbody');
+                $r   = $dom->createElement('tr');
+                $td1 = $dom->createElement('td');
+                $td1->setAttribute('class', 'pdf-numc');
+                if ($numCell) {
+                    while ($numCell->firstChild) {
+                        $td1->appendChild($numCell->firstChild);
+                    }
+                } else {
+                    $td1->appendChild($dom->createTextNode("\xC2\xA0"));
+                }
+                $td2 = $dom->createElement('td');
+                $td2->setAttribute('class', 'pdf-txtc');
+                if ($first) {
+                    $td2->appendChild($first);
+                } else {
+                    $td2->appendChild($dom->createTextNode("\xC2\xA0"));
+                }
+                $r->appendChild($td1);
+                $r->appendChild($td2);
+                $tb->appendChild($r);
+                $lt->appendChild($tb);
+                $box->appendChild($lt);
+
+                // baaki blocks: normal flow (page ke beech aaraam se tootenge)
+                foreach ($blocks as $b) {
+                    $d = $dom->createElement('div');
+                    $d->setAttribute('class', $boxed ? 'pdf-fcont pdf-fcb' : 'pdf-fcont');
+                    $d->appendChild($b);
+                    $box->appendChild($d);
+                }
+
+                $wrap->appendChild($box);
             }
 
             $table->parentNode->replaceChild($wrap, $table);
