@@ -3161,7 +3161,7 @@
                                                         <th>Revision No.</th>
                                                         <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
-                                                        <th>Details of Revision</th>
+                                                        <th>Reason of revision</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="mfprevision-history-body">
@@ -3323,7 +3323,7 @@
                                                     <th>Revision No.</th>
                                                     <!-- <th>Change Control No.</th> -->
                                                     <th>Effective Date</th>
-                                                    <th>Details of Revision</th>
+                                                    <th>Reason of revision</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="mfpstprevision-history-body">
@@ -4330,7 +4330,7 @@
                                                 <th>Revision No.</th>
                                                 <!-- <th>Change Control No.</th> -->
                                                 <th>Effective Date</th>
-                                                <th>Details of Revision</th>
+                                                <th>Reason of revision</th>
                                             </tr>
                                         </thead>
                                         <tbody id="revision-tdshistory-body">
@@ -4606,7 +4606,7 @@
                                                 <th>Revision No.</th>
                                                 <!-- <th>Change Control No.</th> -->
                                                 <th>Effective Date</th>
-                                                <th>Details of Revision</th>
+                                                <th>Reason of revision</th>
                                             </tr>
                                         </thead>
                                         <tbody id="revision-history-fps">
@@ -4977,7 +4977,7 @@
                                                 <th>Revision No.</th>
                                                 <!-- <th>Change Control No.</th> -->
                                                 <th>Effective Date</th>
-                                                <th>Details of Revision</th>
+                                                <th>Reason of revision</th>
                                             </tr>
                                         </thead>
                                         <tbody id="revision-history-cvs">
@@ -5253,7 +5253,7 @@
                                                 <th>Revision No.</th>
                                                 <!-- <th>Change Control No.</th> -->
                                                 <th>Effective Date</th>
-                                                <th>Details of Revision</th>
+                                                <th>Reason of revision</th>
                                             </tr>
                                         </thead>
                                         <tbody id="revision-history-inps">
@@ -11348,7 +11348,7 @@
                                                         <th>Revision No.</th>
                                                         <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
-                                                        <th>Details of Revision</th>
+                                                        <th>Reason of revision</th>
                                                     </tr>
                                                 </thead>
 
@@ -11585,7 +11585,7 @@
                                                         <th>Revision No.</th>
                                                         <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
-                                                        <th>Details of Revision</th>
+                                                        <th>Reason of revision</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="revision-history-ipstp">
@@ -11746,7 +11746,7 @@
                                                         <th>Revision No.</th>
                                                         <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
-                                                        <th>Details of Revision</th>
+                                                        <th>Reason of revision</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="revision-history-cvstp">
@@ -11913,7 +11913,7 @@
                                                         <th>Revision No.</th>
                                                         <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
-                                                        <th>Details of Revision</th>
+                                                        <th>Reason of revision</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="gtprevision-history-body">
@@ -12072,7 +12072,7 @@
                                                     <th>Revision No.</th>
                                                     <!-- <th>Change Control No.</th> -->
                                                     <th>Effective Date</th>
-                                                    <th>Details of Revision</th>
+                                                    <th>Reason of revision</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="rmstprevision-history-body">
@@ -14043,7 +14043,7 @@
                                                         <th>Revision No.</th>
                                                         <!-- <th>Change Control No.</th> -->
                                                         <th>Effective Date</th>
-                                                        <th>Details of Revision</th>
+                                                        <th>Reason of revision</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="revision-history-pams">
@@ -18095,7 +18095,7 @@
                                                     <th>Revision No.</th>
                                                     <!-- <th>Change Control No.</th> -->
                                                     <th>Effective Date</th>
-                                                    <th>Details of Revision</th>
+                                                    <th>Reason of revision</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="rmsrevision-history-body">
@@ -18609,7 +18609,7 @@
                                                     <th>Revision No.</th>
                                                     <!-- <th>Change Control No.</th> -->
                                                     <th>Effective Date</th>
-                                                    <th>Details of Revision</th>
+                                                    <th>Reason of revision</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="piasrevision-history-body">
