@@ -879,7 +879,14 @@
                                 'IPSTP',
                                 'CVSTP',
                                 'RMSTP',
-                                'MFPSTP'
+                                'MFPSTP',
+                                'FPS',
+                                'IPS',
+                                'CVS',
+                                'RMS',
+                                'PMS',
+                                'MFPS',
+                                'PIAS',
                             ].map(c => c.toUpperCase());
 
                             function toggleDocName(value) {
