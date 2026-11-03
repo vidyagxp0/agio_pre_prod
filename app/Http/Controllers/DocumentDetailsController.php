@@ -76,18 +76,6 @@ class DocumentDetailsController extends Controller
     }
   }
 
-  // =====================================================================
-  //  MAIL RULES (sirf mail change hua hai, baaki sab logic same hai)
-  //  1 -> 4  : Reviewers          (pehle se tha, same)
-  //  4 -> 5  : Reviewers          (Checked)
-  //  5 -> 6  : Approvers          (For Approval)
-  //  6 -> 7  : Approvers          (Approved)
-  //  7 -> 10 : Originator         (In-Effective, training mail nahi)
-  //  10 -> 11: Originator         (Effective)
-  //  Ye 4->5, 5->6, 6->7, 7->10, 10->11 wale mail function ke END me
-  //  stage change check karke ek hi jagah se jaate hain.
-  // =====================================================================
-
   function sendforstagechanage(Request $request)
   {
     
@@ -312,7 +300,14 @@ class DocumentDetailsController extends Controller
 
         }
 
-        if (Helpers::checkRoles(2) && in_array(Auth::user()->id, explode(",", $document->reviewers)) && ($document->stage == 4 || $document->stage == 5 || $document->stage == 10)) {
+        // [FIX-1] Stage 4/5 -> reviewer (role 2 + reviewers list), Stage 10 -> QA (role 7)
+        $isReviewerTurn = Helpers::checkRoles(2)
+            && in_array(Auth::user()->id, explode(",", $document->reviewers))
+            && in_array((int) $document->stage, [4, 5], true);
+
+        $isQATurn = Helpers::checkRoles(7) && (int) $document->stage === 10;
+
+        if ($isReviewerTurn || $isQATurn) {
           if ($request->stage_id == "Cancel-by-Reviewer") {
             if ($document->document_type_id == "SOP") {
                 $document->stage = 1;
@@ -592,7 +587,8 @@ class DocumentDetailsController extends Controller
             //////////
           }
           
-          else {
+          // [FIX-1] ye reviewer wala logic sirf stage 4/5 par chalega (stage 10 par QA ke Effective par nahi)
+          else if (in_array((int) $oldStage, [4, 5], true)) {
               // MAIL: yahan ke saare reviewer mails hata diye hain
               // ("Reviewed By..." aur "Document is now Reviewed").
               // 4 -> 5 ka mail ab function ke end me ek hi baar jaata hai.
@@ -860,7 +856,16 @@ class DocumentDetailsController extends Controller
           }
         }
 
-        if (Helpers::checkRoles(3) && (int) $document->originator_id === (int) Auth::id() && in_array((int) $request->stage_id, [2, 4, 6, 8, 10, 11, 12], true)) {
+        // [FIX-2] Originator (role 3, sirf apna document) ya QA (role 7, sirf stage 10 -> 11)
+        $isOriginatorMove = Helpers::checkRoles(3)
+            && (int) $document->originator_id === (int) Auth::id()
+            && in_array((int) $request->stage_id, [2, 4, 6, 8, 10, 11, 12], true);
+
+        $isQAEffective = Helpers::checkRoles(7)
+            && (int) $oldStage === 10
+            && (int) $request->stage_id === 11;
+
+        if ($isOriginatorMove || $isQAEffective) {
 
           if ($request->stage_id) {
             $document->stage = $request->stage_id;
@@ -998,9 +1003,6 @@ class DocumentDetailsController extends Controller
               // MAIL: yahan se trainer ka mail hata diya hai.
               // 5 -> 6 par approvers ko mail ab function ke end me jaata hai.
 
-              
-
-
             }
 
             if ($request->stage_id == 10) {
@@ -1098,42 +1100,8 @@ class DocumentDetailsController extends Controller
 
         // =================================================================
         // MAIL: stage change hone par hi mail, sirf forward transitions par.
-
-
-        $temp_user = Helpers::getInitiatorName($document->division_id);
-
-          if (!empty($temp_user) && !empty($temp_user->email)) {
-
-              try {
-
-                  $temp_user->fromMain = User::find($document->originator_id);
-
-                  SendDocumentMail::dispatch(
-                      [
-                          'history' => 'Send for Effective',
-                          'comment' => $request->comment ?? '',
-                          'user' => Auth::user()->name,
-                          'process' => 'Document',
-                          'site' => 'Document',
-                      ],
-                      $temp_user->email,
-                      $document,
-                      'mail.send_for_inEffective',
-                      'Document is for Effective'
-                  );
-
-              } catch (\Throwable $e) {
-                  report($e);
-              }
-          }
-
-
-
-    
-
-
-         
         // Isse ek click par ek hi mail jaata hai (duplicate nahi).
+        // [FIX-3] yahan ka purana getInitiatorName wala mail block hata diya.
         // =================================================================
         $newStage = (int) $document->stage;
 

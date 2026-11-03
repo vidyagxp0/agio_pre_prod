@@ -503,7 +503,7 @@ class MytaskController extends Controller
     //     }
     // }
 
-        public function index(Request $request)
+    public function index(Request $request)
     {
         $loggedInUserId = Auth::id();
         $allTasks = [];
@@ -785,7 +785,7 @@ class MytaskController extends Controller
                         }
 
                       $currentStage = collect($stages[$processKey])->firstWhere('id', $record->stage);
-    $status = $currentStage ? $currentStage['status'] : 'Unknown';
+        $status = $currentStage ? $currentStage['status'] : 'Unknown';
 
             // Extension (extension_new) ke column names different hain
         if ($processKey == 'Extension') {
@@ -799,22 +799,22 @@ class MytaskController extends Controller
         }
 
 
-    $allTasks[] = [
-        'process' => $processName,
-        'process_key' => $processKey,
-          'record_id' => $record->id,                                   // ✅ ADD BACK — route ke liye zaroori
-          'record' => $record->record ?? $record->record_number ?? null, //
-        'initiator_id' => $initiatorId,
-        'division_id' => $divisionId,
-        'record_number' => $record->record_number,
-        'status' => $status,
-        'short_description' => $record->short_description,
-        'record_format' => $record->record,
-        'route_name' => $routes[$processKey] ?? '',
-        'form_type' => $record->Form_type ?? null,
-        'created_at' => $record->created_at,
-    ];
-}
+            $allTasks[] = [
+                'process' => $processName,
+                'process_key' => $processKey,
+                'record_id' => $record->id,                                   // ✅ ADD BACK — route ke liye zaroori
+                'record' => $record->record ?? $record->record_number ?? null, //
+                'initiator_id' => $initiatorId,
+                'division_id' => $divisionId,
+                'record_number' => $record->record_number,
+                'status' => $status,
+                'short_description' => $record->short_description,
+                'record_format' => $record->record,
+                'route_name' => $routes[$processKey] ?? '',
+                'form_type' => $record->Form_type ?? null,
+                'created_at' => $record->created_at,
+            ];
+        }
                 }
             }
         }
@@ -822,6 +822,7 @@ class MytaskController extends Controller
         // Get document tasks (existing code)
         $array1 = [];
         $array2 = [];
+        $isQA = Helpers::checkRoles(7);
         $document = Document::where('stage', '>=', 2)->orWhere('stage','>=','4')->orderByDesc('id')->get();
 
         foreach ($document as $data) {
@@ -874,6 +875,11 @@ class MytaskController extends Controller
                         array_push($array2, $data);
                     }
                 }
+            }
+
+                // QA Role 7
+            if ($isQA) {
+                array_push($array2, $data);
             }
         }
 

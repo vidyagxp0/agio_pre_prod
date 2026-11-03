@@ -458,7 +458,6 @@
                                 <iframe id="theFrame" width="100%" height="800"
                                     src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0">
                                 </iframe>
-
                                 <iframe id="theFrame" width="100%" height="800"
                                     src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0">
                                 </iframe>
@@ -467,6 +466,11 @@
                             @elseif(in_array($document->document_type_id, ['FPS', 'IPS','CVS','RMS','PMS','PIAS','MFPS','MFPSTP','FPSTP','IPSTP','CVSTP','RMSTP','SPEC','STP','TDS','GTP']))
                                 <iframe id="theFrame" width="100%" height="800"
                                 src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0"></iframe>
+
+                                @if(in_array($document->document_type_id, ['MFPSTP','FPSTP','IPSTP','CVSTP','RMSTP','STP']))
+                                    <iframe id="theFrameAnnexure" width="100%" height="800" style="margin-top: 15px;"
+                                        src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0"></iframe>
+                                @endif
                                 
                             @else
 

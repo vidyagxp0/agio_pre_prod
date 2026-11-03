@@ -62,6 +62,20 @@
                                         @endif
 
                                     @endif
+                                    @if (Helpers::checkRoles(7 ))
+                                        @if (empty($approval_reject))
+                                            @if (empty($stageEffective_submit))
+                                                @php
+                                                    $showEdit = true;
+                                                @endphp
+                                            @endif
+                                        @elseif($document->stage == 10)
+                                            @php
+                                                $showEdit = true;
+                                            @endphp    
+                                        @endif
+
+                                    @endif
                                    
 
                                     @if ($showEdit)
@@ -1488,7 +1502,7 @@
                     @if (Helpers::checkRoles(2) AND Helpers::checkRoles_check_reviewers($document) && $document->stage == 4)
                         <input type="hidden" name="stage_id" value="Cancel-by-Reviewer" />
                     @endif
-                    @if (Helpers::checkRoles(2) AND Helpers::checkRoles_check_reviewers($document) && $document->stage == 10)
+                    @if ($document->stage == 10)
                         <input type="hidden" name="stage_id" value="Cancel-by-InEffective" />
                     @endif
 
