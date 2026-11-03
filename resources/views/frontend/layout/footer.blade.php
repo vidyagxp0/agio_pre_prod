@@ -7479,7 +7479,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
             'border', 'border-top', 'border-right', 'border-bottom', 'border-left',
             'border-collapse', 'border-width', 'border-style', 'border-color'
         ];
-        wordPasteKeepFormatting: true,
+        // wordPasteKeepFormatting: true,
 
         document.querySelectorAll('.froala-editor').forEach(function (element) {
 

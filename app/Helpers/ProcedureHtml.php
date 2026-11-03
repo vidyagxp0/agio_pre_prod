@@ -87,12 +87,17 @@ class ProcedureHtml
             }
             $sp->parentNode->removeChild($sp);
         }
+        // 3b) Cell ke aage-peeche ki faltu khali lines (Word ka <p><br></p>)
+        self::trimCellBlanks($xp);
 
         // 4) Images
         self::prepareImagesForPdf($xp);
 
         // 5a) 2-column "number | bada text" tables ko flow me badlo (dompdf page-split bug se bachne ke liye)
         self::flowifyNumberTables($dom, $xp);
+
+        // 5b) NEW: rowspan hatao, har row me apna cell (dompdf page-split bug fix)
+        self::flattenRowspansInDom($dom, $xp);
 
         // 5) Bade (Word ke) cells ko chhoti rows me todo, taaki page par fit ho
         self::splitTallRows($dom, $xp);
@@ -921,6 +926,110 @@ class ProcedureHtml
             }
 
             $table->parentNode->replaceChild($wrap, $table);
+        }
+    }
+
+        /* ====================================================================
+       ROWSPAN FLATTEN (DOM ke andar)
+       "2." cell jo 3 rows cover karta tha -> ab har row me apna cell.
+       Beech ki line CSS (.rs-first/.rs-mid/.rs-last) chhupati hai.
+       ==================================================================== */
+    private static function flattenRowspansInDom(DOMDocument $dom, DOMXPath $xp): void
+    {
+        foreach (iterator_to_array($xp->query('//div[@id="__root"]//table[.//*[@rowspan]]')) as $table) {
+            if (!$table->parentNode) {
+                continue;
+            }
+            $pending = [];
+
+            foreach (iterator_to_array($xp->query('.//tr', $table)) as $tr) {
+                // sirf is table ki apni rows (nested table ki nahi)
+                $p = $tr->parentNode;
+                if (strtolower($p->nodeName) !== 'table') {
+                    $p = $p->parentNode;
+                }
+                if (!$p->isSameNode($table)) {
+                    continue;
+                }
+
+                $cells = [];
+                foreach ($tr->childNodes as $n) {
+                    if ($n->nodeType === XML_ELEMENT_NODE
+                        && in_array(strtolower($n->nodeName), ['td', 'th'], true)) {
+                        $cells[] = $n;
+                    }
+                }
+
+                $col  = 0;
+                $fill = function (?DOMNode $before) use (&$pending, &$col, $dom, $tr) {
+                    while (!empty($pending[$col]) && $pending[$col]['left'] > 0) {
+                        $at = $col;
+                        $ph = $dom->createElement($pending[$at]['tag']);
+                        if ($pending[$at]['cs'] > 1) {
+                            $ph->setAttribute('colspan', (string) $pending[$at]['cs']);
+                        }
+                        if ($pending[$at]['style'] !== '') {
+                            $ph->setAttribute('style', $pending[$at]['style']);
+                        }
+                        $pending[$at]['left']--;
+                        $ph->setAttribute('class', $pending[$at]['left'] > 0 ? 'rs-mid' : 'rs-last');
+                        $ph->appendChild($dom->createTextNode("\xC2\xA0"));
+                        $before ? $tr->insertBefore($ph, $before) : $tr->appendChild($ph);
+                        $col += $pending[$at]['cs'];
+                    }
+                };
+
+                foreach ($cells as $cell) {
+                    $fill($cell);
+                    $cs = max(1, (int) $cell->getAttribute('colspan'));
+                    $rs = max(1, (int) $cell->getAttribute('rowspan'));
+                    if ($rs > 1) {
+                        // background same rakho taaki merged dikhe
+                        $st   = self::parseStyle($cell->getAttribute('style'));
+                        $keep = array_intersect_key($st, array_flip(['background', 'background-color', 'vertical-align']));
+                        $css  = '';
+                        foreach ($keep as $k => $v) {
+                            $css .= "$k:$v;";
+                        }
+                        $pending[$col] = [
+                            'left'  => $rs - 1,
+                            'cs'    => $cs,
+                            'tag'   => strtolower($cell->nodeName),
+                            'style' => $css,
+                        ];
+                        $cell->removeAttribute('rowspan');
+                        $cell->setAttribute('class', trim($cell->getAttribute('class') . ' rs-first'));
+                    }
+                    $col += $cs;
+                }
+                $fill(null);
+            }
+        }
+    }
+
+    /* ====================================================================
+       Cell ke shuru/aakhir ki khali lines hatao (Word: <p><br></p>)
+       Poora khali cell waisa hi rehta hai.
+       ==================================================================== */
+    private static function trimCellBlanks(DOMXPath $xp): void
+    {
+        foreach (iterator_to_array($xp->query('//div[@id="__root"]//td | //div[@id="__root"]//th')) as $cell) {
+            $hasContent = false;
+            foreach (iterator_to_array($cell->childNodes) as $k) {
+                if (!self::isBlank($k)) {
+                    $hasContent = true;
+                    break;
+                }
+            }
+            if (!$hasContent) {
+                continue;
+            }
+            while ($cell->lastChild && self::isBlank($cell->lastChild)) {
+                $cell->removeChild($cell->lastChild);
+            }
+            while ($cell->firstChild && self::isBlank($cell->firstChild)) {
+                $cell->removeChild($cell->firstChild);
+            }
         }
     }
 }
