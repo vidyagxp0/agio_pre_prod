@@ -1,12 +1,12 @@
 <style>
-    .quill-pdf-content { width: 100%; font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.4; text-align: left; word-wrap: break-word; overflow-wrap: break-word; }
+    .quill-pdf-content { width: 100%; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.4; text-align: left; word-wrap: break-word; overflow-wrap: break-word; }
     .quill-pdf-content p { margin: 0 0 5px 0; font-size: 12px; line-height: 1.4; }
     .quill-pdf-content h1, .quill-pdf-content h2, .quill-pdf-content h3,
     .quill-pdf-content h4, .quill-pdf-content h5, .quill-pdf-content h6 { font-size: 12px; font-weight: bold; margin: 8px 0 4px 0; }
     .quill-pdf-content ul, .quill-pdf-content ol { padding-left: 22px; margin: 2px 0 5px 0; }
     .quill-pdf-content li { font-size: 12px; line-height: 1.4; margin-bottom: 2px; }
-    .quill-pdf-content sub { vertical-align: sub; font-size: 9px; line-height: 0; }
-    .quill-pdf-content sup { vertical-align: super; font-size: 9px; line-height: 0; }
+    .quill-pdf-content sub { vertical-align: sub; font-size: 11px; line-height: 0; }
+    .quill-pdf-content sup { vertical-align: super; font-size: 11px; line-height: 0; }
 
     /* TABLES: columns ka % cleaner colgroup se aata hai, class pdf-fixed par fixed layout */
     .quill-pdf-content table { width: 100%; border-collapse: collapse; border-spacing: 0; margin: 5px 0 8px 0; }

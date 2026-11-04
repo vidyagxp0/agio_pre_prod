@@ -185,7 +185,7 @@
                                 <a href="{{ route('documents.index') }}">Documents</a>
                             </div>
                         @endif
-                        @if (Helpers::checkRoles(3))
+                        @if (Helpers::checkRoles(3) || Helpers::checkRoles(2) || Helpers::checkRoles(7))
                             <div>
                                 <a href="{{ route('document-request.index') }}">Documents Issuance Requests</a>
                             </div>
