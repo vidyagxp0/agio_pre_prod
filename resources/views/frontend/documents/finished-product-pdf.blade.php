@@ -7,7 +7,7 @@
         /* Reference SOP layout: Header height ~170px + 30px gap */
         @page { size: A4; margin: 235px 34px 165px 34px; }
 
-        * { font-family: Arial, Helvetica, sans-serif; font-style: normal; }
+        * { font-family: Arial, sans-serif; font-style: normal; }
         html { text-align: left; }
         body { margin: 0; padding: 0; font-size: 12px; line-height: 1.4; }
 
