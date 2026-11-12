@@ -397,14 +397,14 @@ class DocumentRequestController extends Controller
 
                 $history = new DocumentRequestAuditTrial();
                 $history->document_request_id = $id;
-                $history->activity_type = 'Request Sent By, Request Sent On';
+                $history->activity_type = 'Submit By, Submit On';
                 if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
                     $history->previous = "Null";
                 } else {
                     $history->previous = $lastDocument->submitted_by . ' , ' . $lastDocument->submitted_on;
                 }
                 $history->current = $data->submitted_by . ' , ' . $data->submitted_on;
-                $history->action = 'Request Sent';
+                $history->action = 'Submit';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -420,32 +420,39 @@ class DocumentRequestController extends Controller
                 }
                 $history->save();
 
-                 $list = Helpers::getQAUserList($data->division_id);
+                $list = Helpers::getQAUserList($data->division_id);
 
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-                        
-                            if ($email !== null) {
-                                try {
-                                    $DataEmail = [
-                                        'data' => $data,
-                                        'site' => "Document Issuance Request",
-                                        'history' => "Request Sent",
-                                        'process' => 'Document Issuance Request',
-                                        'comment' => $request->comment,
-                                        'user'=> Auth::user()->name
-                                    ];
+                foreach ($list as $u) {
 
-                                    // dd($DataEmail);
+                    $email = Helpers::getUserEmail($u->user_id);
 
-                                    SendMail::dispatch($DataEmail, $email, $data, 'Document Issuance Request');
+                    if ($email !== null) {
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail Error: ' . $e->getMessage());
-                                }
-                            }
+                        try {
+
+                            $DataEmail = [
+                                'data' => $data,
+                                'site' => "Document Issuance Request",
+                                'history' => "Submit",
+                                'process' => 'Document Issuance Request',
+                                'comment' => $request->comment,
+                                'user' => Auth::user()->name
+                            ];
+
+                            SendMail::dispatch(
+                                $DataEmail,
+                                $email,
+                                $data,
+                                'Document Issuance Request'
+                            );
+
+                        } catch (\Exception $e) {
+
+                            \Log::error('Mail Error: ' . $e->getMessage());
+
                         }
-
+                    }
+                }
                
 
                 $data->update();
@@ -505,29 +512,87 @@ class DocumentRequestController extends Controller
                 $history->save();
 
 
-                 $list = Helpers::getQAUserList($data->division_id);
+                //  $list = Helpers::getQAUserList($data->division_id);
 
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
+                //         foreach ($list as $u) {
+                //             $email = Helpers::getUserEmail($u->user_id);
                         
-                            if ($email !== null) {
-                                try {
-                                    $DataEmail = [
-                                        'data' => $data,
-                                        'site' => "Document Issuance Request",
-                                        'history' => "Approved",
-                                        'process' => 'Document Issuance Request',
-                                        'comment' => $request->comment,
-                                        'user'=> Auth::user()->name
-                                    ];
+                //             if ($email !== null) {
+                //                 try {
+                //                     $DataEmail = [
+                //                         'data' => $data,
+                //                         'site' => "Document Issuance Request",
+                //                         'history' => "Approved",
+                //                         'process' => 'Document Issuance Request',
+                //                         'comment' => $request->comment,
+                //                         'user'=> Auth::user()->name
+                //                     ];
 
-                                    SendMail::dispatch($DataEmail, $email, $data, 'Document Issuance Request');
+                //                     SendMail::dispatch($DataEmail, $email, $data, 'Document Issuance Request');
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail Error: ' . $e->getMessage());
-                                }
-                            }
-                        }
+                //                 } catch (\Exception $e) {
+                //                     \Log::error('Mail Error: ' . $e->getMessage());
+                //                 }
+                //             }
+                //         }
+
+
+                // Get QA Users
+                  
+
+             // Get QA Users of Document Issuance Request process
+                $qaUsers = Helpers::getQAUserList($data->division_id);
+
+                // Combine QA users + Request By + Request To
+                $recipientUserIds = collect($qaUsers)
+                    ->pluck('user_id')
+
+                    // Add Request By user
+                    ->push($data->request_by)
+
+                    // Add Request To user
+                    ->push($data->request_to)
+
+                    // Remove null, empty and duplicate IDs
+                    ->filter()
+                    ->unique()
+                    ->values();
+
+                // Send mail to all recipients
+                foreach ($recipientUserIds as $userId) {
+
+                    $email = Helpers::getUserEmail($userId);
+
+                    if (empty($email)) {
+                        continue;
+                    }
+
+                    try {
+
+                        $DataEmail = [
+                            'data'    => $data,
+                            'site'    => 'Document Issuance Request',
+                            'history' => 'Approved',
+                            'process' => 'Document Issuance Request',
+                            'comment' => $request->comment,
+                            'user'    => Auth::user()->name
+                        ];
+
+                        SendMail::dispatch(
+                            $DataEmail,
+                            $email,
+                            $data,
+                            'Document Issuance Request'
+                        );
+
+                    } catch (\Throwable $e) {
+
+                        \Log::error(
+                            'Document Issuance Request Mail Error: ' . $e->getMessage()
+                        );
+                    }
+                }
+                                                
 
                 $data->update();
                 return back();
@@ -542,7 +607,7 @@ class DocumentRequestController extends Controller
 
                 $history = new DocumentRequestAuditTrial();
                 $history->document_request_id = $id;
-                $history->activity_type = 'Approved By, Approved On';
+                $history->activity_type = 'Request For Print By, Request For Print On';
                 if (is_null($lastDocument->completed_by) || $lastDocument->completed_by === '') {
                     $history->previous = "Null";
                 } else {
@@ -550,7 +615,7 @@ class DocumentRequestController extends Controller
                 }
                 $history->current = $data->completed_by . ' , ' . $data->completed_on;
                 $history->comment = $request->comment;
-                $history->action = 'Approved';
+                $history->action = 'Request For Print';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -566,29 +631,41 @@ class DocumentRequestController extends Controller
                 $history->save();
 
 
-                 $list = Helpers::getQAUserList($data->division_id);
+             
 
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-                        
-                            if ($email !== null) {
-                                try {
-                                    $DataEmail = [
-                                        'data' => $data,
-                                        'site' => "Document Issuance Request",
-                                        'history' => "Approved",
-                                        'process' => 'Document Issuance Request',
-                                        'comment' => $request->comment,
-                                        'user'=> Auth::user()->name
-                                    ];
+              $list = Helpers::getQAUserList($data->division_id);
 
-                                    SendMail::dispatch($DataEmail, $email, $data, 'Document Issuance Request');
+                foreach ($list as $u) {
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail Error: ' . $e->getMessage());
-                                }
-                            }
+                    $email = Helpers::getUserEmail($u->user_id);
+
+                    if ($email !== null) {
+
+                        try {
+
+                            $DataEmail = [
+                                'data' => $data,
+                                'site' => "Document Issuance Request",
+                                'history' => "Request For Print",
+                                'process' => 'Document Issuance Request',
+                                'comment' => $request->comment,
+                                'user' => Auth::user()->name
+                            ];
+
+                            SendMail::dispatch(
+                                $DataEmail,
+                                $email,
+                                $data,
+                                'Document Issuance Request'
+                            );
+
+                        } catch (\Exception $e) {
+
+                            \Log::error('Mail Error: ' . $e->getMessage());
+
                         }
+                    }
+                }
 
                 $data->update();
                 return back();
@@ -647,30 +724,35 @@ class DocumentRequestController extends Controller
                 $history->save();
                 
 
-                 $list = Helpers::getQAUserList($data->division_id);
+                // Get Request By user email
+                    $email = Helpers::getUserEmail($data->request_by);
 
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-                        
-                            if ($email !== null) {
-                                try {
-                                    $DataEmail = [
-                                        'data' => $data,
-                                        'site' => "Document Issuance Request",
-                                        'history' => "More Info Required",
-                                        'process' => 'Document Issuance Request',
-                                        'comment' => $request->comment,
-                                        'user'=> Auth::user()->name
-                                    ];
+                    if (!empty($email)) {
 
-                                    SendMail::dispatch($DataEmail, $email, $data, 'Document Issuance Request');
+                        try {
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail Error: ' . $e->getMessage());
-                                }
-                            }
+                            $DataEmail = [
+                                'data'    => $data,
+                                'site'    => 'Document Issuance Request',
+                                'history' => 'More Info Required',
+                                'process' => 'Document Issuance Request',
+                                'comment' => $request->comment,
+                                'user'    => Auth::user()->name
+                            ];
+
+                            SendMail::dispatch(
+                                $DataEmail,
+                                $email,
+                                $data,
+                                'Document Issuance Request'
+                            );
+
+                        } catch (\Throwable $e) {
+
+                            \Log::error('Mail Error: ' . $e->getMessage());
+
                         }
-
+                    }
                
 
                 $data->update();
@@ -723,32 +805,96 @@ class DocumentRequestController extends Controller
 
 
 
+            //  $list = Helpers::getInitiatorName($data->division_id);
+            
+             
+            //     foreach ($list as $u) {
+
+            //         $email = Helpers::getUserEmail($u->user_id);
+
+            //         if ($email !== null) {
+
+            //             try {
+
+            //                 $DataEmail = [
+            //                     'data' => $data,
+            //                     'site' => "Document Issuance Request",
+            //                     'history' => "Approved",
+            //                     'process' => 'Document Issuance Request',
+            //                     'comment' => $request->comment,
+            //                     'user' => Auth::user()->name
+            //                 ];
+
+            //                 SendMail::dispatch(
+            //                     $DataEmail,
+            //                     $email,
+            //                     $data,
+            //                     'Document Issuance Request'
+            //                 );
+
+            //             } catch (\Exception $e) {
+
+            //                 \Log::error('Mail Error: ' . $e->getMessage());
+
+            //             }
+            //         }
+            //     }
+
+
+
+            $qaUsers = Helpers::getQAUserList($data->division_id);
+
+                // Combine QA users + Request By
+                $recipientUserIds = collect($qaUsers)
+                    ->pluck('user_id')
+
+                    // Add Request By user
+                    ->push($data->request_by)
+
+                    // Remove null, empty and duplicate IDs
+                    ->filter()
+                    ->unique()
+                    ->values();
+
+                // Send mail to all recipients
+                foreach ($recipientUserIds as $userId) {
+
+                    $email = Helpers::getUserEmail($userId);
+
+                    if (empty($email)) {
+                        continue;
+                    }
+
+                    try {
+
+                        $DataEmail = [
+                            'data'    => $data,
+                            'site'    => 'Document Issuance Request',
+                            'history' => 'Cancel',
+                            'process' => 'Document Issuance Request',
+                            'comment' => $request->comment,
+                            'user'    => Auth::user()->name
+                        ];
+
+                        SendMail::dispatch(
+                            $DataEmail,
+                            $email,
+                            $data,
+                            'Document Issuance Request'
+                        );
+
+                    } catch (\Throwable $e) {
+
+                        \Log::error(
+                            'Document Issuance Request Mail Error: ' . $e->getMessage()
+                        );
+                    }
+                }
+
+            // Get Request By user email
+            
+
                
-
-                 $list = Helpers::getQAUserList($data->division_id);
-
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-                        
-                            if ($email !== null) {
-                                try {
-                                    $DataEmail = [
-                                        'data' => $data,
-                                        'site' => "Document Issuance Request",
-                                        'history' => "Cancel",
-                                        'process' => 'Document Issuance Request',
-                                        'comment' => $request->comment,
-                                        'user'=> Auth::user()->name
-                                    ];
-
-                                    SendMail::dispatch($DataEmail, $email, $data, 'Document Issuance Request');
-
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail Error: ' . $e->getMessage());
-                                }
-                            }
-                        }
-
                
 
                 $data->update();

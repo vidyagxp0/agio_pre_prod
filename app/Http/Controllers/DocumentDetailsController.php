@@ -1042,6 +1042,7 @@ class DocumentDetailsController extends Controller
                         try {
 
                             $temp_user->fromMain = User::find($document->originator_id);
+                            
 
                             SendDocumentMail::dispatch(
                                 [
@@ -1098,6 +1099,8 @@ class DocumentDetailsController extends Controller
         }
         $document->update();
 
+        
+
         // =================================================================
         // MAIL: stage change hone par hi mail, sirf forward transitions par.
         // Isse ek click par ek hi mail jaata hai (duplicate nahi).
@@ -1109,7 +1112,8 @@ class DocumentDetailsController extends Controller
 
           case '4-5': // Checked -> reviewers
             $this->notifyUsers(
-              $this->idList($document->reviewers),
+              // $this->idList($document->reviewers), for revieer checked by
+              $this->idList($document->originator_id), 
               $document,
               'Checked',
               'mail.reviewed',
@@ -1131,7 +1135,8 @@ class DocumentDetailsController extends Controller
 
           case '6-7': // Approved -> approvers
             $this->notifyUsers(
-              $this->idList($document->approvers),
+              // $this->idList($document->approvers),
+              $this->idList($document->originator_id),
               $document,
               'Approved',
               'mail.approved',
@@ -1151,16 +1156,50 @@ class DocumentDetailsController extends Controller
             );
             break;
 
-          case '10-11': // Effective -> originator
-            $this->notifyUsers(
-              [$document->originator_id],
+          // case '10-11': // Effective -> originator
+          //   $this->notifyUsers(
+          //     [$document->originator_id],
+          //     $document,
+          //     'Effective',
+          //     'mail.approved',
+          //     'Document is now Effective',
+          //     $request->comment
+          //   );
+          //   break;
+
+
+
+
+          case '10-11': // Effective -> Originator + QA
+
+          // Get QA Users
+          $qaUsers = Helpers::getQAUserList($document->division_id);
+
+          // Get QA User IDs
+          $recipientIds = collect($qaUsers)
+              ->pluck('user_id');
+
+          // Add Originator
+          $recipientIds->push($document->originator_id);
+
+          // Remove duplicates and empty IDs
+          $recipientIds = $recipientIds
+              ->filter()
+              ->unique()
+              ->values()
+              ->toArray();
+
+          // Send mail to QA + Originator
+          $this->notifyUsers(
+              $recipientIds,
               $document,
               'Effective',
               'mail.approved',
               'Document is now Effective',
               $request->comment
-            );
-            break;
+          );
+
+          break;
         }
 
         toastr()->success('Document has been sent.');

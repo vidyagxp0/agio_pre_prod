@@ -70,12 +70,17 @@
     <table class="foot">
         <tr>
             <td style="width:34%; font-weight:bold;">Approved By: Head QA/CQA</td>
-            <td style="width:40%; text-align:center;">
+           <td style="width:40%; text-align:center; white-space:nowrap; vertical-align:middle; padding:5px;">
                 @forelse ($approvals as $t)
-                    <div>{{ $t->user_name ?: 'Yet Not Performed' }}</div>
-                    <div>{{ $t->created_at ? \Carbon\Carbon::parse($t->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                    <span>
+                        {{ $t->user_name ?: 'Yet Not Performed' }}
+                        @if($t->created_at)
+                            &nbsp; | &nbsp;
+                            {{ \Carbon\Carbon::parse($t->created_at)->format('d-M-Y') }}
+                        @endif
+                    </span>
                 @empty
-                    <div>Yet Not Performed</div>
+                    <span>Yet Not Performed</span>
                 @endforelse
             </td>
             <td style="width:26%;">Page No. :</td>
