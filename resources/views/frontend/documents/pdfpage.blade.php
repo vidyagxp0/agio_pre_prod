@@ -315,7 +315,7 @@
         <tbody>
             @if (!empty($RevisionGridData))
                 @foreach ($RevisionGridData as $item)
-                    @php $effectiveDate = $item['revised_effective_date'] ?? $item['effectiveDate_gtp'] ?? null; @endphp
+                    @php $effectiveDate = $item['revised_effective_date'] ?? $item['revised_effective_date'] ?? null; @endphp
                     <tr>
                         <td>{{ $item['revision_number'] ?? '' }}</td>
                         <td>{{ $item['cc_no'] ?? '' }}</td>
