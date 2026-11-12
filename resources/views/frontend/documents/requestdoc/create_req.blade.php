@@ -157,10 +157,14 @@
                                         </label>
                                         <select name="print_sop_type" id="" required>
                                             <option value="">
-                                                -- Select Print Type --
+                                                -- Select  --
                                             </option>
-                                            <option value="single_page_print">Single Page Print</option>
-                                            <option value="full_sop_print">Full SOP Print</option>
+                                            <option value="Controlled Copy">Controlled Copy</option>
+                                            <option value="Display Copy">Display Copy</option>
+                                            <option value="Uncontrolled Copy">Uncontrolled Copy</option>
+                                            <option value="Reference Copy">Reference Copy</option>
+                                            <option value="Obsoleted Copy">Obsoleted Copy</option>
+                                            <option value="Issued Copy">Issued Copy</option>   
                                         </select>
                                     </div>
                                 </div>

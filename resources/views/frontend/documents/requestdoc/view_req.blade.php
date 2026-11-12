@@ -270,7 +270,7 @@
                     } else if (stage == 4) {
                         tabToActivate = 'CCForm4';
                     }
-                    else if (stage == 4) {
+                    else if (stage == 0) {
                         tabToActivate = 'CCForm4';
                     }
 
@@ -434,10 +434,38 @@
 
                                         <select name="print_sop_type" id="">
                                             <option value="">
-                                                -- Select Print Type --
+                                                -- Select --
                                             </option>
-                                            <option value="single_page_print" @if ( $data->print_sop_type == 'single_page_print') selected @endif>Single Page Print</option>
-                                            <option value="full_sop_print" @if ($data->print_sop_type == 'full_sop_print') selected @endif>Full SOP Print</option>
+                                           
+                                                <option value="Controlled Copy"
+                                                {{ $data->print_sop_type == 'Controlled Copy' ? 'selected' : '' }}>
+                                                Controlled Copy
+                                            </option>
+
+                                            <option value="Display Copy"
+                                                {{ $data->print_sop_type == 'Display Copy' ? 'selected' : '' }}>
+                                                Display Copy
+                                            </option>
+
+                                            <option value="Uncontrolled Copy"
+                                                {{ $data->print_sop_type == 'Uncontrolled Copy' ? 'selected' : '' }}>
+                                                Uncontrolled Copy
+                                            </option>
+
+                                            <option value="Reference Copy"
+                                                {{ $data->print_sop_type == 'Reference Copy' ? 'selected' : '' }}>
+                                                Reference Copy
+                                            </option>
+
+                                            <option value="Obsoleted Copy"
+                                                {{ $data->print_sop_type == 'Obsoleted Copy' ? 'selected' : '' }}>
+                                                Obsoleted Copy
+                                            </option>
+
+                                            <option value="Issued Copy"
+                                                {{ $data->print_sop_type == 'Issued Copy' ? 'selected' : '' }}>
+                                                Issued Copy
+                                            </option>
                                         </select>
                           
                                     </div>
