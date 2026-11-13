@@ -221,7 +221,7 @@
                                 <tr>
                                     <th style="width: 20%">Document Name</th>
                                     <th style="width: 12%">Document Number</th>
-                                    <th style="width: 10%">Division</th>
+                                    
                                     <th style="width: 10%">Document Type</th>
                                     <th style="width: 10%">Author</th>
                                     <th style="width: 10%">Current Status</th>
@@ -233,7 +233,7 @@
                                 <tr>
                                     <td>{{ $document->document_name ?? 'N/A' }}</td>
                                     <td>{{ $documentNumber }}</td>
-                                    <td>{{ $division->name ?? 'N/A' }}</td>
+                                   
                                     <td>{{ $document->document_type_id ?? 'N/A' }}</td>
                                     <td>{{ $originator->name ?? 'N/A' }}</td>
                                     <td>{{ $currentStatus }}</td>
@@ -245,7 +245,7 @@
                     </div>
 
                     <div style="margin-top: 20px">
-                        The "{{ $activity }}" activity was performed by {{ $performedBy }}.
+                       You can see all your assigned tasks on your DMS Dashboard.
                     </div>
 
                     <div style="margin-top: 20px">
