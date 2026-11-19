@@ -2322,7 +2322,7 @@
                                             @endphp
                                             <div class="col-lg-6 QualityAssurance">
                                                 <div class="group-input">
-                                                    <label for="Quality Assurance notification">Quality Assurance Person <span id="asteriskPT"
+                                                    <label for="Quality Assurance notification">Quality Assurance Person 1 <span id="asteriskPT"
                                                             style="display: {{ $data1->Quality_Assurance_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
@@ -2491,10 +2491,10 @@
                                                             style="display: none" class="text-danger">*</span></label>
                                                     <select name="QualityAssurance_person" disabled id="QualityAssurance_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->QualityAssurance_person) selected @endif>
-                                                                {{ $user->name }}</option>
-                                                        @endforeach
+                                                            @foreach (Helpers::getUserDetailsActive($data1->QualityAssurance_person, $userRoleIds) as $user)
+                                                                <option value="{{ $user->name }}" @if ($user->name == $data1->QualityAssurance_person) selected @endif>
+                                                                    {{ $user->name }}</option>
+                                                            @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -2987,10 +2987,10 @@
                                                     <select @if ($data->stage == 4) disabled @endif name="ProductionLiquid_person"
                                                         class="ProductionLiquid_person" id="ProductionLiquid_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ProductionLiquid_person) selected @endif>
-                                                                {{ $user->name }}</option>
-                                                        @endforeach
+                                                        @foreach (Helpers::getUserDetailsActive($data1->ProductionLiquid_person, $userRoleIds) as $user)
+                                                                <option value="{{ $user->name }}" @if ($user->name == $data1->ProductionLiquid_person) selected @endif>
+                                                                    {{ $user->name }}</option>
+                                                            @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -3146,10 +3146,10 @@
                                                      <select name="ProductionLiquid_person" disabled
                                                         class="ProductionLiquid_person" id="ProductionLiquid_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ProductionLiquid_person) selected @endif>
-                                                                {{ $user->name }}</option>
-                                                        @endforeach
+                                                        @foreach (Helpers::getUserDetailsActive($data1->ProductionLiquid_person, $userRoleIds) as $user)
+                                                                <option value="{{ $user->name }}" @if ($user->name == $data1->ProductionLiquid_person) selected @endif>
+                                                                    {{ $user->name }}</option>
+                                                            @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -3313,10 +3313,10 @@
                                                     <select @if ($data->stage == 4) disabled @endif name="Production_Injection_Person"
                                                         class="Production_Injection_Person" id="Production_Injection_Person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Production_Injection_Person) selected @endif>
-                                                                {{ $user->name }}</option>
-                                                        @endforeach
+                                                        @foreach (Helpers::getUserDetailsActive($data1->Production_Injection_Person, $userRoleIds) as $user)
+                                                                <option value="{{ $user->name }}" @if ($user->name == $data1->Production_Injection_Person   ) selected @endif>
+                                                                    {{ $user->name }}</option>
+                                                            @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -3475,10 +3475,10 @@
                                                             style="display: none" class="text-danger">*</span></label>
                                                     <select name="Production_Injection_Person" disabled id="Production_Injection_Person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Production_Injection_Person) selected @endif>
-                                                                {{ $user->name }}</option>
-                                                        @endforeach
+                                                       @foreach (Helpers::getUserDetailsActive($data1->Production_Injection_Person, $userRoleIds) as $user)
+                                                                <option value="{{ $user->name }}" @if ($user->name == $data1->Production_Injection_Person) selected @endif>
+                                                                    {{ $user->name }}</option>
+                                                            @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -3641,10 +3641,10 @@
                                                     <select @if ($data->stage == 4) disabled @endif name="Store_person"
                                                         class="Store_person" id="Store_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Store_person) selected @endif>
-                                                                {{ $user->name }}</option>
-                                                        @endforeach
+                                                        @foreach (Helpers::getUserDetailsActive($data1->Store_person, $userRoleIds) as $user)
+                                                                <option value="{{ $user->name }}" @if ($user->name == $data1->Store_person) selected @endif>
+                                                                    {{ $user->name }}</option>
+                                                            @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -3803,7 +3803,7 @@
                                                             style="display: none" class="text-danger">*</span></label>
                                                     <select name="Store_person" disabled id="Store_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
+                                                        @foreach (Helpers::getUserDetailsActive($data1->Store_person, $userRoleIds) as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->Store_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
@@ -3978,10 +3978,10 @@
                                                     <select @if ($data->stage == 4) disabled @endif name="Quality_Control_Person"
                                                         class="Quality_Control_Person" id="Quality_Control_Person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Quality_Control_Person) selected @endif>
-                                                                {{ $user->name }}</option>
-                                                        @endforeach
+                                                        @foreach (Helpers::getUserDetailsActive($data1->Quality_Control_Person, $userRoleIds) as $user)
+                                                                <option value="{{ $user->name }}" @if ($user->name == $data1->Quality_Control_Person) selected @endif>
+                                                                    {{ $user->name }}</option>
+                                                            @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -4140,10 +4140,10 @@
                                                             style="display: none" class="text-danger">*</span></label>
                                                     <select name="Quality_Control_Person" disabled id="Quality_Control_Person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Quality_Control_Person) selected @endif>
-                                                                {{ $user->name }}</option>
-                                                        @endforeach
+                                                        @foreach (Helpers::getUserDetailsActive($data1->Quality_Control_Person, $userRoleIds) as $user)
+                                                                <option value="{{ $user->name }}" @if ($user->name == $data1->Quality_Control_Person) selected @endif>
+                                                                    {{ $user->name }}</option>
+                                                            @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -4311,10 +4311,10 @@
                                                     <select @if ($data->stage == 4) disabled @endif name="ResearchDevelopment_person"
                                                         class="ResearchDevelopment_person" id="ResearchDevelopment_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ResearchDevelopment_person) selected @endif>
-                                                                {{ $user->name }}</option>
-                                                        @endforeach
+                                                        @foreach (Helpers::getUserDetailsActive($data1->ResearchDevelopment_person, $userRoleIds) as $user)
+                                                                <option value="{{ $user->name }}" @if ($user->name == $data1->ResearchDevelopment_person) selected @endif>
+                                                                    {{ $user->name }}</option>
+                                                            @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -4480,10 +4480,10 @@
                                                             style="display: none" class="text-danger">*</span></label>
                                                     <select name="ResearchDevelopment_person" disabled id="ResearchDevelopment_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ResearchDevelopment_person) selected @endif>
-                                                                {{ $user->name }}</option>
-                                                        @endforeach
+                                                        @foreach (Helpers::getUserDetailsActive($data1->ResearchDevelopment_person, $userRoleIds) as $user)
+                                                                <option value="{{ $user->name }}" @if ($user->name == $data1->ResearchDevelopment_person) selected @endif>
+                                                                    {{ $user->name }}</option>
+                                                            @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -4654,7 +4654,7 @@
                                                     <select @if ($data->stage == 4) disabled @endif name="Engineering_person"
                                                         class="Engineering_person" id="Engineering_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
+                                                        @foreach (Helpers::getUserDetailsActive($data1->Engineering_person, $userRoleIds) as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->Engineering_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
@@ -4816,7 +4816,7 @@
                                                             style="display: none" class="text-danger">*</span></label>
                                                     <select name="Engineering_person" disabled id="Engineering_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
+                                                        @foreach (Helpers::getUserDetailsActive($data1->Engineering_person, $userRoleIds) as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->Engineering_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
@@ -4990,7 +4990,7 @@
                                                     <select @if ($data->stage == 4) disabled @endif name="Human_Resource_person"
                                                         class="Human_Resource_person" id="Human_Resource_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
+                                                        @foreach (Helpers::getUserDetailsActive($data1->Human_Resource_person, $userRoleIds) as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->Human_Resource_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
@@ -5152,7 +5152,7 @@
                                                             style="display: none" class="text-danger">*</span></label>
                                                     <select name="Human_Resource_person" disabled id="Human_Resource_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
+                                                        @foreach (Helpers::getUserDetailsActive($data1->Human_Resource_person, $userRoleIds) as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->Human_Resource_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
@@ -5324,7 +5324,7 @@
                                                     <select @if ($data->stage == 4) disabled @endif name="Microbiology_person"
                                                         class="Microbiology_person" id="Microbiology_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
+                                                        @foreach (Helpers::getUserDetailsActive($data1->Microbiology_person, $userRoleIds) as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->Microbiology_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
@@ -5486,7 +5486,7 @@
                                                             style="display: none" class="text-danger">*</span></label>
                                                     <select name="Microbiology_person" disabled id="Microbiology_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
+                                                        @foreach (Helpers::getUserDetailsActive($data1->Microbiology_person, $userRoleIds) as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->Microbiology_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
@@ -5659,7 +5659,7 @@
                                                     <select @if ($data->stage == 4) disabled @endif name="RegulatoryAffair_person"
                                                         class="RegulatoryAffair_person" id="RegulatoryAffair_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
+                                                        @foreach (Helpers::getUserDetailsActive($data1->RegulatoryAffair_person, $userRoleIds) as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->RegulatoryAffair_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
@@ -5821,7 +5821,7 @@
                                                             style="display: none" class="text-danger">*</span></label>
                                                     <select name="RegulatoryAffair_person" disabled id="RegulatoryAffair_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
+                                                        @foreach (Helpers::getUserDetailsActive($data1->RegulatoryAffair_person, $userRoleIds) as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->RegulatoryAffair_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
@@ -5995,7 +5995,7 @@
                                                     <select @if ($data->stage == 4) disabled @endif name="CorporateQualityAssurance_person"
                                                         class="CorporateQualityAssurance_person" id="CorporateQualityAssurance_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
+                                                        @foreach (Helpers::getUserDetailsActive($data1->CorporateQualityAssurance_person, $userRoleIds) as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->CorporateQualityAssurance_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
@@ -6157,7 +6157,7 @@
                                                             style="display: none" class="text-danger">*</span></label>
                                                     <select name="CorporateQualityAssurance_person" disabled id="CorporateQualityAssurance_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
+                                                        @foreach (Helpers::getUserDetailsActive($data1->CorporateQualityAssurance_person, $userRoleIds) as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->CorporateQualityAssurance_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
@@ -6330,7 +6330,7 @@
                                                     <select @if ($data->stage == 4) disabled @endif name="Environment_Health_Safety_person"
                                                         class="Environment_Health_Safety_person" id="Environment_Health_Safety_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
+                                                        @foreach (Helpers::getUserDetailsActive($data1->Environment_Health_Safety_person, $userRoleIds) as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->Environment_Health_Safety_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
@@ -6492,7 +6492,7 @@
                                                             style="display: none" class="text-danger">*</span></label>
                                                     <select name="Environment_Health_Safety_person" disabled id="Environment_Health_Safety_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
+                                                        @foreach (Helpers::getUserDetailsActive($data1->Environment_Health_Safety_person, $userRoleIds) as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->Environment_Health_Safety_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
@@ -6666,7 +6666,7 @@
                                                     <select @if ($data->stage == 4) disabled @endif name="Information_Technology_person"
                                                         class="Information_Technology_person" id="Information_Technology_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
+                                                        @foreach (Helpers::getUserDetailsActive($data1->Information_Technology_person, $userRoleIds) as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->Information_Technology_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
@@ -6821,7 +6821,7 @@
                                                             style="display: none" class="text-danger">*</span></label>
                                                     <select name="Information_Technology_person" disabled id="Information_Technology_person">
                                                         <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
+                                                        @foreach (Helpers::getUserDetailsActive($data1->Information_Technology_person, $userRoleIds) as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->Information_Technology_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
@@ -6994,9 +6994,8 @@
                                             <select @if ($data->stage == 4) disabled @endif
                                                 name="ContractGiver_person" id="ContractGiver_person">
                                                 <option value="">-- Select --</option>
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->name }}"
-                                                        @if ($user->name == $data1->ContractGiver_person) selected @endif>
+                                                @foreach (Helpers::getUserDetailsActive($data1->ContractGiver_person, $userRoleIds) as $user)
+                                                    <option value="{{ $user->name }}" @if ($user->name == $data1->ContractGiver_person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -7296,8 +7295,9 @@
                                         </label>
                                         <select name="Other1_person" id="Other1_person" @if ($data->stage != 3) disabled @endif>
                                             <option value="">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->name }}" @if ($data1->Other1_person == $user->name) selected @endif>{{ $user->name }}</option>
+                                            @foreach (Helpers::getUserDetailsActive($data1->Other1_person, $userRoleIds) as $user)
+                                                <option value="{{ $user->name }}" @if ($user->name == $data1->Other1_person) selected @endif>
+                                                    {{ $user->name }}</option>
                                             @endforeach
                                         </select>
                                         @if ($data->stage != 3)
@@ -7480,8 +7480,9 @@
                                     <label for="Person2">Other's 2 Person <span id="asterisko2" style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
                                     <select name="Other2_person" id="Other2_person" @if ($data->stage != 3) disabled @endif>
                                         <option value="">-- Select --</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->name }}" @if ($data1->Other2_person == $user->name) selected @endif>{{ $user->name }}</option>
+                                        @foreach (Helpers::getUserDetailsActive($data1->Other2_person, $userRoleIds) as $user)
+                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Other2_person) selected @endif>
+                                                {{ $user->name }}</option>
                                         @endforeach
                                     </select>
                                     @if ($data->stage != 3)
@@ -7619,8 +7620,9 @@
                                     <label for="Person3">Other's 3 Person <span id="asterisko3" style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
                                     <select name="Other3_person" id="Other3_person" @if ($data->stage != 3) disabled @endif>
                                         <option value="">-- Select --</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->name }}" @if ($data1->Other3_person == $user->name) selected @endif>{{ $user->name }}</option>
+                                        @foreach (Helpers::getUserDetailsActive($data1->Other3_person, $userRoleIds) as $user)
+                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Other3_person) selected @endif>
+                                                {{ $user->name }}</option>
                                         @endforeach
                                     </select>
                                     @if ($data->stage != 3)
@@ -7748,9 +7750,10 @@
                                     <label for="Person4">Other's 4 Person <span id="asterisko4" class="text-danger">*</span></label>
                                     <select name="Other4_person" id="Other4_person" @if ($data->stage != 3) disabled @endif>
                                         <option value="">-- Select --</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->name }}" @if ($data1->Other4_person == $user->name) selected @endif>{{ $user->name }}</option>
-                                        @endforeach
+                                        @foreach (Helpers::getUserDetailsActive($data1->Other4_person, $userRoleIds) as $user)
+                                            {<option value="{{ $user->name }}" @if ($user->name == $data1->Other4_person) selected @endif>
+                                                {{ $user->name }}</option>
+                                        @endforeach}
                                     </select>
                                     @if ($data->stage != 3)
                                     <!-- Hidden field to retain the value if select is disabled -->
@@ -7879,8 +7882,9 @@
                                     <label for="Person5">Other's 5 Person <span id="asterisko5" class="text-danger">*</span></label>
                                     <select name="Other5_person" id="Other5_person" @if ($data->stage != 3) disabled @endif>
                                         <option value="">-- Select --</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->name }}" @if ($data1->Other5_person == $user->name) selected @endif>{{ $user->name }}</option>
+                                        @foreach (Helpers::getUserDetailsActive($data1->Other5_person, $userRoleIds) as $user)
+                                            <option value="{{ $user->name }}" @if ($user->name == $data1->Other5_person) selected @endif>
+                                                {{ $user->name }}</option>
                                         @endforeach
                                     </select>
                                     @if ($data->stage != 3)

@@ -2159,4 +2159,14 @@ class Helpers
 
         return $html;
     }
+
+    public static function getUserDetailsActive($id, $userRoleIds)
+    {   
+        if($id) {   
+            return User::whereIn('id', $userRoleIds)->get(); 
+        }
+        else{
+            return User::whereIn('id', $userRoleIds)->where('is_active', 1)->get(); // Fetch user data based on user IDs
+        }
+    }
 }

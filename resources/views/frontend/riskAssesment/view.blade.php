@@ -1000,7 +1000,7 @@
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
-                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
+                                            {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}>Save</button>
                                         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
@@ -1738,7 +1738,7 @@
                                 </div>
                                 <div class="button-block">
                                     <button type="submit" id="ChangesaveButton02" class="saveButton"
-                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                        {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}>Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a class="text-white"
@@ -1772,6 +1772,10 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not  require completion </small></div>
                                                     <textarea readonly name="hod_des_rev_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  {{ $data->stage == 2 && $hodrole ? '' : 'readonly' }}  {{$data->stage == 2 ? 'required' : ''}}>{{ $data->hod_des_rev_comm }}</textarea>
                                         </div>
+                                        @endif
+
+                                        @if ($data->stage != 2)
+                                            <input type="hidden" name="hod_des_rev_comm" value="{{ $data->hod_des_rev_comm }}">
                                         @endif
 
                                     </div>
@@ -1927,7 +1931,7 @@
 
                                 <div class="button-block">
                                     <button type="submit" class="saveButton" id="saveButton"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
+                                        {{ $data->stage == 2 && $hodrole ? '' : 'disabled' }}>Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -7264,7 +7268,7 @@
                                 </div>
                                 <div class="button-block">
                                     <button type="submit" class="saveButton" id="saveButton"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
+                                        {{ $data->stage == 4 && $QA_CQA_review ? '' : 'disabled' }}>Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -7460,7 +7464,7 @@
                                 </div>
                                 <div class="button-block">
                                     <button type="submit" class="saveButton" id="saveButton"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
+                                        {{ $data->stage == 5 && $Qa_Cqa_head ? '' : 'disabled' }}>Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -8085,7 +8089,7 @@
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
-                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
@@ -8415,7 +8419,7 @@
                                 </div>
                                 <div class="button-block">
                                     <button type="submit" class="saveButton"
-                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
+                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a class="text-white"
@@ -8535,7 +8539,7 @@
                                 {{-- ----------------------------------------------- --}}
                                 <div class="button-block">
                                     <button type="submit" class="saveButton"
-                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
+                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a class="text-white"
