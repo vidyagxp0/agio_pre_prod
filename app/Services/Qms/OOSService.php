@@ -4203,62 +4203,56 @@ class OOSService
                 'products_details',
                 'instrument_detail',
             ];
-// dd($request->file('oos_detail'));
+           // dd($request->file('oos_detail'));
            
             foreach ($grid_inputs as $grid_input)
             {
 
-                   if ($grid_input === 'oos_detail') {
+                    if ($grid_input === 'oos_detail') {
 
-         $oosDetails = $request->input('oos_detail', []);
-        $oosFiles   = $request->file('oos_detail', []);
+                    $oosDetails = $request->input('oos_detail', []);
+                    $oosFiles   = $request->file('oos_detail', []);
 
-        $existingGrid = Oosgrids::where([
-            'oos_id' => $oos->id,
-            'identifier' => 'oos_detail'
-        ])->first();
+                    $existingGrid = Oosgrids::where([
+                        'oos_id' => $oos->id,
+                        'identifier' => 'oos_detail'
+                    ])->first();
 
-        $existingData = $existingGrid ? $existingGrid->data : [];
+                $existingData = $existingGrid ? $existingGrid->data : [];
 
-        foreach ($oosDetails as $index => $row) {
+                foreach ($oosDetails as $index => $row) {
 
-            // ✅ NEW FILE UPLOADED
-            if (isset($oosFiles[$index]['oos_file_attachment'])) {
+                    // ✅ NEW FILE UPLOADED
+                    if (isset($oosFiles[$index]['oos_file_attachment'])) {
 
-                $file = $oosFiles[$index]['oos_file_attachment'];
-                $fileName = time().'_'.$file->getClientOriginalName();
-                $file->move(public_path('upload'), $fileName);
+                        $file = $oosFiles[$index]['oos_file_attachment'];
+                        $fileName = time().'_'.$file->getClientOriginalName();
+                        $file->move(public_path('upload'), $fileName);
 
-                $oosDetails[$index]['oos_file_attachment'] = $fileName;
+                        $oosDetails[$index]['oos_file_attachment'] = $fileName;
 
-            } else {
-                // 🔥 PRESERVE OLD FILE FROM DB
-                $oosDetails[$index]['oos_file_attachment'] =
-                    $existingData[$index]['oos_file_attachment'] ?? null;
+                    } else {
+                        // 🔥 PRESERVE OLD FILE FROM DB
+                        $oosDetails[$index]['oos_file_attachment'] =
+                            $existingData[$index]['oos_file_attachment'] ?? null;
+                    }
+                }
+
+                Oosgrids::updateOrCreate(
+                    [
+                        'oos_id'     => $oos->id,
+                        'identifier' => 'oos_detail',
+                    ],
+                    [
+                        'data' => $oosDetails
+                    ]
+                );
+
+                continue;
             }
-        }
-
-         Oosgrids::updateOrCreate(
-            [
-                'oos_id'     => $oos->id,
-                'identifier' => 'oos_detail',
-            ],
-            [
-                'data' => $oosDetails
-            ]
-        );
-
-        continue;
-    }
 
                 self::update_grid($oos, $request, $grid_input);
             }
-
-            // if($lastOosRecod->deviation_occured_on_gi != $request->deviation_occured_on_gi){
-            //     return "match nhi ho rhi";
-            // } else {
-            //     return "match ho gyi";
-            // }
 
             // Example for grid "checklist_IB_inv"
             if ($lastOosRecod->stage == 9) {
@@ -4447,7 +4441,7 @@ class OOSService
                 }
             }
             // if ($lastOosRecod->is_repeat_gi != $request->is_repeat_gi){
-                if ($lastOosRecod->is_repeat_gi !=  $request->is_repeat_gi || !empty($request->is_repeat_gi_comment)) {
+            if ($request->exists('is_repeat_gi') && ((string) ($lastOosRecod->is_repeat_gi ?? '') !== (string) ($request->input('is_repeat_gi') ?? '') || $request->filled('is_repeat_gi_comment'))){
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                             ->where('activity_type', 'Is Repeat')
                             ->exists();
@@ -4545,10 +4539,9 @@ class OOSService
                 }
                 $history->save();
             }
-            // if ($lastOosRecod->source_document_type_gi != $request->source_document_type_gi){
-                if ($lastOosRecod->source_document_type_gi !=  $request->source_document_type_gi || !empty($request->source_document_type_gi_comment)) {
+            if ($request->exists('source_document_type_gi') && ((string) ($lastOosRecod->source_document_type_gi ?? '') !== (string) ($request->input('source_document_type_gi') ?? '') || $request->filled('source_document_type_gi_comment'))){
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                            ->where('activity_type', 'ource Document Type')
+                            ->where('activity_type', 'Source Document Type')
                             ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
@@ -5057,7 +5050,7 @@ class OOSService
             $history->action_name = "Update";
         }
         $history->save();
-    }
+       }
 
                 if ($lastOosRecod->Any_other_batches !=  $request->Any_other_batches || !empty($request->Any_other_batches_comment)) {
                     $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
@@ -5126,13 +5119,13 @@ class OOSService
         $history->stage = $lastOosRecod->stage;
         $history->change_to = "Under Phase-IA Investigation";
         $history->change_from = $lastOosRecod->status;
-    if (is_null($lastOosRecod->rational_for_assingnable) || $lastOosRecod->rational_for_assingnable === '') {
-            $history->action_name = "New";
-        } else {
-            $history->action_name = "Update";
+        if (is_null($lastOosRecod->rational_for_assingnable) || $lastOosRecod->rational_for_assingnable === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
         }
-        $history->save();
-    }
 
             // if ($lastOosRecod->phase_i_investigation_pli != $request->phase_i_investigation_pli){
                 if ($lastOosRecod->phase_i_investigation_pli !=  $request->phase_i_investigation_pli || !empty($request->phase_i_investigation_pli_comment)) {
@@ -6172,32 +6165,32 @@ class OOSService
             }
         }
 
-    if ($lastOosRecod->stage == 9) {
-        if ($lastOosRecod->repeat_testing_pia !=  $request->repeat_testing_pia || !empty($request->repeat_testing_ib_comment)) {
-            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                    ->where('activity_type', 'Repeat testing required')
-                    ->exists();
-        $history = new OosAuditTrial();
-        $history->oos_id = $lastOosRecod->id;
-        $history->previous = $lastOosRecod->repeat_testing_pia;
-        $history->activity_type = 'Repeat testing required';
-        $history->current = $request->repeat_testing_pia;
-        $history->comment = "Not Applicable";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastOosRecod->status;
-        $history->stage = $lastOosRecod->stage;
-        $history->change_to = $lastOosRecod->status;
-        $history->change_from = $lastOosRecod->status;
-        if (is_null($lastOosRecod->repeat_testing_pia) || $lastOosRecod->repeat_testing_pia === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+        if ($lastOosRecod->stage == 9) {
+            if ($lastOosRecod->repeat_testing_pia !=  $request->repeat_testing_pia || !empty($request->repeat_testing_ib_comment)) {
+                $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                        ->where('activity_type', 'Repeat testing required')
+                        ->exists();
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = $lastOosRecod->repeat_testing_pia;
+            $history->activity_type = 'Repeat testing required';
+            $history->current = $request->repeat_testing_pia;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = $lastOosRecod->status;
+            $history->change_from = $lastOosRecod->status;
+            if (is_null($lastOosRecod->repeat_testing_pia) || $lastOosRecod->repeat_testing_pia === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+                $history->save();
             }
-            $history->save();
         }
-    }
 
         if ($lastOosRecod->stage == 9) {
             if ($lastOosRecod->repeat_testing_ib !=  $request->repeat_testing_ib || !empty($request->repeat_testing_ib_comment)) {
@@ -6226,32 +6219,32 @@ class OOSService
             }
         }
 
-    if ($lastOosRecod->stage == 9) {
-        if ($lastOosRecod->phase_ii_inv_req_ib !=  $request->phase_ii_inv_req_ib || !empty($request->phase_ii_inv_req_ib_comment)) {
-            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
-                    ->where('activity_type', 'Phase II investigation required')
-                    ->exists();
-        $history = new OosAuditTrial();
-        $history->oos_id = $lastOosRecod->id;
-        $history->previous = $lastOosRecod->phase_ii_inv_req_ib;
-        $history->activity_type = 'Phase II investigation required';
-        $history->current = $request->phase_ii_inv_req_ib;
-        $history->comment = "Not Applicable";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastOosRecod->status;
-        $history->stage = $lastOosRecod->stage;
-        $history->change_to = $lastOosRecod->status;
-        $history->change_from = $lastOosRecod->status;
-        if (is_null($lastOosRecod->phase_ii_inv_req_ib) || $lastOosRecod->phase_ii_inv_req_ib === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
+        if ($lastOosRecod->stage == 9) {
+            if ($lastOosRecod->phase_ii_inv_req_ib !=  $request->phase_ii_inv_req_ib || !empty($request->phase_ii_inv_req_ib_comment)) {
+                $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                        ->where('activity_type', 'Phase II investigation required')
+                        ->exists();
+            $history = new OosAuditTrial();
+            $history->oos_id = $lastOosRecod->id;
+            $history->previous = $lastOosRecod->phase_ii_inv_req_ib;
+            $history->activity_type = 'Phase II investigation required';
+            $history->current = $request->phase_ii_inv_req_ib;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastOosRecod->status;
+            $history->stage = $lastOosRecod->stage;
+            $history->change_to = $lastOosRecod->status;
+            $history->change_from = $lastOosRecod->status;
+            if (is_null($lastOosRecod->phase_ii_inv_req_ib) || $lastOosRecod->phase_ii_inv_req_ib === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+                $history->save();
             }
-            $history->save();
         }
-    }
 
         if ($lastOosRecod->stage == 9) {
             if ($lastOosRecod->production_person_ib !=  $request->production_person_ib || !empty($request->production_person_ib_comment)) {
@@ -6543,13 +6536,13 @@ class OOSService
         $history->stage = $lastOosRecod->stage;
         $history->change_to = $lastOosRecod->status;
         $history->change_from = $lastOosRecod->status;
-    if (is_null($lastOosRecod->justification_ib) || $lastOosRecod->justification_ib === '') {
-            $history->action_name = "New";
-        } else {
-            $history->action_name = "Update";
+        if (is_null($lastOosRecod->justification_ib) || $lastOosRecod->justification_ib === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
         }
-        $history->save();
-    }
 
 
                 // if ($lastOosRecod->QA_Head_primary_remark3 != $request->QA_Head_primary_remark3){
@@ -9506,7 +9499,7 @@ class OOSService
                 $history->save();
             }
 
-// ============ audit trail update close =================
+       // ============ audit trail update close =================
             
 
 
@@ -9523,25 +9516,239 @@ class OOSService
 
     }
 
-    public static function update_grid(OOS $oos, Request $request, $identifier)
+    private static function gridAuditValue($value)
     {
+        if ($value === null || $value === '') {
+            return 'NULL';
+        }
+
+        if (is_string($value)) {
+            $decoded = json_decode($value, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $value = $decoded;
+            }
+        }
+
+        if (is_array($value) || is_object($value)) {
+            return json_encode(
+                $value,
+                JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+            );
+        }
+
+        return (string) $value;
+    }
+
+    private static function saveGridAudit(OOS $oos,$identifier,$previous,$current,$action = 'Update') {
+        
+        // JSON / array ko normalize karo
+        $normalize = function ($value) {
+
+            if (is_string($value)) {
+                $decoded = json_decode($value, true);
+
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $value = $decoded;
+                }
+            }
+
+            return is_array($value) ? $value : [];
+        };
+
+        $oldRows = $normalize($previous);
+        $newRows = $normalize($current);
+
+        // Single associative row ko bhi support karo
+        $isAssoc = function (array $array) {
+            return !empty($array) && !array_is_list($array);
+        };
+
+        if ($isAssoc($oldRows)) {
+            $oldRows = [$oldRows];
+        }
+
+        if ($isAssoc($newRows)) {
+            $newRows = [$newRows];
+        }
+
+        $user = Auth::user();
+
+        // Saare row indexes check karo
+        $rowIndexes = array_unique(array_merge(
+            array_keys($oldRows),
+            array_keys($newRows)
+        ));
+
+        foreach ($rowIndexes as $rowIndex) {
+
+            $oldRow = $oldRows[$rowIndex] ?? [];
+            $newRow = $newRows[$rowIndex] ?? [];
+
+            if (!is_array($oldRow)) {
+                $oldRow = [];
+            }
+
+            if (!is_array($newRow)) {
+                $newRow = [];
+            }
+
+            // Old + New dono ke columns
+            $columns = array_unique(array_merge(
+                array_keys($oldRow),
+                array_keys($newRow)
+            ));
+
+            foreach ($columns as $column) {
+
+                $oldValue = $oldRow[$column] ?? null;
+                $newValue = $newRow[$column] ?? null;
+
+                $oldText = self::gridAuditValue($oldValue);
+                $newText = self::gridAuditValue($newValue);
+
+                // Same value => no audit
+                if ($oldText === $newText) {
+                    continue;
+                }
+
+                $oldExists = array_key_exists($column, $oldRow);
+                $newExists = array_key_exists($column, $newRow);
+
+                if (!$oldExists) {
+                    $changeType = 'Create';
+                } elseif (!$newExists) {
+                    $changeType = 'Delete';
+                } else {
+                    $changeType = 'Update';
+                }
+
+                $gridLabel = str_replace('_', ' ', $identifier);
+
+                $history = new OosAuditTrial();
+
+                $history->oos_id = $oos->id;
+
+                $history->activity_type =
+                    'Checklist: ' . $gridLabel . ' / ' . $column .
+                    ' / Row ' . ((int) $rowIndex + 1);
+
+                $history->previous = $oldText;
+                $history->current = $newText;
+
+                $history->comment = 'Not Applicable';
+
+                $history->user_id = $user->id;
+                $history->user_name = $user->name;
+
+                $history->user_role = RoleGroup::where(
+                    'id',
+                    $user->role
+                )->value('name');
+
+                $history->origin_state = $oos->status;
+                $history->stage = $oos->stage;
+
+                $history->change_from = $oos->status;
+                $history->change_to = $oos->status;
+
+                $history->action_name = $changeType;
+
+                $history->save();
+            }
+        }
+    }
+
+    // public static function update_grid(OOS $oos, Request $request, $identifier)
+    // {
+    //     $res = Helpers::getDefaultResponse();
+
+    //     try {
+
+    //         $oos_grid = Oosgrids::where([ 'identifier' => $identifier, 'oos_id' => $oos->id  ])->firstOrNew();
+    //         $oos_grid->oos_id = $oos->id;
+    //         $oos_grid->identifier = $identifier;
+    //         $oos_grid->data = $request->$identifier;
+    //         $oos_grid->update();
+
+    //     } catch (\Exception $e) {
+    //         $res['status'] = 'error';
+    //         $res['message'] = $e->getMessage();
+    //         info('Error in OOSService@update_grid', [
+    //             'message' => $e->getMessage()
+    //         ]);
+    //     }
+
+    //     return $res;
+    // }
+
+    public static function update_grid(
+    OOS $oos,
+    Request $request,
+    $identifier
+    ) {
         $res = Helpers::getDefaultResponse();
 
         try {
 
-            $oos_grid = Oosgrids::where([ 'identifier' => $identifier, 'oos_id' => $oos->id  ])->firstOrNew();
+            // Form mein grid submit hi nahi hui,
+            // to existing data ko touch nahi karenge.
+            if (!$request->exists($identifier)) {
+                return $res;
+            }
+
+            $oos_grid = Oosgrids::firstOrNew([
+                'identifier' => $identifier,
+                'oos_id' => $oos->id
+            ]);
+
+            $isNew = !$oos_grid->exists;
+
+            $oldValue = $isNew ? null : $oos_grid->data;
+
+            $newValue = $request->input($identifier);
+
+            $oldAuditValue = self::gridAuditValue($oldValue);
+            $newAuditValue = self::gridAuditValue($newValue);
+
+            // Koi actual change nahi hai
+            if (!$isNew && $oldAuditValue === $newAuditValue) {
+                return $res;
+            }
+
             $oos_grid->oos_id = $oos->id;
             $oos_grid->identifier = $identifier;
-            $oos_grid->data = $request->$identifier;
-            $oos_grid->update();
 
-        } catch (\Exception $e) {
+            // Existing model casting ko preserve karo.
+            $oos_grid->data = $newValue;
+
+            $oos_grid->save();
+
+            self::saveGridAudit(
+                $oos,
+                $identifier,
+                $oldValue,
+                $newValue,
+                $isNew ? 'Create' : 'Update'
+            );
+
+            $res['body'] = $oos_grid;
+
+        } catch (\Throwable $e) {
+
             $res['status'] = 'error';
             $res['message'] = $e->getMessage();
-            info('Error in OOSService@update_grid', [
+
+            \Log::error('OOS Grid Update Failed', [
+                'oos_id' => $oos->id,
+                'identifier' => $identifier,
                 'message' => $e->getMessage()
             ]);
+
+            // Audit failure ko silently ignore nahi karna.
+            throw $e;
         }
+
 
         return $res;
     }

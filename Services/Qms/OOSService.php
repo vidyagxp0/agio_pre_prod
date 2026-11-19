@@ -2890,7 +2890,7 @@ class OOSService
             }
             
         
-// ============ audit trail update close =================
+        // ============ audit trail update close =================
             $file_input_names = [
                 'initial_attachment_gi',
                 'file_attachments_pli',
@@ -3035,24 +3035,160 @@ class OOSService
         
     }
 
-    public static function update_grid(OOS $oos, Request $request, $identifier)
+    private static function gridAuditValue($value)
     {
-        $res = Helpers::getDefaultResponse();
+        if ($value === null || $value === '') {
+            return 'NULL';
+        }
+
+        if (is_string($value)) {
+            $decoded = json_decode($value, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $value = $decoded;
+            }
+        }
+
+        if (is_array($value) || is_object($value)) {
+            return json_encode(
+                $value,
+                JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+            );
+        }
+
+        return (string) $value;
+    }
+
+    private static function saveGridAudit(OOS $oos, $identifier, $previous, $current, $action = 'Update') {
+        $oldValue = self::gridAuditValue($previous);
+        $newValue = self::gridAuditValue($current);
+
+        if ($oldValue === $newValue) {
+            return;
+        }
+
+        $user = Auth::user();
+
+        $history = new OosAuditTrial();
+
+        $history->oos_id = $oos->id;
+        $history->activity_type = 'Grid / Checklist: ' .
+            str_replace('_', ' ', $identifier);
+
+        $history->previous = $oldValue;
+        $history->current = $newValue;
+
+        $history->comment = 'Grid / Checklist data changed';
+
+        $history->user_id = $user->id;
+        $history->user_name = $user->name;
+
+        $history->user_role = RoleGroup::where(
+            'id',
+            $user->role
+        )->value('name');
+
+        $history->origin_state = $oos->status;
+        $history->stage = $oos->stage;
+
+        $history->change_from = $oos->status;
+        $history->change_to = $oos->status;
+
+        $history->action_name = $action;
+
+        $history->save();
+    }
+
+    // public static function update_grid(OOS $oos, Request $request, $identifier)
+    // {
+    //     $res = Helpers::getDefaultResponse();
         
+    //     try {
+
+    //         $oos_grid = Oosgrids::where([ 'identifier' => $identifier, 'oos_id' => $oos->id  ])->firstOrNew();
+    //         $oos_grid->oos_id = $oos->id;
+    //         $oos_grid->identifier = $identifier;
+    //         $oos_grid->data = $request->$identifier;
+    //         $oos_grid->update();
+            
+    //     } catch (\Exception $e) {
+    //         $res['status'] = 'error';
+    //         $res['message'] = $e->getMessage();
+    //         info('Error in OOSService@update_grid', [
+    //             'message' => $e->getMessage()
+    //         ]);
+    //     }
+
+    //     return $res;
+    // }
+
+    public static function update_grid(OOS $oos, Request $request, $identifier) {
+        $res = Helpers::getDefaultResponse();
+
+        \Log::info('OOS GRID AUDIT DEBUG', [
+            'oos_id' => $oos->id,
+            'identifier' => $identifier,
+            'exists_in_request' => $request->exists($identifier),
+            'request_value' => $request->input($identifier),
+        ]);
         try {
 
-            $oos_grid = Oosgrids::where([ 'identifier' => $identifier, 'oos_id' => $oos->id  ])->firstOrNew();
+            // Form mein grid submit hi nahi hui,
+            // to existing data ko touch nahi karenge.
+            if (!$request->exists($identifier)) {
+                return $res;
+            }
+
+            $oos_grid = Oosgrids::firstOrNew([
+                'identifier' => $identifier,
+                'oos_id' => $oos->id
+            ]);
+
+            $isNew = !$oos_grid->exists;
+
+            $oldValue = $isNew ? null : $oos_grid->data;
+
+            $newValue = $request->input($identifier);
+
+            $oldAuditValue = self::gridAuditValue($oldValue);
+            $newAuditValue = self::gridAuditValue($newValue);
+
+            // Koi actual change nahi hai
+            if (!$isNew && $oldAuditValue === $newAuditValue) {
+                return $res;
+            }
+
             $oos_grid->oos_id = $oos->id;
             $oos_grid->identifier = $identifier;
-            $oos_grid->data = $request->$identifier;
-            $oos_grid->update();
-            
-        } catch (\Exception $e) {
+
+            // Existing model casting ko preserve karo.
+            $oos_grid->data = $newValue;
+
+            $oos_grid->save();
+
+            self::saveGridAudit(
+                $oos,
+                $identifier,
+                $oldValue,
+                $newValue,
+                $isNew ? 'Create' : 'Update'
+            );
+
+            $res['body'] = $oos_grid;
+
+        } catch (\Throwable $e) {
+
             $res['status'] = 'error';
             $res['message'] = $e->getMessage();
-            info('Error in OOSService@update_grid', [
+
+            \Log::error('OOS Grid Update Failed', [
+                'oos_id' => $oos->id,
+                'identifier' => $identifier,
                 'message' => $e->getMessage()
             ]);
+
+            // Audit failure ko silently ignore nahi karna.
+            throw $e;
         }
 
         return $res;
