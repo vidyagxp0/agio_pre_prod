@@ -3683,10 +3683,21 @@
                                         </div>
                                     </td>
                                 </tr>
-                                
-                                
-                            
                             </table>
+
+                            @if($cc_cfts->effect_check == 'No')
+                            <table>
+                                <tr>
+                                    <th class="w-20">Comments</th>
+                                    <td>
+                                        <div>
+                                            {{ $cc_cfts->effect_comment ?? 'Not Applicable'}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                            </table>
+                            @endif
                         
 
                     <div class="border-table">
@@ -3717,156 +3728,6 @@
                 </div>
             </div>
         </div>
-
-
-
-        {{--  
-            <div class="block">
-                <div class="block-head">
-                    QA Approval Comments
-                </div>
-                <table>
-                    <tr>
-                        <th class="w-20">QA Approval Comments</th>
-                        <td class="w-80">
-                            <div>
-                                {{ $approcomments->risk_identification }}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Training Feedback</th>
-                        <td class="w-80">
-                            <div>
-                                {{ $approcomments->feedback }}
-                            </div>
-                        </td>
-                    </tr>
-
-                </table>
-                <div class="border-table">
-                    <div class="block-head">
-                    Implementation Verification Attachments
-                    </div>
-                    <table>
-
-                        <tr class="table_bg">
-                            <th class="w-20">Sr.No.</th>
-                            <th class="w-60">Attachment</th>
-                        </tr>
-                        @if ($approcomments->tran_attach)
-                            @foreach (json_decode($approcomments->tran_attach) as $key => $file)
-                                <tr>
-                                    <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
-                                            target="_blank"><b>{{ $file }}</b></a> </td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td class="w-20">1</td>
-                                <td class="w-60">Not Applicable</td>
-                            </tr>
-                        @endif
-
-                    </table>
-                </div>
-            </div>
-            <div class="block">
-                <div class="block-head">
-                    Change Closure
-                </div>
-
-                <div class="border-table" style="margin-bottom: 15px;">
-                    <div class="block-" style="margin-bottom:5px; font-weight:bold;">
-                        Affected Documents
-                    </div>
-                    <table>
-
-                        <tr class="table_bg">
-                            <th class="w-20">Sr.No.</th>
-                            <th class="w-60">Affected Documents</th>
-                            <th class="w-60">Document Name</th>
-                            <th class="w-60">Document No.</th>
-                            <th class="w-60">Version No.</th>
-                            <th class="w-60">Implementation Date</th>
-                            <th class="w-60">New Document No.</th>
-                            <th class="w-60">New Version No.</th>
-
-                        </tr>
-                        <tbody>
-                            @if (isset($affectedDoc) && is_array($affectedDoc))
-                            @php
-                                $serialNumber = 1;
-                            @endphp
-                            @foreach ($affectedDoc as $testing)
-                                @if(is_array($testing))
-                                    <tr>
-                                        <td class="w-20">{{ $serialNumber++ }}</td>
-                                        <td class="w-20">{{ $testing['afftectedDoc'] ?? '' }}</td>
-                                        <td class="w-20">{{ $testing['documentName'] ?? '' }}</td>
-                                        <td class="w-20">{{ $testing['documentNumber'] ?? '' }}</td>
-                                        <td class="w-20">{{ $testing['versionNumber'] ?? '' }}</td>
-                                        <td class="w-20">{{ $testing['implimentationDate'] ?? '' }}</td>
-                                        <td class="w-20">{{ $testing['newDocumentNumber'] ?? '' }}</td>
-                                        <td class="w-20">{{ $testing['newVersionNumber'] ?? '' }}</td>
-                                    </tr>
-                                @else
-                                    <tr>
-                                        <td class="w-20" colspan="8"></td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        @else
-                            <tr>
-                                <td class="w-20">1</td>
-                                <td class="w-20">Not Applicable</td>
-                                <td class="w-20">Not Applicable</td>
-                                <td class="w-20">Not Applicable</td>
-                                <td class="w-20">Not Applicable</td>
-                                <td class="w-20">Not Applicable</td>
-                                <td class="w-20">Not Applicable</td>
-                                <td class="w-20">Not Applicable</td>
-                            </tr>
-                        @endif
-
-                        </tbody>
-                    </table>
-                </div>
-
-                <table>
-                    <tr>
-                        <th class="w-20">QA Closure Comments</th>
-                        <td class="w-30"> {{ $assessment->qa_closure_comments }}</td>
-
-                        <th class="w-20">List Of Attachments</th>
-                        <td class="w-30"> {{ $assessment->list_of_attachment }}</td>
-                    </tr>
-                </table>
-                <table>
-
-                    <tr class="table_bg">
-                        <th class="w-20">Sr.No.</th>
-                        <th class="w-60">Attachment</th>
-                    </tr>
-                    @if ($approcomments->tran_attach)
-                        @foreach (json_decode($approcomments->tran_attach) as $key => $file)
-                            <tr>
-                                <td class="w-20">{{ $key + 1 }}</td>
-                                <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
-                                        target="_blank"><b>{{ $file }}</b></a> </td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td class="w-20">1</td>
-                            <td class="w-60">Not Applicable</td>
-                        </tr>
-                    @endif
-
-                </table>
-            </div>
-        </div>  --}}
 
 
 

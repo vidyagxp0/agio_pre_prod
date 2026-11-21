@@ -1,7 +1,7 @@
 @forelse ($audit as $audits => $dataDemo)
     <tr>
         <td>
-            {{ isset($filter_request) ? $audits + 1 : ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 }}
+            {{ $audits + 1 }}
         </td>
 
         <td>

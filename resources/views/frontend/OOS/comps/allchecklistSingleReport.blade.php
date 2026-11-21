@@ -1,5 +1,64 @@
    <!--Start Checklist - Investigation of Bacterial Endotoxin Test CCForm18 -->
+    @php
+        $toText = function ($v) {
+            if (is_array($v)) {
+                $v = array_map(fn($x) => is_array($x) ? json_encode($x) : $x, $v);
+                return implode(', ', array_filter($v, fn($x) => trim((string) $x) !== ''));
+            }
+            return trim(strip_tags((string) $v));
+        };
 
+        // Micro: $gridKey do (Helpers wali key)   |   Chemical: $grid do ($ph_meters etc.)
+        $renderChecklist = function ($title, $questions, $gridKey = null, $grid = null) use ($data, $filled, $toText) {
+            $questions = is_array($questions) ? $questions : [];
+
+            $gridData = [];
+            if (!$gridKey) {
+                $raw = $grid->data ?? null;
+                $gridData = is_string($raw) ? (json_decode($raw, true) ?: []) : (is_array($raw) ? $raw : []);
+            }
+
+            $main = 2.0; $sub = 0; $rowsHtml = '';
+
+            foreach ($questions as $i => $q) {
+                $text  = is_array($q) ? $q['question'] : $q;
+                $isSub = is_array($q) && !empty($q['is_sub_question']);
+
+                if ($isSub) { $sub++; } else { $sub = 0; $main += 0.1; }
+
+                if ($gridKey) {
+                    try {
+                        $res = Helpers::getChemicalGridData($data, $gridKey, true, 'response', true, $i);
+                        $rem = Helpers::getChemicalGridData($data, $gridKey, true, 'remark', true, $i);
+                    } catch (\Throwable $e) {
+                        $res = null; $rem = null;
+                    }
+                    $m  = number_format(round($main, 1), 1);
+                    $no = $isSub ? $m . '.' . $sub : $m;
+                } else {
+                    $row = is_array($gridData[$i] ?? null) ? $gridData[$i] : [];
+                    $res = $row['response'] ?? null;
+                    $rem = $row['remark'] ?? ($row['remarks'] ?? null);
+                    $no  = $i + 1;
+                }
+
+                $res = $toText($res);
+                $rem = $toText($rem);
+
+                if ($filled($res) || $filled($rem)) {
+                    $rowsHtml .= '<tr><td class="text-center">' . e($no) . '</td><td>' . e($text) . '</td><td>'
+                            . e($filled($res) ? $res : '-') . '</td><td>' . e($filled($rem) ? $rem : '-') . '</td></tr>';
+                }
+            }
+
+            if ($rowsHtml === '') return '';
+
+            return '<div class="block"><div class="block-head">' . e($title) . '</div><div class="border-table"><table>'
+                . '<tr class="table_bg"><th style="width: 5%;">Sr.No.</th><th style="width: 40%;">Question</th>'
+                . '<th style="width: 20%;">Response</th><th>Remarks</th></tr>' . $rowsHtml . '</table></div></div>';
+        };
+    @endphp
+   
    @if($data->Form_type == 'OOS_Micro')
         <div class="inner-block">
             <div class="content-table">
@@ -3749,59 +3808,530 @@
         </div>
     @endif
 
-                @if($data->Form_type == 'OOS_Chemical' || $data->Form_type == 'OOT')
-                        @php
-                        $ph_meter_questions = array(
-                                "Was instrument calibrated before start of analysis?",
-                                "Was temperature sensor working efficiently?",
-                                "Was pH electrode stored properly?",
-                                "Was sampled prepared as per STP?",
-                                "Was sufficient quantity of sample to ensure that the sensor is properly dipped?",
-                                "Was electrode filling solution sufficient inside the electrode?",
-                                "Were instrument properly connected at the time of analysis?",
-                            );
-                        @endphp
-                        <div class="block">
-                            <div class="block-head"> CheckList - pH</div>
-                            <div class="border-table">
-                                <table>
-                                    <tr class="table_bg">
-                                        <th style="width: 5%;">Sr.No.</th>
-                                        <th style="width: 40%;">Question</th>
-                                        <th style="width: 20%;">Response</th>
-                                        <th>Remarks</th>
-                                    </tr>
-                                    @if ($ph_meters)
-                                    @foreach ($ph_meter_questions as $ph_meter_question)
-                                    <tr>
-                                        <td class="w-15">{{ $loop->index+1 }}</td>
-                                        <td class="w-15">{{ $ph_meter_question }}</td>
-                                        <td>{{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'response') }} </td>
-                                        <td class="w-15">{{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'remark') }}</td>
-                                    </tr>
-                                    @endforeach
-                                    @else
-                                    <tr>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                    </tr>
-                                    @endif
-                                </table>
-                            </div>
-                        </div>
+    @if($data->Form_type == 'OOS_Chemical' || $data->Form_type == 'OOT')
+            
+            @php
+                $ph_meter_questions = array(
+                    "Was instrument calibrated before start of analysis?",
+                    "Was temperature sensor working efficiently?",
+                    "Was pH electrode stored properly?",
+                    "Was sampled prepared as per STP?",
+                    "Was sufficient quantity of sample to ensure that the sensor is properly dipped?",
+                    "Was electrode filling solution sufficient inside the electrode?",
+                    "Were instrument properly connected at the time of analysis?",
+                );
+            @endphp
 
-                        @php
-                            $Viscometer_questions = array(
-                                    "Was instrument calibrated before start of analysis?",
-                                    "Was sampled prepared as per STP?",
-                                    "Was correct spindle used for analysis?",
-                                    "Was Sufficient quantity used to performed the analysis?",
-                                );
-                        @endphp
-                        <div class="block">
-                        <div class="block-head"> CheckList - Viscometer</div>
+            @php
+                $phData = [];
+
+                if ($ph_meters && !empty($ph_meters->data)) {
+                    if (is_string($ph_meters->data)) {
+                        $phData = json_decode($ph_meters->data, true) ?: [];
+                    } elseif (is_array($ph_meters->data)) {
+                        $phData = $ph_meters->data;
+                    } else {
+                        $phData = (array) $ph_meters->data;
+                    }
+                }
+
+                $hasPhData = false;
+
+                foreach ($phData as $row) {
+                    if (
+                        is_array($row) &&
+                        (
+                            filled($row['response'] ?? null) ||
+                            filled($row['remark'] ?? null) ||
+                            filled($row['remarks'] ?? null)
+                        )
+                    ) {
+                        $hasPhData = true;
+                        break;
+                    }
+                }
+            @endphp
+
+            @if($isPhSelected && $hasPhData)
+                <div class="block">
+                    <div class="block-head">CheckList - pH</div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th>Remarks</th>
+                            </tr>
+
+                            @foreach($ph_meter_questions as $index => $question)
+                                @php
+                                    $answer = $phData[$index] ?? [];
+                                    $response = $answer['response'] ?? null;
+                                    $remark = $answer['remark'] ?? ($answer['remarks'] ?? null);
+                                @endphp
+
+                                @if(filled($response) || filled($remark))
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $question }}</td>
+                                        <td>{{ filled($response) ? $response : '-' }}</td>
+                                        <td>{{ filled($remark) ? $remark : '-' }}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </table>
+                    </div>
+                </div>
+            @endif
+
+            @php
+                $Viscometer_questions = array(
+                    "Was instrument calibrated before start of analysis?",
+                    "Was sampled prepared as per STP?",
+                    "Was correct spindle used for analysis?",
+                    "Was Sufficient quantity used to performed the analysis?",
+                );
+            @endphp
+
+            @php
+                $viscometerData = [];
+
+                if ($Viscometers && !empty($Viscometers->data)) {
+                    if (is_string($Viscometers->data)) {
+                        $viscometerData = json_decode($Viscometers->data, true) ?: [];
+                    } elseif (is_array($Viscometers->data)) {
+                        $viscometerData = $Viscometers->data;
+                    } else {
+                        $viscometerData = (array) $Viscometers->data;
+                    }
+                }
+
+                $hasViscometerData = false;
+
+                foreach ($viscometerData as $row) {
+                    if (
+                        is_array($row) &&
+                        (
+                            filled($row['response'] ?? null) ||
+                            filled($row['remark'] ?? null) ||
+                            filled($row['remarks'] ?? null)
+                        )
+                    ) {
+                        $hasViscometerData = true;
+                        break;
+                    }
+                }
+            @endphp
+
+            @if($isViscometerSelected && $hasViscometerData)
+                <div class="block">
+                    <div class="block-head">CheckList - Viscometer</div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th>Remarks</th>
+                            </tr>
+
+                            @foreach($Viscometer_questions as $index => $question)
+                                @php
+                                    $answer = $viscometerData[$index] ?? [];
+                                    $response = $answer['response'] ?? null;
+                                    $remark = $answer['remark'] ?? ($answer['remarks'] ?? null);
+                                @endphp
+
+                                @if(filled($response) || filled($remark))
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $question }}</td>
+                                        <td>{{ filled($response) ? $response : '-' }}</td>
+                                        <td>{{ filled($remark) ? $remark : '-' }}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </table>
+                    </div>
+                </div>
+            @endif
+
+           
+            @php
+                $Melting_Point_questions = array(
+                    "Was instrument calibrated before start of analysis?",
+                    "Was sampled prepared as per STP?",
+                    "Was sampled properly filled inside the capillary tube?",
+                    "Were instrument properly connected at the time of analysis?",
+                    "Was temperature of the instrument as per STP?",
+                    "Was temperature acquired during analysis?",
+                    "Was analyst verified the oil is filled up to the level before start of analysis?",
+                );
+            @endphp
+
+            @php
+                $meltingPointData = [];
+
+                if ($Melting_Points && !empty($Melting_Points->data)) {
+                    if (is_string($Melting_Points->data)) {
+                        $meltingPointData = json_decode($Melting_Points->data, true) ?: [];
+                    } elseif (is_array($Melting_Points->data)) {
+                        $meltingPointData = $Melting_Points->data;
+                    } else {
+                        $meltingPointData = (array) $Melting_Points->data;
+                    }
+                }
+
+                $hasMeltingPointData = false;
+
+                foreach ($meltingPointData as $row) {
+                    if (
+                        is_array($row) &&
+                        (
+                            filled($row['response'] ?? null) ||
+                            filled($row['remark'] ?? null) ||
+                            filled($row['remarks'] ?? null)
+                        )
+                    ) {
+                        $hasMeltingPointData = true;
+                        break;
+                    }
+                }
+            @endphp
+
+            @if($isMeltingPointSelected && $hasMeltingPointData)
+                <div class="block">
+                    <div class="block-head">CheckList - Melting Point</div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th>Remarks</th>
+                            </tr>
+
+                            @foreach($Melting_Point_questions as $index => $question)
+                                @php
+                                    $answer = $meltingPointData[$index] ?? [];
+                                    $response = $answer['response'] ?? null;
+                                    $remark = $answer['remark'] ?? ($answer['remarks'] ?? null);
+                                @endphp
+
+                                @if(filled($response) || filled($remark))
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $question }}</td>
+                                        <td>{{ filled($response) ? $response : '-' }}</td>
+                                        <td>{{ filled($remark) ? $remark : '-' }}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </table>
+                    </div>
+                </div>
+            @endif
+
+
+            @php
+                $Dis_solution_questions = array(
+                    "Was dissolution appartus in calibrated state?",
+                    "Was the instrument parameter as per STP?",
+                    "Was the bowl temperature at the start and end of analysis as per STP ?",
+                    "Was dissolution appartus clean before analysis?",
+                    "Were the pH of dissolution medium as per STP?",
+                    "Was correct volume of dissolution medium used for analysis?",
+                    "Was correct Appartus used as per STP ?",
+                    "Was the water level of dissolution bath as per SOP/recommendation?",
+                    "Was Tablet/capsule/suspention dropped manually or was placed on dispensing tablet?",
+                    "Was sampling involve profilling dissolution?",
+                    "Was sampling done manually or using auto sampler?",
+                    "Was filtration done immediately after sampling?",
+                    "Was there any dilution of sample after withdrawl of sample?",
+                    "Was correct filter used for dilution?",
+                    "While performing profilling, Does sample withdrawl at specific timeline as per STP?",
+                    "Was Glassware used as per STP?",
+                    "Was bowl temperature found 37°C ± 0.5 before start of analysis?",
+                    "Is method validation/verification available ?",
+                );
+            @endphp
+
+            @php
+                $disSolutionData = [];
+
+                if ($Dis_solutions && !empty($Dis_solutions->data)) {
+                    if (is_string($Dis_solutions->data)) {
+                        $disSolutionData = json_decode($Dis_solutions->data, true) ?: [];
+                    } elseif (is_array($Dis_solutions->data)) {
+                        $disSolutionData = $Dis_solutions->data;
+                    } else {
+                        $disSolutionData = (array) $Dis_solutions->data;
+                    }
+                }
+
+                $hasDisSolutionData = false;
+
+                foreach ($disSolutionData as $row) {
+                    if (
+                        is_array($row) &&
+                        (
+                            filled($row['response'] ?? null) ||
+                            filled($row['remark'] ?? null) ||
+                            filled($row['remarks'] ?? null)
+                        )
+                    ) {
+                        $hasDisSolutionData = true;
+                        break;
+                    }
+                }
+            @endphp
+
+            @if(in_array('Dissolution', $selectedChecklist, true) && $hasDisSolutionData)
+
+                <div class="block">
+                    <div class="block-head">CheckList - Dissolution</div>
+
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th>Remarks</th>
+                            </tr>
+
+                            @foreach($Dis_solution_questions as $index => $question)
+                                @php
+                                    $answer = $disSolutionData[$index] ?? [];
+                                    $response = $answer['response'] ?? null;
+                                    $remark = $answer['remark'] ?? ($answer['remarks'] ?? null);
+                                @endphp
+
+                                @if(filled($response) || filled($remark))
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $question }}</td>
+                                        <td>{{ filled($response) ? $response : '-' }}</td>
+                                        <td>{{ filled($remark) ? $remark : '-' }}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </table>
+                    </div>
+                </div>
+
+            @endif
+
+            @php
+                $HPLC_GC_questions = array(
+                    "Was analyst used correct column as per mentioned in STP?",
+                    "Was Chromatography Condition/Instrument Parameter like Retention time, wavelength, flow rate, injection volume, column temperature and autos ampler temperature as per mentioned in STP?",
+                    "Was inlet filter sonicated before start of analysis?",
+                    "Was suction of port A,port B,port C,port D and rinse port are working correctly?",
+                    "Was corrected rinse solution used for analysis as per SOP?",
+                    "Was Buffer prepared as per mentioned in STP?",
+                    "Is mobile phase within validity periods?",
+                    "Is seal wash performed properly?",
+                    "Whether analyst used corrected solution for column wash/seal wash before start of analysis as per SOP ?",
+                    "Was buffer solution filtered before start of analysis?",
+                    "Was mobile phase maintained in recommended storage condition as per SOP/STP?",
+                    "Was mobile phase sonicated before start of analysis?",
+                    "Was sonication performed with appropriate time line or as per mentioned in STP?",
+                    "Was mobile phase ration maintained as per STP?",
+                    "Was Mobile phase prepared as per mentioned in STP?",
+                    "Was buffer/ mobile phase pH as per STP?",
+                    "Was mobile phase degassed before start of analysis?",
+                    "Whether analyst used correct water for mobile phase,diluent, sample and standard preparation?",
+                    "Was purge valve was closed before start of analysis?",
+                    "Was the vial position as per mentioned in printed sequence?",
+                    "Was analyst used appropriate test tubes for analysis?",
+                    "Was septa of vial/fitment of septa/ filament of cap proper?",
+                    "were capping/crimping of GC vial/HPLC Vial done properly?",
+                    "Was analyst used the Bonded septa for analysis?",
+                    "Was analyst used cleaned septa for analysis?",
+                    "Was vial labelled as per SOP?",
+                    "Is there any bubble observed inside pump port?",
+                    "Was vial filled 3/4th capacity ?",
+                    "Is There any pressure fluctuation observed in sample and standard run ?",
+                    "Is it correct placebo used during the analysis?",
+                    "Was the Glassware's used for preparation of same manufacture's?",
+                    "Was standard and sample weighed & prepared as per STP?",
+                    "Was analyst used correct dilution solution and made as per mentioned in STP?",
+                    "Was analyst used correct filtration technique for analysis of sample?",
+                    "Were all solutions injected within Validity periods?",
+                    "Is there any sign of unfiltered and non degassed mobile phase?",
+                    "Is there any system back pressure/Leakage observed during analysis?",
+                    "Is system suitability result as per acceptance criteria?",
+                    "Is there any hump interfering to peak integration, spilt peak observed?",
+                    "Is peak integrated properly?",
+                    "Is there any anomalous chromatographic elution pattern observed?",
+                    "Were environmental conditions within the proper limits (Temperature/Humidity)?",
+                    "Is Instrument within calibrated state/periods?",
+                    "Was cylinder level good before start of analysis?",
+                    "Was instrument connected to properly during analysis?(Communication failure)",
+                    "Was glass liner cleaned before analysis?",
+                    "Was glass wool maintained properly? (change in color white to brown or black)",
+                    "Was auto sampler work efficiently?",
+                    "Is there color changes observed in oxytrap before and after analysis?(Check silica color)",
+                    "Was jet cleaned before analysis?",
+                    "Is there any leakage in cylinder?",
+                    "Was column fitted properly before start of analysis?(Check Ferrules and nuts)",
+                    "Was vial rack work efficiently?",
+                    "Was elevator movement up and down efficiently?",
+                    "was column conditioning before start of analysis?",
+                    "Is there any column breakage observed during analysis?",
+                    "was there syringe blockage check before analysis?",
+                    "Was vial over-fitted?",
+                    "Was analyst change the rubber septa before start of analysis?",
+                    "Was chemical used of GC Grade?",
+                    "Was calibrated micropipettes used for analysis?",
+                    "Was tips sterilized before used?",
+                    "Is method validation/verification available ?",
+                );
+            @endphp
+
+            @php
+                $hplcGcData = [];
+
+                if ($HPLC_GCs && !empty($HPLC_GCs->data)) {
+                    if (is_string($HPLC_GCs->data)) {
+                        $hplcGcData = json_decode($HPLC_GCs->data, true) ?: [];
+                    } elseif (is_array($HPLC_GCs->data)) {
+                        $hplcGcData = $HPLC_GCs->data;
+                    } else {
+                        $hplcGcData = (array) $HPLC_GCs->data;
+                    }
+                }
+
+                $hasHplcGcData = false;
+
+                foreach ($hplcGcData as $row) {
+                    if (
+                        is_array($row) &&
+                        (
+                            filled($row['response'] ?? null) ||
+                            filled($row['remark'] ?? null) ||
+                            filled($row['remarks'] ?? null)
+                        )
+                    ) {
+                        $hasHplcGcData = true;
+                        break;
+                    }
+                }
+            @endphp
+
+            @if($isHplcGcSelected && $hasHplcGcData)
+
+                <div class="block">
+                    <div class="block-head">CheckList - HPLC GC</div>
+
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th>Remarks</th>
+                            </tr>
+
+                            @foreach($HPLC_GC_questions as $index => $question)
+                                @php
+                                    $answer = $hplcGcData[$index] ?? [];
+                                    $response = $answer['response'] ?? null;
+                                    $remark = $answer['remark'] ?? ($answer['remarks'] ?? null);
+                                @endphp
+
+                                @if(filled($response) || filled($remark))
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $question }}</td>
+                                        <td>{{ filled($response) ? $response : '-' }}</td>
+                                        <td>{{ filled($remark) ? $remark : '-' }}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </table>
+                    </div>
+                </div>
+
+            @endif
+
+
+            @php
+                $General_Checklist_questions = array(
+                "Was solid/Liquid Chemical used as per STP?",
+                "Was chemical used within validity periods?",
+                "Was correct chemical grade used for analysis?",
+                "Was analyst weighed the chemical as per mentioned in STP?",
+                "Was analyst used correct Reagent/Volumentrick solution for analysis",
+                "Were analyst used Cleaned and  Dried Glassware like volumetrik flask,Pippete,separating funnel & Beaker ? ",
+                "Wheather analyst used corrected glassware's as per mentioned in STP?",
+                "Is correct formulae used for calculation?",
+                "Is correct response used for calculation?",
+                "Is there any unauthorized change made in the formulae for calculation in excel sheet used for calculation",
+                "Are correct weights, area count, dilution, factors transcribed in calculation sheet?",
+                "Is correct specification, standard analytical procedure and version number used for analysis?",
+                "Is analyst Qualified to performed the analysis? (Qualificaition number)",
+                "Did analyst identify any usual finding during analysis?(Eg :- sample preparation,standard preparation)",
+                "Was sample store as per storage condition?",
+                "Was correct sample used for analysis?",
+                "Was there any unusual obervation with respect to description of sample?",
+                "Was correct Working/Reference(USP,EPCRS,JP,BP,In House standard)/Party Working standard/Primary/GC standard used for analysis?",
+                "Was potency of Working/Reference(USP,EPCRS,JP,BP,In House standard)/Party Working standard/Primary/GC standard as per COA?",
+                "Was Working/Reference(USP,EPCRS,JP,BP,In House standard)/Party Working standard/Primary/GC standard stored as per storage conditons?",
+                "Wheather instrument parameter as per STP?",
+                "Was Balance used for weighing within weighing range?",
+                "Was Balance used withing validity periods?",
+                "Was standard/Sample weights as per STP?",
+                "Was there any spillage reported by analyst during weighing and transfer?",
+                "Was sample/Standard diluted as per STP?",
+                "Was solution stored as per storage requirements?",
+                "Were chemical/Reagets used of same grade as per STP?",
+                "Were chemical/Reagets used within validity/Expiry periods as per STP?",
+                "Was correct filters and filtration technque used as STP?",
+                "Was sonication time and temperature maintained as per STP?",
+                "Were volumetric solution stored as per recommeded storage conditon?",
+                "Were volumetric solution used within validity periods?",
+                "Was appearance of sample solution satisfactory?",
+                "Was validated analytical method used for analysis?",
+                "Was method of analysis is inline with pharmacopial methods?",
+                "Is instrument used for analysis in calibrated state?",
+                "Is there any instrument breckdown before start of analysis?",
+
+
+                );
+            @endphp
+
+            @if(in_array('General-checklist', $selectedChecklist, true))
+                @php
+                    $generalData = [];
+
+                    if ($General_Checklists && !empty($General_Checklists->data)) {
+                        $generalData = is_string($General_Checklists->data)
+                            ? (json_decode($General_Checklists->data, true) ?: [])
+                            : (array) $General_Checklists->data;
+                    }
+
+                    $hasGeneralData = false;
+
+                    foreach ($generalData as $row) {
+                        if (
+                            is_array($row) &&
+                            (
+                                filled($row['response'] ?? null) ||
+                                filled($row['remark'] ?? null)
+                            )
+                        ) {
+                            $hasGeneralData = true;
+                            break;
+                        }
+                    }
+                @endphp
+
+                @if($hasGeneralData)
+                    <div class="block">
+                        <div class="block-head">CheckList - General</div>
                         <div class="border-table">
                             <table>
                                 <tr class="table_bg">
@@ -3810,396 +4340,212 @@
                                     <th style="width: 20%;">Response</th>
                                     <th>Remarks</th>
                                 </tr>
-                                @if ($Viscometers)
-                                @foreach ($Viscometer_questions as $Viscometer_question)
-                                <tr>
-                                    <td class="w-15">{{ $loop->index+1 }}</td>
-                                    <td class="w-15">{{ $Viscometer_question }}</td>
-                                    <td>{{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'response') }} </td>
-                                    <td class="w-15">{{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'remark') }}</td>
-                                </tr>
+
+                                @foreach($General_Checklist_questions as $index => $question)
+                                    @php
+                                        $answer = $generalData[$index] ?? [];
+                                        $response = $answer['response'] ?? null;
+                                        $remark = $answer['remark'] ?? null;
+                                    @endphp
+
+                                    @if(filled($response) || filled($remark))
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $question }}</td>
+                                            <td>{{ $response ?? '-' }}</td>
+                                            <td>{{ $remark ?? '-' }}</td>
+                                        </tr>
+                                    @endif
                                 @endforeach
-                                @else
-                                <tr>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                </tr>
-                                @endif
                             </table>
                         </div>
-                        </div>
-
-
-                        @php
-                        $Melting_Point_questions = array(
-                            "Was instrument calibrated before start of analysis?",
-                            "Was sampled prepared as per STP?",
-                            "Was sampled properly filled inside the capillary tube?",
-                            "Were instrument properly connected at the time of analysis?",
-                            "Was temperature of the instrument as per STP?",
-                            "Was temperature acquired during analysis?",
-                            "Was analyst verified the oil is filled up to the level before start of analysis?",
-                        );
-                        @endphp
-                        <div class="block">
-                        <div class="block-head"> CheckList - Melting Point</div>
-                        <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th style="width: 5%;">Sr.No.</th>
-                                <th style="width: 40%;">Question</th>
-                                <th style="width: 20%;">Response</th>
-                                <th>Remarks</th>
-                            </tr>
-                            @if ($Melting_Points)
-                            @foreach ($Melting_Point_questions as $Melting_Point_question)
-                            <tr>
-                                <td class="w-15">{{ $loop->index+1 }}</td>
-                                <td class="w-15">{{ $Melting_Point_question }}</td>
-                                <td>{{ Helpers::getArrayKey($Melting_Points->data[$loop->index], 'response') }} </td>
-                                <td class="w-15">{{ Helpers::getArrayKey($Melting_Points->data[$loop->index], 'remark') }}</td>
-                            </tr>
-                            @endforeach
-                            @else
-                            <tr>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                            </tr>
-                            @endif
-                        </table>
-                        </div>
-                        </div>
-                        @php
-
-                        $Dis_solution_questions = array(
-                        "Was dissolution appartus in calibrated state?",
-                        "Was the instrument parameter as per STP?",
-                        "Was the bowl temperature at the start and end of analysis as per STP ?",
-                        "Was dissolution appartus clean before analysis?",
-                        "Were the pH of dissolution medium as per STP?",
-                        "Was correct volume of dissolution medium used for analysis?",
-                        "Was correct Appartus used as per STP ?",
-                        "Was the water level of dissolution bath as per SOP/recommendation?",
-                        "Was Tablet/capsule/suspention dropped manually or was placed on dispensing tablet?",
-                        "Was sampling involve profilling dissolution?",
-                        "Was sampling done manually or using auto sampler?",
-                        "Was filtration done immediately after sampling?",
-                        "Was there any dilution of sample after withdrawl of sample?",
-                        "Was correct  filter used for dilution?",
-                        "While performing profilling ,  Does sample withdrawl at specific timeline as per STP?",
-                        "Was Glassware used as per STP?",
-                        "Was bowl temperature found 37°C ± 0.5 before start of analysis?",
-                        "Is method validation/verification available ?",
-                        );
-                        @endphp
-                        <div class="block">
-                        <div class="block-head"> CheckList - Dissolution</div>
-                        <div class="border-table">
-                        <table>
-                        <tr class="table_bg">
-                            <th style="width: 5%;">Sr.No.</th>
-                            <th style="width: 40%;">Question</th>
-                            <th style="width: 20%;">Response</th>
-                            <th>Remarks</th>
-                        </tr>
-                        @if ($Dis_solutions)
-                        @foreach ($Dis_solution_questions as $Dis_solution_question)
-                        <tr>
-                            <td class="w-15">{{ $loop->index+1 }}</td>
-                            <td class="w-15">{{ $Dis_solution_question }}</td>
-                            <td>{{ Helpers::getArrayKey($Dis_solutions->data[$loop->index], 'response') }} </td>
-                            <td class="w-15">{{ Helpers::getArrayKey($Dis_solutions->data[$loop->index], 'remark') }}</td>
-                        </tr>
-                        @endforeach
-                        @else
-                        <tr>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                        </tr>
-                        @endif
-                        </table>
-                        </div>
-                        </div>
-                        @php
-                        $HPLC_GC_questions = array(
-                        "Was analyst used correct column as per mentioned in STP?",
-                        "Was Chromatography Condition/Instrument Parameter like Retention time, wavelength,
-                        flow rate, injection volume, column temperature and autos ampler temperature as per mentioned in STP?",
-                        "Was inlet filter sonicated before start of analysis?",
-                        "Was suction of port A,port B,port C,port D and rinse port are working correctly?",
-                        "Was corrected rinse solution used for analysis as per SOP? ",
-                        "Was Buffer prepared as per mentioned in STP?",
-                        "Is mobile phase within validity periods?",
-                        "Is seal wash performed properly?",
-                        "Whether analyst used corrected solution for column wash/seal wash before start of
-                        analysis as per SOP ?",
-                        "Was buffer solution filtered before start of analysis?",
-                        "Was mobile phase maintained in recommended storage condition as per SOP/STP?",
-                        "Was mobile phase sonicated before start of analysis?",
-                        "Was sonication performed with appropriate time line or as per mentioned in STP?",
-                        "Was mobile phase ration maintained as per STP?",
-                        "Was Mobile phase prepared as per mentioned in STP?",
-                        "Was buffer/ mobile phase pH as per STP?",
-                        "Was mobile phase degassed before start of analysis?",
-                        "Whether analyst used correct water for mobile phase,diluent, sample and standard preparation?",
-                        "Was purge valve was closed before start of analysis?",
-                        "Was the vial position as per mentioned in printed sequence?",
-                        "Was analyst used appropriate test tubes for analysis?",
-                        "Was septa of vial/fitment of septa/ filament of cap proper?",
-                        "were capping/crimping of GC vial/HPLC Vial done properly?",
-                        "Was analyst used the Bonded septa for analysis?",
-                        "Was analyst used cleaned septa for analysis?",
-                        "Was vial labelled as per SOP?",
-                        "Is there any bubble observed inside pump port?",
-                        "Was vial filled 3/4th capacity ?",
-                        "Is There any pressure fluctuation observed in sample and standard run ?",
-                        "Is it correct placebo used during the analysis?",
-                        "Was the Glassware's used for preparation of same manufacture's?",
-                        "Was standard and sample weighed & prepared as per STP?",
-                        "Was analyst used correct dilution solution and made as per mentioned in STP?",
-                        "Was analyst used correct filtration technique for analysis of sample?",
-                        "Were all solutions injected within Validity periods?",
-                        "Is there any sign of unfiltered and non degassed mobile phase?",
-                        "Is there any system back pressure/Leakage observed during analysis?",
-                        "Is system suitability result as per acceptance criteria?",
-                        "Is there any hump interfering to peak integration, spilt peak observed?",
-                        "Is peak integrated properly?",
-                        "Is there any anomalous chromatographic elution pattern observed?",
-                        "Were environmental conditions within the proper limits (Temperature/Humidity)?",
-                        "Is Instrument within calibrated state/periods?",
-                        "Was cylinder level good before start of analysis?",
-                        "Was instrument connected to properly during analysis?(Communication failure)",
-                        "Was glass liner cleaned before analysis?",
-                        "Was glass wool maintained properly? (change in color white to brown or black)",
-                        "Was auto sampler work efficiently?",
-                        "Is there color changes observed in oxytrap before and after analysis?(Check silica color)",
-                        "Was jet cleaned before analysis?",
-                        "Is there any leakage in cylinder?",
-                        "Was column fitted properly before  start of analysis?(Check Ferrules and nuts)",
-                        "Was vial rack work efficiently?",
-                        "Was elevator movement up and down efficiently?",
-                        "was column conditioning  before start of analysis?",
-                        "Is there any column breakage observed during analysis?",
-                        "was there syringe blockage check before analysis?",
-                        "Was vial over-fitted?",
-                        "Was analyst change the rubber septa before start of analysis?",
-                        "Was chemical used of GC Grade?",
-                        "Was calibrated micropipettes used for analysis?",
-                        "Was tips sterilized before used?",
-                        "Is method validation/verification available ?",
-                        );
-                        @endphp
-                        <div class="block">
-                        <div class="block-head"> CheckList - HPLC GC</div>
-                        <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th style="width: 5%;">Sr.No.</th>
-                                <th style="width: 40%;">Question</th>
-                                <th style="width: 20%;">Response</th>
-                                <th>Remarks</th>
-                            </tr>
-                            @if ($HPLC_GCs)
-                            @foreach ($HPLC_GC_questions as $HPLC_GC_question)
-                            <tr>
-                                <td class="w-15">{{ $loop->index+1 }}</td>
-                                <td class="w-15">{{ $HPLC_GC_question }}</td>
-                                <td>{{ Helpers::getArrayKey($HPLC_GCs->data[$loop->index], 'response') }} </td>
-                                <td class="w-15">{{ Helpers::getArrayKey($HPLC_GCs->data[$loop->index], 'remark') }}</td>
-                            </tr>
-                            @endforeach
-                            @else
-                            <tr>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                            </tr>
-                            @endif
-                        </table>
-                        </div>
-                        </div>
-
-                        @php
-                        $General_Checklist_questions = array(
-                        "Was solid/Liquid Chemical used as per STP?",
-                        "Was chemical used within validity periods?",
-                        "Was correct chemical grade used for analysis?",
-                        "Was analyst weighed the chemical as per mentioned in STP?",
-                        "Was analyst used correct Reagent/Volumentrick solution for analysis",
-                        "Were analyst used Cleaned and  Dried Glassware like volumetrik flask,Pippete,separating funnel & Beaker ? ",
-                        "Wheather analyst used corrected glassware's as per mentioned in STP?",
-                        "Is correct formulae used for calculation?",
-                        "Is correct response used for calculation?",
-                        "Is there any unauthorized change made in the formulae for calculation in excel sheet used for calculation",
-                        "Are correct weights, area count, dilution, factors transcribed in calculation sheet?",
-                        "Is correct specification, standard analytical procedure and version number used for analysis?",
-                        "Is analyst Qualified to performed the analysis? (Qualificaition number)",
-                        "Did analyst identify any usual finding during analysis?(Eg :- sample preparation,standard preparation)",
-                        "Was sample store as per storage condition?",
-                        "Was correct sample used for analysis?",
-                        "Was there any unusual obervation with respect to description of sample?",
-                        "Was correct Working/Reference(USP,EPCRS,JP,BP,In House standard)/Party Working standard/Primary/GC standard used for analysis?",
-                        "Was potency of Working/Reference(USP,EPCRS,JP,BP,In House standard)/Party Working standard/Primary/GC standard as per COA?",
-                        "Was Working/Reference(USP,EPCRS,JP,BP,In House standard)/Party Working standard/Primary/GC standard stored as per storage conditons?",
-                        "Wheather instrument parameter as per STP?",
-                        "Was Balance used for weighing within weighing range?",
-                        "Was Balance used withing validity periods?",
-                        "Was standard/Sample weights as per STP?",
-                        "Was there any spillage reported by analyst during weighing and transfer?",
-                        "Was sample/Standard diluted as per STP?",
-                        "Was solution stored as per storage requirements?",
-                        "Were chemical/Reagets used of same grade as per STP?",
-                        "Were chemical/Reagets used within validity/Expiry periods as per STP?",
-                        "Was correct filters and filtration technque used as STP?",
-                        "Was sonication time and temperature maintained as per STP?",
-                        "Were volumetric solution stored as per recommeded storage conditon?",
-                        "Were volumetric solution used within validity periods?",
-                        "Was appearance of sample solution satisfactory?",
-                        "Was validated analytical method used for analysis?",
-                        "Was method of analysis is inline with pharmacopial methods?",
-                        "Is instrument used for analysis in calibrated state?",
-                        "Is there any instrument breckdown before start of analysis?",
-
-
-                        );
-                        @endphp
-
-                        <div class="block">
-                            <div class="block-head"> CheckList - General</div>
-                            <div class="border-table">
-                                <table>
-                                    <tr class="table_bg">
-                                        <th style="width: 5%;">Sr.No.</th>
-                                        <th style="width: 40%;">Question</th>
-                                        <th style="width: 20%;">Response</th>
-                                        <th>Remarks</th>
-                                    </tr>
-                                    @if ($General_Checklists)
-                                    @foreach ($General_Checklist_questions as $General_Checklist_question)
-                                    <tr>
-                                        <td class="w-15">{{ $loop->index+1 }}</td>
-                                        <td class="w-15">{{ $General_Checklist_question }}</td>
-                                        <td>{{ Helpers::getArrayKey($General_Checklists->data[$loop->index], 'response') }} </td>
-                                        <td class="w-15">{{ Helpers::getArrayKey($General_Checklists->data[$loop->index], 'remark') }}</td>
-                                    </tr>
-                                    @endforeach
-                                    @else
-                                    <tr>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                    </tr>
-                                    @endif
-                                </table>
-                            </div>
-                        </div>
-                        @php
-                        $kF_Potentionmeter_questions = array(
-                        "Was Correct Reagent used for analysis?",
-                        "Was dried methanol used for analysis?",
-                        "Was bureate withn calibrated state?",
-                        "Was kF reagent used within validity periods?",
-                        "Was sample quantity transfer comppletely in titration vessel ?",
-                        "Is there any sample spillage observed on side walls of titration vessel  or out side of titration vessel?",
-                        "Was silica found in good condition ?",
-                        "Was electrode was saturated before start of analysis?",
-                        "Was there any drift observed during analysis?",
-                        "Was correct electrode used for analysis?",
-                        "was power plug connection secure through out analsis?",
-                        "Was inlet tube found bubble free ?",
-                        "Was sample weight taken as per STP?",
-                        "Was standardization performed before start of analysis?",
-                        "Was electrode condtioning before start of analysis?",
-                        "Is RSD of KF within limit as per SOP/STP?",
-                        "Was activated desiccant used?",
-                        "Was tip of nozzle correctly attached with delivery tube of volumetric solution reservior?",
-
-                        );
-                        @endphp
-                        <div class="block">
-                        <div class="block-head"> CheckList - kF Potentionmeter</div>
-                        <div class="border-table">
-                        <table>
-                        <tr class="table_bg">
-                            <th style="width: 5%;">Sr.No.</th>
-                            <th style="width: 40%;">Question</th>
-                            <th style="width: 20%;">Response</th>
-                            <th>Remarks</th>
-                        </tr>
-                        @if ($kF_Potentionmeters)
-                        @foreach ($kF_Potentionmeter_questions as $kF_Potentionmeter_question)
-                        <tr>
-                            <td class="w-15">{{ $loop->index+1 }}</td>
-                            <td class="w-15">{{ $kF_Potentionmeter_question }}</td>
-                            <td>{{ Helpers::getArrayKey($kF_Potentionmeters->data[$loop->index], 'response') }} </td>
-                            <td class="w-15">{{ Helpers::getArrayKey($kF_Potentionmeters->data[$loop->index], 'remark') }}</td>
-                        </tr>
-                        @endforeach
-                        @else
-                        <tr>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                        </tr>
-                        @endif
-                        </table>
-                        </div>
-                        </div>
-                        @php
-                        $RM_PM_questions = array(
-                        "Was analyst Varified the GRN as per received samples?",
-                        "Was analyst used calibrated balanced for sampling ?",
-                        "Was analyst performed the correct sampling procedure?",
-                        "Was sampling performed by trained personal?",
-                        "Was analyst used the cleaned sampling tools for analysis?",
-                        "Was  analyst used correct container for sampling ?",
-                        "Was sample handled as per SOP?",
-                        "Was any deviation observed during the receipt of material?",
-                        "Was the material shipped as per recommended Transportation storage condition?",
-                        "Is the COA received with material complying with the specification and no discrepancy was observed?",
-                        "Was analyst performed the sampling inside the LAF?",
-                        "Was the prefilter pressure efficient before start of sampling?",
-                        "Was material stored as per recommeded storage conditon?",
-
-                        );
-                        @endphp
-                        <div class="block">
-                        <div class="block-head"> CheckList - RM-PM Sampling</div>
-                        <div class="border-table">
-                        <table>
-                        <tr class="table_bg">
-                            <th style="width: 5%;">Sr.No.</th>
-                            <th style="width: 40%;">Question</th>
-                            <th style="width: 20%;">Response</th>
-                            <th>Remarks</th>
-                        </tr>
-                        @if ($kF_Potentionmeters)
-                        @foreach ($RM_PM_questions as $RM_PM_questions)
-                        <tr>
-                            <td class="w-15">{{ $loop->index+1 }}</td>
-                            <td class="w-15">{{ $RM_PM_questions }}</td>
-                            <td>{{ Helpers::getArrayKey($kF_Potentionmeters->data[$loop->index], 'response') }} </td>
-                            <td class="w-15">{{ Helpers::getArrayKey($kF_Potentionmeters->data[$loop->index], 'remark') }}</td>
-                        </tr>
-                        @endforeach
-                        @else
-                        <tr>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                        </tr>
-                        @endif
-                        </table>
-                        </div>
-                        </div>
+                    </div>
                 @endif
+            @endif
+           
+            @php
+                $kF_Potentionmeter_questions = array(
+                    "Was Correct Reagent used for analysis?",
+                    "Was dried methanol used for analysis?",
+                    "Was bureate withn calibrated state?",
+                    "Was kF reagent used within validity periods?",
+                    "Was sample quantity transfer comppletely in titration vessel ?",
+                    "Is there any sample spillage observed on side walls of titration vessel or out side of titration vessel?",
+                    "Was silica found in good condition ?",
+                    "Was electrode was saturated before start of analysis?",
+                    "Was there any drift observed during analysis?",
+                    "Was correct electrode used for analysis?",
+                    "was power plug connection secure through out analsis?",
+                    "Was inlet tube found bubble free ?",
+                    "Was sample weight taken as per STP?",
+                    "Was standardization performed before start of analysis?",
+                    "Was electrode condtioning before start of analysis?",
+                    "Is RSD of KF within limit as per SOP/STP?",
+                    "Was activated desiccant used?",
+                    "Was tip of nozzle correctly attached with delivery tube of volumetric solution reservior?",
+                );
+            @endphp
+
+            @php
+                $kfData = [];
+
+                if ($kF_Potentionmeters && !empty($kF_Potentionmeters->data)) {
+                    if (is_string($kF_Potentionmeters->data)) {
+                        $kfData = json_decode($kF_Potentionmeters->data, true) ?: [];
+                    } elseif (is_array($kF_Potentionmeters->data)) {
+                        $kfData = $kF_Potentionmeters->data;
+                    } else {
+                        $kfData = (array) $kF_Potentionmeters->data;
+                    }
+                }
+
+                $hasKfData = false;
+
+                foreach ($kfData as $row) {
+                    if (
+                        is_array($row) &&
+                        (
+                            filled($row['response'] ?? null) ||
+                            filled($row['remark'] ?? null) ||
+                            filled($row['remarks'] ?? null)
+                        )
+                    ) {
+                        $hasKfData = true;
+                        break;
+                    }
+                }
+
+                $isKfSelected = false;
+
+                foreach ($selectedChecklist as $selected) {
+                    $selectedValue = strtolower(preg_replace('/[^a-z]/', '', trim($selected)));
+
+                    if (in_array($selectedValue, ['kfpotentionmeter', 'kfpotentiometer'], true)) {
+                        $isKfSelected = true;
+                        break;
+                    }
+                }
+            @endphp
+
+            @if($hasKfData)
+
+                <div class="block">
+                    <div class="block-head">CheckList - kF Potentionmeter</div>
+
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th>Remarks</th>
+                            </tr>
+
+                            @foreach($kF_Potentionmeter_questions as $index => $question)
+                                @php
+                                    $answer = $kfData[$index] ?? [];
+
+                                    $response = $answer['response'] ?? null;
+                                    $remark = $answer['remark'] ?? ($answer['remarks'] ?? null);
+                                @endphp
+
+                                @if(filled($response) || filled($remark))
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $question }}</td>
+                                        <td>{{ filled($response) ? $response : '-' }}</td>
+                                        <td>{{ filled($remark) ? $remark : '-' }}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </table>
+                    </div>
+                </div>
+
+            @endif
+
+            @php
+                $RM_PM_questions = array(
+                "Was analyst Varified the GRN as per received samples?",
+                "Was analyst used calibrated balanced for sampling ?",
+                "Was analyst performed the correct sampling procedure?",
+                "Was sampling performed by trained personal?",
+                "Was analyst used the cleaned sampling tools for analysis?",
+                "Was  analyst used correct container for sampling ?",
+                "Was sample handled as per SOP?",
+                "Was any deviation observed during the receipt of material?",
+                "Was the material shipped as per recommended Transportation storage condition?",
+                "Is the COA received with material complying with the specification and no discrepancy was observed?",
+                "Was analyst performed the sampling inside the LAF?",
+                "Was the prefilter pressure efficient before start of sampling?",
+                "Was material stored as per recommeded storage conditon?",
+
+                );
+            @endphp
+            
+            @php
+                $rmPmData = [];
+
+                if ($RM_PMs && !empty($RM_PMs->data)) {
+                    if (is_string($RM_PMs->data)) {
+                        $rmPmData = json_decode($RM_PMs->data, true) ?: [];
+                    } elseif (is_array($RM_PMs->data)) {
+                        $rmPmData = $RM_PMs->data;
+                    }
+                }
+
+                $hasRmPmData = false;
+
+                foreach ($rmPmData as $row) {
+                    if (
+                        is_array($row) &&
+                        (
+                            filled($row['response'] ?? null) ||
+                            filled($row['remark'] ?? null) ||
+                            filled($row['remarks'] ?? null)
+                        )
+                    ) {
+                        $hasRmPmData = true;
+                        break;
+                    }
+                }
+            @endphp
+
+            @if(in_array('RM-PM Sampling', $selectedChecklist, true) && $hasRmPmData)
+
+                <div class="block">
+                    <div class="block-head">CheckList - RM-PM Sampling</div>
+
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th>Remarks</th>
+                            </tr>
+
+                            @foreach($RM_PM_questions as $index => $question)
+                                @php
+                                    $answer = $rmPmData[$index] ?? [];
+
+                                    $response = $answer['response'] ?? null;
+                                    $remark = $answer['remark'] ?? ($answer['remarks'] ?? null);
+                                @endphp
+
+                                @if(filled($response) || filled($remark))
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $question }}</td>
+                                        <td>{{ filled($response) ? $response : '-' }}</td>
+                                        <td>{{ filled($remark) ? $remark : '-' }}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </table>
+                    </div>
+                </div>
+
+            @endif
+
+    @endif
