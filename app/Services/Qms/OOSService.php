@@ -15071,7 +15071,6 @@ class OOSService
 
     private static function saveGridAudit(OOS $oos,$identifier,$previous,$current,$action = 'Update') {
         
-        // JSON / array ko normalize karo
         $normalize = function ($value) {
 
             if (is_string($value)) {
@@ -15088,7 +15087,6 @@ class OOSService
         $oldRows = $normalize($previous);
         $newRows = $normalize($current);
 
-        // Single associative row ko bhi support karo
         $isAssoc = function (array $array) {
             return !empty($array) && !array_is_list($array);
         };
@@ -15103,7 +15101,6 @@ class OOSService
 
         $user = Auth::user();
 
-        // Saare row indexes check karo
         $rowIndexes = array_unique(array_merge(
             array_keys($oldRows),
             array_keys($newRows)
@@ -15122,7 +15119,6 @@ class OOSService
                 $newRow = [];
             }
 
-            // Old + New dono ke columns
             $columns = array_unique(array_merge(
                 array_keys($oldRow),
                 array_keys($newRow)
@@ -15136,7 +15132,6 @@ class OOSService
                 $oldText = self::gridAuditValue($oldValue);
                 $newText = self::gridAuditValue($newValue);
 
-                // Same value => no audit
                 if ($oldText === $newText) {
                     continue;
                 }
@@ -15158,9 +15153,7 @@ class OOSService
 
                 $history->oos_id = $oos->id;
 
-                $history->activity_type =
-                    ': ' . $gridLabel . ' / ' . $column .
-                    ' / Row ' . ((int) $rowIndex + 1);
+                $history->activity_type = ': ' . $gridLabel . ' / ' . $column . ' / Row ' . ((int) $rowIndex + 1);
 
                 $history->previous = $oldText;
                 $history->current = $newText;
@@ -15170,10 +15163,7 @@ class OOSService
                 $history->user_id = $user->id;
                 $history->user_name = $user->name;
 
-                $history->user_role = RoleGroup::where(
-                    'id',
-                    $user->role
-                )->value('name');
+                $history->user_role = RoleGroup::where('id', $user->role)->value('name');
 
                 $history->origin_state = $oos->status;
                 $history->stage = $oos->stage;

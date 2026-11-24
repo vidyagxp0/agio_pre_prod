@@ -103,15 +103,6 @@
 
             @endif
 
-            {{-- <div class="col-md-12 mb-4">
-                <div class="group-input">
-                    <label for="Description Deviation">Checklist Outcome</label>
-                    <textarea class="summernote" data-stage="5" name="justify_if_no_field_alert_pli" value=""
-                        id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
-              {{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : '' }} </textarea>
-                </div>
-            </div> --}}
-
             <div class="col-md-12">
                 {!! quillEditor(
                     'justify_if_no_field_alert_pli',
@@ -130,13 +121,6 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
-
-            {{-- <div class="col-md-12 mb-4">
-                <div class="group-input">
-                    <label for="RootCause">Immediate Action Taken <span class="text-danger">*</span></label>
-                    <textarea name="root_comment" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here" {{ $data->stage == 5 ? '' : 'readonly' }}> {{ $data->root_comment }}</textarea>
-                </div>
-            </div> --}}
 
             <div class="col-md-12">
                 {!! quillEditor(
@@ -157,15 +141,6 @@
                 @enderror
             </div>
 
-            {{-- <div class="col-lg-12 mb-4">
-                <div class="group-input">
-                    <label for="Audit Schedule Start Date">Delay Justification For Investigation</label>
-                    <textarea class="summernote" data-stage="5" name="justify_if_no_analyst_int_pli" value=""
-                        id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
-                  {{$data && $data->justify_if_no_analyst_int_pli ? $data->justify_if_no_analyst_int_pli : ''}}  </textarea>
-                </div>
-            </div> --}}
-
             <div class="col-md-12">
                 {!! quillEditor(
                     'justify_if_no_analyst_int_pli',
@@ -184,17 +159,6 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
-
-
-            {{-- <div class="col-lg-12 mb-4">
-                <div class="group-input">
-                    <label for="Audit Schedule Start Date">Analyst Interview Details <span class="text-danger">*</span></label>
-                    <textarea class="summernote" data-stage="5" name="analyst_interview_pli" value=""
-                        id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
-                  {{$data && $data->analyst_interview_pli ? $data->analyst_interview_pli : ''}}  </textarea>
-
-                </div>
-            </div> --}}
 
             <div class="col-md-12">
                 {!! quillEditor(
@@ -257,12 +221,7 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-lg-12 new-time-data-field">
-                <div class="group-input input-time ">
-                    <label for="deviation_time">Any Other Cause/Suspected Cause<span class="text-danger">*</span></label>
-                    <textarea class="summernote" data-stage="5" id="summernote-1" name="Any_other_cause">{{ $data->Any_other_cause }}</textarea>
-                </div>
-            </div> --}}
+
 
             <div class="col-md-12">
                 {!! quillEditor(
@@ -282,13 +241,6 @@
                 @enderror
             </div>
 
-            {{-- <div class="col-lg-12 new-time-data-field">
-                <div class="group-input input-time ">
-                    <label for="deviation_time">Any Other Batches Analyzed</label>
-                    <textarea class="summernote" data-stage="5" id="summernote-1" name="Any_other_batches">{{ $data->Any_other_batches }}</textarea>
-                </div>
-            </div> --}}
-
             <div class="col-md-12">
                 {!! quillEditor(
                     'Any_other_batches',
@@ -306,13 +258,6 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
-
-            {{-- <div class="col-lg-12 new-time-data-field">
-                <div class="group-input input-time ">
-                    <label for="deviation_time">Details Of Trend</label>
-                    <textarea class="summernote" data-stage="5" id="summernote-1" name="details_of_trend">{{ $data->details_of_trend }}</textarea>
-                </div>
-            </div> --}}
 
             <div class="col-md-12">
                 {!! quillEditor(
@@ -333,13 +278,6 @@
                 @enderror
             </div>
 
-            {{-- <div class="col-lg-12 new-time-data-field">
-                <div class="group-input input-time ">
-                    <label for="deviation_time">Assignable Cause And Rational For Assignable Cause <span class="text-danger">*</span></label>
-                    <textarea class="summernote" data-stage="5" id="summernote-1" name="rational_for_assingnable">{{ $data->rational_for_assingnable }}</textarea>
-                </div>
-            </div> --}}
-
             <div class="col-md-12">
                 {!! quillEditor(
                     'rational_for_assingnable',
@@ -358,16 +296,6 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
-
-
-            {{-- <div class="col-md-12 mb-4">
-                <div class="group-input">
-                    <label for="Description Deviation">Summary Of Investigation <span class="text-danger">*</span></label>
-                    <textarea class="summernote" data-stage="5" name="summary_of_prelim_investiga_plic"
-                        id="summernote-1"  {{Helpers::isOOSChemical($data->stage)}} >
-                    {{ $data->summary_of_prelim_investiga_plic ? $data->summary_of_prelim_investiga_plic : ''}}</textarea>
-                </div>
-            </div> --}}
 
             <div class="col-md-12">
                 {!! quillEditor(
@@ -458,17 +386,6 @@
             </div>
 
             <div class="col-md-12 mb-4">
-                <div class="group-input">
-                    {{-- @if($data->Form_type == 'OOT')
-                    <label for="Description Deviation">OOT Category(If Others)</label>
-                    @else
-                    <label for="Description Deviation">OOS Category(If Others)</label>
-                    @endif
-                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                            require completion</small></div>
-                    <textarea class="summernote" data-stage="5" name="oos_category_others_plic" id="summernote-1"
-                        value=""  {{Helpers::isOOSChemical($data->stage)}} > {{ $data->oos_category_others_plic }}
-                    </textarea> --}}
 
                     {!! quillEditor(
                         'oos_category_others_plic',
@@ -598,9 +515,9 @@
                     <label for="Audit Start Date">Resampling Required <span class="text-danger">*</span></label>
                     <select name="is_repeat_assingable_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
-                        <option value="YES" {{ $data && $data->is_repeat_assingable_pia == 'YES' ?
+                        <option value="Yes" {{ $data && $data->is_repeat_assingable_pia == 'Yes' ?
                             'selected' : '' }}>Yes</option>
-                        <option value="NO" {{ $data && $data->is_repeat_assingable_pia == 'NO' ?
+                        <option value="No" {{ $data && $data->is_repeat_assingable_pia == 'No' ?
                             'selected' : '' }}>No</option>
                     </select>
                 </div>
@@ -614,9 +531,9 @@
                     <label for="Audit Start Date">Repeat Testing Required <span class="text-danger">*</span></label>
                     <select name="repeat_testing_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
-                        <option value="YES" {{ $data && $data->repeat_testing_pia == 'YES' ?
+                        <option value="Yes" {{ $data && $data->repeat_testing_pia == 'Yes' ?
                             'selected' : '' }}>Yes</option>
-                        <option value="NO" {{ $data && $data->repeat_testing_pia == 'NO' ?
+                        <option value="No" {{ $data && $data->repeat_testing_pia == 'No' ?
                             'selected' : '' }}>No</option>
                         <option value="NA" {{ $data && $data->repeat_testing_pia == 'NA' ?
                             'selected' : '' }}>NA</option>    
@@ -706,26 +623,23 @@
                     <div class="file-attachment-field">
                         <div class="file-attachment-list" id="supporting_attachments_plir">
                             @if ($data->supporting_attachments_plir)
-                            @foreach ($data->supporting_attachments_plir as $file)
-                            <h6 type="button" class="file-container text-dark"
-                                style="background-color: rgb(243, 242, 240);">
-                                <b>{{ $file }}</b>
-                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                        class="fa fa-eye text-primary"
-                                        style="font-size:20px; margin-right:4px;"></i></a>
-                                <!-- <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                        class="fa-solid fa-circle-xmark"
-                                        style="color:red; font-size:20px;"></i></a> -->
-
-                                <a type="button"
-                                            class="remove-file"
-                                            data-field-name="supporting_attachments_plir"
-                                            data-file-name="{{ $file }}">
-                                                <i class="fa-solid fa-circle-xmark"
-                                                style="color:red; font-size:20px;"></i>
-                                        </a>
-                            </h6>
-                            @endforeach
+                                @foreach ($data->supporting_attachments_plir as $file)
+                                <h6 type="button" class="file-container text-dark"
+                                    style="background-color: rgb(243, 242, 240);">
+                                    <b>{{ $file }}</b>
+                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                            class="fa fa-eye text-primary"
+                                            style="font-size:20px; margin-right:4px;"></i></a>
+                    
+                                    <a type="button"
+                                        class="remove-file"
+                                        data-field-name="supporting_attachments_plir"
+                                        data-file-name="{{ $file }}">
+                                            <i class="fa-solid fa-circle-xmark"
+                                            style="color:red; font-size:20px;"></i>
+                                    </a>
+                                </h6>
+                                @endforeach
                             @endif
 
                         </div>
