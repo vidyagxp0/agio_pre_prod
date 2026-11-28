@@ -84,48 +84,48 @@
     </style>
 
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const docTypeSelect = document.getElementById("doc-type");
-        const allTabs = document.querySelectorAll(".hidden-tabs");
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const docTypeSelect = document.getElementById("doc-type");
+            const allTabs = document.querySelectorAll(".hidden-tabs");
 
-        if (!docTypeSelect) return;
+            if (!docTypeSelect) return;
 
-        function showMatchingTabs(docTypeId) {
-            const selectedType = String(docTypeId || "")
-                .trim()
-                .toUpperCase();
+            function showMatchingTabs(docTypeId) {
+                const selectedType = String(docTypeId || "")
+                    .trim()
+                    .toUpperCase();
 
-            allTabs.forEach(tab => {
-                const raw = (tab.dataset.id || "").trim();
-                let ids = [];
+                allTabs.forEach(tab => {
+                    const raw = (tab.dataset.id || "").trim();
+                    let ids = [];
 
-                try {
-                    ids = raw.startsWith("[")
-                        ? JSON.parse(raw)
-                        : raw.split(",");
-                } catch {
-                    ids = [];
-                }
+                    try {
+                        ids = raw.startsWith("[")
+                            ? JSON.parse(raw)
+                            : raw.split(",");
+                    } catch {
+                        ids = [];
+                    }
 
-                const matches = Array.isArray(ids) &&
-                    selectedType !== "" &&
-                    ids.some(id =>
-                        String(id).trim().toUpperCase() === selectedType
-                    );
+                    const matches = Array.isArray(ids) &&
+                        selectedType !== "" &&
+                        ids.some(id =>
+                            String(id).trim().toUpperCase() === selectedType
+                        );
 
-                tab.style.display = matches ? "inline-block" : "none";
+                    tab.style.display = matches ? "inline-block" : "none";
+                });
+            }
+
+            // Edit page par saved document type ke tabs bhi dikhenge.
+            showMatchingTabs(docTypeSelect.value);
+
+            docTypeSelect.addEventListener("change", function () {
+                showMatchingTabs(this.value);
             });
-        }
-
-        // Edit page par saved document type ke tabs bhi dikhenge.
-        showMatchingTabs(docTypeSelect.value);
-
-        docTypeSelect.addEventListener("change", function () {
-            showMatchingTabs(this.value);
         });
-    });
-</script>
+    </script>
 
 
     <style>
@@ -220,8 +220,6 @@
         }
         
     </style>
-
-    
 
     <div id="data-fields">
         <div class="container-fluid">
@@ -3257,7 +3255,7 @@
                                     class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                     </a>
                                 </button>
                             </div>
@@ -3419,7 +3417,7 @@
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -4427,7 +4425,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -4703,7 +4701,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -4752,7 +4750,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -5074,7 +5072,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -5350,7 +5348,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -5456,7 +5454,7 @@
                             class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -5660,7 +5658,7 @@
                         class="saveButton">Save</button>
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                         </a>
                     </button>
                 </div>
@@ -5885,7 +5883,7 @@
                     class="saveButton">Save</button>
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                     </a>
                 </button>
             </div>
@@ -5993,7 +5991,7 @@
                         class="saveButton">Save</button>
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                         </a>
                     </button>
                 </div>
@@ -6224,7 +6222,7 @@
                     </div>
                     <div class="input-fields">
                         <div class="row">
-
+      
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment"><b>Bill of Material File Attachment</b></label>
@@ -6289,119 +6287,123 @@
 
                             <script>
 
-                            document.addEventListener('DOMContentLoaded', function () {
+                                document.addEventListener('DOMContentLoaded', function () {
 
-                                document.querySelectorAll('#billMatrialDatassp .remove-file').forEach(button => {
+                                    document.querySelectorAll('#billMatrialDatassp .remove-file').forEach(button => {
 
-                                    button.addEventListener('click', function () {
+                                        button.addEventListener('click', function () {
 
-                                        const fileName = this.dataset.fileName;
-                                        const fileContainer = this.closest('.file-container');
+                                            const fileName = this.dataset.fileName;
+                                            const fileContainer = this.closest('.file-container');
 
-                                        if(fileContainer){
+                                            if(fileContainer){
 
-                                            fileContainer.remove();
+                                                fileContainer.remove();
 
-                                            const deletedInput = document.getElementById('deleted_billMatrial');
+                                                const deletedInput = document.getElementById('deleted_billMatrial');
 
-                                            let deletedFiles = deletedInput.value
-                                                ? deletedInput.value.split(',')
-                                                : [];
+                                                let deletedFiles = deletedInput.value
+                                                    ? deletedInput.value.split(',')
+                                                    : [];
 
-                                            deletedFiles.push(fileName);
+                                                deletedFiles.push(fileName);
 
-                                            deletedInput.value = deletedFiles.join(',');
-                                        }
+                                                deletedInput.value = deletedFiles.join(',');
+                                            }
+
+                                        });
 
                                     });
 
                                 });
 
-                            });
 
+                                function validateBillMaterialFiles(input){
 
-                            function validateBillMaterialFiles(input){
+                                    const allowedExtensions = [
+                                        'pdf',
+                                        'jpg',
+                                        'jpeg',
+                                        'png'
+                                    ];
 
-                                const allowedExtensions = [
-                                    'pdf',
-                                    'jpg',
-                                    'jpeg',
-                                    'png'
-                                ];
+                                    const allowedMimeTypes = [
+                                        'application/pdf',
+                                        'image/jpeg',
+                                        'image/png'
+                                    ];
 
-                                const allowedMimeTypes = [
-                                    'application/pdf',
-                                    'image/jpeg',
-                                    'image/png'
-                                ];
+                                    const files = Array.from(input.files);
 
-                                const files = Array.from(input.files);
-
-                                if(files.length === 0){
-                                    return;
-                                }
-
-                                for(const file of files){
-
-                                    const ext = file.name.split('.').pop().toLowerCase();
-
-                                    if(
-                                        !allowedExtensions.includes(ext) ||
-                                        !allowedMimeTypes.includes(file.type)
-                                    ){
-
-                                        Swal.fire({
-                                            icon:'error',
-                                            title:'Invalid File',
-                                            text:'Only PDF, JPG, JPEG and PNG files are allowed.'
-                                        });
-
-                                        input.value = '';
+                                    if(files.length === 0){
                                         return;
                                     }
+
+                                    for(const file of files){
+
+                                        const ext = file.name.split('.').pop().toLowerCase();
+
+                                        if(
+                                            !allowedExtensions.includes(ext) ||
+                                            !allowedMimeTypes.includes(file.type)
+                                        ){
+
+                                            Swal.fire({
+                                                icon:'error',
+                                                title:'Invalid File',
+                                                text:'Only PDF, JPG, JPEG and PNG files are allowed.'
+                                            });
+
+                                            input.value = '';
+                                            return;
+                                        }
+                                    }
+
+                                    addMultipleFiles(input,'billMatrialDatassp');
                                 }
 
-                                addMultipleFiles(input,'billMatrialDatassp');
-                            }
 
+                                function addMultipleFiles(input,listId){
 
-                            function addMultipleFiles(input,listId){
+                                    const fileList = document.getElementById(listId);
 
-                                const fileList = document.getElementById(listId);
+                                    for(const file of input.files){
 
-                                for(const file of input.files){
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container','text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243,242,240)';
 
-                                    let fileContainer = document.createElement('h6');
-                                    fileContainer.classList.add('file-container','text-dark');
-                                    fileContainer.style.backgroundColor = 'rgb(243,242,240)';
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
 
-                                    let fileText = document.createElement('b');
-                                    fileText.textContent = file.name;
+                                        let remove = document.createElement('a');
+                                        remove.href = "javascript:void(0)";
+                                        remove.classList.add('remove-file');
 
-                                    let remove = document.createElement('a');
-                                    remove.href = "javascript:void(0)";
-                                    remove.classList.add('remove-file');
+                                        remove.innerHTML =
+                                            '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
 
-                                    remove.innerHTML =
-                                        '<i class="fa-solid fa-circle-xmark" style="color:red;font-size:20px;"></i>';
+                                        remove.onclick = function(){
+                                            fileContainer.remove();
+                                        };
 
-                                    remove.onclick = function(){
-                                        fileContainer.remove();
-                                    };
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(remove);
 
-                                    fileContainer.appendChild(fileText);
-                                    fileContainer.appendChild(remove);
+                                        fileList.appendChild(fileContainer);
+                                    }
 
-                                    fileList.appendChild(fileContainer);
                                 }
-
-                            }
 
                             </script>
 
+                        </div>
 
-
-
+                        <div class="col-md-12">
+                            <div class="group-input">
+                                <label for="batch_number">Batch Number</label>
+                                <input type="text" name="batch_number" id="batch_number" value="{{ $document?->batch_number }}">
+                            </div>
                         </div>
                     </div>
                     <div class="button-block">
@@ -6409,7 +6411,7 @@
                             class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -6643,7 +6645,7 @@
                             class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -6838,7 +6840,7 @@
                             class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -7059,7 +7061,7 @@
                             class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -7276,7 +7278,7 @@
                             class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -7504,7 +7506,7 @@
                             class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -8147,7 +8149,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -8354,7 +8356,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -8561,7 +8563,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -8782,7 +8784,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -8994,7 +8996,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -9217,7 +9219,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -9430,7 +9432,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -9642,7 +9644,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -9851,7 +9853,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -10071,7 +10073,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -10284,7 +10286,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -10494,7 +10496,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -10707,7 +10709,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -10901,7 +10903,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -11097,7 +11099,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -11272,7 +11274,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -18698,7 +18700,7 @@
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                              </a>
                             </button>
                         </div>

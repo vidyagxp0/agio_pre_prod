@@ -2322,7 +2322,7 @@
                                             @endphp
                                             <div class="col-lg-6 QualityAssurance">
                                                 <div class="group-input">
-                                                    <label for="Quality Assurance notification">Quality Assurance Person 1 <span id="asteriskPT"
+                                                    <label for="Quality Assurance notification">Quality Assurance Person<span id="asteriskPT"
                                                             style="display: {{ $data1->Quality_Assurance_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
@@ -2351,17 +2351,7 @@
                                                         name="QualityAssurance_assessment" id="summernote-17">{{ $data1->QualityAssurance_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-md-12 mb-3 QualityAssurance">
-                                                <div class="group-input">
-                                                    <label for="Quality Assurance feedback">Quality Assurance Feedback <span id="asteriskPT2"
-                                                            style="display: {{ $data1->Quality_Assurance_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                            class="text-danger">*</span></label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                            does not require completion</small></div>
-                                                    <textarea class="summernote QualityAssurance_feedback" @if ($data->stage == 3 || (isset($data1->QualityAssurance_person) && Auth::user()->name != $data1->QualityAssurance_person)) readonly @endif
-                                                        name="QualityAssurance_feedback" id="summernote-18" @if ($data1->Quality_Assurance_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->QualityAssurance_feedback }}</textarea>
-                                                </div>
-                                            </div> -->
+                                     
                                             <div class="col-12 QualityAssurance">
                                                 <div class="group-input">
                                                     <label for="Quality Assurance attachment">Quality Assurance Attachments</label>
@@ -2395,7 +2385,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3 QualityAssurance">
                                                 <div class="group-input">
-                                                    <label for="Quality Assurance Completed By">Quality Assurance  Review Completed
+                                                    <label for="Quality Assurance Completed By">Quality Assurance Review Completed
                                                         By</label>
                                                     <input readonly type="text" value="{{ $data1->QualityAssurance_by }}"
                                                         name="QualityAssurance_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
@@ -5502,14 +5492,7 @@
                                                         <textarea class="tiny" name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <!-- <div class="col-md-12 mb-3 Microbiology">
-                                                    <div class="group-input">
-                                                        <label for="Microbiology feedback">Microbiology Feedback</label>
-                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                                does not require completion</small></div>
-                                                        <textarea class="tiny" name="Microbiology_feedback" id="summernote-18">{{ $data1->Microbiology_feedback }}</textarea>
-                                                    </div>
-                                                </div> -->
+                                       
                                             @else
                                                 <div class="col-md-12 mb-3 Microbiology">
                                                     <div class="group-input">

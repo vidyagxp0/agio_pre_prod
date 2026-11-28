@@ -21,22 +21,18 @@
         }
     </style>
     <script>
-    $(document).ready(function() {
-        $('.formSubmit').on('submit', function(e) {
-            $('.on-submit-disable-button').prop('disabled', true);
+        $(document).ready(function() {
+            $('.formSubmit').on('submit', function(e) {
+                $('.on-submit-disable-button').prop('disabled', true);
+            });
         });
-    });
-</script>
+    </script>
 
     <div class="form-field-head">
-        {{-- <div class="pr-id">
-            New Child
-        </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName(session()->get('division')) }}/ERRATA
         </div>
     </div>
-
 
 
     {{-- ! ========================================= --}}
@@ -44,19 +40,15 @@
     {{-- ! ========================================= --}}
     <div id="change-control-fields">
         <div class="container-fluid">
-
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm2')">HOD Initial Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Initial Review</button>
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">CFT</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA/CQA Head Designee Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Initiator Update</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">HOD final Review</button>
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA Review</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Head Designee Closure
-                    Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Head Designee Closure Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Activity Log</button>
             </div>
 
@@ -76,9 +68,7 @@
                                     <div class="group-input">
                                         <label for="Record Number">Record Number</label>
                                             <input type="hidden" name="record" id="record" >
-                                     {{--   <input disabled type="text" name="record"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/ERRATA/{{ date('Y') }}/{{ $record_number }}">--}}
-                                               <input disabled type="text" name="record" id="record" placeholder="Record Number">
+                                            <input disabled type="text" name="record" id="record" placeholder="Record Number">
                                     </div>
                                 </div>
 
@@ -88,13 +78,11 @@
                                         <input readonly type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator">Initiator</label>
-                                        {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
                                         <input disabled type="text" name="initiator_by" value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
@@ -115,66 +103,54 @@
                                     </div>
                                 </div>
 
-                                    <script>
-                                        document.addEventListener("DOMContentLoaded", function () {
-                                            // Define department name to code mapping
-                                            const departmentMapping = {
-                                                "Corporate Quality Assurance": "CQA",
-                                                "Quality Control (Microbiology department)": "QM",
-                                                "Engineering": "EN",
-                                                "Store": "ST",
-                                                "Production Injectable": "PI",
-                                                "Production External": "PE",
-                                                "Production Tablet,Powder and Capsule": "PT",
-                                                "Quality Assurance": "QA",
-                                                "Quality Control": "QC",
-                                                "Regulatory Affairs": "RA",
-                                                "Packaging Development /Artwork": "PD",
-                                                "Artwork": "AW",
-                                                "Research & Development": "R&D",
-                                                "Human Resource": "HR",
-                                                "Marketing": "MK",
-                                                "Analytical research and Development Laboratory": "AL",
-                                                "Information Technology": "IT",
-                                                "Safety": "SA",
-                                                "Purchase Department": "PU",
-                                            };
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        // Define department name to code mapping
+                                        const departmentMapping = {
+                                            "Corporate Quality Assurance": "CQA",
+                                            "Quality Control (Microbiology department)": "QM",
+                                            "Engineering": "EN",
+                                            "Store": "ST",
+                                            "Production Injectable": "PI",
+                                            "Production External": "PE",
+                                            "Production Tablet,Powder and Capsule": "PT",
+                                            "Quality Assurance": "QA",
+                                            "Quality Control": "QC",
+                                            "Regulatory Affairs": "RA",
+                                            "Packaging Development /Artwork": "PD",
+                                            "Artwork": "AW",
+                                            "Research & Development": "R&D",
+                                            "Human Resource": "HR",
+                                            "Marketing": "MK",
+                                            "Analytical research and Development Laboratory": "AL",
+                                            "Information Technology": "IT",
+                                            "Safety": "SA",
+                                            "Purchase Department": "PU",
+                                        };
 
-                                            // Get the Initiator Department input
-                                            let initiatorGroupInput = document.getElementById("initiator_group");
-                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+                                        // Get the Initiator Department input
+                                        let initiatorGroupInput = document.getElementById("initiator_group");
+                                        let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
 
-                                            // Get the department name from the input field
-                                            let departmentName = initiatorGroupInput.value.trim();
+                                        // Get the department name from the input field
+                                        let departmentName = initiatorGroupInput.value.trim();
 
-                                            // Auto-generate the department code based on the mapping
-                                            if (departmentName in departmentMapping) {
-                                                initiatorGroupCodeInput.value = departmentMapping[departmentName];
-                                            } else {
-                                                initiatorGroupCodeInput.value = "N/A"; // Default if not found
-                                            }
-                                        });
-                                    </script>
+                                        // Auto-generate the department code based on the mapping
+                                        if (departmentName in departmentMapping) {
+                                            initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                        } else {
+                                            initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                        }
+                                    });
+                                </script>
 
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Initiator Group Code"> Department Code</label>
-                                                    <input type="text" name="department_code" id="initiator_group_code" placeholder="Department Code"
-                                                        value="" readonly>
-                                                </div>
-                                            </div>
-
-
-
-                                {{-- <div class="col-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search">
-                                            Document Type<span class="text-danger"></span>
-                                        </label>
-                                        <input type="text" id="select-state" placeholder="Select..."
-                                            name="document_type">
+                                        <label for="Initiator Group Code"> Department Code</label>
+                                        <input type="text" name="department_code" id="initiator_group_code" placeholder="Department Code"
+                                            value="" readonly>
                                     </div>
-                                </div> --}}
+                                </div>
 
                                 <div class="col-6">
                                     <div class="group-input">
@@ -199,33 +175,18 @@
                                         <input type="text" name="document_type_others" placeholder="Please specify">
                                     </div>
                                 </div>
-<script>
+                                <script>
 
-    function handleDocumentSelection(select) {
-    const othersInput = document.getElementById('others-input');
-    if (select.value === 'others') {
-        othersInput.style.display = 'block';
-    } else {
-        othersInput.style.display = 'none';
-    }
-}
+                                    function handleDocumentSelection(select) {
+                                        const othersInput = document.getElementById('others-input');
+                                        if (select.value === 'others') {
+                                            othersInput.style.display = 'block';
+                                        } else {
+                                            othersInput.style.display = 'none';
+                                        }
+                                    }
 
-    </script>
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="doc-type">Document Type<span class="text-danger">*</span></label>
-                                        <select name="document_type_id" id="doc-type" required onchange="handleDocumentSelection(this)">
-                                            <option value="" selected>Enter your Selection</option>
-                                            @foreach (Helpers::getDocumentTypes() as $code => $type)
-                                                <option value="{{ $code }}">
-                                                    {{ $type }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <p id="doc-typeError" style="color:red">** Department is required</p>
-                                </div> --}}
-
+                                </script>
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -242,57 +203,6 @@
                                     //     : explode(',', $showdata->reference_document);
                                 @endphp
 
-                                    {{-- <div class="">
-                                    <div class="group-input">
-                                        <label for="Reference Recores">Refrence Documents </label>
-
-                                        @foreach ($old_record as $new)
-                                            <option value="{{ $new->id }}">
-                                                {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
-
-                                            </option>
-                                        @endforeach
-
-                                        </select> -->
-                                        <input type="text" name="reference" id="docname" maxlength="255">
-                                    </div>
-                                </div> --}}
-
-                                <!-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="reference">Parent Record Number</label>
-                                        <select multiple name="reference[]" placeholder="Select Parent Record Number"
-                                            data-silent-initial-value-set="true" id="reference">
-
-                                            @foreach ($relatedRecords as $records)
-                                                <option
-                                                    value="{{ Helpers::getDivisionName(
-                                                        $records->division_id || $records->division || $records->division_code || $records->site_location_code,
-                                                    ) .
-                                                        '/' .
-                                                        $records->process_name .
-                                                        '/' .
-                                                        date('Y') .
-                                                        '/' .
-                                                        Helpers::recordFormat($records->record) }}">
-                                                    {{ Helpers::getDivisionName(
-                                                        $records->division_id || $records->division || $records->division_code || $records->site_location_code,
-                                                    ) .
-                                                        '/' .
-                                                        $records->process_name .
-                                                        '/' .
-                                                        date('Y') .
-                                                        '/' .
-                                                        Helpers::recordFormat($records->record) }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('reference')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div> -->
-
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Observation on Page No.">Parent Record Number
@@ -301,8 +211,6 @@
 
                                     </div>
                                 </div>
-
-
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -378,27 +286,10 @@
                                 </script>
 
 
-
-
                                 @php
                                     $users = DB::table('users')->get();
                                 @endphp
-                                <!-- <div class="col-md-6">
-                                                                                                                                                                                                                                                                                        <div class="group-input">
-                                                                                                                                                                                                                                                                                            <label for="select-state">
-                                                                                                                                                                                                                                                                                                Department Head  <span class="text-danger"></span>
-                                                                                                                                                                                                                                                                                            </label>
-                                                                                                                                                                                                                                                                                            <select id="select-state" placeholder="Select..." name="department_head_to">
-                                                                                                                                                                                                                                                                                                <option value="">Select a value</option>
-                                                                                                                                                                                                                                                                                                @foreach ($users as $data)
-    <option value="{{ $data->id }}">{{ $data->name }}</option>
-    @endforeach
-                                                                                                                                                                                                                                                                                            </select>
-                                                                                                                                                                                                                                                                                            @error('department_head_to')
-        <p class="text-danger">{{ $message }}</p>
-    @enderror
-                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                    </div> -->
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
@@ -437,23 +328,9 @@
 
 
                                 <div class="group-input">
-                                    <!-- <label for="audit-agenda-grid">
-                                        Details
-                                        <button type="button" name="details" id="Details-add">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            Launch Deviation
-                                        </span>
-                                    </label> -->
                                     <label for="action-plan-grid">
                                         Details<button type="button" name="action-plan-grid"
                                                 id="Details_add">+</button>
-                                        <!-- <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            Launch Deviation
-                                        </span> -->
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="Details-table">
@@ -461,47 +338,19 @@
                                                 <tr>
                                                     <th style="width: 2%">Sr.No.</th>
                                                     <th style="width: 12%">List Of Impacting Document (If Any)</th>
-                                                    <!-- <th style="width: 16%"> Prepared By</th>
-                                                    <th style="width: 15%">Checked By</th>
-                                                    <th style="width: 15%">Approved By</th> -->
                                                     <th style="width: 3%">Action</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- <td><input disabled type="text" name="details[0][serial]"
-                                                        value="1"></td>
-                                                <td><input type="text" name="details[0][ListOfImpactingDocument]"></td> -->
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
                                                 </td>
                                                 <td><input type="text" name="ListOfImpactingDocument[]"></td>
-                                                <!-- <td><input type="text" name="details[0][PreparedBy]"></td>
-                                                <td><input type="text" name="details[0][CheckedBy]"></td>
-                                                <td><input type="text" name="details[0][ApprovedBy]"></td> -->
                                                 <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
 
                                         </table>
                                     </div>
                                 </div>
-
-                                <!-- <div class="new-date-data-field">
-                                                                                                                                                                                                                                                                                                                        <div class="group-input input-date">
-                                                                                                                                                                                                                                                                                                                            <label for="Errata_date">Date And Time of Correction</label>
-                                                                                                                                                                                                                                                                                                                            <div class="calenderauditee">
-                                                                                                                                                                                                                                                                                                                                <input type="text" id="displayErrataDate"
-                                                                                                                                                                                                                                                                                                                                    name="Date_and_time_of_correction" readonly
-                                                                                                                                                                                                                                                                                                                                    placeholder="DD-MM-YYYY HH:MM" />
-                                                                                                                                                                                                                                                                                                                                <input type="datetime-local" id="Errata_date"
-                                                                                                                                                                                                                                                                                                                                    name="Date_and_time_of_correction" onchange="updateDisplayDateTime(this)"
-                                                                                                                                                                                                                                                                                                                                    class="hide-input" />
-                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                                                        @error('Errata_date')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
-                                                                                                                                                                                                                                                                                                                    </div> -->
-
                                 <script>
                                     function updateDisplayDateTime(input) {
                                         const selectedDateTime = new Date(input.value);
@@ -581,1224 +430,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- -----------Tab-3------------ -->
-                    {{-- <div id="CCForm3" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="sub-head">Production</div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Production Review Required </label>
-                                        <select name="production_review_required">
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Production Person </label>
-                                        <select name="">
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By
-                                            Production)</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Production Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Production Attachments </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Production Review Completed By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Production Review Completed On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-
-                                <div class="sub-head">Warehouse</div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Warehouse Review Required </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Warehouse Person </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By
-                                            Warehouse)</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Warehouse Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Warehouse Attachments </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Warehouse Review Completed By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Warehouse Review Completed On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-
-                                <div class="sub-head">Quality Control</div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Quality Control Review Required </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Quality Control Person </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By Quality
-                                            Control)</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Quality Control Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Quality Control Attachments </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Quality Control Review Completed By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Quality Control Review Completed On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-
-                                <div class="sub-head">Engineering </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Engineering Review Required </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Engineering Person </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By
-                                            Engineering)</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Engineering Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Engineering Attachments </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Engineering Review Completed By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Engineering Review Completed On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-
-                                <div class="sub-head">Analytical Development Laboratry </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Analytical Development Laboratry Review Required </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Analytical Development Laboratry Person </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By Analytical
-                                            Development Laboratry)</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Analytical Development Laboratry
-                                            Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Analytical Development Laboratry Attachments
-                                        </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Analytical Development Laboratry Review Completed
-                                            By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Analytical Development Laboratry Review Completed
-                                            On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-
-
-                                <div class="sub-head">Process Development Laboratry </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Process Development Laboratry Review Required </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Process Development Laboratry Person </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By Process
-                                            Development Laboratry)</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Process Development Laboratry
-                                            Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Process Development Laboratry Attachments </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Process Development Laboratory / Kilo Lab Review Completed
-                                            By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Process Development Laboratory / Kilo Lab Review Completed
-                                            On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-
-                                <div class="sub-head">Technology Transfer Design </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Technology Transfer Design Review Required </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Technology Transfer Design Person </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By Technology
-                                            Transfer Design)</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Technology Transfer Design
-                                            Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Technology Transfer Design Attachments </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Technology Transfer / Design Review Completed By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Technology Transfer / Design Review Completed On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-
-
-
-                                <div class="sub-head">Environment Health & Safety </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Environment Health & Safety Review Required </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Environment Health & Safety Person </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By Environment
-                                            Health & Safety)</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Environment Health & Safety
-                                            Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Environment Health & Safety Attachments </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Environment, Health & Safety Review Completed By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Environment, Health & Safety Review Completed On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-
-                                <div class="sub-head"> Human Resource & Administration </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by"> Human Resource & Administration Review Required </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by"> Human Resource & Administration Person </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By Human Resource &
-                                            Administration)</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments"> Human Resource & Administration
-                                            Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment"> Human Resource & Administration Attachments
-                                        </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Human Resource & Administration Review Completed
-                                            By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Human Resource & Administration Review Completed
-                                            On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-
-                                <div class="sub-head">Information Technology </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Information Technology Review Required </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Information Technology Person </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By Information
-                                            Technology)</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Information Technology Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Information Technology Attachments </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Information Technology Review Completed By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Information Technology Review Completed On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-
-                                <div class="sub-head">Project Management </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Project Management Review Required </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Project Management Person </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By Project
-                                            Management )</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Project Management Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Project Management Attachments </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Other's 1 Review Completed By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Other's 1 Review Completed On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-                                <div class="sub-head">Other's 1 (Additional Person Review From Departments If Required)
-                                </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Other's 1 Review Required </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Other's 1 Person </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="submitted by">Other's 1 Department </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Manufacturing</option>
-                                            <option>Production</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By Other's 1
-                                            )</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Other's 1 Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Other's 1 Attachments </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Project Management Review Completed By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Project Management Review Completed On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-                                <div class="sub-head">Other's 2 (Additional Person Review From Departments If Required)
-                                </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Other's 2 Review Required </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Other's 2 Person </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="submitted by">Other's 2 Department </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Manufacturing</option>
-                                            <option>Production</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By Other's 2
-                                            )</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Other's 2 Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Other's 2 Attachments </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Other's 3 Review Completed By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Other's 2 Review Completed On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-                                <div class="sub-head">Other's 3 (Additional Person Review From Departments If Required)
-                                </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Other's 3 Review Required </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Other's 3 Person </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="submitted by">Other's 3 Department </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Manufacturing</option>
-                                            <option>Production</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By Other's 3
-                                            )</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Other's 3 Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Other's 3 Attachments </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Other's 3 Review Completed By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Other's 3 Review Completed On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-                                <div class="sub-head">Other's 4 (Additional Person Review From Departments If Required)
-                                </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Other's 4 Review Required </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Other's 4 Person </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="submitted by">Other's 4 Department </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Manufacturing</option>
-                                            <option>Production</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By Other's 4
-                                            )</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Other's 4 Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Other's 4 Attachments </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Other's 4 Review Completed By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Other's 4 Review Completed On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-                                <div class="sub-head">Other's 5 (Additional Person Review From Departments If Required)
-                                </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Other's 5 Review Required </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submitted by">Other's 5 Person </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Pankaj</option>
-                                            <option>Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="submitted by">Other's 5 Department </label>
-                                        <select>
-                                            <option>--select--</option>
-                                            <option>Manufacturing</option>
-                                            <option>Production</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Impact Assessment (By Other's 5
-                                            )</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Other's 5 Feedback</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Other's 5 Attachments </label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Reviewed by">Other's 5 Review Completed By</label>
-                                        <input type="text" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">Other's 5 Review Completed On</label>
-                                        <input type="date" />
-                                    </div>
-                                </div>
-
-                                <div class="button-block">
-                                    <button type="button" class="backButton on-submit-disable-button" onclick="previousStep()">Back</button>
-                                    <button type="submit" class="saveButton">Save</button>
-                                    <button type="button"> <a class="text-white"
-                                            href="{{ url('rcms/qms-dashboard') }}">Exit
-                                        </a> </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
+                    
                     <!-- -----------Tab-4------------ -->
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -2077,52 +709,6 @@
                     </div>
 
 
-                    <!-- -----------Tab-8------------ -->
-
-                    {{-- <div id="CCForm8" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="QA Comment">QA Comment</label>
-                                        <textarea class="summernote" name="QA_Comment1" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="QA Attachments">QA Attachments</label>
-                                        <div><small class="text-primary">
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="QA_Attachments1"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="QA_Attachments1" name="QA_Attachments1[]"
-                                                    oninput="addMultipleFiles(this, 'QA_Attachments1')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="button-block">
-                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
-                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-
-
-                                    <button type="button"> <a class="text-white"
-                                            href="{{ url('rcms/qms-dashboard') }}">Exit
-                                        </a> </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-
-
                     <!-- -----------Tab-9------------ -->
 
                     <div id="CCForm9" class="inner-block cctabcontent">
@@ -2168,9 +754,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
 
                     <!-- -----------Tab-10------------ -->
                     <div id="CCForm10" class="inner-block cctabcontent">
@@ -2465,43 +1048,6 @@
         }
     </script>
 
-    <!-- <script>
-        $(document).ready(function() {
-            $('#Details-add').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var html = '';
-                    html += '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="details[' + serialNumber +
-                        '][ListOfImpactingDocument]"></td>' +
-
-                        // '<td><input type="text" name="details[' + serialNumber + '][PreparedBy]"></td>' +
-                        // '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
-                        // '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
-
-                        '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
-                        '</tr>';
-
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    // html += '</select></td>' +
-
-                    '</tr>';
-
-                    return html;
-                }
-
-                var tableBody = $('#Details-table tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
-        });
-    </script> -->
-
     <script>
         $(document).ready(function() {
             $('#Details_add').click(function(e) {
@@ -2584,7 +1130,6 @@
             referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
         }
     </script>
-
 
     <script>
         var maxLength = 255;

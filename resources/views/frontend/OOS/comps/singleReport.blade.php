@@ -126,6 +126,27 @@
     table th, table td {
         word-wrap: break-word;
     }
+
+
+    .analyst-interview-content p {
+        margin: 0 0 10px 0;
+        line-height: 1.5;
+    }
+
+    .analyst-interview-content ol,
+    .analyst-interview-content ul {
+        margin: 5px 0 10px 20px;
+        padding-left: 15px;
+    }
+
+    .analyst-interview-content li {
+        margin-bottom: 5px;
+    }
+
+    .analyst-interview-content strong {
+        font-weight: bold;
+    }
+
 </style>
 
 <body>
@@ -908,12 +929,20 @@
                         <td class="w-80">{{ strip_tags($data->justify_if_no_analyst_int_pli) }}</td>
                     </tr>
                     @endif
+                </table>
+
+                <table>
                     @if(filled(strip_tags((string) $data->analyst_interview_pli)))
                     <tr>
                         <th class="w-20">Analyst Interview Details</th>
-                        <td class="w-80">{{ strip_tags($data->analyst_interview_pli) }}</td>
+                        <td class="w-80 analyst-interview-content">
+                            {!! $data->analyst_interview_pli !!}
+                        </td>
                     </tr>
                     @endif
+                </table>
+
+                <table>   
                     @if(filled(strip_tags((string) $data->Any_other_cause)))
                     <tr>
                         <th class="w-20">Any Other Cause/Suspected Cause</th>
